@@ -43,3 +43,5 @@ ipch/
 #Release/
 #bin/
 obj/
+
+*.TMP
