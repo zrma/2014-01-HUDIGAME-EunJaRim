@@ -4,8 +4,8 @@
 #include "stdafx.h"
 #include "TestClient.h"
 
-#include <winsock2.h>
 #include <windows.h>
+#include <winsock2.h>
 #include <assert.h>
 #include <stdio.h>
 #include <time.h>
