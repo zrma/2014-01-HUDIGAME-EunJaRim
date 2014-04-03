@@ -27,6 +27,8 @@
 #include "ClientManager.h"
 #include "DatabaseJobManager.h"
 #include "DbHelper.h"
+#include "tinyxml.h"
+#include "xpath_static.h"
 
 //////////////////////////////////////////////////////////////////////////
 #pragma comment(lib,"ws2_32.lib")
@@ -76,6 +78,25 @@ __declspec(thread) int LThreadType = -1 ;
 
 int _tmain(int argc, _TCHAR* argv[])
 {
+
+	// xml 로드 테스트
+	TiXmlDocument document = TiXmlDocument( "./data.xml" );
+	bool m_LoadSuccess = document.LoadFile();
+
+	std::string title;
+
+	if ( m_LoadSuccess )
+	{
+		title = TinyXPath::S_xpath_string( document.RootElement(), "/Music/Title/text()" ).c_str();
+		printf_s( "Loaded Music :%s \n", title.c_str() );
+	}
+	else
+	{
+		printf_s( "LoadFail" );
+	}
+
+
+
 	//////////////////////////////////////////////////////////////////////////
 	// SetUnhandledExceptionFilter 
 	// 예기치 않은 프로그램 시스템 예외를 받아낸다.
