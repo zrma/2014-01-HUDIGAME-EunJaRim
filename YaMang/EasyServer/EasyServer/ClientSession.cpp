@@ -4,8 +4,7 @@
 #include "ClientManager.h"
 #include "DatabaseJobContext.h"
 #include "DatabaseJobManager.h"
-#include "EventHandler.h"
-#include "LoginEventHandler.h"
+#include "TestHandler.h"
 
 //////////////////////////////////////////////////////////////////////////
 // EasyServer.cpp 에서 클라이언트 매니저에서 CreateClient 한 후에
@@ -59,9 +58,7 @@ bool ClientSession::OnConnect(SOCKADDR_IN* addr)
 	
 	/// 패킷 핸들링
 	mPacketHandler[PKT_CS_LOGIN] = ClientLoginPacket;
-	mPacketHandler[PKT_CS_KEYSTATE] = ClientKeyStatePacket;
-	mPacketHandler[PKT_CS_MOUSEANGLE] = ClientMouseAnglePacket;
-	mPacketHandler[PKT_CS_EMOTICON] = EmoticonPacket;
+	mPacketHandler[PKT_CS_CHAT] = ClientChatPacket;
 
 	mConnected = true ;
 
@@ -209,9 +206,9 @@ void ClientSession::Disconnect()
 
 //////////////////////////////////////////////////////////////////////////
 // 비동기 입력 완료 후 RecvCompletion 콜백 발생하면
-// 받은 데이터 사이즈를 인자로 넘겨서 DemultiPlex(OnRead) 실행
+// 받은 데이터 사이즈를 인자로 넘겨서 OnRead 실행
 //////////////////////////////////////////////////////////////////////////
-void ClientSession::DemultiPlex(size_t len)
+void ClientSession::OnRead(size_t len)
 {
 	// CircularBuffer.cpp 참조
 	mRecvBuffer.Commit(len) ;
@@ -266,10 +263,11 @@ void ClientSession::DemultiPlex(size_t len)
 		//
 		// (Callback에서 짬짬히 계속 OnRead하고, OnRead에서는 패킷이 완성 될 때마다 처리)
 		//////////////////////////////////////////////////////////////////////////
+
 		/// 패킷 핸들링
 		if ( mPacketHandler[header.mType] )
 		{
-			mPacketHandler[header.mType]( this, &header, &mRecvBuffer );
+			mPacketHandler[header.mType]( this, &header, &mRecvBuffer, &mSocket );
 		}
 		else
 		{
@@ -468,7 +466,7 @@ void CALLBACK RecvCompletion(DWORD dwError, DWORD cbTransferred, LPWSAOVERLAPPED
 	}
 
 	/// 받은 데이터 처리
-	fromClient->DemultiPlex(cbTransferred) ;
+	fromClient->OnRead(cbTransferred) ;
 
 	/// 다시 받기
 	if ( false == fromClient->PostRecv() )

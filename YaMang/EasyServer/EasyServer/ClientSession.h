@@ -35,7 +35,7 @@ public:
 
 
 	
-	void	DemultiPlex(size_t len) ;
+	void	OnRead(size_t len) ;
 	void	OnWriteComplete(size_t len) ;
 
 	bool	OnConnect(SOCKADDR_IN* addr) ;
@@ -57,6 +57,8 @@ public:
 	void	DecOverlappedRequest()		{ --mOverlappedRequested ; }
 	bool	DoingOverlappedOperation() const { return mOverlappedRequested > 0 ; }
 
+	char*	GetPlayerName() { return mPlayerName; }
+
 private:
 	bool	SendFlush(); ///< Send요청 중인것들 모아서 보냄
 	void	OnTick() ;
@@ -66,13 +68,13 @@ private:
 
 
 private:
-	std::map<short, void( *)( ClientSession* client, PacketHeader* header, CircularBuffer* buffer )> mPacketHandler;
+	std::map<short, void( *)( ClientSession* client, PacketHeader* header, CircularBuffer* buffer, SOCKET* socket )> mPacketHandler;
 	double			mPosX ;
 	double			mPosY ;
 	double			mPosZ ;
 	char			mPlayerName[MAX_NAME_LEN] ;
 
-private:
+
 	bool			mConnected ;
 	bool			mLogon ;
 	SOCKET			mSocket ;
