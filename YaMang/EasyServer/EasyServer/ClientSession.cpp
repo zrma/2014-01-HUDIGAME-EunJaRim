@@ -57,6 +57,12 @@ bool ClientSession::OnConnect(SOCKADDR_IN* addr)
 
 	printf("[DEBUG] Client Connected: IP=%s, PORT=%d\n", inet_ntoa(mClientAddr.sin_addr), ntohs(mClientAddr.sin_port)) ;
 	
+	/// 패킷 핸들링
+	mPacketHandler[PKT_CS_LOGIN] = ClientLoginPacket;
+	mPacketHandler[PKT_CS_KEYSTATE] = ClientKeyStatePacket;
+	mPacketHandler[PKT_CS_MOUSEANGLE] = ClientMouseAnglePacket;
+	mPacketHandler[PKT_CS_EMOTICON] = EmoticonPacket;
+
 	mConnected = true ;
 
 	return PostRecv() ;
@@ -260,58 +266,19 @@ void ClientSession::DemultiPlex(size_t len)
 		//
 		// (Callback에서 짬짬히 계속 OnRead하고, OnRead에서는 패킷이 완성 될 때마다 처리)
 		//////////////////////////////////////////////////////////////////////////
-		
-		EventHandler* eh = NULL;
 		/// 패킷 핸들링
-		switch ( header.mType )
+		if ( mPacketHandler[header.mType] )
 		{
-		case PKT_CS_LOGIN:
-			{
-				eh = new LoginEventHandler();
-
-				
-				LoginRequest inPacket ;
-				eh->ReadData( &mRecvBuffer, &inPacket, &header );
-
-				//////////////////////////////////////////////////////////////////////////
-				// CircularBuffer에서 Peek는 읽기만 하는 것
-				// Read는 읽고 나서, 읽은 만큼 제거
-				//////////////////////////////////////////////////////////////////////////
-
-				/// 로그인은 DB 작업을 거쳐야 하기 때문에 DB 작업 요청한다.
-
-				eh->HandleEvent( &mSocket, &inPacket, &header );
-			
-			}
-			break ;
-
-		case PKT_CS_CHAT:
-			{
-				ChatBroadcastRequest inPacket ;
-				
-				mRecvBuffer.Read((char*)&inPacket, header.mSize) ;
-				printf_s( "CHAT RECV:%s \n", inPacket.mChat );
-
-				ChatBroadcastResult outPacket ;
-				outPacket.mPlayerId = inPacket.mPlayerId ;
-				strcpy_s(outPacket.mName, mPlayerName) ;
-				strcpy_s(outPacket.mChat, inPacket.mChat) ;
-		
-				/// 채팅은 바로 방송 하면 끝
-				if ( !Broadcast(&outPacket) )
-					return ;
- 
-			}
-			break ;
-
-		default:
-			{
-				/// 여기 들어오면 이상한 패킷 보낸거다.
-				Disconnect() ;
-				return ;
-			}
-			break ;
+			mPacketHandler[header.mType]( this, &header, &mRecvBuffer );
 		}
+		else
+		{
+			/// 여기 들어오면 이상한 패킷 보낸거다.
+			Disconnect();
+			return;
+		}
+
+
 	}
 }
 

@@ -66,6 +66,7 @@ private:
 
 
 private:
+	std::map<short, void( *)( ClientSession* client, PacketHeader* header, CircularBuffer* buffer )> mPacketHandler;
 	double			mPosX ;
 	double			mPosY ;
 	double			mPosZ ;
