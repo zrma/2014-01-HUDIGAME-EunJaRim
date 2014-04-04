@@ -1,4 +1,4 @@
-/*
+﻿/*
 www.sourceforge.net/projects/tinyxpath
 Copyright (c) 2002 Yves Berquin (yvesb@users.sourceforge.net)
 

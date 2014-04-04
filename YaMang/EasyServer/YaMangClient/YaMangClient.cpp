@@ -1,4 +1,4 @@
-// YaMangClient.cpp : ÀÀ¿ë ÇÁ·Î±×·¥¿¡ ´ëÇÑ ÁøÀÔÁ¡À» Á¤ÀÇÇÕ´Ï´Ù.
+ï»¿// YaMangClient.cpp : ì‘ìš© í”„ë¡œê·¸ë¨ì— ëŒ€í•œ ì§„ì…ì ì„ ì •ì˜í•©ë‹ˆë‹¤.
 //
 
 #include "stdafx.h"
@@ -31,7 +31,7 @@ int nPort = 9001;
 
 bool g_LoginComplete = false;
 
-/// ¼­¹ö¿¡¼­ ¹Ş¾Æ¿Â ³ªÀÇ ID 
+/// ì„œë²„ì—ì„œ ë°›ì•„ì˜¨ ë‚˜ì˜ ID 
 int g_MyClientId = -1;
 
 bool Initialize()
@@ -73,7 +73,7 @@ bool Connect( const char* serverAddr, int port )
 	return true;
 }
 
-/// ÆĞÅ¶Ã³¸® 
+/// íŒ¨í‚·ì²˜ë¦¬ 
 void ProcessPacket( HWND hWnd )
 {
 	while ( true )
@@ -93,10 +93,10 @@ void ProcessPacket( HWND hWnd )
 				LoginResult recvData;
 				if ( g_RecvBuffer.Read( (char*)&recvData, header.mSize ) )
 				{
-					// ÆĞÅ¶Ã³¸®
+					// íŒ¨í‚·ì²˜ë¦¬
 					if ( recvData.mPlayerId == -1 )
 					{
-						/// ¿©±â °É¸®¸é ·Î±×ÀÎ ½ÇÆĞ´Ù.
+						/// ì—¬ê¸° ê±¸ë¦¬ë©´ ë¡œê·¸ì¸ ì‹¤íŒ¨ë‹¤.
 						ExitProcess( -1 );
 					}
 
@@ -112,7 +112,7 @@ void ProcessPacket( HWND hWnd )
 					TextOutA( hdc, 10, 33, buff, strlen( buff ) );
 					ReleaseDC( hWnd, hdc );
 
-					/// Ã¤ÆÃ ¹æ¼Û ÆĞÅ¶ º¸³»´Â Å¸ÀÌ¸Ó µ¹¸®ÀÚ.. 
+					/// ì±„íŒ… ë°©ì†¡ íŒ¨í‚· ë³´ë‚´ëŠ” íƒ€ì´ë¨¸ ëŒë¦¬ì.. 
 					SetTimer( hWnd, 337, 3000, NULL );
 
 				}
@@ -128,7 +128,7 @@ void ProcessPacket( HWND hWnd )
 				ChatBroadcastResult recvData;
 				if ( g_RecvBuffer.Read( (char*)&recvData, header.mSize ) )
 				{
-					/// ¿©±â °É¸®¸é ·Î±×ÀÎ ¾ÈµÈ³ğÀÌ º¸³½°Å´Ù
+					/// ì—¬ê¸° ê±¸ë¦¬ë©´ ë¡œê·¸ì¸ ì•ˆëœë†ˆì´ ë³´ë‚¸ê±°ë‹¤
 					assert( recvData.mPlayerId != -1 );
 
 					char buff[MAX_CHAT_LEN] = { 0, };
@@ -156,12 +156,12 @@ void ProcessPacket( HWND hWnd )
 	}
 }
 
-// Àü¿ª º¯¼ö:
-HINSTANCE hInst;								// ÇöÀç ÀÎ½ºÅÏ½ºÀÔ´Ï´Ù.
-TCHAR szTitle[MAX_LOADSTRING];					// Á¦¸ñ Ç¥½ÃÁÙ ÅØ½ºÆ®ÀÔ´Ï´Ù.
-TCHAR szWindowClass[MAX_LOADSTRING];			// ±âº» Ã¢ Å¬·¡½º ÀÌ¸§ÀÔ´Ï´Ù.
+// ì „ì—­ ë³€ìˆ˜:
+HINSTANCE hInst;								// í˜„ì¬ ì¸ìŠ¤í„´ìŠ¤ì…ë‹ˆë‹¤.
+TCHAR szTitle[MAX_LOADSTRING];					// ì œëª© í‘œì‹œì¤„ í…ìŠ¤íŠ¸ì…ë‹ˆë‹¤.
+TCHAR szWindowClass[MAX_LOADSTRING];			// ê¸°ë³¸ ì°½ í´ë˜ìŠ¤ ì´ë¦„ì…ë‹ˆë‹¤.
 
-// ÀÌ ÄÚµå ¸ğµâ¿¡ µé¾î ÀÖ´Â ÇÔ¼öÀÇ Á¤¹æÇâ ¼±¾ğÀÔ´Ï´Ù.
+// ì´ ì½”ë“œ ëª¨ë“ˆì— ë“¤ì–´ ìˆëŠ” í•¨ìˆ˜ì˜ ì •ë°©í–¥ ì„ ì–¸ì…ë‹ˆë‹¤.
 ATOM				MyRegisterClass(HINSTANCE hInstance);
 BOOL				InitInstance(HINSTANCE, int);
 LRESULT CALLBACK	WndProc(HWND, UINT, WPARAM, LPARAM);
@@ -174,16 +174,16 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
 
- 	// TODO: ¿©±â¿¡ ÄÚµå¸¦ ÀÔ·ÂÇÕ´Ï´Ù.
+ 	// TODO: ì—¬ê¸°ì— ì½”ë“œë¥¼ ì…ë ¥í•©ë‹ˆë‹¤.
 	MSG msg;
 	HACCEL hAccelTable;
 
-	// Àü¿ª ¹®ÀÚ¿­À» ÃÊ±âÈ­ÇÕ´Ï´Ù.
+	// ì „ì—­ ë¬¸ìì—´ì„ ì´ˆê¸°í™”í•©ë‹ˆë‹¤.
 	LoadString(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
 	LoadString(hInstance, IDC_YAMANGCLIENT, szWindowClass, MAX_LOADSTRING);
 	MyRegisterClass(hInstance);
 
-	// ÀÀ¿ë ÇÁ·Î±×·¥ ÃÊ±âÈ­¸¦ ¼öÇàÇÕ´Ï´Ù.
+	// ì‘ìš© í”„ë¡œê·¸ë¨ ì´ˆê¸°í™”ë¥¼ ìˆ˜í–‰í•©ë‹ˆë‹¤.
 	if (!InitInstance (hInstance, nCmdShow))
 	{
 		return FALSE;
@@ -191,7 +191,7 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 
 	hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_YAMANGCLIENT));
 
-	// ±âº» ¸Ş½ÃÁö ·çÇÁÀÔ´Ï´Ù.
+	// ê¸°ë³¸ ë©”ì‹œì§€ ë£¨í”„ì…ë‹ˆë‹¤.
 	while (GetMessage(&msg, NULL, 0, 0))
 	{
 		if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
@@ -207,9 +207,9 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 
 
 //
-//  ÇÔ¼ö: MyRegisterClass()
+//  í•¨ìˆ˜: MyRegisterClass()
 //
-//  ¸ñÀû: Ã¢ Å¬·¡½º¸¦ µî·ÏÇÕ´Ï´Ù.
+//  ëª©ì : ì°½ í´ë˜ìŠ¤ë¥¼ ë“±ë¡í•©ë‹ˆë‹¤.
 //
 ATOM MyRegisterClass(HINSTANCE hInstance)
 {
@@ -233,20 +233,20 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 }
 
 //
-//   ÇÔ¼ö: InitInstance(HINSTANCE, int)
+//   í•¨ìˆ˜: InitInstance(HINSTANCE, int)
 //
-//   ¸ñÀû: ÀÎ½ºÅÏ½º ÇÚµéÀ» ÀúÀåÇÏ°í ÁÖ Ã¢À» ¸¸µì´Ï´Ù.
+//   ëª©ì : ì¸ìŠ¤í„´ìŠ¤ í•¸ë“¤ì„ ì €ì¥í•˜ê³  ì£¼ ì°½ì„ ë§Œë“­ë‹ˆë‹¤.
 //
-//   ¼³¸í:
+//   ì„¤ëª…:
 //
-//        ÀÌ ÇÔ¼ö¸¦ ÅëÇØ ÀÎ½ºÅÏ½º ÇÚµéÀ» Àü¿ª º¯¼ö¿¡ ÀúÀåÇÏ°í
-//        ÁÖ ÇÁ·Î±×·¥ Ã¢À» ¸¸µç ´ÙÀ½ Ç¥½ÃÇÕ´Ï´Ù.
+//        ì´ í•¨ìˆ˜ë¥¼ í†µí•´ ì¸ìŠ¤í„´ìŠ¤ í•¸ë“¤ì„ ì „ì—­ ë³€ìˆ˜ì— ì €ì¥í•˜ê³ 
+//        ì£¼ í”„ë¡œê·¸ë¨ ì°½ì„ ë§Œë“  ë‹¤ìŒ í‘œì‹œí•©ë‹ˆë‹¤.
 //
 BOOL InitInstance( HINSTANCE hInstance, int nCmdShow )
 {
 	HWND hWnd;
 
-	hInst = hInstance; // ÀÎ½ºÅÏ½º ÇÚµéÀ» Àü¿ª º¯¼ö¿¡ ÀúÀåÇÕ´Ï´Ù.
+	hInst = hInstance; // ì¸ìŠ¤í„´ìŠ¤ í•¸ë“¤ì„ ì „ì—­ ë³€ìˆ˜ì— ì €ì¥í•©ë‹ˆë‹¤.
 
 	hWnd = CreateWindow( szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
 						 CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, NULL, NULL, hInstance, NULL );
@@ -263,13 +263,13 @@ BOOL InitInstance( HINSTANCE hInstance, int nCmdShow )
 }
 
 //
-//  ÇÔ¼ö: WndProc(HWND, UINT, WPARAM, LPARAM)
+//  í•¨ìˆ˜: WndProc(HWND, UINT, WPARAM, LPARAM)
 //
-//  ¸ñÀû:  ÁÖ Ã¢ÀÇ ¸Ş½ÃÁö¸¦ Ã³¸®ÇÕ´Ï´Ù.
+//  ëª©ì :  ì£¼ ì°½ì˜ ë©”ì‹œì§€ë¥¼ ì²˜ë¦¬í•©ë‹ˆë‹¤.
 //
-//  WM_COMMAND	- ÀÀ¿ë ÇÁ·Î±×·¥ ¸Ş´º¸¦ Ã³¸®ÇÕ´Ï´Ù.
-//  WM_PAINT	- ÁÖ Ã¢À» ±×¸³´Ï´Ù.
-//  WM_DESTROY	- Á¾·á ¸Ş½ÃÁö¸¦ °Ô½ÃÇÏ°í ¹İÈ¯ÇÕ´Ï´Ù.
+//  WM_COMMAND	- ì‘ìš© í”„ë¡œê·¸ë¨ ë©”ë‰´ë¥¼ ì²˜ë¦¬í•©ë‹ˆë‹¤.
+//  WM_PAINT	- ì£¼ ì°½ì„ ê·¸ë¦½ë‹ˆë‹¤.
+//  WM_DESTROY	- ì¢…ë£Œ ë©”ì‹œì§€ë¥¼ ê²Œì‹œí•˜ê³  ë°˜í™˜í•©ë‹ˆë‹¤.
 //
 //
 LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam )
@@ -288,7 +288,7 @@ LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam 
 			CreateWindow( L"BUTTON", L"CONNECT", WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
 						  10, 10, 175, 23, hWnd, (HMENU)IDC_SEND_BUTTON, GetModuleHandle( NULL ), NULL );
 
-			// ¼ÒÄÏ °ü·Ã ÃÊ±âÈ­ ÀÛ¾÷
+			// ì†Œì¼“ ê´€ë ¨ ì´ˆê¸°í™” ì‘ì—…
 			if ( false == Initialize() )
 			{
 				SendMessage( hWnd, WM_DESTROY, NULL, NULL );
@@ -298,9 +298,9 @@ LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam 
 			//////////////////////////////////////////////////////////////////////////
 			// http://blog.naver.com/alsduddl525/140123329159
 			// http://blog.naver.com/merds/150000138666
-			// http://blog.naver.com/popssong/70133058993 ÂüÁ¶
+			// http://blog.naver.com/popssong/70133058993 ì°¸ì¡°
 			//
-			// g_Socket ¿¡ ¿À´Â °ÍµéÀº WM_SOCKET ÀÌº¥Æ®·Î Ã³¸®ÇÏ°ÚÀ½
+			// g_Socket ì— ì˜¤ëŠ” ê²ƒë“¤ì€ WM_SOCKET ì´ë²¤íŠ¸ë¡œ ì²˜ë¦¬í•˜ê² ìŒ
 			//////////////////////////////////////////////////////////////////////////
 			int	nResult = WSAAsyncSelect( g_Socket, hWnd, WM_SOCKET, ( FD_CLOSE | FD_CONNECT ) );
 			if ( nResult )
@@ -315,13 +315,13 @@ LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam 
 
 		case WM_TIMER:
 		{
-			/// ÁÖ±âÀûÀ¸·Î Ã¤ÆÃ ³¯·Áº¸ÀÚ.
+			/// ì£¼ê¸°ì ìœ¼ë¡œ ì±„íŒ… ë‚ ë ¤ë³´ì.
 
 			ChatBroadcastRequest sendData;
 
 			sendData.mPlayerId = g_MyClientId;
 
-			/// ·£´ı ¹®ÀÚ¿­À» Ã¤ÆÃÀ¸·Î ³¯¸®±â
+			/// ëœë¤ ë¬¸ìì—´ì„ ì±„íŒ…ìœ¼ë¡œ ë‚ ë¦¬ê¸°
 			char* buff = sendData.mChat;
 			for ( int i = 0; i < 300; ++i )
 			{
@@ -334,9 +334,9 @@ LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam 
 			{
 				PostMessage( hWnd, WM_SOCKET, wParam, FD_WRITE );
 				//////////////////////////////////////////////////////////////////////////
-				// http://blog.naver.com/gkqxhq324456/110177315036 ÂüÁ¶
+				// http://blog.naver.com/gkqxhq324456/110177315036 ì°¸ì¡°
 				//
-				// Ã¤ÆÃÀ» ³¯¸®·Á°í ¹öÆÛ¿¡ µ¥ÀÌÅÍµµ ³Ö¾î µÎ¾úÀ¸´Ï, WM_SOCKET ÀÌº¥Æ®¸¦ ¹ß»ı½ÃÅ°ÀÚ
+				// ì±„íŒ…ì„ ë‚ ë¦¬ë ¤ê³  ë²„í¼ì— ë°ì´í„°ë„ ë„£ì–´ ë‘ì—ˆìœ¼ë‹ˆ, WM_SOCKET ì´ë²¤íŠ¸ë¥¼ ë°œìƒì‹œí‚¤ì
 				//////////////////////////////////////////////////////////////////////////
 			}
 
@@ -348,7 +348,7 @@ LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam 
 		{
 			wmId = LOWORD( wParam );
 			wmEvent = HIWORD( wParam );
-			// ¸Ş´º ¼±ÅÃÀ» ±¸¹® ºĞ¼®ÇÕ´Ï´Ù.
+			// ë©”ë‰´ ì„ íƒì„ êµ¬ë¬¸ ë¶„ì„í•©ë‹ˆë‹¤.
 
 			switch ( wmId )
 			{
@@ -369,11 +369,11 @@ LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam 
 			break;
 
 			//////////////////////////////////////////////////////////////////////////
-			// ¼ÒÄÏ ÀÌº¥Æ®
+			// ì†Œì¼“ ì´ë²¤íŠ¸
 			//////////////////////////////////////////////////////////////////////////
 		case WM_SOCKET:
 		{
-			// lParam ÀÌ ¿¡·¯ÀÎÁö °ËÃâ ÇØº¸±â
+			// lParam ì´ ì—ëŸ¬ì¸ì§€ ê²€ì¶œ í•´ë³´ê¸°
 			if ( WSAGETSELECTERROR( lParam ) )
 			{
 				MessageBox( hWnd, L"WSAGETSELECTERROR", L"Error", MB_OK | MB_ICONERROR );
@@ -381,18 +381,18 @@ LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam 
 				break;
 			}
 
-			// ¿¡·¯ ¾Æ´Ï¸é ÀÌº¥Æ® °ËÃâÇØ¼­ switch
+			// ì—ëŸ¬ ì•„ë‹ˆë©´ ì´ë²¤íŠ¸ ê²€ì¶œí•´ì„œ switch
 			switch ( WSAGETSELECTEVENT( lParam ) )
 			{
 				case FD_CONNECT:
-					// ¿¬°áÀÌ µÇ¾ú´Ù
+					// ì—°ê²°ì´ ë˜ì—ˆë‹¤
 				{
-					/// NAGLE ²ö´Ù
+					/// NAGLE ëˆë‹¤
 					int opt = 1;
 					::setsockopt( g_Socket, IPPROTO_TCP, TCP_NODELAY, (const char*)&opt, sizeof( int ) );
 
 					srand( static_cast<unsigned int> ( time( NULL ) ) );
-					/// ´ë·« 1000~1100 ÀÇ ID·Î ·Î±×ÀÎ ÇØº¸ÀÚ 
+					/// ëŒ€ëµ 1000~1100 ì˜ IDë¡œ ë¡œê·¸ì¸ í•´ë³´ì 
 					LoginRequest sendData;
 					sendData.mPlayerId = 1000 + rand() % 101;
 
@@ -416,31 +416,31 @@ LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam 
 					char inBuf[4096] = { 0, };
 
 					int recvLen = recv( g_Socket, inBuf, 4096, 0 );
-					// send() ÇÔ¼ö¿Í ¹İ´ë
+					// send() í•¨ìˆ˜ì™€ ë°˜ëŒ€
 
-					// ¼ÒÄÏ¿¡¼­ ÀĞ¾î¿Â µ¥ÀÌÅÍ¸¦ ÀÏ´Ü ¹öÆÛ¿¡ ¾²ÀÚ
+					// ì†Œì¼“ì—ì„œ ì½ì–´ì˜¨ ë°ì´í„°ë¥¼ ì¼ë‹¨ ë²„í¼ì— ì“°ì
 					if ( !g_RecvBuffer.Write( inBuf, recvLen ) )
 					{
-						/// ¹öÆÛ ²ËÃ¡´Ù. 
+						/// ë²„í¼ ê½‰ì°¼ë‹¤. 
 						assert( false );
 					}
 
 					ProcessPacket( hWnd );
 					//////////////////////////////////////////////////////////////////////////
-					// ÆĞÅ¶ ÇÚµé¸µ!
+					// íŒ¨í‚· í•¸ë“¤ë§!
 					//////////////////////////////////////////////////////////////////////////
 				}
 					break;
 
 					//////////////////////////////////////////////////////////////////////////
-					// µ¥ÀÌÅÍ¸¦ ¹ŞÀ¸¸é -> ¹öÆÛ¿¡ ¾´ ÈÄ¿¡, ÇÚµé¸µ ÇÏ´Â ÂÊ¿¡¼­ ¹öÆÛ µ¥ÀÌÅÍ »Ì¾Æ¼­ Ã³¸®
+					// ë°ì´í„°ë¥¼ ë°›ìœ¼ë©´ -> ë²„í¼ì— ì“´ í›„ì—, í•¸ë“¤ë§ í•˜ëŠ” ìª½ì—ì„œ ë²„í¼ ë°ì´í„° ë½‘ì•„ì„œ ì²˜ë¦¬
 					//
-					// µ¥ÀÌÅÍ¸¦ º¸³¾¶§ -> ¹öÆÛ¿¡ ¾´ ÈÄ¿¡, FD_WRITE ÂÊ¿¡¼­ ¹öÆÛ µ¥ÀÌÅÍ »Ì¾Æ¼­ send()
+					// ë°ì´í„°ë¥¼ ë³´ë‚¼ë•Œ -> ë²„í¼ì— ì“´ í›„ì—, FD_WRITE ìª½ì—ì„œ ë²„í¼ ë°ì´í„° ë½‘ì•„ì„œ send()
 					//////////////////////////////////////////////////////////////////////////
 
 				case FD_WRITE:
 				{
-					/// ½ÇÁ¦·Î ¹öÆÛ¿¡ ÀÖ´Â°Íµé ²¨³»¼­ º¸³»±â
+					/// ì‹¤ì œë¡œ ë²„í¼ì— ìˆëŠ”ê²ƒë“¤ êº¼ë‚´ì„œ ë³´ë‚´ê¸°
 					int size = g_SendBuffer.GetCurrentSize();
 					if ( size > 0 )
 					{
@@ -449,11 +449,11 @@ LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam 
 
 						int sent = send( g_Socket, data, size, 0 );
 
-						/// ´Ù¸¦¼ö ÀÖ´Ù
+						/// ë‹¤ë¥¼ìˆ˜ ìˆë‹¤
 						if ( sent != size )
 							OutputDebugStringA( "sent != request\n" );
 
-						// º¸³½ µ¥ÀÌÅÍ´Â Áö¿ìÀÚ
+						// ë³´ë‚¸ ë°ì´í„°ëŠ” ì§€ìš°ì
 						g_SendBuffer.Consume( sent );
 
 						delete[] data;
@@ -476,7 +476,7 @@ LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam 
 		case WM_DISPLAYCHANGE:
 		case WM_PAINT:
 			hdc = BeginPaint( hWnd, &ps );
-			// TODO: ¿©±â¿¡ ±×¸®±â ÄÚµå¸¦ Ãß°¡ÇÕ´Ï´Ù.
+			// TODO: ì—¬ê¸°ì— ê·¸ë¦¬ê¸° ì½”ë“œë¥¼ ì¶”ê°€í•©ë‹ˆë‹¤.
 			EndPaint( hWnd, &ps );
 			break;
 

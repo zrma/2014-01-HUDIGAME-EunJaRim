@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "CircularBuffer.h"
 
 
@@ -18,16 +18,16 @@ bool CircularBuffer::Write(const char* data, size_t bytes)
 	if (bytes == 0)
 		return false ;
 
-	/// ¿ë·® ºÎÁ·
+	/// ìš©ëŸ‰ ë¶€ì¡±
 	if ( bytes > mCapacity - mCurrentSize )
 		return false ;
 	
-	// ¹Ù·Î ¾²±â °¡´ÉÇÑ °æ¿ì
+	// ë°”ë¡œ ì“°ê¸° ê°€ëŠ¥í•œ ê²½ìš°
 	//////////////////////////////////////////////////////////////////////////
-	// ³¡ºÎºĞ = mCapacity
-	// ÇöÀç µ¥ÀÌÅÍ°¡ Â÷ ÀÖ´Â ³¡ ºÎºĞ = mEndIndex
+	// ëë¶€ë¶„ = mCapacity
+	// í˜„ì¬ ë°ì´í„°ê°€ ì°¨ ìˆëŠ” ë ë¶€ë¶„ = mEndIndex
 	//
-	// ÇöÀç µ¥ÀÌÅÍ ²Ë Â÷ ÀÖ´Â ³¡ºÎºĞºÎÅÍ ¹öÆÛ ³¡±îÁö ³²Àº °ø°£ »çÀÌ - 1
+	// í˜„ì¬ ë°ì´í„° ê½‰ ì°¨ ìˆëŠ” ëë¶€ë¶„ë¶€í„° ë²„í¼ ëê¹Œì§€ ë‚¨ì€ ê³µê°„ ì‚¬ì´ - 1
 	// = mCapacity - mEndIndex
 	//////////////////////////////////////////////////////////////////////////
 	if ( bytes <= mCapacity - mEndIndex )
@@ -37,17 +37,17 @@ bool CircularBuffer::Write(const char* data, size_t bytes)
 
 		if ( mEndIndex == mCapacity )
 			mEndIndex = 0 ;
-		// µ¥ÀÌÅÍ°¡ ²Ë Â÷¸é mEndIndex¸¦ 0À¸·Î º¸³»¹ö¸²
-		// ¼­Å§·¯ Å¥ ÇüÅÂ
+		// ë°ì´í„°ê°€ ê½‰ ì°¨ë©´ mEndIndexë¥¼ 0ìœ¼ë¡œ ë³´ë‚´ë²„ë¦¼
+		// ì„œí˜ëŸ¬ í í˜•íƒœ
 	}
-	// ÂÉ°³¼­ ½á¾ß µÉ °æ¿ì
+	// ìª¼ê°œì„œ ì¨ì•¼ ë  ê²½ìš°
 	else
 	{
-		// µŞºÎºĞ ³²Àº °ø°£ - À§ÀÇ ÁÖ¼® - 1 ÂüÁ¶
+		// ë’·ë¶€ë¶„ ë‚¨ì€ ê³µê°„ - ìœ„ì˜ ì£¼ì„ - 1 ì°¸ì¡°
 		size_t size1 = mCapacity - mEndIndex ;
 		memcpy(mData + mEndIndex, data, size1) ;
 		
-		// µŞºÎºĞ ²Ë Ã¤¿üÀ¸´Ï ³ª¸ÓÁö µ¥ÀÌÅÍ´Â ½ÃÀÛ ºÎºĞºÎÅÍ ¾ÕºÎÅÍ Ã¤¿ö³ª°¨
+		// ë’·ë¶€ë¶„ ê½‰ ì±„ì› ìœ¼ë‹ˆ ë‚˜ë¨¸ì§€ ë°ì´í„°ëŠ” ì‹œì‘ ë¶€ë¶„ë¶€í„° ì•ë¶€í„° ì±„ì›Œë‚˜ê°
 		size_t size2 = bytes - size1 ;
 		memcpy(mData, data + size1, size2) ;
 		mEndIndex = size2 ;
@@ -66,14 +66,14 @@ bool CircularBuffer::Read(char* data, size_t bytes)
 	if ( mCurrentSize < bytes )
 		return false ;
 
-	/// ¹Ù·Î ÇÑ¹ø¿¡ ÀĞ¾î ¿Ã ¼ö ÀÖ´Â °æ¿ì
+	/// ë°”ë¡œ í•œë²ˆì— ì½ì–´ ì˜¬ ìˆ˜ ìˆëŠ” ê²½ìš°
 	//////////////////////////////////////////////////////////////////////////
-	// ¹öÆÛÀÇ ³¡ºÎºĞ = mCapacity 
-	// ÇöÀç µ¥ÀÌÅÍ°¡ Â÷ ÀÖ´Â ½ÃÀÛºÎºĞ = mBeginIndex
+	// ë²„í¼ì˜ ëë¶€ë¶„ = mCapacity 
+	// í˜„ì¬ ë°ì´í„°ê°€ ì°¨ ìˆëŠ” ì‹œì‘ë¶€ë¶„ = mBeginIndex
 	//
-	// À§¿¡¼­ mCurrentSize < bytes ÀÌ´Ï±î
-	// bytes <= mCapacity - mBeginIndex ¶ó¸é µ¥ÀÌÅÍ Â÷ ÀÖ´Â ½ÃÀÛºÎºĞºÎÅÍ ¹öÆÛ ³¡±îÁö
-	// ²Ë Â÷ ÀÖ´Â µ¥ÀÌÅÍ ¾È¿¡¼­ ÇÑ ¹ø¿¡ bytes¸¦ ±Ü¾î ¿Ã ¼ö ÀÖ°ÚÁö
+	// ìœ„ì—ì„œ mCurrentSize < bytes ì´ë‹ˆê¹Œ
+	// bytes <= mCapacity - mBeginIndex ë¼ë©´ ë°ì´í„° ì°¨ ìˆëŠ” ì‹œì‘ë¶€ë¶„ë¶€í„° ë²„í¼ ëê¹Œì§€
+	// ê½‰ ì°¨ ìˆëŠ” ë°ì´í„° ì•ˆì—ì„œ í•œ ë²ˆì— bytesë¥¼ ê¸ì–´ ì˜¬ ìˆ˜ ìˆê² ì§€
 	//////////////////////////////////////////////////////////////////////////
 	if ( bytes <= mCapacity - mBeginIndex )
 	{
@@ -82,16 +82,16 @@ bool CircularBuffer::Read(char* data, size_t bytes)
 
 		if ( mBeginIndex == mCapacity )
 			mBeginIndex = 0 ;
-		// ¼­Å§·¯ Å¥ ÇüÅÂ
+		// ì„œí˜ëŸ¬ í í˜•íƒœ
 	}
-	/// ÀĞ¾î¿Ã µ¥ÀÌÅÍ°¡ ÂÉ°³Á® ÀÖ´Â °æ¿ì
+	/// ì½ì–´ì˜¬ ë°ì´í„°ê°€ ìª¼ê°œì ¸ ìˆëŠ” ê²½ìš°
 	else
 	{
-		// ÀÌ°Ç ½ÃÀÛºÎºĞºÎÅÍ ¹öÆÛ ¸Ş¸ğ¸®ÀÇ ¸Ç ³¡±îÁö
+		// ì´ê±´ ì‹œì‘ë¶€ë¶„ë¶€í„° ë²„í¼ ë©”ëª¨ë¦¬ì˜ ë§¨ ëê¹Œì§€
 		size_t size1 = mCapacity - mBeginIndex ;
 		memcpy(data, mData + mBeginIndex, size1) ;
 
-		// ÀÌ°Ç ¹öÆÛ ¸Ş¸ğ¸® ½ÃÀÛÀ§Ä¡ºÎÅÍ ³ª¸ÓÁö ÀĞÀ» »çÀÌÁî±îÁö
+		// ì´ê±´ ë²„í¼ ë©”ëª¨ë¦¬ ì‹œì‘ìœ„ì¹˜ë¶€í„° ë‚˜ë¨¸ì§€ ì½ì„ ì‚¬ì´ì¦ˆê¹Œì§€
 		size_t size2 = bytes - size1 ;
 		memcpy(data + size1, mData, size2) ;
 		mBeginIndex = size2 ;
@@ -103,19 +103,19 @@ bool CircularBuffer::Read(char* data, size_t bytes)
 }
 
 //////////////////////////////////////////////////////////////////////////
-// µ¥ÀÌÅÍ¸¦ ÀĞ±â¸¸ ÇÏ¹Ç·Î mBeginIndex, mEndIndex, mCurrentSize µî
-// ³»ºÎ º¯¼ö º¯°æÀÌ ¾ø´Ù.
+// ë°ì´í„°ë¥¼ ì½ê¸°ë§Œ í•˜ë¯€ë¡œ mBeginIndex, mEndIndex, mCurrentSize ë“±
+// ë‚´ë¶€ ë³€ìˆ˜ ë³€ê²½ì´ ì—†ë‹¤.
 //////////////////////////////////////////////////////////////////////////
 
-// µ¥ÀÌÅÍ µé¾î ÀÖ´Â ¸¸Å­ ÅëÂ°·Î Peek
+// ë°ì´í„° ë“¤ì–´ ìˆëŠ” ë§Œí¼ í†µì§¸ë¡œ Peek
 void CircularBuffer::Peek(char* data)
 {
-	/// ¹Ù·Î ÇÑ¹ø¿¡ ÀĞ¾î ¿Ã ¼ö ÀÖ´Â °æ¿ì
+	/// ë°”ë¡œ í•œë²ˆì— ì½ì–´ ì˜¬ ìˆ˜ ìˆëŠ” ê²½ìš°
 	if ( mCurrentSize <= mCapacity - mBeginIndex )
 	{
 		memcpy(data, mData + mBeginIndex, mCurrentSize) ;
 	}
-	/// ÀĞ¾î¿Ã µ¥ÀÌÅÍ°¡ ÂÉ°³Á® ÀÖ´Â °æ¿ì
+	/// ì½ì–´ì˜¬ ë°ì´í„°ê°€ ìª¼ê°œì ¸ ìˆëŠ” ê²½ìš°
 	else
 	{
 		size_t size1 = mCapacity - mBeginIndex ;
@@ -126,7 +126,7 @@ void CircularBuffer::Peek(char* data)
 	}
 }
 
-// ÁöÁ¤ÇÑ Å©±â ¸¸Å­ Peek()
+// ì§€ì •í•œ í¬ê¸° ë§Œí¼ Peek()
 bool CircularBuffer::Peek(char* data, size_t bytes)
 {
 	if (bytes == 0)
@@ -135,12 +135,12 @@ bool CircularBuffer::Peek(char* data, size_t bytes)
 	if ( mCurrentSize < bytes )
 		return false ;
 
-	/// ¹Ù·Î ÇÑ¹ø¿¡ ÀĞ¾î ¿Ã ¼ö ÀÖ´Â °æ¿ì
+	/// ë°”ë¡œ í•œë²ˆì— ì½ì–´ ì˜¬ ìˆ˜ ìˆëŠ” ê²½ìš°
 	if ( bytes <= mCapacity - mBeginIndex )
 	{
 		memcpy(data, mData + mBeginIndex, bytes) ;
 	}
-	/// ÀĞ¾î¿Ã µ¥ÀÌÅÍ°¡ ÂÉ°³Á® ÀÖ´Â °æ¿ì
+	/// ì½ì–´ì˜¬ ë°ì´í„°ê°€ ìª¼ê°œì ¸ ìˆëŠ” ê²½ìš°
 	else
 	{
 		size_t size1 = mCapacity - mBeginIndex ;
@@ -162,7 +162,7 @@ bool CircularBuffer::Consume(size_t bytes)
 	if ( mCurrentSize < bytes )
 		return false ;
 
-	/// ¹Ù·Î ÇÑ¹ø¿¡ Á¦°ÅÇÒ ¼ö ÀÖ´Â °æ¿ì
+	/// ë°”ë¡œ í•œë²ˆì— ì œê±°í•  ìˆ˜ ìˆëŠ” ê²½ìš°
 	if ( bytes <= mCapacity - mBeginIndex )
 	{
 		mBeginIndex += bytes ;
@@ -170,14 +170,14 @@ bool CircularBuffer::Consume(size_t bytes)
 		if ( mBeginIndex == mCapacity )
 			mBeginIndex = 0 ;
 	}
-	/// Á¦°ÅÇÒ µ¥ÀÌÅÍ°¡ ÂÉ°³Á® ÀÖ´Â °æ¿ì
+	/// ì œê±°í•  ë°ì´í„°ê°€ ìª¼ê°œì ¸ ìˆëŠ” ê²½ìš°
 	else
 	{
 		size_t size2 = bytes + mBeginIndex - mCapacity ;
 		//////////////////////////////////////////////////////////////////////////
-		// Á¦°ÅÇÒ µ¥ÀÌÅÍ°¡ ÂÉ°³Á® ÀÖ´Ù´Â ÀÌ¾ß±â´Â
-		// mBeginIndex + bytes ÇÏ¸é ¼­Å§·¯ ¿¬»êÃ³·³ ³Ñ¾î°£´Ü ¶æÀÌ¹Ç·Î
-		// ¸ğµâ·¯ È¿°ú¸¦ ÁÖ±â À§ÇØ -mCapacity ÇØÁà¾ß µÊ
+		// ì œê±°í•  ë°ì´í„°ê°€ ìª¼ê°œì ¸ ìˆë‹¤ëŠ” ì´ì•¼ê¸°ëŠ”
+		// mBeginIndex + bytes í•˜ë©´ ì„œí˜ëŸ¬ ì—°ì‚°ì²˜ëŸ¼ ë„˜ì–´ê°„ë‹¨ ëœ»ì´ë¯€ë¡œ
+		// ëª¨ë“ˆëŸ¬ íš¨ê³¼ë¥¼ ì£¼ê¸° ìœ„í•´ -mCapacity í•´ì¤˜ì•¼ ë¨
 		//////////////////////////////////////////////////////////////////////////
 		mBeginIndex = size2 ;
 	}
