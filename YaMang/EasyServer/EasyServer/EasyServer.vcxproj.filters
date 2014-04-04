@@ -70,6 +70,10 @@
     <ClInclude Include="ProducerConsumerQueue.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="EventHandler.h">
+      <Filter>SourceCode</Filter>
+    </ClInclude>
+    <ClInclude Include="LoginEventHandler.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -100,6 +104,9 @@
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="DatabaseJobContext.cpp">
+      <Filter>SourceCode</Filter>
+    </ClCompile>
+    <ClCompile Include="LoginEventHandler.cpp">
       <Filter>SourceCode</Filter>
     </ClCompile>
   </ItemGroup>

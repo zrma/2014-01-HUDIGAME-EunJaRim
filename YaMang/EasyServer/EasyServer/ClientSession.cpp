@@ -4,6 +4,8 @@
 #include "ClientManager.h"
 #include "DatabaseJobContext.h"
 #include "DatabaseJobManager.h"
+#include "EventHandler.h"
+#include "LoginEventHandler.h"
 
 //////////////////////////////////////////////////////////////////////////
 // EasyServer.cpp 에서 클라이언트 매니저에서 CreateClient 한 후에
@@ -201,9 +203,9 @@ void ClientSession::Disconnect()
 
 //////////////////////////////////////////////////////////////////////////
 // 비동기 입력 완료 후 RecvCompletion 콜백 발생하면
-// 받은 데이터 사이즈를 인자로 넘겨서 OnRead 실행
+// 받은 데이터 사이즈를 인자로 넘겨서 DemultiPlex(OnRead) 실행
 //////////////////////////////////////////////////////////////////////////
-void ClientSession::OnRead(size_t len)
+void ClientSession::DemultiPlex(size_t len)
 {
 	// CircularBuffer.cpp 참조
 	mRecvBuffer.Commit(len) ;
@@ -258,22 +260,27 @@ void ClientSession::OnRead(size_t len)
 		//
 		// (Callback에서 짬짬히 계속 OnRead하고, OnRead에서는 패킷이 완성 될 때마다 처리)
 		//////////////////////////////////////////////////////////////////////////
-
+		
+		EventHandler* eh = NULL;
 		/// 패킷 핸들링
 		switch ( header.mType )
 		{
 		case PKT_CS_LOGIN:
 			{
+				eh = new LoginEventHandler();
+
+				
 				LoginRequest inPacket ;
-				mRecvBuffer.Read((char*)&inPacket, header.mSize) ;
+				eh->ReadData( &mRecvBuffer, &inPacket, &header );
+
 				//////////////////////////////////////////////////////////////////////////
 				// CircularBuffer에서 Peek는 읽기만 하는 것
 				// Read는 읽고 나서, 읽은 만큼 제거
 				//////////////////////////////////////////////////////////////////////////
 
 				/// 로그인은 DB 작업을 거쳐야 하기 때문에 DB 작업 요청한다.
-				LoadPlayerDataContext* newDbJob = new LoadPlayerDataContext(mSocket, inPacket.mPlayerId) ;
-				GDatabaseJobManager->PushDatabaseJobRequest(newDbJob) ;
+
+				eh->HandleEvent( &mSocket, &inPacket, &header );
 			
 			}
 			break ;
@@ -281,8 +288,10 @@ void ClientSession::OnRead(size_t len)
 		case PKT_CS_CHAT:
 			{
 				ChatBroadcastRequest inPacket ;
-				mRecvBuffer.Read((char*)&inPacket, header.mSize) ;
 				
+				mRecvBuffer.Read((char*)&inPacket, header.mSize) ;
+				printf_s( "CHAT RECV:%s \n", inPacket.mChat );
+
 				ChatBroadcastResult outPacket ;
 				outPacket.mPlayerId = inPacket.mPlayerId ;
 				strcpy_s(outPacket.mName, mPlayerName) ;
@@ -492,7 +501,7 @@ void CALLBACK RecvCompletion(DWORD dwError, DWORD cbTransferred, LPWSAOVERLAPPED
 	}
 
 	/// 받은 데이터 처리
-	fromClient->OnRead(cbTransferred) ;
+	fromClient->DemultiPlex(cbTransferred) ;
 
 	/// 다시 받기
 	if ( false == fromClient->PostRecv() )

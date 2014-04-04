@@ -35,7 +35,7 @@ public:
 
 
 	
-	void	OnRead(size_t len) ;
+	void	DemultiPlex(size_t len) ;
 	void	OnWriteComplete(size_t len) ;
 
 	bool	OnConnect(SOCKADDR_IN* addr) ;
