@@ -1,6 +1,6 @@
 #pragma once
 #include "ClientSession.h"
-class EventHandler
+__interface EventHandler
 {
 public:
 	virtual void HandleEvent( ClientSession* client, PacketHeader* header, CircularBuffer* buffer, SOCKET* socket ) = 0;
