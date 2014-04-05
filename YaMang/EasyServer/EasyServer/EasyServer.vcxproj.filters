@@ -11,6 +11,9 @@
     <Filter Include="Utils">
       <UniqueIdentifier>{002996bc-5f49-4034-9846-d804baed220a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="EventHandler">
+      <UniqueIdentifier>{1c738d88-5ad9-47e1-8175-d5bef9bd48a2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -70,16 +73,18 @@
     <ClInclude Include="ProducerConsumerQueue.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="EventHandler.h">
-      <Filter>SourceCode</Filter>
-    </ClInclude>
     <ClInclude Include="LoginEventHandler.h">
-      <Filter>SourceCode</Filter>
+      <Filter>EventHandler</Filter>
     </ClInclude>
     <ClInclude Include="HandlerMap.h">
-      <Filter>SourceCode</Filter>
+      <Filter>EventHandler</Filter>
     </ClInclude>
-    <ClInclude Include="ChatEventHandler.h" />
+    <ClInclude Include="EventHandler.h">
+      <Filter>EventHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="ChatEventHandler.h">
+      <Filter>EventHandler</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -112,14 +117,14 @@
     <ClCompile Include="DatabaseJobContext.cpp">
       <Filter>SourceCode</Filter>
     </ClCompile>
-    <ClCompile Include="HandlerMap.cpp">
-      <Filter>SourceCode</Filter>
+    <ClCompile Include="ChatEventHandler.cpp">
+      <Filter>EventHandler</Filter>
     </ClCompile>
     <ClCompile Include="LoginEventHandler.cpp">
-      <Filter>SourceCode</Filter>
+      <Filter>EventHandler</Filter>
     </ClCompile>
-    <ClCompile Include="ChatEventHandler.cpp">
-      <Filter>SourceCode</Filter>
+    <ClCompile Include="HandlerMap.cpp">
+      <Filter>EventHandler</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

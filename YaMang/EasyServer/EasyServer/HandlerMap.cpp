@@ -20,7 +20,6 @@ bool HandlerMap::HandleEvent( short* packetType, ClientSession* client, PacketHe
 {
 	if ( mPacketHandler[*packetType] )
 	{
-		//mPacketHandler[*packetType]( client, header, buffer, socket );
 		mPacketHandler[*packetType]->HandleEvent( client, header, buffer, socket );
 		return true;
 	}
