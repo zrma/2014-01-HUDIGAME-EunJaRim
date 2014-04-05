@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 
 #include "TestHandler.h"
 #include "ClientSession.h"
@@ -26,7 +26,7 @@ void ClientChatPacket( ClientSession* client, PacketHeader* header, CircularBuff
 	strcpy_s( outPacket.mName, client->GetPlayerName() );
 	strcpy_s( outPacket.mChat, inPacket.mChat );
 
-	/// Ã¤ÆÃÀº ¹Ù·Î ¹æ¼Û ÇÏ¸é ³¡
+	/// ì±„íŒ…ì€ ë°”ë¡œ ë°©ì†¡ í•˜ë©´ ë
 	if ( !client->Broadcast( &outPacket ) )
 		return;
 
