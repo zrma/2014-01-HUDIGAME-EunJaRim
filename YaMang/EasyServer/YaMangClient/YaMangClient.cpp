@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <time.h>
 
+#include "Logger.h"
 
 #include "..\..\PacketType.h"
 #include "CircularBuffer.h"
@@ -183,6 +184,9 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 	LoadString(hInstance, IDC_YAMANGCLIENT, szWindowClass, MAX_LOADSTRING);
 	MyRegisterClass(hInstance);
 
+	Logger::GetInstance();
+	Log( "테스트용 출력이므니다. \n" );
+
 	// 응용 프로그램 초기화를 수행합니다.
 	if (!InitInstance (hInstance, nCmdShow))
 	{
@@ -200,6 +204,8 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 			DispatchMessage(&msg);
 		}
 	}
+
+	Logger::Release();
 
 	return (int) msg.wParam;
 }
