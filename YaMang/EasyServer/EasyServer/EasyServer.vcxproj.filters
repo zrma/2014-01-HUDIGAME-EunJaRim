@@ -70,10 +70,16 @@
     <ClInclude Include="ProducerConsumerQueue.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="TestHandler.h">
+    <ClInclude Include="EventHandler.h">
       <Filter>SourceCode</Filter>
     </ClInclude>
-    <ClInclude Include="HandlerMap.h" />
+    <ClInclude Include="LoginEventHandler.h">
+      <Filter>SourceCode</Filter>
+    </ClInclude>
+    <ClInclude Include="HandlerMap.h">
+      <Filter>SourceCode</Filter>
+    </ClInclude>
+    <ClInclude Include="ChatEventHandler.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -106,10 +112,13 @@
     <ClCompile Include="DatabaseJobContext.cpp">
       <Filter>SourceCode</Filter>
     </ClCompile>
-    <ClCompile Include="TestHandler.cpp">
+    <ClCompile Include="HandlerMap.cpp">
       <Filter>SourceCode</Filter>
     </ClCompile>
-    <ClCompile Include="HandlerMap.cpp">
+    <ClCompile Include="LoginEventHandler.cpp">
+      <Filter>SourceCode</Filter>
+    </ClCompile>
+    <ClCompile Include="ChatEventHandler.cpp">
       <Filter>SourceCode</Filter>
     </ClCompile>
   </ItemGroup>

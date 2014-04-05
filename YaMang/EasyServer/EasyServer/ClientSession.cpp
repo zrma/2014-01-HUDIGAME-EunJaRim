@@ -4,7 +4,6 @@
 #include "ClientManager.h"
 #include "DatabaseJobContext.h"
 #include "DatabaseJobManager.h"
-#include "TestHandler.h"
 #include "HandlerMap.h"
 
 //////////////////////////////////////////////////////////////////////////

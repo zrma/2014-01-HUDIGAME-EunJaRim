@@ -26,8 +26,8 @@ SOCKET g_Socket = NULL;
 CircularBuffer g_SendBuffer( BUFSIZE );
 CircularBuffer g_RecvBuffer( BUFSIZE );
 
-char* szServer = "10.73.45.142";
-//  char* szServer = "127.0.0.1";
+//char* szServer = "10.73.45.142";
+  char* szServer = "127.0.0.1";
 int nPort = 9001;
 
 bool g_LoginComplete = false;

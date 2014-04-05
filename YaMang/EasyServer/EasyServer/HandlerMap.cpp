@@ -1,13 +1,14 @@
 #include "stdafx.h"
 #include "HandlerMap.h"
-#include "TestHandler.h"
+#include "LoginEventHandler.h"
+#include "ChatEventHandler.h"
 
 
 HandlerMap::HandlerMap()
 {
 	/// 패킷 핸들링
-	mPacketHandler[PKT_CS_LOGIN] = ClientLoginPacket;
-	mPacketHandler[PKT_CS_CHAT] = ClientChatPacket;
+	mPacketHandler[PKT_CS_LOGIN] = new LoginEventHandler();
+	mPacketHandler[PKT_CS_CHAT] = new ChatEventHandler();
 }
 
 
@@ -19,7 +20,8 @@ bool HandlerMap::HandleEvent( short* packetType, ClientSession* client, PacketHe
 {
 	if ( mPacketHandler[*packetType] )
 	{
-		mPacketHandler[*packetType]( client, header, buffer, socket );
+		//mPacketHandler[*packetType]( client, header, buffer, socket );
+		mPacketHandler[*packetType]->HandleEvent( client, header, buffer, socket );
 		return true;
 	}
 	

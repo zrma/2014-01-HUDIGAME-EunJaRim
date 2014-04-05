@@ -1,11 +1,11 @@
 #pragma once
 #include "EventHandler.h"
 
-class LoginEventHandler: public EventHandler
+class ChatEventHandler: public EventHandler
 {
 public:
-	LoginEventHandler();
-	~LoginEventHandler();
+	ChatEventHandler();
+	~ChatEventHandler();
 
 	void HandleEvent( ClientSession* client, PacketHeader* header, CircularBuffer* buffer, SOCKET* socket );
 };
