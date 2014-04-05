@@ -76,7 +76,7 @@ __declspec(thread) int LThreadType = -1 ;
 //////////////////////////////////////////////////////////////////////////
 
 
-int _tmain(int argc, _TCHAR* argv[])
+int _tmain( int argc, _TCHAR* argv[] )
 {
 
 	// xml 로드 테스트
@@ -105,7 +105,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	//////////////////////////////////////////////////////////////////////////
 
 	/// crash 발생시 dump 남기기 위해서
-	SetUnhandledExceptionFilter(ExceptionFilter) ;
+	SetUnhandledExceptionFilter( ExceptionFilter );
 	//////////////////////////////////////////////////////////////////////////
 	// http://blog.naver.com/goli81?Redirect=Log&logNo=10009869628 참조
 	//
@@ -113,15 +113,15 @@ int _tmain(int argc, _TCHAR* argv[])
 	// Exception.cpp 쪽에서 전역 함수로 선언 되어 있음
 
 	AllocConsole();
-	FILE* pFile; 
-	freopen_s(&pFile, "CONOUT$", "wb", stdout);
+	FILE* pFile;
+	freopen_s( &pFile, "CONOUT$", "wb", stdout );
 
-	LThreadType = THREAD_MAIN ;
+	LThreadType = THREAD_MAIN;
 
 	//////////////////////////////////////////////////////////////////////////
 	/// Manager Init
-	GClientManager = new ClientManager() ;
-	GDatabaseJobManager = new DatabaseJobManager() ;
+	GClientManager = new ClientManager();
+	GDatabaseJobManager = new DatabaseJobManager();
 	//////////////////////////////////////////////////////////////////////////
 	// 각 매니저들은 각 헤더파일들에 extern 으로 선언 되어 있음
 	// 여기서 new 해줌
@@ -129,17 +129,20 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	//////////////////////////////////////////////////////////////////////////
 	/// DB Helper 초기화
-	if ( false == DbHelper::Initialize(DB_CONN_STR) )
-		return -1 ;
+	if ( false == DbHelper::Initialize( DB_CONN_STR ) )
+		return -1;
 	// 초기화에 실패 했다면 서버 종료
 	//////////////////////////////////////////////////////////////////////////
 
 	//////////////////////////////////////////////////////////////////////////
 	/// 윈속 초기화
 	//////////////////////////////////////////////////////////////////////////
-	WSADATA wsa ;
-	if ( WSAStartup(MAKEWORD(2,2), &wsa) != 0 )
-		return -1 ;
+	WSADATA wsa;
+	if ( WSAStartup( MAKEWORD( 2, 2 ), &wsa ) != 0 )
+	{
+		return -1;
+	}
+
 	// 윈도우 소켓 사용시 WSAStartup() 함수를 호출해야 winsock.dll을 이용 가능하다
 	// 사용 시 유의점 : WSAStartup() / WSACleanup() 함수를 짝으로 맞춰 사용
 	// 
@@ -161,7 +164,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	//
 	// 그런데 이런 방식으로 활용하게 되면 위에 활용한 것과 같이 예외 처리 부분을 처리하지 못하게 됨
 	//////////////////////////////////////////////////////////////////////////
-	
+
 	//////////////////////////////////////////////////////////////////////////
 	// WSAStartup() 함수는 ws2_32.dll 안에 있는 함수들을 응용프로그램 영역으로 불러온다.
 	// 
@@ -182,7 +185,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	// WSAStartup() 함수가 반환하는 윈도우 소켓의 세부 정보의 저장에 사용 되는 구조체
 	//////////////////////////////////////////////////////////////////////////
 
-	SOCKET listenSocket = socket(AF_INET, SOCK_STREAM, 0) ;
+	SOCKET listenSocket = socket( AF_INET, SOCK_STREAM, 0 );
 	//////////////////////////////////////////////////////////////////////////
 	// AF_INET : The Internet Protocol version 4 (IPv4) address family.
 	// SOCK_STREAM : TCP
@@ -191,11 +194,13 @@ int _tmain(int argc, _TCHAR* argv[])
 	// LAW SOCKET을 사용할 때 사용한다. 주로 사용 되지 않아 0이나 IPPROTO_TCP / IPPROTO_UPT로 사용 된다.
 	//////////////////////////////////////////////////////////////////////////
 
-	if (listenSocket == INVALID_SOCKET)
-		return -1 ;
+	if ( listenSocket == INVALID_SOCKET )
+	{
+		return -1;
+	}
 
-	int opt = 1 ;
-	setsockopt(listenSocket, SOL_SOCKET, SO_REUSEADDR, (const char*)&opt, sizeof(int) ) ;
+	int opt = 1;
+	setsockopt( listenSocket, SOL_SOCKET, SO_REUSEADDR, (const char*)&opt, sizeof( int ) );
 	//////////////////////////////////////////////////////////////////////////
 	// 소켓의 세부 사항 조절 - getsockopt / setsockopt
 	// http://vinchi.tistory.com/246 참조
@@ -215,17 +220,17 @@ int _tmain(int argc, _TCHAR* argv[])
 	//////////////////////////////////////////////////////////////////////////
 
 	/// bind
-	SOCKADDR_IN serveraddr ;
-	ZeroMemory(&serveraddr, sizeof(serveraddr)) ;
-	
-	serveraddr.sin_family = AF_INET ;
+	SOCKADDR_IN serveraddr;
+	ZeroMemory( &serveraddr, sizeof( serveraddr ) );
+
+	serveraddr.sin_family = AF_INET;
 	// IPv4
 
-	serveraddr.sin_port = htons(LISTEN_PORT) ;
+	serveraddr.sin_port = htons( LISTEN_PORT );
 	// htons		= Hostshort TO uNsigned Short
 	// LISTEN_PORT	= 9001
 
-	serveraddr.sin_addr.s_addr = htonl(INADDR_ANY) ;
+	serveraddr.sin_addr.s_addr = htonl( INADDR_ANY );
 	// INADDR_ANY를 사용하면 0.0.0.0 으로 설정하는 것과 같음
 	//
 	// 클라이언트에서 서버 주소를 어떤 것으로 접속을 시도하든 해당 서버의 지정 된 포트로 연결 시도하는
@@ -268,20 +273,24 @@ int _tmain(int argc, _TCHAR* argv[])
 	// 두 구조체의 크기를 같게 하기 위해 sin_zero를 추가 한 것
 	//////////////////////////////////////////////////////////////////////////
 
-	int ret = bind(listenSocket, (SOCKADDR*)&serveraddr, sizeof(serveraddr)) ;
+	int ret = bind( listenSocket, (SOCKADDR*)&serveraddr, sizeof( serveraddr ) );
 	// socket() 함수로 소켓을 생성 이후에 소켓에 주소 값을 설정하는 함수가 bind()
 
-	if (ret == SOCKET_ERROR)
-		return -1 ;
-	
+	if ( ret == SOCKET_ERROR )
+	{
+		return -1;
+	}
+
 	/// listen
-	ret = listen(listenSocket, SOMAXCONN) ;
+	ret = listen( listenSocket, SOMAXCONN );
 	// SOMAXCONN = BackLog size : 연결 요청 대기 큐의 사이즈
-	if (ret == SOCKET_ERROR)
-		return -1 ;
+	if ( ret == SOCKET_ERROR )
+	{
+		return -1;
+	}
 
 	/// auto-reset event
-	HANDLE hEvent = CreateEvent(NULL, FALSE, FALSE, NULL) ;
+	HANDLE hEvent = CreateEvent( NULL, FALSE, FALSE, NULL );
 	//////////////////////////////////////////////////////////////////////////
 	//	HANDLE CreateEvent( 
 	//		LPSECURITY_ATTRIBUTES lpEventAttributes,	// 일반적으로 NULL, 보안 관련
@@ -298,82 +307,86 @@ int _tmain(int argc, _TCHAR* argv[])
 	// 위의 경우는 자동 리셋으로 설정되어 있음
 	//////////////////////////////////////////////////////////////////////////
 
-	if (hEvent == NULL)
+	if ( hEvent == NULL )
 	{
-		WSACleanup() ;
-		return -1 ;
+		WSACleanup();
+		return -1;
 	}
 
 	/// Client Logic + I/O Thread
-	DWORD dwThreadId ;
-	HANDLE hThread = (HANDLE)_beginthreadex (NULL, 0, ClientHandlingThread, hEvent, 0, (unsigned int*)&dwThreadId) ;
+	DWORD dwThreadId;
+	HANDLE hThread = (HANDLE)_beginthreadex( NULL, 0, ClientHandlingThread, hEvent, 0, (unsigned int*)&dwThreadId );
 	//////////////////////////////////////////////////////////////////////////
 	// 클라이언트 핸들링 스레드 쪽에 이벤트를 전달하기 위해서 hEvent를 전달 인자로 대입
 	//
 	// http://blog.naver.com/hello20?Redirect=Log&logNo=150038699567
 	//////////////////////////////////////////////////////////////////////////
 
-    if (hThread == NULL)
+	if ( hThread == NULL )
 	{
-		CloseHandle( hEvent ) ;
-		WSACleanup() ;
-		return -1 ;
+		CloseHandle( hEvent );
+		WSACleanup();
+		return -1;
 	}
 
 
 	/// DB Thread
-	HANDLE hDbThread = (HANDLE)_beginthreadex (NULL, 0, DatabaseHandlingThread, NULL, 0, (unsigned int*)&dwThreadId) ;
-	if (hDbThread == NULL)
+	HANDLE hDbThread = (HANDLE)_beginthreadex( NULL, 0, DatabaseHandlingThread, NULL, 0, (unsigned int*)&dwThreadId );
+	if ( hDbThread == NULL )
 	{
-		CloseHandle( hThread ) ;
-		CloseHandle( hEvent ) ;
-		WSACleanup() ;
-		return -1 ;
+		CloseHandle( hThread );
+		CloseHandle( hEvent );
+		WSACleanup();
+		return -1;
 	}
 
 	/// accept loop
 	while ( true )
 	{
-		g_AcceptedSocket = accept(listenSocket, NULL, NULL) ;
+		g_AcceptedSocket = accept( listenSocket, NULL, NULL );
 		// accept() = 연결 요청 대기 큐에서 대기 중인 클라이언트의 연결 요청을 수락하는 기능의 함수
 
 		if ( g_AcceptedSocket == INVALID_SOCKET )
 		{
-			printf("accept: invalid socket\n") ;
-			continue ;
+			printf( "accept: invalid socket\n" );
+			continue;
 		}
 
 		/// accept event fire!
 		//////////////////////////////////////////////////////////////////////////
 		// 위에서 생성한 - 스레드 내부에 신호를 전달시키기 위한 hEvent 발생!
 		//////////////////////////////////////////////////////////////////////////
-		if ( !SetEvent(hEvent) )
+		if ( !SetEvent( hEvent ) )
 		{
-			printf("SetEvent error: %d\n", GetLastError()) ;
-			break ;
+			printf( "SetEvent error: %d\n", GetLastError() );
+			break;
 		}
 	}
 
-	CloseHandle( hThread ) ;
-	CloseHandle( hEvent ) ;
-	CloseHandle( hDbThread ) ;
+	CloseHandle( hThread );
+	CloseHandle( hEvent );
+	CloseHandle( hDbThread );
 
 	//////////////////////////////////////////////////////////////////////////
 	// 윈속 종료
-	WSACleanup() ;
+	WSACleanup();
 	// 위에서 언급한 WSAStartup() 함수와 맞춰 사용한 WSACleanup()
 	//////////////////////////////////////////////////////////////////////////
 
-	DbHelper::Finalize() ;
+	DbHelper::Finalize();
 	// sqlite3_close
 
 	if ( GClientManager != nullptr )
-		delete GClientManager ;
+	{
+		delete GClientManager;
+	}
 
 	if ( GDatabaseJobManager != nullptr )
-		delete GDatabaseJobManager ;
+	{
+		delete GDatabaseJobManager;
+	}
 
-	return 0 ;
+	return 0;
 }
 
 unsigned int WINAPI ClientHandlingThread( LPVOID lpParam )
