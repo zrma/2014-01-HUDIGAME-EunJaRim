@@ -5,6 +5,7 @@
 #include "DatabaseJobContext.h"
 #include "DatabaseJobManager.h"
 #include "TestHandler.h"
+#include "HandlerMap.h"
 
 //////////////////////////////////////////////////////////////////////////
 // EasyServer.cpp 에서 클라이언트 매니저에서 CreateClient 한 후에
@@ -55,10 +56,6 @@ bool ClientSession::OnConnect(SOCKADDR_IN* addr)
 	//////////////////////////////////////////////////////////////////////////
 
 	printf("[DEBUG] Client Connected: IP=%s, PORT=%d\n", inet_ntoa(mClientAddr.sin_addr), ntohs(mClientAddr.sin_port)) ;
-	
-	/// 패킷 핸들링
-	mPacketHandler[PKT_CS_LOGIN] = ClientLoginPacket;
-	mPacketHandler[PKT_CS_CHAT] = ClientChatPacket;
 
 	mConnected = true ;
 
@@ -144,7 +141,8 @@ void ClientSession::Disconnect()
 		return ;
 
 	printf("[DEBUG] Client Disconnected: IP=%s, PORT=%d\n", inet_ntoa(mClientAddr.sin_addr), ntohs(mClientAddr.sin_port)) ;
-
+	
+	
 	//////////////////////////////////////////////////////////////////////////
 	// 변경 전
 	// shutdown(mSocket, SD_BOTH) ;
@@ -265,11 +263,7 @@ void ClientSession::OnRead(size_t len)
 		//////////////////////////////////////////////////////////////////////////
 
 		/// 패킷 핸들링
-		if ( mPacketHandler[header.mType] )
-		{
-			mPacketHandler[header.mType]( this, &header, &mRecvBuffer, &mSocket );
-		}
-		else
+		if ( !HandlerMap::GetInstance( )->HandleEvent( &( header.mType ), this, &header, &mRecvBuffer, &mSocket ) )
 		{
 			/// 여기 들어오면 이상한 패킷 보낸거다.
 			Disconnect();

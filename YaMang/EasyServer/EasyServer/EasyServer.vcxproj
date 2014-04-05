@@ -162,6 +162,7 @@
     <ClInclude Include="DbHelper.h" />
     <ClInclude Include="EasyServer.h" />
     <ClInclude Include="Exception.h" />
+    <ClInclude Include="HandlerMap.h" />
     <ClInclude Include="ObjectPool.h" />
     <ClInclude Include="ProducerConsumerQueue.h" />
     <ClInclude Include="SPSCQueue.h" />
@@ -181,6 +182,7 @@
     <ClCompile Include="DbHelper.cpp" />
     <ClCompile Include="EasyServer.cpp" />
     <ClCompile Include="Exception.cpp" />
+    <ClCompile Include="HandlerMap.cpp" />
     <ClCompile Include="sqlite3.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>

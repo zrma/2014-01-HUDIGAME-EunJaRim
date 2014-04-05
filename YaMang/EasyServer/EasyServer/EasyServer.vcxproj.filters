@@ -73,6 +73,7 @@
     <ClInclude Include="TestHandler.h">
       <Filter>SourceCode</Filter>
     </ClInclude>
+    <ClInclude Include="HandlerMap.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -106,6 +107,9 @@
       <Filter>SourceCode</Filter>
     </ClCompile>
     <ClCompile Include="TestHandler.cpp">
+      <Filter>SourceCode</Filter>
+    </ClCompile>
+    <ClCompile Include="HandlerMap.cpp">
       <Filter>SourceCode</Filter>
     </ClCompile>
   </ItemGroup>
