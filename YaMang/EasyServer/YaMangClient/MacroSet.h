@@ -5,6 +5,9 @@
 template <class T>
 class Singleton
 {
+protected:
+	Singleton( void ) {}
+	virtual ~Singleton( void ) {}
 public:
 	static T* GetInstance( void )
 	{
@@ -22,7 +25,8 @@ public:
 private:
 	static T*	m_Instance;
 };
-template <typename T> T* Singleton <T>::m_Instance = nullptr;
+template <typename T>
+T* Singleton<T>::m_Instance = nullptr;
 
 
 template <typename T>
@@ -34,7 +38,6 @@ inline void SafeRelease( T* &p )
 		p = nullptr;
 	}
 }
-
 
 template <typename T>
 inline void SafeDelete( T* &p )
