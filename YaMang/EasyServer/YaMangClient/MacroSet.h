@@ -19,7 +19,7 @@ public:
 	}
 	static void Release( void )
 	{
-		SafeRelease( m_Instance );
+		SafeDelete( m_Instance );
 	}
 
 private:

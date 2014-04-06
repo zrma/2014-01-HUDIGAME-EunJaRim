@@ -89,7 +89,5 @@ public:
 private:
 	MainWindow( const MainWindow & );
 	MainWindow & operator=( const MainWindow & );
-
-	// GameManager & m_GameManager;
 };
 
