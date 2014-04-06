@@ -148,17 +148,80 @@ void ViewSetting()
 //light 세팅에 대해서는 향후 추가
 //light는 여러개를 미리 가지고 있게 할 것인가?
 //아니면 사용자가 최소로 추가하고 해당 light를 공용 자원으로 할 것인가?
+void Lighting(int lightNum)
+{
+	//재질 속성 부여
+	D3DMATERIAL9 mtrl;
+	ZeroMemory( &mtrl, sizeof( D3DMATERIAL9 ) );
+	mtrl.Diffuse.r = mtrl.Ambient.r = 1.0f;
+	mtrl.Diffuse.g = mtrl.Ambient.g = 1.0f;
+	mtrl.Diffuse.b = mtrl.Ambient.b = 1.0f;
+	mtrl.Diffuse.a = mtrl.Ambient.a = 1.0f;
+	D3dDevice->SetMaterial( &mtrl );
+
+	D3DXVECTOR3 vecDir0;
+	D3DLIGHT9 light0;
+	ZeroMemory( &light0, sizeof( D3DLIGHT9 ) );
+	light0.Type = D3DLIGHT_DIRECTIONAL;
+	light0.Diffuse.r = 1.f;
+	light0.Diffuse.g = 1.f;
+	light0.Diffuse.b = 1.f;
+	vecDir0 = D3DXVECTOR3( -1.f, 1.f, 0.f );
+	D3DXVec3Normalize( (D3DXVECTOR3*) &light0.Direction, &vecDir0 );
+	light0.Range = 1000.f;
+
+
+	D3DXVECTOR3 vecDir1;
+	D3DLIGHT9 light1;
+	ZeroMemory( &light1, sizeof( D3DLIGHT9 ) );
+	light1.Type = D3DLIGHT_DIRECTIONAL;
+	light1.Diffuse.r = 1.f;
+	light1.Diffuse.g = 1.f;
+	light1.Diffuse.b = 1.f;
+	vecDir1 = D3DXVECTOR3( 1.f, 1.f, 0.f );
+	D3DXVec3Normalize( (D3DXVECTOR3*) &light1.Direction, &vecDir1 );
+	light1.Range = 1000.f;
+
+	D3dDevice->SetLight( 0, &light0 );
+	D3dDevice->SetLight( 1, &light1 );
+
+	D3dDevice->SetRenderState( D3DRS_LIGHTING, TRUE );
+	D3dDevice->SetRenderState( D3DRS_AMBIENT, 0x00808080 );
+
+	switch ( lightNum )
+	{
+		case 1:
+			D3dDevice->LightEnable( 0, TRUE );
+			D3dDevice->LightEnable( 1, FALSE );
+			break;
+		case 2:
+			D3dDevice->LightEnable( 0, FALSE );
+			D3dDevice->LightEnable( 1, TRUE );
+			break;
+		default:
+			break;
+	}
+}
+
 
 //////////////////////////////////////////////////////////////////////////
-//render에 인자를 넣으면 전부 실행되도록 함
+//render를 pre - main - post renderring으로 변경
+//pre에서는 matrix, view, light에 대한 setting 진행
+//main에서는 mesh object에 대한 직접 rendering 진행
+//post에서는 pre에서 설정한 setting 초기화
 //////////////////////////////////////////////////////////////////////////
 YAMANGDXDLL_API void PreRendering( float moveX, float moveY, float moveZ )
 {
+	//렌더 방어코드
+	//pre rendering 단계에서 진행되지 않으면 향후 render 모두 실패
 	if ( SUCCEEDED( D3dDevice->BeginScene() ) )
 	{
 		SetupTranslateMatrices( moveX, moveY, moveZ );
 		ViewSetting();
 		//lightsetting
+		//일단 1로 진행, 향후 라이트 개수 등 확정되면 인자 받아 설정
+		int lightNum = 1;
+		Lighting( lightNum );
 
 		D3dDevice->SetTextureStageState( 0, D3DTSS_COLOROP, D3DTOP_MODULATE );
 		D3dDevice->SetTextureStageState( 0, D3DTSS_COLORARG1, D3DTA_TEXTURE );
