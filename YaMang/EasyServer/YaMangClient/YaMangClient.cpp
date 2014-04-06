@@ -4,8 +4,6 @@
 #include "stdafx.h"
 #include "YaMangClient.h"
 
-#include <winsock2.h>
-#include <assert.h>
 #include <stdio.h>
 #include <time.h>
 
@@ -35,6 +33,8 @@ bool g_LoginComplete = false;
 /// 서버에서 받아온 나의 ID 
 int g_MyClientId = -1;
 
+//////////////////////////////////////////////////////////////////////////
+// 네트워크 매니저한테 가야 됨
 bool Initialize()
 {
 	WSADATA WsaDat;
@@ -50,6 +50,8 @@ bool Initialize()
 	return true;
 }
 
+//////////////////////////////////////////////////////////////////////////
+// 네트워크 매니저한테 가야 됨
 bool Connect( const char* serverAddr, int port )
 {
 	// Resolve IP address for hostname
@@ -75,6 +77,8 @@ bool Connect( const char* serverAddr, int port )
 }
 
 /// 패킷처리 
+//////////////////////////////////////////////////////////////////////////
+// 네트워크 매니저한테 가야 됨
 void ProcessPacket( HWND hWnd )
 {
 	while ( true )

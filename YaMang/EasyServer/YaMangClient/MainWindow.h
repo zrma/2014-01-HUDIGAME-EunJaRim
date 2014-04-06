@@ -1,8 +1,10 @@
-#pragma once
+﻿#pragma once
 
 #include "MacroSet.h"
 
 static const WCHAR WINDOW_NAME[] = L"YaMang";
+
+class GameManager;
 
 template <class DERIVED_TYPE>
 class BaseWindow: public Singleton<DERIVED_TYPE>
@@ -75,7 +77,7 @@ protected:
 	HWND m_hwnd;
 };
 
-class MainWindow : public BaseWindow<MainWindow>
+class MainWindow: public BaseWindow<MainWindow>
 {
 public:
 	MainWindow();
@@ -89,5 +91,7 @@ public:
 private:
 	MainWindow( const MainWindow & );
 	MainWindow & operator=( const MainWindow & );
+
+	GameManager* m_GameManager;
 };
 

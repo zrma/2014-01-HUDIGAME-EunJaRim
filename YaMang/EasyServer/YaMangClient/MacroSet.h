@@ -17,6 +17,7 @@ public:
 		}
 		return m_Instance;
 	}
+	
 	static void Release( void )
 	{
 		SafeDelete( m_Instance );

@@ -1,8 +1,11 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "MainWindow.h"
+#include "GameManager.h"
 
+const int WM_SOCKET = 104;
 
 MainWindow::MainWindow()
+: m_GameManager(GameManager::GetInstance())
 {
 }
 
@@ -13,11 +16,33 @@ MainWindow::~MainWindow()
 
 LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 {
+	int wmId, wmEvent;
+
 	switch ( uMsg )
 	{
+		case WM_CREATE:
+		{
+			// 소켓 초기화가 들어가야 됩니다.
+
+		}
+			return 0;
+
+		case WM_TIMER:
+		{
+			// 타이머 이벤트가 발생하면 이곳에서 핸들링 해 봅니다.
+		}
+			return 0;
+
+		case WM_SOCKET:
+		{
+			// 네트워크 매니저(싱글톤 객체)를 활용하여 패킷을 핸들링 해 줍니다.
+		}
+			return 0;
 		case WM_DESTROY:
-			// m_GameManager.Release();
+		{
+			m_GameManager->Release();
 			PostQuitMessage( 0 );
+		}
 			return 0;
 
 		case WM_ERASEBKGND:
@@ -26,4 +51,30 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 		default:
 			return DefWindowProc( m_hwnd, uMsg, wParam, lParam );
 	}
+
+	return 0;
+}
+
+int MainWindow::RunGame()
+{
+	m_GameManager->Init();
+
+	MSG msg = {0,};
+
+	while ( msg.message != WM_QUIT )
+	{
+		if ( PeekMessage( &msg, NULL, 0, 0, PM_REMOVE ) )
+		{
+			TranslateMessage( &msg );
+			DispatchMessage( &msg );
+		}
+
+		if ( m_GameManager->Process() == false )
+		{
+			m_GameManager->Destory();
+			PostQuitMessage( 0 );
+		}
+	}
+
+	return (int)msg.wParam;
 }
