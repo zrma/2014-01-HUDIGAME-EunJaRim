@@ -30,7 +30,11 @@ struct MESHOBJECT
 };
 
 extern "C"{
+	//처음과 마지막에만 실행하는 함수들
 	YAMANGDXDLL_API HRESULT InitD3D( HWND hWnd );
+	YAMANGDXDLL_API void D3DCleanUp( );
+
+	//파일 이름 넣어 mesh object 받아오기
 	YAMANGDXDLL_API HRESULT InitGeometry( HWND hWnd, LPCTSTR fileName, MESHOBJECT* inputVal );
 	
 	//x,y,z축 이동이 없으면 0을 넣으면 됩니다.
@@ -39,9 +43,6 @@ extern "C"{
 	//각 object 해제시 사용
 	YAMANGDXDLL_API void MeshObjectCleanUp( MESHOBJECT* inputVal );
 
-	//최종 1회 실행
-	YAMANGDXDLL_API void D3DCleanUp();
-	
 	//내부에서 처리하도록 변경
 	//YAMANGDXDLL_API void SetupTranslateMatrices(float moveX, float moveY, float moveZ);
 	//YAMANGDXDLL_API void ViewSetting();
