@@ -12,8 +12,6 @@
 LPDIRECT3D9 D3D = nullptr;
 LPDIRECT3DDEVICE9 D3dDevice = nullptr;
 
-//yaMangDxDll 내부 사용에서 각 객체가 들고 있어야 된다 판단되어 삭제
-//DWORD g_NumMaterials = 0L;
 
 //////////////////////////////////////////////////////////////////////////
 //input args: 윈도우 핸들
@@ -154,9 +152,9 @@ void ViewSetting()
 //////////////////////////////////////////////////////////////////////////
 //render에 인자를 넣으면 전부 실행되도록 함
 //////////////////////////////////////////////////////////////////////////
-YAMANGDXDLL_API void Render( MESHOBJECT* inputVal, float moveX, float moveY, float moveZ )
+YAMANGDXDLL_API void PreRendering( float moveX, float moveY, float moveZ )
 {
-	if (SUCCEEDED(D3dDevice->BeginScene()))
+	if ( SUCCEEDED( D3dDevice->BeginScene() ) )
 	{
 		SetupTranslateMatrices( moveX, moveY, moveZ );
 		ViewSetting();
@@ -166,20 +164,27 @@ YAMANGDXDLL_API void Render( MESHOBJECT* inputVal, float moveX, float moveY, flo
 		D3dDevice->SetTextureStageState( 0, D3DTSS_COLORARG1, D3DTA_TEXTURE );
 		D3dDevice->SetTextureStageState( 0, D3DTSS_COLORARG2, D3DTA_DIFFUSE );
 		D3dDevice->SetTextureStageState( 0, D3DTSS_ALPHAOP, D3DTOP_DISABLE );
-
-		for ( DWORD i = 0; i < inputVal->NumMaterials; ++i )
-		{
-			D3dDevice->SetMaterial( &inputVal->MeshMarterials[i] );
-			D3dDevice->SetTexture( 0, inputVal->MeshTexture[i] );
-
-			(inputVal->importedMesh)->DrawSubset( i );
-		}
-
-		D3dDevice->EndScene();
 	}
+}
 
+YAMANGDXDLL_API void Rendering( MESHOBJECT* inputVal )
+{
+	for ( DWORD i = 0; i < inputVal->NumMaterials; ++i )
+	{
+		D3dDevice->SetMaterial( &inputVal->MeshMarterials[i] );
+		D3dDevice->SetTexture( 0, inputVal->MeshTexture[i] );
+
+		( inputVal->importedMesh )->DrawSubset( i );
+	}
+}
+
+YAMANGDXDLL_API void PostRendering()
+{
+	D3dDevice->EndScene();
 	D3dDevice->Present( NULL, NULL, NULL, NULL );
 }
+		
+
 
 YAMANGDXDLL_API void MeshObjectCleanUp( MESHOBJECT* inputVal )
 {

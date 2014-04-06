@@ -12,10 +12,7 @@
 
 #include "MeshObject.h"
 
-//////////////////////////////////////////////////////////////////////////
-// MESH OBJECT struct
-// 함수를 부를 경우 해당 struct를 반환해 내부를 사용할 수 있도록 함
-//////////////////////////////////////////////////////////////////////////
+
 
 
 extern "C"{
@@ -26,8 +23,15 @@ extern "C"{
 	//파일 이름 넣어 mesh object 받아오기
 	YAMANGDXDLL_API HRESULT InitGeometry( HWND hWnd, LPCTSTR fileName, MESHOBJECT* inputVal );
 	
+	//render 사전 준비 beginScene
 	//x,y,z축 이동이 없으면 0을 넣으면 됩니다.
-	YAMANGDXDLL_API void Render( MESHOBJECT* inputVal, float moveX, float moveY, float moveZ );
+	YAMANGDXDLL_API void PreRendering( float moveX, float moveY, float moveZ );
+
+	//Main rendering MeshObject를 넣어 render 진행
+	YAMANGDXDLL_API void Rendering( MESHOBJECT* inputVal );
+
+	//rendering 후 디바이스 endScene
+	YAMANGDXDLL_API void PostRendering();
 
 	//각 object 해제시 사용
 	YAMANGDXDLL_API void MeshObjectCleanUp( MESHOBJECT* inputVal );
