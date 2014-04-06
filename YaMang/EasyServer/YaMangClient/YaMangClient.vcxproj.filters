@@ -5,18 +5,26 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="MainLoop">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
     <Filter Include="Utils">
       <UniqueIdentifier>{8a0bea49-18dd-414c-bad9-f6b13922cba9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainLoop">
+      <UniqueIdentifier>{c267d2b6-392d-41ef-afcf-e25e5bbc5347}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CircularBuffer.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Logger.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="YaMangClient.h">
+      <Filter>MainLoop</Filter>
+    </ClInclude>
     <ClInclude Include="GameManager.h">
       <Filter>MainLoop</Filter>
     </ClInclude>
@@ -24,6 +32,9 @@
       <Filter>MainLoop</Filter>
     </ClInclude>
     <ClInclude Include="MainWindow.h">
+      <Filter>MainLoop</Filter>
+    </ClInclude>
+    <ClInclude Include="NetworkManager.h">
       <Filter>MainLoop</Filter>
     </ClInclude>
     <ClInclude Include="Resource.h">
@@ -35,22 +46,13 @@
     <ClInclude Include="targetver.h">
       <Filter>MainLoop</Filter>
     </ClInclude>
-    <ClInclude Include="YaMangClient.h">
-      <Filter>MainLoop</Filter>
-    </ClInclude>
-    <ClInclude Include="CircularBuffer.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Logger.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>MainLoop</Filter>
+    <ClCompile Include="CircularBuffer.cpp">
+      <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="YaMangClient.cpp">
-      <Filter>MainLoop</Filter>
+    <ClCompile Include="Logger.cpp">
+      <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="GameManager.cpp">
       <Filter>MainLoop</Filter>
@@ -58,11 +60,14 @@
     <ClCompile Include="MainWindow.cpp">
       <Filter>MainLoop</Filter>
     </ClCompile>
-    <ClCompile Include="CircularBuffer.cpp">
-      <Filter>Utils</Filter>
+    <ClCompile Include="NetworkManager.cpp">
+      <Filter>MainLoop</Filter>
     </ClCompile>
-    <ClCompile Include="Logger.cpp">
-      <Filter>Utils</Filter>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>MainLoop</Filter>
+    </ClCompile>
+    <ClCompile Include="YaMangClient.cpp">
+      <Filter>MainLoop</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

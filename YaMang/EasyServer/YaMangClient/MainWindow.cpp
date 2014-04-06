@@ -22,7 +22,7 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 	{
 		case WM_CREATE:
 		{
-			// 소켓 초기화가 들어가야 됩니다.
+			// 요거 자원 초기화로 따로 뽑아내야 할 지 고민
 
 		}
 			return 0;
@@ -71,7 +71,7 @@ int MainWindow::RunGame()
 
 		if ( m_GameManager->Process() == false )
 		{
-			m_GameManager->Destory();
+			m_GameManager->Destroy();
 			PostQuitMessage( 0 );
 		}
 	}

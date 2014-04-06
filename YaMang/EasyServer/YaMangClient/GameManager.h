@@ -10,7 +10,7 @@ public:
 
 	bool Init();
 	bool Process();
-	void Destory();
+	void Destroy();
 
 private:
 	GameManager( const GameManager & );

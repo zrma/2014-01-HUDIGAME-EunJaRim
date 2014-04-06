@@ -299,6 +299,8 @@ LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam 
 						  10, 10, 175, 23, hWnd, (HMENU)IDC_SEND_BUTTON, GetModuleHandle( NULL ), NULL );
 
 			// 소켓 관련 초기화 작업
+			//////////////////////////////////////////////////////////////////////////
+			// 네트워크 매니저한테 가야 됨
 			if ( false == Initialize() )
 			{
 				SendMessage( hWnd, WM_DESTROY, NULL, NULL );
