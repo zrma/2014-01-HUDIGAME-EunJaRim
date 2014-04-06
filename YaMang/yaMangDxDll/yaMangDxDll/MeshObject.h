@@ -1,12 +1,12 @@
-#include <d3dx9.h>
+ï»¿#include <d3dx9.h>
 
 //////////////////////////////////////////////////////////////////////////
 // MESH OBJECT struct
-// ÇÔ¼ö¸¦ ºÎ¸¦ °æ¿ì ÇØ´ç struct¸¦ ¹ÝÈ¯ÇØ ³»ºÎ¸¦ »ç¿ëÇÒ ¼ö ÀÖµµ·Ï ÇÔ
+// í•¨ìˆ˜ë¥¼ ë¶€ë¥¼ ê²½ìš° í•´ë‹¹ structë¥¼ ë°˜í™˜í•´ ë‚´ë¶€ë¥¼ ì‚¬ìš©í•  ìˆ˜ ìžˆë„ë¡ í•¨
 //////////////////////////////////////////////////////////////////////////
 struct MESHOBJECT
 {
-	//vertexbuffer¸¦ Á÷Á¢ ¸¸µé¾î¼­ »ç¿ëÇÏ´Â °æ¿ì´Â ¾øÀ» °ÍÀÌ¹Ç·Î »èÁ¦
+	//vertexbufferë¥¼ ì§ì ‘ ë§Œë“¤ì–´ì„œ ì‚¬ìš©í•˜ëŠ” ê²½ìš°ëŠ” ì—†ì„ ê²ƒì´ë¯€ë¡œ ì‚­ì œ
 	//LPDIRECT3DVERTEXBUFFER9 VertexBuffer = nullptr;
 
 	LPD3DXMESH importedMesh = nullptr;

@@ -1,4 +1,4 @@
-// yaMangDxDll.cpp : DLL ÀÀ¿ë ÇÁ·Î±×·¥À» À§ÇØ ³»º¸³½ ÇÔ¼ö¸¦ Á¤ÀÇÇÕ´Ï´Ù.
+ï»¿// yaMangDxDll.cpp : DLL ì‘ìš© í”„ë¡œê·¸ëž¨ì„ ìœ„í•´ ë‚´ë³´ë‚¸ í•¨ìˆ˜ë¥¼ ì •ì˜í•©ë‹ˆë‹¤.
 //
 
 #include "stdafx.h"
@@ -6,24 +6,24 @@
 
 
 //////////////////////////////////////////////////////////////////////////
-//Global val ¼±¾ð
+//Global val ì„ ì–¸
 //////////////////////////////////////////////////////////////////////////
-//ºÎ¸ð Process °ø¿ë ÀÚ¿ø
+//ë¶€ëª¨ Process ê³µìš© ìžì›
 LPDIRECT3D9 D3D = nullptr;
 LPDIRECT3DDEVICE9 D3dDevice = nullptr;
 
 
 //////////////////////////////////////////////////////////////////////////
-//input args: À©µµ¿ì ÇÚµé
-//ÇâÈÄ °ø¿ëÀ¸·Î »ç¿ëÇÒ D3D, D3DDevice¿¡ ´ëÇØ ÃÊ±âÈ­ ÁøÇà
-//ÇÁ·Î±×·¥¿¡¼­ 1È¸¸¸ ½ÇÇà ÈÄ Process Á¾·á±îÁö »ç¿ë
-//Âü°íurl: http://www.delmadang.com/community/bbs_view.asp?bbsNo=17&indx=426040 
+//input args: ìœˆë„ìš° í•¸ë“¤
+//í–¥í›„ ê³µìš©ìœ¼ë¡œ ì‚¬ìš©í•  D3D, D3DDeviceì— ëŒ€í•´ ì´ˆê¸°í™” ì§„í–‰
+//í”„ë¡œê·¸ëž¨ì—ì„œ 1íšŒë§Œ ì‹¤í–‰ í›„ Process ì¢…ë£Œê¹Œì§€ ì‚¬ìš©
+//ì°¸ê³ url: http://www.delmadang.com/community/bbs_view.asp?bbsNo=17&indx=426040 
 //////////////////////////////////////////////////////////////////////////
 YAMANGDXDLL_API HRESULT InitD3D( HWND hWnd )
 {
 	if ( nullptr == ( D3D = Direct3DCreate9( D3D_SDK_VERSION ) ) )
 	{
-		// ¿À·ù
+		// ì˜¤ë¥˜
 		MessageBox( NULL, L"Could not Create D3D", L"Meshes.exe", MB_OK );
 		return E_FAIL;
 	}
@@ -60,7 +60,7 @@ YAMANGDXDLL_API HRESULT InitGeometry( HWND hWnd, LPCTSTR fileName, MESHOBJECT* i
 	}
 
 
-	//importÇÑ mesh¿¡ normal °ªÀÌ ¾ø´Â °æ¿ì normal °è»ê
+	//importí•œ meshì— normal ê°’ì´ ì—†ëŠ” ê²½ìš° normal ê³„ì‚°
 	if ( !( ( inputVal->importedMesh )->GetFVF()&D3DFVF_NORMAL ) )
 	{
 		ID3DXMesh* pTempMesh = 0;
@@ -121,16 +121,16 @@ void SetupTranslateMatrices( float moveX, float moveY, float moveZ )
 	D3DXMatrixIdentity( &matWorld );
 	D3dDevice->SetTransform( D3DTS_WORLD, &matWorld );
 
-	//x, y, zÃà ÀÔ·Â °ª¿¡ ´ëÇØ ÀÌµ¿ Ã³¸®
+	//x, y, zì¶• ìž…ë ¥ ê°’ì— ëŒ€í•´ ì´ë™ ì²˜ë¦¬
 	D3DXMATRIXA16 thisMatrix;
 	D3DXMatrixTranslation( &thisMatrix, moveX, moveY, moveZ );
 	D3dDevice->MultiplyTransform( D3DTS_WORLD, &thisMatrix );
 
-	//ÇâÈÄ Ãß°¡ ¸ÅÆ®¸¯½º Ã³¸® ÇÊ¿ä ³»¿ë¿¡ ´ëÇØ Ãß°¡ ¿¹Á¤
+	//í–¥í›„ ì¶”ê°€ ë§¤íŠ¸ë¦­ìŠ¤ ì²˜ë¦¬ í•„ìš” ë‚´ìš©ì— ëŒ€í•´ ì¶”ê°€ ì˜ˆì •
 }
 
-//Ä«¸Þ¶ó ¼¼ÆÃÀº ÇâÈÄ¿¡ ÁøÇàÇÏµµ·Ï ÇÔ
-//default·Î ÀÏ´Ü ÀÌ·¸°Ô µÒ
+//ì¹´ë©”ë¼ ì„¸íŒ…ì€ í–¥í›„ì— ì§„í–‰í•˜ë„ë¡ í•¨
+//defaultë¡œ ì¼ë‹¨ ì´ë ‡ê²Œ ë‘ 
 void ViewSetting()
 {
 	D3DXVECTOR3 vEyePt( 0.f, 3.f, -5.f );
@@ -145,12 +145,12 @@ void ViewSetting()
 	D3dDevice->SetTransform( D3DTS_PROJECTION, &matProj );
 }
 
-//light ¼¼ÆÃ¿¡ ´ëÇØ¼­´Â ÇâÈÄ Ãß°¡
-//light´Â ¿©·¯°³¸¦ ¹Ì¸® °¡Áö°í ÀÖ°Ô ÇÒ °ÍÀÎ°¡?
-//¾Æ´Ï¸é »ç¿ëÀÚ°¡ ÃÖ¼Ò·Î Ãß°¡ÇÏ°í ÇØ´ç light¸¦ °ø¿ë ÀÚ¿øÀ¸·Î ÇÒ °ÍÀÎ°¡?
+//light ì„¸íŒ…ì— ëŒ€í•´ì„œëŠ” í–¥í›„ ì¶”ê°€
+//lightëŠ” ì—¬ëŸ¬ê°œë¥¼ ë¯¸ë¦¬ ê°€ì§€ê³  ìžˆê²Œ í•  ê²ƒì¸ê°€?
+//ì•„ë‹ˆë©´ ì‚¬ìš©ìžê°€ ìµœì†Œë¡œ ì¶”ê°€í•˜ê³  í•´ë‹¹ lightë¥¼ ê³µìš© ìžì›ìœ¼ë¡œ í•  ê²ƒì¸ê°€?
 
 //////////////////////////////////////////////////////////////////////////
-//render¿¡ ÀÎÀÚ¸¦ ³ÖÀ¸¸é ÀüºÎ ½ÇÇàµÇµµ·Ï ÇÔ
+//renderì— ì¸ìžë¥¼ ë„£ìœ¼ë©´ ì „ë¶€ ì‹¤í–‰ë˜ë„ë¡ í•¨
 //////////////////////////////////////////////////////////////////////////
 YAMANGDXDLL_API void PreRendering( float moveX, float moveY, float moveZ )
 {
@@ -226,5 +226,5 @@ YAMANGDXDLL_API void D3DCleanUp()
 
 
 
-// ³»º¸³½ º¯¼öÀÇ ¿¹Á¦ÀÔ´Ï´Ù.
+// ë‚´ë³´ë‚¸ ë³€ìˆ˜ì˜ ì˜ˆì œìž…ë‹ˆë‹¤.
 // YAMANGDXDLL_API int nyaMangDxDll=0;
