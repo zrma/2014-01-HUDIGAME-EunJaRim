@@ -85,6 +85,9 @@
     <ClInclude Include="ChatEventHandler.h">
       <Filter>EventHandler</Filter>
     </ClInclude>
+    <ClInclude Include="TestEventHandler.h">
+      <Filter>EventHandler</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -124,6 +127,9 @@
       <Filter>EventHandler</Filter>
     </ClCompile>
     <ClCompile Include="HandlerMap.cpp">
+      <Filter>EventHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="TestEventHandler.cpp">
       <Filter>EventHandler</Filter>
     </ClCompile>
   </ItemGroup>

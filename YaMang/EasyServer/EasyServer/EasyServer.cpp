@@ -130,8 +130,11 @@ int _tmain( int argc, _TCHAR* argv[] )
 	//////////////////////////////////////////////////////////////////////////
 	/// DB Helper 초기화
 	if ( false == DbHelper::Initialize( DB_CONN_STR ) )
+	{
 		return -1;
+	}
 	// 초기화에 실패 했다면 서버 종료
+
 	//////////////////////////////////////////////////////////////////////////
 
 	//////////////////////////////////////////////////////////////////////////
@@ -391,15 +394,15 @@ int _tmain( int argc, _TCHAR* argv[] )
 
 unsigned int WINAPI ClientHandlingThread( LPVOID lpParam )
 {
-	LThreadType = THREAD_CLIENT ;
+	LThreadType = THREAD_CLIENT;
 	// TLS(Thread Local Storage)
 	// 이 스레드는 클라이언트 핸들링 스레드
 
-	HANDLE hEvent = (HANDLE)lpParam ;
+	HANDLE hEvent = (HANDLE)lpParam;
 	// 메인스레드에서 생성한 이벤트를 매개인자로 받아옴
 
 	/// Timer
-	HANDLE hTimer = CreateWaitableTimer(NULL, FALSE, NULL) ;
+	HANDLE hTimer = CreateWaitableTimer( NULL, FALSE, NULL );
 	//////////////////////////////////////////////////////////////////////////
 	//
 	//	HANDLE WINAPI CreateWaitableTimer(
@@ -417,18 +420,24 @@ unsigned int WINAPI ClientHandlingThread( LPVOID lpParam )
 	// http://blog.naver.com/kjyong86/140151818181 참조
 	//////////////////////////////////////////////////////////////////////////
 
-	if (hTimer == NULL)
-		return -1 ;
-	
-	LARGE_INTEGER liDueTime ;
-	liDueTime.QuadPart = -10000000 ; // 1초 후부터 동작
+	if ( hTimer == NULL )
+	{
+		return -1;
+	}
+		
+
+	LARGE_INTEGER liDueTime;
+	liDueTime.QuadPart = -10000000; // 1초 후부터 동작
 	//////////////////////////////////////////////////////////////////////////
 	// SetWaitabletimer 시간 단위 = 100 나노초
 	// 1000,000,000나노초 = 1초
 	//////////////////////////////////////////////////////////////////////////
 
-	if ( !SetWaitableTimer(hTimer, &liDueTime, 10, TimerProc, NULL, TRUE) )
-		return -1 ;
+	if ( !SetWaitableTimer( hTimer, &liDueTime, 10, TimerProc, NULL, TRUE ) )
+	{
+		return -1;
+	}
+
 	//////////////////////////////////////////////////////////////////////////
 	// 0.01초 주기로 TimerProc 함수 실행 하도록 콜백 설정
 	// 
@@ -438,62 +447,64 @@ unsigned int WINAPI ClientHandlingThread( LPVOID lpParam )
 	while ( true )
 	{
 		/// accept or IO/Timer completion 대기
-		DWORD result = WaitForSingleObjectEx(hEvent, INFINITE, TRUE) ;
+		DWORD result = WaitForSingleObjectEx( hEvent, INFINITE, TRUE );
 		// 이벤트 신호 들어올 때가지 무한 대기
 
 		/// client connected
 		if ( result == WAIT_OBJECT_0 )
 		{
-	
 			/// 소켓 정보 구조체 할당과 초기화
-			ClientSession* client = GClientManager->CreateClient(g_AcceptedSocket) ;
+			ClientSession* client = GClientManager->CreateClient( g_AcceptedSocket );
 			//////////////////////////////////////////////////////////////////////////
 			// 클라이언트 매니저에 매개인자로 접속 대기 큐에서 accept 된 소켓 정보를 넘겨 CreateClient
 			// 클라 생성
 			//
 			// ClientManager.cpp 참조
-			
-			SOCKADDR_IN clientaddr ;
-			int addrlen = sizeof(clientaddr) ;
-			getpeername(g_AcceptedSocket, (SOCKADDR*)&clientaddr, &addrlen) ;
+
+			SOCKADDR_IN clientaddr;
+			int addrlen = sizeof( clientaddr );
+			getpeername( g_AcceptedSocket, (SOCKADDR*)&clientaddr, &addrlen );
 			// 소켓으로부터 클라이언트 네임(sockaddr 주소값)을 얻어옴
 
 			// 클라 접속 처리
-			if ( false == client->OnConnect(&clientaddr) )
+			if ( false == client->OnConnect( &clientaddr ) )
 			{
-				client->Disconnect() ;
+				client->Disconnect();
 			}
 			// ClientSession.cpp 참조
-		
-			continue ; // 다시 대기로
+
+			continue; // 다시 대기로
 		}
 
 		// APC에 있던 completion이 아니라면 에러다
 		if ( result != WAIT_IO_COMPLETION )
-			return -1 ;
+		{
+			return -1;
+		}
+
 		//////////////////////////////////////////////////////////////////////////
 		// 이벤트 신호를 받아서 WaitForSingleObjectEx 하단으로 진입했는데
 		// result 반환 값이 WAIT_IO_COMPLETION 가 아니라면 에러였음
 		//////////////////////////////////////////////////////////////////////////
 	}
 
-	CloseHandle( hTimer ) ;
+	CloseHandle( hTimer );
 	return 0;
-} 
+}
 
 unsigned int WINAPI DatabaseHandlingThread( LPVOID lpParam )
 {
-	LThreadType = THREAD_DATABASE ;
+	LThreadType = THREAD_DATABASE;
 
-	GDatabaseJobManager->ExecuteDatabaseJobs() ;
+	GDatabaseJobManager->ExecuteDatabaseJobs();
 
-	return 0 ;
+	return 0;
 }
 
-void CALLBACK TimerProc(LPVOID lpArg, DWORD dwTimerLowValue, DWORD dwTimerHighValue)
+void CALLBACK TimerProc( LPVOID lpArg, DWORD dwTimerLowValue, DWORD dwTimerHighValue )
 {
-	assert( LThreadType == THREAD_CLIENT ) ;
+	assert( LThreadType == THREAD_CLIENT );
 
-	GClientManager->OnPeriodWork() ;
+	GClientManager->OnPeriodWork();
 	// 클라이언트 쪽은 0.01초 단위로 콜백 함수 호출하면서 주기적으로 해야 할 일 처리
 }
