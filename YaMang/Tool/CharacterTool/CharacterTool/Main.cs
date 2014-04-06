@@ -50,7 +50,9 @@ namespace CharacterTool
             
             string filename = "tiger.x";
             YamangDll.InitGeometry(this.Window.Handle, filename, ref infoPtr );
-            YamangDll.Render(ref infoPtr, 0, 0, 0);
+            YamangDll.PreRendering(0, 0, 0);
+            YamangDll.Rendering(ref infoPtr);
+            YamangDll.PostRendering();
         }
     }
 }

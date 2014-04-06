@@ -24,7 +24,13 @@ namespace CharacterTool
         public static extern Int32 InitGeometry( IntPtr hWnd, [MarshalAs(UnmanagedType.LPWStr)] String fileName, ref IntPtr inputVal);
 
         [DllImport("yaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void Render( ref IntPtr inputVal, float moveX, float moveY, float moveZ);
+        public static extern void PreRendering(float x, float y, float z);
+
+        [DllImport("yaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void Rendering(ref IntPtr inputVal);
+
+        [DllImport("yaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void PostRendering();
 
         [DllImport("yaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void MeshObjectCleanUp( IntPtr inputVal );
