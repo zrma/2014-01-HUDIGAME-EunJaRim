@@ -13,11 +13,35 @@ namespace CharacterTool
 {
     public partial class Main : Form
     {
+        //test field
+        YamangDll.MESHOBJECT info;
+        IntPtr infoPtr;
+        bool isRunning = false;
+
+        ~Main()
+        {
+            isRunning = false;
+            YamangDll.D3DCleanUp();
+        }
+
         public Main()
         {
 
             InitializeComponent();
             YamangDll.InitD3D(this.Window.Handle);
+            Render();
+        }
+
+        async private void Render()
+        {
+            while (isRunning)
+            {
+                YamangDll.PreRendering(0, 0, -2);
+                YamangDll.Rendering(ref infoPtr);
+                YamangDll.PostRendering();
+
+                await Task.Delay(10);
+            }   
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -32,7 +56,6 @@ namespace CharacterTool
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 //Open X File
-
             }
         }
 
@@ -43,16 +66,17 @@ namespace CharacterTool
 
         private void button1_Click(object sender, EventArgs e)
         {
-            YamangDll.MESHOBJECT info = new YamangDll.MESHOBJECT();
-            IntPtr infoPtr = Marshal.AllocHGlobal(Marshal.SizeOf(info));
+            isRunning = true;
+            info = new YamangDll.MESHOBJECT();
+            infoPtr = Marshal.AllocHGlobal(Marshal.SizeOf(info));
+            
             Marshal.StructureToPtr(info, infoPtr, false);
             info = (YamangDll.MESHOBJECT)Marshal.PtrToStructure(infoPtr, typeof(YamangDll.MESHOBJECT));
             
             string filename = "tiger.x";
             YamangDll.InitGeometry(this.Window.Handle, filename, ref infoPtr );
-            YamangDll.PreRendering(0, 0, 0);
-            YamangDll.Rendering(ref infoPtr);
-            YamangDll.PostRendering();
+
+            Render();
         }
     }
 }
