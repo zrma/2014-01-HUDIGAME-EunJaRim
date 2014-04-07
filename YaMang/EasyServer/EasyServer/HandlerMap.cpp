@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "HandlerMap.h"
 #include "LoginEventHandler.h"
 #include "ChatEventHandler.h"
@@ -7,7 +7,7 @@
 
 HandlerMap::HandlerMap()
 {
-	/// ��Ŷ �ڵ鸵
+	/// 패킷 핸들링
 	mPacketHandler[PKT_CS_LOGIN] = new LoginEventHandler();
 	mPacketHandler[PKT_CS_CHAT] = new ChatEventHandler();
 	mPacketHandler[PKT_CS_TEST] = new TestEventHandler();

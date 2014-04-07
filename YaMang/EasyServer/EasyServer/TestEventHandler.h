@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "EventHandler.h"
 
 class TestEventHandler: public EventHandler

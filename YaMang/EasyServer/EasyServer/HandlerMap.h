@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <map>
 #include "ClientSession.h"
 #include "MacroSet.h"
