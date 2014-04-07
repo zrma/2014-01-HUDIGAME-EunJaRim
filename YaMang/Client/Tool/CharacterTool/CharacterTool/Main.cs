@@ -69,17 +69,20 @@ namespace CharacterTool
 
         private void button1_Click(object sender, EventArgs e)
         {
-            isRunning = true;
-            info = new YamangDll.MESHOBJECT();
-            infoPtr = Marshal.AllocHGlobal(Marshal.SizeOf(info));
-            
-            Marshal.StructureToPtr(info, infoPtr, false);
-            info = (YamangDll.MESHOBJECT)Marshal.PtrToStructure(infoPtr, typeof(YamangDll.MESHOBJECT));
-            
-            string filename = "tiger.x";
-            YamangDll.InitGeometry(this.Window.Handle, filename, ref infoPtr );
+            if (!isRunning)
+            {
+                isRunning = true;
+                info = new YamangDll.MESHOBJECT();
+                infoPtr = Marshal.AllocHGlobal(Marshal.SizeOf(info));
 
-            Render();
+                Marshal.StructureToPtr(info, infoPtr, false);
+                info = (YamangDll.MESHOBJECT)Marshal.PtrToStructure(infoPtr, typeof(YamangDll.MESHOBJECT));
+
+                string filename = "tiger.x";
+                YamangDll.InitGeometry(this.Window.Handle, filename, ref infoPtr);
+
+                Render();
+            }
         }
     }
 }
