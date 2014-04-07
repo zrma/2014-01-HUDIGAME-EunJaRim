@@ -359,11 +359,18 @@ void ClientSession::OnWriteComplete( size_t len )
 	/// 보내기 완료한 데이터는 버퍼에서 제거
 	mSendBuffer.Remove( len );
 
+	Log( "이번에 보내진 데이터 len : %d, 남겨진 버퍼 잔고 : %d \n", len, mSendBuffer.GetContiguiousBytes() );
+	// 디버깅용 출력 추가
+
 	/// 얼래? 덜 보낸 경우도 있나? (커널의 send queue가 꽉찼거나, Send Completion이전에 또 send 한 경우?)
 	if ( mSendBuffer.GetContiguiousBytes() > 0 )
 	{
 		// 그런데 그것이 실제로 일어났습니다.
 		// 데이터 엄청 많이 들어오다보면(python client)걸림 좋은 컴터에서 하면 괜찮을려나
+
+		//////////////////////////////////////////////////////////////////////////
+		// 커널의 센드 큐가 꽉 찬 것 같음.
+
 		CRASH_ASSERT( false );
 		assert( false );
 		// 이러면 디버깅 모드에서는 무조건 이 안에 들어왔을 때 assert 되고 중지!
