@@ -43,19 +43,19 @@ bool CreatePlayerDataContext::OnExecute()
 	//////////////////////////////////////////////////////////////////////////
 	// const char* SQL_InsertTest = "INSERT INTO players VALUES(?, ?, ?, ?, ?, ?)" ;
 	//////////////////////////////////////////////////////////////////////////
-	DbHelper dbhelper(SQL_InsertTest) ;
+	DbHelper dbhelper( SQL_InsertTest );
 
-	dbhelper.BindParamInt(mPlayerId) ;
-	dbhelper.BindParamText(mPlayerName, strlen(mPlayerName)) ;
-	dbhelper.BindParamDouble(mPosX) ;
-	dbhelper.BindParamDouble(mPosY) ;
-	dbhelper.BindParamDouble(mPosZ) ;
-	dbhelper.BindParamText(mComment, strlen(mComment)) ;
+	dbhelper.BindParamInt( mPlayerId );
+	dbhelper.BindParamText( mPlayerName, static_cast<int>( strlen( mPlayerName ) ) );
+	dbhelper.BindParamDouble( mPosX );
+	dbhelper.BindParamDouble( mPosY );
+	dbhelper.BindParamDouble( mPosZ );
+	dbhelper.BindParamText( mComment, static_cast<int>( strlen( mComment ) ) );
 
 	if ( RESULT_ERROR == dbhelper.FetchRow() )
-		return false ;
+		return false;
 
-	return true ;
+	return true;
 }
 
 bool DeletePlayerDataContext::OnExecute()
@@ -79,17 +79,16 @@ bool UpdatePlayerDataContext::OnExecute()
 	//////////////////////////////////////////////////////////////////////////
 	// const char* SQL_UpdateTest = "UPDATE players SET pos_x=?, pos_y=?, pos_z=?, comment=? WHERE pid=?" ;
 	//////////////////////////////////////////////////////////////////////////
-	DbHelper dbhelper(SQL_UpdateTest) ;
+	DbHelper dbhelper( SQL_UpdateTest );
 
-	dbhelper.BindParamDouble(mPosX) ;
-	dbhelper.BindParamDouble(mPosY) ;
-	dbhelper.BindParamDouble(mPosZ) ;
-	dbhelper.BindParamText(mComment, strlen(mComment)) ;
-	dbhelper.BindParamInt(mPlayerId) ;
+	dbhelper.BindParamDouble( mPosX );
+	dbhelper.BindParamDouble( mPosY );
+	dbhelper.BindParamDouble( mPosZ );
+	dbhelper.BindParamText( mComment, static_cast<int>( strlen( mComment ) ) );
+	dbhelper.BindParamInt( mPlayerId );
 
 	if ( RESULT_ERROR == dbhelper.FetchRow() )
-		return false ;
+		return false;
 
-	return true ;
-
+	return true;
 }

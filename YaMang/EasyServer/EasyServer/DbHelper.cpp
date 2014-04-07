@@ -239,7 +239,7 @@ bool DbHelper::BindParamText(const char* text, int count)
 	//
 	// http://neptjuno.tistory.com/41 참조
 	//////////////////////////////////////////////////////////////////////////
-	if ( sqlite3_bind_text(mResult, ++mBindColCount, text, strlen(text), NULL) != SQLITE_OK )
+	if ( sqlite3_bind_text(mResult, ++mBindColCount, text, static_cast<int>(strlen(text)), NULL) != SQLITE_OK )
 	{
 		printf("DbHelper Bind Text failed: %s\n", sqlite3_errmsg(mSqlite)) ;
 		return false ;

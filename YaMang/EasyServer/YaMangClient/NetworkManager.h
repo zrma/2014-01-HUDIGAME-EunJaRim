@@ -10,4 +10,6 @@ public:
 	bool	Init();
 	void	Destroy();
 
+private:
+	SOCKET	m_Socket;
 };

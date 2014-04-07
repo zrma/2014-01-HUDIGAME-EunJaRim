@@ -1647,7 +1647,7 @@ void xpath_processor::v_function_string_length (
    if (u_nb_arg != 1)
       throw execution_error (28);
    S_arg = erpp_arg [0] -> S_get_string ();
-   v_push_int (S_arg . length (), "string-length");
+   v_push_int( (int)(S_arg.length()), "string-length" );
 }
 
 /**

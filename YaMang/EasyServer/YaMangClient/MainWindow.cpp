@@ -16,7 +16,7 @@ MainWindow::~MainWindow()
 
 LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 {
-	int wmId, wmEvent;
+	// int wmId, wmEvent;
 
 	switch ( uMsg )
 	{
