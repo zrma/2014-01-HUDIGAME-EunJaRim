@@ -1,6 +1,8 @@
 ﻿#include "stdafx.h"
 #include "TestEventHandler.h"
-
+#include "../../PacketType.h"
+#include "CircularBuffer.h"
+#include "ClientSession.h"
 
 TestEventHandler::TestEventHandler()
 {

@@ -2,7 +2,9 @@
 #include "LoginEventHandler.h"
 #include "DatabaseJobContext.h"
 #include "DatabaseJobManager.h"
-
+#include "../../PacketType.h"
+#include "CircularBuffer.h"
+#include "ClientSession.h"
 
 LoginEventHandler::LoginEventHandler()
 {

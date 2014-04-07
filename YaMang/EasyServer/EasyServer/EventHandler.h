@@ -1,5 +1,9 @@
 ﻿#pragma once
-#include "ClientSession.h"
+
+struct PacketHeader;
+class ClientSession;
+class CircularBuffer;
+
 __interface EventHandler
 {
 public:

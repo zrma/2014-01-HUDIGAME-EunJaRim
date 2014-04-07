@@ -1,4 +1,6 @@
 ﻿#include "stdafx.h"
+#include "EventHandler.h"
+#include "ClientSession.h"
 #include "HandlerMap.h"
 #include "LoginEventHandler.h"
 #include "ChatEventHandler.h"
@@ -27,5 +29,4 @@ bool HandlerMap::HandleEvent( short* packetType, ClientSession* client, PacketHe
 	}
 	
 	return false;
-	
 }

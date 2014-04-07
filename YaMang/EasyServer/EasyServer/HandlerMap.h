@@ -1,8 +1,11 @@
 ﻿#pragma once
 #include <map>
-#include "ClientSession.h"
 #include "MacroSet.h"
-#include "EventHandler.h"
+
+__interface EventHandler;
+struct PacketHeader;
+class ClientSession;
+class CircularBuffer;
 
 class HandlerMap : public Singleton<HandlerMap>
 {
