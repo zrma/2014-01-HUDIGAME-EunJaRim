@@ -9,7 +9,9 @@ public:
 
 	bool	Init();
 	void	Destroy();
+	void	ProcessPacket();
 	bool	Connect( const char* serverAddr, int port );
+	
 
 private:
 	SOCKET	m_Socket;

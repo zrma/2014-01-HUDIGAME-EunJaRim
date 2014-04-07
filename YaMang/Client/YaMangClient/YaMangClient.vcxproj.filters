@@ -11,6 +11,12 @@
     <Filter Include="MainLoop">
       <UniqueIdentifier>{c267d2b6-392d-41ef-afcf-e25e5bbc5347}</UniqueIdentifier>
     </Filter>
+    <Filter Include="EventHandler">
+      <UniqueIdentifier>{785d6400-85ba-41a5-8c5b-e8a89c53a551}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PacketDefine">
+      <UniqueIdentifier>{438c0be6-e343-4759-a258-f601f6925763}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -46,6 +52,24 @@
     <ClInclude Include="targetver.h">
       <Filter>MainLoop</Filter>
     </ClInclude>
+    <ClInclude Include="ChatEventHandler.h">
+      <Filter>EventHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="TestEventHandler.h">
+      <Filter>EventHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="HandlerMap.h">
+      <Filter>EventHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="EventHandler.h">
+      <Filter>EventHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="LoginEventHandler.h">
+      <Filter>EventHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\PacketType.h">
+      <Filter>PacketDefine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CircularBuffer.cpp">
@@ -68,6 +92,18 @@
     </ClCompile>
     <ClCompile Include="YaMangClient.cpp">
       <Filter>MainLoop</Filter>
+    </ClCompile>
+    <ClCompile Include="HandlerMap.cpp">
+      <Filter>EventHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="ChatEventHandler.cpp">
+      <Filter>EventHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="LoginEventHandler.cpp">
+      <Filter>EventHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="TestEventHandler.cpp">
+      <Filter>EventHandler</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

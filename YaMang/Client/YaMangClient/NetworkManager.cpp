@@ -72,3 +72,8 @@ bool NetworkManager::Connect( const char* serverAddr, int port )
 
 	return true;
 }
+
+void NetworkManager::ProcessPacket()
+{
+
+}

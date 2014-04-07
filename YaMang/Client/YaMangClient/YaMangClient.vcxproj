@@ -142,8 +142,13 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\PacketType.h" />
+    <ClInclude Include="ChatEventHandler.h" />
     <ClInclude Include="CircularBuffer.h" />
+    <ClInclude Include="EventHandler.h" />
     <ClInclude Include="GameManager.h" />
+    <ClInclude Include="HandlerMap.h" />
+    <ClInclude Include="LoginEventHandler.h" />
     <ClInclude Include="MacroSet.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="MainWindow.h" />
@@ -151,12 +156,16 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="TestEventHandler.h" />
     <ClInclude Include="YaMangClient.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ChatEventHandler.cpp" />
     <ClCompile Include="CircularBuffer.cpp" />
     <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="HandlerMap.cpp" />
     <ClCompile Include="Logger.cpp" />
+    <ClCompile Include="LoginEventHandler.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="NetworkManager.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -165,6 +174,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="TestEventHandler.cpp" />
     <ClCompile Include="YaMangClient.cpp" />
   </ItemGroup>
   <ItemGroup>
