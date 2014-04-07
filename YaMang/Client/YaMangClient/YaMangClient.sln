@@ -8,6 +8,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "yaMangDxDll", "..\yaMangDxDll\yaMangDxDll\yaMangDxDll.vcxproj", "{E6D200DD-4FE0-48A2-921E-8807C91E08D6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CharacterTool", "..\Tool\CharacterTool\CharacterTool\CharacterTool.csproj", "{B8938A68-57BB-4335-95AF-699CD01A255F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E6D200DD-4FE0-48A2-921E-8807C91E08D6} = {E6D200DD-4FE0-48A2-921E-8807C91E08D6}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

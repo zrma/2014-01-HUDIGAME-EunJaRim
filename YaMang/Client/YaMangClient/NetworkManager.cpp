@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "NetworkManager.h"
 
 #include "..\..\PacketType.h"
@@ -6,8 +6,10 @@
 
 #pragma comment(lib,"ws2_32.lib")
 
+const int BUFSIZE = 1024 * 10;
+
 NetworkManager::NetworkManager()
-:m_Socket(NULL)
+:m_Socket( NULL ), m_RecvBuffer( BUFSIZE ), m_SendBuffer(BUFSIZE)
 {
 }
 
@@ -75,5 +77,86 @@ bool NetworkManager::Connect( const char* serverAddr, int port )
 
 void NetworkManager::ProcessPacket()
 {
+	// 하단의 것들 각각 이벤트 핸들링 해 줘야 됨
 
+	/*
+	while ( true )
+	{
+		PacketHeader header;
+		
+		if ( false == g_RecvBuffer.Peek( (char*)&header, sizeof( PacketHeader ) ) )
+			break;
+
+		if ( header.mSize > static_cast<short> ( g_RecvBuffer.GetCurrentSize() ) )
+			break;
+
+		switch ( header.mType )
+		{
+			case PKT_SC_LOGIN:
+			{
+				LoginResult recvData;
+				if ( g_RecvBuffer.Read( (char*)&recvData, header.mSize ) )
+				{
+					// 패킷처리
+					if ( recvData.mPlayerId == -1 )
+					{
+						/// 여기 걸리면 로그인 실패다.
+						ExitProcess( -1 );
+					}
+
+
+					g_MyClientId = recvData.mPlayerId;
+					g_LoginComplete = true;
+
+					char buff[128] = { 0, };
+					sprintf_s( buff, "LOGIN SUCCESS ClientId[%d] Name[%s] POS(%.4f, %.4f, %.4f) \n", g_MyClientId, recvData.mName, recvData.mPosX, recvData.mPosY, recvData.mPosZ );
+
+					static int ypos = 33;
+					HDC hdc = GetDC( hWnd );
+					TextOutA( hdc, 10, 33, buff, strlen( buff ) );
+					ReleaseDC( hWnd, hdc );
+
+					/// 채팅 방송 패킷 보내는 타이머 돌리자.. 
+					SetTimer( hWnd, 337, 3000, NULL );
+
+				}
+				else
+				{
+					assert( false );
+				}
+			}
+				break;
+
+			case PKT_SC_CHAT:
+			{
+				ChatBroadcastResult recvData;
+				if ( g_RecvBuffer.Read( (char*)&recvData, header.mSize ) )
+				{
+					/// 여기 걸리면 로그인 안된놈이 보낸거다
+					assert( recvData.mPlayerId != -1 );
+
+					char buff[MAX_CHAT_LEN] = { 0, };
+					sprintf_s( buff, "CHAT from Player[%s]: %s \n", recvData.mName, recvData.mChat );
+
+					static int y2pos = 60;
+					HDC hdc = GetDC( hWnd );
+					TextOutA( hdc, 10, y2pos, buff, strlen( buff ) );
+					ReleaseDC( hWnd, hdc );
+					y2pos += 15;
+					if ( y2pos > 600 )
+						y2pos = 60;
+
+				}
+				else
+				{
+					assert( false );
+				}
+			}
+				break;
+			default:
+				assert( false );
+		}
+
+	}
+	*/
 }

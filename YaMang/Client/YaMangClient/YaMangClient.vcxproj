@@ -185,7 +185,7 @@
     <Image Include="YaMangClient.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\yaMangDxDll\yaMangDxDll\yaMangDxDll.vcxproj">
+    <ProjectReference Include="..\yaMangDxDll\yaMangDxDll\yaMangDxDll.vcxproj">
       <Project>{e6d200dd-4fe0-48a2-921e-8807c91e08d6}</Project>
     </ProjectReference>
   </ItemGroup>
