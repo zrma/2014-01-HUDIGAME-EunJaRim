@@ -33,7 +33,7 @@ namespace CharacterTool
         public static extern void PostRendering();
 
         [DllImport("yaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void MeshObjectCleanUp( IntPtr inputVal );
+        public static extern void MeshObjectCleanUp( ref IntPtr inputVal );
 
         //DLL 내부 MESHOBJECT 정의
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
