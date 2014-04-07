@@ -34,7 +34,7 @@ bool g_LoginComplete = false;
 int g_MyClientId = -1;
 
 //////////////////////////////////////////////////////////////////////////
-// 네트워크 매니저한테 가야 됨
+// 네트워크 매니저
 bool Initialize()
 {
 	WSADATA WsaDat;
@@ -49,6 +49,8 @@ bool Initialize()
 
 	return true;
 }
+// 이전 완료
+//////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////
 // 네트워크 매니저한테 가야 됨
@@ -479,6 +481,8 @@ LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam 
 					MessageBox( hWnd, L"Server closed connection", L"Connection closed!", MB_ICONINFORMATION | MB_OK );
 					closesocket( g_Socket );
 					SendMessage( hWnd, WM_DESTROY, NULL, NULL );
+
+					// 여기는 네트워크 매니저에서 Destroy 하고 매니저를 Release 하도록 한다
 				}
 					break;
 			}

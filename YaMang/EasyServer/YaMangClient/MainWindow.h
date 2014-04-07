@@ -3,6 +3,7 @@
 #include "MacroSet.h"
 
 static const WCHAR WINDOW_NAME[] = L"YaMang";
+const int WM_SOCKET = 104;
 
 class GameManager;
 

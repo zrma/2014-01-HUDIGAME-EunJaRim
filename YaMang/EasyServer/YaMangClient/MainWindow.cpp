@@ -2,8 +2,6 @@
 #include "MainWindow.h"
 #include "GameManager.h"
 
-const int WM_SOCKET = 104;
-
 MainWindow::MainWindow()
 : m_GameManager(GameManager::GetInstance())
 {
