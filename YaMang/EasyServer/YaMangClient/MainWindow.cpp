@@ -1,6 +1,7 @@
 ﻿#include "stdafx.h"
 #include "MainWindow.h"
 #include "GameManager.h"
+#include "NetworkManager.h"
 
 MainWindow::MainWindow()
 : m_GameManager(GameManager::GetInstance())
@@ -20,8 +21,8 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 	{
 		case WM_CREATE:
 		{
-			// 요거 자원 초기화로 따로 뽑아내야 할 지 고민
-
+			// 자원 초기화를 수행합니다.
+			NetworkManager::GetInstance()->Init();
 		}
 			return 0;
 

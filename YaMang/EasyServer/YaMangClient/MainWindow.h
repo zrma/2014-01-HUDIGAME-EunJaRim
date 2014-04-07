@@ -38,10 +38,11 @@ public:
 		}
 	}
 
-	BaseWindow(): m_hwnd( nullptr ) {}
+	BaseWindow(): m_hwnd( nullptr ), m_hAccelTable( nullptr ){}
 
 	BOOL Create( PCWSTR lpWindowName,
-				 DWORD dwStyle,
+				 DWORD dwStyle, 
+				 LPCWSTR lpTableName,
 				 DWORD dwExStyle = 0,
 				 int x = CW_USEDEFAULT,
 				 int y = CW_USEDEFAULT,
@@ -61,6 +62,8 @@ public:
 
 		m_hwnd = CreateWindowEx( dwExStyle, ClassName(), lpWindowName, dwStyle,
 								 x, y, nWidth, nHeight, hWndParent, hMenu, GetModuleHandle( NULL ), this );
+		
+		m_hAccelTable = LoadAccelerators( wc.hInstance, lpTableName );
 
 		return ( m_hwnd ? TRUE : FALSE );
 	}
@@ -75,7 +78,8 @@ protected:
 	virtual PCWSTR	ClassName() const = 0;
 	virtual LRESULT	HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam ) = 0;
 
-	HWND m_hwnd;
+	HWND	m_hwnd;
+	HACCEL	m_hAccelTable;
 };
 
 class MainWindow: public BaseWindow<MainWindow>
@@ -86,7 +90,7 @@ public:
 
 	PCWSTR	ClassName() const { return WINDOW_NAME; }
 	LRESULT	HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam );
-
+	
 	int RunGame();
 
 private:

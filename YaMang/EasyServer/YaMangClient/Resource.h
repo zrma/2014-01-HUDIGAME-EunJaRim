@@ -3,19 +3,19 @@
 // Used by YaMangClient.rc
 //
 
-#define IDS_APP_TITLE			103
+#define IDS_APP_TITLE				103
 
-#define IDR_MAINFRAME			128
-#define IDD_YAMANGCLIENT_DIALOG	102
-#define IDD_ABOUTBOX			103
-#define IDM_ABOUT				104
-#define IDM_EXIT				105
+#define IDR_MAINFRAME				128
+#define IDD_YAMANGCLIENT_DIALOG		102
+#define IDD_ABOUTBOX				103
+#define IDM_ABOUT					104
+#define IDM_EXIT					105
 #define IDI_YAMANGCLIENT			107
-#define IDI_SMALL				108
+#define IDI_SMALL					108
 #define IDC_YAMANGCLIENT			109
-#define IDC_MYICON				2
+#define IDC_MYICON					2
 #ifndef IDC_STATIC
-#define IDC_STATIC				-1
+#define IDC_STATIC					-1
 #endif
 // 다음은 새 개체에 사용할 기본값입니다.
 //
