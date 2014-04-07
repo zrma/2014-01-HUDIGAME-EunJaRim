@@ -34,13 +34,16 @@ namespace CharacterTool
 
         async private void Render()
         {
+            int i = 0;
             while (isRunning)
             {
                 YamangDll.PreRendering(0, 0, -2);
                 YamangDll.Rendering(ref infoPtr);
                 YamangDll.PostRendering();
 
+                button1.Text = "" + i;
                 await Task.Delay(10);
+                ++i;
             }   
         }
 
