@@ -75,7 +75,7 @@ __declspec(thread) int LThreadType = -1 ;
 // 헤더 파일에서 extern으로 선언 되어 있음 -> 다른 곳에서도 사용 하게 된다.
 //////////////////////////////////////////////////////////////////////////
 
-
+SRWLOCK g_Lock;
 int _tmain( int argc, _TCHAR* argv[] )
 {
 
@@ -343,9 +343,13 @@ int _tmain( int argc, _TCHAR* argv[] )
 		return -1;
 	}
 
+	
 	/// accept loop
 	while ( true )
 	{
+		// accept lock
+		AcquireSRWLockExclusive( &g_Lock );
+		
 		g_AcceptedSocket = accept( listenSocket, NULL, NULL );
 		// accept() = 연결 요청 대기 큐에서 대기 중인 클라이언트의 연결 요청을 수락하는 기능의 함수
 
@@ -364,6 +368,8 @@ int _tmain( int argc, _TCHAR* argv[] )
 			printf( "SetEvent error: %d\n", GetLastError() );
 			break;
 		}
+
+		ReleaseSRWLockExclusive( &g_Lock );
 	}
 
 	CloseHandle( hThread );

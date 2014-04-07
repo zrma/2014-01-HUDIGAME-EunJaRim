@@ -1,11 +1,11 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 __author__ = 'sm9'
 
 import asyncore, socket
 import string, random
 import struct, time
 
-HOST = '192.168.0.11'
+HOST = '10.73.45.142'
 PORT = 9001
 
 

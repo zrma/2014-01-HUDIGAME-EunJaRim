@@ -24,7 +24,7 @@ print 'Connecting...'
 s.connect((HOST, PORT));
 
 
-s.send(struct.pack('hhi', 8, PKT_CS_LOGIN, pid));
+s.send(struct.pack('iii', 8, PKT_CS_LOGIN, pid));
 """
 data = s.recv(1024);
 if not data:
@@ -40,7 +40,7 @@ while True:
     if message == "exit":
         break;
     else:
-        s.send(struct.pack('<hhi1024s', 1032, PKT_CS_TEST, pid, message));
+        s.send(struct.pack('<iii1024s', 1032, PKT_CS_TEST, pid, message));
 
 """
 if not data:

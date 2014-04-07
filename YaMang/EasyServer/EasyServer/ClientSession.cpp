@@ -364,6 +364,7 @@ void ClientSession::OnWriteComplete( size_t len )
 	{
 		// 그런데 그것이 실제로 일어났습니다.
 		// 데이터 엄청 많이 들어오다보면(python client)걸림 좋은 컴터에서 하면 괜찮을려나
+		CRASH_ASSERT( false );
 		assert( false );
 		// 이러면 디버깅 모드에서는 무조건 이 안에 들어왔을 때 assert 되고 중지!
 	}
@@ -506,6 +507,7 @@ void CALLBACK RecvCompletion( DWORD dwError, DWORD cbTransferred, LPWSAOVERLAPPE
 //////////////////////////////////////////////////////////////////////////
 // 비동기 출력 WSASend()에 의해서 출력이 완료 되면 콜백으로 SendCompletion 실행
 //////////////////////////////////////////////////////////////////////////
+//SRWLOCK g_Lock;
 void CALLBACK SendCompletion( DWORD dwError, DWORD cbTransferred, LPWSAOVERLAPPED lpOverlapped, DWORD dwFlags )
 {
 	ClientSession* fromClient = static_cast<OverlappedIO*>( lpOverlapped )->mObject;
@@ -525,8 +527,9 @@ void CALLBACK SendCompletion( DWORD dwError, DWORD cbTransferred, LPWSAOVERLAPPE
 		fromClient->Disconnect();
 		return;
 	}
-
+	//AcquireSRWLockExclusive( &g_Lock );
 	fromClient->OnWriteComplete( cbTransferred );
+	//ReleaseSRWLockExclusive( &g_Lock );
 	// 보내기 완료한 데이터를 버퍼에서 제거
 
 }
