@@ -88,6 +88,9 @@
     <ClInclude Include="TestEventHandler.h">
       <Filter>EventHandler</Filter>
     </ClInclude>
+    <ClInclude Include="MacroSet.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

@@ -1,7 +1,7 @@
 #pragma once
 #include <map>
 #include "ClientSession.h"
-#include "..\YaMangClient\MacroSet.h"
+#include "MacroSet.h"
 #include "EventHandler.h"
 
 class HandlerMap : public Singleton<HandlerMap>

@@ -169,6 +169,7 @@
     <ClInclude Include="Exception.h" />
     <ClInclude Include="HandlerMap.h" />
     <ClInclude Include="LoginEventHandler.h" />
+    <ClInclude Include="MacroSet.h" />
     <ClInclude Include="ObjectPool.h" />
     <ClInclude Include="ProducerConsumerQueue.h" />
     <ClInclude Include="SPSCQueue.h" />
