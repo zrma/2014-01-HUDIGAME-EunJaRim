@@ -58,10 +58,16 @@ YAMANGDXDLL_API HRESULT InitGeometry( HWND hWnd, LPCTSTR fileName, MESHOBJECT* i
 {
 	LPD3DXBUFFER D3dxMtrialBuffer;
 
+	char	currentDirectory[MAX_PATH] = { 0, };
+	GetCurrentDirectoryA( MAX_PATH, currentDirectory );
+
 	//x file import
-	if (FAILED(D3DXLoadMeshFromX(fileName, D3DXMESH_SYSTEMMEM, D3dDevice, NULL, &D3dxMtrialBuffer, NULL, &(inputVal->NumMaterials), &inputVal->importedMesh)))
+	// if (FAILED(D3DXLoadMeshFromX(fileName, D3DXMESH_SYSTEMMEM, D3dDevice, NULL, &D3dxMtrialBuffer, NULL, &(inputVal->NumMaterials), &inputVal->importedMesh)))
+	if ( FAILED( D3DXLoadMeshFromX( L"./tiger.x", D3DXMESH_SYSTEMMEM, D3dDevice, NULL, &D3dxMtrialBuffer, NULL, &( inputVal->NumMaterials ), &(inputVal->importedMesh ) ) ) )
 	{
-		MessageBox( NULL, L"Could not find x file", fileName, MB_OK );
+		Log( "못 찾았음 ㅠㅠ \n%s", currentDirectory );
+		
+		MessageBox( NULL, L"Could not find x file", L"Mesh Load", MB_OK );
 		return E_FAIL;
 	}
 

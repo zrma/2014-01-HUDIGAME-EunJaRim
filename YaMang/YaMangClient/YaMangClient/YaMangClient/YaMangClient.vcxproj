@@ -129,6 +129,11 @@
       <Project>{e6d200dd-4fe0-48a2-921e-8807c91e08d6}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="tiger.x">
+      <FileType>Document</FileType>
+    </Media>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
