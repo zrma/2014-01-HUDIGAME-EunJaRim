@@ -33,8 +33,7 @@ void Renderer::RenderBegin()
 {
 	if ( m_Result )
 	{
-		PreRendering();
-		m_IsReady = true;
+		m_IsReady = PreRendering();
 	}
 }
 
@@ -49,7 +48,7 @@ void Renderer::RenderEnd()
 
 void Renderer::Render( MESHOBJECT* mesh )
 {
-	if ( mesh )
+	if ( mesh && m_IsReady )
 	{
 		Rendering( mesh );
 	}
