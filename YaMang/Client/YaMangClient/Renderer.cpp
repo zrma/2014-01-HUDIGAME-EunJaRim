@@ -1,11 +1,11 @@
 #include "stdafx.h"
-#include "../yaMangDxDll/yaMangDxDll/MeshObject.h"
+#include "../yaMangDxDll/yaMangDxDll/yaMangDxDll.h"
 #include "Renderer.h"
+#include "MainWindow.h"
 
-Renderer::Renderer()
+Renderer::Renderer(): m_Result( false ), m_IsReady( false )
 {
 }
-
 
 Renderer::~Renderer()
 {
@@ -13,35 +13,61 @@ Renderer::~Renderer()
 
 bool Renderer::Init()
 {
-	return true;
+	if ( S_OK == InitD3D( MainWindow::GetInstance()->Window() ) )
+	{
+		m_Result = true;
+	}
+
+	return m_Result;
 }
 
 void Renderer::Destroy()
 {
-
+	if ( m_Result )
+	{
+		D3DCleanUp();
+	}
 }
 
-bool Renderer::RenderBegin()
+void Renderer::RenderBegin()
 {
-	return true;
+	if ( m_Result )
+	{
+		PreRendering();
+		m_IsReady = true;
+	}
 }
 
-bool Renderer::RenderEnd()
+void Renderer::RenderEnd()
 {
-	return true;
+	if ( m_Result && m_IsReady )
+	{
+		PostRendering();
+		m_IsReady = false;
+	}
 }
 
-bool Renderer::Render( MESHOBJECT* mesh )
+void Renderer::Render( MESHOBJECT* mesh )
 {
-	return true;
+	if ( mesh )
+	{
+		Rendering( mesh );
+	}
 }
 
 bool Renderer::CreateMesh( const LPCTSTR& fileName, MESHOBJECT* mesh )
 {
-	return true;
+	if ( S_OK == InitGeometry( MainWindow::GetInstance()->Window(), fileName, mesh ) )
+	{
+		return true;
+	}
+	return false;
 }
 
 void Renderer::DeleteMesh( MESHOBJECT* mesh )
 {
-
+	if ( mesh )
+	{
+		MeshObjectCleanUp( mesh );
+	}
 }

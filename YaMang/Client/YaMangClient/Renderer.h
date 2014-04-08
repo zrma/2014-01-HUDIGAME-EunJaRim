@@ -12,11 +12,15 @@ public:
 
 	bool	Init();
 	void	Destroy();
-	bool	RenderBegin();
-	bool	RenderEnd();
+	void	RenderBegin();
+	void	RenderEnd();
 
-	bool	Render( MESHOBJECT* mesh );
+	void	Render( MESHOBJECT* mesh );
 	bool	CreateMesh( const LPCTSTR& fileName, MESHOBJECT* mesh );
 	void	DeleteMesh( MESHOBJECT* mesh );
+
+private:
+	bool	m_Result;
+	bool	m_IsReady;
 };
 
