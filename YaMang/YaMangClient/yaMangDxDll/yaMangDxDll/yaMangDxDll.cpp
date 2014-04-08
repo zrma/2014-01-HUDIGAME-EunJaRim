@@ -58,15 +58,9 @@ YAMANGDXDLL_API HRESULT InitGeometry( HWND hWnd, LPCTSTR fileName, MESHOBJECT* i
 {
 	LPD3DXBUFFER D3dxMtrialBuffer;
 
-	char	currentDirectory[MAX_PATH] = { 0, };
-	GetCurrentDirectoryA( MAX_PATH, currentDirectory );
-	
 	//x file import
-	// if (FAILED(D3DXLoadMeshFromX(fileName, D3DXMESH_SYSTEMMEM, D3dDevice, NULL, &D3dxMtrialBuffer, NULL, &(inputVal->NumMaterials), &inputVal->importedMesh)))
-	if ( FAILED( D3DXLoadMeshFromX( L"./tiger.x", D3DXMESH_SYSTEMMEM, D3dDevice, NULL, &D3dxMtrialBuffer, NULL, &( inputVal->NumMaterials ), &inputVal->importedMesh ) ) )
+	if (FAILED(D3DXLoadMeshFromX(fileName, D3DXMESH_SYSTEMMEM, D3dDevice, NULL, &D3dxMtrialBuffer, NULL, &(inputVal->NumMaterials), &inputVal->importedMesh)))
 	{
-		Log( "못 찾았음 ㅠㅠ \n%s", currentDirectory );
-		
 		MessageBox( NULL, L"Could not find x file", L"Mesh Load", MB_OK );
 		return E_FAIL;
 	}
@@ -233,19 +227,21 @@ YAMANGDXDLL_API void PreRendering( float moveX, float moveY, float moveZ )
 		//일단 1로 진행, 향후 라이트 개수 등 확정되면 인자 받아 설정
 		int lightNum = 1;
 		Lighting( lightNum );
-		printf_s( "라이팅 세팅!\n" );
+
+		Log( "라이팅 세팅!\n" );
 
 		D3dDevice->SetTextureStageState( 0, D3DTSS_COLOROP, D3DTOP_MODULATE );
 		D3dDevice->SetTextureStageState( 0, D3DTSS_COLORARG1, D3DTA_TEXTURE );
 		D3dDevice->SetTextureStageState( 0, D3DTSS_COLORARG2, D3DTA_DIFFUSE );
 		D3dDevice->SetTextureStageState( 0, D3DTSS_ALPHAOP, D3DTOP_DISABLE );
-		printf_s( "pre render 완료!\n" );
+		
+		Log( "pre render 완료!\n" );
 	}
 }
 
 YAMANGDXDLL_API void Rendering( MESHOBJECT* inputVal )
 {
-	printf_s( "%p \n", inputVal );
+	Log( "%p \n", inputVal );
 	for ( DWORD i = 0; i < inputVal->NumMaterials; ++i )
 	{
 		D3dDevice->SetMaterial( &inputVal->MeshMarterials[i] );
@@ -259,7 +255,7 @@ YAMANGDXDLL_API void PostRendering()
 {
 	D3dDevice->EndScene();
 
-	printf_s( "씬이 종료 되었습니다\n" );
+	Log( "씬이 종료 되었습니다\n" );
 	D3dDevice->Present( NULL, NULL, NULL, NULL );
 }
 		
