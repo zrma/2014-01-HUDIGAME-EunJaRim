@@ -78,7 +78,7 @@ __declspec(thread) int LThreadType = -1 ;
 SRWLOCK g_Lock;
 int _tmain( int argc, _TCHAR* argv[] )
 {
-
+	///# 모든 로직은 SetUnhandledExceptionFilter 뒤에 오도록
 	// xml 로드 테스트
 	TiXmlDocument document = TiXmlDocument( "./data.xml" );
 	bool m_LoadSuccess = document.LoadFile();
@@ -112,6 +112,7 @@ int _tmain( int argc, _TCHAR* argv[] )
 	// ExceptionFilter
 	// Exception.cpp 쪽에서 전역 함수로 선언 되어 있음
 
+	///# 서버는 이미 콘솔 프로젝트인데... 아래 작업 왜 하는거지?
 	AllocConsole();
 	FILE* pFile;
 	freopen_s( &pFile, "CONOUT$", "wb", stdout );
@@ -348,8 +349,14 @@ int _tmain( int argc, _TCHAR* argv[] )
 	while ( true )
 	{
 		// accept lock
+
+		///# 헐.. 이거 왜한겨? 
+		/// 일단 지금은 g_Lock 다른 곳에서 쓰고 있지 않음. (아마도 작업중?)
+		/// 그리고 다른곳에서 쓰인다고 해도 g_Lock잡고 들어가서 accept로 블록 하고 있는건데.. ㅎㄷㄷ
+	
 		AcquireSRWLockExclusive( &g_Lock );
-		
+	
+		///# 아래 문제는 Producer-Consumer 방식으로 해결할 것.
 		g_AcceptedSocket = accept( listenSocket, NULL, NULL );
 		// accept() = 연결 요청 대기 큐에서 대기 중인 클라이언트의 연결 요청을 수락하는 기능의 함수
 

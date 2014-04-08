@@ -277,6 +277,8 @@ void ClientSession::OnRead( size_t len )
 		//////////////////////////////////////////////////////////////////////////
 
 		/// 패킷 핸들링
+
+		///# 패킷 타입을 굳이 포인터로 넘긴 이유는? 
 		if ( !HandlerMap::GetInstance()->HandleEvent( &( header.mType ), this, &header, &mRecvBuffer, &mSocket ) )
 		{
 			/// 여기 들어오면 이상한 패킷 보낸거다.
