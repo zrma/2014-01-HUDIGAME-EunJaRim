@@ -16,7 +16,7 @@ public:
 	void	RenderEnd();
 
 	void	Render( MESHOBJECT* mesh );
-	bool	CreateMesh( const LPCTSTR& fileName, MESHOBJECT* mesh );
+	bool	CreateMesh( LPCTSTR& fileName, MESHOBJECT* mesh );
 	void	DeleteMesh( MESHOBJECT* mesh );
 
 private:

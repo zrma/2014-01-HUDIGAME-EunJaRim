@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "../yaMangDxDll/yaMangDxDll/yaMangDxDll.h"
+#include "../../yaMangDxDll/yaMangDxDll/yaMangDxDll.h"
 #include "Renderer.h"
 #include "MainWindow.h"
 
@@ -55,7 +55,7 @@ void Renderer::Render( MESHOBJECT* mesh )
 	}
 }
 
-bool Renderer::CreateMesh( const LPCTSTR& fileName, MESHOBJECT* mesh )
+bool Renderer::CreateMesh( LPCTSTR& fileName, MESHOBJECT* mesh )
 {
 	if ( S_OK == InitGeometry( MainWindow::GetInstance()->Window(), fileName, mesh ) )
 	{

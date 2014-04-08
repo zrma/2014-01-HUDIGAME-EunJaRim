@@ -1,23 +1,23 @@
 ﻿#include "stdafx.h"
-#include "TestEventHandler.h"
-#include "../../PacketType.h"
+#include "ChatEventHandler.h"
+#include "../../../PacketType.h"
 #include "CircularBuffer.h"
 
-TestEventHandler::TestEventHandler()
+ChatEventHandler::ChatEventHandler()
 {
 }
 
 
-TestEventHandler::~TestEventHandler()
+ChatEventHandler::~ChatEventHandler()
 {
 }
 
-void TestEventHandler::HandleEvent( PacketHeader* header, CircularBuffer* buffer )
+void ChatEventHandler::HandleEvent( PacketHeader* header, CircularBuffer* buffer )
 {
 	/*
 	ChatBroadcastRequest inPacket;
 	buffer->Read( (char*)&inPacket, header->mSize );
-	printf_s( "TEST RECV:%s \n", inPacket.mChat );
+	printf_s( "CHAT RECV:%s \n", inPacket.mChat );
 
 	ChatBroadcastResult outPacket;
 	outPacket.mPlayerId = inPacket.mPlayerId;
@@ -27,5 +27,6 @@ void TestEventHandler::HandleEvent( PacketHeader* header, CircularBuffer* buffer
 	/// 채팅은 바로 방송 하면 끝
 	if ( !client->Broadcast( &outPacket ) )
 		return;
+
 	*/
 }

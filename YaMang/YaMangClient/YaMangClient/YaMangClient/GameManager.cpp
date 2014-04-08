@@ -1,7 +1,9 @@
 ﻿#include "stdafx.h"
 #include "GameManager.h"
+#include "Renderer.h"
+#include "NetworkManager.h"
 
-GameManager::GameManager()
+GameManager::GameManager(): m_Mesh(nullptr)
 {
 }
 
@@ -16,8 +18,18 @@ GameManager::~GameManager()
 bool GameManager::Init()
 {
 	// 렌더러 생성 및 초기화
-	
+	Renderer::GetInstance()->Init();
+	// 방어코드 필요함
+
+	NetworkManager::GetInstance()->Init();
+	// 방어코드 필요함
+
 	// 리소스 로딩 및 초기화
+	//////////////////////////////////////////////////////////////////////////
+	// 테스트용 코드
+	LPCTSTR fileName = L"tiger.x";
+
+	Renderer::GetInstance()->CreateMesh( fileName, m_Mesh );
 
 	// 씬 생성 및 초기화
 
@@ -32,8 +44,15 @@ bool GameManager::Process()
 	// 업데이트
 
 	// 렌더 비긴
+	Renderer::GetInstance()->RenderBegin();
+
+	if ( m_Mesh )
+	{
+		Renderer::GetInstance()->Render( m_Mesh );
+	}
 
 	// 렌더 엔드
+	Renderer::GetInstance()->RenderEnd();
 
 	return true;
 }

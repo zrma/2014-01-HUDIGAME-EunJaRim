@@ -5,31 +5,49 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Utils">
-      <UniqueIdentifier>{8a0bea49-18dd-414c-bad9-f6b13922cba9}</UniqueIdentifier>
+    <Filter Include="EventHandler">
+      <UniqueIdentifier>{1b0c526e-0e33-4789-9731-1cab60f521a1}</UniqueIdentifier>
     </Filter>
     <Filter Include="MainLoop">
-      <UniqueIdentifier>{c267d2b6-392d-41ef-afcf-e25e5bbc5347}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="EventHandler">
-      <UniqueIdentifier>{785d6400-85ba-41a5-8c5b-e8a89c53a551}</UniqueIdentifier>
+      <UniqueIdentifier>{e6d79ce0-2101-4f0a-b47c-3f696244f68c}</UniqueIdentifier>
     </Filter>
     <Filter Include="PacketDefine">
-      <UniqueIdentifier>{438c0be6-e343-4759-a258-f601f6925763}</UniqueIdentifier>
+      <UniqueIdentifier>{0a26ce5f-33d2-4912-8f37-272c6dcecfb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{cf8ba7a5-240a-46e3-a970-d6e03db70597}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CircularBuffer.h">
-      <Filter>Utils</Filter>
+    <ClInclude Include="Resource.h">
+      <Filter>MainLoop</Filter>
     </ClInclude>
-    <ClInclude Include="Logger.h">
-      <Filter>Utils</Filter>
+    <ClInclude Include="stdafx.h">
+      <Filter>MainLoop</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>MainLoop</Filter>
     </ClInclude>
     <ClInclude Include="YaMangClient.h">
       <Filter>MainLoop</Filter>
+    </ClInclude>
+    <ClInclude Include="ChatEventHandler.h">
+      <Filter>EventHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="EventHandler.h">
+      <Filter>EventHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="HandlerMap.h">
+      <Filter>EventHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="LoginEventHandler.h">
+      <Filter>EventHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="TestEventHandler.h">
+      <Filter>EventHandler</Filter>
     </ClInclude>
     <ClInclude Include="GameManager.h">
       <Filter>MainLoop</Filter>
@@ -43,41 +61,37 @@
     <ClInclude Include="NetworkManager.h">
       <Filter>MainLoop</Filter>
     </ClInclude>
-    <ClInclude Include="Resource.h">
+    <ClInclude Include="Renderer.h">
       <Filter>MainLoop</Filter>
     </ClInclude>
-    <ClInclude Include="stdafx.h">
-      <Filter>MainLoop</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>MainLoop</Filter>
-    </ClInclude>
-    <ClInclude Include="ChatEventHandler.h">
-      <Filter>EventHandler</Filter>
-    </ClInclude>
-    <ClInclude Include="TestEventHandler.h">
-      <Filter>EventHandler</Filter>
-    </ClInclude>
-    <ClInclude Include="HandlerMap.h">
-      <Filter>EventHandler</Filter>
-    </ClInclude>
-    <ClInclude Include="EventHandler.h">
-      <Filter>EventHandler</Filter>
-    </ClInclude>
-    <ClInclude Include="LoginEventHandler.h">
-      <Filter>EventHandler</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\PacketType.h">
+    <ClInclude Include="..\..\..\PacketType.h">
       <Filter>PacketDefine</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer.h" />
+    <ClInclude Include="CircularBuffer.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Logger.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CircularBuffer.cpp">
-      <Filter>Utils</Filter>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>MainLoop</Filter>
     </ClCompile>
-    <ClCompile Include="Logger.cpp">
-      <Filter>Utils</Filter>
+    <ClCompile Include="YaMangClient.cpp">
+      <Filter>MainLoop</Filter>
+    </ClCompile>
+    <ClCompile Include="ChatEventHandler.cpp">
+      <Filter>EventHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="HandlerMap.cpp">
+      <Filter>EventHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="LoginEventHandler.cpp">
+      <Filter>EventHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="TestEventHandler.cpp">
+      <Filter>EventHandler</Filter>
     </ClCompile>
     <ClCompile Include="GameManager.cpp">
       <Filter>MainLoop</Filter>
@@ -88,25 +102,15 @@
     <ClCompile Include="NetworkManager.cpp">
       <Filter>MainLoop</Filter>
     </ClCompile>
-    <ClCompile Include="stdafx.cpp">
+    <ClCompile Include="Renderer.cpp">
       <Filter>MainLoop</Filter>
     </ClCompile>
-    <ClCompile Include="YaMangClient.cpp">
-      <Filter>MainLoop</Filter>
+    <ClCompile Include="CircularBuffer.cpp">
+      <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="HandlerMap.cpp">
-      <Filter>EventHandler</Filter>
+    <ClCompile Include="Logger.cpp">
+      <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="ChatEventHandler.cpp">
-      <Filter>EventHandler</Filter>
-    </ClCompile>
-    <ClCompile Include="LoginEventHandler.cpp">
-      <Filter>EventHandler</Filter>
-    </ClCompile>
-    <ClCompile Include="TestEventHandler.cpp">
-      <Filter>EventHandler</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="YaMangClient.rc">

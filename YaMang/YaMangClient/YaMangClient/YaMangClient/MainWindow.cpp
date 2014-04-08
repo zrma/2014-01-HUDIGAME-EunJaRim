@@ -2,6 +2,7 @@
 #include "MainWindow.h"
 #include "GameManager.h"
 #include "NetworkManager.h"
+#include "Renderer.h"
 
 MainWindow::MainWindow()
 : m_GameManager(GameManager::GetInstance())
@@ -22,7 +23,6 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 		case WM_CREATE:
 		{
 			// 자원 초기화를 수행합니다.
-			NetworkManager::GetInstance()->Init();
 		}
 			return 0;
 
@@ -39,6 +39,8 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 			return 0;
 		case WM_DESTROY:
 		{
+			NetworkManager::GetInstance()->Destroy();
+			Renderer::GetInstance()->Destroy();
 			m_GameManager->Release();
 			PostQuitMessage( 0 );
 		}

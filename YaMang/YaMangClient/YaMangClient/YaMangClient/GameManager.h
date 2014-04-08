@@ -2,6 +2,8 @@
 
 #include "MacroSet.h"
 
+struct MESHOBJECT;
+
 class GameManager : public Singleton<GameManager>
 {
 public:
@@ -15,4 +17,6 @@ public:
 private:
 	GameManager( const GameManager & );
 	GameManager & operator=( const GameManager & );
+
+	MESHOBJECT*		m_Mesh;
 };

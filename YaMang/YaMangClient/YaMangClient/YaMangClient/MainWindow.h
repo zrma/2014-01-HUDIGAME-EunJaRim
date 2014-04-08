@@ -57,6 +57,8 @@ public:
 		wc.hInstance = GetModuleHandle( NULL );
 		wc.lpszClassName = ClassName();
 
+		wc.hCursor = LoadCursor( NULL, IDC_ARROW );
+
 		RegisterClass( &wc );
 
 		m_hwnd = CreateWindowEx( dwExStyle, ClassName(), lpWindowName, dwStyle,
