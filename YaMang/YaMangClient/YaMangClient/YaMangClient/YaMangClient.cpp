@@ -6,6 +6,7 @@
 
 #include <stdio.h>
 #include <time.h>
+#include <crtdbg.h>
 
 #include "Logger.h"
 #include "MainWindow.h"
@@ -21,20 +22,21 @@ int APIENTRY _tWinMain( _In_ HINSTANCE hInstance,
 	UNREFERENCED_PARAMETER( hPrevInstance );
 	UNREFERENCED_PARAMETER( lpCmdLine );
 
+	_CrtSetDbgFlag( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
+
 #ifdef _PRINT_CONSOLE
 	Logger::GetInstance();
 #endif
 
-	MainWindow* window = MainWindow::GetInstance();
-
-	if ( false == window->Create( L"YaMang", WS_POPUPWINDOW, MAKEINTRESOURCE( IDC_YAMANGCLIENT ) ) )
+	if ( false == MainWindow::GetInstance()->Create( L"YaMang", WS_POPUPWINDOW, MAKEINTRESOURCE( IDC_YAMANGCLIENT ) ) )
 	{
 		return 0;
 	}
 
-	window->Display( nCmdShow );
-
-	int result = window->RunGame();
+	MainWindow::GetInstance()->Display( nCmdShow );
+	
+	int result = MainWindow::GetInstance()->RunGame();
+	MainWindow::Release();
 
 #ifdef _PRINT_CONSOLE
 	Logger::Release();

@@ -38,13 +38,26 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 		}
 			return 0;
 		case WM_DESTROY:
-		{
-			NetworkManager::GetInstance()->Destroy();
-			Renderer::GetInstance()->Destroy();
-			m_GameManager->Release();
+		{	
 			PostQuitMessage( 0 );
 		}
 			return 0;
+
+		/*
+		case WM_MOUSEMOVE:
+		{
+			MouseX = LOWORD( IParam );
+			MouseY = HIWORD( IParam );
+		}
+			break;
+		*/
+		case WM_KEYDOWN:
+			switch ( wParam )
+			{
+				case VK_ESCAPE:
+					m_GameManager->Stop();
+					return 0;
+			}
 
 		case WM_ERASEBKGND:
 			return 1;
@@ -70,9 +83,10 @@ int MainWindow::RunGame()
 			DispatchMessage( &msg );
 		}
 
-		if ( m_GameManager->Process() == false )
+		if ( false == m_GameManager->Process() )
 		{
 			m_GameManager->Destroy();
+			m_GameManager->Release();
 			PostQuitMessage( 0 );
 		}
 	}

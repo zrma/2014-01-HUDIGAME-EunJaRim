@@ -46,7 +46,7 @@ bool NetworkManager::Init()
 
 void NetworkManager::Destroy()
 {
-	MessageBox( MainWindow::GetInstance()->Window(), L"Server closed connection", L"Connection closed!", MB_ICONINFORMATION | MB_OK );
+	// MessageBox( MainWindow::GetInstance()->Window(), L"Server closed connection", L"Connection closed!", MB_ICONINFORMATION | MB_OK );
 	closesocket( m_Socket );
 	SendMessage( MainWindow::GetInstance()->Window(), WM_DESTROY, NULL, NULL );
 }

@@ -4,7 +4,7 @@
 #include "Renderer.h"
 #include "NetworkManager.h"
 
-GameManager::GameManager(): m_Mesh(new MESHOBJECT())
+GameManager::GameManager(): m_Mesh( new MESHOBJECT() ), m_Continue( true )
 {
 }
 
@@ -42,6 +42,10 @@ bool GameManager::Init()
 //////////////////////////////////////////////////////////////////////////
 bool GameManager::Process()
 {
+	if ( !m_Continue )
+	{
+		return false;
+	}
 	// 업데이트
 
 	// 렌더 비긴
@@ -66,6 +70,11 @@ void GameManager::Destroy()
 	// 씬 해제
 
 	// 리소스 해제
-
+	Renderer::GetInstance()->DeleteMesh( m_Mesh );
 	// 렌더러 해제
+	Renderer::GetInstance()->Destroy();
+	Renderer::Release();
+
+	NetworkManager::GetInstance()->Destroy();
+	NetworkManager::Release();
 }

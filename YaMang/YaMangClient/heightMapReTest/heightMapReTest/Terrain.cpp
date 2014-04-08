@@ -92,14 +92,14 @@ int Terrain::CreateIndexBuffer()
 	{
 		for ( int x = 0; x < iWidth - 1; ++x )
 		{
-			pIndice->_0 = (DWORD) ( z*iHeight + x );
-			pIndice->_1 = (DWORD) ( z*iHeight + x + 1 );
-			pIndice->_2 = (DWORD) ( ( z + 1 )*iHeight + x );
+			pIndice->_0 = static_cast<WORD> ( z*iHeight + x );
+			pIndice->_1 = static_cast<WORD> ( z*iHeight + x + 1 );
+			pIndice->_2 = static_cast<WORD> ( ( z + 1 )*iHeight + x );
 			++pIndice;
 
-			pIndice->_0 = (DWORD) ( ( z + 1 )*iHeight + x );
-			pIndice->_1 = (DWORD) ( z*iHeight + x + 1 );
-			pIndice->_2 = (DWORD) ( ( z + 1 )*iHeight + x + 1 );
+			pIndice->_0 = static_cast<WORD> ( ( z + 1 )*iHeight + x );
+			pIndice->_1 = static_cast<WORD> ( z*iHeight + x + 1 );
+			pIndice->_2 = static_cast<WORD> ( ( z + 1 )*iHeight + x + 1 );
 			++pIndice;
 		}
 	}
