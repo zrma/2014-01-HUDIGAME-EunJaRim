@@ -28,7 +28,6 @@ bool GameManager::Init()
 	//////////////////////////////////////////////////////////////////////////
 	// 테스트용 코드
 	LPCTSTR fileName = L"tiger.x";
-
 	Renderer::GetInstance()->CreateMesh( fileName, m_Mesh );
 
 	// 씬 생성 및 초기화

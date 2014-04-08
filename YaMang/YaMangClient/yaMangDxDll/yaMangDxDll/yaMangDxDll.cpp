@@ -61,7 +61,7 @@ YAMANGDXDLL_API HRESULT InitGeometry( HWND hWnd, LPCTSTR fileName, MESHOBJECT* i
 	//x file import
 	if (FAILED(D3DXLoadMeshFromX(fileName, D3DXMESH_SYSTEMMEM, D3dDevice, NULL, &D3dxMtrialBuffer, NULL, &(inputVal->NumMaterials), &inputVal->importedMesh)))
 	{
-		MessageBox( NULL, L"Could not find x file", L"Meshes.exe", MB_OK );
+		MessageBox( NULL, L"Could not find x file", fileName, MB_OK );
 		return E_FAIL;
 	}
 
