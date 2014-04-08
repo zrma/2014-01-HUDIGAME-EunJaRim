@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <time.h>
 
-#include "Logger.h"
+// #include "Logger.h"
 #include "MainWindow.h"
 
 #pragma comment(lib,"ws2_32.lib")
@@ -19,9 +19,9 @@ int APIENTRY _tWinMain( _In_ HINSTANCE hInstance,
 {
 	UNREFERENCED_PARAMETER( hPrevInstance );
 	UNREFERENCED_PARAMETER( lpCmdLine );
-
+#ifdef _PRINT_CONSOLE
 	Logger::GetInstance();
-
+#endif
 	MainWindow* window = MainWindow::GetInstance();
 
 	if ( false == window->Create( L"YaMang", WS_POPUPWINDOW, MAKEINTRESOURCE( IDC_YAMANGCLIENT ) ) )
@@ -32,8 +32,9 @@ int APIENTRY _tWinMain( _In_ HINSTANCE hInstance,
 	window->Display( nCmdShow );
 
 	int result = window->RunGame();
+#ifdef _PRINT_CONSOLE
 	Logger::Release();
-
+#endif
 	return result;
 }
 

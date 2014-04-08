@@ -3,6 +3,8 @@
 
 #include "stdafx.h"
 #include "yaMangDxDll.h"
+#include "Logger.h"
+#include <stdio.h>
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -44,6 +46,10 @@ YAMANGDXDLL_API HRESULT InitD3D( HWND hWnd )
 
 	D3dDevice->SetRenderState( D3DRS_CULLMODE, D3DCULL_NONE );
 	D3dDevice->SetRenderState( D3DRS_ZENABLE, TRUE );
+
+#ifdef _PRINT_CONSOLE
+	Logger::GetInstance();
+#endif
 
 	return S_OK;
 }
@@ -222,16 +228,19 @@ YAMANGDXDLL_API void PreRendering( float moveX, float moveY, float moveZ )
 		//일단 1로 진행, 향후 라이트 개수 등 확정되면 인자 받아 설정
 		int lightNum = 1;
 		Lighting( lightNum );
+		printf_s( "라이팅 세팅!\n" );
 
 		D3dDevice->SetTextureStageState( 0, D3DTSS_COLOROP, D3DTOP_MODULATE );
 		D3dDevice->SetTextureStageState( 0, D3DTSS_COLORARG1, D3DTA_TEXTURE );
 		D3dDevice->SetTextureStageState( 0, D3DTSS_COLORARG2, D3DTA_DIFFUSE );
 		D3dDevice->SetTextureStageState( 0, D3DTSS_ALPHAOP, D3DTOP_DISABLE );
+		printf_s( "pre render 완료!\n" );
 	}
 }
 
 YAMANGDXDLL_API void Rendering( MESHOBJECT* inputVal )
 {
+	printf_s( "%p \n", inputVal );
 	for ( DWORD i = 0; i < inputVal->NumMaterials; ++i )
 	{
 		D3dDevice->SetMaterial( &inputVal->MeshMarterials[i] );
@@ -244,6 +253,8 @@ YAMANGDXDLL_API void Rendering( MESHOBJECT* inputVal )
 YAMANGDXDLL_API void PostRendering()
 {
 	D3dDevice->EndScene();
+
+	printf_s( "씬이 종료 되었습니다\n" );
 	D3dDevice->Present( NULL, NULL, NULL, NULL );
 }
 		
@@ -283,6 +294,10 @@ YAMANGDXDLL_API void D3DCleanUp()
 	{
 		D3D->Release();
 	}
+
+#ifdef _PRINT_CONSOLE
+	Logger::Release();
+#endif
 }
 
 
