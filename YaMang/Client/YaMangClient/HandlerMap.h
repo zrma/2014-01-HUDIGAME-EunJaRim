@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include <map>
+#include <array>
 #include "MacroSet.h"
 
 __interface EventHandler;
@@ -15,7 +15,6 @@ public:
 	bool	HandleEvent( short* packetType, PacketHeader* header, CircularBuffer* buffer );
 
 private:
-	std::map<short, EventHandler*> mPacketHandler;
-
+	std::array<EventHandler*, PKT_MAX> m_PacketHandler;
 };
 

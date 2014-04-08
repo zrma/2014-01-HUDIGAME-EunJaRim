@@ -29,6 +29,8 @@ enum PacketTypes
 	// Client to Server (서버쪽에서 핸들링)
 	PKT_SC_TEST = 6,
 	// Server to Client (클라쪽에서 핸들링)
+
+	PKT_MAX = 1024
 };
 
 #pragma pack(push, 1)

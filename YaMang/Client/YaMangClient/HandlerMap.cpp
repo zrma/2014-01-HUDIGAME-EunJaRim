@@ -8,10 +8,10 @@
 
 HandlerMap::HandlerMap()
 {
-	// 서버와 여기가 다름
-	mPacketHandler[PKT_SC_LOGIN] = new LoginEventHandler();
-	mPacketHandler[PKT_SC_CHAT] = new ChatEventHandler();
-	mPacketHandler[PKT_SC_TEST] = new TestEventHandler();
+	ZeroMemory( &m_PacketHandler, sizeof( m_PacketHandler ) );
+	m_PacketHandler[PKT_SC_LOGIN] = new LoginEventHandler();
+	m_PacketHandler[PKT_SC_CHAT] = new ChatEventHandler();
+	m_PacketHandler[PKT_SC_TEST] = new TestEventHandler();
 }
 
 
@@ -21,9 +21,9 @@ HandlerMap::~HandlerMap()
 
 bool HandlerMap::HandleEvent( short* packetType, PacketHeader* header, CircularBuffer* buffer )
 {
-	if ( mPacketHandler[*packetType] )
+	if ( m_PacketHandler[*packetType] )
 	{
-		mPacketHandler[*packetType]->HandleEvent( header, buffer );
+		m_PacketHandler[*packetType]->HandleEvent( header, buffer );
 		return true;
 	}
 	
