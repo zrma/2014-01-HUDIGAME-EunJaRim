@@ -215,8 +215,9 @@ void Lighting(int lightNum)
 //main에서는 mesh object에 대한 직접 rendering 진행
 //post에서는 pre에서 설정한 setting 초기화
 //////////////////////////////////////////////////////////////////////////
-YAMANGDXDLL_API void PreRendering( float moveX, float moveY, float moveZ )
+YAMANGDXDLL_API bool PreRendering( float moveX, float moveY, float moveZ )
 {
+	bool flag = false;
 	//렌더 방어코드
 	//pre rendering 단계에서 진행되지 않으면 향후 render 모두 실패
 	if ( SUCCEEDED( D3dDevice->BeginScene() ) )
@@ -236,7 +237,11 @@ YAMANGDXDLL_API void PreRendering( float moveX, float moveY, float moveZ )
 		D3dDevice->SetTextureStageState( 0, D3DTSS_ALPHAOP, D3DTOP_DISABLE );
 		
 		Log( "pre render 완료!\n" );
+		
+		flag = true;
 	}
+
+	return flag;
 }
 
 YAMANGDXDLL_API void Rendering( MESHOBJECT* inputVal )
