@@ -189,10 +189,7 @@ void Lighting(int lightNum)
 
 	D3dDevice->SetLight( 0, &light0 );
 	D3dDevice->SetLight( 1, &light1 );
-
-	D3dDevice->SetRenderState( D3DRS_LIGHTING, TRUE );
-	D3dDevice->SetRenderState( D3DRS_AMBIENT, 0x00808080 );
-
+		
 	switch ( lightNum )
 	{
 		case 1:
@@ -206,6 +203,9 @@ void Lighting(int lightNum)
 		default:
 			break;
 	}
+
+	D3dDevice->SetRenderState( D3DRS_LIGHTING, TRUE );
+	D3dDevice->SetRenderState( D3DRS_AMBIENT, 0x00808080 );
 }
 
 
@@ -217,6 +217,13 @@ void Lighting(int lightNum)
 //////////////////////////////////////////////////////////////////////////
 YAMANGDXDLL_API void PreRendering( float moveX, float moveY, float moveZ )
 {
+	if ( NULL == D3dDevice )
+	{
+		return;
+	}
+
+	D3dDevice->Clear( 0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB( 30, 10, 10 ), 1.0f, 0 );
+
 	//렌더 방어코드
 	//pre rendering 단계에서 진행되지 않으면 향후 render 모두 실패
 	if ( SUCCEEDED( D3dDevice->BeginScene() ) )
@@ -227,7 +234,7 @@ YAMANGDXDLL_API void PreRendering( float moveX, float moveY, float moveZ )
 		//일단 1로 진행, 향후 라이트 개수 등 확정되면 인자 받아 설정
 		int lightNum = 1;
 		Lighting( lightNum );
-
+		
 		Log( "라이팅 세팅!\n" );
 
 		D3dDevice->SetTextureStageState( 0, D3DTSS_COLOROP, D3DTOP_MODULATE );
@@ -235,13 +242,13 @@ YAMANGDXDLL_API void PreRendering( float moveX, float moveY, float moveZ )
 		D3dDevice->SetTextureStageState( 0, D3DTSS_COLORARG2, D3DTA_DIFFUSE );
 		D3dDevice->SetTextureStageState( 0, D3DTSS_ALPHAOP, D3DTOP_DISABLE );
 		
-		Log( "pre render 완료!\n" );
+		Log( "Render Begin \n" );
 	}
 }
 
 YAMANGDXDLL_API void Rendering( MESHOBJECT* inputVal )
 {
-	Log( "%p \n", inputVal );
+	Log( "Now Render : %p \n", inputVal );
 	for ( DWORD i = 0; i < inputVal->NumMaterials; ++i )
 	{
 		D3dDevice->SetMaterial( &inputVal->MeshMarterials[i] );
@@ -255,7 +262,7 @@ YAMANGDXDLL_API void PostRendering()
 {
 	D3dDevice->EndScene();
 
-	Log( "씬이 종료 되었습니다\n" );
+	Log( "Render End \n" );
 	D3dDevice->Present( NULL, NULL, NULL, NULL );
 }
 		
@@ -300,9 +307,6 @@ YAMANGDXDLL_API void D3DCleanUp()
 	Logger::Release();
 #endif
 }
-
-
-
 
 
 // 내보낸 변수의 예제입니다.
