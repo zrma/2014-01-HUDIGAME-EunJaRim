@@ -70,6 +70,7 @@
     <ClInclude Include="..\..\PacketType.h">
       <Filter>PacketDefine</Filter>
     </ClInclude>
+    <ClInclude Include="Renderer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CircularBuffer.cpp">
@@ -105,6 +106,7 @@
     <ClCompile Include="TestEventHandler.cpp">
       <Filter>EventHandler</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="YaMangClient.rc">
