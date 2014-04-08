@@ -1,15 +1,17 @@
 ﻿#include "stdafx.h"
 #include "GameManager.h"
+#include "../../yaMangDxDll/yaMangDxDll/yaMangDxDll.h"
 #include "Renderer.h"
 #include "NetworkManager.h"
 
-GameManager::GameManager(): m_Mesh(nullptr)
+GameManager::GameManager(): m_Mesh(new MESHOBJECT())
 {
 }
 
 
 GameManager::~GameManager()
 {
+	SafeDelete( m_Mesh );
 }
 
 //////////////////////////////////////////////////////////////////////////
