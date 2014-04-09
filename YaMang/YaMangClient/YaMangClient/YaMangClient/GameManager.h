@@ -16,9 +16,6 @@ public:
 	void Stop() { m_Continue = false;  }
 
 private:
-	GameManager( const GameManager & );
-	GameManager & operator=( const GameManager & );
-	
 	bool			m_Continue;
 
 	MESHOBJECT*		m_Mesh;

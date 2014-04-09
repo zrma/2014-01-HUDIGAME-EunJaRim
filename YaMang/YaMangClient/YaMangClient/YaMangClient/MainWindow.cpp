@@ -5,7 +5,6 @@
 #include "Renderer.h"
 
 MainWindow::MainWindow()
-: m_GameManager(GameManager::GetInstance())
 {
 }
 
@@ -55,7 +54,7 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 			switch ( wParam )
 			{
 				case VK_ESCAPE:
-					m_GameManager->Stop();
+					GameManager::GetInstance()->Stop();
 					return 0;
 			}
 
@@ -71,7 +70,7 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 
 int MainWindow::RunGame()
 {
-	m_GameManager->Init();
+	GameManager::GetInstance()->Init();
 
 	MSG msg = {0,};
 
@@ -83,10 +82,10 @@ int MainWindow::RunGame()
 			DispatchMessage( &msg );
 		}
 
-		if ( false == m_GameManager->Process() )
+		if ( false == GameManager::GetInstance()->Process() )
 		{
-			m_GameManager->Destroy();
-			m_GameManager->Release();
+			GameManager::GetInstance()->Destroy();
+			GameManager::Release();
 			PostQuitMessage( 0 );
 		}
 	}

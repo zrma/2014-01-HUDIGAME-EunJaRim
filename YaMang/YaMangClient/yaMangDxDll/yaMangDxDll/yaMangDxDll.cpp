@@ -276,7 +276,7 @@ YAMANGDXDLL_API void PostRendering()
 
 YAMANGDXDLL_API void MeshObjectCleanUp( MESHOBJECT* inputVal )
 {
-	if ( inputVal->MeshMarterials )
+	if ( NULL != inputVal->MeshMarterials )
 	{
 		delete[] inputVal->MeshMarterials;
 	}

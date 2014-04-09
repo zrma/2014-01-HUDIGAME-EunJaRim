@@ -93,11 +93,5 @@ public:
 
 	HWND	Window() const { return m_hwnd; }
 	BOOL	Display( int nCmdShow ) const { return ShowWindow( Window(), nCmdShow ); }
-
-private:
-	MainWindow( const MainWindow & );
-	MainWindow & operator=( const MainWindow & );
-
-	GameManager* m_GameManager;
 };
 
