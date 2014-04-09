@@ -26,6 +26,8 @@ bool GameManager::Init()
 	NetworkManager::GetInstance()->Init();
 	// 방어코드 필요함
 
+	NetworkManager::GetInstance()->Connect();
+
 	// 리소스 로딩 및 초기화
 	//////////////////////////////////////////////////////////////////////////
 	// 테스트용 코드

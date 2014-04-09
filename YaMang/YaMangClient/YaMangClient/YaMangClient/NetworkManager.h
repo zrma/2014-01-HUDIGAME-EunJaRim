@@ -11,7 +11,7 @@ public:
 	bool	Init();
 	void	Destroy();
 	void	ProcessPacket();
-	bool	Connect( const char* serverAddr, int port );
+	bool	Connect();
 	
 
 private:

@@ -3,6 +3,9 @@
 
 #include "../../../PacketType.h"
 #include "MainWindow.h"
+#include "tinyxml.h"
+#include "xpath_static.h"
+#include <string>
 
 #pragma comment(lib,"ws2_32.lib")
 
@@ -46,13 +49,37 @@ bool NetworkManager::Init()
 
 void NetworkManager::Destroy()
 {
-	// MessageBox( MainWindow::GetInstance()->Window(), L"Server closed connection", L"Connection closed!", MB_ICONINFORMATION | MB_OK );
+	MessageBox( MainWindow::GetInstance()->Window(), L"Server closed connection", L"Connection closed!", MB_ICONINFORMATION | MB_OK );
 	closesocket( m_Socket );
 	SendMessage( MainWindow::GetInstance()->Window(), WM_DESTROY, NULL, NULL );
 }
 
-bool NetworkManager::Connect( const char* serverAddr, int port )
+bool NetworkManager::Connect()
 {
+
+	const char * serverAddr = "127.0.0.1";
+	int port;
+
+	// xml 로드 테스트
+	TiXmlDocument document = TiXmlDocument( "clientConfig.xml" );
+	bool m_LoadSuccess = document.LoadFile();
+
+	if ( m_LoadSuccess )
+	{
+		std::string ipLoad;
+		std::string portLoad;
+		ipLoad = TinyXPath::S_xpath_string( document.RootElement( ), "/client/ip/text()" ).c_str( );
+		portLoad = TinyXPath::S_xpath_string( document.RootElement( ), "/client/port/text()" ).c_str( );
+		
+		serverAddr = ipLoad.c_str();
+		port = std::stoi( portLoad );
+		Log( "Loaded ip :%s Port Number :%s \n", serverAddr, portLoad.c_str() );
+	}
+	else
+	{
+		MessageBox( MainWindow::GetInstance()->Window(), L"ClientConfig.xml Load Fail", L"Connection Load Fail!", MB_ICONINFORMATION | MB_OK );
+	}
+
 	struct hostent* host;
 
 	if ( ( host = gethostbyname( serverAddr ) ) == NULL )
