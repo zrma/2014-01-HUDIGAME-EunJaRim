@@ -86,7 +86,8 @@ int MainWindow::RunGame()
 		{
 			GameManager::GetInstance()->Destroy();
 			GameManager::Release();
-			PostQuitMessage( 0 );
+			
+			break;
 		}
 	}
 

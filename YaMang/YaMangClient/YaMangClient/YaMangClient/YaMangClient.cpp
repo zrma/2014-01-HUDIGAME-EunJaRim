@@ -23,7 +23,7 @@ int APIENTRY _tWinMain( _In_ HINSTANCE hInstance,
 	UNREFERENCED_PARAMETER( lpCmdLine );
 
 	_CrtSetDbgFlag( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
-	// _CrtSetBreakAlloc( 209 );
+	// _CrtSetBreakAlloc( 193 );
 
 #ifdef _PRINT_CONSOLE
 	Logger::GetInstance();
