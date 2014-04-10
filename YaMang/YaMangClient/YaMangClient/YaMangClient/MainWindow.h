@@ -20,7 +20,7 @@ public:
 			pThis = (BaseWindow*)pCreate->lpCreateParams;
 			SetWindowLongPtr( hwnd, GWLP_USERDATA, (LONG_PTR)pThis );
 
-			pThis->m_hwnd = hwnd;
+			pThis->m_HandleOfWindow = hwnd;
 		}
 		else
 		{
@@ -37,7 +37,7 @@ public:
 		}
 	}
 
-	BaseWindow(): m_hwnd( nullptr ), m_hAccelTable( nullptr ){}
+	BaseWindow(): m_HandleOfWindow( nullptr ), m_HandleOfAccelTable( nullptr ){}
 
 	BOOL Create( PCWSTR lpWindowName,
 				 DWORD dwStyle, 
@@ -61,12 +61,12 @@ public:
 
 		RegisterClass( &wc );
 
-		m_hwnd = CreateWindowEx( dwExStyle, ClassName(), lpWindowName, dwStyle,
+		m_HandleOfWindow = CreateWindowEx( dwExStyle, ClassName(), lpWindowName, dwStyle,
 								 x, y, nWidth, nHeight, hWndParent, hMenu, GetModuleHandle( NULL ), this );
 		
-		m_hAccelTable = LoadAccelerators( wc.hInstance, lpTableName );
+		m_HandleOfAccelTable = LoadAccelerators( wc.hInstance, lpTableName );
 
-		return ( m_hwnd ? TRUE : FALSE );
+		return ( m_HandleOfWindow ? TRUE : FALSE );
 	}
 
 	static const int WINDOW_WIDTH = 640; // 1280;
@@ -76,8 +76,8 @@ protected:
 	virtual PCWSTR	ClassName() const = 0;
 	virtual LRESULT	HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam ) = 0;
 
-	HWND	m_hwnd;
-	HACCEL	m_hAccelTable;
+	HWND	m_HandleOfWindow;
+	HACCEL	m_HandleOfAccelTable;
 };
 
 class MainWindow: public BaseWindow, public Singleton<MainWindow>
@@ -91,7 +91,7 @@ public:
 	
 	int		RunGame();
 
-	HWND	Window() const { return m_hwnd; }
+	HWND	Window() const { return m_HandleOfWindow; }
 	BOOL	Display( int nCmdShow ) const { return ShowWindow( Window(), nCmdShow ); }
 };
 
