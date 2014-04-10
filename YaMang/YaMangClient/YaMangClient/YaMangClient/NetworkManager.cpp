@@ -106,23 +106,28 @@ void NetworkManager::ProcessPacket()
 {
 	// 하단의 것들 각각 이벤트 핸들링 해 줘야 됨
 
-	/*
-	while ( true )
-	{
+	
+	//while ( true )
+	//{
 		PacketHeader header;
 		
-		if ( false == g_RecvBuffer.Peek( (char*)&header, sizeof( PacketHeader ) ) )
-			break;
+		if ( false == m_RecvBuffer.Peek( (char*)&header, sizeof( PacketHeader ) ) )
+		{
+			return;
+		}
+			
 
-		if ( header.mSize > static_cast<short> ( g_RecvBuffer.GetCurrentSize() ) )
-			break;
+		if ( header.mSize > static_cast<short> ( m_RecvBuffer.GetCurrentSize() ) )
+		{
+			return;
+		}
 
 		switch ( header.mType )
 		{
 			case PKT_SC_LOGIN:
 			{
 				LoginResult recvData;
-				if ( g_RecvBuffer.Read( (char*)&recvData, header.mSize ) )
+				if ( m_RecvBuffer.Read( (char*)&recvData, header.mSize ) )
 				{
 					// 패킷처리
 					if ( recvData.mPlayerId == -1 )
@@ -131,20 +136,20 @@ void NetworkManager::ProcessPacket()
 						ExitProcess( -1 );
 					}
 
+					printf_s( "player[%d] \n", recvData.mPlayerId );
+					//g_MyClientId = recvData.mPlayerId;
+					//g_LoginComplete = true;
 
-					g_MyClientId = recvData.mPlayerId;
-					g_LoginComplete = true;
+					//char buff[128] = { 0, };
+					//sprintf_s( buff, "LOGIN SUCCESS ClientId[%d] Name[%s] POS(%.4f, %.4f, %.4f) \n", g_MyClientId, recvData.mName, recvData.mPosX, recvData.mPosY, recvData.mPosZ );
 
-					char buff[128] = { 0, };
-					sprintf_s( buff, "LOGIN SUCCESS ClientId[%d] Name[%s] POS(%.4f, %.4f, %.4f) \n", g_MyClientId, recvData.mName, recvData.mPosX, recvData.mPosY, recvData.mPosZ );
-
-					static int ypos = 33;
-					HDC hdc = GetDC( hWnd );
-					TextOutA( hdc, 10, 33, buff, strlen( buff ) );
-					ReleaseDC( hWnd, hdc );
-
-					/// 채팅 방송 패킷 보내는 타이머 돌리자.. 
-					SetTimer( hWnd, 337, 3000, NULL );
+// 					static int ypos = 33;
+// 					HDC hdc = GetDC( hWnd );
+// 					TextOutA( hdc, 10, 33, buff, strlen( buff ) );
+// 					ReleaseDC( hWnd, hdc );
+// 
+// 					/// 채팅 방송 패킷 보내는 타이머 돌리자.. 
+// 					SetTimer( hWnd, 337, 3000, NULL );
 
 				}
 				else
@@ -156,6 +161,7 @@ void NetworkManager::ProcessPacket()
 
 			case PKT_SC_CHAT:
 			{
+				/*
 				ChatBroadcastResult recvData;
 				if ( g_RecvBuffer.Read( (char*)&recvData, header.mSize ) )
 				{
@@ -178,12 +184,14 @@ void NetworkManager::ProcessPacket()
 				{
 					assert( false );
 				}
+				*/
+
 			}
 				break;
 			default:
 				assert( false );
 		}
 
-	}
-	*/
+	//}
+	
 }

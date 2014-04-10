@@ -50,6 +50,8 @@ bool GameManager::Process()
 	}
 	// 업데이트
 
+	NetworkManager::GetInstance()->ProcessPacket();
+
 	// 렌더 비긴
 	Renderer::GetInstance()->RenderBegin();
 
