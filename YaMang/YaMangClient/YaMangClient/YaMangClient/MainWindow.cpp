@@ -60,6 +60,13 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 			return 0;
 		case WM_DESTROY:
 		{	
+			if ( GameManager::GetInstance()->Process() )
+			{
+				GameManager::GetInstance()->Stop();
+				// 창이 강제 제거 되었을 때(창 닫기 등)
+				// 여기서 이 이벤트를 발생시켜서 RunGame()의 루프에서 빠져나오게 해야
+				// 안전하게 리소스가 해제 되면서 메모리 릭을 피할 수 있다.
+			}
 			PostQuitMessage( 0 );
 		}
 			return 0;
@@ -120,7 +127,7 @@ int MainWindow::RunGame()
 		{
 			GameManager::GetInstance()->Destroy();
 			GameManager::Release();
-			
+			PostQuitMessage( 0 );
 			break;
 		}
 	}
