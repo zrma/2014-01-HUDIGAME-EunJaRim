@@ -37,6 +37,8 @@ bool NetworkManager::Init()
 	}
 
 	nResult = WSAAsyncSelect( m_Socket, MainWindow::GetInstance()->Window(), WM_SOCKET, ( FD_CLOSE | FD_CONNECT ) );
+	// 소켓에 오는 것들은 WM_SOCKET 이벤트로 처리하겠음
+
 	if ( nResult )
 	{
 		MessageBox( MainWindow::GetInstance()->Window(), L"WSAAsyncSelect failed", L"Critical Error", MB_ICONERROR );
