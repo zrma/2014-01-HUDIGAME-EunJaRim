@@ -6,7 +6,6 @@
 #include "Logger.h"
 #include <stdio.h>
 
-
 //////////////////////////////////////////////////////////////////////////
 //Global val 선언
 //////////////////////////////////////////////////////////////////////////
@@ -236,15 +235,15 @@ YAMANGDXDLL_API bool PreRendering( float moveX, float moveY, float moveZ )
 		int lightNum = 1;
 		Lighting( lightNum );
 		
-		Log( "라이팅 세팅!\n" );
+		//Log( "라이팅 세팅!\n" );
 
 		D3dDevice->SetTextureStageState( 0, D3DTSS_COLOROP, D3DTOP_MODULATE );
 		D3dDevice->SetTextureStageState( 0, D3DTSS_COLORARG1, D3DTA_TEXTURE );
 		D3dDevice->SetTextureStageState( 0, D3DTSS_COLORARG2, D3DTA_DIFFUSE );
 		D3dDevice->SetTextureStageState( 0, D3DTSS_ALPHAOP, D3DTOP_DISABLE );
 		
-		Log( "Render Begin \n" );
-		Log( "pre render 완료!\n" );
+		//Log( "Render Begin \n" );
+		//Log( "pre render 완료!\n" );
 		
 		flag = true;
 	}
@@ -254,7 +253,7 @@ YAMANGDXDLL_API bool PreRendering( float moveX, float moveY, float moveZ )
 
 YAMANGDXDLL_API void Rendering( MESHOBJECT* inputVal )
 {
-	Log( "Now Render : %p \n", inputVal );
+	//Log( "Now Render : %p \n", inputVal );
 	for ( DWORD i = 0; i < inputVal->NumMaterials; ++i )
 	{
 		D3dDevice->SetMaterial( &inputVal->MeshMarterials[i] );
@@ -268,7 +267,7 @@ YAMANGDXDLL_API void PostRendering()
 {
 	D3dDevice->EndScene();
 
-	Log( "Render End \n" );
+	//Log( "Render End \n" );
 	D3dDevice->Present( NULL, NULL, NULL, NULL );
 }
 		
