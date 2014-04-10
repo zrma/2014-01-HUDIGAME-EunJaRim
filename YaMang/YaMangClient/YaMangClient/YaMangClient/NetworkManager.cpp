@@ -64,14 +64,11 @@ bool NetworkManager::Connect()
 
 	// xml 로드 테스트
 	TiXmlDocument document = TiXmlDocument( "clientConfig.xml" );
-	bool m_LoadSuccess = document.LoadFile();
 
-	if ( m_LoadSuccess )
+	if ( document.LoadFile() )
 	{
-		std::string ipLoad;
-		std::string portLoad;
-		ipLoad = TinyXPath::S_xpath_string( document.RootElement( ), "/client/ip/text()" ).c_str( );
-		portLoad = TinyXPath::S_xpath_string( document.RootElement( ), "/client/port/text()" ).c_str( );
+		std::string ipLoad = TinyXPath::S_xpath_string( document.RootElement(), "/client/ip/text()" ).c_str();
+		std::string portLoad = TinyXPath::S_xpath_string( document.RootElement( ), "/client/port/text()" ).c_str( );
 		
 		serverAddr = ipLoad.c_str();
 		port = std::stoi( portLoad );
@@ -84,7 +81,7 @@ bool NetworkManager::Connect()
 
 	struct hostent* host;
 
-	if ( ( host = gethostbyname( serverAddr ) ) == NULL )
+	if ( NULL == ( host = gethostbyname( serverAddr ) ) )
 	{
 		return false;
 	}
@@ -108,92 +105,85 @@ void NetworkManager::ProcessPacket()
 {
 	// 하단의 것들 각각 이벤트 핸들링 해 줘야 됨
 
-	
-	//while ( true )
-	//{
-		PacketHeader header;
-		
-		if ( false == m_RecvBuffer.Peek( (char*)&header, sizeof( PacketHeader ) ) )
-		{
-			return;
-		}
-			
+	PacketHeader header;
 
-		if ( header.mSize > static_cast<short> ( m_RecvBuffer.GetCurrentSize() ) )
-		{
-			return;
-		}
+	if ( false == m_RecvBuffer.Peek( (char*)&header, sizeof( PacketHeader ) ) )
+	{
+		return;
+	}
 
-		switch ( header.mType )
+
+	if ( header.mSize > static_cast<short> ( m_RecvBuffer.GetCurrentSize() ) )
+	{
+		return;
+	}
+
+	switch ( header.mType )
+	{
+		case PKT_SC_LOGIN:
 		{
-			case PKT_SC_LOGIN:
+			LoginResult recvData;
+			if ( m_RecvBuffer.Read( (char*)&recvData, header.mSize ) )
 			{
-				LoginResult recvData;
-				if ( m_RecvBuffer.Read( (char*)&recvData, header.mSize ) )
+				// 패킷처리
+				if ( recvData.mPlayerId == -1 )
 				{
-					// 패킷처리
-					if ( recvData.mPlayerId == -1 )
-					{
-						/// 여기 걸리면 로그인 실패다.
-						ExitProcess( -1 );
-					}
+					/// 여기 걸리면 로그인 실패다.
+					ExitProcess( -1 );
+				}
 
-					printf_s( "player[%d] \n", recvData.mPlayerId );
-					//g_MyClientId = recvData.mPlayerId;
-					//g_LoginComplete = true;
-
-					//char buff[128] = { 0, };
-					//sprintf_s( buff, "LOGIN SUCCESS ClientId[%d] Name[%s] POS(%.4f, %.4f, %.4f) \n", g_MyClientId, recvData.mName, recvData.mPosX, recvData.mPosY, recvData.mPosZ );
-
-// 					static int ypos = 33;
-// 					HDC hdc = GetDC( hWnd );
-// 					TextOutA( hdc, 10, 33, buff, strlen( buff ) );
-// 					ReleaseDC( hWnd, hdc );
+// 				printf_s( "player[%d] \n", recvData.mPlayerId );
+// 				g_MyClientId = recvData.mPlayerId;
+// 				g_LoginComplete = true;
 // 
-// 					/// 채팅 방송 패킷 보내는 타이머 돌리자.. 
-// 					SetTimer( hWnd, 337, 3000, NULL );
+// 				char buff[128] = { 0, };
+// 				sprintf_s( buff, "LOGIN SUCCESS ClientId[%d] Name[%s] POS(%.4f, %.4f, %.4f) \n", g_MyClientId, recvData.mName, recvData.mPosX, recvData.mPosY, recvData.mPosZ );
+// 
+// 				static int ypos = 33;
+// 				HDC hdc = GetDC( hWnd );
+// 				TextOutA( hdc, 10, 33, buff, strlen( buff ) );
+// 				ReleaseDC( hWnd, hdc );
+// 
+// 				/// 채팅 방송 패킷 보내는 타이머 돌리자.. 
+// 				SetTimer( hWnd, 337, 3000, NULL );
 
-				}
-				else
-				{
-					assert( false );
-				}
 			}
-				break;
-
-			case PKT_SC_CHAT:
+			else
 			{
-				/*
-				ChatBroadcastResult recvData;
-				if ( g_RecvBuffer.Read( (char*)&recvData, header.mSize ) )
-				{
-					/// 여기 걸리면 로그인 안된놈이 보낸거다
-					assert( recvData.mPlayerId != -1 );
-
-					char buff[MAX_CHAT_LEN] = { 0, };
-					sprintf_s( buff, "CHAT from Player[%s]: %s \n", recvData.mName, recvData.mChat );
-
-					static int y2pos = 60;
-					HDC hdc = GetDC( hWnd );
-					TextOutA( hdc, 10, y2pos, buff, strlen( buff ) );
-					ReleaseDC( hWnd, hdc );
-					y2pos += 15;
-					if ( y2pos > 600 )
-						y2pos = 60;
-
-				}
-				else
-				{
-					assert( false );
-				}
-				*/
-
-			}
-				break;
-			default:
 				assert( false );
+			}
 		}
+			break;
 
-	//}
-	
+		case PKT_SC_CHAT:
+		{
+// 
+// 			ChatBroadcastResult recvData;
+// 			if ( g_RecvBuffer.Read( (char*)&recvData, header.mSize ) )
+// 			{
+// 				/// 여기 걸리면 로그인 안된놈이 보낸거다
+// 				assert( recvData.mPlayerId != -1 );
+// 
+// 				char buff[MAX_CHAT_LEN] = { 0, };
+// 				sprintf_s( buff, "CHAT from Player[%s]: %s \n", recvData.mName, recvData.mChat );
+// 
+// 				static int y2pos = 60;
+// 				HDC hdc = GetDC( hWnd );
+// 				TextOutA( hdc, 10, y2pos, buff, strlen( buff ) );
+// 				ReleaseDC( hWnd, hdc );
+// 				y2pos += 15;
+// 				if ( y2pos > 600 )
+// 					y2pos = 60;
+// 
+// 			}
+// 			else
+// 			{
+// 				assert( false );
+// 			}
+
+		}
+			break;
+		default:
+			assert( false );
+	}
 }
