@@ -30,7 +30,8 @@ int APIENTRY _tWinMain( _In_ HINSTANCE hInstance,
 	Logger::GetInstance();
 #endif
 
-	if ( false == MainWindow::GetInstance()->Create( L"YaMang", WS_POPUPWINDOW, MAKEINTRESOURCE( IDC_YAMANGCLIENT ) ) )
+	// WS_POPUPWINDOW
+	if ( false == MainWindow::GetInstance()->Create( L"YaMang", WS_OVERLAPPEDWINDOW , MAKEINTRESOURCE( IDC_YAMANGCLIENT ) ) )
 	{
 		return 0;
 	}

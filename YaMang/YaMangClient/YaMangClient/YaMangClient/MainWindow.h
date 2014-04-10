@@ -69,8 +69,8 @@ public:
 		return ( m_hwnd ? TRUE : FALSE );
 	}
 
-	static const int WINDOW_WIDTH = 1280;
-	static const int WINDOW_HEIGHT = 720;
+	static const int WINDOW_WIDTH = 640; // 1280;
+	static const int WINDOW_HEIGHT = 360; // 720;
 
 protected:
 	virtual PCWSTR	ClassName() const = 0;
