@@ -12,10 +12,40 @@ LONG WINAPI ExceptionFilter( EXCEPTION_POINTERS* exceptionInfo )
 		return EXCEPTION_CONTINUE_SEARCH;
 	}
 
+	std::string fileName = "YaMangServer_minidump-" __DATE__ "-" __TIME__".dmp";
+	std::string::size_type offset = 0;
+	for ( int i = 0; i < fileName.length(); ++i )
+	{
+		offset = fileName.find( " ", offset );
+
+		if ( std::string::npos == offset )
+		{
+			break;
+		}
+		else
+		{
+			fileName.replace( offset, 1, "_" );
+		}
+	}
+
+	offset = 0;
+	for ( int i = 0; i < fileName.length(); ++i )
+	{
+		offset = fileName.find( ":", offset );
+
+		if ( std::string::npos == offset )
+		{
+			break;
+		}
+		else
+		{
+			fileName.replace( offset, 1, "_" );
+		}
+	}
 
 	/// dump file 남기자.
 	// 디버깅 중이 아닐 때 생긴 Crash에 대해서 dmp 파일을 남기는 부분
-	HANDLE hFile = CreateFileA( "EasyServer_minidump.dmp", GENERIC_READ | GENERIC_WRITE,
+	HANDLE hFile = CreateFileA( fileName.c_str(), GENERIC_READ | GENERIC_WRITE,
 								0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL );
 
 	if ( ( hFile != NULL ) && ( hFile != INVALID_HANDLE_VALUE ) )

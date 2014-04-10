@@ -43,10 +43,8 @@ int _tmain( int argc, _TCHAR* argv[] )
 	}
 	else
 	{
-		printf_s( "LoadFail" );
+		printf_s( "PORT Load Fail! \n" );
 	}
-
-
 
 	LThreadType = THREAD_MAIN;
 
