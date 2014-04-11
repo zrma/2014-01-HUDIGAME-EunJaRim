@@ -4,7 +4,8 @@
 #include "ClientManager.h"
 #include "DatabaseJobContext.h"
 #include "DatabaseJobManager.h"
-#include "TestHandler.h"
+#include "ChatHandler.h"
+#include "LoginHandler.h"
 
 //@{ Handler Helper
 
@@ -37,7 +38,8 @@ struct RegisterHandler
 	}
 };
 
-
+static RegisterHandler registLoginHandler( PKT_CS_LOGIN, LoginHandler::HandleEvent );
+static RegisterHandler registChatHandler( PKT_CS_CHAT, ChatHandler::HandleEvent );
 
 //@}
 
@@ -378,28 +380,3 @@ void CALLBACK SendCompletion( DWORD dwError, DWORD cbTransferred, LPWSAOVERLAPPE
 	fromClient->OnWriteComplete( cbTransferred );
 
 }
-
-
-//////////////////////////////////////////////////////////////////
-
-
-static void HandlerPKT_CS_LOGIN( ClientSession* session, PacketHeader& pktBase );
-static RegisterHandler _registerPKT_CS_LOGIN( PKT_CS_LOGIN, HandlerPKT_CS_LOGIN );
-static void HandlerPKT_CS_LOGIN( ClientSession* session, PacketHeader& pktBase )
-{
-	LoginRequest inPacket = static_cast<LoginRequest&>( pktBase );
-	session->HandleLoginRequest( inPacket );
-}
-
-void ClientSession::HandleLoginRequest( LoginRequest& inPacket )
-{
-	mRecvBuffer.Read( (char*)&inPacket, inPacket.mSize );
-
-	/// 로그인은 DB 작업을 거쳐야 하기 때문에 DB 작업 요청한다.
-	LoadPlayerDataContext* newDbJob = new LoadPlayerDataContext( mSocket, inPacket.mPlayerId );
-	GDatabaseJobManager->PushDatabaseJobRequest( newDbJob );
-}
-
-
-
-static RegisterHandler registTestHandler( PKT_CS_CHAT, TestHandler::HandleEvent );
