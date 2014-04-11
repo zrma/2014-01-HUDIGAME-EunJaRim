@@ -13,6 +13,13 @@
 
 #pragma comment(lib,"ws2_32.lib")
 
+// 테스트용 전역 변수 입니다.
+// 반드시 나중에 날려버립시다.
+
+float posX = 0;
+float posY = 0;
+float posZ = 0;
+
 int APIENTRY _tWinMain( _In_ HINSTANCE hInstance,
 						_In_opt_ HINSTANCE hPrevInstance,
 						_In_ LPTSTR    lpCmdLine,

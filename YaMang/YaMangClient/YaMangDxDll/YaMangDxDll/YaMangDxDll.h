@@ -28,7 +28,7 @@ extern "C"{
 	YAMANGDXDLL_API bool PreRendering( float moveX = 0, float moveY = 0, float moveZ = 0);
 
 	//Main rendering MeshObject를 넣어 render 진행
-	YAMANGDXDLL_API void Rendering( MESHOBJECT* inputVal );
+	YAMANGDXDLL_API void Rendering( MESHOBJECT* inputVal, float moveX = 0, float moveY = 0, float moveZ = 0 );
 
 	//rendering 후 디바이스 endScene
 	YAMANGDXDLL_API void PostRendering();

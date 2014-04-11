@@ -3,6 +3,10 @@
 #include "Renderer.h"
 #include "MainWindow.h"
 
+extern float posX;
+extern float posY;
+extern float posZ;
+
 Renderer::Renderer(): m_Result( false ), m_IsReady( false )
 {
 }
@@ -50,7 +54,7 @@ void Renderer::Render( MESHOBJECT* mesh )
 {
 	if ( mesh && m_IsReady )
 	{
-		Rendering( mesh );
+		Rendering( mesh, posX, posY, posZ );
 	}
 }
 

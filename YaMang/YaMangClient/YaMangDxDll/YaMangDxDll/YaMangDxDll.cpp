@@ -251,8 +251,13 @@ YAMANGDXDLL_API bool PreRendering( float moveX, float moveY, float moveZ )
 	return flag;
 }
 
-YAMANGDXDLL_API void Rendering( MESHOBJECT* inputVal )
+YAMANGDXDLL_API void Rendering( MESHOBJECT* inputVal, float moveX, float moveY, float moveZ )
 {
+	D3DXMATRIXA16 thisMatrix;
+
+	D3DXMatrixTranslation( &thisMatrix, moveX, moveY, moveZ );
+	g_D3dDevice->MultiplyTransform( D3DTS_WORLD, &thisMatrix );
+
 	//Log( "Now Render : %p \n", inputVal );
 	for ( DWORD i = 0; i < inputVal->NumMaterials; ++i )
 	{

@@ -12,6 +12,10 @@
 
 const int BUFSIZE = 1024 * 10;
 
+extern float posX;
+extern float posY;
+extern float posZ;
+
 NetworkManager::NetworkManager()
 :m_Socket( NULL ), m_RecvBuffer( BUFSIZE ), m_SendBuffer(BUFSIZE)
 {
@@ -166,6 +170,15 @@ void NetworkManager::ProcessPacket()
  
  				char buff[MAX_CHAT_LEN] = { 0, };
  				sprintf_s( buff, "CHAT from Player[%s]: %s \n", recvData.mName, recvData.mChat );
+
+				if ( recvData.mChat[0] == 'L' )
+				{
+					posX -= 2.0f;
+				}
+				if ( recvData.mChat[0] == 'R' )
+				{
+					posX += 2.0f;
+				}
  
 // 				static int y2pos = 60;
 // 				HDC hdc = GetDC( hWnd );
