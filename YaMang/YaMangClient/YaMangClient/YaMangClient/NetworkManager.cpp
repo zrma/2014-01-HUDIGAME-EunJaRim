@@ -141,17 +141,8 @@ void NetworkManager::ProcessPacket()
 // 				g_MyClientId = recvData.mPlayerId;
 // 				g_LoginComplete = true;
 // 
-// 				char buff[128] = { 0, };
-// 				sprintf_s( buff, "LOGIN SUCCESS ClientId[%d] Name[%s] POS(%.4f, %.4f, %.4f) \n", g_MyClientId, recvData.mName, recvData.mPosX, recvData.mPosY, recvData.mPosZ );
-// 
-// 				static int ypos = 33;
-// 				HDC hdc = GetDC( hWnd );
-// 				TextOutA( hdc, 10, 33, buff, strlen( buff ) );
-// 				ReleaseDC( hWnd, hdc );
-// 
 // 				/// 채팅 방송 패킷 보내는 타이머 돌리자.. 
 // 				SetTimer( hWnd, 337, 3000, NULL );
-
 			}
 			else
 			{
