@@ -19,37 +19,12 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 
 	switch ( uMsg )
 	{
+		case WM_CREATE:
+			SetTimer( MainWindow::GetInstance()->Window(), 337, 10, NULL );
+
 		case WM_TIMER:
 		{
-			// 타이머 이벤트가 발생하면 이곳에서 핸들링 해 봅니다.
-			
-			//////////////////////////////////////////////////////////////////////////
-			// 9느님 원 소스에서 발췌 - 주기적으로 채팅하기
-			/*
-			ChatBroadcastRequest sendData;
-
-			sendData.mPlayerId = g_MyClientId;
-
-			/// 랜덤 문자열을 채팅으로 날리기
-			char* buff = sendData.mChat;
-			for ( int i = 0; i < 300; ++i )
-			{
-				sendData.mChat[i] = (char)( 65 + ( rand() % 26 ) );
-			}
-			sendData.mChat[300] = '\0';
-
-			if ( g_SendBuffer.Write( (const char*)&sendData, sendData.mSize ) )
-				// sendData.mSize = sizeof(ChatBroadcastRequest);
-			{
-				PostMessage( hWnd, WM_SOCKET, wParam, FD_WRITE );
-				//////////////////////////////////////////////////////////////////////////
-				// http://blog.naver.com/gkqxhq324456/110177315036 참조
-				//
-				// 채팅을 날리려고 버퍼에 데이터도 넣어 두었으니, WM_SOCKET 이벤트를 발생시키자
-				//////////////////////////////////////////////////////////////////////////
-			}
-			*/
-			//////////////////////////////////////////////////////////////////////////
+			GameManager::GetInstance()->Update();
 		}
 			return 0;
 
@@ -70,7 +45,7 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 
 		case WM_DESTROY:
 		{	
-			if ( GameManager::GetInstance()->Process() )
+			if ( GameManager::GetInstance()->Update() )
 			{
 				GameManager::GetInstance()->Stop();
 				// 창이 강제 제거 되었을 때(창 닫기 등)
@@ -133,7 +108,7 @@ int MainWindow::RunGame()
 			DispatchMessage( &msg );
 		}
 
-		if ( false == GameManager::GetInstance()->Process() )
+		if ( false == GameManager::GetInstance()->Render() )
 		{
 			GameManager::GetInstance()->Destroy();
 			GameManager::Release();
