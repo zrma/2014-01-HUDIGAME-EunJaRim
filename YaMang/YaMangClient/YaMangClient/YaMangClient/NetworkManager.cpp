@@ -158,16 +158,15 @@ void NetworkManager::ProcessPacket()
 
 		case PKT_SC_CHAT:
 		{
-// 
-// 			ChatBroadcastResult recvData;
-// 			if ( g_RecvBuffer.Read( (char*)&recvData, header.mSize ) )
-// 			{
-// 				/// 여기 걸리면 로그인 안된놈이 보낸거다
-// 				assert( recvData.mPlayerId != -1 );
-// 
-// 				char buff[MAX_CHAT_LEN] = { 0, };
-// 				sprintf_s( buff, "CHAT from Player[%s]: %s \n", recvData.mName, recvData.mChat );
-// 
+ 			ChatBroadcastResult recvData;
+ 			if ( m_RecvBuffer.Read( (char*)&recvData, header.mSize ) )
+ 			{
+ 				/// 여기 걸리면 로그인 안된놈이 보낸거다
+ 				assert( recvData.mPlayerId != -1 );
+ 
+ 				char buff[MAX_CHAT_LEN] = { 0, };
+ 				sprintf_s( buff, "CHAT from Player[%s]: %s \n", recvData.mName, recvData.mChat );
+ 
 // 				static int y2pos = 60;
 // 				HDC hdc = GetDC( hWnd );
 // 				TextOutA( hdc, 10, y2pos, buff, strlen( buff ) );
@@ -176,11 +175,12 @@ void NetworkManager::ProcessPacket()
 // 				if ( y2pos > 600 )
 // 					y2pos = 60;
 // 
-// 			}
-// 			else
-// 			{
-// 				assert( false );
-// 			}
+				Log( "%s \n", buff );
+ 			}
+ 			else
+ 			{
+ 				assert( false );
+ 			}
 
 		}
 			break;
