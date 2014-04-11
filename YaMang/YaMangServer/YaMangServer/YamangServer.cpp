@@ -12,7 +12,7 @@
 
 #include "tinyxml.h"
 #include "xpath_static.h"
-#include <string>
+
 
 #pragma comment(lib,"ws2_32.lib")
 

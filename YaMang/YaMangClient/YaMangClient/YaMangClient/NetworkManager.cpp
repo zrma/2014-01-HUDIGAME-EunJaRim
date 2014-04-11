@@ -5,8 +5,6 @@
 #include "MainWindow.h"
 #include "tinyxml.h"
 #include "xpath_static.h"
-#include <string>
-#include <time.h>
 #include "PacketType.h"
 #include "LoginHandler.h"
 #include "ChatHandler.h"

@@ -4,9 +4,9 @@
 #include "stdafx.h"
 #include "YaMangClient.h"
 
-#include <stdio.h>
-#include <time.h>
+#ifdef DEBUG
 #include <crtdbg.h>
+#endif // DEBUG
 
 #include "Logger.h"
 #include "MainWindow.h"
