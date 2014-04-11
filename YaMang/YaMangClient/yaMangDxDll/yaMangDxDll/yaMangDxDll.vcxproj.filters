@@ -27,21 +27,18 @@
     <ClInclude Include="targetver.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="yaMangDxDll.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="MeshObject.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Logger.h">
       <Filter>console</Filter>
     </ClInclude>
+    <ClInclude Include="YaMangDxDll.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="yaMangDxDll.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="dllmain.cpp">
@@ -49,6 +46,9 @@
     </ClCompile>
     <ClCompile Include="Logger.cpp">
       <Filter>console</Filter>
+    </ClCompile>
+    <ClCompile Include="YaMangDxDll.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
