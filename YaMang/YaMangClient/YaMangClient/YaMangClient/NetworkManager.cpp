@@ -7,14 +7,53 @@
 #include "xpath_static.h"
 #include <string>
 #include <time.h>
+#include "PacketType.h"
+#include "LoginHandler.h"
+#include "ChatHandler.h"
 
 #pragma comment(lib,"ws2_32.lib")
+
 
 const int BUFSIZE = 1024 * 10;
 
 extern float posX;
 extern float posY;
 extern float posZ;
+
+//////////////////////////////////////////////////////////////////////////
+
+typedef void( *EventHandler )( PacketHeader& pktBase );
+static EventHandler HandlerTable[PKT_MAX];
+
+static void DefaultHandler( PacketHeader& pktBase )
+{
+	assert( false );
+	ExitProcess( -1 );
+}
+
+struct InitializeHandlers
+{
+	InitializeHandlers()
+	{
+		for ( int i = 0; i < PKT_MAX; ++i )
+		{
+			HandlerTable[i] = DefaultHandler;
+		}
+	}
+} _init_handlers_;
+
+struct RegisterHandler
+{
+	RegisterHandler( int pktType, EventHandler handler )
+	{
+		HandlerTable[pktType] = handler;
+	}
+};
+
+static RegisterHandler registLoginHandler( PKT_SC_LOGIN, LoginHandler::HandleEvent );
+static RegisterHandler registChatHandler( PKT_SC_CHAT, ChatHandler::HandleEvent );
+
+//////////////////////////////////////////////////////////////////////////
 
 NetworkManager::NetworkManager()
 : m_RecvBuffer( BUFSIZE ), m_SendBuffer( BUFSIZE )
@@ -124,74 +163,9 @@ void NetworkManager::ProcessPacket()
 		return;
 	}
 
-	switch ( header.mType )
-	{
-		case PKT_SC_LOGIN:
-		{
-			LoginResult recvData;
-			if ( m_RecvBuffer.Read( (char*)&recvData, header.mSize ) )
-			{
-				// 패킷처리
-				if ( recvData.mPlayerId == -1 )
-				{
-					/// 여기 걸리면 로그인 실패다.
-					ExitProcess( -1 );
-				}
 
-// 				printf_s( "player[%d] \n", recvData.mPlayerId );
-// 				g_MyClientId = recvData.mPlayerId;
-// 				g_LoginComplete = true;
-// 
-// 				/// 채팅 방송 패킷 보내는 타이머 돌리자.. 
-// 				SetTimer( hWnd, 337, 3000, NULL );
-			}
-			else
-			{
-				assert( false );
-			}
-		}
-			break;
+	HandlerTable[header.mType]( header );
 
-		case PKT_SC_CHAT:
-		{
- 			ChatBroadcastResult recvData;
- 			if ( m_RecvBuffer.Read( (char*)&recvData, header.mSize ) )
- 			{
- 				/// 여기 걸리면 로그인 안된놈이 보낸거다
- 				assert( recvData.mPlayerId != -1 );
- 
- 				char buff[MAX_CHAT_LEN] = { 0, };
- 				sprintf_s( buff, "CHAT from Player[%s]: %s \n", recvData.mName, recvData.mChat );
-
-				if ( recvData.mChat[0] == 'L' )
-				{
-					posX -= 2.0f;
-				}
-				if ( recvData.mChat[0] == 'R' )
-				{
-					posX += 2.0f;
-				}
- 
-// 				static int y2pos = 60;
-// 				HDC hdc = GetDC( hWnd );
-// 				TextOutA( hdc, 10, y2pos, buff, strlen( buff ) );
-// 				ReleaseDC( hWnd, hdc );
-// 				y2pos += 15;
-// 				if ( y2pos > 600 )
-// 					y2pos = 60;
-// 
-				Log( "%s \n", buff );
- 			}
- 			else
- 			{
- 				assert( false );
- 			}
-
-		}
-			break;
-		default:
-			assert( false );
-	}
 }
 
 bool NetworkManager::Connected( WPARAM wParam, LPARAM lParam )

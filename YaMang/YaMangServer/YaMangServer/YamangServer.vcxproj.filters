@@ -25,6 +25,9 @@
     <Filter Include="YaMang">
       <UniqueIdentifier>{816778cb-2cbf-4496-b41c-b67e80e0c8c5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="EventHandler">
+      <UniqueIdentifier>{6c02102e-cbb6-4bdf-a200-187a3965d68f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -84,14 +87,14 @@
     <ClInclude Include="MacroSet.h">
       <Filter>MainArea</Filter>
     </ClInclude>
-    <ClInclude Include="ChatHandler.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="LoginHandler.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\SharedPreference\PacketType.h">
       <Filter>PacketType</Filter>
+    </ClInclude>
+    <ClInclude Include="ChatHandler.h">
+      <Filter>EventHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="LoginHandler.h">
+      <Filter>EventHandler</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -126,10 +129,10 @@
       <Filter>YaMang</Filter>
     </ClCompile>
     <ClCompile Include="ChatHandler.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>EventHandler</Filter>
     </ClCompile>
     <ClCompile Include="LoginHandler.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>EventHandler</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

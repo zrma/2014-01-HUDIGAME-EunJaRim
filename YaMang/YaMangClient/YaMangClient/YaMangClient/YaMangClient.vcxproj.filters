@@ -58,6 +58,12 @@
     <ClInclude Include="..\..\..\CommonInclude\PacketType.h">
       <Filter>PacketDefine</Filter>
     </ClInclude>
+    <ClInclude Include="ChatHandler.h">
+      <Filter>EventHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="LoginHandler.h">
+      <Filter>EventHandler</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -83,6 +89,12 @@
     </ClCompile>
     <ClCompile Include="Logger.cpp">
       <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="ChatHandler.cpp">
+      <Filter>EventHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="LoginHandler.cpp">
+      <Filter>EventHandler</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

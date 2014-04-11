@@ -1,0 +1,38 @@
+#include "stdafx.h"
+#include "LoginHandler.h"
+#include "NetworkManager.h"
+
+
+LoginHandler::LoginHandler()
+{
+}
+
+
+LoginHandler::~LoginHandler()
+{
+}
+
+void LoginHandler::HandleEvent( PacketHeader& pktBase )
+{
+	LoginResult recvData = static_cast<LoginResult&>( pktBase );
+	if ( NetworkManager::GetInstance( )->m_RecvBuffer.Read( (char*)&recvData, recvData.mSize ) )
+	{
+		// 패킷처리
+		if ( recvData.mPlayerId == -1 )
+		{
+			/// 여기 걸리면 로그인 실패다.
+			ExitProcess( -1 );
+		}
+
+		// 				printf_s( "player[%d] \n", recvData.mPlayerId );
+		// 				g_MyClientId = recvData.mPlayerId;
+		// 				g_LoginComplete = true;
+		// 
+		// 				/// 채팅 방송 패킷 보내는 타이머 돌리자.. 
+		// 				SetTimer( hWnd, 337, 3000, NULL );
+	}
+	else
+	{
+		assert( false );
+	}
+}

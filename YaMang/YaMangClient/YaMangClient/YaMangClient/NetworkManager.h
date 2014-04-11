@@ -19,4 +19,7 @@ private:
 	SOCKET			m_Socket = NULL;
 	CircularBuffer	m_RecvBuffer;
 	CircularBuffer	m_SendBuffer;
+
+	friend class LoginHandler;
+	friend class ChatHandler;
 };

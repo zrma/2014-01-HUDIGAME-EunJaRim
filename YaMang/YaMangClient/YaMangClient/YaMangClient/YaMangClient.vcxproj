@@ -85,9 +85,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\CommonInclude\PacketType.h" />
+    <ClInclude Include="ChatHandler.h" />
     <ClInclude Include="CircularBuffer.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Logger.h" />
+    <ClInclude Include="LoginHandler.h" />
     <ClInclude Include="MacroSet.h" />
     <ClInclude Include="MainWindow.h" />
     <ClInclude Include="NetworkManager.h" />
@@ -98,9 +100,11 @@
     <ClInclude Include="YaMangClient.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ChatHandler.cpp" />
     <ClCompile Include="CircularBuffer.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Logger.cpp" />
+    <ClCompile Include="LoginHandler.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="NetworkManager.cpp" />
     <ClCompile Include="Renderer.cpp" />
