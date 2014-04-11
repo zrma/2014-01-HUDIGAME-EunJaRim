@@ -1,6 +1,6 @@
 ﻿#include "stdafx.h"
 #include "YamangServer.h"
-#include "..\SharedPreferences\PacketType.h"
+#include "PacketType.h"
 #include "ClientSession.h"
 #include "ClientManager.h"
 #include "DatabaseJobContext.h"

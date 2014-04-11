@@ -46,9 +46,6 @@
     <ClInclude Include="LoginEventHandler.h">
       <Filter>EventHandler</Filter>
     </ClInclude>
-    <ClInclude Include="TestEventHandler.h">
-      <Filter>EventHandler</Filter>
-    </ClInclude>
     <ClInclude Include="GameManager.h">
       <Filter>MainLoop</Filter>
     </ClInclude>
@@ -64,14 +61,14 @@
     <ClInclude Include="Renderer.h">
       <Filter>MainLoop</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\PacketType.h">
-      <Filter>PacketDefine</Filter>
-    </ClInclude>
     <ClInclude Include="CircularBuffer.h">
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="Logger.h">
       <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CommonInclude\PacketType.h">
+      <Filter>PacketDefine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -88,9 +85,6 @@
       <Filter>EventHandler</Filter>
     </ClCompile>
     <ClCompile Include="LoginEventHandler.cpp">
-      <Filter>EventHandler</Filter>
-    </ClCompile>
-    <ClCompile Include="TestEventHandler.cpp">
       <Filter>EventHandler</Filter>
     </ClCompile>
     <ClCompile Include="GameManager.cpp">

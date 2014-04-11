@@ -3,7 +3,7 @@
 #include <map>
 #include <WinSock2.h>
 #include "Config.h"
-#include "..\SharedPreferences\PacketType.h"
+#include "PacketType.h"
 #include "CircularBuffer.h"
 #include "ObjectPool.h"
 

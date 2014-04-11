@@ -2,7 +2,7 @@
 #include "YamangServer.h"
 
 #include "Config.h"
-#include "..\SharedPreferences\PacketType.h"
+#include "PacketType.h"
 
 #include "Exception.h"
 #include "ClientSession.h"

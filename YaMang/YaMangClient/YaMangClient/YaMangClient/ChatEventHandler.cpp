@@ -1,6 +1,6 @@
 ﻿#include "stdafx.h"
 #include "ChatEventHandler.h"
-#include "../../../PacketType.h"
+#include "PacketType.h"
 #include "CircularBuffer.h"
 
 ChatEventHandler::ChatEventHandler()

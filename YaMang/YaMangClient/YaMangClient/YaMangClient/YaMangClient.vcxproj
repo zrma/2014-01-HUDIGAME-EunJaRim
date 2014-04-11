@@ -54,7 +54,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\YaMangDxDll\YaMangDxDll;$(SolutionDir)..\TinyXmlLib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\YaMangDxDll\YaMangDxDll;$(SolutionDir)..\..\SharedPreference;$(SolutionDir)..\TinyXmlLib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -84,7 +84,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\PacketType.h" />
+    <ClInclude Include="..\..\..\CommonInclude\PacketType.h" />
     <ClInclude Include="ChatEventHandler.h" />
     <ClInclude Include="CircularBuffer.h" />
     <ClInclude Include="EventHandler.h" />
@@ -99,7 +99,6 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="TestEventHandler.h" />
     <ClInclude Include="YaMangClient.h" />
   </ItemGroup>
   <ItemGroup>
@@ -116,7 +115,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="TestEventHandler.cpp" />
     <ClCompile Include="YaMangClient.cpp" />
   </ItemGroup>
   <ItemGroup>

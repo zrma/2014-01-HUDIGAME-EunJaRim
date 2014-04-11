@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 #include "NetworkManager.h"
 
-#include "../../../PacketType.h"
+#include "PacketType.h"
 #include "MainWindow.h"
 #include "tinyxml.h"
 #include "xpath_static.h"

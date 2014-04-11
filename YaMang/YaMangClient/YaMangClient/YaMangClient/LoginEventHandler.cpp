@@ -1,6 +1,6 @@
 ﻿#include "stdafx.h"
 #include "LoginEventHandler.h"
-#include "../../../PacketType.h"
+#include "PacketType.h"
 #include "CircularBuffer.h"
 
 LoginEventHandler::LoginEventHandler()

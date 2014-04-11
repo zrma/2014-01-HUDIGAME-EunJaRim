@@ -1,6 +1,6 @@
 ﻿#include "stdafx.h"
 #include "ClientSession.h"
-#include "..\SharedPreferences\PacketType.h"
+#include "PacketType.h"
 #include "ClientManager.h"
 #include "DatabaseJobContext.h"
 #include "DatabaseJobManager.h"
