@@ -50,8 +50,8 @@ int _tmain( int argc, _TCHAR* argv[] )
 	/// Manager Init
 	// 각 매니저들은 각 헤더파일들에 extern 으로 선언 되어 있음
 	// 여기서 new 해줌
-	GClientManager = new ClientManager;
-	GDatabaseJobManager = new DatabaseJobManager;
+	g_ClientManager = new ClientManager;
+	g_DatabaseJobManager = new DatabaseJobManager;
 
 	/// DB Helper 초기화
 	if ( false == DbHelper::Initialize( DB_CONN_STR ) )
@@ -151,8 +151,8 @@ int _tmain( int argc, _TCHAR* argv[] )
 	// sqlite3_close
 	DbHelper::Finalize();
 
-	delete GClientManager;
-	delete GDatabaseJobManager;
+	delete g_ClientManager;
+	delete g_DatabaseJobManager;
 
 	return 0;
 }
@@ -188,7 +188,7 @@ unsigned int WINAPI ClientHandlingThread( LPVOID lpParam )
 		if ( pAcceptList->Consume( acceptSock, false ) )
 		{
 			/// 소켓 정보 구조체 할당과 초기화
-			ClientSession* client = GClientManager->CreateClient( acceptSock );
+			ClientSession* client = g_ClientManager->CreateClient( acceptSock );
 
 			SOCKADDR_IN clientaddr;
 			int addrlen = sizeof( clientaddr );
@@ -205,7 +205,7 @@ unsigned int WINAPI ClientHandlingThread( LPVOID lpParam )
 		}
 
 		/// 최종적으로 클라이언트들에 쌓인 send 요청 처리
-		GClientManager->FlushClientSend();
+		g_ClientManager->FlushClientSend();
 
 		/// APC Queue에 쌓인 작업들 처리
 		SleepEx( INFINITE, TRUE );
@@ -220,7 +220,7 @@ unsigned int WINAPI DatabaseHandlingThread( LPVOID lpParam )
 {
 	LThreadType = THREAD_DATABASE;
 
-	GDatabaseJobManager->ExecuteDatabaseJobs();
+	g_DatabaseJobManager->ExecuteDatabaseJobs();
 
 	return 0;
 }
@@ -230,5 +230,5 @@ void CALLBACK TimerProc( LPVOID lpArg, DWORD dwTimerLowValue, DWORD dwTimerHighV
 	assert( LThreadType == THREAD_CLIENT );
 
 	// 클라이언트 쪽은 0.1초 단위로 콜백 함수 호출하면서 주기적으로 해야 할 일 처리
-	GClientManager->OnPeriodWork();
+	g_ClientManager->OnPeriodWork();
 }

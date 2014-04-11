@@ -44,4 +44,4 @@ private:
 	DWORD		mLastClientWorkTick;
 };
 
-extern ClientManager* GClientManager;
+extern ClientManager* g_ClientManager;

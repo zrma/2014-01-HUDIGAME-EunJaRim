@@ -26,4 +26,4 @@ private:
 
 };
 
-extern DatabaseJobManager* GDatabaseJobManager;
+extern DatabaseJobManager* g_DatabaseJobManager;

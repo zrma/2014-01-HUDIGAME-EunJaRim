@@ -90,7 +90,7 @@
     <ClInclude Include="LoginHandler.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\CommonInclude\PacketType.h">
+    <ClInclude Include="..\..\SharedPreference\PacketType.h">
       <Filter>PacketType</Filter>
     </ClInclude>
   </ItemGroup>

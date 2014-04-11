@@ -9,7 +9,7 @@
 // 헤더파일에 extern 형태로 선언 되어 있음
 // 다른 부분에서도 가져다 쓰기 때문에 헤더에 extern 선언만 해 두고 여기서 nullptr로 초기화
 // 실제 할당은 EasyServer.cpp의 _tmain() 함수에서 동적할당(new)
-ClientManager* GClientManager = nullptr;
+ClientManager* g_ClientManager = nullptr;
 
 // 클라 생성
 // _tmain() 쪽의 클라이언트 핸들링 스레드에서 WaitForSingleObjectEx(hEvent, INFINITE, TRUE) 가
@@ -134,7 +134,7 @@ void ClientManager::DispatchDatabaseJobResults()
 	DatabaseJobContext* dbResult = nullptr;
 
 	// DB Job 매니저에서 계속 Pop
-	while ( GDatabaseJobManager->PopDatabaseJobResult( dbResult ) )
+	while ( g_DatabaseJobManager->PopDatabaseJobResult( dbResult ) )
 	{
 		if ( false == dbResult->mSuccess )
 		{
@@ -209,7 +209,7 @@ void ClientManager::CreatePlayer( int pid, double x, double y, double z, const c
 	strcpy_s( newPlayerJob->mPlayerName, name );
 	strcpy_s( newPlayerJob->mComment, comment );
 
-	GDatabaseJobManager->PushDatabaseJobRequest( newPlayerJob );
+	g_DatabaseJobManager->PushDatabaseJobRequest( newPlayerJob );
 
 }
 
@@ -219,7 +219,7 @@ void ClientManager::CreatePlayer( int pid, double x, double y, double z, const c
 void ClientManager::DeletePlayer( int pid )
 {
 	DeletePlayerDataContext* delPlayerJob = new DeletePlayerDataContext( pid );
-	GDatabaseJobManager->PushDatabaseJobRequest( delPlayerJob );
+	g_DatabaseJobManager->PushDatabaseJobRequest( delPlayerJob );
 }
 
 void ClientManager::CreatePlayerDone( DatabaseJobContext* dbJob )

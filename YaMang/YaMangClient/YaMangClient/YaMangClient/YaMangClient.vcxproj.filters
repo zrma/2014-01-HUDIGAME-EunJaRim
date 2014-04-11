@@ -34,18 +34,6 @@
     <ClInclude Include="YaMangClient.h">
       <Filter>MainLoop</Filter>
     </ClInclude>
-    <ClInclude Include="ChatEventHandler.h">
-      <Filter>EventHandler</Filter>
-    </ClInclude>
-    <ClInclude Include="EventHandler.h">
-      <Filter>EventHandler</Filter>
-    </ClInclude>
-    <ClInclude Include="HandlerMap.h">
-      <Filter>EventHandler</Filter>
-    </ClInclude>
-    <ClInclude Include="LoginEventHandler.h">
-      <Filter>EventHandler</Filter>
-    </ClInclude>
     <ClInclude Include="GameManager.h">
       <Filter>MainLoop</Filter>
     </ClInclude>
@@ -77,15 +65,6 @@
     </ClCompile>
     <ClCompile Include="YaMangClient.cpp">
       <Filter>MainLoop</Filter>
-    </ClCompile>
-    <ClCompile Include="ChatEventHandler.cpp">
-      <Filter>EventHandler</Filter>
-    </ClCompile>
-    <ClCompile Include="HandlerMap.cpp">
-      <Filter>EventHandler</Filter>
-    </ClCompile>
-    <ClCompile Include="LoginEventHandler.cpp">
-      <Filter>EventHandler</Filter>
     </ClCompile>
     <ClCompile Include="GameManager.cpp">
       <Filter>MainLoop</Filter>

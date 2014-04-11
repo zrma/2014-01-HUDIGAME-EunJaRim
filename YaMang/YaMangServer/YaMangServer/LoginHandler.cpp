@@ -20,7 +20,7 @@ void LoginHandler::HandleEvent( ClientSession* session, PacketHeader& pktBase )
 
 	/// 로그인은 DB 작업을 거쳐야 하기 때문에 DB 작업 요청한다.
 	LoadPlayerDataContext* newDbJob = new LoadPlayerDataContext( session->mSocket, inPacket.mPlayerId );
-	GDatabaseJobManager->PushDatabaseJobRequest( newDbJob );
+	g_DatabaseJobManager->PushDatabaseJobRequest( newDbJob );
 }
 
 

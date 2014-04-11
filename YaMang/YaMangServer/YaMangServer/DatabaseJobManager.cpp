@@ -4,7 +4,7 @@
 #include "DatabaseJobManager.h"
 #include "DbHelper.h"
 
-DatabaseJobManager* GDatabaseJobManager = nullptr;
+DatabaseJobManager* g_DatabaseJobManager = nullptr;
 
 
 /// 아래 함수는 DB 처리 쓰레드에서 불려야 한다

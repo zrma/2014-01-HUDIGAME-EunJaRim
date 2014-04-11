@@ -1,5 +1,5 @@
-#include "stdafx.h"
-#include "YaMangDxDll.h" // agebreak : 이렇게 상대 경로로 넣지 말고, 설정의 Include 폴더에 추가 시키는 것이 좋다.
+癤�#include "stdafx.h"
+#include "YaMangDxDll.h"
 #include "Renderer.h"
 #include "MainWindow.h"
 
