@@ -17,6 +17,7 @@ public:
 	ClientSession* CreateClient( SOCKET sock );
 
 	void BroadcastPacket( ClientSession* from, PacketHeader* pkt );
+	void DirectPacket( int pid, PacketHeader* pkt );
 
 	void OnPeriodWork();
 

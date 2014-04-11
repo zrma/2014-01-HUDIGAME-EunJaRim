@@ -55,6 +55,20 @@ void ClientManager::BroadcastPacket( ClientSession* from, PacketHeader* pkt )
 }
 
 
+void ClientManager::DirectPacket( int pid, PacketHeader* pkt )
+{
+	for ( ClientList::const_iterator it = mClientList.begin(); it != mClientList.end(); ++it )
+	{
+		ClientSession* client = it->second;
+		if ( pid == client->mPlayerId )
+		{
+			client->SendRequest( pkt );
+			break;
+		}
+	}
+}
+
+
 // EasyServer.cpp의 클라이언트 핸들링 스레드에서 0.1초마다 콜백
 //
 // 0.1초마다 주기적으로 해야 할 일

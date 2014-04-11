@@ -277,6 +277,7 @@ void ClientSession::DatabaseJobDone( DatabaseJobContext* result )
 	{
 		LoadPlayerDataContext* login = dynamic_cast<LoadPlayerDataContext*>( result );
 
+		printf_s( "[DEBUG][%d] Login DONE! \n", login->mPlayerId );
 		LoginDone( login->mPlayerId, login->mPosX, login->mPosY, login->mPosZ, login->mPlayerName );
 
 	}
