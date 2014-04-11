@@ -1,13 +1,12 @@
 #pragma once
 #include "ClientSession.h"
 
-class TestHandler
+class LoginHandler
 {
 public:
-	TestHandler();
-	~TestHandler();
+	LoginHandler();
+	~LoginHandler();
 
 	static void HandleEvent( ClientSession* session, PacketHeader& pktBase );
-
 };
 

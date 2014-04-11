@@ -1,23 +1,22 @@
 #include "stdafx.h"
-#include "TestHandler.h"
-#include "ClientSession.h"
+#include "ChatHandler.h"
 
 
-TestHandler::TestHandler()
+ChatHandler::ChatHandler()
 {
 }
 
 
-TestHandler::~TestHandler()
+ChatHandler::~ChatHandler()
 {
 }
 
-void TestHandler::HandleEvent( ClientSession* session, PacketHeader& pktBase )
+void ChatHandler::HandleEvent( ClientSession* session, PacketHeader& pktBase )
 {
 	ChatBroadcastRequest inPacket = static_cast<ChatBroadcastRequest&>( pktBase );
 
 	session->mRecvBuffer.Read( (char*)&inPacket, inPacket.mSize );
-	
+
 	ChatBroadcastResult outPacket;
 	outPacket.mPlayerId = inPacket.mPlayerId;
 	strcpy_s( outPacket.mName, session->mPlayerName );
