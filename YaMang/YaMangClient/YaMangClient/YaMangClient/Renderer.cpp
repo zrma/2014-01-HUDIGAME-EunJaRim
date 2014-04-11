@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "../../yaMangDxDll/yaMangDxDll/yaMangDxDll.h" // agebreak : 이렇게 상대 경로로 넣지 말고, 설정의 Include 폴더에 추가 시키는 것이 좋다.
+#include "YaMangDxDll.h" // agebreak : 이렇게 상대 경로로 넣지 말고, 설정의 Include 폴더에 추가 시키는 것이 좋다.
 #include "Renderer.h"
 #include "MainWindow.h"
 
@@ -7,7 +7,7 @@ extern float posX;
 extern float posY;
 extern float posZ;
 
-Renderer::Renderer(): m_Result( false ), m_IsReady( false )
+Renderer::Renderer()
 {
 }
 

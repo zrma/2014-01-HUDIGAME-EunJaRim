@@ -16,7 +16,7 @@ public:
 	
 
 private:
-	SOCKET			m_Socket;
+	SOCKET			m_Socket = NULL;
 	CircularBuffer	m_RecvBuffer;
 	CircularBuffer	m_SendBuffer;
 };

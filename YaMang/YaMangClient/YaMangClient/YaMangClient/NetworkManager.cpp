@@ -17,7 +17,7 @@ extern float posY;
 extern float posZ;
 
 NetworkManager::NetworkManager()
-:m_Socket( NULL ), m_RecvBuffer( BUFSIZE ), m_SendBuffer(BUFSIZE)
+: m_RecvBuffer( BUFSIZE ), m_SendBuffer( BUFSIZE )
 {
 }
 

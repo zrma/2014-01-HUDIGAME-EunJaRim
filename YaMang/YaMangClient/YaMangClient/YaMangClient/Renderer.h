@@ -20,7 +20,7 @@ public:
 	void	DeleteMesh( MESHOBJECT* mesh );
 
 private:
-	bool	m_Result;
-	bool	m_IsReady;
+	bool	m_Result = false;
+	bool	m_IsReady = false;
 };
 

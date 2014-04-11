@@ -5,6 +5,7 @@
 #include "NetworkManager.h"
 
 GameManager::GameManager()
+:m_Mesh( new MESHOBJECT() )
 {
 }
 

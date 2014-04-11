@@ -144,3 +144,21 @@ int MainWindow::RunGame()
 
 	return (int)msg.wParam;
 }
+
+BOOL MainWindow::Create( PCWSTR lpWindowName, DWORD dwStyle, DWORD dwExStyle /*= 0*/, int x /*= CW_USEDEFAULT*/, int y /*= CW_USEDEFAULT*/, int nWidth /*= WINDOW_WIDTH*/, int nHeight /*= WINDOW_HEIGHT*/, HWND hWndParent /*= 0*/, HMENU hMenu /*= 0 */ )
+{
+	WNDCLASS wc = { 0 };
+
+	wc.lpfnWndProc = WindowProc;
+	wc.hInstance = GetModuleHandle( NULL );
+	wc.lpszClassName = ClassName();
+
+	wc.hCursor = LoadCursor( NULL, IDC_ARROW );
+
+	RegisterClass( &wc );
+
+	m_HandleOfWindow = CreateWindowEx( dwExStyle, ClassName(), lpWindowName, dwStyle,
+									   x, y, nWidth, nHeight, hWndParent, hMenu, GetModuleHandle( NULL ), this );
+
+	return ( m_HandleOfWindow ? TRUE : FALSE );
+}
