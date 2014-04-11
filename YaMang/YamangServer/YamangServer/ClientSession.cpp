@@ -4,12 +4,13 @@
 #include "ClientManager.h"
 #include "DatabaseJobContext.h"
 #include "DatabaseJobManager.h"
+#include "TestHandler.h"
 
 //@{ Handler Helper
 
-typedef void( *HandlerFunc )( ClientSession* session, PacketHeader& pktBase );
+typedef void( *EventHandler )( ClientSession* session, PacketHeader& pktBase );
 
-static HandlerFunc HandlerTable[PKT_MAX];
+static EventHandler HandlerTable[PKT_MAX];
 
 static void DefaultHandler( ClientSession* session, PacketHeader& pktBase )
 {
@@ -30,16 +31,13 @@ struct InitializeHandlers
 
 struct RegisterHandler
 {
-	RegisterHandler( int pktType, HandlerFunc handler )
+	RegisterHandler( int pktType, EventHandler handler )
 	{
 		HandlerTable[pktType] = handler;
 	}
 };
 
-#define REGISTER_HANDLER(PKT_TYPE)	\
-	static void Handler_##PKT_TYPE(ClientSession* session, PacketHeader& pktBase); \
-	static RegisterHandler _register_##PKT_TYPE(PKT_TYPE, Handler_##PKT_TYPE); \
-	static void Handler_##PKT_TYPE(ClientSession* session, PacketHeader& pktBase)
+
 
 //@}
 
@@ -385,7 +383,9 @@ void CALLBACK SendCompletion( DWORD dwError, DWORD cbTransferred, LPWSAOVERLAPPE
 //////////////////////////////////////////////////////////////////
 
 
-REGISTER_HANDLER( PKT_CS_LOGIN )
+static void HandlerPKT_CS_LOGIN( ClientSession* session, PacketHeader& pktBase );
+static RegisterHandler _registerPKT_CS_LOGIN( PKT_CS_LOGIN, HandlerPKT_CS_LOGIN );
+static void HandlerPKT_CS_LOGIN( ClientSession* session, PacketHeader& pktBase )
 {
 	LoginRequest inPacket = static_cast<LoginRequest&>( pktBase );
 	session->HandleLoginRequest( inPacket );
@@ -400,28 +400,6 @@ void ClientSession::HandleLoginRequest( LoginRequest& inPacket )
 	GDatabaseJobManager->PushDatabaseJobRequest( newDbJob );
 }
 
-REGISTER_HANDLER( PKT_CS_CHAT )
-{
-	ChatBroadcastRequest inPacket = static_cast<ChatBroadcastRequest&>( pktBase );
-	session->HandleChatRequest( inPacket );
-}
-
-void ClientSession::HandleChatRequest( ChatBroadcastRequest& inPacket )
-{
-	mRecvBuffer.Read( (char*)&inPacket, inPacket.mSize );
-
-	ChatBroadcastResult outPacket;
-	outPacket.mPlayerId = inPacket.mPlayerId;
-	strcpy_s( outPacket.mName, mPlayerName );
-	strcpy_s( outPacket.mChat, inPacket.mChat );
-
-	printf_s( "[%s]%s \n", mPlayerName, inPacket.mChat );
-
-	/// 채팅은 바로 방송 하면 끝
-	if ( !Broadcast( &outPacket ) )
-	{
-		Disconnect();
-	}
-}
 
 
+static RegisterHandler registTestHandler( PKT_CS_CHAT, TestHandler::HandleEvent );

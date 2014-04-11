@@ -95,6 +95,7 @@ private:
 	int				mDbUpdateCount; ///< DB에 주기적으로 업데이트 하기 위한 변수
 
 	friend class ClientManager;
+	friend class TestHandler;
 };
 
 
