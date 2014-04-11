@@ -4,7 +4,7 @@
 #include "Renderer.h"
 #include "NetworkManager.h"
 
-GameManager::GameManager(): m_Mesh( new MESHOBJECT() ), m_Continue( true )
+GameManager::GameManager()
 {
 }
 

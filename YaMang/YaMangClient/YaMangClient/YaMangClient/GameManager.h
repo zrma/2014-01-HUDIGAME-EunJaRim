@@ -16,7 +16,7 @@ public:
 	void Stop() { m_Continue = false;  }
 
 private:
-	bool			m_Continue;
+	bool			m_Continue = true;	// agebreak : C++0x에 추가된 초기화
 
-	MESHOBJECT*		m_Mesh;
+	MESHOBJECT*		m_Mesh = nullptr;
 };
