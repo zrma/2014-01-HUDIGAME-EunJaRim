@@ -27,7 +27,7 @@ ClientSession* ClientManager::CreateClient( SOCKET sock )
 	// 키는 소켓, 밸류는 클라이언트 세션의 포인터인 맵 자료구조
 	// typedef pair<const Key, Type> value_type;
 	// value_type은 키와 밸류를 한 쌍으로 묶어주는 자료구조
-	mClientList.insert( ClientList::value_type( sock, client ) );
+	m_ClientList.insert( ClientList::value_type( sock, client ) );
 
 	return client;
 }
@@ -38,7 +38,7 @@ void ClientManager::BroadcastPacket( ClientSession* from, PacketHeader* pkt )
 {
 	///FYI: C++ STL iterator 스타일의 루프
 	// 연산자 오버로딩 된 ++ 연산자를 이용해서 차례대로 순회
-	for ( ClientList::const_iterator it = mClientList.begin(); it != mClientList.end(); ++it )
+	for ( ClientList::const_iterator it = m_ClientList.begin(); it != m_ClientList.end(); ++it )
 	{
 		// ClientList는 맵이므로 it(iterator)는 해당 pair의 포인터이다.
 		// 그러므로 it->second 는 밸류(클라이언트 세션)
@@ -57,7 +57,7 @@ void ClientManager::BroadcastPacket( ClientSession* from, PacketHeader* pkt )
 
 void ClientManager::DirectPacket( int pid, PacketHeader* pkt )
 {
-	for ( ClientList::const_iterator it = mClientList.begin(); it != mClientList.end(); ++it )
+	for ( ClientList::const_iterator it = m_ClientList.begin(); it != m_ClientList.end(); ++it )
 	{
 		ClientSession* client = it->second;
 		if ( pid == client->mPlayerId )
@@ -80,17 +80,17 @@ void ClientManager::OnPeriodWork()
 {
 	/// 접속이 끊긴 세션들 주기적으로 정리 (1초 정도 마다 해주자)
 	DWORD currTick = GetTickCount();
-	if ( currTick - mLastGCTick >= 1000 )
+	if ( currTick - m_LastGCTick >= 1000 )
 	{
 		CollectGarbageSessions();
-		mLastGCTick = currTick;
+		m_LastGCTick = currTick;
 	}
 
 	/// 접속된 클라이언트 세션별로 주기적으로 해줘야 하는 일 (주기는 알아서 정하면 됨 - 지금은 1초로 ㅎㅎ)
-	if ( currTick - mLastClientWorkTick >= 1000 )
+	if ( currTick - m_LastClientWorkTick >= 1000 )
 	{
 		ClientPeriodWork();
-		mLastClientWorkTick = currTick;
+		m_LastClientWorkTick = currTick;
 	}
 
 	/// 처리 완료된 DB 작업들 각각의 Client로 dispatch
@@ -102,7 +102,7 @@ void ClientManager::CollectGarbageSessions()
 	std::vector<ClientSession*> disconnectedSessions;
 
 	///FYI: C++ 11 람다를 이용한 스타일
-	std::for_each( mClientList.begin(), mClientList.end(),
+	std::for_each( m_ClientList.begin(), m_ClientList.end(),
 				   [&]( ClientList::const_reference it )
 	// Call by Reference(&)를 이용해서 이터레이터 람다 사용, 아래 함수 실행
 	{
@@ -124,7 +124,7 @@ void ClientManager::CollectGarbageSessions()
 		ClientSession* client = disconnectedSessions[i];
 
 		// 우선 클라이언트 리스트에서 해당 목록을 지운다
-		mClientList.erase( client->mSocket );
+		m_ClientList.erase( client->mSocket );
 		delete client;
 	}
 
@@ -134,7 +134,7 @@ void ClientManager::CollectGarbageSessions()
 void ClientManager::ClientPeriodWork()
 {
 	/// FYI: C++ 11 스타일의 루프
-	for ( auto& it : mClientList )
+	for ( auto& it : m_ClientList )
 	{
 		ClientSession* client = it.second;
 		client->OnTick();
@@ -178,9 +178,9 @@ void ClientManager::DispatchDatabaseJobResults()
 			else
 			{
 				/// 여기는 해당 DB요청을 했던 클라이언트에서 직접 해줘야 는 경우다
-				auto& it = mClientList.find( dbResult->mSockKey );
+				auto& it = m_ClientList.find( dbResult->mSockKey );
 
-				if ( it != mClientList.end() && it->second->IsConnected() )
+				if ( it != m_ClientList.end() && it->second->IsConnected() )
 				{
 					/// dispatch here....
 					it->second->DatabaseJobDone( dbResult );
@@ -197,7 +197,7 @@ void ClientManager::DispatchDatabaseJobResults()
 
 void ClientManager::FlushClientSend()
 {
-	for ( auto& it : mClientList )
+	for ( auto& it : m_ClientList )
 	{
 		ClientSession* client = it.second;
 		if ( false == client->SendFlush() )

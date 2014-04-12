@@ -64,6 +64,9 @@
     <ClInclude Include="LoginHandler.h">
       <Filter>EventHandler</Filter>
     </ClInclude>
+    <ClInclude Include="DummyRender.h">
+      <Filter>MainLoop</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -95,6 +98,9 @@
     </ClCompile>
     <ClCompile Include="LoginHandler.cpp">
       <Filter>EventHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="DummyRender.cpp">
+      <Filter>MainLoop</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

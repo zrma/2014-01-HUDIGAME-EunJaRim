@@ -1,8 +1,9 @@
 ﻿#include "stdafx.h"
 #include "GameManager.h"
-#include "../../yaMangDxDll/yaMangDxDll/yaMangDxDll.h"
+#include "YaMangDxDll.h"
 #include "Renderer.h"
 #include "NetworkManager.h"
+#include "DummyRender.h"
 
 GameManager::GameManager()
 :m_Mesh( new MESHOBJECT() )
@@ -66,16 +67,13 @@ bool GameManager::Render()
 		return false;
 	}
 
-	// 렌더 비긴
-	Renderer::GetInstance()->RenderBegin();
+	// 더미 렌더
+	DummyRender dRender;
 
 	if ( m_Mesh )
 	{
 		Renderer::GetInstance()->Render( m_Mesh );
 	}
-
-	// 렌더 엔드
-	Renderer::GetInstance()->RenderEnd();
 
 	return true;
 }

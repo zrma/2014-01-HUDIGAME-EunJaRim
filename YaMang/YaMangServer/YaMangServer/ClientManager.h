@@ -10,7 +10,7 @@ struct DatabaseJobContext;
 class ClientManager
 {
 public:
-	ClientManager(): mLastGCTick( 0 ), mLastClientWorkTick( 0 )
+	ClientManager(): m_LastGCTick( 0 ), m_LastClientWorkTick( 0 )
 	{
 	}
 
@@ -39,10 +39,10 @@ private:
 
 private:
 	typedef std::map<SOCKET, ClientSession*> ClientList;
-	ClientList	mClientList;
+	ClientList	m_ClientList;
 
-	DWORD		mLastGCTick;
-	DWORD		mLastClientWorkTick;
+	DWORD		m_LastGCTick;
+	DWORD		m_LastClientWorkTick;
 };
 
 extern ClientManager* g_ClientManager;
