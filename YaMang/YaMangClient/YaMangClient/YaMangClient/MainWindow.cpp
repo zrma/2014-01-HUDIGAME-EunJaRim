@@ -36,6 +36,7 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 			NetworkManager::GetInstance()->Connected( wParam, lParam );
 		}
 			return 0;
+
 		case WM_SIZE:
 		{
 			// 리사이징에 대한 부분을 여기서 처리 해 줌
@@ -67,13 +68,17 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 		}
 			break;
 		*/
+
+		case WM_SYSKEYDOWN:
 		case WM_KEYDOWN:
+		{
 			switch ( wParam )
 			{
 				case VK_ESCAPE:
 					GameManager::GetInstance()->Stop();
 					return 0;
 			}
+		}
 
 		case WM_ERASEBKGND:
 			return 1;

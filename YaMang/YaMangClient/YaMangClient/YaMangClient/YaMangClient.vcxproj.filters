@@ -76,6 +76,9 @@
     <ClInclude Include="InputDispatcher.h">
       <Filter>MainLoop</Filter>
     </ClInclude>
+    <ClInclude Include="GameOverHandler.h">
+      <Filter>EventHandler</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -116,6 +119,9 @@
     </ClCompile>
     <ClCompile Include="InputDispatcher.cpp">
       <Filter>MainLoop</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOverHandler.cpp">
+      <Filter>EventHandler</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
