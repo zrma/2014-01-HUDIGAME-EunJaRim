@@ -1,5 +1,5 @@
 ﻿#include "stdafx.h"
-#include "YamangServer.h"
+#include "YaMangServer.h"
 
 #include "Config.h"
 #include "PacketType.h"

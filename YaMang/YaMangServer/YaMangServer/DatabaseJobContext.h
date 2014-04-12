@@ -92,17 +92,17 @@ struct DeletePlayerDataContext : public DatabaseJobContext, public ObjectPool<De
 struct UpdatePlayerDataContext: public DatabaseJobContext, public ObjectPool<UpdatePlayerDataContext>
 {
 	UpdatePlayerDataContext( SOCKET socketKey, int playerId ): DatabaseJobContext( socketKey )
-	, mPlayerId( playerId ), mPosX( 0 ), mPosY( 0 ), mPosZ( 0 )
+	, m_PlayerId( playerId ), m_PosX( 0 ), m_PosY( 0 ), m_PosZ( 0 )
 	{
-		memset( mComment, 0, sizeof( mComment ) );
+		memset( m_Comment, 0, sizeof( m_Comment ) );
 	}
 
 	virtual bool OnExecute();
 
-	int		mPlayerId;
+	int		m_PlayerId;
 
-	double	mPosX;
-	double	mPosY;
-	double	mPosZ;
-	char	mComment[MAX_COMMENT_LEN];
+	double	m_PosX;
+	double	m_PosY;
+	double	m_PosZ;
+	char	m_Comment[MAX_COMMENT_LEN];
 };

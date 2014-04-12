@@ -48,19 +48,19 @@ static RegisterHandler registChatHandler( PKT_CS_CHAT, ChatHandler::HandleEvent 
 // 주소 값을 받아와서 멤버 변수로 저장한다.
 bool ClientSession::OnConnect( SOCKADDR_IN* addr )
 {
-	memcpy( &mClientAddr, addr, sizeof( SOCKADDR_IN ) );
+	memcpy( &m_ClientAddr, addr, sizeof( SOCKADDR_IN ) );
 
 	/// 소켓을 넌블러킹으로 바꾸고
 	u_long arg = 1;
-	ioctlsocket( mSocket, FIONBIO, &arg );
+	ioctlsocket( m_Socket, FIONBIO, &arg );
 
 	/// nagle 알고리즘 끄기
 	int opt = 1;
-	setsockopt( mSocket, IPPROTO_TCP, TCP_NODELAY, (const char*)&opt, sizeof( int ) );
+	setsockopt( m_Socket, IPPROTO_TCP, TCP_NODELAY, (const char*)&opt, sizeof( int ) );
 
-	printf( "[DEBUG] Client Connected: IP=%s, PORT=%d\n", inet_ntoa( mClientAddr.sin_addr ), ntohs( mClientAddr.sin_port ) );
+	printf( "[DEBUG] Client Connected: IP=%s, PORT=%d\n", inet_ntoa( m_ClientAddr.sin_addr ), ntohs( m_ClientAddr.sin_port ) );
 
-	mConnected = true;
+	m_Connected = true;
 
 	return PostRecv();
 }
@@ -75,18 +75,18 @@ bool ClientSession::PostRecv()
 	DWORD recvbytes = 0;
 	DWORD flags = 0;
 	WSABUF buf;
-	buf.len = (ULONG)mRecvBuffer.GetFreeSpaceSize();
-	buf.buf = (char*)mRecvBuffer.GetBuffer();
+	buf.len = (ULONG)m_RecvBuffer.GetFreeSpaceSize();
+	buf.buf = (char*)m_RecvBuffer.GetBuffer();
 
-	memset( &mOverlappedRecv, 0, sizeof( OverlappedIO ) );
+	memset( &m_OverlappedRecv, 0, sizeof( OverlappedIO ) );
 
 	// 비동기 입력 호출이 완료 되었을 때 콜백 함수가 실행 되면
 	// 어느 호출이 부른 것인지를 식별하기 위해
 	// ClientSession* 를 담고 있는 멤버변수 mObject에 this (현재 객체) 주소 대입
-	mOverlappedRecv.mObject = this;
+	m_OverlappedRecv.m_Object = this;
 
 	/// 비동기 입출력 시작
-	if ( SOCKET_ERROR == WSARecv( mSocket, &buf, 1, &recvbytes, &flags, &mOverlappedRecv, RecvCompletion ) )
+	if ( SOCKET_ERROR == WSARecv( m_Socket, &buf, 1, &recvbytes, &flags, &m_OverlappedRecv, RecvCompletion ) )
 	{
 		if ( WSAGetLastError() != WSA_IO_PENDING )
 		{
@@ -107,7 +107,7 @@ void ClientSession::Disconnect()
 		return;
 	}
 
-	printf( "[DEBUG] Client Disconnected: IP=%s, PORT=%d\n", inet_ntoa( mClientAddr.sin_addr ), ntohs( mClientAddr.sin_port ) );
+	printf( "[DEBUG] Client Disconnected: IP=%s, PORT=%d\n", inet_ntoa( m_ClientAddr.sin_addr ), ntohs( m_ClientAddr.sin_port ) );
 
 	/// 즉각 해제
 	LINGER lingerOption;
@@ -115,15 +115,15 @@ void ClientSession::Disconnect()
 	lingerOption.l_linger = 0;
 
 	/// no TCP TIME_WAIT
-	if ( SOCKET_ERROR == setsockopt( mSocket, SOL_SOCKET, SO_LINGER, (char*)&lingerOption, sizeof( LINGER ) ) )
+	if ( SOCKET_ERROR == setsockopt( m_Socket, SOL_SOCKET, SO_LINGER, (char*)&lingerOption, sizeof( LINGER ) ) )
 	{
 		printf_s( "[DEBUG] setsockopt linger option error: %d\n", GetLastError() );
 		return;
 	}
 
-	closesocket( mSocket );
+	closesocket( m_Socket );
 
-	mConnected = false;
+	m_Connected = false;
 }
 
 // 비동기 입력 완료 후 RecvCompletion 콜백 발생하면
@@ -131,27 +131,27 @@ void ClientSession::Disconnect()
 void ClientSession::OnRead( size_t len )
 {
 	// 버퍼 쓰기 영역 크기 증가
-	mRecvBuffer.Commit( len );
+	m_RecvBuffer.Commit( len );
 
 	/// 패킷 파싱하고 처리
 	while ( true )
 	{
 		/// 패킷 헤더 크기 만큼 읽어와보기
 		PacketHeader header;
-		if ( false == mRecvBuffer.Peek( (char*)&header, sizeof( PacketHeader ) ) )
+		if ( false == m_RecvBuffer.Peek( (char*)&header, sizeof( PacketHeader ) ) )
 		{
 			return;
 		}
 
 		/// 패킷 완성이 되는가? 
-		if ( mRecvBuffer.GetStoredSize() < header.mSize )
+		if ( m_RecvBuffer.GetStoredSize() < header.m_Size )
 		{
 			return;
 		}
 
 		// 헤더에 담겨 있는 mSize는 패킷 전체 사이즈
 		// 패킷 사이즈 = 패킷 헤더 + 페이로드(payload = 실제 데이터)
-		if ( header.mType >= PKT_MAX || header.mType <= PKT_NONE )
+		if ( header.m_Type >= PKT_MAX || header.m_Type <= PKT_NONE )
 		{
 			Disconnect();
 			return;
@@ -161,7 +161,7 @@ void ClientSession::OnRead( size_t len )
 		// 다시 PostRecv() 함수를 호출하게 되어 통신이 재개 되어 다시 받아오고
 		// 결국 요건을 충족 시키게 되면 아래로 진입 하게 되어 패킷 처리 하게 됨
 		/// packet dispatch...
-		HandlerTable[header.mType]( this, header );
+		HandlerTable[header.m_Type]( this, header );
 	}
 }
 
@@ -173,7 +173,7 @@ bool ClientSession::SendRequest( PacketHeader* pkt )
 	}
 
 	/// Send 요청은 버퍼에 쌓아놨다가 한번에 보낸다.
-	if ( false == mSendBuffer.Write( (char*)pkt, pkt->mSize ) )
+	if ( false == m_SendBuffer.Write( (char*)pkt, pkt->m_Size ) )
 	{
 		/// 버퍼 용량 부족인 경우는 끊어버림
 		Disconnect();
@@ -192,7 +192,7 @@ bool ClientSession::SendFlush()
 	}
 
 	/// 보낼 데이터가 없으면 그냥 리턴
-	if ( mSendBuffer.GetContiguiousBytes() == 0 )
+	if ( m_SendBuffer.GetContiguiousBytes() == 0 )
 	{
 		return true;
 	}
@@ -201,14 +201,14 @@ bool ClientSession::SendFlush()
 	DWORD flags = 0;
 
 	WSABUF buf;
-	buf.len = (ULONG)mSendBuffer.GetContiguiousBytes();
-	buf.buf = (char*)mSendBuffer.GetBufferStart();
+	buf.len = (ULONG)m_SendBuffer.GetContiguiousBytes();
+	buf.buf = (char*)m_SendBuffer.GetBufferStart();
 
-	memset( &mOverlappedSend, 0, sizeof( OverlappedIO ) );
-	mOverlappedSend.mObject = this;
+	memset( &m_OverlappedSend, 0, sizeof( OverlappedIO ) );
+	m_OverlappedSend.m_Object = this;
 
 	// 비동기 입출력 시작
-	if ( SOCKET_ERROR == WSASend( mSocket, &buf, 1, &sendbytes, flags, &mOverlappedSend, SendCompletion ) )
+	if ( SOCKET_ERROR == WSASend( m_Socket, &buf, 1, &sendbytes, flags, &m_OverlappedSend, SendCompletion ) )
 	{
 		if ( WSAGetLastError() != WSA_IO_PENDING )
 		{
@@ -227,7 +227,7 @@ bool ClientSession::SendFlush()
 void ClientSession::OnWriteComplete( size_t len )
 {
 	/// 보내기 완료한 데이터는 버퍼에서 제거
-	mSendBuffer.Remove( len );
+	m_SendBuffer.Remove( len );
 }
 
 bool ClientSession::Broadcast( PacketHeader* pkt )
@@ -252,15 +252,15 @@ void ClientSession::OnTick()
 	/// 클라별로 주기적으로 해야될 일은 여기에
 
 	/// 특정 주기로 DB에 위치 저장
-	if ( ++mDbUpdateCount == PLAYER_DB_UPDATE_CYCLE )
+	if ( ++m_DbUpdateCount == PLAYER_DB_UPDATE_CYCLE )
 	{
-		mDbUpdateCount = 0;
-		UpdatePlayerDataContext* updatePlayer = new UpdatePlayerDataContext( mSocket, mPlayerId );
+		m_DbUpdateCount = 0;
+		UpdatePlayerDataContext* updatePlayer = new UpdatePlayerDataContext( m_Socket, m_PlayerId );
 
-		updatePlayer->mPosX = mPosX;
-		updatePlayer->mPosY = mPosY;
-		updatePlayer->mPosZ = mPosZ;
-		strcpy_s( updatePlayer->mComment, "updated_test" ); ///< 일단은 테스트를 위해
+		updatePlayer->m_PosX = m_PosX;
+		updatePlayer->m_PosY = m_PosY;
+		updatePlayer->m_PosZ = m_PosZ;
+		strcpy_s( updatePlayer->m_Comment, "updated_test" ); ///< 일단은 테스트를 위해
 		g_DatabaseJobManager->PushDatabaseJobRequest( updatePlayer );
 	}
 
@@ -268,7 +268,7 @@ void ClientSession::OnTick()
 
 void ClientSession::DatabaseJobDone( DatabaseJobContext* result )
 {
-	CRASH_ASSERT( mSocket == result->mSockKey );
+	CRASH_ASSERT( m_Socket == result->mSockKey );
 
 
 	const type_info& typeInfo = typeid( *result );
@@ -295,7 +295,7 @@ void ClientSession::DatabaseJobDone( DatabaseJobContext* result )
 void ClientSession::UpdateDone()
 {
 	/// 콘텐츠를 넣기 전까지는 딱히 해줄 것이 없다. 단지 테스트를 위해서..
-	printf( "DEBUG: Player[%d] Update Done\n", mPlayerId );
+	printf( "DEBUG: Player[%d] Update Done\n", m_PlayerId );
 }
 
 
@@ -304,16 +304,16 @@ void ClientSession::LoginDone( int pid, double x, double y, double z, const char
 {
 	LoginResult outPacket;
 
-	outPacket.mPlayerId = mPlayerId = pid;
-	outPacket.mPosX = mPosX = x;
-	outPacket.mPosY = mPosY = y;
-	outPacket.mPosZ = mPosZ = z;
-	strcpy_s( mPlayerName, name );
-	strcpy_s( outPacket.mName, name );
+	outPacket.m_PlayerId = m_PlayerId = pid;
+	outPacket.m_PosX = m_PosX = x;
+	outPacket.m_PosY = m_PosY = y;
+	outPacket.m_PosZ = m_PosZ = z;
+	strcpy_s( m_PlayerName, name );
+	strcpy_s( outPacket.m_Name, name );
 
 	SendRequest( &outPacket );
 
-	mLogon = true;
+	m_Logon = true;
 }
 
 ///////////////////////////////////////////////////////////
@@ -325,7 +325,7 @@ void CALLBACK RecvCompletion( DWORD dwError, DWORD cbTransferred, LPWSAOVERLAPPE
 	// 해당 구조체의 멤버 변수 mObject => ClientSession*
 	// 바로 이 포인터가 비동기 입력 WSARecv로 보낸 ClientSession 객체의 주소값
 	// PostRecv 멤소드에서 mOverlappedRecv.mObject = this ; 이 부분 참조
-	ClientSession* fromClient = static_cast<OverlappedIO*>( lpOverlapped )->mObject;
+	ClientSession* fromClient = static_cast<OverlappedIO*>( lpOverlapped )->m_Object;
 
 	// Overlapped IO 완료 했음. 카운트 감소
 	fromClient->DecOverlappedRequest();
@@ -354,7 +354,7 @@ void CALLBACK RecvCompletion( DWORD dwError, DWORD cbTransferred, LPWSAOVERLAPPE
 // 비동기 출력 WSASend()에 의해서 출력이 완료 되면 콜백으로 SendCompletion 실행
 void CALLBACK SendCompletion( DWORD dwError, DWORD cbTransferred, LPWSAOVERLAPPED lpOverlapped, DWORD dwFlags )
 {
-	ClientSession* fromClient = static_cast<OverlappedIO*>( lpOverlapped )->mObject;
+	ClientSession* fromClient = static_cast<OverlappedIO*>( lpOverlapped )->m_Object;
 
 	// Overlapped IO 완료 했음. 카운트 감소
 	fromClient->DecOverlappedRequest();

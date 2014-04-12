@@ -84,7 +84,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\CommonInclude\PacketType.h" />
+    <ClInclude Include="..\..\..\SharedPreference\PacketType.h" />
     <ClInclude Include="ChatHandler.h" />
     <ClInclude Include="CircularBuffer.h" />
     <ClInclude Include="DummyRender.h" />

@@ -21,8 +21,8 @@ private:
 		MAX_DB_JOB = 127
 	};
 
-	ProducerConsumerQueue<DatabaseJobContext*, MAX_DB_JOB>	mDbJobRequestQueue;
-	ProducerConsumerQueue<DatabaseJobContext*, MAX_DB_JOB>	mDbJobResultQueue;
+	ProducerConsumerQueue<DatabaseJobContext*, MAX_DB_JOB>	m_DbJobRequestQueue;
+	ProducerConsumerQueue<DatabaseJobContext*, MAX_DB_JOB>	m_DbJobResultQueue;
 
 };
 

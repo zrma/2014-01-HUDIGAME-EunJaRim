@@ -4,12 +4,12 @@ template<typename TElem, int QSize>
 class ProducerConsumerQueue
 {
 public:
-	ProducerConsumerQueue(): mOccupiedSize( 0 ), mQueueOffset( 0 )
+	ProducerConsumerQueue(): m_OccupiedSize( 0 ), m_QueueOffset( 0 )
 	{
-		memset( mQueueArray, 0, sizeof( mQueueArray ) );
-		InitializeConditionVariable( &mNotFull );
-		InitializeConditionVariable( &mNotEmpty );
-		InitializeSRWLock( &mSRWLock );
+		memset( m_QueueArray, 0, sizeof( m_QueueArray ) );
+		InitializeConditionVariable( &m_NotFull );
+		InitializeConditionVariable( &m_NotEmpty );
+		InitializeSRWLock( &m_SRWLock );
 	}
 
 	~ProducerConsumerQueue() {}
@@ -17,29 +17,29 @@ public:
 	bool Produce( const TElem& item, bool waitUntilConsume = true )
 	{
 		/// 큐에 넣을 공간 생길때까지 잔다.
-		AcquireSRWLockExclusive( &mSRWLock );
+		AcquireSRWLockExclusive( &m_SRWLock );
 
-		while ( mOccupiedSize == QSize )
+		while ( m_OccupiedSize == QSize )
 		{
 			if ( waitUntilConsume )
 			{
 				/// 큐에 넣을 공간 생길때까지 잔다.
-				SleepConditionVariableSRW( &mNotFull, &mSRWLock, INFINITE, 0 );
+				SleepConditionVariableSRW( &m_NotFull, &m_SRWLock, INFINITE, 0 );
 			}
 			else
 			{
-				ReleaseSRWLockExclusive( &mSRWLock );
+				ReleaseSRWLockExclusive( &m_SRWLock );
 				return false;
 			}
 		}
 
 
-		mQueueArray[( mQueueOffset + mOccupiedSize ) % QSize] = item;
-		++mOccupiedSize;
+		m_QueueArray[( m_QueueOffset + m_OccupiedSize ) % QSize] = item;
+		++m_OccupiedSize;
 
-		ReleaseSRWLockExclusive( &mSRWLock );
+		ReleaseSRWLockExclusive( &m_SRWLock );
 
-		WakeConditionVariable( &mNotEmpty );
+		WakeConditionVariable( &m_NotEmpty );
 
 		return true;
 	}
@@ -48,50 +48,49 @@ public:
 	bool Consume( TElem& item, bool waitUntilProduce = true )
 	{
 		/// 큐에 아이템 들어올때까지 잔다
-		AcquireSRWLockExclusive( &mSRWLock );
+		AcquireSRWLockExclusive( &m_SRWLock );
 
-		while ( mOccupiedSize == 0 )
+		while ( m_OccupiedSize == 0 )
 		{
 			if ( waitUntilProduce )
 			{
 				/// 큐에 아이템 들어올때까지 잔다
-				SleepConditionVariableSRW( &mNotEmpty, &mSRWLock, INFINITE, 0 );
+				SleepConditionVariableSRW( &m_NotEmpty, &m_SRWLock, INFINITE, 0 );
 			}
 			else
 			{
-				ReleaseSRWLockExclusive( &mSRWLock );
+				ReleaseSRWLockExclusive( &m_SRWLock );
 				return false;
 			}
 
 		}
 
-		item = mQueueArray[mQueueOffset];
-		--mOccupiedSize;
+		item = m_QueueArray[m_QueueOffset];
+		--m_OccupiedSize;
 
-		if ( ++mQueueOffset == QSize )
+		if ( ++m_QueueOffset == QSize )
 		{
-			mQueueOffset = 0;
+			m_QueueOffset = 0;
 		}
 
-		ReleaseSRWLockExclusive( &mSRWLock );
+		ReleaseSRWLockExclusive( &m_SRWLock );
 
-		WakeConditionVariable( &mNotFull );
+		WakeConditionVariable( &m_NotFull );
 
 		return true;
 	}
 
 private:
 
-	TElem mQueueArray[QSize];
+	TElem m_QueueArray[QSize];
 
-	uint32_t mOccupiedSize;
-	uint32_t mQueueOffset;
+	uint32_t m_OccupiedSize;
+	uint32_t m_QueueOffset;
 
-	CONDITION_VARIABLE mNotFull;
-	CONDITION_VARIABLE mNotEmpty;
+	CONDITION_VARIABLE m_NotFull;
+	CONDITION_VARIABLE m_NotEmpty;
 
-	SRWLOCK mSRWLock;
-
+	SRWLOCK m_SRWLock;
 };
 
 

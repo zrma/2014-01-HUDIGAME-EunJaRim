@@ -15,10 +15,10 @@ LoginHandler::~LoginHandler()
 void LoginHandler::HandleEvent( PacketHeader& pktBase )
 {
 	LoginResult recvData = static_cast<LoginResult&>( pktBase );
-	if ( NetworkManager::GetInstance( )->m_RecvBuffer.Read( (char*)&recvData, recvData.mSize ) )
+	if ( NetworkManager::GetInstance( )->m_RecvBuffer.Read( (char*)&recvData, recvData.m_Size ) )
 	{
 		// 패킷처리
-		if ( recvData.mPlayerId == -1 )
+		if ( recvData.m_PlayerId == -1 )
 		{
 			/// 여기 걸리면 로그인 실패다.
 			ExitProcess( -1 );

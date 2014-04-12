@@ -22,9 +22,9 @@ enum PacketTypes
 
 struct PacketHeader
 {
-	PacketHeader(): mSize( 0 ), mType( PKT_NONE ) {}
-	short mSize;
-	short mType;
+	PacketHeader(): m_Size( 0 ), m_Type( PKT_NONE ) {}
+	short m_Size;
+	short m_Type;
 };
 
 
@@ -33,29 +33,29 @@ struct LoginRequest: public PacketHeader
 {
 	LoginRequest()
 	{
-		mSize = sizeof( LoginRequest );
-		mType = PKT_CS_LOGIN;
-		mPlayerId = -1;
+		m_Size = sizeof( LoginRequest );
+		m_Type = PKT_CS_LOGIN;
+		m_PlayerId = -1;
 	}
 
-	int	mPlayerId;
+	int	m_PlayerId;
 };
 
 struct LoginResult: public PacketHeader
 {
 	LoginResult()
 	{
-		mSize = sizeof( LoginResult );
-		mType = PKT_SC_LOGIN;
-		mPlayerId = -1;
-		memset( mName, 0, MAX_NAME_LEN );
+		m_Size = sizeof( LoginResult );
+		m_Type = PKT_SC_LOGIN;
+		m_PlayerId = -1;
+		memset( m_Name, 0, MAX_NAME_LEN );
 	}
 
-	int		mPlayerId;
-	double	mPosX;
-	double	mPosY;
-	double	mPosZ;
-	char	mName[MAX_NAME_LEN];
+	int		m_PlayerId;
+	double	m_PosX;
+	double	m_PosY;
+	double	m_PosZ;
+	char	m_Name[MAX_NAME_LEN];
 
 };
 
@@ -63,32 +63,32 @@ struct ChatBroadcastRequest: public PacketHeader
 {
 	ChatBroadcastRequest()
 	{
-		mSize = sizeof( ChatBroadcastRequest );
-		mType = PKT_CS_CHAT;
-		mPlayerId = -1;
+		m_Size = sizeof( ChatBroadcastRequest );
+		m_Type = PKT_CS_CHAT;
+		m_PlayerId = -1;
 
-		memset( mChat, 0, MAX_CHAT_LEN );
+		memset( m_Chat, 0, MAX_CHAT_LEN );
 	}
 
-	int	mPlayerId;
-	char mChat[MAX_CHAT_LEN];
+	int	m_PlayerId;
+	char m_Chat[MAX_CHAT_LEN];
 };
 
 struct ChatBroadcastResult: public PacketHeader
 {
 	ChatBroadcastResult()
 	{
-		mSize = sizeof( ChatBroadcastResult );
-		mType = PKT_SC_CHAT;
-		mPlayerId = -1;
+		m_Size = sizeof( ChatBroadcastResult );
+		m_Type = PKT_SC_CHAT;
+		m_PlayerId = -1;
 
-		memset( mName, 0, MAX_NAME_LEN );
-		memset( mChat, 0, MAX_CHAT_LEN );
+		memset( m_Name, 0, MAX_NAME_LEN );
+		memset( m_Chat, 0, MAX_CHAT_LEN );
 	}
 
-	int	mPlayerId;
-	char mName[MAX_NAME_LEN];
-	char mChat[MAX_CHAT_LEN];
+	int	m_PlayerId;
+	char m_Name[MAX_NAME_LEN];
+	char m_Chat[MAX_CHAT_LEN];
 };
 
 #pragma pack(pop)

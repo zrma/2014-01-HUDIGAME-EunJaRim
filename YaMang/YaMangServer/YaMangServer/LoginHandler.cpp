@@ -16,10 +16,10 @@ LoginHandler::~LoginHandler()
 void LoginHandler::HandleEvent( ClientSession* session, PacketHeader& pktBase )
 {
 	LoginRequest inPacket = static_cast<LoginRequest&>( pktBase );
-	session->mRecvBuffer.Read( (char*)&inPacket, inPacket.mSize );
+	session->m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size );
 
 	/// 로그인은 DB 작업을 거쳐야 하기 때문에 DB 작업 요청한다.
-	LoadPlayerDataContext* newDbJob = new LoadPlayerDataContext( session->mSocket, inPacket.mPlayerId );
+	LoadPlayerDataContext* newDbJob = new LoadPlayerDataContext( session->m_Socket, inPacket.m_PlayerId );
 	g_DatabaseJobManager->PushDatabaseJobRequest( newDbJob );
 }
 

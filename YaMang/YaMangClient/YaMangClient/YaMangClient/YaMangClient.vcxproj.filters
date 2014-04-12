@@ -55,9 +55,6 @@
     <ClInclude Include="Logger.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\CommonInclude\PacketType.h">
-      <Filter>PacketDefine</Filter>
-    </ClInclude>
     <ClInclude Include="ChatHandler.h">
       <Filter>EventHandler</Filter>
     </ClInclude>
@@ -66,6 +63,9 @@
     </ClInclude>
     <ClInclude Include="DummyRender.h">
       <Filter>MainLoop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SharedPreference\PacketType.h">
+      <Filter>PacketDefine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

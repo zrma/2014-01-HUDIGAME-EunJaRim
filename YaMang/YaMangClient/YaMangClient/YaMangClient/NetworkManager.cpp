@@ -156,13 +156,13 @@ void NetworkManager::ProcessPacket()
 	}
 
 
-	if ( header.mSize > static_cast<short> ( m_RecvBuffer.GetCurrentSize() ) )
+	if ( header.m_Size > static_cast<short> ( m_RecvBuffer.GetCurrentSize() ) )
 	{
 		return;
 	}
 
 
-	HandlerTable[header.mType]( header );
+	HandlerTable[header.m_Type]( header );
 
 }
 
@@ -189,9 +189,9 @@ bool NetworkManager::Connected( WPARAM wParam, LPARAM lParam )
 			srand( static_cast<unsigned int> ( time( NULL ) ) );
 			/// 대략 1000~1100 의 ID로 로그인 해보자
 			LoginRequest sendData;
-			sendData.mPlayerId = 1000 + rand() % 101;
+			sendData.m_PlayerId = 1000 + rand() % 101;
 
-			if ( m_SendBuffer.Write( (const char*)&sendData, sendData.mSize ) )
+			if ( m_SendBuffer.Write( (const char*)&sendData, sendData.m_Size ) )
 			{
 				PostMessage( MainWindow::GetInstance()->Window(), WM_SOCKET, wParam, FD_WRITE );
 			}

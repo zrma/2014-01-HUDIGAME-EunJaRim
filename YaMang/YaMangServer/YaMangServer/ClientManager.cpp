@@ -60,7 +60,7 @@ void ClientManager::DirectPacket( int pid, PacketHeader* pkt )
 	for ( ClientList::const_iterator it = m_ClientList.begin(); it != m_ClientList.end(); ++it )
 	{
 		ClientSession* client = it->second;
-		if ( pid == client->mPlayerId )
+		if ( pid == client->m_PlayerId )
 		{
 			client->SendRequest( pkt );
 			break;
@@ -124,7 +124,7 @@ void ClientManager::CollectGarbageSessions()
 		ClientSession* client = disconnectedSessions[i];
 
 		// 우선 클라이언트 리스트에서 해당 목록을 지운다
-		m_ClientList.erase( client->mSocket );
+		m_ClientList.erase( client->m_Socket );
 		delete client;
 	}
 

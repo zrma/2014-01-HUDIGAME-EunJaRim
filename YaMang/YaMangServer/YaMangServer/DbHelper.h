@@ -37,13 +37,13 @@ public:
 
 private:
 
-	static sqlite3* mSqlite;
+	static sqlite3* m_Sqlite;
 
 	/// 현재 수행중인 SQL문에 대한 정보
-	sqlite3_stmt*	mResult;
-	int				mResultColCount;
+	sqlite3_stmt*	m_Result;
+	int				m_ResultColCount;
 
-	int				mBindColCount;
-	int				mResultCurrentCol;
+	int				m_BindColCount;
+	int				m_ResultCurrentCol;
 
 };

@@ -13,16 +13,16 @@ public:
 	static void* operator new( size_t objSize )
 	{
 		// 초기 생성 or 꽉 찼을 때
-		if ( !mFreeList )
+		if ( !m_FreeList )
 		{
 			// TOBJECT의 10칸 배열을 미리 동적 생성 해 둠
-			mFreeList = new uint8_t[sizeof(TOBJECT)*ALLOC_COUNT];
+			m_FreeList = new uint8_t[sizeof(TOBJECT)*ALLOC_COUNT];
 
 			// 엄밀히 따지면 mFreeList는 uint8_t(unsigned char) 배열이므로
 			// 2중 배열 형태로 만들 필요가 있음
-			uint8_t* pNext = mFreeList;
+			uint8_t* pNext = m_FreeList;
 			// mFreeList의 포인터(현재는 배열 시작위치)를 mFreeList의 이중 포인터 형태로 형 변환 해서 넣어둠
-			uint8_t** ppCurr = reinterpret_cast<uint8_t**>( mFreeList );
+			uint8_t** ppCurr = reinterpret_cast<uint8_t**>( m_FreeList );
 
 			/// OBJECT의 크기가 반드시 포인터 크기보다 커야 한다
 			// 배열 안에 미리 다음 위치의 포인터를 찍어 둠
@@ -46,16 +46,16 @@ public:
 
 			// 마지막에 다다르게 되면 mFreeList의 값이 0이 되어서 false, !mFreeList = true
 			// 위의 if문에 검출 되어서 배열을 추가 할당 하게 된다.
-			mTotalAllocCount += ALLOC_COUNT;
+			m_TotalAllocCount += ALLOC_COUNT;
 		}
 
 		// pAvailable은 mFreeList가 가리킬, 배열의 사용 가능한 현재 위치다!
-		uint8_t* pAvailable = mFreeList;
+		uint8_t* pAvailable = m_FreeList;
 		// 그리고 mFreeList는 현재 위치에 담겨 있는 주소값(다음 위치겠지)으로 갱신
-		mFreeList = *reinterpret_cast<uint8_t**>( pAvailable );
+		m_FreeList = *reinterpret_cast<uint8_t**>( pAvailable );
 
 		// 카운트 증가하고
-		++mCurrentUseCount;
+		++m_CurrentUseCount;
 
 		// 현재 위치 값을 리턴합시다.
 		return pAvailable;
@@ -63,36 +63,36 @@ public:
 
 	static void	operator delete( void* obj )
 	{
-		CRASH_ASSERT( mCurrentUseCount > 0 );
+		CRASH_ASSERT( m_CurrentUseCount > 0 );
 
-		--mCurrentUseCount;
+		--m_CurrentUseCount;
 
 		// mFreeList는 다음에 쓸, 사용 가능한 배열의 현재 위치
 		// obj는 지금 지울 위치니까, 현재 지울 위치에 해당하는 값
 		// 즉 *obj = mFreeList로, 현재 위치에 다음 위치 값을 저장한다
-		*reinterpret_cast<uint8_t**>( obj ) = mFreeList;
+		*reinterpret_cast<uint8_t**>( obj ) = m_FreeList;
 
 		// 그리고 현재 위치를, 사용 가능한 배열의 현재 위치로 갱신
-		mFreeList = static_cast<uint8_t*>( obj );
+		m_FreeList = static_cast<uint8_t*>( obj );
 	}
 
 
 private:
-	static uint8_t*	mFreeList;
-	static int		mTotalAllocCount; ///< for tracing
-	static int		mCurrentUseCount; ///< for tracing
+	static uint8_t*	m_FreeList;
+	static int		m_TotalAllocCount; ///< for tracing
+	static int		m_CurrentUseCount; ///< for tracing
 
 
 };
 
 // 정적 변수들에 대해서 초기화 필요
 template <class TOBJECT, int ALLOC_COUNT>
-uint8_t* ObjectPool<TOBJECT, ALLOC_COUNT>::mFreeList = nullptr;
+uint8_t* ObjectPool<TOBJECT, ALLOC_COUNT>::m_FreeList = nullptr;
 
 template <class TOBJECT, int ALLOC_COUNT>
-int ObjectPool<TOBJECT, ALLOC_COUNT>::mTotalAllocCount = 0;
+int ObjectPool<TOBJECT, ALLOC_COUNT>::m_TotalAllocCount = 0;
 
 template <class TOBJECT, int ALLOC_COUNT>
-int ObjectPool<TOBJECT, ALLOC_COUNT>::mCurrentUseCount = 0;
+int ObjectPool<TOBJECT, ALLOC_COUNT>::m_CurrentUseCount = 0;
 
 

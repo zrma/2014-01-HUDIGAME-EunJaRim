@@ -81,9 +81,6 @@
     <ClInclude Include="ClientSession.h">
       <Filter>YaMang</Filter>
     </ClInclude>
-    <ClInclude Include="YamangServer.h">
-      <Filter>YaMang</Filter>
-    </ClInclude>
     <ClInclude Include="MacroSet.h">
       <Filter>MainArea</Filter>
     </ClInclude>
@@ -95,6 +92,9 @@
     </ClInclude>
     <ClInclude Include="LoginHandler.h">
       <Filter>EventHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="YaMangServer.h">
+      <Filter>YaMang</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -125,14 +125,14 @@
     <ClCompile Include="ClientSession.cpp">
       <Filter>YaMang</Filter>
     </ClCompile>
-    <ClCompile Include="YamangServer.cpp">
-      <Filter>YaMang</Filter>
-    </ClCompile>
     <ClCompile Include="ChatHandler.cpp">
       <Filter>EventHandler</Filter>
     </ClCompile>
     <ClCompile Include="LoginHandler.cpp">
       <Filter>EventHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="YaMangServer.cpp">
+      <Filter>YaMang</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

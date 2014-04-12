@@ -73,11 +73,11 @@ bool UpdatePlayerDataContext::OnExecute()
 	// const char* SQL_UpdateTest = "UPDATE players SET pos_x=?, pos_y=?, pos_z=?, comment=? WHERE pid=?" ;
 	DbHelper dbhelper( SQL_UpdateTest );
 
-	dbhelper.BindParamDouble( mPosX );
-	dbhelper.BindParamDouble( mPosY );
-	dbhelper.BindParamDouble( mPosZ );
-	dbhelper.BindParamText( mComment, static_cast<int>( strlen( mComment ) ) );
-	dbhelper.BindParamInt( mPlayerId );
+	dbhelper.BindParamDouble( m_PosX );
+	dbhelper.BindParamDouble( m_PosY );
+	dbhelper.BindParamDouble( m_PosZ );
+	dbhelper.BindParamText( m_Comment, static_cast<int>( strlen( m_Comment ) ) );
+	dbhelper.BindParamInt( m_PlayerId );
 
 	if ( RESULT_ERROR == dbhelper.FetchRow() )
 	{

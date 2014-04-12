@@ -11,12 +11,12 @@ public:
 
   size_t GetCurrentSize() const
   { 
-	  return mCurrentSize ; 
+	  return m_CurrentSize ; 
   }
 
   size_t GetCapacity() const
   { 
-	  return mCapacity ;
+	  return m_Capacity ;
   }
 
   bool Write(const char* data, size_t bytes) ;
@@ -33,10 +33,10 @@ public:
 private:
 
 
-  size_t mBeginIndex ;
-  size_t mEndIndex ;
-  size_t mCurrentSize ;
-  size_t mCapacity ;
+  size_t m_BeginIndex ;
+  size_t m_EndIndex ;
+  size_t m_CurrentSize ;
+  size_t m_Capacity ;
 
-  char* mData ;
+  char* m_Data ;
 } ;

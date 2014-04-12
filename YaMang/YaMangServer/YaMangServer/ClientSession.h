@@ -14,22 +14,22 @@ struct DatabaseJobContext;
 
 struct OverlappedIO: public OVERLAPPED
 {
-	OverlappedIO(): mObject( nullptr )
+	OverlappedIO(): m_Object( nullptr )
 	{
 	}
 
-	ClientSession* mObject;
+	ClientSession* m_Object;
 };
 
 class ClientSession: public ObjectPool<ClientSession>
 {
 public:
 	ClientSession( SOCKET sock )
-		: mConnected( false ), mLogon( false ), mSocket( sock ), mPlayerId( -1 ), mSendBuffer( BUFSIZE ), mRecvBuffer( BUFSIZE ), mOverlappedRequested( 0 )
-		, mPosX( 0 ), mPosY( 0 ), mPosZ( 0 ), mDbUpdateCount( 0 )
+		: m_Connected( false ), m_Logon( false ), m_Socket( sock ), m_PlayerId( -1 ), m_SendBuffer( BUFSIZE ), m_RecvBuffer( BUFSIZE ), m_OverlappedRequested( 0 )
+		, m_PosX( 0 ), m_PosY( 0 ), m_PosZ( 0 ), m_DbUpdateCount( 0 )
 	{
-		memset( &mClientAddr, 0, sizeof( SOCKADDR_IN ) );
-		memset( mPlayerName, 0, sizeof( mPlayerName ) );
+		memset( &m_ClientAddr, 0, sizeof( SOCKADDR_IN ) );
+		memset( m_PlayerName, 0, sizeof( m_PlayerName ) );
 	}
 	~ClientSession() {}
 
@@ -47,15 +47,15 @@ public:
 
 	void	Disconnect();
 
-	bool	IsConnected() const { return mConnected; }
+	bool	IsConnected() const { return m_Connected; }
 
 	void	DatabaseJobDone( DatabaseJobContext* result );
 
 
 	/// 현재 Send/Recv 요청 중인 상태인지 검사하기 위함
-	void	IncOverlappedRequest() { ++mOverlappedRequested; }
-	void	DecOverlappedRequest() { --mOverlappedRequested; }
-	bool	DoingOverlappedOperation() const { return mOverlappedRequested > 0; }
+	void	IncOverlappedRequest() { ++m_OverlappedRequested; }
+	void	DecOverlappedRequest() { --m_OverlappedRequested; }
+	bool	DoingOverlappedOperation() const { return m_OverlappedRequested > 0; }
 
 public:
 	void	HandleLoginRequest( LoginRequest& inPacket );
@@ -71,27 +71,27 @@ private:
 
 
 private:
-	double			mPosX;
-	double			mPosY;
-	double			mPosZ;
-	char			mPlayerName[MAX_NAME_LEN];
+	double			m_PosX;
+	double			m_PosY;
+	double			m_PosZ;
+	char			m_PlayerName[MAX_NAME_LEN];
 
 private:
-	bool			mConnected;
-	bool			mLogon;
-	SOCKET			mSocket;
+	bool			m_Connected;
+	bool			m_Logon;
+	SOCKET			m_Socket;
 
-	int				mPlayerId;
-	SOCKADDR_IN		mClientAddr;
+	int				m_PlayerId;
+	SOCKADDR_IN		m_ClientAddr;
 
-	CircularBuffer	mSendBuffer;
-	CircularBuffer	mRecvBuffer;
+	CircularBuffer	m_SendBuffer;
+	CircularBuffer	m_RecvBuffer;
 
-	OverlappedIO	mOverlappedSend;
-	OverlappedIO	mOverlappedRecv;
-	int				mOverlappedRequested;
+	OverlappedIO	m_OverlappedSend;
+	OverlappedIO	m_OverlappedRecv;
+	int				m_OverlappedRequested;
 
-	int				mDbUpdateCount; ///< DB에 주기적으로 업데이트 하기 위한 변수
+	int				m_DbUpdateCount; ///< DB에 주기적으로 업데이트 하기 위한 변수
 
 	friend class ClientManager;
 	friend class ChatHandler;
