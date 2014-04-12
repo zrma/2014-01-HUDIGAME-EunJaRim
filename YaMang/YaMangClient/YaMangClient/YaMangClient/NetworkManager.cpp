@@ -15,9 +15,9 @@
 
 const int BUFSIZE = 1024 * 10;
 
-extern float posX;
-extern float posY;
-extern float posZ;
+extern float myPosX;
+extern float myPosY;
+extern float myPosZ;
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -168,7 +168,7 @@ void NetworkManager::ProcessPacket()
 
 }
 
-bool NetworkManager::Connected( WPARAM wParam, LPARAM lParam )
+bool NetworkManager::HandleMessage( WPARAM wParam, LPARAM lParam )
 {
 	// lParam 이 에러인지 검출 해보기
 	if ( WSAGETSELECTERROR( lParam ) )

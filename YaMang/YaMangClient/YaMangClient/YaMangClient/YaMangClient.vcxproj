@@ -92,6 +92,7 @@
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameOverHandler.h" />
     <ClInclude Include="InputDispatcher.h" />
+    <ClInclude Include="KeyInput.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="LoginHandler.h" />
     <ClInclude Include="MacroSet.h" />
@@ -111,6 +112,7 @@
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameOverHandler.cpp" />
     <ClCompile Include="InputDispatcher.cpp" />
+    <ClCompile Include="KeyInput.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="LoginHandler.cpp" />
     <ClCompile Include="MainWindow.cpp" />

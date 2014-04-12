@@ -79,6 +79,9 @@
     <ClInclude Include="GameOverHandler.h">
       <Filter>EventHandler</Filter>
     </ClInclude>
+    <ClInclude Include="KeyInput.h">
+      <Filter>MainLoop</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -122,6 +125,9 @@
     </ClCompile>
     <ClCompile Include="GameOverHandler.cpp">
       <Filter>EventHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyInput.cpp">
+      <Filter>MainLoop</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

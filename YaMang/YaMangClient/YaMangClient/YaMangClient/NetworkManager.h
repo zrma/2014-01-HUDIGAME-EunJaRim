@@ -12,7 +12,7 @@ public:
 	void	Destroy();
 	void	ProcessPacket();
 	bool	Connect();
-	bool	Connected( WPARAM wParam, LPARAM lParam );
+	bool	HandleMessage( WPARAM wParam, LPARAM lParam );
 	
 
 private:

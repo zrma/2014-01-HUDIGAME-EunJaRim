@@ -1,8 +1,9 @@
 #pragma once
-class InputDispatcher
+#include "MacroSet.h"
+
+class InputDispatcher : public Singleton<InputDispatcher>
 {
 public:
 	InputDispatcher();
 	~InputDispatcher();
 };
-

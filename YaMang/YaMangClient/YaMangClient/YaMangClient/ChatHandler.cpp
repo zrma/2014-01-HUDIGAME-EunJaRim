@@ -2,9 +2,9 @@
 #include "ChatHandler.h"
 #include "NetworkManager.h"
 
-extern float posX;
-extern float posY;
-extern float posZ;
+extern float myPosX;
+extern float myPosY;
+extern float myPosZ;
 
 ChatHandler::ChatHandler()
 {
@@ -29,21 +29,13 @@ void ChatHandler::HandleEvent( PacketHeader& pktBase )
 
 		if ( recvData.m_Chat[0] == 'L' )
 		{
-			posX -= 2.0f;
+			myPosX -= 2.0f;
 		}
 		if ( recvData.m_Chat[0] == 'R' )
 		{
-			posX += 2.0f;
+			myPosX += 2.0f;
 		}
 
-		// 				static int y2pos = 60;
-		// 				HDC hdc = GetDC( hWnd );
-		// 				TextOutA( hdc, 10, y2pos, buff, strlen( buff ) );
-		// 				ReleaseDC( hWnd, hdc );
-		// 				y2pos += 15;
-		// 				if ( y2pos > 600 )
-		// 					y2pos = 60;
-		// 
 		Log( "%s \n", buff );
 	}
 	else

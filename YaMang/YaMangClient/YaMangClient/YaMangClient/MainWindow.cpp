@@ -33,7 +33,7 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 
 		case WM_SOCKET:
 		{
-			NetworkManager::GetInstance()->Connected( wParam, lParam );
+			NetworkManager::GetInstance()->HandleMessage( wParam, lParam );
 		}
 			return 0;
 
