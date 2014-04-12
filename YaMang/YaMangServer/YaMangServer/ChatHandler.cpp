@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "ChatHandler.h"
 #include "ClientManager.h"
 
@@ -25,7 +25,7 @@ void ChatHandler::HandleEvent( ClientSession* session, PacketHeader& pktBase )
 
 	printf_s( "[%d]%s \n", inPacket.mPlayerId, inPacket.mChat );
 
-	/// Ã¤ÆÃÀº ¹Ù·Î ¹æ¼Û ÇÏ¸é ³¡
+	/// ì±„íŒ…ì€ ë°”ë¡œ ë°©ì†¡ í•˜ë©´ ë
 	if ( !session->Broadcast( &outPacket ) )
 	{
 		session->Disconnect();

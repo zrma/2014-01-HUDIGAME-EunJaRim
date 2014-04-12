@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "LoginHandler.h"
 #include "DatabaseJobContext.h"
 #include "DatabaseJobManager.h"
@@ -18,7 +18,7 @@ void LoginHandler::HandleEvent( ClientSession* session, PacketHeader& pktBase )
 	LoginRequest inPacket = static_cast<LoginRequest&>( pktBase );
 	session->mRecvBuffer.Read( (char*)&inPacket, inPacket.mSize );
 
-	/// ·Î±×ÀÎÀº DB ÀÛ¾÷À» °ÅÃÄ¾ß ÇÏ±â ¶§¹®¿¡ DB ÀÛ¾÷ ¿äÃ»ÇÑ´Ù.
+	/// ë¡œê·¸ì¸ì€ DB ìž‘ì—…ì„ ê±°ì³ì•¼ í•˜ê¸° ë•Œë¬¸ì— DB ìž‘ì—… ìš”ì²­í•œë‹¤.
 	LoadPlayerDataContext* newDbJob = new LoadPlayerDataContext( session->mSocket, inPacket.mPlayerId );
 	g_DatabaseJobManager->PushDatabaseJobRequest( newDbJob );
 }
