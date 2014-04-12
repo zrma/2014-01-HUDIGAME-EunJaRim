@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "LoginHandler.h"
 #include "NetworkManager.h"
 
@@ -17,17 +17,17 @@ void LoginHandler::HandleEvent( PacketHeader& pktBase )
 	LoginResult recvData = static_cast<LoginResult&>( pktBase );
 	if ( NetworkManager::GetInstance( )->m_RecvBuffer.Read( (char*)&recvData, recvData.m_Size ) )
 	{
-		// ÆĞÅ¶Ã³¸®
+		// íŒ¨í‚·ì²˜ë¦¬
 		if ( recvData.m_PlayerId == -1 )
 		{
-			/// ¿©±â °É¸®¸é ·Î±×ÀÎ ½ÇÆĞ´Ù.
+			/// ì—¬ê¸° ê±¸ë¦¬ë©´ ë¡œê·¸ì¸ ì‹¤íŒ¨ë‹¤.
 			ExitProcess( -1 );
 		}
 
 		printf_s( "My playerID[%d] \n", recvData.m_PlayerId );
 		NetworkManager::GetInstance()->m_MyPlayerId = recvData.m_PlayerId;
 
-		// 				/// Ã¤ÆÃ ¹æ¼Û ÆĞÅ¶ º¸³»´Â Å¸ÀÌ¸Ó µ¹¸®ÀÚ.. 
+		// 				/// ì±„íŒ… ë°©ì†¡ íŒ¨í‚· ë³´ë‚´ëŠ” íƒ€ì´ë¨¸ ëŒë¦¬ì.. 
 		// 				SetTimer( hWnd, 337, 3000, NULL );
 	}
 	else

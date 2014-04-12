@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "ChatHandler.h"
 #include "NetworkManager.h"
 
@@ -21,7 +21,7 @@ void ChatHandler::HandleEvent( PacketHeader& pktBase )
 	
 	if ( NetworkManager::GetInstance( )->m_RecvBuffer.Read( (char*)&recvData, recvData.m_Size ) )
 	{
-		/// ¿©±â °É¸®¸é ·Î±×ÀÎ ¾ÈµÈ³ğÀÌ º¸³½°Å´Ù
+		/// ì—¬ê¸° ê±¸ë¦¬ë©´ ë¡œê·¸ì¸ ì•ˆëœë†ˆì´ ë³´ë‚¸ê±°ë‹¤
 		assert( recvData.m_PlayerId != -1 );
 
 		char buff[MAX_CHAT_LEN] = { 0, };

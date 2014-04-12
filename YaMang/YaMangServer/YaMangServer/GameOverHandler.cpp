@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "GameOverHandler.h"
 
 
@@ -36,7 +36,7 @@ void GameOverHandler::HandleEvent( ClientSession* session, PacketHeader& pktBase
 
 	printf_s( "[GameOverMessage][%d]%s \n", inPacket.m_PlayerId, inPacket.m_Chat );
 
-	/// Ã¤ÆÃÀº ¹Ù·Î ¹æ¼Û ÇÏ¸é ³¡
+	/// ì±„íŒ…ì€ ë°”ë¡œ ë°©ì†¡ í•˜ë©´ ë
 	if ( !session->Broadcast( &outPacket ) )
 	{
 		session->Disconnect();

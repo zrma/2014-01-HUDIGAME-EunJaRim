@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "GameOverHandler.h"
 #include "NetworkManager.h"
 
@@ -18,7 +18,7 @@ void GameOverHandler::HandleEvent( PacketHeader& pktBase )
 
 	if ( NetworkManager::GetInstance()->m_RecvBuffer.Read( (char*)&recvData, recvData.m_Size ) )
 	{
-		/// ¿©±â °É¸®¸é ¼­¹ö·ÎºÎÅÍ Àß¸øµÈ ¾ÆÀÌµð°¡ ³Ñ¾î¿Â°Í
+		/// ì—¬ê¸° ê±¸ë¦¬ë©´ ì„œë²„ë¡œë¶€í„° ìž˜ëª»ëœ ì•„ì´ë””ê°€ ë„˜ì–´ì˜¨ê²ƒ
 		assert( recvData.m_PlayerId != -1 );
 
 		if ( NetworkManager::GetInstance( )->m_MyPlayerId != recvData.m_PlayerId )

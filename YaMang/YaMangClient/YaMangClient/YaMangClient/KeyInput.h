@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 enum class KeyEventType
 {
@@ -15,6 +15,7 @@ public:
 	~KeyInput();
 
 private:
-	KeyEventType m_KeyEventType;
+	int				m_KeyValue = 0;
+	KeyEventType	m_KeyEventType = KeyEventType::KEY_UNUSED;
 };
 
