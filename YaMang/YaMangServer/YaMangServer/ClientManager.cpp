@@ -150,7 +150,7 @@ void ClientManager::DispatchDatabaseJobResults()
 	// DB Job 매니저에서 계속 Pop
 	while ( g_DatabaseJobManager->PopDatabaseJobResult( dbResult ) )
 	{
-		if ( false == dbResult->mSuccess )
+		if ( false == dbResult->m_Success )
 		{
 			printf( "DB JOB FAIL \n" );
 		}
@@ -178,7 +178,7 @@ void ClientManager::DispatchDatabaseJobResults()
 			else
 			{
 				/// 여기는 해당 DB요청을 했던 클라이언트에서 직접 해줘야 는 경우다
-				auto& it = m_ClientList.find( dbResult->mSockKey );
+				auto& it = m_ClientList.find( dbResult->m_SockKey );
 
 				if ( it != m_ClientList.end() && it->second->IsConnected() )
 				{
@@ -216,12 +216,12 @@ void ClientManager::FlushClientSend()
 void ClientManager::CreatePlayer( int pid, double x, double y, double z, const char* name, const char* comment )
 {
 	CreatePlayerDataContext* newPlayerJob = new CreatePlayerDataContext();
-	newPlayerJob->mPlayerId = pid;
-	newPlayerJob->mPosX = x;
-	newPlayerJob->mPosY = y;
-	newPlayerJob->mPosZ = z;
-	strcpy_s( newPlayerJob->mPlayerName, name );
-	strcpy_s( newPlayerJob->mComment, comment );
+	newPlayerJob->m_PlayerId = pid;
+	newPlayerJob->m_PosX = x;
+	newPlayerJob->m_PosY = y;
+	newPlayerJob->m_PosZ = z;
+	strcpy_s( newPlayerJob->m_PlayerName, name );
+	strcpy_s( newPlayerJob->m_Comment, comment );
 
 	g_DatabaseJobManager->PushDatabaseJobRequest( newPlayerJob );
 
@@ -242,7 +242,7 @@ void ClientManager::CreatePlayerDone( DatabaseJobContext* dbJob )
 	// 자식 클래스인 CreatePlayerDataContext로 캐스팅
 	CreatePlayerDataContext* createJob = dynamic_cast<CreatePlayerDataContext*>( dbJob );
 
-	printf( "PLAYER[%d] CREATED: %s \n", createJob->mPlayerId, createJob->mPlayerName );
+	printf( "PLAYER[%d] CREATED: %s \n", createJob->m_PlayerId, createJob->m_PlayerName );
 }
 
 void ClientManager::DeletePlayerDone( DatabaseJobContext* dbJob )
@@ -250,6 +250,6 @@ void ClientManager::DeletePlayerDone( DatabaseJobContext* dbJob )
 	// CreatePlayerDone과 같음
 	DeletePlayerDataContext* deleteJob = dynamic_cast<DeletePlayerDataContext*>( dbJob );
 
-	printf( "PLAYER [%d] DELETED\n", deleteJob->mPlayerId );
+	printf( "PLAYER [%d] DELETED\n", deleteJob->m_PlayerId );
 
 }

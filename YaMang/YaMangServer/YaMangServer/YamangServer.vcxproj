@@ -14,6 +14,7 @@
     <ProjectGuid>{3ED9FCB7-0F29-47BA-8A70-ED6C3AA0C093}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>YamangServer</RootNamespace>
+    <ProjectName>YaMangServer</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">

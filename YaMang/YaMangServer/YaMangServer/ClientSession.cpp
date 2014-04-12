@@ -268,7 +268,7 @@ void ClientSession::OnTick()
 
 void ClientSession::DatabaseJobDone( DatabaseJobContext* result )
 {
-	CRASH_ASSERT( m_Socket == result->mSockKey );
+	CRASH_ASSERT( m_Socket == result->m_SockKey );
 
 
 	const type_info& typeInfo = typeid( *result );
@@ -277,8 +277,8 @@ void ClientSession::DatabaseJobDone( DatabaseJobContext* result )
 	{
 		LoadPlayerDataContext* login = dynamic_cast<LoadPlayerDataContext*>( result );
 
-		printf_s( "[DEBUG][%d] Login DONE! \n", login->mPlayerId );
-		LoginDone( login->mPlayerId, login->mPosX, login->mPosY, login->mPosZ, login->mPlayerName );
+		printf_s( "[DEBUG][%d] Login DONE! \n", login->m_PlayerId );
+		LoginDone( login->m_PlayerId, login->m_PosX, login->m_PosY, login->m_PosZ, login->m_PlayerName );
 
 	}
 	else if ( typeInfo == typeid( UpdatePlayerDataContext ) )

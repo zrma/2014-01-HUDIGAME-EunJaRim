@@ -13,7 +13,7 @@ bool LoadPlayerDataContext::OnExecute()
 {
 	// const char* SQL_SelectTest = "SELECT name, pos_x, pos_y, pos_z FROM players WHERE pid=?" ;
 	DbHelper dbhelper( SQL_SelectTest );
-	dbhelper.BindParamInt( mPlayerId );
+	dbhelper.BindParamInt( m_PlayerId );
 
 	/// 데이터가 없네?
 	if ( RESULT_ROW != dbhelper.FetchRow() )
@@ -23,11 +23,11 @@ bool LoadPlayerDataContext::OnExecute()
 
 
 	const unsigned char* name = dbhelper.GetResultParamText();
-	mPosX = dbhelper.GetResultParamDouble();
-	mPosY = dbhelper.GetResultParamDouble();
-	mPosZ = dbhelper.GetResultParamDouble();
+	m_PosX = dbhelper.GetResultParamDouble();
+	m_PosY = dbhelper.GetResultParamDouble();
+	m_PosZ = dbhelper.GetResultParamDouble();
 
-	strcpy_s( mPlayerName, (char*)name );
+	strcpy_s( m_PlayerName, (char*)name );
 
 
 	return true;
@@ -38,12 +38,12 @@ bool CreatePlayerDataContext::OnExecute()
 	// const char* SQL_InsertTest = "INSERT INTO players VALUES(?, ?, ?, ?, ?, ?)" ;
 	DbHelper dbhelper( SQL_InsertTest );
 
-	dbhelper.BindParamInt( mPlayerId );
-	dbhelper.BindParamText( mPlayerName, static_cast<int>( strlen( mPlayerName ) ) );
-	dbhelper.BindParamDouble( mPosX );
-	dbhelper.BindParamDouble( mPosY );
-	dbhelper.BindParamDouble( mPosZ );
-	dbhelper.BindParamText( mComment, static_cast<int>( strlen( mComment ) ) );
+	dbhelper.BindParamInt( m_PlayerId );
+	dbhelper.BindParamText( m_PlayerName, static_cast<int>( strlen( m_PlayerName ) ) );
+	dbhelper.BindParamDouble( m_PosX );
+	dbhelper.BindParamDouble( m_PosY );
+	dbhelper.BindParamDouble( m_PosZ );
+	dbhelper.BindParamText( m_Comment, static_cast<int>( strlen( m_Comment ) ) );
 
 	if ( RESULT_ERROR == dbhelper.FetchRow() )
 	{
@@ -57,7 +57,7 @@ bool DeletePlayerDataContext::OnExecute()
 {
 	// const char* SQL_DeleteTest = "DELETE FROM players WHERE pid=?" ;
 	DbHelper dbhelper( SQL_DeleteTest );
-	dbhelper.BindParamInt( mPlayerId );
+	dbhelper.BindParamInt( m_PlayerId );
 
 	if ( RESULT_ERROR == dbhelper.FetchRow() )
 	{

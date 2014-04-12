@@ -9,11 +9,11 @@
 /// 모든 DB관련 작업은 아래의 추상 클래스를 상속받아 사용해야 함
 struct DatabaseJobContext
 {
-	DatabaseJobContext(): mSuccess( false )
+	DatabaseJobContext(): m_Success( false )
 	{
 	}
 
-	DatabaseJobContext( SOCKET socketKey ): mSockKey( socketKey ), mSuccess( false )
+	DatabaseJobContext( SOCKET socketKey ): m_SockKey( socketKey ), m_Success( false )
 	{
 	}
 
@@ -23,10 +23,10 @@ struct DatabaseJobContext
 	// 순수가상 함수 OnExecute()를 상속 받은 각각의 자식 Context가 실제 작업 수행
 	virtual bool OnExecute() = 0;
 
-	void SetSuccess( bool success ) { mSuccess = success; }
+	void SetSuccess( bool success ) { m_Success = success; }
 
-	SOCKET	mSockKey;
-	bool	mSuccess;
+	SOCKET	m_SockKey;
+	bool	m_Success;
 };
 
 
@@ -34,21 +34,21 @@ struct DatabaseJobContext
 struct LoadPlayerDataContext: public DatabaseJobContext, public ObjectPool<LoadPlayerDataContext>
 {
 	LoadPlayerDataContext( SOCKET socketKey, int playerId ): DatabaseJobContext( socketKey )
-	, mPlayerId( playerId ), mPosX( 0 ), mPosY( 0 ), mPosZ( 0 )
+	, m_PlayerId( playerId ), m_PosX( 0 ), m_PosY( 0 ), m_PosZ( 0 )
 	{
-		memset( mPlayerName, 0, sizeof( mPlayerName ) );
+		memset( m_PlayerName, 0, sizeof( m_PlayerName ) );
 	}
 
 
 	virtual bool OnExecute();
 
 
-	int		mPlayerId;
+	int		m_PlayerId;
 
-	double	mPosX;
-	double	mPosY;
-	double	mPosZ;
-	char	mPlayerName[MAX_NAME_LEN];
+	double	m_PosX;
+	double	m_PosY;
+	double	m_PosZ;
+	char	m_PlayerName[MAX_NAME_LEN];
 
 };
 
@@ -57,21 +57,21 @@ struct LoadPlayerDataContext: public DatabaseJobContext, public ObjectPool<LoadP
 struct CreatePlayerDataContext: public DatabaseJobContext, public ObjectPool<CreatePlayerDataContext>
 {
 	CreatePlayerDataContext()
-	: mPlayerId( -1 ), mPosX( 0 ), mPosY( 0 ), mPosZ( 0 )
+	: m_PlayerId( -1 ), m_PosX( 0 ), m_PosY( 0 ), m_PosZ( 0 )
 	{
-		memset( mPlayerName, 0, sizeof( mPlayerName ) );
-		memset( mComment, 0, sizeof( mComment ) );
+		memset( m_PlayerName, 0, sizeof( m_PlayerName ) );
+		memset( m_Comment, 0, sizeof( m_Comment ) );
 	}
 
 	virtual bool OnExecute();
 
-	int		mPlayerId;
+	int		m_PlayerId;
 
-	double	mPosX;
-	double	mPosY;
-	double	mPosZ;
-	char	mPlayerName[MAX_NAME_LEN];
-	char	mComment[MAX_COMMENT_LEN];
+	double	m_PosX;
+	double	m_PosY;
+	double	m_PosZ;
+	char	m_PlayerName[MAX_NAME_LEN];
+	char	m_Comment[MAX_COMMENT_LEN];
 };
 
 
@@ -79,12 +79,12 @@ struct CreatePlayerDataContext: public DatabaseJobContext, public ObjectPool<Cre
 /// Player 삭제 작업
 struct DeletePlayerDataContext : public DatabaseJobContext, public ObjectPool<DeletePlayerDataContext>
 {
-	DeletePlayerDataContext(int playerId) : mPlayerId(playerId)
+	DeletePlayerDataContext(int playerId) : m_PlayerId(playerId)
 	{}
 
 	virtual bool OnExecute() ;
 
-	int		mPlayerId ;
+	int		m_PlayerId ;
 
 } ;
 
