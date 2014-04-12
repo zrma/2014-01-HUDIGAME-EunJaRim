@@ -8,6 +8,7 @@
 #include "PacketType.h"
 #include "LoginHandler.h"
 #include "ChatHandler.h"
+#include "GameOverHandler.h"
 
 #pragma comment(lib,"ws2_32.lib")
 
@@ -50,6 +51,7 @@ struct RegisterHandler
 
 static RegisterHandler registLoginHandler( PKT_SC_LOGIN, LoginHandler::HandleEvent );
 static RegisterHandler registChatHandler( PKT_SC_CHAT, ChatHandler::HandleEvent );
+static RegisterHandler registGameOverHandler( PKT_SC_GAMEOVER, GameOverHandler::HandleEvent );
 
 //////////////////////////////////////////////////////////////////////////
 

@@ -24,10 +24,9 @@ void LoginHandler::HandleEvent( PacketHeader& pktBase )
 			ExitProcess( -1 );
 		}
 
-		// 				printf_s( "player[%d] \n", recvData.mPlayerId );
-		// 				g_MyClientId = recvData.mPlayerId;
-		// 				g_LoginComplete = true;
-		// 
+		printf_s( "My playerID[%d] \n", recvData.m_PlayerId );
+		NetworkManager::GetInstance()->m_MyPlayerId = recvData.m_PlayerId;
+
 		// 				/// 채팅 방송 패킷 보내는 타이머 돌리자.. 
 		// 				SetTimer( hWnd, 337, 3000, NULL );
 	}

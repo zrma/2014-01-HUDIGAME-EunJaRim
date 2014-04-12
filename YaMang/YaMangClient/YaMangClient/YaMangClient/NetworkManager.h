@@ -19,7 +19,9 @@ private:
 	SOCKET			m_Socket = NULL;
 	CircularBuffer	m_RecvBuffer;
 	CircularBuffer	m_SendBuffer;
+	int				m_MyPlayerId;
 
 	friend class LoginHandler;
 	friend class ChatHandler;
+	friend class GameOverHandler;
 };

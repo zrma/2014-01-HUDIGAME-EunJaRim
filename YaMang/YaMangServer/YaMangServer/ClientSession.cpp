@@ -6,6 +6,7 @@
 #include "DatabaseJobManager.h"
 #include "ChatHandler.h"
 #include "LoginHandler.h"
+#include "GameOverHandler.h"
 
 typedef void( *EventHandler )( ClientSession* session, PacketHeader& pktBase );
 static EventHandler HandlerTable[PKT_MAX];
@@ -37,6 +38,7 @@ struct RegisterHandler
 
 static RegisterHandler registLoginHandler( PKT_CS_LOGIN, LoginHandler::HandleEvent );
 static RegisterHandler registChatHandler( PKT_CS_CHAT, ChatHandler::HandleEvent );
+static RegisterHandler registGameOverHandler( PKT_CS_GAMEOVER, GameOverHandler::HandleEvent );
 
 // EasyServer.cpp 에서 클라이언트 매니저에서 CreateClient 한 후에
 // 소켓 객체로부터 getpeername()를 이용해 주소 값을 뽑아 와서 OnConnect() 호출

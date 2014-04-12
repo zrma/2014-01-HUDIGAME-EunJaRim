@@ -96,6 +96,7 @@ private:
 	friend class ClientManager;
 	friend class ChatHandler;
 	friend class LoginHandler;
+	friend class GameOverHandler;
 };
 
 void CALLBACK RecvCompletion( DWORD dwError, DWORD cbTransferred, LPWSAOVERLAPPED lpOverlapped, DWORD dwFlags );

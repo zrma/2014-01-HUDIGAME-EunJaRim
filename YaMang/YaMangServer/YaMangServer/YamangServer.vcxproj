@@ -93,6 +93,7 @@
     <ClInclude Include="DatabaseJobManager.h" />
     <ClInclude Include="DbHelper.h" />
     <ClInclude Include="Exception.h" />
+    <ClInclude Include="GameOverHandler.h" />
     <ClInclude Include="LoginHandler.h" />
     <ClInclude Include="MacroSet.h" />
     <ClInclude Include="ObjectPool.h" />
@@ -114,6 +115,7 @@
     <ClCompile Include="DatabaseJobManager.cpp" />
     <ClCompile Include="DbHelper.cpp" />
     <ClCompile Include="Exception.cpp" />
+    <ClCompile Include="GameOverHandler.cpp" />
     <ClCompile Include="LoginHandler.cpp" />
     <ClCompile Include="sqlite3.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>

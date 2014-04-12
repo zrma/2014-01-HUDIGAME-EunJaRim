@@ -96,6 +96,9 @@
     <ClInclude Include="YaMangServer.h">
       <Filter>YaMang</Filter>
     </ClInclude>
+    <ClInclude Include="GameOverHandler.h">
+      <Filter>EventHandler</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DatabaseJobContext.cpp">
@@ -133,6 +136,9 @@
     </ClCompile>
     <ClCompile Include="YaMangServer.cpp">
       <Filter>YaMang</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOverHandler.cpp">
+      <Filter>EventHandler</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

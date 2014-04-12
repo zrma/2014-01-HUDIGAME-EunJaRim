@@ -30,22 +30,5 @@ void ChatHandler::HandleEvent( ClientSession* session, PacketHeader& pktBase )
 	{
 		session->Disconnect();
 	}
-
-	// test code
-	if ( inPacket.m_Chat[0] == '!')
-	{
-		if ( strlen( inPacket.m_Chat ) < 4 )
-		{
-			return;
-		}
-		std::string directMessage;
-		directMessage.append( inPacket.m_Chat );
-
-		int pid = stoi(directMessage.substr( 1, 4 ));
-		char msg[1024] = "YOU OUT!";
-		strcpy_s( outPacket.m_Chat, msg );
-		g_ClientManager->DirectPacket( pid, &outPacket );
-	}
 	
 }
-extern ClientManager* g_ClientManager;// also TEST

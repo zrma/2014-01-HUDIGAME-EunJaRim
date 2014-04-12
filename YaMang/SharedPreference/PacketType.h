@@ -15,6 +15,9 @@ enum PacketTypes
 	PKT_CS_CHAT = 3,
 	PKT_SC_CHAT = 4,
 
+	PKT_CS_GAMEOVER = 5,
+	PKT_SC_GAMEOVER = 6,
+
 	PKT_MAX = 1024
 };
 
@@ -89,6 +92,36 @@ struct ChatBroadcastResult: public PacketHeader
 	int	m_PlayerId;
 	char m_Name[MAX_NAME_LEN];
 	char m_Chat[MAX_CHAT_LEN];
+};
+
+// test Request packet
+struct GameOverRequest: public PacketHeader
+{
+	GameOverRequest( )
+	{
+		m_Size = sizeof( GameOverRequest );
+		m_Type = PKT_CS_GAMEOVER;
+		m_PlayerId = -1;
+
+		memset( m_Chat, 0, MAX_CHAT_LEN );
+	}
+
+	int	m_PlayerId;
+	char m_Chat[MAX_CHAT_LEN];
+};
+
+struct GameOverResult: public PacketHeader
+{
+	GameOverResult( )
+	{
+		m_Size = sizeof( GameOverResult );
+		m_Type = PKT_SC_GAMEOVER;
+		m_PlayerId = -1;
+		m_IsWon = false;
+	}
+
+	int	m_PlayerId;
+	bool m_IsWon;
 };
 
 #pragma pack(pop)
