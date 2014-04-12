@@ -34,7 +34,13 @@ void ChatHandler::HandleEvent( ClientSession* session, PacketHeader& pktBase )
 	// test code
 	if ( inPacket.mChat[0] == '!')
 	{
-		std::string directMessage = inPacket.mChat;
+		if ( strlen( inPacket.mChat ) < 4 )
+		{
+			return;
+		}
+		std::string directMessage;
+		directMessage.append( inPacket.mChat );
+
 		int pid = stoi(directMessage.substr( 1, 4 ));
 		char msg[1024] = "YOU OUT!";
 		strcpy_s( outPacket.mChat, msg );

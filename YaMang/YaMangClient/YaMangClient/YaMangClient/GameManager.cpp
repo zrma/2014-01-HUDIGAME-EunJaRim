@@ -51,6 +51,7 @@ bool GameManager::Update()
 	}
 	// 업데이트
 
+	NetworkManager::GetInstance()->ProcessPacket();
 	
 	return true;
 }
