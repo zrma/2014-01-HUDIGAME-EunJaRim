@@ -17,6 +17,9 @@
     <Filter Include="Utils">
       <UniqueIdentifier>{cf8ba7a5-240a-46e3-a970-d6e03db70597}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Matrixer">
+      <UniqueIdentifier>{5205afc4-08c4-4b9e-866a-bfe3f54000dd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -67,6 +70,12 @@
     <ClInclude Include="..\..\..\SharedPreference\PacketType.h">
       <Filter>PacketDefine</Filter>
     </ClInclude>
+    <ClInclude Include="CameraController.h">
+      <Filter>Matrixer</Filter>
+    </ClInclude>
+    <ClInclude Include="InputDispatcher.h">
+      <Filter>MainLoop</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -100,6 +109,12 @@
       <Filter>EventHandler</Filter>
     </ClCompile>
     <ClCompile Include="DummyRender.cpp">
+      <Filter>MainLoop</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraController.cpp">
+      <Filter>Matrixer</Filter>
+    </ClCompile>
+    <ClCompile Include="InputDispatcher.cpp">
       <Filter>MainLoop</Filter>
     </ClCompile>
   </ItemGroup>
