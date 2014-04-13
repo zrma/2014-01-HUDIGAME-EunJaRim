@@ -279,7 +279,7 @@ YAMANGDXDLL_API bool PreRendering()
 	if ( SUCCEEDED( g_D3dDevice->BeginScene() ) )
 	{
 		SetupTranslateMatrices();
-		//ViewSetting();
+		ViewSetting();
 
 		//lightsetting
 		//일단 1로 진행, 향후 라이트 개수 등 확정되면 인자 받아 설정
