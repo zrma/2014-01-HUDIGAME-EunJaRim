@@ -28,8 +28,8 @@ DWORD g_ZHeight = 0;
 //////////////////////////////////////////////////////////////////////////
 //텍스트 출력에 필요한 자원
 //////////////////////////////////////////////////////////////////////////
-ID3DXFont*   Font; // 글자를 그릴 폰트 스타일 객체
-ID3DXSprite*  Sprite; // 폰트를 그릴 스프라이트 객체 
+ID3DXFont*		g_Font = nullptr;		// 글자를 그릴 폰트 스타일 객체
+ID3DXSprite*	g_Sprite = nullptr;		// 폰트를 그릴 스프라이트 객체 
 
 struct CUSTOMVERTEX
 {
@@ -50,7 +50,7 @@ struct MYINDEX
 //input args: 윈도우 핸들
 //향후 공용으로 사용할 D3D, D3DDevice에 대해 초기화 진행
 //프로그램에서 1회만 실행 후 Process 종료까지 사용
-//참고url: http://www.delmadang.com/community/bbs_view.asp?bbsNo=17&indx=426040 
+//참고 URL : http://www.delmadang.com/community/bbs_view.asp?bbsNo=17&indx=426040 
 //////////////////////////////////////////////////////////////////////////
 YAMANGDXDLL_API HRESULT InitD3D( HWND hWnd )
 {
@@ -81,21 +81,21 @@ YAMANGDXDLL_API HRESULT InitD3D( HWND hWnd )
 
 	//텍스트 출력 자원 초기화
 	D3DXCreateFont(
-		g_D3dDevice // Device 객체 
-		, 30 // 폰트 높이 
-		, 0 // 폰트 길이 
-		, FW_NORMAL // 폰트 굵기 (기본 FW_BOLD) 
-		, 1 // 밉레벨 
-		, false // 폰트 기울기 켜기/끄기 설정 
-		, DEFAULT_CHARSET // 문자셋 
-		, OUT_DEFAULT_PRECIS // 출력 정확도 설정 
-		, DEFAULT_QUALITY // 퀄리티 설정 
-		, DEFAULT_PITCH | FF_DONTCARE // 피치 설정 
-		, "맑은 고딕" // 글꼴 설정 
-		, &Font // 초기화할 Font 
-		); // 폰트 초기화
+		g_D3dDevice						// Device 객체 
+		, 30							// 폰트 높이 
+		, 0								// 폰트 길이 
+		, FW_NORMAL						// 폰트 굵기 (기본 FW_BOLD) 
+		, 1								// 밉레벨 
+		, false							// 폰트 기울기 켜기/끄기 설정 
+		, DEFAULT_CHARSET				// 문자셋 
+		, OUT_DEFAULT_PRECIS			// 출력 정확도 설정 
+		, DEFAULT_QUALITY				// 퀄리티 설정 
+		, DEFAULT_PITCH | FF_DONTCARE	// 피치 설정 
+		, L"맑은 고딕"					// 글꼴 설정 
+		, &g_Font						// 초기화할 Font 
+		);								// 폰트 초기화
 
-	D3DXCreateSprite( g_D3dDevice, &Sprite ); // 스프라이트 초기화 
+	D3DXCreateSprite( g_D3dDevice, &g_Sprite ); // 스프라이트 초기화 
 
 
 #ifdef _PRINT_CONSOLE
@@ -555,7 +555,6 @@ YAMANGDXDLL_API void HeightMapRender()
 YAMANGDXDLL_API void SetAspectRatio( float width, float height )
 {
 	D3DXMATRIXA16 matProj;
-
 	float aspectRatio = width / height;
 
 	D3DXMatrixPerspectiveFovLH( &matProj, D3DX_PI / 2, aspectRatio, 1.0f, 100.0f );
@@ -569,17 +568,22 @@ YAMANGDXDLL_API void SetAspectRatio( float width, float height )
 
 YAMANGDXDLL_API void RenderText( LPCWSTR text, float left, float top, int RGB_R, int RGB_G, int RGB_B, float right, float bottom)
 {
-	Sprite->Begin( D3DXSPRITE_ALPHABLEND | D3DXSPRITE_SORT_TEXTURE );
+	g_Sprite->Begin( D3DXSPRITE_ALPHABLEND | D3DXSPRITE_SORT_TEXTURE );
 	// 스프라이트 그리기 시작
 	// 2D일 경우 D3DXSPRITE_SORT_TEXTURE, 3D일 경우 D3DXSPRITE_OBJECTSPACE
-	RECT rt = { left, top, right, bottom }; // 그릴 위치
-	Font->DrawText( Sprite, text
-		, -1 // 총 문자열 수(그냥 -1 해도 됨.) 
-		, &rt // 그릴 위치 
-		, DT_NOCLIP // 옵션 플래그
-		, D3DCOLOR_XRGB( RGB_R, RGB_G, RGB_B ) // 그릴 색 , default로 흰색
-		);
-	Sprite->End(); // 스프라이트 그리기 끝 
+	RECT rt = {
+		static_cast<LONG>( left ),
+		static_cast<LONG>( top ),
+		static_cast<LONG>( right ),
+		static_cast<LONG>( bottom )
+	}; // 그릴 위치
+	g_Font->DrawText( g_Sprite, text
+					, -1										// 총 문자열 수(그냥 -1 해도 됨.) 
+					, &rt									// 그릴 위치 
+					, DT_NOCLIP								// 옵션 플래그
+					, D3DCOLOR_XRGB( RGB_R, RGB_G, RGB_B )	// 그릴 색 , default로 흰색
+					);
+	g_Sprite->End();											// 스프라이트 그리기 끝 
 }
 
 // 내보낸 변수의 예제입니다.

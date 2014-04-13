@@ -4,7 +4,6 @@
 #include "NetworkManager.h"
 #include "Renderer.h"
 #include "InputDispatcher.h"
-#include "YaMangDxDll.h"
 
 MainWindow::MainWindow()
 {
