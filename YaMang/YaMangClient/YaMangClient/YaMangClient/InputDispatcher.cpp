@@ -114,7 +114,7 @@ REGISTER_KEY_HANDLER( VK_SPACE )
 {
 	myPosX = 0;
 	myPosY = 0;
-	myPosZ = 0;
+	myPosZ = 5;
 
 	CameraController::GetInstance()->Init();
 }
