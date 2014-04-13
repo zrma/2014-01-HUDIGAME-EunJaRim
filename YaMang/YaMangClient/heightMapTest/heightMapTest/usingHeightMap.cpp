@@ -75,7 +75,7 @@ HRESULT InitTexture()
 		return E_FAIL;
 	}
 
-	if (FAILED(D3DXCreateTextureFromFile(g_pD3DDevice,L"gom.tga", &g_pTexDiffuse)))
+	if (FAILED(D3DXCreateTextureFromFile(g_pD3DDevice,L"tile2.tga", &g_pTexDiffuse)))
 	{
 		return E_FAIL;
 	}

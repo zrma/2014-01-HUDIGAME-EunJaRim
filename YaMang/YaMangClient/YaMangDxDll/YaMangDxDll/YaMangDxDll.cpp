@@ -13,6 +13,32 @@
 LPDIRECT3D9 g_D3D = nullptr;
 LPDIRECT3DDEVICE9 g_D3dDevice = nullptr;
 
+//////////////////////////////////////////////////////////////////////////
+//Height Map 생성용 공용 자원
+//////////////////////////////////////////////////////////////////////////
+LPDIRECT3DVERTEXBUFFER9 g_VB = nullptr;
+LPDIRECT3DINDEXBUFFER9 g_IB = nullptr;
+
+LPDIRECT3DTEXTURE9 g_pTexHeight = nullptr;
+LPDIRECT3DTEXTURE9 g_pTexDiffuse = nullptr;
+
+DWORD g_XHeight = 0;
+DWORD g_ZHeight = 0;
+
+struct CUSTOMVERTEX
+{
+	D3DXVECTOR3 vertexPoint;
+	D3DXVECTOR3 vertexNormal;
+	D3DXVECTOR2 vertexTexturePoint;
+};
+
+#define D3DFVF_CUSTOMVERTEX ( D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_TEX1)
+
+struct MYINDEX
+{
+	WORD _0, _1, _2;
+};
+
 
 //////////////////////////////////////////////////////////////////////////
 //input args: 윈도우 핸들
@@ -25,7 +51,7 @@ YAMANGDXDLL_API HRESULT InitD3D( HWND hWnd )
 	if ( nullptr == ( g_D3D = Direct3DCreate9( D3D_SDK_VERSION ) ) )
 	{
 		// 오류
-		MessageBox( NULL, L"Could not Create D3D", L"Meshes.exe", MB_OK );
+		MessageBox( NULL, L"Could not Create D3D", L"YaMang.exe", MB_OK );
 		return E_FAIL;
 	}
 
@@ -37,9 +63,10 @@ YAMANGDXDLL_API HRESULT InitD3D( HWND hWnd )
 	d3dpp.EnableAutoDepthStencil = TRUE;
 	d3dpp.AutoDepthStencilFormat = D3DFMT_D16;
 
-	if ( FAILED( g_D3D->CreateDevice( D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd, D3DCREATE_SOFTWARE_VERTEXPROCESSING, &d3dpp, &g_D3dDevice ) ) )
+	if ( FAILED( g_D3D->CreateDevice( D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, 
+		hWnd, D3DCREATE_SOFTWARE_VERTEXPROCESSING, &d3dpp, &g_D3dDevice ) ) )
 	{
-		MessageBox( NULL, L"Could not CreateDevice", L"Meshes.exe", MB_OK );
+		MessageBox( NULL, L"Could not CreateDevice", L"YaMang.exe", MB_OK );
 		return E_FAIL;
 	}
 
@@ -58,9 +85,10 @@ YAMANGDXDLL_API HRESULT InitGeometry( HWND hWnd, LPCTSTR fileName, MESHOBJECT* i
 	LPD3DXBUFFER D3dxMtrialBuffer;
 
 	//x file import
-	if ( FAILED( D3DXLoadMeshFromX( fileName, D3DXMESH_SYSTEMMEM, g_D3dDevice, NULL, &D3dxMtrialBuffer, NULL, &( inputVal->NumMaterials ), &inputVal->importedMesh ) ) )
+	if ( FAILED( D3DXLoadMeshFromX( fileName, D3DXMESH_SYSTEMMEM, g_D3dDevice, NULL, 
+		&D3dxMtrialBuffer, NULL, &( inputVal->NumMaterials ), &inputVal->importedMesh ) ) )
 	{
-		MessageBox( NULL, L"Could not find x file", L"Mesh Load", MB_OK );
+		MessageBox( NULL, L"Could not find x file", L"YaMang.exe", MB_OK );
 		return E_FAIL;
 	}
 
@@ -107,7 +135,7 @@ YAMANGDXDLL_API HRESULT InitGeometry( HWND hWnd, LPCTSTR fileName, MESHOBJECT* i
 
 				if ( FAILED( D3DXCreateTextureFromFileA( g_D3dDevice, strTexture, &( inputVal->MeshTexture[i] ) ) ) )
 				{
-					MessageBox( NULL, L"Could not find texture map", L"Meshes.exe", MB_OK );
+					MessageBox( NULL, L"Could not find texture map", L"YaMang.exe", MB_OK );
 				}
 			}
 		}
