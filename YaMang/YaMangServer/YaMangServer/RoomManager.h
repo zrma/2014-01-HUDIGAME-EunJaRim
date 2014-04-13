@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 class ClientSession;
 class ClientManager;
@@ -9,9 +9,9 @@ public:
 	RoomManager();
 	~RoomManager();
 
-	void	AddRoom(); // ¹æ »ı¼º
-	void	DeleteRoom(); // ¹æ »èÁ¦
-	void	ChangeRoom(); // Å¬¶óÀÌ¾ğÆ®¸¦ ´Ù¸¥ ¹æÀ¸·Î ÀÌµ¿ (Å¬¶ó ¸Å´ÏÀú ¾Æ´Ô)
+	void	AddRoom(); // ë°© ìƒì„±
+	void	DeleteRoom(); // ë°© ì‚­ì œ
+	void	ChangeRoom(); // í´ë¼ì´ì–¸íŠ¸ë¥¼ ë‹¤ë¥¸ ë°©ìœ¼ë¡œ ì´ë™ (í´ë¼ ë§¤ë‹ˆì € ì•„ë‹˜)
 
 	ClientSession* CreateClient( SOCKET sock );
 	void FlushClientSend( );

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "RoomManager.h"
 #include "ClientSession.h"
 #include "ClientManager.h"
@@ -9,8 +9,8 @@ RoomManager* g_RoomManager = nullptr;
 RoomManager::RoomManager()
 {
 	ClientManager* waitingRoom = new ClientManager();
-	//m_RoomList.push_back( RoomList::value_type( 0, waitingRoom ) ); // 0Àº ´ë±â¹æÀ» ¶æÇÔ
-	m_RoomList.insert( RoomList::value_type( 0, waitingRoom ) ); // 0Àº ´ë±â¹æÀ» ¶æÇÔ
+	//m_RoomList.push_back( RoomList::value_type( 0, waitingRoom ) ); // 0ì€ ëŒ€ê¸°ë°©ì„ ëœ»í•¨
+	m_RoomList.insert( RoomList::value_type( 0, waitingRoom ) ); // 0ì€ ëŒ€ê¸°ë°©ì„ ëœ»í•¨
 }
 
 
@@ -25,10 +25,10 @@ RoomManager::~RoomManager()
 
 ClientSession* RoomManager::CreateClient( SOCKET sock )
 {
-	// ¼øÈ¸¸¦ ÇÒ ÇÊ¿ä ¾øÀ¸³ª ³ªÁß¿¡ map¿¡¼­ vector·Î ¹Ù²Ü¿¹Á¤
+	// ìˆœíšŒë¥¼ í•  í•„ìš” ì—†ìœ¼ë‚˜ ë‚˜ì¤‘ì— mapì—ì„œ vectorë¡œ ë°”ê¿€ì˜ˆì •
 	for ( auto& it : m_RoomList )
 	{
-		// ´ë±â¹æ¿¡ »ı¼º
+		// ëŒ€ê¸°ë°©ì— ìƒì„±
 		int roomNumber = it.first;
 		if ( 0 == roomNumber )
 		{
