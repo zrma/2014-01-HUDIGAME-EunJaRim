@@ -196,10 +196,6 @@ void ViewSetting()
 	D3DXMATRIXA16 matView;
 	D3DXMatrixLookAtLH( &matView, &vEyePt, &vLookatPt, &vUpVec );
 	SetMatrix( &matView, true );
-
-	D3DXMATRIXA16 matProj;
-	D3DXMatrixPerspectiveFovLH( &matProj, D3DX_PI / 2, 1.0f, 1.0f, 100.0f );
-	g_D3dDevice->SetTransform( D3DTS_PROJECTION, &matProj );
 }
 
 //light 세팅에 대해서는 향후 추가
@@ -283,7 +279,7 @@ YAMANGDXDLL_API bool PreRendering()
 	if ( SUCCEEDED( g_D3dDevice->BeginScene() ) )
 	{
 		SetupTranslateMatrices();
-		ViewSetting();
+		//ViewSetting();
 
 		//lightsetting
 		//일단 1로 진행, 향후 라이트 개수 등 확정되면 인자 받아 설정
