@@ -119,7 +119,7 @@ YAMANGDXDLL_API HRESULT InitGeometry( HWND hWnd, LPCTSTR fileName, MESHOBJECT* i
 	return S_OK;
 }
 
-void SetupTranslateMatrices( float moveX, float moveY, float moveZ )
+void SetupTranslateMatrices()
 {
 	D3DXMATRIXA16 matWorld;
 	D3DXMatrixIdentity( &matWorld );
@@ -127,7 +127,7 @@ void SetupTranslateMatrices( float moveX, float moveY, float moveZ )
 
 	//x, y, z축 입력 값에 대해 이동 처리
 	D3DXMATRIXA16 thisMatrix;
-	D3DXMatrixTranslation( &thisMatrix, moveX, moveY, moveZ );
+	D3DXMatrixTranslation( &thisMatrix, 0, 0, 0 );
 	g_D3dDevice->MultiplyTransform( D3DTS_WORLD, &thisMatrix );
 
 	//향후 추가 매트릭스 처리 필요 내용에 대해 추가 예정
@@ -214,7 +214,7 @@ void Lighting( int lightNum )
 //main에서는 mesh object에 대한 직접 rendering 진행
 //post에서는 pre에서 설정한 setting 초기화
 //////////////////////////////////////////////////////////////////////////
-YAMANGDXDLL_API bool PreRendering( float moveX, float moveY, float moveZ )
+YAMANGDXDLL_API bool PreRendering()
 {
 	if ( NULL == g_D3dDevice )
 	{
@@ -224,17 +224,18 @@ YAMANGDXDLL_API bool PreRendering( float moveX, float moveY, float moveZ )
 	g_D3dDevice->Clear( 0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB( 30, 10, 10 ), 1.0f, 0 );
 
 	bool flag = false;
+
 	//렌더 방어코드
 	//pre rendering 단계에서 진행되지 않으면 향후 render 모두 실패
 	if ( SUCCEEDED( g_D3dDevice->BeginScene() ) )
 	{
-		SetupTranslateMatrices( moveX, moveY, moveZ );
+		SetupTranslateMatrices();
 		ViewSetting();
+
 		//lightsetting
 		//일단 1로 진행, 향후 라이트 개수 등 확정되면 인자 받아 설정
 		int lightNum = 1;
 		Lighting( lightNum );
-
 		//Log( "라이팅 세팅!\n" );
 
 		g_D3dDevice->SetTextureStageState( 0, D3DTSS_COLOROP, D3DTOP_MODULATE );
@@ -251,58 +252,8 @@ YAMANGDXDLL_API bool PreRendering( float moveX, float moveY, float moveZ )
 	return flag;
 }
 
-/*
-YAMANGDXDLL_API bool PreRendering( D3DXMATRIXA16* matView )
+YAMANGDXDLL_API void Rendering( MESHOBJECT* inputVal )
 {
-	if ( NULL == g_D3dDevice )
-	{
-		return false;
-	}
-
-	g_D3dDevice->Clear( 0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB( 30, 10, 10 ), 1.0f, 0 );
-
-	bool flag = false;
-	//렌더 방어코드
-	//pre rendering 단계에서 진행되지 않으면 향후 render 모두 실패
-	if ( SUCCEEDED( g_D3dDevice->BeginScene() ) )
-	{
-		SetMatrix( matView, true );
-		D3DXMATRIXA16 matProj;
-		D3DXMatrixPerspectiveFovLH( &matProj, D3DX_PI / 2, 1.0f, 1.0f, 100.0f );
-		g_D3dDevice->SetTransform( D3DTS_PROJECTION, &matProj );
-
-		D3DXMATRIXA16 mat;
-		D3DXMatrixIdentity( &mat );
-		g_D3dDevice->SetTransform( D3DTS_WORLD, &mat );
-
-		//lightsetting
-		//일단 1로 진행, 향후 라이트 개수 등 확정되면 인자 받아 설정
-		int lightNum = 1;
-		Lighting( lightNum );
-
-		//Log( "라이팅 세팅!\n" );
-
-		g_D3dDevice->SetTextureStageState( 0, D3DTSS_COLOROP, D3DTOP_MODULATE );
-		g_D3dDevice->SetTextureStageState( 0, D3DTSS_COLORARG1, D3DTA_TEXTURE );
-		g_D3dDevice->SetTextureStageState( 0, D3DTSS_COLORARG2, D3DTA_DIFFUSE );
-		g_D3dDevice->SetTextureStageState( 0, D3DTSS_ALPHAOP, D3DTOP_DISABLE );
-
-		//Log( "Render Begin \n" );
-		//Log( "pre render 완료!\n" );
-
-		flag = true;
-	}
-
-	return flag;
-}
-*/
-YAMANGDXDLL_API void Rendering( MESHOBJECT* inputVal, float moveX, float moveY, float moveZ )
-{
-	D3DXMATRIXA16 thisMatrix;
-
-	D3DXMatrixTranslation( &thisMatrix, moveX, moveY, moveZ );
-	SetMatrix( &thisMatrix );
-
 	//Log( "Now Render : %p \n", inputVal );
 	for ( DWORD i = 0; i < inputVal->NumMaterials; ++i )
 	{
@@ -368,10 +319,6 @@ YAMANGDXDLL_API void SetMatrix( D3DXMATRIXA16* matrix, bool cameraSet /*= false 
 	if ( cameraSet == true )
 	{
 		g_D3dDevice->SetTransform( D3DTS_VIEW, matrix );
-
-		//D3DXMATRIXA16 matProj;
-		//D3DXMatrixPerspectiveFovLH( &matProj, D3DX_PI / 2, 1.0f, 1.0f, 100.0f );
-		//g_D3dDevice->SetTransform( D3DTS_PROJECTION, &matProj );
 	}
 	else
 	{

@@ -25,11 +25,10 @@ extern "C"{
 	
 	//render 사전 준비 beginScene
 	//x,y,z축 이동이 없으면 0을 넣으면 됩니다.
-	YAMANGDXDLL_API bool PreRendering( float moveX = 0, float moveY = 0, float moveZ = 0);
-//	YAMANGDXDLL_API bool PreRendering( D3DXMATRIXA16* matView );
+	YAMANGDXDLL_API bool PreRendering();
 
 	//Main rendering MeshObject를 넣어 render 진행
-	YAMANGDXDLL_API void Rendering( MESHOBJECT* inputVal, float moveX = 0, float moveY = 0, float moveZ = 0 );
+	YAMANGDXDLL_API void Rendering( MESHOBJECT* inputVal );
 
 	//rendering 후 디바이스 endScene
 	YAMANGDXDLL_API void PostRendering();
