@@ -51,7 +51,8 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 			GetWindowRect( m_HandleOfWindow, &rect );
 			float width = rect.right - rect.left;
 			float height = rect.bottom - rect.left;
-			SetAspectRatio(width, height);
+			
+			Renderer::GetInstance()->ResizeWindow( width, height );
 		}
 			return 0;
 
@@ -168,7 +169,7 @@ BOOL MainWindow::Create( PCWSTR lpWindowName, DWORD dwStyle, DWORD dwExStyle /*=
 	m_HandleOfWindow = CreateWindowEx( dwExStyle, ClassName(), lpWindowName, dwStyle,
 									   x, y, nWidth, nHeight, hWndParent, hMenu, GetModuleHandle( NULL ), this );
 
-	SetAspectRatio( nWidth, nHeight);
+	Renderer::GetInstance()->ResizeWindow( nWidth, nHeight);
 
 	return ( m_HandleOfWindow ? TRUE : FALSE );
 }

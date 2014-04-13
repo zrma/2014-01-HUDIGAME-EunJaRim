@@ -25,6 +25,12 @@ LPDIRECT3DTEXTURE9 g_TexDiffuse = nullptr;
 DWORD g_XHeight = 0;
 DWORD g_ZHeight = 0;
 
+//////////////////////////////////////////////////////////////////////////
+//텍스트 출력에 필요한 자원
+//////////////////////////////////////////////////////////////////////////
+ID3DXFont*   Font; // 글자를 그릴 폰트 스타일 객체
+ID3DXSprite*  Sprite; // 폰트를 그릴 스프라이트 객체 
+
 struct CUSTOMVERTEX
 {
 	D3DXVECTOR3 vertexPoint;
@@ -72,6 +78,25 @@ YAMANGDXDLL_API HRESULT InitD3D( HWND hWnd )
 
 	g_D3dDevice->SetRenderState( D3DRS_CULLMODE, D3DCULL_NONE );
 	g_D3dDevice->SetRenderState( D3DRS_ZENABLE, TRUE );
+
+	//텍스트 출력 자원 초기화
+	D3DXCreateFont(
+		g_D3dDevice // Device 객체 
+		, 30 // 폰트 높이 
+		, 0 // 폰트 길이 
+		, FW_NORMAL // 폰트 굵기 (기본 FW_BOLD) 
+		, 1 // 밉레벨 
+		, false // 폰트 기울기 켜기/끄기 설정 
+		, DEFAULT_CHARSET // 문자셋 
+		, OUT_DEFAULT_PRECIS // 출력 정확도 설정 
+		, DEFAULT_QUALITY // 퀄리티 설정 
+		, DEFAULT_PITCH | FF_DONTCARE // 피치 설정 
+		, "맑은 고딕" // 글꼴 설정 
+		, &Font // 초기화할 Font 
+		); // 폰트 초기화
+
+	D3DXCreateSprite( g_D3dDevice, &Sprite ); // 스프라이트 초기화 
+
 
 #ifdef _PRINT_CONSOLE
 	Logger::GetInstance();

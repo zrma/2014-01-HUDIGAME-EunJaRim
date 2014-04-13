@@ -114,3 +114,8 @@ void Renderer::SetCamera()
 {
 	SetMatrix( &(CameraController::GetInstance()->GetMatrix()), true );
 }
+
+void Renderer::ResizeWindow( float width, float height )
+{
+	SetAspectRatio( width, height );
+}
