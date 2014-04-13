@@ -425,7 +425,7 @@ HRESULT InitVertexBuffer( HWND hWnd )
 		{
 			vertex.vertexPoint.x = (float) x - g_XHeight / 2.0f;
 			vertex.vertexPoint.z = -( (float) z - g_ZHeight / 2.0f );
-			vertex.vertexPoint.y = ( (float) ( *( (LPDWORD) d3drc.pBits + x + z*( d3drc.Pitch / 4 ) ) & 0x000000ff ) ) / 5.f;
+			vertex.vertexPoint.y = ( (float) ( *( (LPDWORD) d3drc.pBits + x + z*( d3drc.Pitch / 4 ) ) & 0x000000ff ) ) / 16.f;
 
 			//normal 값이고
 			//0,0,0 기준으로 각 지점의 normal 값을 계산
