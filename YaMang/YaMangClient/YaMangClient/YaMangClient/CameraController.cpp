@@ -54,10 +54,17 @@ void CameraController::TransCamera( TransType trans, float range )
 	}
 
 	D3DXMatrixMultiply( &m_Matrix, &m_Matrix, &matrix );
+// 	Log( " %f %f %f %f \n %f %f %f %f \n %f %f %f %f \n %f %f %f %f \n",
+// 		 m_Matrix._11, m_Matrix._21, m_Matrix._31, m_Matrix._41,
+// 		 m_Matrix._12, m_Matrix._22, m_Matrix._32, m_Matrix._42,
+// 		 m_Matrix._13, m_Matrix._23, m_Matrix._33, m_Matrix._43,
+// 		 m_Matrix._14, m_Matrix._24, m_Matrix._34, m_Matrix._44 );
+}
 
-	Log( " %f %f %f %f \n %f %f %f %f \n %f %f %f %f \n %f %f %f %f \n",
-		 m_Matrix._11, m_Matrix._21, m_Matrix._31, m_Matrix._41,
-		 m_Matrix._12, m_Matrix._22, m_Matrix._32, m_Matrix._42,
-		 m_Matrix._13, m_Matrix._23, m_Matrix._33, m_Matrix._43,
-		 m_Matrix._14, m_Matrix._24, m_Matrix._34, m_Matrix._44 );
+D3DXMATRIXA16 CameraController::GetInvMatrix()
+{
+	D3DXMATRIXA16 outMatrix;
+	D3DXMatrixInverse( &outMatrix, NULL, &m_Matrix );
+
+	return outMatrix;
 }

@@ -5,6 +5,7 @@
 DummyRender::DummyRender()
 {
 	Renderer::GetInstance()->RenderBegin();
+	Renderer::GetInstance()->SetCamera();
 }
 
 DummyRender::~DummyRender()

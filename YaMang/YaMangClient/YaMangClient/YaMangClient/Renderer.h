@@ -18,6 +18,7 @@ public:
 	void	Render( MESHOBJECT* mesh );
 	bool	CreateMesh( LPCTSTR& fileName, MESHOBJECT* mesh );
 	void	DeleteMesh( MESHOBJECT* mesh );
+	void	SetCamera();
 
 private:
 	bool	m_Result = false;

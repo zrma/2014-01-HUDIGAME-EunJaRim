@@ -124,12 +124,12 @@ REGISTER_KEY_HANDLER( VK_ESCAPE )
 
 REGISTER_KEY_HANDLER( VK_W )
 {
-	CameraController::GetInstance()->TransCamera( TransType::TRANS_TYPE_TRANSLATE_Z, -1.0f );
+	CameraController::GetInstance()->TransCamera( TransType::TRANS_TYPE_TRANSLATE_Z, 1.0f );
 }
 
 REGISTER_KEY_HANDLER( VK_S )
 {
-	CameraController::GetInstance()->TransCamera( TransType::TRANS_TYPE_TRANSLATE_Z, 1.0f );
+	CameraController::GetInstance()->TransCamera( TransType::TRANS_TYPE_TRANSLATE_Z, -1.0f );
 }
 
 REGISTER_KEY_HANDLER( VK_A )
