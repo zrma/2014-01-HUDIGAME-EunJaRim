@@ -38,7 +38,7 @@ extern "C"{
 
 	YAMANGDXDLL_API void SetMatrix( D3DXMATRIXA16* matrix, bool cameraSet = false );
 
-	YAMANGDXDLL_API void SetAspectRatio( float width, float height )
+	YAMANGDXDLL_API void SetAspectRatio( float width, float height );
 	//내부에서 처리하도록 변경
 	//YAMANGDXDLL_API void SetupTranslateMatrices(float moveX, float moveY, float moveZ);
 	//YAMANGDXDLL_API void ViewSetting();
