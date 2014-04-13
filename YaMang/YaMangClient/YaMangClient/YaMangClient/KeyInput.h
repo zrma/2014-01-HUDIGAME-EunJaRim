@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-enum class KeyEventType
+enum KeyStatus
 {
 	KEY_DOWN,
 	KEY_PRESSED,
@@ -43,10 +43,12 @@ public:
 	KeyInput();
 	~KeyInput();
 
-	char	GetKeyValue() { return m_KeyValue; }
-	void	SetKeyValue( char key ) { m_KeyValue = key; }
+	char		GetKeyValue() { return m_KeyValue; }
+	void		SetKeyValue( char key ) { m_KeyValue = key; }
+	KeyStatus	GetKeyStatus() { return m_KeyStatus; }
+	void		SetKeyStatus( KeyStatus keyStatus ) { m_KeyStatus = keyStatus; }
 
 private:
-	char			m_KeyValue = 0;
-	KeyEventType	m_KeyEventType = KeyEventType::KEY_UNUSED;
+	char		m_KeyValue = 0;
+	KeyStatus	m_KeyStatus = KeyStatus::KEY_UNUSED;
 };

@@ -28,6 +28,7 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 
 		case WM_TIMER:
 		{
+			InputDispatcher::GetInstance()->DispatchKeyInput();
 			GameManager::GetInstance()->Update();
 		}
 			return 0;

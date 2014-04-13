@@ -54,6 +54,32 @@ void InputDispatcher::DispatchKeyInput()
 		KeyInput inputKey = *( m_KeyInputList.rbegin() );
 		m_KeyInputList.pop_front();
 
+		switch ( inputKey.GetKeyValue() )
+		{
+			case KeyStatus::KEY_DOWN:
+			{
+				// inputKey.SetKeyValue( KeyStatus::KEY_PRESSED );
+				break;
+			}
+			case KeyStatus::KEY_PRESSED:
+			{
+				break;
+			}
+			case KeyStatus::KEY_UP:
+			{
+				break;
+			}
+			case KeyStatus::KEY_UNUSED:
+			{
+				break;
+			}
+			default:
+			{
+				// ??!
+				break;
+			}
+		}
+
 		Log( "이번 입력은 %c입니다. \n", inputKey.GetKeyValue() );
 
 		KeyHandlerTable[inputKey.GetKeyValue()]( &inputKey );
