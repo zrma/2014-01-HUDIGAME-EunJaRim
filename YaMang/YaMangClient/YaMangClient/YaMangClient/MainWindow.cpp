@@ -74,7 +74,7 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 		case WM_KEYDOWN:
 		{
 			KeyInput key;
-			key.SetKeyValue( static_cast<char>( wParam ) );
+			key.SetKeyValue( static_cast<unsigned char>( wParam ) );
 			key.SetKeyStatus( KeyStatus::KEY_DOWN );
 			if ( InputDispatcher::GetInstance()->IsPressed( key ) )
 			{
@@ -90,7 +90,7 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 		case WM_KEYUP:
 		{
 			KeyInput key;
-			key.SetKeyValue( static_cast<char>( wParam ) );
+			key.SetKeyValue( static_cast<unsigned char>( wParam ) );
 			key.SetKeyStatus( KeyStatus::KEY_UP );
 
 			InputDispatcher::GetInstance()->EventKeyInput( key );

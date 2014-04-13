@@ -445,13 +445,13 @@ HRESULT InitIdxBuffer( HWND hWnd )
 	{
 		for ( DWORD x = 0; x < g_XHeight - 1; ++x )
 		{
-			idx._0 = ( z*g_XHeight + x );
-			idx._1 = ( z*g_XHeight + x + 1 );
-			idx._2 = ( ( z + 1 )*g_XHeight + x );
+			idx._0 = static_cast<WORD>( z*g_XHeight + x );
+			idx._1 = static_cast<WORD>( z*g_XHeight + x + 1 );
+			idx._2 = static_cast<WORD>( ( z + 1 )*g_XHeight + x );
 			*idxPointer++ = idx;
-			idx._0 = ( ( z + 1 )*g_XHeight + x );
-			idx._1 = ( z*g_XHeight + x + 1 );
-			idx._2 = ( ( z + 1 ) *g_XHeight + x + 1 );
+			idx._0 = static_cast<WORD>( ( z + 1 )*g_XHeight + x );
+			idx._1 = static_cast<WORD>( z*g_XHeight + x + 1 );
+			idx._2 = static_cast<WORD>( ( z + 1 ) *g_XHeight + x + 1 );
 			*idxPointer++ = idx;
 		}
 	}
@@ -521,13 +521,11 @@ YAMANGDXDLL_API void HeightMapRender()
 	g_D3dDevice->SetStreamSource( 0, g_VertexBuffer, 0, sizeof( CUSTOMVERTEX ) );
 	g_D3dDevice->SetFVF( D3DFVF_CUSTOMVERTEX );
 
+	g_D3dDevice->SetTexture( 0, g_TexDiffuse );
+
 	g_D3dDevice->SetIndices( g_IdxBuffer );
 	g_D3dDevice->DrawIndexedPrimitive( D3DPT_TRIANGLELIST, 0, 0, g_XHeight*g_ZHeight, 0, ( g_XHeight - 1 )*( g_ZHeight - 1 ) * 2 );
 }
-
-
-
-
 
 
 // 내보낸 변수의 예제입니다.

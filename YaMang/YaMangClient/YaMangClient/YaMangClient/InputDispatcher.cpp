@@ -28,7 +28,7 @@ struct InitializeKeyHandlers
 
 struct RegisterKeyHandler
 {
-	RegisterKeyHandler( char keyType, KeyEventHandler keyHandler )
+	RegisterKeyHandler( unsigned char keyType, KeyEventHandler keyHandler )
 	{
 		KeyHandlerTable[keyType] = keyHandler;
 	}
@@ -41,7 +41,7 @@ struct RegisterKeyHandler
 
 InputDispatcher::InputDispatcher()
 {
-	ZeroMemory( &m_IsKeyPressed, m_IsKeyPressed.size() );
+	ZeroMemory( &m_IsKeyPressed, sizeof(m_IsKeyPressed) );
 }
 
 
@@ -115,6 +115,8 @@ REGISTER_KEY_HANDLER( VK_SPACE )
 	myPosX = 0;
 	myPosY = 0;
 	myPosZ = 0;
+
+	CameraController::GetInstance()->Init();
 }
 
 REGISTER_KEY_HANDLER( VK_ESCAPE )
@@ -124,20 +126,20 @@ REGISTER_KEY_HANDLER( VK_ESCAPE )
 
 REGISTER_KEY_HANDLER( VK_W )
 {
-	CameraController::GetInstance()->TransCamera( TransType::TRANS_TYPE_TRANSLATE_Z, 0.5f );
+	CameraController::GetInstance()->TransCamera( TransType::TRANS_TYPE_TRANSLATE_Z, -0.5f );
 }
 
 REGISTER_KEY_HANDLER( VK_S )
 {
-	CameraController::GetInstance()->TransCamera( TransType::TRANS_TYPE_TRANSLATE_Z, -0.5f );
+	CameraController::GetInstance()->TransCamera( TransType::TRANS_TYPE_TRANSLATE_Z, 0.5f );
 }
 
 REGISTER_KEY_HANDLER( VK_A )
 {
-	CameraController::GetInstance()->TransCamera( TransType::TRANS_TYPE_TRANSLATE_X, -0.5f );
+	CameraController::GetInstance()->TransCamera( TransType::TRANS_TYPE_TRANSLATE_X, 0.5f );
 }
 
 REGISTER_KEY_HANDLER( VK_D )
 {
-	CameraController::GetInstance()->TransCamera( TransType::TRANS_TYPE_TRANSLATE_X, 0.5f );
+	CameraController::GetInstance()->TransCamera( TransType::TRANS_TYPE_TRANSLATE_X, -0.5f );
 }

@@ -38,6 +38,10 @@ bool GameManager::Init()
 	LPCTSTR fileName = L"tiger.x";
 	Renderer::GetInstance()->CreateMesh( fileName, m_Mesh );
 
+	LPCTSTR mapFileName = L"heightmap_128_128.bmp";
+	LPCTSTR textureFileName = L"heightmap_texture.tga";
+	Renderer::GetInstance()->CreateMap( mapFileName, textureFileName );
+
 	// 씬 생성 및 초기화
 
 	// 카메라 초기화
@@ -79,6 +83,14 @@ bool GameManager::Render()
 
 	if ( m_Mesh )
 	{
+		//////////////////////////////////////////////////////////////////////////
+		// 여기는 현재 하드코딩으로 렌더를 해 주지만,
+		// 추후 씬 디렉터를 추가해서 씬 디렉터가 각 씬을 구성하고,
+		// 그 씬 내부에 맵이나, 케릭터 등의 각 객체가 존재해서
+		// 업데이트와 렌더를 씬에게 명령을 내리고 씬에서 다시 하부로 명령이 전파 되는 식으로 구현 해야 함
+		//////////////////////////////////////////////////////////////////////////
+
+		Renderer::GetInstance()->RenderMap();
 		Renderer::GetInstance()->Render( m_Mesh );
 	}
 

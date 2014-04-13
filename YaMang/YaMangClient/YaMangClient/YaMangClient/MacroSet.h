@@ -1,5 +1,6 @@
 #pragma  once
 
+#pragma warning(disable: 4316)
 #include <cassert>
 
 template <class T>

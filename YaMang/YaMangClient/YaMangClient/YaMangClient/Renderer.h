@@ -16,12 +16,18 @@ public:
 	void	RenderEnd();
 
 	void	Render( MESHOBJECT* mesh );
+	void	RenderMap();
+	
+	bool	CreateMap( LPCTSTR& heightMapFileName, LPCTSTR& textureFileName );
+	void	DeleteMap();
+
 	bool	CreateMesh( LPCTSTR& fileName, MESHOBJECT* mesh );
 	void	DeleteMesh( MESHOBJECT* mesh );
+	
 	void	SetCamera();
 
 private:
 	bool	m_Result = false;
 	bool	m_IsReady = false;
+	bool	m_IsMapReady = false;
 };
-

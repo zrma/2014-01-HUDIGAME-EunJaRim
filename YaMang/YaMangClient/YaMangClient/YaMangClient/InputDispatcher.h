@@ -12,7 +12,7 @@ public:
 	void	DispatchKeyInput();
 
 	bool	IsPressed( KeyInput key ) { return IsPressed( key.GetKeyValue() ); }
-	bool	IsPressed( char key ) { return m_IsKeyPressed[key]; }
+	bool	IsPressed( unsigned char key ) { return m_IsKeyPressed[key]; }
 
 private:
 	std::list<KeyInput>			m_KeyInputList;

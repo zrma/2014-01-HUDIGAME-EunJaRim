@@ -1,4 +1,5 @@
 #pragma once
+#pragma 
 #include "Logger.h"
 #include <d3dx9math.h>
 
@@ -24,7 +25,7 @@ enum class TransType
 class CameraController: public Singleton<CameraController>
 {
 public:
-	__declspec( align( 16 ) ) CameraController();
+	CameraController();
 	~CameraController();
 
 	void	Init();

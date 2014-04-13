@@ -28,6 +28,8 @@ bool Renderer::Init()
 
 void Renderer::Destroy()
 {
+	DeleteMap();
+
 	if ( m_Result )
 	{
 		D3DCleanUp();
@@ -55,8 +57,34 @@ void Renderer::Render( MESHOBJECT* mesh )
 {
 	if ( mesh && m_IsReady )
 	{
-		Rendering( mesh, myPosX, myPosY, myPosZ );
+		Rendering( mesh, myPosX, myPosY + 50, myPosZ );
 	}
+}
+
+void Renderer::RenderMap()
+{
+	if ( m_IsMapReady )
+	{
+		HeightMapRender();
+	}
+}
+
+bool Renderer::CreateMap( LPCTSTR& heightMapFileName, LPCTSTR& textureFileName )
+{
+	m_IsMapReady = ( S_OK == HeightMapTextureImport(
+		MainWindow::GetInstance()->Window(), heightMapFileName, textureFileName ) );
+
+	return m_IsMapReady;
+}
+
+void Renderer::DeleteMap()
+{
+	if ( m_IsMapReady )
+	{
+		HeightMapCleanup();
+	}
+
+	m_IsMapReady = false;
 }
 
 bool Renderer::CreateMesh( LPCTSTR& fileName, MESHOBJECT* mesh )
@@ -78,5 +106,5 @@ void Renderer::DeleteMesh( MESHOBJECT* mesh )
 
 void Renderer::SetCamera()
 {
-	SetMatrix( &(CameraController::GetInstance()->GetInvMatrix()), true );
+	SetMatrix( &(CameraController::GetInstance()->GetMatrix()), true );
 }
