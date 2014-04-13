@@ -244,7 +244,7 @@ bool ClientSession::Broadcast( PacketHeader* pkt )
 		return false;
 	}
 
-	g_ClientManager->BroadcastPacket( this, pkt );
+	m_ClientManager->BroadcastPacket( this, pkt );
 
 	return true;
 }

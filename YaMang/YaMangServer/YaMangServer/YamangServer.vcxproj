@@ -99,6 +99,7 @@
     <ClInclude Include="MacroSet.h" />
     <ClInclude Include="ObjectPool.h" />
     <ClInclude Include="ProducerConsumerQueue.h" />
+    <ClInclude Include="RoomManager.h" />
     <ClInclude Include="SPSCQueue.h" />
     <ClInclude Include="sqlite3.h" />
     <ClInclude Include="sqlite3ext.h" />
@@ -119,6 +120,7 @@
     <ClCompile Include="GameOverHandler.cpp" />
     <ClCompile Include="GameStartHandler.cpp" />
     <ClCompile Include="LoginHandler.cpp" />
+    <ClCompile Include="RoomManager.cpp" />
     <ClCompile Include="sqlite3.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4996</DisableSpecificWarnings>

@@ -57,9 +57,7 @@ public:
 	void	DecOverlappedRequest() { --m_OverlappedRequested; }
 	bool	DoingOverlappedOperation() const { return m_OverlappedRequested > 0; }
 
-public:
-	void	HandleLoginRequest( LoginRequest& inPacket );
-	void	HandleChatRequest( ChatBroadcastRequest& inPacket );
+	void	SetClientManager( ClientManager* clientManager ) { m_ClientManager = clientManager; }
 
 private:
 
@@ -92,6 +90,8 @@ private:
 	int				m_OverlappedRequested;
 
 	int				m_DbUpdateCount; ///< DB에 주기적으로 업데이트 하기 위한 변수
+
+	ClientManager*	m_ClientManager;
 
 	friend class ClientManager;
 	friend class ChatHandler;

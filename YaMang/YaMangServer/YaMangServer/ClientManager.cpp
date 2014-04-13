@@ -6,10 +6,6 @@
 #include "DatabaseJobContext.h"
 #include "DatabaseJobManager.h"
 
-// 헤더파일에 extern 형태로 선언 되어 있음
-// 다른 부분에서도 가져다 쓰기 때문에 헤더에 extern 선언만 해 두고 여기서 nullptr로 초기화
-// 실제 할당은 EasyServer.cpp의 _tmain() 함수에서 동적할당(new)
-ClientManager* g_ClientManager = nullptr;
 
 // 클라 생성
 // _tmain() 쪽의 클라이언트 핸들링 스레드에서 WaitForSingleObjectEx(hEvent, INFINITE, TRUE) 가
@@ -28,6 +24,7 @@ ClientSession* ClientManager::CreateClient( SOCKET sock )
 	// typedef pair<const Key, Type> value_type;
 	// value_type은 키와 밸류를 한 쌍으로 묶어주는 자료구조
 	m_ClientList.insert( ClientList::value_type( sock, client ) );
+	client->SetClientManager( this );
 
 	return client;
 }
