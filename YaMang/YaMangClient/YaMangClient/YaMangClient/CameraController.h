@@ -31,7 +31,13 @@ public:
 	void	Init();
 	void	TransCamera( TransType trans, float range );
 	
-	D3DXMATRIXA16	GetMatrix() { return m_Matrix; }
+	D3DXMATRIXA16	GetMatrix()
+	{
+		D3DXMATRIXA16 matrix;
+		D3DXMatrixRotationX( &matrix, -1.5f );
+		D3DXMatrixMultiply( &matrix, &m_Matrix, &matrix );
+		return matrix;
+	}
 	D3DXMATRIXA16	GetInvMatrix();
 
 private:

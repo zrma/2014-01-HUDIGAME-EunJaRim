@@ -353,7 +353,7 @@ YAMANGDXDLL_API void SetMatrix( D3DXMATRIXA16* matrix, bool cameraSet /*= false 
 	}
 	else
 	{
-		g_D3dDevice->MultiplyTransform( D3DTS_WORLD, matrix );
+		g_D3dDevice->SetTransform( D3DTS_WORLD, matrix );
 	}
 }
 

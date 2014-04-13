@@ -18,7 +18,7 @@
 
 float myPosX = 0;
 float myPosY = 0;
-float myPosZ = 0;
+float myPosZ = 25;
 
 int APIENTRY _tWinMain( _In_ HINSTANCE hInstance,
 						_In_opt_ HINSTANCE hPrevInstance,

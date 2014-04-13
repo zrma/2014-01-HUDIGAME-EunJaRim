@@ -57,7 +57,13 @@ void Renderer::Render( MESHOBJECT* mesh )
 {
 	if ( mesh && m_IsReady )
 	{
-		Rendering( mesh, myPosX, myPosY + 50, myPosZ );
+		D3DXMATRIXA16 matrix;
+		D3DXMatrixIdentity( &matrix );
+		D3DXMatrixTranslation( &matrix, myPosX, myPosY + 45, myPosZ );
+		
+		SetMatrix( &matrix );
+
+		Rendering( mesh );
 	}
 }
 
