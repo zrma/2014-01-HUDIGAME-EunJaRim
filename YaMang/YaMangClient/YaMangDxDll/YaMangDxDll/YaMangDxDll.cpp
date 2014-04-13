@@ -252,7 +252,6 @@ YAMANGDXDLL_API bool PreRendering()
 	g_D3dDevice->Clear( 0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB( 30, 10, 10 ), 1.0f, 0 );
 
 	bool flag = false;
-<<<<<<< HEAD
 
 	//렌더 방어코드
 	//pre rendering 단계에서 진행되지 않으면 향후 render 모두 실패
@@ -280,47 +279,7 @@ YAMANGDXDLL_API bool PreRendering()
 
 	return flag;
 }
-=======
-	//렌더 방어코드
-	//pre rendering 단계에서 진행되지 않으면 향후 render 모두 실패
-	if ( SUCCEEDED( g_D3dDevice->BeginScene() ) )
-	{
-		SetupTranslateMatrices( moveX, moveY, moveZ );
-		ViewSetting();
-		//lightsetting
-		//일단 1로 진행, 향후 라이트 개수 등 확정되면 인자 받아 설정
-		int lightNum = 1;
-		Lighting( lightNum );
 
-		//Log( "라이팅 세팅!\n" );
-
-		g_D3dDevice->SetTextureStageState( 0, D3DTSS_COLOROP, D3DTOP_MODULATE );
-		g_D3dDevice->SetTextureStageState( 0, D3DTSS_COLORARG1, D3DTA_TEXTURE );
-		g_D3dDevice->SetTextureStageState( 0, D3DTSS_COLORARG2, D3DTA_DIFFUSE );
-		g_D3dDevice->SetTextureStageState( 0, D3DTSS_ALPHAOP, D3DTOP_DISABLE );
-		
-		//height map 으로 인해 추가 된 속성
-		g_D3dDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_SOLID );
-		g_D3dDevice->SetSamplerState( 0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR );
-		g_D3dDevice->SetTextureStageState( 0, D3DTSS_TEXCOORDINDEX, 0 );
-
-		//Log( "Render Begin \n" );
-		//Log( "pre render 완료!\n" );
-
-		flag = true;
-	}
-
-	return flag;
-}
-
-
-YAMANGDXDLL_API void Rendering( MESHOBJECT* inputVal, float moveX, float moveY, float moveZ )
-{
-	D3DXMATRIXA16 thisMatrix;
-
-	D3DXMatrixTranslation( &thisMatrix, moveX, moveY, moveZ );
-	SetMatrix( &thisMatrix );
->>>>>>> 61bf20ae2a7c37d0abe9e3ffa5340bcf65d7277d
 
 YAMANGDXDLL_API void Rendering( MESHOBJECT* inputVal )
 {
