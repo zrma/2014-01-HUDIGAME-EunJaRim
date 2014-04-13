@@ -101,5 +101,6 @@ void GameManager::Destroy()
 	NetworkManager::GetInstance()->Destroy();
 	NetworkManager::Release();
 
+	CameraController::Release();
 	InputDispatcher::Release();
 }

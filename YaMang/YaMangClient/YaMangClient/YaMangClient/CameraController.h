@@ -21,16 +21,16 @@ enum class TransType
 	TRANS_TYPE_MAX
 };
 
-class CameraController : public Singleton<CameraController>
+class CameraController: public Singleton<CameraController>
 {
 public:
-	CameraController();
+	__declspec( align( 16 ) )CameraController();
 	~CameraController();
 
 	void	Init();
 	void	TransCamera( TransType trans, float range );
-
+	
 	D3DXMATRIXA16	GetMatrix() { return m_Matrix; }
 private:
-	__declspec( align( 16 ) ) D3DXMATRIXA16	m_Matrix;
+	D3DXMATRIXA16	m_Matrix;
 };
