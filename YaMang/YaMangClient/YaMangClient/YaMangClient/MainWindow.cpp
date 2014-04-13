@@ -3,6 +3,7 @@
 #include "GameManager.h"
 #include "NetworkManager.h"
 #include "Renderer.h"
+#include "InputDispatcher.h"
 
 MainWindow::MainWindow()
 {
@@ -72,13 +73,12 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 		case WM_SYSKEYDOWN:
 		case WM_KEYDOWN:
 		{
-			switch ( wParam )
-			{
-				case VK_ESCAPE:
-					GameManager::GetInstance()->Stop();
-					return 0;
-			}
+			KeyInput key;
+			key.SetKeyValue( static_cast<char>( wParam ) );
+			InputDispatcher::GetInstance()->m_KeyInputList.push_back( key );
+			InputDispatcher::GetInstance()->DispatchKeyInput();
 		}
+			return 0;
 
 		case WM_ERASEBKGND:
 			return 1;
@@ -120,6 +120,7 @@ int MainWindow::RunGame()
 		{
 			GameManager::GetInstance()->Destroy();
 			GameManager::Release();
+			InputDispatcher::Release();
 			PostQuitMessage( 0 );
 			break;
 		}

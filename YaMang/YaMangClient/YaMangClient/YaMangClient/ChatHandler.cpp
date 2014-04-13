@@ -27,13 +27,21 @@ void ChatHandler::HandleEvent( PacketHeader& pktBase )
 		char buff[MAX_CHAT_LEN] = { 0, };
 		sprintf_s( buff, "CHAT from Player[%s]: %s \n", recvData.m_Name, recvData.m_Chat );
 
-		if ( recvData.m_Chat[0] == 'L' )
+		if ( recvData.m_Chat[0] == 'A' )
 		{
-			myPosX -= 2.0f;
+			myPosX -= 0.5f;
 		}
-		if ( recvData.m_Chat[0] == 'R' )
+		if ( recvData.m_Chat[0] == 'D' )
 		{
-			myPosX += 2.0f;
+			myPosX += 0.5f;
+		}
+		if ( recvData.m_Chat[0] == 'W' )
+		{
+			myPosZ += 0.5f;
+		}
+		if ( recvData.m_Chat[0] == 'S' )
+		{
+			myPosZ -= 0.5f;
 		}
 
 		Log( "%s \n", buff );
