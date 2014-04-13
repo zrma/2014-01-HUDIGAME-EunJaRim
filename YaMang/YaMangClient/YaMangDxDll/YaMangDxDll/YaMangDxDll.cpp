@@ -142,7 +142,7 @@ void ViewSetting()
 	D3DXVECTOR3 vUpVec( 0.f, 1.f, 0.f );
 	D3DXMATRIXA16 matView;
 	D3DXMatrixLookAtLH( &matView, &vEyePt, &vLookatPt, &vUpVec );
-	g_D3dDevice->SetTransform( D3DTS_VIEW, &matView );
+	SetMatrix( &matView, true );
 
 	D3DXMATRIXA16 matProj;
 	D3DXMatrixPerspectiveFovLH( &matProj, D3DX_PI / 2, 1.0f, 1.0f, 100.0f );
@@ -256,7 +256,7 @@ YAMANGDXDLL_API void Rendering( MESHOBJECT* inputVal, float moveX, float moveY, 
 	D3DXMATRIXA16 thisMatrix;
 
 	D3DXMatrixTranslation( &thisMatrix, moveX, moveY, moveZ );
-	g_D3dDevice->MultiplyTransform( D3DTS_WORLD, &thisMatrix );
+	SetMatrix( &thisMatrix );
 
 	//Log( "Now Render : %p \n", inputVal );
 	for ( DWORD i = 0; i < inputVal->NumMaterials; ++i )
@@ -316,6 +316,22 @@ YAMANGDXDLL_API void D3DCleanUp()
 #ifdef _PRINT_CONSOLE
 	Logger::Release();
 #endif
+}
+
+YAMANGDXDLL_API void SetMatrix( D3DXMATRIXA16* matrix, bool cameraSet /*= false */ )
+{
+	if ( cameraSet == true )
+	{
+		g_D3dDevice->SetTransform( D3DTS_VIEW, matrix );
+
+		//D3DXMATRIXA16 matProj;
+		//D3DXMatrixPerspectiveFovLH( &matProj, D3DX_PI / 2, 1.0f, 1.0f, 100.0f );
+		//g_D3dDevice->SetTransform( D3DTS_PROJECTION, &matProj );
+	}
+	else
+	{
+		g_D3dDevice->SetTransform( D3DTS_WORLD, matrix );
+	}
 }
 
 

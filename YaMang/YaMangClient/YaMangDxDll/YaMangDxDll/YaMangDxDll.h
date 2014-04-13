@@ -36,6 +36,8 @@ extern "C"{
 	//각 object 해제시 사용
 	YAMANGDXDLL_API void MeshObjectCleanUp( MESHOBJECT* inputVal );
 
+	YAMANGDXDLL_API void SetMatrix( D3DXMATRIXA16* matrix, bool cameraSet = false );
+
 	//내부에서 처리하도록 변경
 	//YAMANGDXDLL_API void SetupTranslateMatrices(float moveX, float moveY, float moveZ);
 	//YAMANGDXDLL_API void ViewSetting();
