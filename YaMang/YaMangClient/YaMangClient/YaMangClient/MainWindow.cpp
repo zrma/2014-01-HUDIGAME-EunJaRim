@@ -4,6 +4,7 @@
 #include "NetworkManager.h"
 #include "Renderer.h"
 #include "InputDispatcher.h"
+#include "YaMangDxDll.h"
 
 MainWindow::MainWindow()
 {
@@ -45,6 +46,12 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 			// int y = (int)HIWORD( lParam );
 			// Renderer::GetInstance()->Resize( x, y );
 			InvalidateRect( m_HandleOfWindow, NULL, FALSE );
+
+			RECT rect;
+			GetWindowRect( m_HandleOfWindow, &rect );
+			float width = rect.right - rect.left;
+			float height = rect.bottom - rect.left;
+			SetAspectRatio(width, height);
 		}
 			return 0;
 
@@ -160,6 +167,8 @@ BOOL MainWindow::Create( PCWSTR lpWindowName, DWORD dwStyle, DWORD dwExStyle /*=
 
 	m_HandleOfWindow = CreateWindowEx( dwExStyle, ClassName(), lpWindowName, dwStyle,
 									   x, y, nWidth, nHeight, hWndParent, hMenu, GetModuleHandle( NULL ), this );
+
+	SetAspectRatio( nWidth, nHeight);
 
 	return ( m_HandleOfWindow ? TRUE : FALSE );
 }
