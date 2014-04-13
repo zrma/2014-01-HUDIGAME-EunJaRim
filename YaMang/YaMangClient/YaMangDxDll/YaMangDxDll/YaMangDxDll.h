@@ -41,8 +41,21 @@ extern "C"{
 	//내부에서 처리하도록 변경
 	//YAMANGDXDLL_API void SetupTranslateMatrices(float moveX, float moveY, float moveZ);
 	//YAMANGDXDLL_API void ViewSetting();
+
+
+	//////////////////////////////////////////////////////////////////////////
+	//여기 이하는 height map 출력을 위한 함수입니다.
+	//height map은 일반 object와 g_D3D g_D3DDevice를 공유합니다.
+	//////////////////////////////////////////////////////////////////////////
+
+	//heightMap(file name) : 2승수 bitmap (128*128 추천)
+	//mapTexture(file name) : 2승수 bitmap or tga file
+	YAMANGDXDLL_API HRESULT HeightMapTextureImport( HWND hWnd, LPCTSTR heightMap, LPCTSTR mapTexture );
+	YAMANGDXDLL_API void HeightMapCleanup();
+	YAMANGDXDLL_API void HeightMapRender();
 }
 
+//단일 변수 out sample
 //extern YAMANGDXDLL_API int nyaMangDxDll;
 
 

@@ -24,13 +24,15 @@ enum class TransType
 class CameraController: public Singleton<CameraController>
 {
 public:
-	__declspec( align( 16 ) )CameraController();
+	__declspec( align( 16 ) ) CameraController();
 	~CameraController();
 
 	void	Init();
 	void	TransCamera( TransType trans, float range );
 	
 	D3DXMATRIXA16	GetMatrix() { return m_Matrix; }
+	D3DXMATRIXA16	GetInvMatrix();
+
 private:
 	D3DXMATRIXA16	m_Matrix;
 };

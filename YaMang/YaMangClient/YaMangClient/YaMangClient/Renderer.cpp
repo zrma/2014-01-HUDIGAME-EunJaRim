@@ -2,6 +2,7 @@
 #include "YaMangDxDll.h"
 #include "Renderer.h"
 #include "MainWindow.h"
+#include "CameraController.h"
 
 extern float myPosX;
 extern float myPosY;
@@ -73,4 +74,9 @@ void Renderer::DeleteMesh( MESHOBJECT* mesh )
 	{
 		MeshObjectCleanUp( mesh );
 	}
+}
+
+void Renderer::SetCamera()
+{
+	SetMatrix( &(CameraController::GetInstance()->GetInvMatrix()), true );
 }

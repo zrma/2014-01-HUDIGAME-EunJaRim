@@ -75,7 +75,7 @@ HRESULT InitTexture()
 		return E_FAIL;
 	}
 
-	if (FAILED(D3DXCreateTextureFromFile(g_pD3DDevice,L"gom.tga", &g_pTexDiffuse)))
+	if (FAILED(D3DXCreateTextureFromFile(g_pD3DDevice,L"tile2.tga", &g_pTexDiffuse)))
 	{
 		return E_FAIL;
 	}
@@ -115,7 +115,7 @@ HRESULT InitVB()
 		{
 			v.p.x = (float) x - g_cxHeight / 2.0f;
 			v.p.z = -( (float) z - g_czHeight / 2.0f );
-			v.p.y = ( (float) ( *( (LPDWORD) d3drc.pBits + x + z*( d3drc.Pitch / 4 ) ) & 0x000000ff ) ) / 10.f;
+			v.p.y = ( (float) ( *( (LPDWORD) d3drc.pBits + x + z*( d3drc.Pitch / 4 ) ) & 0x000000ff ) )/5.f;
 
 			//normal 값이고
 			//0,0,0 기준으로 각 지점의 normal 값을 계산
