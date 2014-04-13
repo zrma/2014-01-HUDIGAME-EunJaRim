@@ -17,7 +17,7 @@ public:
 
 	void	Render( MESHOBJECT* mesh );
 	void	RenderMap();
-	void	ResizeWindow( float width, float height );
+	void	ResizeWindow( long width, long height );
 	
 	bool	CreateMap( LPCTSTR& heightMapFileName, LPCTSTR& textureFileName );
 	void	DeleteMap();

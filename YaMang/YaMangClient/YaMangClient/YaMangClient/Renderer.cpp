@@ -118,7 +118,7 @@ void Renderer::SetCamera()
 	SetMatrix( &(CameraController::GetInstance()->GetMatrix()), true );
 }
 
-void Renderer::ResizeWindow( float width, float height )
+void Renderer::ResizeWindow( long width, long height )
 {
 	SetAspectRatio( width, height );
 }
@@ -126,5 +126,6 @@ void Renderer::ResizeWindow( float width, float height )
 void Renderer::DeleteTextRenderer()
 {
 	// 방어코드 이따 추가
+	// 펜이 dll 안에 device랑 같이 init되서
 	RenderTextCleanUp();
 }

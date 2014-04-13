@@ -552,10 +552,10 @@ YAMANGDXDLL_API void HeightMapRender()
 	g_D3dDevice->DrawIndexedPrimitive( D3DPT_TRIANGLELIST, 0, 0, g_XHeight*g_ZHeight, 0, ( g_XHeight - 1 )*( g_ZHeight - 1 ) * 2 );
 }
 
-YAMANGDXDLL_API void SetAspectRatio( float width, float height )
+YAMANGDXDLL_API void SetAspectRatio( long width, long height )
 {
 	D3DXMATRIXA16 matProj;
-	float aspectRatio = width / height;
+	long aspectRatio = width / height;
 
 	D3DXMatrixPerspectiveFovLH( &matProj, D3DX_PI / 2, aspectRatio, 1.0f, 100.0f );
 	g_D3dDevice->SetTransform( D3DTS_PROJECTION, &matProj );

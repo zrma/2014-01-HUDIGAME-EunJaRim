@@ -42,8 +42,8 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 		{
 			RECT rect;
 			GetWindowRect( m_HandleOfWindow, &rect );
-			float width = rect.right - rect.left;
-			float height = rect.bottom - rect.left;
+			long width = rect.right - rect.left;
+			long height = rect.bottom - rect.left;
 			
 			Renderer::GetInstance()->ResizeWindow( width, height );
 			InvalidateRect( m_HandleOfWindow, NULL, FALSE );
