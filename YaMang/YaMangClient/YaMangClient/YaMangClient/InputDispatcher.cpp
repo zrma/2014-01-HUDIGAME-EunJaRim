@@ -68,29 +68,24 @@ void InputDispatcher::EventKeyInput( KeyInput key )
 			assert( false );
 		}
 	}
+
+	m_KeyInputList.push_back( key );
 }
 
 void InputDispatcher::DispatchKeyInput()
 {
-	for ( UINT i = 0; i < m_IsKeyPressed.size(); ++i )
+	auto iter = m_KeyInputList.begin();
+	while ( iter != m_KeyInputList.end() )
 	{
-		if ( m_IsKeyPressed[i] )
+		if ( !m_IsKeyPressed[iter->GetKeyValue()] )
 		{
-			KeyInput pressedKey;
-			pressedKey.SetKeyStatus( KeyStatus::KEY_PRESSED );
-			pressedKey.SetKeyValue( i );
-			m_KeyInputList.push_back( pressedKey );
-
-			// printf_s( "%c를 넣었어요! \n", i );
+			m_KeyInputList.erase( iter++ );
 		}
-	}
-
-	while ( m_KeyInputList.size() > 0 )
-	{
-		KeyInput inputKey = *( m_KeyInputList.rbegin() );
-		m_KeyInputList.pop_front();
-
-		KeyHandlerTable[inputKey.GetKeyValue()]( &inputKey );
+		else
+		{
+			KeyInput keyInput = *(iter++);
+			KeyHandlerTable[keyInput.GetKeyValue()]( &keyInput );
+		}
 	}
 }
 
