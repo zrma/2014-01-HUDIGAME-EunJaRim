@@ -13,4 +13,5 @@ GameStartHandler::~GameStartHandler()
 
 void LoadBitmapMapData()
 {
+	//
 }
