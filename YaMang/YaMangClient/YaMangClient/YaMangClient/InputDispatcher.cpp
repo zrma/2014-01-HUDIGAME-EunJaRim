@@ -2,6 +2,7 @@
 #include "InputDispatcher.h"
 #include "KeyInput.h"
 #include "GameManager.h"
+#include "CameraController.h"
 
 extern float myPosX;
 extern float myPosY;
@@ -89,22 +90,22 @@ void InputDispatcher::DispatchKeyInput()
 	}
 }
 
-REGISTER_KEY_HANDLER( VK_W )
+REGISTER_KEY_HANDLER( VK_UP )
 {
 	myPosZ += 0.2f;
 }
 
-REGISTER_KEY_HANDLER( VK_S )
+REGISTER_KEY_HANDLER( VK_DOWN )
 {
 	myPosZ -= 0.2f;
 }
 
-REGISTER_KEY_HANDLER( VK_A )
+REGISTER_KEY_HANDLER( VK_LEFT )
 {
 	myPosX -= 0.2f;
 }
 
-REGISTER_KEY_HANDLER( VK_D )
+REGISTER_KEY_HANDLER( VK_RIGHT )
 {
 	myPosX += 0.2f;
 }
@@ -119,4 +120,24 @@ REGISTER_KEY_HANDLER( VK_SPACE )
 REGISTER_KEY_HANDLER( VK_ESCAPE )
 {
 	GameManager::GetInstance()->Stop();
+}
+
+REGISTER_KEY_HANDLER( VK_W )
+{
+	CameraController::GetInstance()->TransCamera( TransType::TRANS_TYPE_TRANSLATE_Z, -1.0f );
+}
+
+REGISTER_KEY_HANDLER( VK_S )
+{
+	CameraController::GetInstance()->TransCamera( TransType::TRANS_TYPE_TRANSLATE_Z, 1.0f );
+}
+
+REGISTER_KEY_HANDLER( VK_A )
+{
+	CameraController::GetInstance()->TransCamera( TransType::TRANS_TYPE_TRANSLATE_X, -1.0f );
+}
+
+REGISTER_KEY_HANDLER( VK_D )
+{
+	CameraController::GetInstance()->TransCamera( TransType::TRANS_TYPE_TRANSLATE_X, 1.0f );
 }

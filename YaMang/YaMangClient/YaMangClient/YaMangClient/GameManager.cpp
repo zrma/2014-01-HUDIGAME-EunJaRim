@@ -5,6 +5,7 @@
 #include "NetworkManager.h"
 #include "DummyRender.h"
 #include "InputDispatcher.h"
+#include "CameraController.h"
 
 GameManager::GameManager()
 :m_Mesh( new MESHOBJECT() )
@@ -38,6 +39,9 @@ bool GameManager::Init()
 	Renderer::GetInstance()->CreateMesh( fileName, m_Mesh );
 
 	// 씬 생성 및 초기화
+
+	// 카메라 초기화
+	CameraController::GetInstance()->Init();
 
 	return true;
 }

@@ -11,7 +11,8 @@ public:
 	void	EventKeyInput( KeyInput key );
 	void	DispatchKeyInput();
 
-	bool	IsPressed( KeyInput key ) { return m_IsKeyPressed[key.GetKeyValue()]; }
+	bool	IsPressed( KeyInput key ) { return IsPressed( key.GetKeyValue() ); }
+	bool	IsPressed( char key ) { return m_IsKeyPressed[key]; }
 
 private:
 	std::list<KeyInput>			m_KeyInputList;
