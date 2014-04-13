@@ -40,18 +40,13 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 
 		case WM_SIZE:
 		{
-			// 리사이징에 대한 부분을 여기서 처리 해 줌
-			// int x = (int)LOWORD( lParam );
-			// int y = (int)HIWORD( lParam );
-			// Renderer::GetInstance()->Resize( x, y );
-			InvalidateRect( m_HandleOfWindow, NULL, FALSE );
-
 			RECT rect;
 			GetWindowRect( m_HandleOfWindow, &rect );
 			float width = rect.right - rect.left;
 			float height = rect.bottom - rect.left;
 			
 			Renderer::GetInstance()->ResizeWindow( width, height );
+			InvalidateRect( m_HandleOfWindow, NULL, FALSE );
 		}
 			return 0;
 
