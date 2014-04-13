@@ -22,7 +22,12 @@ bool Renderer::Init()
 	{
 		m_Result = true;
 
-		ResizeWindow( 640, 360 );
+		RECT rect;
+		GetWindowRect( MainWindow::GetInstance()->Window(), &rect );
+		LONG width = rect.right - rect.left;
+		LONG height = rect.bottom - rect.left;
+
+		ResizeWindow( width, height );
 	}
 
 	return m_Result;
@@ -118,7 +123,7 @@ void Renderer::SetCamera()
 	SetMatrix( &(CameraController::GetInstance()->GetMatrix()), true );
 }
 
-void Renderer::ResizeWindow( long width, long height )
+void Renderer::ResizeWindow( LONG width, LONG height )
 {
 	SetAspectRatio( width, height );
 }

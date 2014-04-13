@@ -42,11 +42,14 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 		{
 			RECT rect;
 			GetWindowRect( m_HandleOfWindow, &rect );
-			long width = rect.right - rect.left;
-			long height = rect.bottom - rect.left;
+			
+			LONG width = static_cast<LONG>( LOWORD( lParam ) );
+			LONG height = static_cast<LONG>( HIWORD( lParam ) );
 			
 			Renderer::GetInstance()->ResizeWindow( width, height );
 			InvalidateRect( m_HandleOfWindow, NULL, FALSE );
+
+			Log( " 사이즈 : %d %d \n", width, height );
 		}
 			return 0;
 
