@@ -168,7 +168,5 @@ BOOL MainWindow::Create( PCWSTR lpWindowName, DWORD dwStyle, DWORD dwExStyle /*=
 	m_HandleOfWindow = CreateWindowEx( dwExStyle, ClassName(), lpWindowName, dwStyle,
 									   x, y, nWidth, nHeight, hWndParent, hMenu, GetModuleHandle( NULL ), this );
 
-	Renderer::GetInstance()->ResizeWindow( nWidth, nHeight);
-
 	return ( m_HandleOfWindow ? TRUE : FALSE );
 }

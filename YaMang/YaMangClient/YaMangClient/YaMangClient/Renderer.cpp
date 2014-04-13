@@ -21,6 +21,8 @@ bool Renderer::Init()
 	if ( S_OK == InitD3D( MainWindow::GetInstance()->Window() ) )
 	{
 		m_Result = true;
+
+		ResizeWindow( 640, 360 );
 	}
 
 	return m_Result;
