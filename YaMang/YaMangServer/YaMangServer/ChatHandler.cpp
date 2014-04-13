@@ -1,4 +1,5 @@
 ﻿#include "stdafx.h"
+#include "ClientSession.h"
 #include "ChatHandler.h"
 #include "ClientManager.h"
 

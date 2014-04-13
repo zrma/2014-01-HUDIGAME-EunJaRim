@@ -1,4 +1,5 @@
 ﻿#include "stdafx.h"
+#include "PacketType.h"
 #include "ChatHandler.h"
 #include "NetworkManager.h"
 

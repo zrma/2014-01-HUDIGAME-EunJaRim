@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "ClientSession.h"
+class ClientSession;
 
 class GameOverHandler
 {

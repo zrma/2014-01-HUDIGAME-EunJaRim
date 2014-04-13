@@ -1,4 +1,5 @@
 ﻿#include "stdafx.h"
+#include "ClientSession.h"
 #include "LoginHandler.h"
 #include "DatabaseJobContext.h"
 #include "DatabaseJobManager.h"

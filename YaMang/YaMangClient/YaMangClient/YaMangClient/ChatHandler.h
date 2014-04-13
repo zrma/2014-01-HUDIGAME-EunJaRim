@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "PacketType.h"
+class PacketHeader;
 
 class ChatHandler
 {

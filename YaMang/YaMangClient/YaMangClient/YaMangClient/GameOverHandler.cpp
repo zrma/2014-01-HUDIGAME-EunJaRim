@@ -1,4 +1,5 @@
 ﻿#include "stdafx.h"
+#include "PacketType.h"
 #include "GameOverHandler.h"
 #include "NetworkManager.h"
 
