@@ -16,11 +16,11 @@ LPDIRECT3DDEVICE9 g_D3dDevice = nullptr;
 //////////////////////////////////////////////////////////////////////////
 //Height Map 생성용 공용 자원
 //////////////////////////////////////////////////////////////////////////
-LPDIRECT3DVERTEXBUFFER9 g_VB = nullptr;
-LPDIRECT3DINDEXBUFFER9 g_IB = nullptr;
+LPDIRECT3DVERTEXBUFFER9 g_VertexBuffer = nullptr;
+LPDIRECT3DINDEXBUFFER9 g_IdxBuffer = nullptr;
 
-LPDIRECT3DTEXTURE9 g_pTexHeight = nullptr;
-LPDIRECT3DTEXTURE9 g_pTexDiffuse = nullptr;
+LPDIRECT3DTEXTURE9 g_TexHeight = nullptr;
+LPDIRECT3DTEXTURE9 g_TexDiffuse = nullptr;
 
 DWORD g_XHeight = 0;
 DWORD g_ZHeight = 0;
@@ -269,6 +269,8 @@ YAMANGDXDLL_API bool PreRendering( float moveX, float moveY, float moveZ )
 		g_D3dDevice->SetTextureStageState( 0, D3DTSS_COLORARG1, D3DTA_TEXTURE );
 		g_D3dDevice->SetTextureStageState( 0, D3DTSS_COLORARG2, D3DTA_DIFFUSE );
 		g_D3dDevice->SetTextureStageState( 0, D3DTSS_ALPHAOP, D3DTOP_DISABLE );
+		
+		//height map 으로 인해 추가 된 속성
 		g_D3dDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_SOLID );
 		g_D3dDevice->SetSamplerState( 0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR );
 		g_D3dDevice->SetTextureStageState( 0, D3DTSS_TEXCOORDINDEX, 0 );
@@ -308,7 +310,6 @@ YAMANGDXDLL_API void PostRendering()
 	//Log( "Render End \n" );
 	g_D3dDevice->Present( NULL, NULL, NULL, NULL );
 }
-		
 
 
 YAMANGDXDLL_API void MeshObjectCleanUp( MESHOBJECT* inputVal )
@@ -370,10 +371,175 @@ YAMANGDXDLL_API void SetMatrix( D3DXMATRIXA16* matrix, bool cameraSet /*= false 
 }
 
 
+
 //////////////////////////////////////////////////////////////////////////
 //height map 세계에 오신 것을 환영합니다.
 // :)
 //////////////////////////////////////////////////////////////////////////
+HRESULT InitVertexBuffer( HWND hWnd )
+{
+	D3DSURFACE_DESC ddsd;
+	D3DLOCKED_RECT d3drc;
+
+	g_TexHeight->GetLevelDesc( 0, &ddsd );
+	g_XHeight = ddsd.Width;
+	g_ZHeight = ddsd.Height;
+
+	if ( FAILED( g_D3dDevice->CreateVertexBuffer( ddsd.Width*ddsd.Height*sizeof( CUSTOMVERTEX ), 0, D3DFVF_CUSTOMVERTEX, D3DPOOL_DEFAULT, &g_VertexBuffer, NULL ) ) )
+	{
+		MessageBox( NULL, L"Fail in Creating VertexBuffer", L"YaMang.exe", MB_OK );
+		return E_FAIL;
+	}
+
+	//surface lock
+	//확인만 하고 쓸일은 없으므로 readonly
+	g_TexHeight->LockRect( 0, &d3drc, NULL, D3DLOCK_READONLY );
+
+	VOID* vertices;
+	if ( FAILED( g_VertexBuffer->Lock( 0, g_XHeight*g_ZHeight*sizeof( CUSTOMVERTEX ), (void**) &vertices, 0 ) ) )
+	{
+		MessageBox( NULL, L"Fail in lock VertexBuffer", L"YaMang.exe", MB_OK );
+		return E_FAIL;
+	}
+
+
+	//Vertex 구조체 채우기
+	CUSTOMVERTEX vertex;
+	CUSTOMVERTEX* vertexPointer = (CUSTOMVERTEX*) vertices;
+
+	for ( DWORD z = 0; z < g_ZHeight; ++z )
+	{
+		for ( DWORD x = 0; x < g_XHeight; ++x )
+		{
+			vertex.vertexPoint.x = (float) x - g_XHeight / 2.0f;
+			vertex.vertexPoint.z = -( (float) z - g_ZHeight / 2.0f );
+			vertex.vertexPoint.y = ( (float) ( *( (LPDWORD) d3drc.pBits + x + z*( d3drc.Pitch / 4 ) ) & 0x000000ff ) ) / 10.f;
+
+			//normal 값이고
+			//0,0,0 기준으로 각 지점의 normal 값을 계산
+			vertex.vertexNormal.x = vertex.vertexPoint.x;
+			vertex.vertexNormal.y = vertex.vertexPoint.y;
+			vertex.vertexNormal.z = vertex.vertexPoint.z;
+
+			//단위 벡터로 만드는 것
+			//정규화 벡터로 변경하는 연산
+			D3DXVec3Normalize( &vertex.vertexNormal, &vertex.vertexNormal );
+
+			vertex.vertexTexturePoint.x = (float) x / ( g_XHeight - 1 );
+			vertex.vertexTexturePoint.y = (float) z / ( g_ZHeight - 1 );
+			*vertexPointer++ = vertex;
+		}
+	}
+	g_VertexBuffer->Unlock();
+
+	g_TexHeight->UnlockRect( 0 );
+
+	return S_OK;
+}
+
+HRESULT InitIdxBuffer( HWND hWnd )
+{
+	if ( FAILED( g_D3dDevice->CreateIndexBuffer( ( g_XHeight - 1 )*( g_ZHeight - 1 ) * 2 * sizeof( MYINDEX ), 0, D3DFMT_INDEX16, D3DPOOL_DEFAULT, &g_IdxBuffer, NULL ) ) )
+	{
+		MessageBox( NULL, L"Fail in CreateIndexBuffer", L"YaMang.exe", MB_OK );
+		return E_FAIL;
+	}
+
+	MYINDEX idx;
+	MYINDEX* idxPointer;
+
+	if ( FAILED( g_IdxBuffer->Lock( 0, ( g_XHeight - 1 )*( g_ZHeight - 1 ) * 2 * sizeof( MYINDEX ), (void**) &idxPointer, 0 ) ) )
+	{
+		MessageBox( NULL, L"Fail in index locking", L"YaMang.exe", MB_OK );
+		return E_FAIL;
+	}
+
+	for ( DWORD z = 0; z < g_ZHeight - 1; ++z )
+	{
+		for ( DWORD x = 0; x < g_XHeight - 1; ++x )
+		{
+			idx._0 = ( z*g_XHeight + x );
+			idx._1 = ( z*g_XHeight + x + 1 );
+			idx._2 = ( ( z + 1 )*g_XHeight + x );
+			*idxPointer++ = idx;
+			idx._0 = ( ( z + 1 )*g_XHeight + x );
+			idx._1 = ( z*g_XHeight + x + 1 );
+			idx._2 = ( ( z + 1 ) *g_XHeight + x + 1 );
+			*idxPointer++ = idx;
+		}
+	}
+	g_IdxBuffer->Unlock();
+
+	return S_OK;
+}
+
+
+YAMANGDXDLL_API HRESULT HeightMapTextureImport ( HWND hWnd, LPCTSTR heightMap, LPCTSTR mapTexture )
+{
+	if ( FAILED( D3DXCreateTextureFromFileEx( g_D3dDevice, heightMap, D3DX_DEFAULT, D3DX_DEFAULT, D3DX_DEFAULT, 0, D3DFMT_X8B8G8R8, D3DPOOL_MANAGED, D3DX_DEFAULT, D3DX_DEFAULT, 0, NULL, NULL, &g_TexHeight ) ) )
+	{
+		MessageBox( NULL, L"Could not find heightMap file", L"YaMang.exe", MB_OK );
+		return E_FAIL;
+	}
+
+	if ( FAILED( D3DXCreateTextureFromFile( g_D3dDevice, mapTexture, &g_TexDiffuse ) ) )
+	{
+		MessageBox( NULL, L"Could not find heightMapTexture file", L"YaMang.exe", MB_OK );
+		return E_FAIL;
+	}
+
+	if ( FAILED( InitVertexBuffer( hWnd ) ) )
+	{
+		MessageBox( NULL, L"Fail in InitVertexBuffer", L"YaMang.exe", MB_OK );
+		return E_FAIL;
+	}
+
+	if ( FAILED( InitIdxBuffer( hWnd ) ) )
+	{
+		MessageBox( NULL, L"Fail in InitIdxBuffer", L"YaMang.exe", MB_OK );
+		return E_FAIL;
+	}
+	
+	return S_OK;
+}
+
+
+YAMANGDXDLL_API void HeightMapCleanup()
+{
+	if ( g_TexHeight != NULL )
+	{
+		g_TexHeight->Release();
+	}
+
+	if ( g_TexDiffuse != NULL )
+	{
+		g_TexDiffuse->Release();
+	}
+
+	if ( g_IdxBuffer != NULL )
+	{
+		g_IdxBuffer->Release();
+	}
+
+	if ( g_VertexBuffer != NULL )
+	{
+		g_VertexBuffer->Release();
+	}
+
+}
+
+
+YAMANGDXDLL_API void HeightMapRender()
+{
+	g_D3dDevice->SetStreamSource( 0, g_VertexBuffer, 0, sizeof( CUSTOMVERTEX ) );
+	g_D3dDevice->SetFVF( D3DFVF_CUSTOMVERTEX );
+
+	g_D3dDevice->SetIndices( g_IdxBuffer );
+	g_D3dDevice->DrawIndexedPrimitive( D3DPT_TRIANGLELIST, 0, 0, g_XHeight*g_ZHeight, 0, ( g_XHeight - 1 )*( g_ZHeight - 1 ) * 2 );
+}
+
+
+
 
 
 
