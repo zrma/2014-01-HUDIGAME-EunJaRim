@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "YaMangClient", "YaMangClient\YaMangClient.vcxproj", "{FE999F60-92D0-4F12-8904-7BB720E92ABC}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -9,7 +9,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "YaMangClient", "YaMangClien
 		{E6D200DD-4FE0-48A2-921E-8807C91E08D6} = {E6D200DD-4FE0-48A2-921E-8807C91E08D6}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "yaMangDxDll", "..\yaMangDxDll\yaMangDxDll\yaMangDxDll.vcxproj", "{E6D200DD-4FE0-48A2-921E-8807C91E08D6}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "YaMangDxDll", "..\yaMangDxDll\yaMangDxDll\yaMangDxDll.vcxproj", "{E6D200DD-4FE0-48A2-921E-8807C91E08D6}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TinyXmlLib", "..\TinyXmlLib\TinyXmlLib.vcxproj", "{D97191B9-D8D6-49E2-8B8D-ACA7C4EB6A15}"
 EndProject
@@ -44,5 +44,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal

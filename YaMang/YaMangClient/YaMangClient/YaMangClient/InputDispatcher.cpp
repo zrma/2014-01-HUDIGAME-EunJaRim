@@ -53,6 +53,8 @@ void InputDispatcher::EventKeyInput( KeyInput key )
 	switch ( key.GetKeyStatus() )
 	{
 		case KeyStatus::KEY_DOWN:
+			m_KeyInputList.push_back( key );
+
 		case KeyStatus::KEY_PRESSED:
 		{
 			m_IsKeyPressed[key.GetKeyValue()] = true;
@@ -68,8 +70,6 @@ void InputDispatcher::EventKeyInput( KeyInput key )
 			assert( false );
 		}
 	}
-
-	m_KeyInputList.push_back( key );
 }
 
 void InputDispatcher::DispatchKeyInput()
@@ -91,22 +91,29 @@ void InputDispatcher::DispatchKeyInput()
 
 REGISTER_KEY_HANDLER( VK_W )
 {
-	myPosZ += 0.5;
+	myPosZ += 0.2f;
 }
 
 REGISTER_KEY_HANDLER( VK_S )
 {
-	myPosZ -= 0.5;
+	myPosZ -= 0.2f;
 }
 
 REGISTER_KEY_HANDLER( VK_A )
 {
-	myPosX -= 0.5;
+	myPosX -= 0.2f;
 }
 
 REGISTER_KEY_HANDLER( VK_D )
 {
-	myPosX += 0.5;
+	myPosX += 0.2f;
+}
+
+REGISTER_KEY_HANDLER( VK_SPACE )
+{
+	myPosX = 0;
+	myPosY = 0;
+	myPosZ = 0;
 }
 
 REGISTER_KEY_HANDLER( VK_ESCAPE )

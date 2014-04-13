@@ -29,19 +29,19 @@ void ChatHandler::HandleEvent( PacketHeader& pktBase )
 
 		if ( recvData.m_Chat[0] == 'A' )
 		{
-			myPosX -= 0.5f;
+			myPosX -= 0.2f;
 		}
 		if ( recvData.m_Chat[0] == 'D' )
 		{
-			myPosX += 0.5f;
+			myPosX += 0.2f;
 		}
 		if ( recvData.m_Chat[0] == 'W' )
 		{
-			myPosZ += 0.5f;
+			myPosZ += 0.2f;
 		}
 		if ( recvData.m_Chat[0] == 'S' )
 		{
-			myPosZ -= 0.5f;
+			myPosZ -= 0.2f;
 		}
 
 		Log( "%s \n", buff );

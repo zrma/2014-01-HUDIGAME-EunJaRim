@@ -22,7 +22,7 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 	{
 		case WM_CREATE:
 		{
-			SetTimer( MainWindow::GetInstance()->Window(), 337, 10, NULL );
+			SetTimer( MainWindow::GetInstance()->Window(), 337, 20, NULL );
 		}
 			return 0;
 
@@ -76,8 +76,13 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 			KeyInput key;
 			key.SetKeyValue( static_cast<char>( wParam ) );
 			key.SetKeyStatus( KeyStatus::KEY_DOWN );
+			if ( InputDispatcher::GetInstance()->IsPressed( key ) )
+			{
+				key.SetKeyStatus( KeyStatus::KEY_PRESSED );
+			}
 			
 			InputDispatcher::GetInstance()->EventKeyInput( key );
+			InputDispatcher::GetInstance()->DispatchKeyInput();
 		}
 			return 0;
 
@@ -89,6 +94,7 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 			key.SetKeyStatus( KeyStatus::KEY_UP );
 
 			InputDispatcher::GetInstance()->EventKeyInput( key );
+			InputDispatcher::GetInstance()->DispatchKeyInput();
 		}
 			return 0;
 
