@@ -8,11 +8,10 @@ public:
 	InputDispatcher();
 	~InputDispatcher();
 
-	void DispatchKeyInput();
+	void	EventKeyInput( KeyInput key );
+	void	DispatchKeyInput();
 
 private:
-	std::list<KeyInput>	m_KeyInputList;
-	bool				m_IsKeyPressed[MAX_KEY];
-
-	friend class MainWindow;
+	std::list<KeyInput>			m_KeyInputList;
+	std::array<bool, MAX_KEY>	m_IsKeyPressed;
 };

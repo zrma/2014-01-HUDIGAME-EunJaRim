@@ -40,6 +40,7 @@ struct RegisterKeyHandler
 
 InputDispatcher::InputDispatcher()
 {
+	ZeroMemory( &m_IsKeyPressed, m_IsKeyPressed.size() );
 }
 
 
@@ -47,40 +48,47 @@ InputDispatcher::~InputDispatcher()
 {
 }
 
+void InputDispatcher::EventKeyInput( KeyInput key )
+{
+	switch ( key.GetKeyStatus() )
+	{
+		case KeyStatus::KEY_DOWN:
+		case KeyStatus::KEY_PRESSED:
+		{
+			m_IsKeyPressed[key.GetKeyValue()] = true;
+		}
+			break;
+		case KeyStatus::KEY_UP:
+		{
+			m_IsKeyPressed[key.GetKeyValue()] = false;
+		}
+			break;
+		default:
+		{
+			assert( false );
+		}
+	}
+}
+
 void InputDispatcher::DispatchKeyInput()
 {
+	for ( UINT i = 0; i < m_IsKeyPressed.size(); ++i )
+	{
+		if ( m_IsKeyPressed[i] )
+		{
+			KeyInput pressedKey;
+			pressedKey.SetKeyStatus( KeyStatus::KEY_PRESSED );
+			pressedKey.SetKeyValue( i );
+			m_KeyInputList.push_back( pressedKey );
+
+			// printf_s( "%c를 넣었어요! \n", i );
+		}
+	}
+
 	while ( m_KeyInputList.size() > 0 )
 	{
 		KeyInput inputKey = *( m_KeyInputList.rbegin() );
 		m_KeyInputList.pop_front();
-
-		switch ( inputKey.GetKeyValue() )
-		{
-			case KeyStatus::KEY_DOWN:
-			{
-				// inputKey.SetKeyValue( KeyStatus::KEY_PRESSED );
-				break;
-			}
-			case KeyStatus::KEY_PRESSED:
-			{
-				break;
-			}
-			case KeyStatus::KEY_UP:
-			{
-				break;
-			}
-			case KeyStatus::KEY_UNUSED:
-			{
-				break;
-			}
-			default:
-			{
-				// ??!
-				break;
-			}
-		}
-
-		Log( "이번 입력은 %c입니다. \n", inputKey.GetKeyValue() );
 
 		KeyHandlerTable[inputKey.GetKeyValue()]( &inputKey );
 	}

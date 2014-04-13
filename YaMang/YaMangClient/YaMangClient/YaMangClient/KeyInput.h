@@ -1,11 +1,11 @@
 ﻿#pragma once
 
-enum KeyStatus
+enum class KeyStatus
 {
+	KEY_NONE,
 	KEY_DOWN,
 	KEY_PRESSED,
 	KEY_UP,
-	KEY_UNUSED,
 };
 
 const char VK_A = 0x41;
@@ -50,5 +50,5 @@ public:
 
 private:
 	char		m_KeyValue = 0;
-	KeyStatus	m_KeyStatus = KeyStatus::KEY_UNUSED;
+	KeyStatus	m_KeyStatus = KeyStatus::KEY_NONE;
 };

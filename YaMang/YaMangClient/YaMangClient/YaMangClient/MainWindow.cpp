@@ -28,7 +28,6 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 
 		case WM_TIMER:
 		{
-			InputDispatcher::GetInstance()->DispatchKeyInput();
 			GameManager::GetInstance()->Update();
 		}
 			return 0;
@@ -76,8 +75,20 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 		{
 			KeyInput key;
 			key.SetKeyValue( static_cast<char>( wParam ) );
-			InputDispatcher::GetInstance()->m_KeyInputList.push_back( key );
-			InputDispatcher::GetInstance()->DispatchKeyInput();
+			key.SetKeyStatus( KeyStatus::KEY_DOWN );
+			
+			InputDispatcher::GetInstance()->EventKeyInput( key );
+		}
+			return 0;
+
+		case WM_SYSKEYUP:
+		case WM_KEYUP:
+		{
+			KeyInput key;
+			key.SetKeyValue( static_cast<char>( wParam ) );
+			key.SetKeyStatus( KeyStatus::KEY_UP );
+
+			InputDispatcher::GetInstance()->EventKeyInput( key );
 		}
 			return 0;
 
@@ -121,7 +132,6 @@ int MainWindow::RunGame()
 		{
 			GameManager::GetInstance()->Destroy();
 			GameManager::Release();
-			InputDispatcher::Release();
 			PostQuitMessage( 0 );
 			break;
 		}

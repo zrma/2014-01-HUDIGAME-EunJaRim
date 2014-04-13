@@ -4,6 +4,7 @@
 #include "Renderer.h"
 #include "NetworkManager.h"
 #include "DummyRender.h"
+#include "InputDispatcher.h"
 
 GameManager::GameManager()
 :m_Mesh( new MESHOBJECT() )
@@ -52,6 +53,8 @@ bool GameManager::Update()
 	}
 	// 업데이트
 
+	InputDispatcher::GetInstance()->DispatchKeyInput();
+
 	NetworkManager::GetInstance()->ProcessPacket();
 	
 	return true;
@@ -93,4 +96,6 @@ void GameManager::Destroy()
 
 	NetworkManager::GetInstance()->Destroy();
 	NetworkManager::Release();
+
+	InputDispatcher::Release();
 }
