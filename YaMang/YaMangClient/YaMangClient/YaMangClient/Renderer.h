@@ -27,6 +27,8 @@ public:
 	
 	void	SetCamera();
 
+	void	DeleteTextRenderer();
+
 private:
 	bool	m_Result = false;
 	bool	m_IsReady = false;

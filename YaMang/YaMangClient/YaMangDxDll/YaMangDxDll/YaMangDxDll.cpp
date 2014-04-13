@@ -586,6 +586,19 @@ YAMANGDXDLL_API void RenderText( LPCWSTR text, float left, float top, int RGB_R,
 	g_Sprite->End();											// 스프라이트 그리기 끝 
 }
 
+YAMANGDXDLL_API void RenderTextCleanUp()
+{
+	if ( g_Font != NULL )
+	{
+		g_Font->Release();
+	}
+
+	if ( g_Sprite != NULL )
+	{
+		g_Sprite->Release();
+	}
+}
+
 // 내보낸 변수의 예제입니다.
 // YAMANGDXDLL_API int nyaMangDxDll=0;
 

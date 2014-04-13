@@ -31,6 +31,7 @@ bool Renderer::Init()
 void Renderer::Destroy()
 {
 	DeleteMap();
+	DeleteTextRenderer();
 
 	if ( m_Result )
 	{
@@ -120,4 +121,10 @@ void Renderer::SetCamera()
 void Renderer::ResizeWindow( float width, float height )
 {
 	SetAspectRatio( width, height );
+}
+
+void Renderer::DeleteTextRenderer()
+{
+	// 방어코드 이따 추가
+	RenderTextCleanUp();
 }
