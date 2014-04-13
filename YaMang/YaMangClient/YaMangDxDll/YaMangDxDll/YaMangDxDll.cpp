@@ -562,6 +562,26 @@ YAMANGDXDLL_API void SetAspectRatio( float width, float height )
 	g_D3dDevice->SetTransform( D3DTS_PROJECTION, &matProj );
 }
 
+
+//////////////////////////////////////////////////////////////////////////
+//Text Render
+//////////////////////////////////////////////////////////////////////////
+
+YAMANGDXDLL_API void RenderText( LPCWSTR text, float left, float top, int RGB_R, int RGB_G, int RGB_B, float right, float bottom)
+{
+	Sprite->Begin( D3DXSPRITE_ALPHABLEND | D3DXSPRITE_SORT_TEXTURE );
+	// 스프라이트 그리기 시작
+	// 2D일 경우 D3DXSPRITE_SORT_TEXTURE, 3D일 경우 D3DXSPRITE_OBJECTSPACE
+	RECT rt = { left, top, right, bottom }; // 그릴 위치
+	Font->DrawText( Sprite, text
+		, -1 // 총 문자열 수(그냥 -1 해도 됨.) 
+		, &rt // 그릴 위치 
+		, DT_NOCLIP // 옵션 플래그
+		, D3DCOLOR_XRGB( RGB_R, RGB_G, RGB_B ) // 그릴 색 , default로 흰색
+		);
+	Sprite->End(); // 스프라이트 그리기 끝 
+}
+
 // 내보낸 변수의 예제입니다.
 // YAMANGDXDLL_API int nyaMangDxDll=0;
 

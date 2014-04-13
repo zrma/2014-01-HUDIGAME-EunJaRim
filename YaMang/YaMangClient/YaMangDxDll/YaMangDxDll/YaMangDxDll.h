@@ -54,6 +54,13 @@ extern "C"{
 	YAMANGDXDLL_API HRESULT HeightMapTextureImport( HWND hWnd, LPCTSTR heightMap, LPCTSTR mapTexture );
 	YAMANGDXDLL_API void HeightMapCleanup();
 	YAMANGDXDLL_API void HeightMapRender();
+
+	//////////////////////////////////////////////////////////////////////////
+	//Text Render 를 위한 함수
+	//////////////////////////////////////////////////////////////////////////
+	YAMANGDXDLL_API void RenderText( LPCWSTR text, float left, float top, int RGB_R = 255, int RGB_G = 255, int RGB_B = 255, float right = 0, float bottom = 0);
+
+
 }
 
 //단일 변수 out sample
