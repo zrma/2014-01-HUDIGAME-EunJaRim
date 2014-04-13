@@ -10,3 +10,7 @@ GameStartHandler::GameStartHandler()
 GameStartHandler::~GameStartHandler()
 {
 }
+
+void LoadBitmapMapData()
+{
+}
