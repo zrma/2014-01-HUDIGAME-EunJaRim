@@ -35,6 +35,8 @@ public:
 		if ( !m_Instance )
 		{
 			m_Instance = (CameraController*) _aligned_malloc( sizeof( CameraController ), ALIGNMENT_SIZE );
+			new (m_Instance) CameraController();
+			// m_Instance = new CameraController();
 		}
 		return m_Instance;
 	}
@@ -43,7 +45,9 @@ public:
 	{
 		if ( m_Instance )
 		{
-			_aligned_free( m_Instance );
+ 			m_Instance->~CameraController();
+ 			_aligned_free( m_Instance );
+			//SafeDelete( m_Instance );
 		}
 	}
 
@@ -52,12 +56,16 @@ public:
 	
 	void	AddAxis( FLOAT axis ) { m_Axis += axis; }
 	void	SetAxis( FLOAT axis ) { m_Axis = axis; }
+	void	AddHeight( FLOAT height ) { m_Height += height; }
+	void	SetHeight( FLOAT height ) { m_Height = height; }
 
 	D3DXMATRIXA16	GetMatrix();
 	D3DXMATRIXA16	GetInvMatrix();
 
 private:
 	FLOAT			m_Axis = 0;
+	FLOAT			m_Height = 0;
+
 	__declspec( align( ALIGNMENT_SIZE ) ) 
 					D3DXMATRIXA16	m_Matrix;
 	

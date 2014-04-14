@@ -163,3 +163,13 @@ REGISTER_KEY_HANDLER( VK_F )
 {
 	CameraController::GetInstance()->AddAxis( -0.05f );
 }
+
+REGISTER_KEY_HANDLER( VK_C )
+{
+	CameraController::GetInstance()->AddHeight( -0.2f );
+}
+
+REGISTER_KEY_HANDLER( VK_V )
+{
+	CameraController::GetInstance()->AddHeight( 0.2f );
+}

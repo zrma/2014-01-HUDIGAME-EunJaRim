@@ -77,8 +77,16 @@ D3DXMATRIXA16 CameraController::GetInvMatrix()
 
 D3DXMATRIXA16 CameraController::GetMatrix()
 {
-	D3DXMATRIXA16 matrix;
-	D3DXMatrixRotationX( &matrix, m_Axis );
-	D3DXMatrixMultiply( &matrix, &m_Matrix, &matrix );
-	return matrix;
+	D3DXMATRIXA16 matrixOut;
+	D3DXMATRIXA16 matrixTemp;
+
+	D3DXMatrixIdentity( &matrixOut );
+
+	D3DXMatrixTranslation( &matrixTemp, 0, m_Height, 0 );
+	D3DXMatrixMultiply( &matrixOut, &m_Matrix, &matrixTemp );
+
+	D3DXMatrixRotationX( &matrixTemp, m_Axis );
+	D3DXMatrixMultiply( &matrixOut, &matrixOut, &matrixTemp );
+	
+	return matrixOut;
 }
