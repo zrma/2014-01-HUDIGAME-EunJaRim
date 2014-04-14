@@ -18,7 +18,7 @@ void CameraController::Init()
 
 	D3DXMATRIXA16 matrix;
 	
-	D3DXMatrixTranslation( &matrix, 0, -50.0f, -5.0f );
+	D3DXMatrixTranslation( &matrix, 0, -40.0f, -5.0f );
 	D3DXMatrixMultiply( &m_Matrix, &m_Matrix, &matrix );
 }
 
@@ -72,4 +72,12 @@ D3DXMATRIXA16 CameraController::GetInvMatrix()
 	D3DXMatrixInverse( &outMatrix, NULL, &m_Matrix );
 
 	return outMatrix;
+}
+
+D3DXMATRIXA16 CameraController::GetMatrix()
+{
+	D3DXMATRIXA16 matrix;
+	D3DXMatrixRotationX( &matrix, m_Axis );
+	D3DXMatrixMultiply( &matrix, &m_Matrix, &matrix );
+	return matrix;
 }

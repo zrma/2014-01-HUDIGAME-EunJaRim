@@ -67,7 +67,7 @@ void Renderer::Render( MESHOBJECT* mesh )
 	{
 		D3DXMATRIXA16 matrix;
 		D3DXMatrixIdentity( &matrix );
-		D3DXMatrixTranslation( &matrix, myPosX, myPosY + 45, myPosZ );
+		D3DXMatrixTranslation( &matrix, myPosX, myPosY + 25, myPosZ );
 		
 		SetMatrix( &matrix );
 

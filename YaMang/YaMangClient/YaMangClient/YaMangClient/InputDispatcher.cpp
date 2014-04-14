@@ -143,3 +143,23 @@ REGISTER_KEY_HANDLER( VK_D )
 {
 	CameraController::GetInstance()->TransCamera( TransType::TRANS_TYPE_TRANSLATE_X, -0.5f );
 }
+
+REGISTER_KEY_HANDLER( VK_Q )
+{
+	CameraController::GetInstance()->TransCamera( TransType::TRANS_TYPE_ROTATE_Y, 0.05f );
+}
+
+REGISTER_KEY_HANDLER( VK_E )
+{
+	CameraController::GetInstance()->TransCamera( TransType::TRANS_TYPE_ROTATE_Y, -0.05f );
+}
+
+REGISTER_KEY_HANDLER( VK_R )
+{
+	CameraController::GetInstance()->AddAxis( 0.05f );
+}
+
+REGISTER_KEY_HANDLER( VK_F )
+{
+	CameraController::GetInstance()->AddAxis( -0.05f );
+}
