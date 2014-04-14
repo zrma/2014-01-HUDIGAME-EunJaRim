@@ -16,11 +16,14 @@ CameraController::~CameraController()
 void CameraController::Init()
 {
 	D3DXMatrixIdentity( &m_Matrix );
-
 	D3DXMATRIXA16 matrix;
 	
-	D3DXMatrixTranslation( &matrix, 0, -40.0f, -5.0f );
+	D3DXMatrixTranslation( &matrix, 0, -40.0f, 5.0f );
 	D3DXMatrixMultiply( &m_Matrix, &m_Matrix, &matrix );
+
+	m_Axis = -0.5f;
+	m_Height = 10.0f;
+
 }
 
 void CameraController::TransCamera( TransType trans, float range )

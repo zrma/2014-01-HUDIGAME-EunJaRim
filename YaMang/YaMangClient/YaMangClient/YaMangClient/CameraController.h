@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Logger.h"
+#include "MacroSet.h"
 #include <d3dx9math.h>
 
 #define ALIGNMENT_SIZE	16
@@ -24,32 +24,11 @@ enum class TransType
 	TRANS_TYPE_MAX
 };
 
-class CameraController
+class CameraController : public Singleton<CameraController>
 {
 public:
 	CameraController();
 	~CameraController();
-
-	static CameraController* GetInstance( void )
-	{
-		if ( !m_Instance )
-		{
-			m_Instance = (CameraController*) _aligned_malloc( sizeof( CameraController ), ALIGNMENT_SIZE );
-			new (m_Instance) CameraController();
-			// m_Instance = new CameraController();
-		}
-		return m_Instance;
-	}
-
-	static void Release( void )
-	{
-		if ( m_Instance )
-		{
- 			m_Instance->~CameraController();
- 			_aligned_free( m_Instance );
-			//SafeDelete( m_Instance );
-		}
-	}
 
 	void	Init();
 	void	TransCamera( TransType trans, float range );
