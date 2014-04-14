@@ -360,6 +360,17 @@ YAMANGDXDLL_API void D3DCleanUp()
 		g_D3D->Release();
 	}
 
+	// 텍스트 소멸자 합침
+	if ( g_Font != NULL )
+	{
+		g_Font->Release();
+	}
+
+	if ( g_Sprite != NULL )
+	{
+		g_Sprite->Release();
+	}
+
 #ifdef _PRINT_CONSOLE
 	Logger::Release();
 #endif
@@ -580,19 +591,6 @@ YAMANGDXDLL_API void RenderText( LPCWSTR text, float left, float top, int RGB_R,
 					, D3DCOLOR_XRGB( RGB_R, RGB_G, RGB_B )	// 그릴 색 , default로 흰색
 					);
 	g_Sprite->End();											// 스프라이트 그리기 끝 
-}
-
-YAMANGDXDLL_API void RenderTextCleanUp()
-{
-	if ( g_Font != NULL )
-	{
-		g_Font->Release();
-	}
-
-	if ( g_Sprite != NULL )
-	{
-		g_Sprite->Release();
-	}
 }
 
 // 내보낸 변수의 예제입니다.

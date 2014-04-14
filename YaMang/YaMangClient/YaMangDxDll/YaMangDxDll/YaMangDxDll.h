@@ -59,7 +59,6 @@ extern "C"{
 	//Text Render 를 위한 함수
 	//////////////////////////////////////////////////////////////////////////
 	YAMANGDXDLL_API void RenderText( LPCWSTR text, float left, float top, int RGB_R = 255, int RGB_G = 255, int RGB_B = 255, float right = 0, float bottom = 0);
-	YAMANGDXDLL_API void RenderTextCleanUp();
 
 }
 

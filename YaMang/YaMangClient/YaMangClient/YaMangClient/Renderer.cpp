@@ -36,7 +36,6 @@ bool Renderer::Init()
 void Renderer::Destroy()
 {
 	DeleteMap();
-	DeleteTextRenderer();
 
 	if ( m_Result )
 	{
@@ -128,9 +127,3 @@ void Renderer::ResizeWindow( LONG width, LONG height )
 	SetAspectRatio( width, height );
 }
 
-void Renderer::DeleteTextRenderer()
-{
-	// 방어코드 이따 추가
-	// 펜이 dll 안에 device랑 같이 init되서
-	RenderTextCleanUp();
-}
