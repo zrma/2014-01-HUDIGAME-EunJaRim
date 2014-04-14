@@ -3,6 +3,8 @@
 #include "Logger.h"
 #include <d3dx9math.h>
 
+#define ALIGNMENT_SIZE	16
+
 enum class TransType
 {
 	TRANS_TYPE_NONE,
@@ -22,11 +24,28 @@ enum class TransType
 	TRANS_TYPE_MAX
 };
 
-class CameraController : public Singleton<CameraController>
+class CameraController
 {
 public:
 	CameraController();
 	~CameraController();
+
+	static CameraController* GetInstance( void )
+	{
+		if ( !m_Instance )
+		{
+			m_Instance = (CameraController*) _aligned_malloc( sizeof( CameraController ), ALIGNMENT_SIZE );
+		}
+		return m_Instance;
+	}
+
+	static void Release( void )
+	{
+		if ( m_Instance )
+		{
+			_aligned_free( m_Instance );
+		}
+	}
 
 	void	Init();
 	void	TransCamera( TransType trans, float range );
@@ -38,6 +57,9 @@ public:
 	D3DXMATRIXA16	GetInvMatrix();
 
 private:
-	D3DXMATRIXA16	m_Matrix;
 	FLOAT			m_Axis = 0;
+	__declspec( align( ALIGNMENT_SIZE ) ) 
+					D3DXMATRIXA16	m_Matrix;
+	
+	static CameraController*		m_Instance;
 };

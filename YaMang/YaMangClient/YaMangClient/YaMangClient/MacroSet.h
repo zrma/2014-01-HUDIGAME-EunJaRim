@@ -1,7 +1,6 @@
 #pragma  once
 
 #include <cassert>
-#define ALIGNMENT	16
 
 template <class T>
 class Singleton
@@ -14,7 +13,7 @@ public:
 	{
 		if ( !m_Instance )
 		{
-			m_Instance = (T*)_aligned_malloc( sizeof( T ), ALIGNMENT );
+			m_Instance = new T;
 		}
 		return m_Instance;
 	}
@@ -23,7 +22,7 @@ public:
 	{
 		if ( m_Instance )
 		{
-			_aligned_free( m_Instance );
+			delete m_Instance;
 		}
 	}
 

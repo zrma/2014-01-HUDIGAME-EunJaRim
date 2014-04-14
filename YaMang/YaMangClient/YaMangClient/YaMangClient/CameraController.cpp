@@ -2,11 +2,12 @@
 #include "CameraController.h"
 #include "InputDispatcher.h"
 
+CameraController* CameraController::m_Instance = nullptr;
+
 CameraController::CameraController()
 {
 	D3DXMatrixIdentity( &m_Matrix );
 }
-
 
 CameraController::~CameraController()
 {
