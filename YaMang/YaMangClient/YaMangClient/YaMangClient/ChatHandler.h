@@ -1,5 +1,5 @@
 ﻿#pragma once
-class PacketHeader;
+struct PacketHeader;
 
 class ChatHandler
 {

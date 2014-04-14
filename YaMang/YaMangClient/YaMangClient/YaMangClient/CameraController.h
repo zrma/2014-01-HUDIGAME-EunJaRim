@@ -1,5 +1,5 @@
 #pragma once
-#pragma 
+
 #include "Logger.h"
 #include <d3dx9math.h>
 
@@ -22,7 +22,7 @@ enum class TransType
 	TRANS_TYPE_MAX
 };
 
-class CameraController: public Singleton<CameraController>
+class CameraController : public Singleton<CameraController>
 {
 public:
 	CameraController();
