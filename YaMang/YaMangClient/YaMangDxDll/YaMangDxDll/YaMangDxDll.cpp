@@ -42,7 +42,7 @@ struct CUSTOMVERTEX
 
 struct MYINDEX
 {
-	WORD _0, _1, _2;
+	UINT _0, _1, _2;
 };
 
 
@@ -458,7 +458,7 @@ HRESULT InitVertexBuffer( HWND hWnd )
 
 HRESULT InitIdxBuffer( HWND hWnd )
 {
-	if ( FAILED( g_D3dDevice->CreateIndexBuffer( ( g_XHeight - 1 )*( g_ZHeight - 1 ) * 2 * sizeof( MYINDEX ), 0, D3DFMT_INDEX16, D3DPOOL_DEFAULT, &g_IdxBuffer, NULL ) ) )
+	if ( FAILED( g_D3dDevice->CreateIndexBuffer( ( g_XHeight - 1 )*( g_ZHeight - 1 ) * 2 * sizeof( MYINDEX ), 0, D3DFMT_INDEX32, D3DPOOL_DEFAULT, &g_IdxBuffer, NULL ) ) )
 	{
 		MessageBox( NULL, L"Fail in CreateIndexBuffer", L"YaMang.exe", MB_OK );
 		return E_FAIL;
@@ -473,17 +473,17 @@ HRESULT InitIdxBuffer( HWND hWnd )
 		return E_FAIL;
 	}
 
-	for ( DWORD z = 0; z < g_ZHeight - 1; ++z )
+	for ( UINT z = 0; z < g_ZHeight - 1; ++z )
 	{
-		for ( DWORD x = 0; x < g_XHeight - 1; ++x )
+		for ( UINT x = 0; x < g_XHeight - 1; ++x )
 		{
-			idx._0 = static_cast<WORD>( z*g_XHeight + x );
-			idx._1 = static_cast<WORD>( z*g_XHeight + x + 1 );
-			idx._2 = static_cast<WORD>( ( z + 1 )*g_XHeight + x );
+			idx._0 = static_cast<UINT>( z*g_XHeight + x );
+			idx._1 = static_cast<UINT>( z*g_XHeight + x + 1 );
+			idx._2 = static_cast<UINT>( ( z + 1 )*g_XHeight + x );
 			*idxPointer++ = idx;
-			idx._0 = static_cast<WORD>( ( z + 1 )*g_XHeight + x );
-			idx._1 = static_cast<WORD>( z*g_XHeight + x + 1 );
-			idx._2 = static_cast<WORD>( ( z + 1 ) *g_XHeight + x + 1 );
+			idx._0 = static_cast<UINT>( ( z + 1 )*g_XHeight + x );
+			idx._1 = static_cast<UINT>( z*g_XHeight + x + 1 );
+			idx._2 = static_cast<UINT>( ( z + 1 ) *g_XHeight + x + 1 );
 			*idxPointer++ = idx;
 		}
 	}

@@ -38,8 +38,8 @@ bool GameManager::Init()
 	LPCTSTR fileName = L"tiger.x";
 	Renderer::GetInstance()->CreateMesh( fileName, m_Mesh );
 
-	LPCTSTR mapFileName = L"heightmap_128_128.bmp";
-	LPCTSTR textureFileName = L"heightmap_texture.tga";
+	LPCTSTR mapFileName = L"heightmap_1024_1024.bmp";
+	LPCTSTR textureFileName = L"heightmap_texture_1024_1024.jpg";
 	Renderer::GetInstance()->CreateMap( mapFileName, textureFileName );
 
 	// 씬 생성 및 초기화
