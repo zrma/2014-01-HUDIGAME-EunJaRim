@@ -198,6 +198,15 @@ void ViewSetting()
 	SetMatrix( &matView, true );
 }
 
+YAMANGDXDLL_API void SetAspectRatio( LONG width, LONG height )
+{
+	D3DXMATRIXA16 matProj;
+	float aspectRatio = static_cast<float>( width ) / static_cast<float>( height );
+
+	D3DXMatrixPerspectiveFovLH( &matProj, D3DX_PI / 5, aspectRatio, 1.0f, 1000.0f );
+	g_D3dDevice->SetTransform( D3DTS_PROJECTION, &matProj );
+}
+
 //light 세팅에 대해서는 향후 추가
 //light는 여러개를 미리 가지고 있게 할 것인가?
 //아니면 사용자가 최소로 추가하고 해당 light를 공용 자원으로 할 것인가?
@@ -547,7 +556,6 @@ YAMANGDXDLL_API void HeightMapCleanup()
 
 }
 
-
 YAMANGDXDLL_API void HeightMapRender()
 {
 	g_D3dDevice->SetStreamSource( 0, g_VertexBuffer, 0, sizeof( CUSTOMVERTEX ) );
@@ -558,16 +566,6 @@ YAMANGDXDLL_API void HeightMapRender()
 	g_D3dDevice->SetIndices( g_IdxBuffer );
 	g_D3dDevice->DrawIndexedPrimitive( D3DPT_TRIANGLELIST, 0, 0, g_XHeight*g_ZHeight, 0, ( g_XHeight - 1 )*( g_ZHeight - 1 ) * 2 );
 }
-
-YAMANGDXDLL_API void SetAspectRatio( LONG width, LONG height )
-{
-	D3DXMATRIXA16 matProj;
-	float aspectRatio = static_cast<float>( width ) / static_cast<float>( height );
-
-	D3DXMatrixPerspectiveFovLH( &matProj, D3DX_PI / 5, aspectRatio, 1.0f, 1000.0f );
-	g_D3dDevice->SetTransform( D3DTS_PROJECTION, &matProj );
-}
-
 
 //////////////////////////////////////////////////////////////////////////
 //Text Render

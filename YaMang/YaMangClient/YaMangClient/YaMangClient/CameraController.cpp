@@ -23,7 +23,6 @@ void CameraController::Init()
 
 	m_Axis = -0.5f;
 	m_Height = 10.0f;
-
 }
 
 void CameraController::TransCamera( TransType trans, float range )
