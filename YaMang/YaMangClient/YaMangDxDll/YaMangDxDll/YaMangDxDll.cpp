@@ -199,7 +199,7 @@ void ViewSetting()
 	SetMatrix( &matView, true );
 }
 
-YAMANGDXDLL_API void SetAspectRatio( LONG width, LONG height )
+YAMANGDXDLL_API void SetAspectRatio( long width, long height )
 {
 	D3DXMATRIXA16 matProj;
 	float aspectRatio = static_cast<float>( width ) / static_cast<float>( height );
