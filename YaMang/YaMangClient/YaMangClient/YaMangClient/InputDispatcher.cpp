@@ -126,22 +126,22 @@ REGISTER_KEY_HANDLER( VK_ESCAPE )
 
 REGISTER_KEY_HANDLER( VK_W )
 {
-	CameraController::GetInstance()->TransCamera( TransType::TRANS_TYPE_TRANSLATE_Z, -0.5f );
+	CameraController::GetInstance()->TransCamera( TransType::TRANS_TYPE_TRANSLATE_Z, -50.0f );
 }
 
 REGISTER_KEY_HANDLER( VK_S )
 {
-	CameraController::GetInstance()->TransCamera( TransType::TRANS_TYPE_TRANSLATE_Z, 0.5f );
+	CameraController::GetInstance()->TransCamera( TransType::TRANS_TYPE_TRANSLATE_Z, 10.0f );
 }
 
 REGISTER_KEY_HANDLER( VK_A )
 {
-	CameraController::GetInstance()->TransCamera( TransType::TRANS_TYPE_TRANSLATE_X, 0.5f );
+	CameraController::GetInstance()->TransCamera( TransType::TRANS_TYPE_TRANSLATE_X, 10.0 );
 }
 
 REGISTER_KEY_HANDLER( VK_D )
 {
-	CameraController::GetInstance()->TransCamera( TransType::TRANS_TYPE_TRANSLATE_X, -0.5f );
+	CameraController::GetInstance()->TransCamera( TransType::TRANS_TYPE_TRANSLATE_X, -10.0f );
 }
 
 REGISTER_KEY_HANDLER( VK_Q )
@@ -156,20 +156,20 @@ REGISTER_KEY_HANDLER( VK_E )
 
 REGISTER_KEY_HANDLER( VK_R )
 {
-	CameraController::GetInstance()->AddAxis( 0.05f );
+	CameraController::GetInstance()->AddAxis( 0.02f );
 }
 
 REGISTER_KEY_HANDLER( VK_F )
 {
-	CameraController::GetInstance()->AddAxis( -0.05f );
+	CameraController::GetInstance()->AddAxis( -0.02f );
 }
 
 REGISTER_KEY_HANDLER( VK_C )
 {
-	CameraController::GetInstance()->AddHeight( -0.2f );
+	CameraController::GetInstance()->AddHeight( -10.0f );
 }
 
 REGISTER_KEY_HANDLER( VK_V )
 {
-	CameraController::GetInstance()->AddHeight( 0.2f );
+	CameraController::GetInstance()->AddHeight( 10.0f );
 }

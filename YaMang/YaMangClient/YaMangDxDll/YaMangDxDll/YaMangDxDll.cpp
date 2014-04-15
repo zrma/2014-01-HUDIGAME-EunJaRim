@@ -203,7 +203,7 @@ YAMANGDXDLL_API void SetAspectRatio( LONG width, LONG height )
 	D3DXMATRIXA16 matProj;
 	float aspectRatio = static_cast<float>( width ) / static_cast<float>( height );
 
-	D3DXMatrixPerspectiveFovLH( &matProj, D3DX_PI / 5, aspectRatio, 1.0f, 1000.0f );
+	D3DXMatrixPerspectiveFovLH( &matProj, D3DX_PI / 5, aspectRatio, 1.0f, 2000.0f );
 	g_D3dDevice->SetTransform( D3DTS_PROJECTION, &matProj );
 }
 
@@ -441,7 +441,7 @@ HRESULT InitVertexBuffer( HWND hWnd )
 		{
 			vertex.vertexPoint.x = (float) x - g_XHeight / 2.0f;
 			vertex.vertexPoint.z = -( (float) z - g_ZHeight / 2.0f );
-			vertex.vertexPoint.y = ( (float) ( *( (LPDWORD) d3drc.pBits + x + z*( d3drc.Pitch / 4 ) ) & 0x000000ff ) ) / 16.f;
+			vertex.vertexPoint.y = ( (float) ( *( (LPDWORD) d3drc.pBits + x + z*( d3drc.Pitch / 4 ) ) & 0x000000ff ) ) / 10.f;
 
 			//normal 값이고
 			//0,0,0 기준으로 각 지점의 normal 값을 계산
