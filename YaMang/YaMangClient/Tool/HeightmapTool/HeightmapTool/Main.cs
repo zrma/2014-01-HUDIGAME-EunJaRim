@@ -7,14 +7,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 
 namespace HeightmapTool
 {
-    public partial class Form1 : Form
+    public partial class Main : Form
     {
-        public Form1()
+        IntPtr infoPtr;
+        bool isRunning = false;
+
+        public Main()
         {
             InitializeComponent();
+            YamangDll.InitD3D(this.Window.Handle);
+        }
+
+        ~Main()
+        {
+            isRunning = false;
+            YamangDll.D3DCleanUp();
         }
     }
 }

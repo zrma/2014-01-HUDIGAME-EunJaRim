@@ -1,6 +1,6 @@
 ﻿namespace HeightmapTool
 {
-    partial class Form1
+    partial class Main
     {
         /// <summary>
         /// 필수 디자이너 변수입니다.
