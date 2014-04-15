@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 
-namespace HeightmapTool
+namespace CharacterTool
 {
     public partial class Main : Form
     {
@@ -19,7 +19,7 @@ namespace HeightmapTool
         public Main()
         {
             InitializeComponent();
-            YamangDll.InitD3D(this.Window.Handle);
+            YamangDll.InitD3D(this.MainWindow.Handle, 816, 660);
         }
 
         ~Main()
