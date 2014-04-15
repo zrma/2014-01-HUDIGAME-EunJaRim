@@ -25,7 +25,7 @@ RoomManager::~RoomManager()
 
 ClientSession* RoomManager::CreateClient( SOCKET sock )
 {
-	// 순회를 할 필요 없으나 나중에 map에서 vector로 바꿀예정
+	// 순회를 할 필요 없으나 나중에 map에서 vector로 바꿀예정 - 생각해 보니 삭제를 할때 바로 접근 못할것 같으니 list가 날듯?
 	for ( auto& it : m_RoomList )
 	{
 		// 대기방에 생성
