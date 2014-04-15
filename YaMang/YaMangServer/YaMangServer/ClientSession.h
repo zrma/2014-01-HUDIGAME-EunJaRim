@@ -93,6 +93,7 @@ private:
 
 	ClientManager*	m_ClientManager;
 
+	///# 전에 이야기했던거다... 프렌드랑 너무 친하면 앙대..
 	friend class ClientManager;
 	friend class ChatHandler;
 	friend class LoginHandler;

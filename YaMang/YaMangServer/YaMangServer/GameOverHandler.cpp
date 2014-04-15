@@ -23,6 +23,7 @@ void GameOverHandler::HandleEvent( ClientSession* session, PacketHeader& pktBase
 	
 
 	GameOverResult outPacket;
+	///# 아래 pid가 적법한거라고 보장이 되나? 클라에서 제대로 안보내면?
 	int pid = stoi( packetMessage.substr( 1, 4 ) );
 	outPacket.m_PlayerId = pid;
 
