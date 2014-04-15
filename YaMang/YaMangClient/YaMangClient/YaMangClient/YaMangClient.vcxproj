@@ -86,15 +86,12 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\SharedPreference\PacketType.h" />
     <ClInclude Include="CameraController.h" />
-    <ClInclude Include="ChatHandler.h" />
     <ClInclude Include="CircularBuffer.h" />
     <ClInclude Include="DummyRender.h" />
     <ClInclude Include="GameManager.h" />
-    <ClInclude Include="GameOverHandler.h" />
     <ClInclude Include="InputDispatcher.h" />
     <ClInclude Include="KeyInput.h" />
     <ClInclude Include="Logger.h" />
-    <ClInclude Include="LoginHandler.h" />
     <ClInclude Include="MacroSet.h" />
     <ClInclude Include="MainWindow.h" />
     <ClInclude Include="NetworkManager.h" />
@@ -106,15 +103,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CameraController.cpp" />
-    <ClCompile Include="ChatHandler.cpp" />
     <ClCompile Include="CircularBuffer.cpp" />
     <ClCompile Include="DummyRender.cpp" />
+    <ClCompile Include="EventHandler.cpp" />
     <ClCompile Include="GameManager.cpp" />
-    <ClCompile Include="GameOverHandler.cpp" />
     <ClCompile Include="InputDispatcher.cpp" />
     <ClCompile Include="KeyInput.cpp" />
     <ClCompile Include="Logger.cpp" />
-    <ClCompile Include="LoginHandler.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="NetworkManager.cpp" />
     <ClCompile Include="Renderer.cpp" />

@@ -5,7 +5,6 @@
 #include "DatabaseJobContext.h"
 #include "DatabaseJobManager.h"
 
-
 // EasyServer.cpp 에서 클라이언트 매니저에서 CreateClient 한 후에
 // 소켓 객체로부터 getpeername()를 이용해 주소 값을 뽑아 와서 OnConnect() 호출
 // EasyServer.cpp의 ClientHandlingThread()에서 호출 한,
@@ -14,6 +13,7 @@
 // 
 // 해당 객체에, 위의 인자로부터(EasyServer.cpp의 클라이언트 핸들링 스레드에서)
 // 주소 값을 받아와서 멤버 변수로 저장한다.
+
 bool ClientSession::OnConnect( SOCKADDR_IN* addr )
 {
 	memcpy( &m_ClientAddr, addr, sizeof( SOCKADDR_IN ) );

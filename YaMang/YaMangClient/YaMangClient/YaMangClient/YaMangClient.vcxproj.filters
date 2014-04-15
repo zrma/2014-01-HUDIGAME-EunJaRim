@@ -5,9 +5,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="EventHandler">
-      <UniqueIdentifier>{1b0c526e-0e33-4789-9731-1cab60f521a1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="MainLoop">
       <UniqueIdentifier>{e6d79ce0-2101-4f0a-b47c-3f696244f68c}</UniqueIdentifier>
     </Filter>
@@ -22,6 +19,9 @@
     </Filter>
     <Filter Include="InputHandler">
       <UniqueIdentifier>{781a1a04-c0ee-4c90-8b4d-8ad63d625aa6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network">
+      <UniqueIdentifier>{1b0c526e-0e33-4789-9731-1cab60f521a1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -49,9 +49,6 @@
     <ClInclude Include="MainWindow.h">
       <Filter>MainLoop</Filter>
     </ClInclude>
-    <ClInclude Include="NetworkManager.h">
-      <Filter>MainLoop</Filter>
-    </ClInclude>
     <ClInclude Include="Renderer.h">
       <Filter>MainLoop</Filter>
     </ClInclude>
@@ -60,12 +57,6 @@
     </ClInclude>
     <ClInclude Include="Logger.h">
       <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="ChatHandler.h">
-      <Filter>EventHandler</Filter>
-    </ClInclude>
-    <ClInclude Include="LoginHandler.h">
-      <Filter>EventHandler</Filter>
     </ClInclude>
     <ClInclude Include="DummyRender.h">
       <Filter>MainLoop</Filter>
@@ -76,14 +67,14 @@
     <ClInclude Include="CameraController.h">
       <Filter>Matrixer</Filter>
     </ClInclude>
-    <ClInclude Include="GameOverHandler.h">
-      <Filter>EventHandler</Filter>
-    </ClInclude>
     <ClInclude Include="InputDispatcher.h">
       <Filter>InputHandler</Filter>
     </ClInclude>
     <ClInclude Include="KeyInput.h">
       <Filter>InputHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="NetworkManager.h">
+      <Filter>Network</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -99,9 +90,6 @@
     <ClCompile Include="MainWindow.cpp">
       <Filter>MainLoop</Filter>
     </ClCompile>
-    <ClCompile Include="NetworkManager.cpp">
-      <Filter>MainLoop</Filter>
-    </ClCompile>
     <ClCompile Include="Renderer.cpp">
       <Filter>MainLoop</Filter>
     </ClCompile>
@@ -111,26 +99,23 @@
     <ClCompile Include="Logger.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="ChatHandler.cpp">
-      <Filter>EventHandler</Filter>
-    </ClCompile>
-    <ClCompile Include="LoginHandler.cpp">
-      <Filter>EventHandler</Filter>
-    </ClCompile>
     <ClCompile Include="DummyRender.cpp">
       <Filter>MainLoop</Filter>
     </ClCompile>
     <ClCompile Include="CameraController.cpp">
       <Filter>Matrixer</Filter>
     </ClCompile>
-    <ClCompile Include="GameOverHandler.cpp">
-      <Filter>EventHandler</Filter>
-    </ClCompile>
     <ClCompile Include="InputDispatcher.cpp">
       <Filter>InputHandler</Filter>
     </ClCompile>
     <ClCompile Include="KeyInput.cpp">
       <Filter>InputHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="EventHandler.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="NetworkManager.cpp">
+      <Filter>Network</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

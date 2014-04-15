@@ -1,6 +1,5 @@
 ﻿#pragma once
 
-
 #include "Config.h"
 #include "PacketType.h"
 #include "CircularBuffer.h"
@@ -11,8 +10,6 @@
 class ClientSession;
 class ClientManager;
 struct DatabaseJobContext;
-
-
 
 struct OverlappedIO: public OVERLAPPED
 {
@@ -59,11 +56,13 @@ public:
 
 	void	SetClientManager( ClientManager* clientManager ) { m_ClientManager = clientManager; }
 
-public:
+	//////////////////////////////////////////////////////////////////////////
+	// 패킷 핸들러
+	//////////////////////////////////////////////////////////////////////////
 	void	HandleLoginRequest( LoginRequest& inPacket );
 	void	HandleChatRequest( ChatBroadcastRequest& inPacket );
 	void	HandleGameOverRequest( GameOverRequest& inPacket );
-
+	
 private:
 
 	bool	SendFlush(); ///< Send요청 중인것들 모아서 보냄
@@ -99,9 +98,7 @@ private:
 	ClientManager*	m_ClientManager;
 
 	friend class ClientManager;
-
 };
-
 
 typedef void( *HandlerFunc )( ClientSession* session, PacketHeader& pktBase );
 extern HandlerFunc HandlerTable[];

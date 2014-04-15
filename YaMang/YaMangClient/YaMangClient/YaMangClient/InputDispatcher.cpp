@@ -3,10 +3,19 @@
 #include "KeyInput.h"
 #include "GameManager.h"
 #include "CameraController.h"
+#include "NetworkManager.h"
+#include "PacketType.h"
+#include "MainWindow.h"
 
+//////////////////////////////////////////////////////////////////////////
+// 테스트 코드 - 추후 지워야 합니다.
+//////////////////////////////////////////////////////////////////////////
 extern float myPosX;
 extern float myPosY;
 extern float myPosZ;
+
+//////////////////////////////////////////////////////////////////////////
+
 
 typedef void( *KeyEventHandler )( const KeyInput* inputKey );
 static KeyEventHandler KeyHandlerTable[MAX_KEY];
@@ -90,24 +99,52 @@ void InputDispatcher::DispatchKeyInput()
 	}
 }
 
+
+void NetworkManager::RequestChat( ChatBroadcastRequest& outPacket )
+{
+	outPacket.m_PlayerId = m_MyPlayerId;
+
+	if ( m_SendBuffer.Write( (const char*)&outPacket, outPacket.m_Size ) )
+	{
+		PostMessage( MainWindow::GetInstance()->Window(), WM_SOCKET, NULL, FD_WRITE );
+		//////////////////////////////////////////////////////////////////////////
+		// http://blog.naver.com/gkqxhq324456/110177315036 참조
+		//
+		// 채팅을 날리려고 버퍼에 데이터도 넣어 두었으니, WM_SOCKET 이벤트를 발생시키자
+		//////////////////////////////////////////////////////////////////////////
+	}
+}
+
 REGISTER_KEY_HANDLER( VK_UP )
 {
-	myPosZ += 0.2f;
+ 	ChatBroadcastRequest reqPacket;
+	strcpy_s( reqPacket.m_Chat, "IsMoveUpOK" );
+
+	NetworkManager::GetInstance()->RequestChat( reqPacket );
 }
 
 REGISTER_KEY_HANDLER( VK_DOWN )
 {
-	myPosZ -= 0.2f;
+	ChatBroadcastRequest reqPacket;
+	strcpy_s( reqPacket.m_Chat, "IsMoveDownOK" );
+
+	NetworkManager::GetInstance()->RequestChat( reqPacket );
 }
 
 REGISTER_KEY_HANDLER( VK_LEFT )
 {
-	myPosX -= 0.2f;
+	ChatBroadcastRequest reqPacket;
+	strcpy_s( reqPacket.m_Chat, "IsMoveLeftOK" );
+
+	NetworkManager::GetInstance()->RequestChat( reqPacket );
 }
 
 REGISTER_KEY_HANDLER( VK_RIGHT )
 {
-	myPosX += 0.2f;
+	ChatBroadcastRequest reqPacket;
+	strcpy_s( reqPacket.m_Chat, "IsMoveRightOK" );
+
+	NetworkManager::GetInstance()->RequestChat( reqPacket );
 }
 
 REGISTER_KEY_HANDLER( VK_SPACE )

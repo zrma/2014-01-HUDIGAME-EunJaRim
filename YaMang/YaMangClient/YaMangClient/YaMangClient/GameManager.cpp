@@ -7,6 +7,19 @@
 #include "InputDispatcher.h"
 #include "CameraController.h"
 
+
+//////////////////////////////////////////////////////////////////////////
+// 테스트 코드 - 추후 지워야 합니다.
+//////////////////////////////////////////////////////////////////////////
+extern float myPosX;
+extern float myPosY;
+extern float myPosZ;
+extern bool moveLeft;
+extern bool moveRight;
+extern bool moveUp;
+extern bool moveDown;
+
+
 GameManager::GameManager()
 :m_Mesh( new MESHOBJECT() )
 {
@@ -65,6 +78,25 @@ bool GameManager::Update()
 
 	NetworkManager::GetInstance()->ProcessPacket();
 	
+
+	//////////////////////////////////////////////////////////////////////////
+	if ( moveLeft )
+	{
+		myPosX -= 0.1f;
+	}
+	if ( moveRight )
+	{
+		myPosX += 0.1f;
+	}
+	if ( moveUp )
+	{
+		myPosZ += 0.1f;
+	}
+	if ( moveDown )
+	{
+		myPosZ -= 0.1f;
+	}
+
 	return true;
 }
 

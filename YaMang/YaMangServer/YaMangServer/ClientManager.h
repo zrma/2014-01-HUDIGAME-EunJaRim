@@ -39,7 +39,7 @@ private:
 
 private:
 	typedef std::map<SOCKET, ClientSession*> ClientList;
-	ClientList	m_ClientList;
+	ClientList		m_ClientList;
 
 	DWORD			m_LastGCTick;
 	DWORD			m_LastClientWorkTick;

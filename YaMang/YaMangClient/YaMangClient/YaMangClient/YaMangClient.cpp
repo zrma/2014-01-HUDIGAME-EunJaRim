@@ -13,12 +13,18 @@
 
 #pragma comment(lib,"ws2_32.lib")
 
+//////////////////////////////////////////////////////////////////////////
+// 테스트 코드 - 추후 지워야 합니다.
+//////////////////////////////////////////////////////////////////////////
 // 테스트용 전역 변수 입니다.
 // 반드시 나중에 날려버립시다.
-
 float myPosX = 0;
 float myPosY = 0;
 float myPosZ = 5;
+bool moveLeft = false;
+bool moveRight = false;
+bool moveUp = false;
+bool moveDown = false;
 
 int APIENTRY _tWinMain( _In_ HINSTANCE hInstance,
 						_In_opt_ HINSTANCE hPrevInstance,

@@ -120,12 +120,6 @@ void NetworkManager::ProcessPacket()
 		return;
 	}
 
-	if ( header.m_Type < 0 )
-	{
-		m_RecvBuffer.Reset();
-		return;
-	}
-
 	HandlerTable[header.m_Type]( header );
 }
 
@@ -181,12 +175,6 @@ bool NetworkManager::HandleMessage( WPARAM wParam, LPARAM lParam )
 			{
 				/// 버퍼 꽉찼다.
 				// assert( false );
-
-				//////////////////////////////////////////////////////////////////////////
-				// 임시로 테스트를 위해 여기 주석 쳐 놨음
-				//
-				// 테스트가 끝난 후 제거하자
-				//////////////////////////////////////////////////////////////////////////
 			}
 
 			ProcessPacket();

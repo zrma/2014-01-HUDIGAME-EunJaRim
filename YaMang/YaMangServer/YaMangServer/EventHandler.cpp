@@ -4,6 +4,14 @@
 #include "DatabaseJobContext.h"
 #include "DatabaseJobManager.h"
 
+//////////////////////////////////////////////////////////////////////////
+#include "RoomManager.h"
+#include "ClientManager.h"
+// 테스트용 헤더
+
+extern RoomManager* g_RoomManager;
+//////////////////////////////////////////////////////////////////////////
+
 HandlerFunc HandlerTable[PKT_MAX];
 
 static void DefaultHandler( ClientSession* session, PacketHeader& pktBase )
@@ -37,9 +45,6 @@ struct RegisterHandler
 	static RegisterHandler _register_##PKT_TYPE( PKT_TYPE, Handler_##PKT_TYPE ); \
 	static void Handler_##PKT_TYPE( ClientSession* session, PacketHeader& pktBase )
 
-//@}
-
-
 REGISTER_HANDLER( PKT_CS_LOGIN )
 {
 	LoginRequest inPacket = static_cast<LoginRequest&>( pktBase );
@@ -61,6 +66,79 @@ REGISTER_HANDLER( PKT_CS_CHAT )
 	session->HandleChatRequest( inPacket );
 }
 
+//////////////////////////////////////////////////////////////////////////
+// 임시로 추가 한 부분
+//////////////////////////////////////////////////////////////////////////
+std::map<int, std::array<int, 4>> g_EventTimeTable;
+
+struct EventData
+{
+	int				targetId = 0;
+	ClientSession*	session = nullptr;
+};
+
+void CALLBACK StopEvent( LPVOID lpArg, DWORD dwTimerLowValue, DWORD dwTimerHighValue )
+{
+	for ( auto& iter : g_EventTimeTable )
+	{
+		auto key = iter.first;
+		auto& value = iter.second;
+
+		for ( int i = 0; i < 4; ++i )
+		{
+			if ( value[i] > 0 )
+			{
+				++value[i];
+			}
+		}
+
+		ChatBroadcastResult inPacket;
+		inPacket.m_PlayerId = key;
+		strcpy_s( inPacket.m_Name, "MSG" );
+
+		if ( value[0] > 1 )
+		{
+			value[0] = 0;
+			strcpy_s( inPacket.m_Chat, "StopUp" );
+			auto it = g_RoomManager->GetFirstClientManager();
+			if ( it )
+			{
+				it->DirectPacket( key, &inPacket );
+			}
+		}
+		if ( value[1] > 1 )
+		{
+			value[1] = 0;
+			strcpy_s( inPacket.m_Chat, "StopDown" );
+			auto it = g_RoomManager->GetFirstClientManager();
+			if ( it )
+			{
+				it->DirectPacket( key, &inPacket );
+			}
+		}
+		if ( value[2] > 1 )
+		{
+			value[2] = 0;
+			strcpy_s( inPacket.m_Chat, "StopLeft" );
+			auto it = g_RoomManager->GetFirstClientManager();
+			if ( it )
+			{
+				it->DirectPacket( key, &inPacket );
+			}
+		}
+		if ( value[3] > 1 )
+		{
+			value[3] = 0;
+			strcpy_s( inPacket.m_Chat, "StopRight" );
+			auto it = g_RoomManager->GetFirstClientManager();
+			if ( it )
+			{
+				it->DirectPacket( key, &inPacket );
+			}
+		}
+	}
+}
+
 void ClientSession::HandleChatRequest( ChatBroadcastRequest& inPacket )
 {
 	m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size );
@@ -68,7 +146,57 @@ void ClientSession::HandleChatRequest( ChatBroadcastRequest& inPacket )
 	ChatBroadcastResult outPacket;
 	outPacket.m_PlayerId = inPacket.m_PlayerId;
 	strcpy_s( outPacket.m_Name, m_PlayerName );
-	strcpy_s( outPacket.m_Chat, inPacket.m_Chat );
+	// strcpy_s( outPacket.m_Chat, inPacket.m_Chat );
+
+	//////////////////////////////////////////////////////////////////////////
+	// 임시로 구현 해 둠
+	//////////////////////////////////////////////////////////////////////////
+	std::string packetMessage;
+	packetMessage.append( inPacket.m_Chat );
+
+	if ( g_EventTimeTable.find( inPacket.m_PlayerId ) == g_EventTimeTable.end() )
+	{
+		ZeroMemory( &(g_EventTimeTable[inPacket.m_PlayerId]), sizeof( std::array<int, 4> ) );
+	}
+
+	if ( packetMessage == "IsMoveUpOK")
+	{
+		g_EventTimeTable[inPacket.m_PlayerId][0] += 1;
+		strcpy_s( outPacket.m_Chat, "MoveUp" );
+
+		SendRequest( &outPacket );
+		return;
+	}
+	else if ( packetMessage == "IsMoveDownOK")
+	{
+		g_EventTimeTable[inPacket.m_PlayerId][1] += 1;
+		strcpy_s( outPacket.m_Chat, "MoveDown" );
+		
+		SendRequest( &outPacket );
+		return;
+	}
+	else if ( packetMessage == "IsMoveLeftOK" )
+	{
+		g_EventTimeTable[inPacket.m_PlayerId][2] += 1;
+		strcpy_s( outPacket.m_Chat, "MoveLeft" );
+
+		SendRequest( &outPacket );
+		return;
+	}
+	else if ( packetMessage == "IsMoveRightOK")
+	{
+		g_EventTimeTable[inPacket.m_PlayerId][3] += 1;
+		strcpy_s( outPacket.m_Chat, "MoveRight" );
+		
+		SendRequest( &outPacket );
+		return;
+	}
+	else
+	{
+		strcpy_s( outPacket.m_Chat, inPacket.m_Chat );
+	}
+	//////////////////////////////////////////////////////////////////////////
+	// 이 위까지 임시로 구현한 것임
 
 	/// 채팅은 바로 방송 하면 끝
 	if ( !Broadcast( &outPacket ) )
@@ -91,25 +219,39 @@ void ClientSession::HandleGameOverRequest( GameOverRequest& inPacket )
 	std::string packetMessage;
 	packetMessage.append( inPacket.m_Chat );
 
-
-	GameOverResult outPacket;
-	int pid = stoi( packetMessage.substr( 1, 4 ) );
-	outPacket.m_PlayerId = pid;
-
-	if ( packetMessage.at( 0 ) == 'W' )
+	//////////////////////////////////////////////////////////////////////////
+	// 테스트용으로 임시로 붙여둠
+	//////////////////////////////////////////////////////////////////////////
+	try
 	{
-		outPacket.m_IsWon = true;
+		int pid = stoi( packetMessage.substr( 1, 4 ) );
+		// 예외 상황이 발생 할 수 있음
+		//
+		// 1) 4글자 미만일 경우 펑!
+		// 2) 숫자가 아닐 경우 펑!
+
+		GameOverResult outPacket;
+		outPacket.m_PlayerId = pid;
+
+		if ( packetMessage.at( 0 ) == 'W' )
+		{
+			outPacket.m_IsWon = true;
+		}
+		else
+		{
+			outPacket.m_IsWon = false;
+		}
+
+		printf_s( "[GameOverMessage][%d]%s \n", inPacket.m_PlayerId, inPacket.m_Chat );
+
+		/// 채팅은 바로 방송 하면 끝
+		if ( !Broadcast( &outPacket ) )
+		{
+			Disconnect();
+		}
 	}
-	else
+	catch (...)
 	{
-		outPacket.m_IsWon = false;
-	}
-
-	printf_s( "[GameOverMessage][%d]%s \n", inPacket.m_PlayerId, inPacket.m_Chat );
-
-	/// 채팅은 바로 방송 하면 끝
-	if ( !Broadcast( &outPacket ) )
-	{
-		Disconnect();
+		return;
 	}
 }

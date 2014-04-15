@@ -30,6 +30,8 @@ public:
   /// 데이터 제거
   bool Consume(size_t bytes) ;
 
+  void Reset() { m_CurrentSize = 0; m_BeginIndex = 0; m_EndIndex = 0; }
+
 private:
 
 

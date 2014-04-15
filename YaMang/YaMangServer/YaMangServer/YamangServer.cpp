@@ -23,6 +23,11 @@ typedef ProducerConsumerQueue<SOCKET, 100> PendingAcceptList;
 
 static int LISTEN_PORT = 9001;
 
+//////////////////////////////////////////////////////////////////////////
+// 임시 추가!!!
+//////////////////////////////////////////////////////////////////////////
+extern void CALLBACK StopEvent( LPVOID lpArg, DWORD dwTimerLowValue, DWORD dwTimerHighValue );
+
 int _tmain( int argc, _TCHAR* argv[] )
 {
 	/// crash 발생시 dump 남기기 위해서
@@ -50,8 +55,8 @@ int _tmain( int argc, _TCHAR* argv[] )
 	/// Manager Init
 	// 각 매니저들은 각 헤더파일들에 extern 으로 선언 되어 있음
 	// 여기서 new 해줌
-	g_RoomManager = new RoomManager;
-	g_DatabaseJobManager = new DatabaseJobManager;
+	g_RoomManager = new RoomManager();
+	g_DatabaseJobManager = new DatabaseJobManager();
 
 	/// DB Helper 초기화
 	if ( false == DbHelper::Initialize( DB_CONN_STR ) )
@@ -178,6 +183,22 @@ unsigned int WINAPI ClientHandlingThread( LPVOID lpParam )
 	if ( !SetWaitableTimer( hTimer, &liDueTime, 100, TimerProc, NULL, TRUE ) )
 	{
 		return -1;
+	}
+
+	//////////////////////////////////////////////////////////////////////////
+	// 임시 추가
+	//////////////////////////////////////////////////////////////////////////
+
+	LARGE_INTEGER li = { 0 };
+	HANDLE hTimerForTest = CreateWaitableTimer( NULL, FALSE, NULL );
+	if ( hTimerForTest != NULL )
+	{
+		li.QuadPart = -50000000;
+
+		if ( !SetWaitableTimer( hTimerForTest, &li, ( 1000 ), StopEvent, NULL, FALSE ) )
+		{
+			CloseHandle( hTimerForTest );
+		}
 	}
 
 	while ( true )
