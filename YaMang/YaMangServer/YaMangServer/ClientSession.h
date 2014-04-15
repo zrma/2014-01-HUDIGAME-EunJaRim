@@ -12,6 +12,8 @@ class ClientSession;
 class ClientManager;
 struct DatabaseJobContext;
 
+
+
 struct OverlappedIO: public OVERLAPPED
 {
 	OverlappedIO(): m_Object( nullptr )
@@ -32,8 +34,6 @@ public:
 		memset( m_PlayerName, 0, sizeof( m_PlayerName ) );
 	}
 	~ClientSession() {}
-
-
 
 	void	OnRead( size_t len );
 	void	OnWriteComplete( size_t len );
@@ -58,6 +58,11 @@ public:
 	bool	DoingOverlappedOperation() const { return m_OverlappedRequested > 0; }
 
 	void	SetClientManager( ClientManager* clientManager ) { m_ClientManager = clientManager; }
+
+public:
+	void	HandleLoginRequest( LoginRequest& inPacket );
+	void	HandleChatRequest( ChatBroadcastRequest& inPacket );
+	void	HandleGameOverRequest( GameOverRequest& inPacket );
 
 private:
 
@@ -94,10 +99,12 @@ private:
 	ClientManager*	m_ClientManager;
 
 	friend class ClientManager;
-	friend class ChatHandler;
-	friend class LoginHandler;
-	friend class GameOverHandler;
+
 };
+
+
+typedef void( *HandlerFunc )( ClientSession* session, PacketHeader& pktBase );
+extern HandlerFunc HandlerTable[];
 
 void CALLBACK RecvCompletion( DWORD dwError, DWORD cbTransferred, LPWSAOVERLAPPED lpOverlapped, DWORD dwFlags );
 void CALLBACK SendCompletion( DWORD dwError, DWORD cbTransferred, LPWSAOVERLAPPED lpOverlapped, DWORD dwFlags );
