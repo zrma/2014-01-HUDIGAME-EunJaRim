@@ -52,7 +52,7 @@ struct MYINDEX
 //프로그램에서 1회만 실행 후 Process 종료까지 사용
 //참고 URL : http://www.delmadang.com/community/bbs_view.asp?bbsNo=17&indx=426040 
 //////////////////////////////////////////////////////////////////////////
-YAMANGDXDLL_API HRESULT InitD3D( HWND hWnd )
+YAMANGDXDLL_API HRESULT InitD3D( HWND hWnd, LONG width, LONG height )
 {
 	if ( nullptr == ( g_D3D = Direct3DCreate9( D3D_SDK_VERSION ) ) )
 	{
@@ -97,6 +97,7 @@ YAMANGDXDLL_API HRESULT InitD3D( HWND hWnd )
 
 	D3DXCreateSprite( g_D3dDevice, &g_Sprite ); // 스프라이트 초기화 
 
+	SetAspectRatio( width, height );
 
 #ifdef _PRINT_CONSOLE
 	Logger::GetInstance();
@@ -288,7 +289,7 @@ YAMANGDXDLL_API bool PreRendering()
 	if ( SUCCEEDED( g_D3dDevice->BeginScene() ) )
 	{
 		SetupTranslateMatrices();
-		// ViewSetting();
+		//ViewSetting();
 
 		//lightsetting
 		//일단 1로 진행, 향후 라이트 개수 등 확정되면 인자 받아 설정

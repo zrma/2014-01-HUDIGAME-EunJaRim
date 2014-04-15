@@ -26,8 +26,6 @@ bool Renderer::Init()
 		GetWindowRect( MainWindow::GetInstance()->Window(), &rect );
 		LONG width = rect.right - rect.left;
 		LONG height = rect.bottom - rect.left;
-
-		ResizeWindow( width, height );
 	}
 
 	return m_Result;
@@ -124,6 +122,9 @@ void Renderer::SetCamera()
 
 void Renderer::ResizeWindow( LONG width, LONG height )
 {
-	SetAspectRatio( width, height );
+	if ( m_Result )
+	{
+		SetAspectRatio( width, height );
+	}
 }
 
