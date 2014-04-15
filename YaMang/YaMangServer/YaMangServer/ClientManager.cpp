@@ -210,7 +210,7 @@ void ClientManager::FlushClientSend()
 // Push Request / Pop Result 로 구성 되어 있음
 // DatabaseJobManager.cpp 참조
 //////////////////////////////////////////////////////////////////////////
-void ClientManager::CreatePlayer( int pid, double x, double y, double z, const char* name, const char* comment )
+void ClientManager::DBCreatePlayer( int pid, double x, double y, double z, const char* name, const char* comment )
 {
 	CreatePlayerDataContext* newPlayerJob = new CreatePlayerDataContext();
 	newPlayerJob->m_PlayerId = pid;
@@ -227,7 +227,7 @@ void ClientManager::CreatePlayer( int pid, double x, double y, double z, const c
 //////////////////////////////////////////////////////////////////////////
 // 삭제 컨텍스트를 만들어서 해당 객체를 Push Request 함수를 이용해서 처리 요청
 //////////////////////////////////////////////////////////////////////////
-void ClientManager::DeletePlayer( int pid )
+void ClientManager::DBDeletePlayer( int pid )
 {
 	DeletePlayerDataContext* delPlayerJob = new DeletePlayerDataContext( pid );
 	g_DatabaseJobManager->PushDatabaseJobRequest( delPlayerJob );
@@ -249,4 +249,17 @@ void ClientManager::DeletePlayerDone( DatabaseJobContext* dbJob )
 
 	printf( "PLAYER [%d] DELETED\n", deleteJob->m_PlayerId );
 
+}
+
+bool ClientManager::DeleteClient( SOCKET sock )
+{
+	// 바로 erase해도 되나?
+	auto toBeDelete = m_ClientList.find( sock );
+	if ( toBeDelete != m_ClientList.end( ) )
+	{
+		m_ClientList.erase( toBeDelete );
+		return true;
+	}
+
+	return false;
 }

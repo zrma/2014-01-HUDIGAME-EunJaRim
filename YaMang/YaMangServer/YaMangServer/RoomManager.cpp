@@ -3,63 +3,124 @@
 #include "ClientSession.h"
 #include "ClientManager.h"
 
-
+std::hash_map<int, SOCKET>	g_PidSocketTable;
 RoomManager* g_RoomManager = nullptr;
-
 RoomManager::RoomManager()
 {
-	ClientManager* waitingRoom = new ClientManager();
-	//m_RoomList.push_back( RoomList::value_type( 0, waitingRoom ) ); // 0은 대기방을 뜻함
-	m_RoomList.insert( RoomList::value_type( 0, waitingRoom ) ); // 0은 대기방을 뜻함
+	g_PidSocketTable.clear();
+
+	m_Lobby = new ClientManager( );
+
+	Room room;
+	room.roomNumber = 0;
+	room.clientManager = m_Lobby;
+
+	m_RoomList.clear();
+	m_RoomList.push_back( room ); // 0은 대기방을 뜻함
 }
 
 
 RoomManager::~RoomManager()
 {
-	for ( auto& it : m_RoomList )
+	for ( auto it = m_RoomList.begin( ); it != m_RoomList.end( ); ++it )
 	{
-		ClientManager* room = it.second;
+		ClientManager* room = it->clientManager;
 		delete room;
 	}
 }
 
-ClientSession* RoomManager::CreateClient( SOCKET sock )
+void RoomManager::AddRoom()
 {
-	// 순회를 할 필요 없으나 나중에 map에서 vector로 바꿀예정 - 생각해 보니 삭제를 할때 바로 접근 못할것 같으니 list가 날듯?
-	for ( auto& it : m_RoomList )
+	Room room;
+	room.roomNumber = ++m_RoomCount;
+	room.clientManager = new ClientManager( );
+	m_RoomList.push_back( room );
+}
+
+bool RoomManager::ChangeRoom( int roomNumberFrom, int roomNumberTo, int pid )
+{
+	ClientManager* roomFrom = nullptr;
+	ClientManager* roomTo = nullptr;
+	SOCKET socketMover = g_PidSocketTable.find( pid )->second;
+
+	int roomCount = 0;
+	for ( auto it = m_RoomList.begin(); it != m_RoomList.end(); ++it )
 	{
-		// 대기방에 생성
-		int roomNumber = it.first;
-		if ( 0 == roomNumber )
+		if ( roomNumberFrom == it->roomNumber )
 		{
-			ClientManager* room = it.second;
-			return room->CreateClient( sock );
+			roomFrom = it->clientManager;
+			++roomCount;
+		}
+		else if ( roomNumberTo == it->roomNumber )
+		{
+			roomTo = it->clientManager;
+			++roomCount;
+		}
+
+		if ( roomCount == 2 )
+		{
+			break;
 		}
 	}
 
-	CRASH_ASSERT( false );
-	return nullptr;
+
+	if ( nullptr == roomFrom || nullptr == roomTo )
+	{
+		return false;
+	}
+
+
+	if ( roomFrom->DeleteClient( socketMover ) )
+	{
+		roomTo->CreateClient( socketMover );
+		return true;
+	}
+
+	return false;
+}
+
+bool RoomManager::DeleteRoom( int roomNumber )
+{
+	for ( auto it = m_RoomList.begin(); it != m_RoomList.end(); ++it )
+	{
+		if ( roomNumber == it->roomNumber )
+		{
+
+			ClientManager* toBeDelete = it->clientManager;
+			if ( 0 == toBeDelete->GetClientSize( ) )
+			{
+				delete toBeDelete;
+				return true;
+			}
+
+			return false;
+
+		}
+	}
+
+	return false;
+}
+
+ClientSession* RoomManager::CreateClient( SOCKET sock )
+{
+	return m_Lobby->CreateClient( sock );
 }
 
 void RoomManager::FlushClientSend()
 {
-	for ( auto& it : m_RoomList )
+	for ( auto it = m_RoomList.begin(); it != m_RoomList.end(); ++it )
 	{
-		ClientManager* room = it.second;
-		room->FlushClientSend();
+		ClientManager* room = it->clientManager;
+		room->FlushClientSend( );
 	}
 }
 
 void RoomManager::OnPeriodWork()
 {
-// 	for ( auto& it = m_RoomList.begin( ); it != m_RoomList.end( ); ++it )
-// 	{
-// 		ClientManager* room = it.second;
-// 		room->OnPeriodWork();
-// 	}
-	for ( auto& it : m_RoomList )
+	for ( auto it = m_RoomList.begin(); it != m_RoomList.end(); ++it )
 	{
-		ClientManager* room = it.second;
-		room->OnPeriodWork();
+		ClientManager* room = it->clientManager;
+		room->OnPeriodWork( );
 	}
 }
+
