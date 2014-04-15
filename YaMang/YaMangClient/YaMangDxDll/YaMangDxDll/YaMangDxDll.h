@@ -17,7 +17,7 @@
 
 extern "C"{
 	//처음과 마지막에만 실행하는 함수들
-	YAMANGDXDLL_API HRESULT InitD3D( HWND hWnd, LONG width=1280, LONG height=720 );
+	YAMANGDXDLL_API HRESULT InitD3D( HWND hWnd, long width=1280, long height=720 );
 	YAMANGDXDLL_API void D3DCleanUp( );
 
 	//파일 이름 넣어 mesh object 받아오기

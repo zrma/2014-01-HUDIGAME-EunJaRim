@@ -52,7 +52,7 @@ struct MYINDEX
 //프로그램에서 1회만 실행 후 Process 종료까지 사용
 //참고 URL : http://www.delmadang.com/community/bbs_view.asp?bbsNo=17&indx=426040 
 //////////////////////////////////////////////////////////////////////////
-YAMANGDXDLL_API HRESULT InitD3D( HWND hWnd, LONG width, LONG height )
+YAMANGDXDLL_API HRESULT InitD3D( HWND hWnd, long width, long height )
 {
 	if ( nullptr == ( g_D3D = Direct3DCreate9( D3D_SDK_VERSION ) ) )
 	{
