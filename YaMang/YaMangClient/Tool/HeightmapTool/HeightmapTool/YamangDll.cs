@@ -51,7 +51,7 @@ namespace CharacterTool
 
         [DllImport("yaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void HeightMapRender();
-        
+
 
         //////////////////////////////////////////////////////////////////////////
         //Text Render를 위한 함수
@@ -59,6 +59,7 @@ namespace CharacterTool
 
         [DllImport("yaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void RenderText([MarshalAs(UnmanagedType.LPWStr)] String text, float left, float top, int RGB_R = 255, int RGB_G = 255, int RGB_B = 255, float right = 0, float bottom = 0);
+
 
         //DLL 내부 MESHOBJECT 정의
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]

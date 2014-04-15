@@ -4,6 +4,7 @@
 #include "ClientManager.h"
 #include "DatabaseJobContext.h"
 #include "DatabaseJobManager.h"
+#include "RoomManager.h"
 
 // EasyServer.cpp 에서 클라이언트 매니저에서 CreateClient 한 후에
 // 소켓 객체로부터 getpeername()를 이용해 주소 값을 뽑아 와서 OnConnect() 호출
@@ -73,6 +74,13 @@ void ClientSession::Disconnect()
 	if ( !IsConnected() )
 	{
 		return;
+	}
+	
+	// g_PidSocketTable.erase( m_PlayerId ); 이거 한줄로 될것 같은데 교수님이 find하고 뭐 하라고 했던게 자꾸 생각남
+	auto toBeDelete = g_PidSocketTable.find( m_PlayerId );
+	if ( toBeDelete != g_PidSocketTable.end( ) )
+	{
+		g_PidSocketTable.erase( toBeDelete );
 	}
 
 	printf( "[DEBUG] Client Disconnected: IP=%s, PORT=%d\n", inet_ntoa( m_ClientAddr.sin_addr ), ntohs( m_ClientAddr.sin_port ) );
@@ -270,6 +278,8 @@ void ClientSession::UpdateDone()
 // 로그인을 시도해서 유저 데이터를 불러오면, 데이터를 읽어서 클라이언트 쪽에 Send()
 void ClientSession::LoginDone( int pid, double x, double y, double z, const char* name )
 {
+	g_PidSocketTable.insert( std::pair<int, SOCKET>( pid, m_Socket ) );
+
 	LoginResult outPacket;
 
 	outPacket.m_PlayerId = m_PlayerId = pid;
