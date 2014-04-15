@@ -20,7 +20,7 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 	{
 		case WM_CREATE:
 		{
-			SetTimer( MainWindow::GetInstance()->Window(), 337, 50, NULL );
+			SetTimer( MainWindow::GetInstance()->Window(), 337, 20, NULL );
 		}
 			return 0;
 
