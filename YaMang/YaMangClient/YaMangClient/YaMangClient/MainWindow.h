@@ -13,32 +13,7 @@ public:
 	MainWindow();
 	virtual ~MainWindow();
 
-	static LRESULT CALLBACK WindowProc( HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam )	// agebreak: 왜 WinProc 과 Create가 헤더에 구현되어 있나??
-	{
-		MainWindow * pThis = NULL;
-
-		if ( uMsg == WM_NCCREATE )
-		{
-			CREATESTRUCT* pCreate = (CREATESTRUCT*)lParam;
-			pThis = (MainWindow*)pCreate->lpCreateParams;
-			SetWindowLongPtr( hwnd, GWLP_USERDATA, (LONG_PTR)pThis );
-
-			pThis->m_HandleOfWindow = hwnd;
-		}
-		else
-		{
-			pThis = (MainWindow*)GetWindowLongPtr( hwnd, GWLP_USERDATA );
-		}
-
-		if ( pThis )
-		{
-			return pThis->HandleMessage( uMsg, wParam, lParam );
-		}
-		else
-		{
-			return DefWindowProc( hwnd, uMsg, wParam, lParam );
-		}
-	}
+	static LRESULT CALLBACK WindowProc( HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
 	
 	PCWSTR	ClassName() const { return WINDOW_NAME; }
 	LRESULT	HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam );

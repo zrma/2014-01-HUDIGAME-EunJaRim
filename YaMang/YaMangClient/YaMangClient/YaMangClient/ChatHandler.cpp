@@ -2,6 +2,8 @@
 #include "PacketType.h"
 #include "ChatHandler.h"
 #include "NetworkManager.h"
+#include "MainWindow.h"
+#include "KeyInput.h"
 
 extern float myPosX;
 extern float myPosY;
@@ -30,19 +32,26 @@ void ChatHandler::HandleEvent( PacketHeader& pktBase )
 
 		if ( recvData.m_Chat[0] == 'A' )
 		{
-			myPosX -= 0.2f;
+			PostMessage( MainWindow::GetInstance()->Window(), WM_KEYDOWN, VK_A, NULL );
 		}
 		if ( recvData.m_Chat[0] == 'D' )
 		{
-			myPosX += 0.2f;
+			PostMessage( MainWindow::GetInstance()->Window(), WM_KEYDOWN, VK_D, NULL );
 		}
 		if ( recvData.m_Chat[0] == 'W' )
 		{
-			myPosZ += 0.2f;
+			PostMessage( MainWindow::GetInstance()->Window(), WM_KEYDOWN, VK_W, NULL );
 		}
 		if ( recvData.m_Chat[0] == 'S' )
 		{
-			myPosZ -= 0.2f;
+			PostMessage( MainWindow::GetInstance()->Window(), WM_KEYDOWN, VK_S, NULL );
+		}
+		if ( recvData.m_Chat[0] == 'F' )
+		{
+			PostMessage( MainWindow::GetInstance()->Window(), WM_KEYUP, VK_A, NULL );
+			PostMessage( MainWindow::GetInstance()->Window(), WM_KEYUP, VK_D, NULL );
+			PostMessage( MainWindow::GetInstance()->Window(), WM_KEYUP, VK_W, NULL );
+			PostMessage( MainWindow::GetInstance()->Window(), WM_KEYUP, VK_S, NULL );
 		}
 
 		Log( "%s \n", buff );

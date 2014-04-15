@@ -16,8 +16,6 @@ MainWindow::~MainWindow()
 
 LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 {
-	// int wmId, wmEvent;
-
 	switch ( uMsg )
 	{
 		case WM_CREATE:
@@ -167,4 +165,31 @@ BOOL MainWindow::Create( PCWSTR lpWindowName, DWORD dwStyle, DWORD dwExStyle /*=
 									   x, y, nWidth, nHeight, hWndParent, hMenu, GetModuleHandle( NULL ), this );
 
 	return ( m_HandleOfWindow ? TRUE : FALSE );
+}
+
+LRESULT CALLBACK MainWindow::WindowProc( HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam )
+{
+	MainWindow * pThis = NULL;
+
+	if ( uMsg == WM_NCCREATE )
+	{
+		CREATESTRUCT* pCreate = (CREATESTRUCT*)lParam;
+		pThis = (MainWindow*)pCreate->lpCreateParams;
+		SetWindowLongPtr( hwnd, GWLP_USERDATA, (LONG_PTR)pThis );
+
+		pThis->m_HandleOfWindow = hwnd;
+	}
+	else
+	{
+		pThis = (MainWindow*)GetWindowLongPtr( hwnd, GWLP_USERDATA );
+	}
+
+	if ( pThis )
+	{
+		return pThis->HandleMessage( uMsg, wParam, lParam );
+	}
+	else
+	{
+		return DefWindowProc( hwnd, uMsg, wParam, lParam );
+	}
 }
