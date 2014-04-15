@@ -103,6 +103,7 @@ void CALLBACK StopEvent( LPVOID lpArg, DWORD dwTimerLowValue, DWORD dwTimerHighV
 			auto it = g_RoomManager->GetFirstClientManager();
 			if ( it )
 			{
+				printf_s( "%d번 클라이언트 Stop! \n", key );
 				it->DirectPacket( key, &inPacket );
 			}
 		}
@@ -113,6 +114,7 @@ void CALLBACK StopEvent( LPVOID lpArg, DWORD dwTimerLowValue, DWORD dwTimerHighV
 			auto it = g_RoomManager->GetFirstClientManager();
 			if ( it )
 			{
+				printf_s( "%d번 클라이언트 Stop! \n", key );
 				it->DirectPacket( key, &inPacket );
 			}
 		}
@@ -123,6 +125,7 @@ void CALLBACK StopEvent( LPVOID lpArg, DWORD dwTimerLowValue, DWORD dwTimerHighV
 			auto it = g_RoomManager->GetFirstClientManager();
 			if ( it )
 			{
+				printf_s( "%d번 클라이언트 Stop! \n", key );
 				it->DirectPacket( key, &inPacket );
 			}
 		}
@@ -133,6 +136,7 @@ void CALLBACK StopEvent( LPVOID lpArg, DWORD dwTimerLowValue, DWORD dwTimerHighV
 			auto it = g_RoomManager->GetFirstClientManager();
 			if ( it )
 			{
+				printf_s( "%d번 클라이언트 Stop! \n", key );
 				it->DirectPacket( key, &inPacket );
 			}
 		}
@@ -163,7 +167,7 @@ void ClientSession::HandleChatRequest( ChatBroadcastRequest& inPacket )
 	{
 		g_EventTimeTable[inPacket.m_PlayerId][0] += 1;
 		strcpy_s( outPacket.m_Chat, "MoveUp" );
-
+		printf_s( "%d번 클라이언트 Move! \n", inPacket.m_PlayerId );
 		SendRequest( &outPacket );
 		return;
 	}
@@ -171,7 +175,7 @@ void ClientSession::HandleChatRequest( ChatBroadcastRequest& inPacket )
 	{
 		g_EventTimeTable[inPacket.m_PlayerId][1] += 1;
 		strcpy_s( outPacket.m_Chat, "MoveDown" );
-		
+		printf_s( "%d번 클라이언트 Move! \n", inPacket.m_PlayerId );
 		SendRequest( &outPacket );
 		return;
 	}
@@ -179,7 +183,7 @@ void ClientSession::HandleChatRequest( ChatBroadcastRequest& inPacket )
 	{
 		g_EventTimeTable[inPacket.m_PlayerId][2] += 1;
 		strcpy_s( outPacket.m_Chat, "MoveLeft" );
-
+		printf_s( "%d번 클라이언트 Move! \n", inPacket.m_PlayerId );
 		SendRequest( &outPacket );
 		return;
 	}
@@ -187,7 +191,7 @@ void ClientSession::HandleChatRequest( ChatBroadcastRequest& inPacket )
 	{
 		g_EventTimeTable[inPacket.m_PlayerId][3] += 1;
 		strcpy_s( outPacket.m_Chat, "MoveRight" );
-		
+		printf_s( "%d번 클라이언트 Move! \n", inPacket.m_PlayerId );
 		SendRequest( &outPacket );
 		return;
 	}

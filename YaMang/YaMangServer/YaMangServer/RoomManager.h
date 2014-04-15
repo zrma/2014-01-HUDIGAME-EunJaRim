@@ -20,15 +20,9 @@ public:
 	RoomManager();
 	~RoomManager();
 
-<<<<<<< HEAD
-	void	AddRoom();		// 방 생성
-	void	DeleteRoom();	// 방 삭제
-	void	ChangeRoom();	// 클라이언트를 다른 방으로 이동 (클라 매니저 아님)
-=======
 	void	AddRoom(); // 방 생성
 	bool	ChangeRoom( int roomNumberFrom, int roomNumberTo, int pid ); // 클라이언트를 다른 방으로 이동 (클라 매니저 아님)
 	bool	DeleteRoom( int roomNumber ); // 방 삭제
->>>>>>> f5e6817da0d90ae350ee46022773a6a1adee0659
 
 	ClientSession*	CreateClient( SOCKET sock );
 	void			FlushClientSend( );
@@ -40,9 +34,9 @@ public:
 	// 나중에 지울 것!
 	ClientManager*	GetFirstClientManager()
 	{
-		if ( m_RoomList.find( 0 ) != m_RoomList.end() )
+		if ( m_RoomList.size() > 0 )
 		{
-			return m_RoomList[0];
+			return (m_RoomList.begin())->clientManager;
 		}
 		return nullptr;
 	}
