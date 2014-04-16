@@ -18,6 +18,12 @@ enum PacketTypes
 	PKT_CS_GAMEOVER = 5,
 	PKT_SC_GAMEOVER = 6,
 
+	PKT_CS_ROOM_CREATE = 7,
+	PKT_SC_ROOM_CREATE = 8,
+
+	PKT_CS_ROOM_CHANGE = 9,
+	PKT_SC_ROOM_CHANGE = 10,
+
 	PKT_MAX = 1024
 };
 
@@ -122,6 +128,61 @@ struct GameOverResult: public PacketHeader
 
 	int	m_PlayerId;
 	bool m_IsWon;
+};
+
+
+struct RoomCreateRequest: public PacketHeader
+{
+	RoomCreateRequest( )
+	{
+		m_Size = sizeof( RoomCreateRequest );
+		m_Type = PKT_CS_ROOM_CREATE;
+		m_PlayerId = -1;
+	}
+
+	int	m_PlayerId;
+};
+
+struct RoomCreateResult: public PacketHeader
+{
+	RoomCreateResult( )
+	{
+		m_Size = sizeof( RoomCreateResult );
+		m_Type = PKT_SC_ROOM_CREATE;
+		m_RoomNumber = -1;
+	}
+
+	int	m_RoomNumber;
+};
+
+
+
+struct RoomChangeRequest: public PacketHeader
+{
+	RoomChangeRequest( )
+	{
+		m_Size = sizeof( RoomChangeRequest );
+		m_Type = PKT_CS_ROOM_CHANGE;
+		m_RoomFrom = -1;
+		m_RoomTo = -1;
+		m_PlayerId = -1;
+	}
+
+	int m_RoomFrom;
+	int m_RoomTo;
+	int	m_PlayerId;
+};
+
+struct RoomChangeResult: public PacketHeader
+{
+	RoomChangeResult( )
+	{
+		m_Size = sizeof( RoomChangeResult );
+		m_Type = PKT_SC_ROOM_CHANGE;
+		m_RoomNumber = -1;
+	}
+
+	int	m_RoomNumber;
 };
 
 #pragma pack(pop)

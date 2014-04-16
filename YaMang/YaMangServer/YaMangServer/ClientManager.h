@@ -14,35 +14,39 @@ public:
 	{
 	}
 
-	ClientSession* CreateClient( SOCKET sock );
-	bool	DeleteClient( SOCKET sock );
-	int		GetClientSize() { return static_cast<int>(m_ClientList.size()); }
+	ClientSession*		CreateClient( SOCKET sock );
+	ClientSession*		DeleteClient( SOCKET sock );
+	void				InputClient( ClientSession* client );
 
-	void BroadcastPacket( ClientSession* from, PacketHeader* pkt );
-	void DirectPacket( int pid, PacketHeader* pkt );
+	int					GetClientSize() { return static_cast<int>(m_ClientList.size()); }
 
-	void OnPeriodWork();
+	void				BroadcastPacket( ClientSession* from, PacketHeader* pkt );
+	void				DirectPacket( int pid, PacketHeader* pkt );
+
+	void				OnPeriodWork();
 
 	/// DB에 플레이어 정보를 생성하거나 삭제하는 함수
-	void DBCreatePlayer( int pid, double x, double y, double z, const char* name, const char* comment );
-	void DBDeletePlayer( int pid );
+	void				DBCreatePlayer( int pid, double x, double y, double z, const char* name, const char* comment );
+	void				DBDeletePlayer( int pid );
 
-	void FlushClientSend();
+	void				FlushClientSend();
 
-private:
-	void CreatePlayerDone( DatabaseJobContext* dbJob );
-	void DeletePlayerDone( DatabaseJobContext* dbJob );
+	void				PrintClientList( ); // 테스트용 함수
 
 private:
-	void CollectGarbageSessions();
-	void ClientPeriodWork();
-	void DispatchDatabaseJobResults();
+	void				CreatePlayerDone( DatabaseJobContext* dbJob );
+	void				DeletePlayerDone( DatabaseJobContext* dbJob );
+
+private:
+	void				CollectGarbageSessions();
+	void				ClientPeriodWork();
+	void				DispatchDatabaseJobResults();
 
 
 private:
 	typedef std::map<SOCKET, ClientSession*> ClientList;
-	ClientList		m_ClientList;
+	ClientList			m_ClientList;
 
-	DWORD			m_LastGCTick;
-	DWORD			m_LastClientWorkTick;
+	DWORD				m_LastGCTick;
+	DWORD				m_LastClientWorkTick;
 };

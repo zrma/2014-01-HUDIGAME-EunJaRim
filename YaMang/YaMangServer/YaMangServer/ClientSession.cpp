@@ -223,22 +223,39 @@ bool ClientSession::Broadcast( PacketHeader* pkt )
 	return true;
 }
 
+bool ClientSession::DirectSend( PacketHeader* pkt )
+{
+	if ( !SendRequest( pkt ) )
+	{
+		return false;
+	}
+
+	if ( !IsConnected() )
+	{
+		return false;
+	}
+
+	m_ClientManager->DirectPacket( m_PlayerId, pkt );
+
+	return true;
+}
+
 void ClientSession::OnTick()
 {
 	/// 클라별로 주기적으로 해야될 일은 여기에
 
 	/// 특정 주기로 DB에 위치 저장
-	if ( ++m_DbUpdateCount == PLAYER_DB_UPDATE_CYCLE )
-	{
-		m_DbUpdateCount = 0;
-		UpdatePlayerDataContext* updatePlayer = new UpdatePlayerDataContext( m_Socket, m_PlayerId );
-
-		updatePlayer->m_PosX = m_PosX;
-		updatePlayer->m_PosY = m_PosY;
-		updatePlayer->m_PosZ = m_PosZ;
-		strcpy_s( updatePlayer->m_Comment, "updated_test" ); ///< 일단은 테스트를 위해
-		g_DatabaseJobManager->PushDatabaseJobRequest( updatePlayer );
-	}
+// 	if ( ++m_DbUpdateCount == PLAYER_DB_UPDATE_CYCLE )
+// 	{
+// 		m_DbUpdateCount = 0;
+// 		UpdatePlayerDataContext* updatePlayer = new UpdatePlayerDataContext( m_Socket, m_PlayerId );
+// 
+// 		updatePlayer->m_PosX = m_PosX;
+// 		updatePlayer->m_PosY = m_PosY;
+// 		updatePlayer->m_PosZ = m_PosZ;
+// 		strcpy_s( updatePlayer->m_Comment, "updated_test" ); ///< 일단은 테스트를 위해
+// 		g_DatabaseJobManager->PushDatabaseJobRequest( updatePlayer );
+// 	}
 
 }
 

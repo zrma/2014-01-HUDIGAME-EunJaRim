@@ -41,6 +41,7 @@ public:
 
 	bool	SendRequest( PacketHeader* pkt );
 	bool	Broadcast( PacketHeader* pkt );
+	bool	DirectSend( PacketHeader* pkt );
 
 	void	Disconnect();
 
@@ -62,7 +63,10 @@ public:
 	void	HandleLoginRequest( LoginRequest& inPacket );
 	void	HandleChatRequest( ChatBroadcastRequest& inPacket );
 	void	HandleGameOverRequest( GameOverRequest& inPacket );
-	
+	void	HandleRoomCreateRequest( RoomCreateRequest& inPacket );
+	void	HandleRoomChangeRequest( RoomChangeRequest& inPacket );
+
+
 private:
 
 	bool	SendFlush(); ///< Send요청 중인것들 모아서 보냄

@@ -30,6 +30,12 @@ ClientSession* ClientManager::CreateClient( SOCKET sock )
 }
 
 
+void ClientManager::InputClient( ClientSession* client )
+{
+	m_ClientList.insert( ClientList::value_type( client->m_Socket, client ) );
+	client->SetClientManager( this );
+}
+
 
 void ClientManager::BroadcastPacket( ClientSession* from, PacketHeader* pkt )
 {
@@ -251,15 +257,25 @@ void ClientManager::DeletePlayerDone( DatabaseJobContext* dbJob )
 
 }
 
-bool ClientManager::DeleteClient( SOCKET sock )
+ClientSession* ClientManager::DeleteClient( SOCKET sock )
 {
 	// 바로 erase해도 되나?
 	auto toBeDelete = m_ClientList.find( sock );
 	if ( toBeDelete != m_ClientList.end( ) )
 	{
+		ClientSession* client = toBeDelete->second;
 		m_ClientList.erase( toBeDelete );
-		return true;
+		return client;
 	}
 
 	return false;
+}
+
+void ClientManager::PrintClientList()
+{
+	for ( auto& it : m_ClientList )
+	{
+		ClientSession* client = it.second;
+		printf_s( "[%d][%s] \n", client->m_PlayerId, client->m_PlayerName );
+	}
 }

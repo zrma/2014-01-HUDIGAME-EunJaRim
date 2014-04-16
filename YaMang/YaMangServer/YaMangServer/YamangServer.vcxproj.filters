@@ -87,17 +87,14 @@
     <ClInclude Include="..\..\SharedPreference\PacketType.h">
       <Filter>PacketType</Filter>
     </ClInclude>
-    <ClInclude Include="ChatHandler.h">
-      <Filter>EventHandler</Filter>
-    </ClInclude>
-    <ClInclude Include="LoginHandler.h">
-      <Filter>EventHandler</Filter>
-    </ClInclude>
     <ClInclude Include="YaMangServer.h">
       <Filter>YaMang</Filter>
     </ClInclude>
-    <ClInclude Include="GameOverHandler.h">
-      <Filter>EventHandler</Filter>
+    <ClInclude Include="GameStartHandler.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomManager.h">
+      <Filter>YaMang</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -128,17 +125,17 @@
     <ClCompile Include="ClientSession.cpp">
       <Filter>YaMang</Filter>
     </ClCompile>
-    <ClCompile Include="ChatHandler.cpp">
-      <Filter>EventHandler</Filter>
-    </ClCompile>
-    <ClCompile Include="LoginHandler.cpp">
-      <Filter>EventHandler</Filter>
-    </ClCompile>
     <ClCompile Include="YaMangServer.cpp">
       <Filter>YaMang</Filter>
     </ClCompile>
-    <ClCompile Include="GameOverHandler.cpp">
-      <Filter>EventHandler</Filter>
+    <ClCompile Include="GameStartHandler.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="EventHandler.cpp">
+      <Filter>YaMang</Filter>
+    </ClCompile>
+    <ClCompile Include="RoomManager.cpp">
+      <Filter>YaMang</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

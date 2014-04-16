@@ -29,12 +29,16 @@ RoomManager::~RoomManager()
 	}
 }
 
-void RoomManager::AddRoom()
+int RoomManager::AddRoom()
 {
 	Room room;
 	room.roomNumber = ++m_RoomCount;
 	room.clientManager = new ClientManager( );
 	m_RoomList.push_back( room );
+
+	printf_s( "ROOM [%d] CREATED! \n", room.roomNumber );
+
+	return room.roomNumber;
 }
 
 bool RoomManager::ChangeRoom( int roomNumberFrom, int roomNumberTo, int pid )
@@ -69,14 +73,10 @@ bool RoomManager::ChangeRoom( int roomNumberFrom, int roomNumberTo, int pid )
 		return false;
 	}
 
+	ClientSession* client = roomFrom->DeleteClient( socketMover );
+	roomTo->InputClient( client );
 
-	if ( roomFrom->DeleteClient( socketMover ) )
-	{
-		roomTo->CreateClient( socketMover );
-		return true;
-	}
-
-	return false;
+	return true;
 }
 
 bool RoomManager::DeleteRoom( int roomNumber )
@@ -121,6 +121,16 @@ void RoomManager::OnPeriodWork()
 	{
 		ClientManager* room = it->clientManager;
 		room->OnPeriodWork( );
+	}
+}
+
+void RoomManager::PrintClientList()
+{
+	for ( auto it = m_RoomList.begin(); it != m_RoomList.end(); ++it )
+	{
+		ClientManager* room = it->clientManager;
+		printf_s( "-ROOM %d ClientList- \n", it->roomNumber );
+		room->PrintClientList();
 	}
 }
 

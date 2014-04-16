@@ -100,7 +100,7 @@ void CALLBACK StopEvent( LPVOID lpArg, DWORD dwTimerLowValue, DWORD dwTimerHighV
 		{
 			value[0] = 0;
 			strcpy_s( inPacket.m_Chat, "StopUp" );
-			auto it = g_RoomManager->GetFirstClientManager();
+			auto it = g_RoomManager->m_Lobby;
 			if ( it )
 			{
 				printf_s( "%d번 클라이언트 Stop! \n", key );
@@ -111,7 +111,7 @@ void CALLBACK StopEvent( LPVOID lpArg, DWORD dwTimerLowValue, DWORD dwTimerHighV
 		{
 			value[1] = 0;
 			strcpy_s( inPacket.m_Chat, "StopDown" );
-			auto it = g_RoomManager->GetFirstClientManager();
+			auto it = g_RoomManager->m_Lobby;
 			if ( it )
 			{
 				printf_s( "%d번 클라이언트 Stop! \n", key );
@@ -122,7 +122,7 @@ void CALLBACK StopEvent( LPVOID lpArg, DWORD dwTimerLowValue, DWORD dwTimerHighV
 		{
 			value[2] = 0;
 			strcpy_s( inPacket.m_Chat, "StopLeft" );
-			auto it = g_RoomManager->GetFirstClientManager();
+			auto it = g_RoomManager->m_Lobby;
 			if ( it )
 			{
 				printf_s( "%d번 클라이언트 Stop! \n", key );
@@ -133,7 +133,7 @@ void CALLBACK StopEvent( LPVOID lpArg, DWORD dwTimerLowValue, DWORD dwTimerHighV
 		{
 			value[3] = 0;
 			strcpy_s( inPacket.m_Chat, "StopRight" );
-			auto it = g_RoomManager->GetFirstClientManager();
+			auto it = g_RoomManager->m_Lobby;
 			if ( it )
 			{
 				printf_s( "%d번 클라이언트 Stop! \n", key );
@@ -263,6 +263,84 @@ void ClientSession::HandleGameOverRequest( GameOverRequest& inPacket )
 		}
 	}
 	catch (...)
+	{
+		return;
+	}
+}
+
+
+
+REGISTER_HANDLER( PKT_CS_ROOM_CREATE )
+{
+	RoomCreateRequest inPacket = static_cast<RoomCreateRequest&>( pktBase );
+	session->HandleRoomCreateRequest( inPacket );
+}
+
+void ClientSession::HandleRoomCreateRequest( RoomCreateRequest& inPacket )
+{
+
+	m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size );
+
+	try
+	{
+		// 어차피 방 만들고 요청하는 사람을 그방으로 넣어주는게 좋을까?
+		int pid = inPacket.m_PlayerId;
+
+		int roomNumber = g_RoomManager->AddRoom();
+
+		RoomCreateResult outPacket;
+
+		outPacket.m_RoomNumber = roomNumber;
+
+		if ( !DirectSend( &outPacket ) )
+		{
+			Disconnect();
+		}
+
+	}
+	catch ( ... )
+	{
+		return;
+	}
+}
+
+
+
+
+REGISTER_HANDLER( PKT_CS_ROOM_CHANGE )
+{
+	RoomChangeRequest inPacket = static_cast<RoomChangeRequest&>( pktBase );
+	session->HandleRoomChangeRequest( inPacket );
+}
+
+void ClientSession::HandleRoomChangeRequest( RoomChangeRequest& inPacket )
+{
+
+	m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size );
+
+	try
+	{
+		int pid = inPacket.m_PlayerId;
+
+		int roomFrom = inPacket.m_RoomFrom;
+		int roomTo = inPacket.m_RoomTo;
+
+		if ( !g_RoomManager->ChangeRoom( roomFrom, roomTo, pid ) )
+		{
+			Disconnect();
+		}
+
+		RoomChangeResult outPacket;
+		outPacket.m_RoomNumber = roomTo;
+
+		if ( !DirectSend( &outPacket ) )
+		{
+			Disconnect();
+		}
+
+		g_RoomManager->PrintClientList(); // 테스트 프린트
+	}
+	catch ( ... )
 	{
 		return;
 	}
