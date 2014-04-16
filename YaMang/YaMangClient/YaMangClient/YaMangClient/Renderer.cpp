@@ -66,6 +66,11 @@ void Renderer::Render( MESHOBJECT* mesh )
 	if ( mesh && m_IsReady )
 	{
 		D3DXMATRIXA16 matrix;
+		
+		char szDebug[64] = { 0, };
+		sprintf_s(szDebug, "matrixSize : %d \n", sizeof(matrix));
+		OutputDebugStringA(szDebug);
+
 		D3DXMatrixIdentity( &matrix );
 		D3DXMatrixTranslation( &matrix, myPosX, myPosY + 25, myPosZ );
 		

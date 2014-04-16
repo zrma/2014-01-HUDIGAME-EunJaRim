@@ -40,7 +40,7 @@ namespace CharacterTool
                 YamangDll.PostRendering();
 
                 //button1.Text = "" + i;
-                //await Task.Delay(10);
+                await Task.Delay(10);
                 //++i;
             }
         }
@@ -58,6 +58,11 @@ namespace CharacterTool
 
                 Render();
             }
+        }
+
+        private void MakeMatrix(float[,] matrix)
+        {
+
         }
     }
 }
