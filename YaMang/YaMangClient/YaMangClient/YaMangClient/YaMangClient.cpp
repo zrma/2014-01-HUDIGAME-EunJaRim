@@ -25,6 +25,7 @@ bool moveLeft = false;
 bool moveRight = false;
 bool moveUp = false;
 bool moveDown = false;
+bool isCameraFollow = false;
 
 int APIENTRY _tWinMain( _In_ HINSTANCE hInstance,
 						_In_opt_ HINSTANCE hPrevInstance,

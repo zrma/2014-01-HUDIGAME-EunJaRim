@@ -13,7 +13,7 @@
 extern float myPosX;
 extern float myPosY;
 extern float myPosZ;
-
+extern bool isCameraFollow;
 //////////////////////////////////////////////////////////////////////////
 
 
@@ -149,11 +149,7 @@ REGISTER_KEY_HANDLER( VK_RIGHT )
 
 REGISTER_KEY_HANDLER( VK_SPACE )
 {
-	myPosX = 0;
-	myPosY = 0;
-	myPosZ = 5;
-
-	CameraController::GetInstance()->Init();
+	isCameraFollow = !isCameraFollow;
 }
 
 REGISTER_KEY_HANDLER( VK_ESCAPE )
