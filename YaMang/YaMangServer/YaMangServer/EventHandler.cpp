@@ -96,7 +96,7 @@ void CALLBACK StopEvent( LPVOID lpArg, DWORD dwTimerLowValue, DWORD dwTimerHighV
 		inPacket.m_PlayerId = key;
 		strcpy_s( inPacket.m_Name, "MSG" );
 
-		if ( value[0] > 1 )
+		if ( value[0] > 3 )
 		{
 			value[0] = 0;
 			strcpy_s( inPacket.m_Chat, "StopUp" );
@@ -107,7 +107,7 @@ void CALLBACK StopEvent( LPVOID lpArg, DWORD dwTimerLowValue, DWORD dwTimerHighV
 				it->DirectPacket( key, &inPacket );
 			}
 		}
-		if ( value[1] > 1 )
+		if ( value[1] > 3 )
 		{
 			value[1] = 0;
 			strcpy_s( inPacket.m_Chat, "StopDown" );
@@ -118,7 +118,7 @@ void CALLBACK StopEvent( LPVOID lpArg, DWORD dwTimerLowValue, DWORD dwTimerHighV
 				it->DirectPacket( key, &inPacket );
 			}
 		}
-		if ( value[2] > 1 )
+		if ( value[2] > 3 )
 		{
 			value[2] = 0;
 			strcpy_s( inPacket.m_Chat, "StopLeft" );
@@ -129,7 +129,7 @@ void CALLBACK StopEvent( LPVOID lpArg, DWORD dwTimerLowValue, DWORD dwTimerHighV
 				it->DirectPacket( key, &inPacket );
 			}
 		}
-		if ( value[3] > 1 )
+		if ( value[3] > 3 )
 		{
 			value[3] = 0;
 			strcpy_s( inPacket.m_Chat, "StopRight" );
@@ -165,6 +165,8 @@ void ClientSession::HandleChatRequest( ChatBroadcastRequest& inPacket )
 
 	if ( packetMessage == "IsMoveUpOK")
 	{
+		if ( g_EventTimeTable[inPacket.m_PlayerId][0] > 0 )
+			return;
 		g_EventTimeTable[inPacket.m_PlayerId][0] += 1;
 		strcpy_s( outPacket.m_Chat, "MoveUp" );
 		printf_s( "%d번 클라이언트 Move! \n", inPacket.m_PlayerId );
@@ -173,6 +175,8 @@ void ClientSession::HandleChatRequest( ChatBroadcastRequest& inPacket )
 	}
 	else if ( packetMessage == "IsMoveDownOK")
 	{
+		if ( g_EventTimeTable[inPacket.m_PlayerId][1] > 0 )
+			return;
 		g_EventTimeTable[inPacket.m_PlayerId][1] += 1;
 		strcpy_s( outPacket.m_Chat, "MoveDown" );
 		printf_s( "%d번 클라이언트 Move! \n", inPacket.m_PlayerId );
@@ -181,6 +185,8 @@ void ClientSession::HandleChatRequest( ChatBroadcastRequest& inPacket )
 	}
 	else if ( packetMessage == "IsMoveLeftOK" )
 	{
+		if ( g_EventTimeTable[inPacket.m_PlayerId][2] > 0 )
+			return;
 		g_EventTimeTable[inPacket.m_PlayerId][2] += 1;
 		strcpy_s( outPacket.m_Chat, "MoveLeft" );
 		printf_s( "%d번 클라이언트 Move! \n", inPacket.m_PlayerId );
@@ -189,6 +195,8 @@ void ClientSession::HandleChatRequest( ChatBroadcastRequest& inPacket )
 	}
 	else if ( packetMessage == "IsMoveRightOK")
 	{
+		if ( g_EventTimeTable[inPacket.m_PlayerId][3] > 0 )
+			return;
 		g_EventTimeTable[inPacket.m_PlayerId][3] += 1;
 		strcpy_s( outPacket.m_Chat, "MoveRight" );
 		printf_s( "%d번 클라이언트 Move! \n", inPacket.m_PlayerId );
