@@ -4,6 +4,14 @@
 
 CameraController* CameraController::m_Instance = nullptr;
 
+//////////////////////////////////////////////////////////////////////////
+// 임시로 추가해둠
+//////////////////////////////////////////////////////////////////////////
+extern bool isCameraFollow;
+extern float myPosX;
+extern float myPosY;
+extern float myPosZ;
+
 CameraController::CameraController()
 {
 	D3DXMatrixIdentity( &m_Matrix );
@@ -79,6 +87,15 @@ D3DXMATRIXA16 CameraController::GetInvMatrix()
 
 D3DXMATRIXA16 CameraController::GetMatrix()
 {
+	if ( isCameraFollow )
+	{
+		D3DXMatrixIdentity( &m_Matrix );
+		D3DXMATRIXA16 matrix;
+
+		D3DXMatrixTranslation( &matrix, -myPosX, myPosY, -myPosZ );
+		D3DXMatrixMultiply( &m_Matrix, &m_Matrix, &matrix );
+	}
+
 	D3DXMATRIXA16 matrixOut;
 	D3DXMATRIXA16 matrixTemp;
 
