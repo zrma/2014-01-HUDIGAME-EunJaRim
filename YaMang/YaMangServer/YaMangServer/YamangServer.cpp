@@ -23,11 +23,6 @@ typedef ProducerConsumerQueue<SOCKET, 100> PendingAcceptList;
 
 static int LISTEN_PORT = 9001;
 
-//////////////////////////////////////////////////////////////////////////
-// 임시 추가!!!
-//////////////////////////////////////////////////////////////////////////
-extern void CALLBACK StopEvent( LPVOID lpArg, DWORD dwTimerLowValue, DWORD dwTimerHighValue );
-
 int _tmain( int argc, _TCHAR* argv[] )
 {
 	/// crash 발생시 dump 남기기 위해서
@@ -183,22 +178,6 @@ unsigned int WINAPI ClientHandlingThread( LPVOID lpParam )
 	if ( !SetWaitableTimer( hTimer, &liDueTime, 100, TimerProc, NULL, TRUE ) )
 	{
 		return -1;
-	}
-
-	//////////////////////////////////////////////////////////////////////////
-	// 임시 추가
-	//////////////////////////////////////////////////////////////////////////
-
-	LARGE_INTEGER li = { 0 };
-	HANDLE hTimerForTest = CreateWaitableTimer( NULL, FALSE, NULL );
-	if ( hTimerForTest != NULL )
-	{
-		li.QuadPart = -50000000;
-
-		if ( !SetWaitableTimer( hTimerForTest, &li, ( 1000 ), StopEvent, NULL, FALSE ) )
-		{
-			CloseHandle( hTimerForTest );
-		}
 	}
 
 	while ( true )

@@ -8,10 +8,10 @@
 #include "MainWindow.h"
 
 
-typedef void( *KeyEventHandler )( const KeyInput* inputKey );
+typedef void( *KeyEventHandler )( KeyInput inputKey );
 static KeyEventHandler KeyHandlerTable[MAX_KEY];
 
-static void DefaultKeyHandler( const KeyInput* inputKey )
+static void DefaultKeyHandler( KeyInput inputKey )
 {
 }
 
@@ -35,9 +35,9 @@ struct RegisterKeyHandler
 };
 
 #define REGISTER_KEY_HANDLER( KEY_TYPE ) \
-	static void Handler_##KEY_TYPE( const KeyInput* inputKey ); \
+	static void Handler_##KEY_TYPE( KeyInput inputKey ); \
 	static RegisterKeyHandler _register_##KEY_TYPE(KEY_TYPE, Handler_##KEY_TYPE); \
-	static void Handler_##KEY_TYPE( const KeyInput* inputKey )
+	static void Handler_##KEY_TYPE( KeyInput inputKey )
 
 InputDispatcher::InputDispatcher()
 {
@@ -54,12 +54,12 @@ void InputDispatcher::EventKeyInput( KeyInput key )
 	switch ( key.GetKeyStatus() )
 	{
 		case KeyStatus::KEY_DOWN:
-			m_KeyInputList.push_back( key );
-
-		case KeyStatus::KEY_PRESSED:
 		{
+			m_KeyInputList.push_back( key );
 			m_IsKeyPressed[key.GetKeyValue()] = true;
 		}
+			break;
+		case KeyStatus::KEY_PRESSED:
 			break;
 		case KeyStatus::KEY_UP:
 		{
@@ -78,14 +78,18 @@ void InputDispatcher::DispatchKeyInput()
 	auto iter = m_KeyInputList.begin();
 	while ( iter != m_KeyInputList.end() )
 	{
-		if ( !m_IsKeyPressed[iter->GetKeyValue()] )
+		if ( IsPressed(*(iter)) )
 		{
-			m_KeyInputList.erase( iter++ );
+			KeyHandlerTable[iter->GetKeyValue()]( *(iter) );
+			( iter++ )->SetKeyStatus( KeyStatus::KEY_PRESSED );
 		}
 		else
 		{
-			KeyInput keyInput = *(iter++);
-			KeyHandlerTable[keyInput.GetKeyValue()]( &keyInput );
+			( iter )->SetKeyStatus( KeyStatus::KEY_UP );
+			KeyHandlerTable[iter->GetKeyValue()]( *(iter) );
+
+			m_KeyInputList.erase(iter);
+			break;
 		}
 	}
 }
@@ -108,39 +112,41 @@ void NetworkManager::RequestChat( ChatBroadcastRequest& outPacket )
 
 REGISTER_KEY_HANDLER( VK_UP )
 {
- 	ChatBroadcastRequest reqPacket;
-	strcpy_s( reqPacket.m_Chat, "IsMoveUpOK" );
-
-	NetworkManager::GetInstance()->RequestChat( reqPacket );
+	switch ( inputKey.GetKeyStatus() )
+	{
+		case KeyStatus::KEY_DOWN:
+			Log( "Up키 눌렀다! \n" );
+			break;
+		case KeyStatus::KEY_PRESSED:
+			Log( "Up키 누르고 있다! \n" );
+			break;
+		case KeyStatus::KEY_UP:
+			Log( "Up키 뗐다! \n" );
+			break;
+		default:
+			break;
+	}
 }
 
 REGISTER_KEY_HANDLER( VK_DOWN )
 {
-	ChatBroadcastRequest reqPacket;
-	strcpy_s( reqPacket.m_Chat, "IsMoveDownOK" );
-
-	NetworkManager::GetInstance()->RequestChat( reqPacket );
 }
 
 REGISTER_KEY_HANDLER( VK_LEFT )
 {
-	ChatBroadcastRequest reqPacket;
-	strcpy_s( reqPacket.m_Chat, "IsMoveLeftOK" );
-
-	NetworkManager::GetInstance()->RequestChat( reqPacket );
 }
 
 REGISTER_KEY_HANDLER( VK_RIGHT )
 {
-	ChatBroadcastRequest reqPacket;
-	strcpy_s( reqPacket.m_Chat, "IsMoveRightOK" );
-
-	NetworkManager::GetInstance()->RequestChat( reqPacket );
+// 	ChatBroadcastRequest reqPacket;
+// 	strcpy_s( reqPacket.m_Chat, "IsMoveRightOK" );
+// 
+// 	NetworkManager::GetInstance()->RequestChat( reqPacket );
 }
 
 REGISTER_KEY_HANDLER( VK_SPACE )
 {
-
+	CameraController::GetInstance()->Init();
 }
 
 REGISTER_KEY_HANDLER( VK_ESCAPE )

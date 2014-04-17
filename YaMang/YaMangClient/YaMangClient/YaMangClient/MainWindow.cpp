@@ -24,12 +24,6 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 		}
 			return 0;
 
-		case WM_TIMER:
-		{
-			GameManager::GetInstance()->Process();
-		}
-			return 0;
-
 		case WM_SOCKET:
 		{
 			NetworkManager::GetInstance()->HandleMessage( wParam, lParam );
@@ -83,7 +77,7 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 			{
 				key.SetKeyStatus( KeyStatus::KEY_PRESSED );
 			}
-			
+
 			InputDispatcher::GetInstance()->EventKeyInput( key );
 			InputDispatcher::GetInstance()->DispatchKeyInput();
 		}

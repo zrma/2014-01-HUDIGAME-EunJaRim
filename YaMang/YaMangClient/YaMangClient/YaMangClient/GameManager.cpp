@@ -64,7 +64,6 @@ bool GameManager::Process()
 	// 업데이트
 
 	InputDispatcher::GetInstance()->DispatchKeyInput();
-
 	NetworkManager::GetInstance()->ProcessPacket();
 	
 	// 더미 렌더
