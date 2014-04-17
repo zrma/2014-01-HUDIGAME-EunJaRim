@@ -1,12 +1,12 @@
 #include "stdafx.h"
 #include "CameraController.h"
 #include "InputDispatcher.h"
+#include "Renderer.h"
 
 CameraController* CameraController::m_Instance = nullptr;
 
 CameraController::CameraController()
 {
-	D3DXMatrixIdentity( &m_Matrix );
 }
 
 CameraController::~CameraController()
@@ -15,11 +15,13 @@ CameraController::~CameraController()
 
 void CameraController::Init()
 {
-	D3DXMatrixIdentity( &m_Matrix );
+	D3DXMatrixIdentity( &m_ViewMatrix );
+	D3DXMatrixIdentity( &m_ProjMatrix );
+
 	D3DXMATRIXA16 matrix;
 	
 	D3DXMatrixTranslation( &matrix, 0, -40.0f, 5.0f );
-	D3DXMatrixMultiply( &m_Matrix, &m_Matrix, &matrix );
+	D3DXMatrixMultiply( &m_ViewMatrix, &m_ViewMatrix, &matrix );
 
 	m_Axis = -0.5f;
 	m_Height = 10.0f;
@@ -61,7 +63,7 @@ void CameraController::TransCamera( TransType trans, float range )
 			break;
 	}
 
-	D3DXMatrixMultiply( &m_Matrix, &m_Matrix, &matrix );
+	D3DXMatrixMultiply( &m_ViewMatrix, &m_ViewMatrix, &matrix );
 // 	Log( " %f %f %f %f \n %f %f %f %f \n %f %f %f %f \n %f %f %f %f \n",
 // 		 m_Matrix._11, m_Matrix._21, m_Matrix._31, m_Matrix._41,
 // 		 m_Matrix._12, m_Matrix._22, m_Matrix._32, m_Matrix._42,
@@ -72,7 +74,7 @@ void CameraController::TransCamera( TransType trans, float range )
 D3DXMATRIXA16 CameraController::GetInvMatrix()
 {
 	D3DXMATRIXA16 outMatrix;
-	D3DXMatrixInverse( &outMatrix, NULL, &m_Matrix );
+	D3DXMatrixInverse( &outMatrix, NULL, &m_ViewMatrix );
 
 	return outMatrix;
 }
@@ -87,10 +89,37 @@ D3DXMATRIXA16 CameraController::GetMatrix()
 	D3DXMatrixIdentity( &matrixOut );
 
 	D3DXMatrixTranslation( &matrixTemp, 0, m_Height, 0 );
-	D3DXMatrixMultiply( &matrixOut, &m_Matrix, &matrixTemp );
+	D3DXMatrixMultiply( &matrixOut, &m_ViewMatrix, &matrixTemp );
 
 	D3DXMatrixRotationX( &matrixTemp, m_Axis );
 	D3DXMatrixMultiply( &matrixOut, &matrixOut, &matrixTemp );
 	
 	return matrixOut;
+}
+
+void CameraController::MoveForward( float speed )
+{
+	D3DXVECTOR3 view;
+	view = m_Look - m_Eye;
+	D3DXVec3Normalize( &view, &view );
+	m_Eye += view * speed;
+	m_Look += view * speed;
+
+	D3DXMatrixLookAtLH( &m_ViewMatrix, &m_Eye, &m_Look, &m_Up );
+	Renderer::GetInstance()->SetCamera( m_ViewMatrix );
+}
+
+void CameraController::MoveSide( float speed )
+{
+
+}
+
+void CameraController::RotateUp( float angle )
+{
+
+}
+
+void CameraController::RotateSide( float angle )
+{
+
 }

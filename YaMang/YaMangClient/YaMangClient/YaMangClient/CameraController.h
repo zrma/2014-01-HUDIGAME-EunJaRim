@@ -39,16 +39,21 @@ public:
 	D3DXMATRIXA16	GetMatrix();
 	D3DXMATRIXA16	GetInvMatrix();
 
+	void	MoveForward( float speed ); //< 앞뒤이동
+	void	MoveSide( float speed ); //< 좌우이동
+	void	RotateUp( float angle ); //< 상하회전
+	void	RotateSide( float angle ); //< 좌우회전
+
 private:
 	FLOAT			m_Axis = 0;
 	FLOAT			m_Height = 0;
 
-	__declspec( align( ALIGNMENT_SIZE ) ) 
-					D3DXMATRIXA16	m_Matrix;
+	__declspec( align( ALIGNMENT_SIZE ) ) D3DXMATRIXA16	m_ViewMatrix;
+	__declspec( align( ALIGNMENT_SIZE ) ) D3DXMATRIXA16	m_ProjMatrix;
 
-	D3DXVECTOR4		m_Eye = { 0, 0, 0, 0 };
-	D3DXVECTOR4		m_Look = { 0, 0, 0, 0 };
-	D3DXVECTOR4		m_Up = { 0, 0, 0, 0 };
-	
+	D3DXVECTOR3		m_Eye = { 0, 0, 0 };
+	D3DXVECTOR3		m_Look = { 0, 0, -1 };
+	D3DXVECTOR3		m_Up = { 0, 1, 0 };
+
 	static CameraController*		m_Instance;
 };

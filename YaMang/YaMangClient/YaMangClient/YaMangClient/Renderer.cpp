@@ -2,7 +2,6 @@
 #include "YaMangDxDll.h"
 #include "Renderer.h"
 #include "MainWindow.h"
-#include "CameraController.h"
 
 Renderer::Renderer()
 {
@@ -115,9 +114,9 @@ void Renderer::DeleteMesh( MESHOBJECT* mesh )
 	}
 }
 
-void Renderer::SetCamera()
+void Renderer::SetCamera( D3DXMATRIXA16& matrix )
 {
-	SetMatrix( &( CameraController::GetInstance( )->GetMatrix( ) ), true );
+	SetMatrix( &matrix, true );
 }
 
 void Renderer::ResizeWindow( LONG width, LONG height )
