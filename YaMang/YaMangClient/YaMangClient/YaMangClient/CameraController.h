@@ -51,9 +51,9 @@ private:
 	__declspec( align( ALIGNMENT_SIZE ) ) D3DXMATRIXA16	m_ViewMatrix;
 	__declspec( align( ALIGNMENT_SIZE ) ) D3DXMATRIXA16	m_ProjMatrix;
 
-	D3DXVECTOR3		m_Eye = { 0, 0, 0 };
-	D3DXVECTOR3		m_Look = { 0, 0, -1 };
-	D3DXVECTOR3		m_Up = { 0, 1, 0 };
+	D3DXVECTOR3		m_EyePoint = { 0, 0, 0 };
+	D3DXVECTOR3		m_LookAtPoint = { 0, 0, -1 };
+	D3DXVECTOR3		m_UpVector = { 0, 1, 0 };
 
 	static CameraController*		m_Instance;
 };

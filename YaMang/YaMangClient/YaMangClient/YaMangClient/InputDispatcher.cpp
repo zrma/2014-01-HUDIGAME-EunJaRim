@@ -166,12 +166,12 @@ REGISTER_KEY_HANDLER( VK_S )
 
 REGISTER_KEY_HANDLER( VK_A )
 {
-	CameraController::GetInstance()->TransCamera( TransType::TRANS_TYPE_TRANSLATE_X, 10.0 );
+	CameraController::GetInstance()->MoveSide( -0.3f );
 }
 
 REGISTER_KEY_HANDLER( VK_D )
 {
-	CameraController::GetInstance()->TransCamera( TransType::TRANS_TYPE_TRANSLATE_X, -10.0f );
+	CameraController::GetInstance()->MoveSide( 0.3f );
 }
 
 REGISTER_KEY_HANDLER( VK_Q )

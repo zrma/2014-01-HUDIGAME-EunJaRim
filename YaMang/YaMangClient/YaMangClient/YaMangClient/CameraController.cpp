@@ -99,19 +99,25 @@ D3DXMATRIXA16 CameraController::GetMatrix()
 
 void CameraController::MoveForward( float speed )
 {
-	D3DXVECTOR3 view;
-	view = m_Look - m_Eye;
+	D3DXVECTOR3 view = m_LookAtPoint - m_EyePoint;
 	D3DXVec3Normalize( &view, &view );
-	m_Eye += view * speed;
-	m_Look += view * speed;
+	m_EyePoint += view * speed;
+	m_LookAtPoint += view * speed;
 
-	D3DXMatrixLookAtLH( &m_ViewMatrix, &m_Eye, &m_Look, &m_Up );
+	D3DXMatrixLookAtLH( &m_ViewMatrix, &m_EyePoint, &m_LookAtPoint, &m_UpVector );
 	Renderer::GetInstance()->SetCamera( m_ViewMatrix );
 }
 
 void CameraController::MoveSide( float speed )
 {
+	D3DXVECTOR3 view = m_LookAtPoint - m_EyePoint;
+	D3DXVECTOR3 cross;
+	D3DXVec3Cross( &cross, &m_UpVector, &view );
+	m_EyePoint += cross * speed;
+	m_LookAtPoint += cross * speed;
 
+	D3DXMatrixLookAtLH( &m_ViewMatrix, &m_EyePoint, &m_LookAtPoint, &m_UpVector );
+	Renderer::GetInstance()->SetCamera( m_ViewMatrix );
 }
 
 void CameraController::RotateUp( float angle )
