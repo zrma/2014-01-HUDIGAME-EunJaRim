@@ -4,13 +4,6 @@
 #include "MainWindow.h"
 #include "CameraController.h"
 
-//////////////////////////////////////////////////////////////////////////
-// 테스트 코드 - 추후 지워야 합니다.
-//////////////////////////////////////////////////////////////////////////
-extern float myPosX;
-extern float myPosY;
-extern float myPosZ;
-
 Renderer::Renderer()
 {
 }
@@ -72,7 +65,6 @@ void Renderer::Render( MESHOBJECT* mesh )
 		OutputDebugStringA(szDebug);
 
 		D3DXMatrixIdentity( &matrix );
-		D3DXMatrixTranslation( &matrix, myPosX, myPosY + 25, myPosZ );
 		
 		SetMatrix( &matrix );
 

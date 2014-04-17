@@ -7,15 +7,6 @@
 #include "PacketType.h"
 #include "MainWindow.h"
 
-//////////////////////////////////////////////////////////////////////////
-// 테스트 코드 - 추후 지워야 합니다.
-//////////////////////////////////////////////////////////////////////////
-extern float myPosX;
-extern float myPosY;
-extern float myPosZ;
-extern bool isCameraFollow;
-//////////////////////////////////////////////////////////////////////////
-
 
 typedef void( *KeyEventHandler )( const KeyInput* inputKey );
 static KeyEventHandler KeyHandlerTable[MAX_KEY];
@@ -149,7 +140,7 @@ REGISTER_KEY_HANDLER( VK_RIGHT )
 
 REGISTER_KEY_HANDLER( VK_SPACE )
 {
-	isCameraFollow = !isCameraFollow;
+
 }
 
 REGISTER_KEY_HANDLER( VK_ESCAPE )
