@@ -55,7 +55,7 @@ bool GameManager::Init()
 //////////////////////////////////////////////////////////////////////////
 // 업데이트 부분
 //////////////////////////////////////////////////////////////////////////
-bool GameManager::Update()
+bool GameManager::Process()
 {
 	if ( !m_Continue )
 	{
@@ -67,19 +67,6 @@ bool GameManager::Update()
 
 	NetworkManager::GetInstance()->ProcessPacket();
 	
-	return true;
-}
-
-//////////////////////////////////////////////////////////////////////////
-// 렌더링 부분
-//////////////////////////////////////////////////////////////////////////
-bool GameManager::Render()
-{
-	if ( !m_Continue )
-	{
-		return false;
-	}
-
 	// 더미 렌더
 	DummyRender dRender;
 
@@ -95,8 +82,6 @@ bool GameManager::Render()
 		Renderer::GetInstance()->RenderMap();
 		Renderer::GetInstance()->Render( m_Mesh );
 	}
-
-	Renderer::GetInstance()->WriteText( L"하이", 20, 20 );
 
 	return true;
 }

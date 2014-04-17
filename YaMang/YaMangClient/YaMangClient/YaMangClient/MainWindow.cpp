@@ -26,7 +26,7 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 
 		case WM_TIMER:
 		{
-			GameManager::GetInstance()->Update();
+			GameManager::GetInstance()->Process();
 		}
 			return 0;
 
@@ -53,7 +53,7 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 
 		case WM_DESTROY:
 		{	
-			if ( GameManager::GetInstance()->Update() )
+			if ( GameManager::GetInstance()->Process() )
 			{
 				GameManager::GetInstance()->Stop();
 				// 창이 강제 제거 되었을 때(창 닫기 등)
@@ -137,7 +137,7 @@ int MainWindow::RunGame()
 			DispatchMessage( &msg );
 		}
 
-		if ( false == GameManager::GetInstance()->Render() )
+		if ( false == GameManager::GetInstance()->Process() )
 		{
 			GameManager::GetInstance()->Destroy();
 			GameManager::Release();

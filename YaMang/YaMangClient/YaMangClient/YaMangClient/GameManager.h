@@ -11,8 +11,7 @@ public:
 	~GameManager();
 
 	bool Init();
-	bool Update();
-	bool Render();
+	bool Process();
 	void Destroy();
 	void Stop() { m_Continue = false;  }
 
