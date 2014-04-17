@@ -37,8 +37,12 @@ namespace YamangTools
             {
                 YamangDll.PreRendering();
                 YamangDll.HeightMapRender();
+                
+                //DLL 정상 연동 확인 코드
+                YamangDll.RenderText("HI", 200, 200);
+                
                 YamangDll.PostRendering();
-
+                
                 //button1.Text = "" + i;
                 await Task.Delay(10);
                 //++i;
@@ -51,8 +55,8 @@ namespace YamangTools
             {
                 isRunning = true;
 
-                string heightMap = "C:\\Users\\trizdreaming\\Documents\\GitHub\\2014-01-HUDIGAME-EunJaRim\\YaMang\\YaMangClient\\Tool\\HeightmapTool\\HeightmapTool\\heightmap_128_128.bmp";
-                string mapTexture = "C:\\Users\\trizdreaming\\Documents\\GitHub\\2014-01-HUDIGAME-EunJaRim\\YaMang\\YaMangClient\\Tool\\HeightmapTool\\HeightmapTool\\heightmap_texture.tga";
+                string heightMap = ".\\Resource\\heightmap_1024_1024_korea.bmp";
+                string mapTexture = ".\\Resource\\heightmap_texture_1024_1024_korea.bmp";
 
                 YamangDll.HeightMapTextureImport(this.MainWindow.Handle, heightMap, mapTexture);
 

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 
-namespace CharacterTool
+namespace YamangTools
 {
     class YamangDll
     {
@@ -34,6 +34,9 @@ namespace CharacterTool
 
         [DllImport("yaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void MeshObjectCleanUp( ref IntPtr inputVal );
+
+        //[DllImport("yaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
+        //public static extern void SetMatrix( D3DXMATRIXA16* matrix, bool cameraSet = false );
 
         [DllImport("yaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void SetAspectRatio(long width, long height);
