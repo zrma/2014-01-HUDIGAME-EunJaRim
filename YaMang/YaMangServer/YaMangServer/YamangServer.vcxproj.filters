@@ -25,8 +25,14 @@
     <Filter Include="YaMang">
       <UniqueIdentifier>{816778cb-2cbf-4496-b41c-b67e80e0c8c5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="EventHandler">
+    <Filter Include="Unit">
+      <UniqueIdentifier>{e6960497-b61b-49b7-b1ae-4b6e947bdfda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Event">
       <UniqueIdentifier>{6c02102e-cbb6-4bdf-a200-187a3965d68f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="temp">
+      <UniqueIdentifier>{04646a2e-5cd4-42a4-8c2a-9c57ea94a1c9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -90,11 +96,62 @@
     <ClInclude Include="YaMangServer.h">
       <Filter>YaMang</Filter>
     </ClInclude>
-    <ClInclude Include="GameStartHandler.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="RoomManager.h">
       <Filter>YaMang</Filter>
+    </ClInclude>
+    <ClInclude Include="Corps.h">
+      <Filter>Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="Guard.h">
+      <Filter>Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="knight.h">
+      <Filter>Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="Pike.h">
+      <Filter>Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="Sword.h">
+      <Filter>Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="Unit.h">
+      <Filter>Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="Arrow.h">
+      <Filter>Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="Action.h">
+      <Filter>Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Attack.h">
+      <Filter>Event</Filter>
+    </ClInclude>
+    <ClInclude Include="CorpsSpawn.h">
+      <Filter>Event</Filter>
+    </ClInclude>
+    <ClInclude Include="DefenseFormation.h">
+      <Filter>Event</Filter>
+    </ClInclude>
+    <ClInclude Include="DestroyFormation.h">
+      <Filter>Event</Filter>
+    </ClInclude>
+    <ClInclude Include="HoldPosition.h">
+      <Filter>Event</Filter>
+    </ClInclude>
+    <ClInclude Include="MovePosition.h">
+      <Filter>Event</Filter>
+    </ClInclude>
+    <ClInclude Include="RushFormation.h">
+      <Filter>Event</Filter>
+    </ClInclude>
+    <ClInclude Include="TakeArea.h">
+      <Filter>Event</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStartHandler.h">
+      <Filter>temp</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldMap.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -128,14 +185,65 @@
     <ClCompile Include="YaMangServer.cpp">
       <Filter>YaMang</Filter>
     </ClCompile>
-    <ClCompile Include="GameStartHandler.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="EventHandler.cpp">
       <Filter>YaMang</Filter>
     </ClCompile>
     <ClCompile Include="RoomManager.cpp">
       <Filter>YaMang</Filter>
+    </ClCompile>
+    <ClCompile Include="Corps.cpp">
+      <Filter>Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="Guard.cpp">
+      <Filter>Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="knight.cpp">
+      <Filter>Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="Pike.cpp">
+      <Filter>Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="Sword.cpp">
+      <Filter>Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit.cpp">
+      <Filter>Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="Arrow.cpp">
+      <Filter>Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="Action.cpp">
+      <Filter>Event</Filter>
+    </ClCompile>
+    <ClCompile Include="Attack.cpp">
+      <Filter>Event</Filter>
+    </ClCompile>
+    <ClCompile Include="CorpsSpawn.cpp">
+      <Filter>Event</Filter>
+    </ClCompile>
+    <ClCompile Include="DefenseFormation.cpp">
+      <Filter>Event</Filter>
+    </ClCompile>
+    <ClCompile Include="DestroyFormation.cpp">
+      <Filter>Event</Filter>
+    </ClCompile>
+    <ClCompile Include="HoldPosition.cpp">
+      <Filter>Event</Filter>
+    </ClCompile>
+    <ClCompile Include="MovePosition.cpp">
+      <Filter>Event</Filter>
+    </ClCompile>
+    <ClCompile Include="RushFormation.cpp">
+      <Filter>Event</Filter>
+    </ClCompile>
+    <ClCompile Include="TakeArea.cpp">
+      <Filter>Event</Filter>
+    </ClCompile>
+    <ClCompile Include="GameStartHandler.cpp">
+      <Filter>temp</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldMap.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

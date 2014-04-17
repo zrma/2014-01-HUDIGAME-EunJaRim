@@ -84,38 +84,68 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\SharedPreference\PacketType.h" />
+    <ClInclude Include="Action.h" />
+    <ClInclude Include="Arrow.h" />
+    <ClInclude Include="Attack.h" />
     <ClInclude Include="CircularBuffer.h" />
     <ClInclude Include="ClientManager.h" />
     <ClInclude Include="ClientSession.h" />
     <ClInclude Include="Config.h" />
+    <ClInclude Include="Corps.h" />
+    <ClInclude Include="CorpsSpawn.h" />
     <ClInclude Include="DatabaseJobContext.h" />
     <ClInclude Include="DatabaseJobManager.h" />
     <ClInclude Include="DbHelper.h" />
+    <ClInclude Include="DefenseFormation.h" />
+    <ClInclude Include="DestroyFormation.h" />
     <ClInclude Include="Exception.h" />
     <ClInclude Include="GameStartHandler.h" />
+    <ClInclude Include="Guard.h" />
+    <ClInclude Include="HoldPosition.h" />
+    <ClInclude Include="knight.h" />
     <ClInclude Include="MacroSet.h" />
+    <ClInclude Include="MovePosition.h" />
     <ClInclude Include="ObjectPool.h" />
+    <ClInclude Include="Pike.h" />
     <ClInclude Include="ProducerConsumerQueue.h" />
     <ClInclude Include="RoomManager.h" />
+    <ClInclude Include="RushFormation.h" />
     <ClInclude Include="SPSCQueue.h" />
     <ClInclude Include="sqlite3.h" />
     <ClInclude Include="sqlite3ext.h" />
     <ClInclude Include="SQLStatement.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Sword.h" />
+    <ClInclude Include="TakeArea.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Unit.h" />
+    <ClInclude Include="WorldMap.h" />
     <ClInclude Include="YaMangServer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Action.cpp" />
+    <ClCompile Include="Arrow.cpp" />
+    <ClCompile Include="Attack.cpp" />
     <ClCompile Include="CircularBuffer.cpp" />
     <ClCompile Include="ClientManager.cpp" />
     <ClCompile Include="ClientSession.cpp" />
+    <ClCompile Include="Corps.cpp" />
+    <ClCompile Include="CorpsSpawn.cpp" />
     <ClCompile Include="DatabaseJobContext.cpp" />
     <ClCompile Include="DatabaseJobManager.cpp" />
     <ClCompile Include="DbHelper.cpp" />
+    <ClCompile Include="DefenseFormation.cpp" />
+    <ClCompile Include="DestroyFormation.cpp" />
     <ClCompile Include="EventHandler.cpp" />
     <ClCompile Include="Exception.cpp" />
     <ClCompile Include="GameStartHandler.cpp" />
+    <ClCompile Include="Guard.cpp" />
+    <ClCompile Include="HoldPosition.cpp" />
+    <ClCompile Include="knight.cpp" />
+    <ClCompile Include="MovePosition.cpp" />
+    <ClCompile Include="Pike.cpp" />
     <ClCompile Include="RoomManager.cpp" />
+    <ClCompile Include="RushFormation.cpp" />
     <ClCompile Include="sqlite3.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4996</DisableSpecificWarnings>
@@ -124,6 +154,10 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Sword.cpp" />
+    <ClCompile Include="TakeArea.cpp" />
+    <ClCompile Include="Unit.cpp" />
+    <ClCompile Include="WorldMap.cpp" />
     <ClCompile Include="YaMangServer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
