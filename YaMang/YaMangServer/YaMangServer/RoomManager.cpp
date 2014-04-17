@@ -27,6 +27,7 @@ RoomManager::~RoomManager()
 		ClientManager* room = it->clientManager;
 		delete room;
 	}
+	m_RoomList.clear();
 }
 
 int RoomManager::AddRoom()
@@ -90,6 +91,7 @@ bool RoomManager::DeleteRoom( int roomNumber )
 			if ( 0 == toBeDelete->GetClientSize( ) )
 			{
 				delete toBeDelete;
+				m_RoomList.erase( it );
 				return true;
 			}
 

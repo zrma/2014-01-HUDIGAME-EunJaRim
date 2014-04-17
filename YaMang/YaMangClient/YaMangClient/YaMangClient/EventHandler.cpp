@@ -3,14 +3,6 @@
 #include "NetworkManager.h"
 #include "GameManager.h"
 
-//////////////////////////////////////////////////////////////////////////
-// 테스트 코드 - 추후 지워야 합니다.
-//////////////////////////////////////////////////////////////////////////
-extern bool moveLeft;
-extern bool moveRight;
-extern bool moveUp;
-extern bool moveDown;
-
 HandlerFunc HandlerTable[PKT_MAX];
 
 static void DefaultHandler( PacketHeader& pktBase )
@@ -118,39 +110,6 @@ void NetworkManager::HandleChatResult( ChatBroadcastResult& inPacket )
 
 		char buff[MAX_CHAT_LEN] = { 0, };
 		sprintf_s( buff, "CHAT from Player[%s]: %s \n", inPacket.m_Name, inPacket.m_Chat );
-
-		if ( !strcmp( inPacket.m_Chat, "MoveLeft" ) && inPacket.m_PlayerId == m_MyPlayerId )
-		{
-			moveLeft = true;
-		}
-		if ( !strcmp( inPacket.m_Chat, "MoveRight" ) && inPacket.m_PlayerId == m_MyPlayerId )
-		{
-			moveRight = true;
-		}
-		if ( !strcmp( inPacket.m_Chat, "MoveUp" ) && inPacket.m_PlayerId == m_MyPlayerId )
-		{
-			moveUp = true;
-		}
-		if ( !strcmp( inPacket.m_Chat, "MoveDown" ) && inPacket.m_PlayerId == m_MyPlayerId )
-		{
-			moveDown = true;
-		}
-		if ( !strcmp( inPacket.m_Chat, "StopLeft" ) && inPacket.m_PlayerId == m_MyPlayerId )
-		{
-			moveLeft = false;
-		}
-		if ( !strcmp( inPacket.m_Chat, "StopRight" ) && inPacket.m_PlayerId == m_MyPlayerId )
-		{
-			moveRight = false;
-		}
-		if ( !strcmp( inPacket.m_Chat, "StopUp" ) && inPacket.m_PlayerId == m_MyPlayerId )
-		{
-			moveUp = false;
-		}
-		if ( !strcmp( inPacket.m_Chat, "StopDown" ) && inPacket.m_PlayerId == m_MyPlayerId )
-		{
-			moveDown = false;
-		}
 
 		Log( "%s \n", buff );
 	}
