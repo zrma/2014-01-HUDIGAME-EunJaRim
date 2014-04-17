@@ -26,7 +26,6 @@ namespace CharacterTool
 
         public Main()
         {
-
             InitializeComponent();
             YamangDll.InitD3D(this.Window.Handle);
             Render();
@@ -37,7 +36,7 @@ namespace CharacterTool
             int i = 0;
             while (isRunning)
             {
-                YamangDll.PreRendering(0, 0, -2);
+                YamangDll.PreRendering();
                 YamangDll.Rendering(ref infoPtr);
                 YamangDll.PostRendering();
 
