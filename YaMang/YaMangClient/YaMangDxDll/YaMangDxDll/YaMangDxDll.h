@@ -12,17 +12,14 @@
 
 #include "MeshObject.h"
 
-
-
-
 extern "C"{
 	//처음과 마지막에만 실행하는 함수들
-	YAMANGDXDLL_API HRESULT InitD3D( HWND hWnd, long width=1280, long height=720 );
-	YAMANGDXDLL_API void D3DCleanUp( );
+	YAMANGDXDLL_API HRESULT InitD3D( HWND hWnd, long width = 1280, long height = 720 );
+	YAMANGDXDLL_API void D3DCleanUp();
 
 	//파일 이름 넣어 mesh object 받아오기
 	YAMANGDXDLL_API HRESULT InitGeometry( HWND hWnd, LPCTSTR fileName, MESHOBJECT* inputVal );
-	
+
 	//render 사전 준비 beginScene
 	//x,y,z축 이동이 없으면 0을 넣으면 됩니다.
 	YAMANGDXDLL_API bool PreRendering();
@@ -58,10 +55,8 @@ extern "C"{
 	//////////////////////////////////////////////////////////////////////////
 	//Text Render 를 위한 함수
 	//////////////////////////////////////////////////////////////////////////
-	YAMANGDXDLL_API void RenderText( LPCWSTR text, float left, float top, int RGB_R = 255, int RGB_G = 255, int RGB_B = 255, float right = 0, float bottom = 0);
-
+	YAMANGDXDLL_API void RenderText( LPCWSTR text, float left, float top, int RGB_R = 255, int RGB_G = 255, int RGB_B = 255, float right = 0, float bottom = 0 );
 }
-
 //단일 변수 out sample
 //extern YAMANGDXDLL_API int nyaMangDxDll;
 

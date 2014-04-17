@@ -96,6 +96,8 @@ bool GameManager::Render()
 		Renderer::GetInstance()->Render( m_Mesh );
 	}
 
+	Renderer::GetInstance()->WriteText( L"하이", 20, 20 );
+
 	return true;
 }
 

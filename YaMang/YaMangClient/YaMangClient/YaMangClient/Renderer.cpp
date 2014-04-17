@@ -14,7 +14,7 @@ Renderer::~Renderer()
 
 bool Renderer::Init()
 {
-	if ( S_OK == InitD3D( MainWindow::GetInstance()->Window() ) )
+	if ( S_OK == InitD3D( MainWindow::GetInstance( )->Window( ) ) )
 	{
 		m_Result = true;
 
@@ -33,7 +33,7 @@ void Renderer::Destroy()
 
 	if ( m_Result )
 	{
-		D3DCleanUp();
+		D3DCleanUp( );
 	}
 }
 
@@ -41,7 +41,7 @@ void Renderer::RenderBegin()
 {
 	if ( m_Result )
 	{
-		m_IsReady = PreRendering();
+		m_IsReady = PreRendering( );
 	}
 }
 
@@ -49,7 +49,7 @@ void Renderer::RenderEnd()
 {
 	if ( m_Result && m_IsReady )
 	{
-		PostRendering();
+		PostRendering( );
 		m_IsReady = false;
 	}
 }
@@ -76,7 +76,7 @@ void Renderer::RenderMap()
 {
 	if ( m_IsMapReady )
 	{
-		HeightMapRender();
+		HeightMapRender( );
 	}
 }
 
@@ -92,7 +92,7 @@ void Renderer::DeleteMap()
 {
 	if ( m_IsMapReady )
 	{
-		HeightMapCleanup();
+		HeightMapCleanup( );
 	}
 
 	m_IsMapReady = false;
@@ -100,7 +100,7 @@ void Renderer::DeleteMap()
 
 bool Renderer::CreateMesh( LPCTSTR& fileName, MESHOBJECT* mesh )
 {
-	if ( S_OK == InitGeometry( MainWindow::GetInstance()->Window(), fileName, mesh ) )
+	if ( S_OK == InitGeometry( MainWindow::GetInstance( )->Window( ), fileName, mesh ) )
 	{
 		return true;
 	}
@@ -117,7 +117,7 @@ void Renderer::DeleteMesh( MESHOBJECT* mesh )
 
 void Renderer::SetCamera()
 {
-	SetMatrix( &(CameraController::GetInstance()->GetMatrix()), true );
+	SetMatrix( &( CameraController::GetInstance( )->GetMatrix( ) ), true );
 }
 
 void Renderer::ResizeWindow( LONG width, LONG height )
@@ -125,6 +125,14 @@ void Renderer::ResizeWindow( LONG width, LONG height )
 	if ( m_Result )
 	{
 		SetAspectRatio( width, height );
+	}
+}
+
+void Renderer::WriteText( LPCWSTR text, float left, float top, int RGB_R /*= 255*/, int RGB_G /*= 255*/, int RGB_B /*= 255*/, float right /*= 0*/, float bottom /*= 0 */ )
+{
+	if ( m_Result )
+	{
+		RenderText( text, left, top, RGB_R, RGB_G, RGB_B, right, bottom );
 	}
 }
 
