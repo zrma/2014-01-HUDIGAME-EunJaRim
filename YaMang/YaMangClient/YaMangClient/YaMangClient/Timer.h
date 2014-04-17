@@ -9,7 +9,7 @@ public:
 
 
 	UINT	GetNowTime();
-	UINT	GetElapsedTime() { m_GameStartTime - GetNowTime(); }
+	UINT	GetElapsedTime() { return m_GameStartTime - GetNowTime(); }
 
 private:
 	UINT	m_GameStartTime = 0;

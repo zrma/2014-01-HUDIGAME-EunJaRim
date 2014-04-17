@@ -3,8 +3,6 @@
 #include "MacroSet.h"
 #include <d3dx9math.h>
 
-#define ALIGNMENT_SIZE	16
-
 enum class TransType
 {
 	TRANS_TYPE_NONE,
@@ -47,6 +45,10 @@ private:
 
 	__declspec( align( ALIGNMENT_SIZE ) ) 
 					D3DXMATRIXA16	m_Matrix;
+
+	D3DXVECTOR4		m_Eye = { 0, 0, 0, 0 };
+	D3DXVECTOR4		m_Look = { 0, 0, 0, 0 };
+	D3DXVECTOR4		m_Up = { 0, 0, 0, 0 };
 	
 	static CameraController*		m_Instance;
 };
