@@ -1,4 +1,4 @@
-﻿namespace CharacterTool
+﻿namespace YamangTools
 {
     partial class Main
     {
