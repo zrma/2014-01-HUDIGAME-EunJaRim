@@ -35,8 +35,9 @@ namespace YamangTools
         [DllImport("yaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void MeshObjectCleanUp( ref IntPtr inputVal );
 
-        //[DllImport("yaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("yaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
         //public static extern void SetMatrix( D3DXMATRIXA16* matrix, bool cameraSet = false );
+        public static extern void SetMatrix(ref IntPtr matrix, bool cameraSet = false);
 
         [DllImport("yaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void SetAspectRatio(long width, long height);
@@ -75,5 +76,10 @@ namespace YamangTools
             UInt32 NumMaterials;
         };
 
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+        public struct ARGMATRIX
+        {
+            public float _11, _12, _13, _14, _21, _22, _23, _24, _31, _32, _33, _34, _41, _42, _43, _44;
+        };
     }
 }
