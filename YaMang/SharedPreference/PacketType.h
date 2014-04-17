@@ -61,9 +61,6 @@ struct LoginResult: public PacketHeader
 	}
 
 	int		m_PlayerId;
-	double	m_PosX;
-	double	m_PosY;
-	double	m_PosZ;
 	char	m_Name[MAX_NAME_LEN];
 
 };

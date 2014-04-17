@@ -271,7 +271,7 @@ void ClientSession::DatabaseJobDone( DatabaseJobContext* result )
 		LoadPlayerDataContext* login = dynamic_cast<LoadPlayerDataContext*>( result );
 
 		printf_s( "[DEBUG][%d] Login DONE! \n", login->m_PlayerId );
-		LoginDone( login->m_PlayerId, login->m_PosX, login->m_PosY, login->m_PosZ, login->m_PlayerName );
+		LoginDone( login->m_PlayerId, login->m_PlayerName );
 
 	}
 	else if ( typeInfo == typeid( UpdatePlayerDataContext ) )
@@ -293,16 +293,13 @@ void ClientSession::UpdateDone()
 
 
 // 로그인을 시도해서 유저 데이터를 불러오면, 데이터를 읽어서 클라이언트 쪽에 Send()
-void ClientSession::LoginDone( int pid, double x, double y, double z, const char* name )
+void ClientSession::LoginDone( int pid, const char* name )
 {
 	g_PidSocketTable.insert( std::pair<int, SOCKET>( pid, m_Socket ) );
 
 	LoginResult outPacket;
 
 	outPacket.m_PlayerId = m_PlayerId = pid;
-	outPacket.m_PosX = m_PosX = x;
-	outPacket.m_PosY = m_PosY = y;
-	outPacket.m_PosZ = m_PosZ = z;
 	strcpy_s( m_PlayerName, name );
 	strcpy_s( outPacket.m_Name, name );
 

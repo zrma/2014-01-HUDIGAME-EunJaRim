@@ -84,6 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\SharedPreference\PacketType.h" />
+    <ClInclude Include="..\..\SharedPreference\SharedDefine.h" />
     <ClInclude Include="Action.h" />
     <ClInclude Include="Arrow.h" />
     <ClInclude Include="Attack.h" />

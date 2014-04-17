@@ -16,9 +16,6 @@
     <Filter Include="DB">
       <UniqueIdentifier>{2fbed75f-a6cf-4c4c-9fae-ab02c72182c8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="PacketType">
-      <UniqueIdentifier>{480bf115-e28e-4614-b6c4-3bbe6d7b7492}</UniqueIdentifier>
-    </Filter>
     <Filter Include="MainArea">
       <UniqueIdentifier>{90de8246-801c-48ec-94a3-3d2c5427aedb}</UniqueIdentifier>
     </Filter>
@@ -33,6 +30,9 @@
     </Filter>
     <Filter Include="temp">
       <UniqueIdentifier>{04646a2e-5cd4-42a4-8c2a-9c57ea94a1c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SharedPreference">
+      <UniqueIdentifier>{480bf115-e28e-4614-b6c4-3bbe6d7b7492}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -91,7 +91,7 @@
       <Filter>MainArea</Filter>
     </ClInclude>
     <ClInclude Include="..\..\SharedPreference\PacketType.h">
-      <Filter>PacketType</Filter>
+      <Filter>SharedPreference</Filter>
     </ClInclude>
     <ClInclude Include="YaMangServer.h">
       <Filter>YaMang</Filter>
@@ -152,6 +152,9 @@
     </ClInclude>
     <ClInclude Include="WorldMap.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\SharedPreference\SharedDefine.h">
+      <Filter>SharedPreference</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

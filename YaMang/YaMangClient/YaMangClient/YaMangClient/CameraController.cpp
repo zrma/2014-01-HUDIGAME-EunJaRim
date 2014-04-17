@@ -80,6 +80,7 @@ D3DXMATRIXA16 CameraController::GetInvMatrix()
 D3DXMATRIXA16 CameraController::GetMatrix()
 {
 
+
 	D3DXMATRIXA16 matrixOut;
 	D3DXMATRIXA16 matrixTemp;
 

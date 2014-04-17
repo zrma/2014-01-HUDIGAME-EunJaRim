@@ -4,6 +4,7 @@
 #include <WinSock2.h>
 
 class ClientSession;
+
 struct PacketHeader;
 struct DatabaseJobContext;
 
@@ -32,6 +33,7 @@ public:
 	void				FlushClientSend();
 
 	void				PrintClientList( ); // 테스트용 함수
+
 
 private:
 	void				CreatePlayerDone( DatabaseJobContext* dbJob );

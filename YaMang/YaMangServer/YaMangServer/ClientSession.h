@@ -4,6 +4,8 @@
 #include "PacketType.h"
 #include "CircularBuffer.h"
 #include "ObjectPool.h"
+#include "Corps.h"
+#include <hash_map>
 
 #define BUFSIZE	(1024*10)
 
@@ -25,7 +27,7 @@ class ClientSession: public ObjectPool<ClientSession>
 public:
 	ClientSession( SOCKET sock )
 		: m_Connected( false ), m_Logon( false ), m_Socket( sock ), m_PlayerId( -1 ), m_SendBuffer( BUFSIZE ), m_RecvBuffer( BUFSIZE ), m_OverlappedRequested( 0 )
-		, m_PosX( 0 ), m_PosY( 0 ), m_PosZ( 0 ), m_DbUpdateCount( 0 )
+		
 	{
 		memset( &m_ClientAddr, 0, sizeof( SOCKADDR_IN ) );
 		memset( m_PlayerName, 0, sizeof( m_PlayerName ) );
@@ -72,14 +74,12 @@ private:
 	bool	SendFlush(); ///< Send요청 중인것들 모아서 보냄
 	void	OnTick();
 
-	void	LoginDone( int pid, double x, double y, double z, const char* name );
+	void	LoginDone( int pid, const char* name );
 	void	UpdateDone();
 
+	int		GenerateCorps();
 
 private:
-	double			m_PosX;
-	double			m_PosY;
-	double			m_PosZ;
 	char			m_PlayerName[MAX_NAME_LEN];
 
 private:
@@ -97,7 +97,9 @@ private:
 	OverlappedIO	m_OverlappedRecv;
 	int				m_OverlappedRequested;
 
-	int				m_DbUpdateCount; ///< DB에 주기적으로 업데이트 하기 위한 변수
+
+	typedef std::hash_map<int, Corps*> CorpsList;
+	CorpsList		m_CorpsList;
 
 	ClientManager*	m_ClientManager;
 
