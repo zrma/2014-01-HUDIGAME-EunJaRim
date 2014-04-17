@@ -39,28 +39,8 @@ namespace YamangTools
             {
                 YamangDll.PreRendering();
                 YamangDll.HeightMapRender();
-                
-                //DLL 정상 연동 확인 코드
-                YamangDll.RenderText("HI", 200, 200);
-                
-                YamangDll.PostRendering();
-                
-                //button1.Text = "" + i;
-                await Task.Delay(10);
-                //++i;
-            }
-        }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            if (!isRunning)
-            {
-                isRunning = true;
-
-                string heightMap = ".\\Resource\\heightmap_1024_1024_korea.bmp";
-                string mapTexture = ".\\Resource\\heightmap_texture_1024_1024_korea.bmp";
-
-                YamangDll.HeightMapTextureImport(this.MainWindow.Handle, heightMap, mapTexture);
+              
 
 
                 info = new YamangDll.ARGMATRIX();
@@ -85,9 +65,31 @@ namespace YamangTools
 
                 Marshal.StructureToPtr(info, infoPtr, false);
                 info = (YamangDll.ARGMATRIX)Marshal.PtrToStructure(infoPtr, typeof(YamangDll.ARGMATRIX));
-               
+
                 bool cameraSet = false;
-                YamangDll.SetMatrix( ref infoPtr, cameraSet);
+                YamangDll.SetMatrix(ref infoPtr, cameraSet);
+
+                //DLL 정상 연동 확인 코드
+                YamangDll.RenderText("HI", 200, 200);
+                
+                YamangDll.PostRendering();
+                
+                //button1.Text = "" + i;
+                await Task.Delay(10);
+                //++i;
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (!isRunning)
+            {
+                isRunning = true;
+
+                string heightMap = ".\\Resource\\heightmap_1024_1024_korea.bmp";
+                string mapTexture = ".\\Resource\\heightmap_texture_1024_1024_korea.bmp";
+
+                YamangDll.HeightMapTextureImport(this.MainWindow.Handle, heightMap, mapTexture);
 
                 Render();
             }

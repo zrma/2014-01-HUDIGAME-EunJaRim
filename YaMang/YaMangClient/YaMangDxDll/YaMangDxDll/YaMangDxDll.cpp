@@ -389,6 +389,12 @@ YAMANGDXDLL_API void D3DCleanUp()
 
 YAMANGDXDLL_API void SetMatrix( D3DXMATRIXA16* matrix, bool cameraSet /*= false */ )
 {
+	//Log("%f, %f, %f, %f \n", matrix->_11, matrix->_12, matrix->_13, matrix->_14);
+	//Log("%f, %f, %f, %f \n", matrix->_21, matrix->_22, matrix->_23, matrix->_24);
+	//Log("%f, %f, %f, %f \n", matrix->_31, matrix->_32, matrix->_33, matrix->_34);
+	//Log("%f, %f, %f, %f \n", matrix->_41, matrix->_42, matrix->_43, matrix->_44);
+	//Log("==============================");
+
 	if ( cameraSet == true )
 	{
 		g_D3dDevice->SetTransform( D3DTS_VIEW, matrix );
