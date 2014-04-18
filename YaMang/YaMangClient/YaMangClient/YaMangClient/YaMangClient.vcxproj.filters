@@ -11,9 +11,6 @@
     <Filter Include="Utils">
       <UniqueIdentifier>{cf8ba7a5-240a-46e3-a970-d6e03db70597}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Matrixer">
-      <UniqueIdentifier>{5205afc4-08c4-4b9e-866a-bfe3f54000dd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Network">
       <UniqueIdentifier>{1b0c526e-0e33-4789-9731-1cab60f521a1}</UniqueIdentifier>
     </Filter>
@@ -25,6 +22,9 @@
     </Filter>
     <Filter Include="SharedPreference">
       <UniqueIdentifier>{0a26ce5f-33d2-4912-8f37-272c6dcecfb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Render">
+      <UniqueIdentifier>{bed35af9-c826-4a2b-8672-e989610c4c61}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -52,9 +52,6 @@
     <ClInclude Include="MainWindow.h">
       <Filter>MainLoop</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer.h">
-      <Filter>MainLoop</Filter>
-    </ClInclude>
     <ClInclude Include="CircularBuffer.h">
       <Filter>Utils</Filter>
     </ClInclude>
@@ -66,9 +63,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\SharedPreference\PacketType.h">
       <Filter>SharedPreference</Filter>
-    </ClInclude>
-    <ClInclude Include="CameraController.h">
-      <Filter>Matrixer</Filter>
     </ClInclude>
     <ClInclude Include="InputDispatcher.h">
       <Filter>Event</Filter>
@@ -130,9 +124,6 @@
     <ClInclude Include="TakeArea.h">
       <Filter>Event</Filter>
     </ClInclude>
-    <ClInclude Include="MouseManager.h">
-      <Filter>Matrixer</Filter>
-    </ClInclude>
     <ClInclude Include="MouseInput.h">
       <Filter>Event</Filter>
     </ClInclude>
@@ -144,6 +135,21 @@
     </ClInclude>
     <ClInclude Include="..\..\..\SharedPreference\SharedDefine.h">
       <Filter>SharedPreference</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface3D.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraController.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseManager.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="TextObject.h">
+      <Filter>Render</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -159,9 +165,6 @@
     <ClCompile Include="MainWindow.cpp">
       <Filter>MainLoop</Filter>
     </ClCompile>
-    <ClCompile Include="Renderer.cpp">
-      <Filter>MainLoop</Filter>
-    </ClCompile>
     <ClCompile Include="CircularBuffer.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
@@ -170,9 +173,6 @@
     </ClCompile>
     <ClCompile Include="DummyRender.cpp">
       <Filter>MainLoop</Filter>
-    </ClCompile>
-    <ClCompile Include="CameraController.cpp">
-      <Filter>Matrixer</Filter>
     </ClCompile>
     <ClCompile Include="InputDispatcher.cpp">
       <Filter>Event</Filter>
@@ -237,9 +237,6 @@
     <ClCompile Include="TakeArea.cpp">
       <Filter>Event</Filter>
     </ClCompile>
-    <ClCompile Include="MouseManager.cpp">
-      <Filter>Matrixer</Filter>
-    </ClCompile>
     <ClCompile Include="MouseInput.cpp">
       <Filter>Event</Filter>
     </ClCompile>
@@ -248,6 +245,21 @@
     </ClCompile>
     <ClCompile Include="UIManager.cpp">
       <Filter>MainLoop</Filter>
+    </ClCompile>
+    <ClCompile Include="Interface3D.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraController.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="MouseManager.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="TextObject.cpp">
+      <Filter>Render</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

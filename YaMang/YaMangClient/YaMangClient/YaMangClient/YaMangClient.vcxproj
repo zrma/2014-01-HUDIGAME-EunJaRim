@@ -111,6 +111,7 @@
     <ClInclude Include="NetworkManager.h" />
     <ClInclude Include="Pike.h" />
     <ClInclude Include="Renderer.h" />
+    <ClInclude Include="Interface3D.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="RushFormation.h" />
     <ClInclude Include="SceneManager.h" />
@@ -118,6 +119,7 @@
     <ClInclude Include="Sword.h" />
     <ClInclude Include="TakeArea.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="TextObject.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="UIManager.h" />
     <ClInclude Include="Unit.h" />
@@ -149,6 +151,7 @@
     <ClCompile Include="NetworkManager.cpp" />
     <ClCompile Include="Pike.cpp" />
     <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="Interface3D.cpp" />
     <ClCompile Include="RushFormation.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -157,6 +160,7 @@
     </ClCompile>
     <ClCompile Include="Sword.cpp" />
     <ClCompile Include="TakeArea.cpp" />
+    <ClCompile Include="TextObject.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="UIManager.cpp" />
     <ClCompile Include="Unit.cpp" />

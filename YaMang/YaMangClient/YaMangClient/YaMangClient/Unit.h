@@ -1,17 +1,12 @@
 ﻿#pragma once
+#include "Interface3D.h"
 
-extern const float NOT_A_NUMBER_FLOAT;
-
-class Unit
+class Unit: public Interface3D
 {
 public:
 	Unit();
 	virtual ~Unit();
 
 private:
-	float	m_PosX = NOT_A_NUMBER_FLOAT;
-	float	m_PosY = -NOT_A_NUMBER_FLOAT;
 	int		m_UnitId = -1;
-
-	int		m_MoveSpeed = 0;
 };
