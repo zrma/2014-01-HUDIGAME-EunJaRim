@@ -598,6 +598,30 @@ YAMANGDXDLL_API void RenderText( LPCWSTR text, float left, float top, int RGB_R,
 	g_Sprite->End();											// 스프라이트 그리기 끝 
 }
 
+YAMANGDXDLL_API void GetViewPort9( D3DVIEWPORT9* viewport )
+{
+	if ( g_D3dDevice )
+	{
+		g_D3dDevice->GetViewport( viewport );
+	}
+}
+
+YAMANGDXDLL_API void GetD3DProjMatrix( D3DXMATRIXA16* projMatrix )
+{
+	if ( g_D3dDevice )
+	{
+		g_D3dDevice->GetTransform( D3DTS_PROJECTION, projMatrix );
+	}
+}
+
+YAMANGDXDLL_API void GetD3DViewMatrix( D3DXMATRIXA16* viewMatrix )
+{
+	if ( g_D3dDevice )
+	{
+		g_D3dDevice->GetTransform( D3DTS_VIEW, viewMatrix );
+	}
+}
+
 // 내보낸 변수의 예제입니다.
 // YAMANGDXDLL_API int nyaMangDxDll=0;
 

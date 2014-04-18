@@ -56,16 +56,10 @@ void Renderer::RenderEnd()
 void Renderer::Render( MESHOBJECT* mesh )
 {
 	if ( mesh && m_IsReady )
-	{
-		D3DXMATRIXA16 matrix;
-		
-		char szDebug[64] = { 0, };
-		sprintf_s(szDebug, "matrixSize : %d \n", sizeof(matrix));
-		OutputDebugStringA(szDebug);
-
-		D3DXMatrixIdentity( &matrix );
-		
-		SetMatrix( &matrix );
+	{	
+// 		char szDebug[64] = { 0, };
+// 		sprintf_s(szDebug, "matrixSize : %d \n", sizeof(matrix));
+// 		OutputDebugStringA(szDebug);
 
 		Rendering( mesh );
 	}
@@ -133,5 +127,29 @@ void Renderer::WriteText( LPCWSTR text, float left, float top, int RGB_R /*= 255
 	{
 		RenderText( text, left, top, RGB_R, RGB_G, RGB_B, right, bottom );
 	}
+}
+
+D3DVIEWPORT9 Renderer::GetViewPort()
+{
+	D3DVIEWPORT9	viewPort;
+	GetViewPort9( &viewPort );
+
+	return viewPort;
+}
+
+D3DXMATRIXA16 Renderer::GetProjMatrix()
+{
+	D3DXMATRIXA16	projMatrix;
+	GetD3DProjMatrix( &projMatrix );
+
+	return projMatrix;
+}
+
+D3DXMATRIXA16 Renderer::GetViewMatrix()
+{
+	D3DXMATRIXA16	viewMatrix;
+	GetD3DViewMatrix( &viewMatrix );
+
+	return viewMatrix;
 }
 

@@ -40,7 +40,6 @@ extern "C"{
 	//YAMANGDXDLL_API void SetupTranslateMatrices(float moveX, float moveY, float moveZ);
 	//YAMANGDXDLL_API void ViewSetting();
 
-
 	//////////////////////////////////////////////////////////////////////////
 	//여기 이하는 height map 출력을 위한 함수입니다.
 	//height map은 일반 object와 g_D3D g_D3DDevice를 공유합니다.
@@ -56,6 +55,13 @@ extern "C"{
 	//Text Render 를 위한 함수
 	//////////////////////////////////////////////////////////////////////////
 	YAMANGDXDLL_API void RenderText( LPCWSTR text, float left, float top, int RGB_R = 255, int RGB_G = 255, int RGB_B = 255, float right = 0, float bottom = 0 );
+
+	//////////////////////////////////////////////////////////////////////////
+	// Picking Ray를 위한 부분
+	//////////////////////////////////////////////////////////////////////////
+	YAMANGDXDLL_API void GetViewPort9( D3DVIEWPORT9* viewport );
+	YAMANGDXDLL_API void GetD3DProjMatrix( D3DXMATRIXA16* projMatrix );
+	YAMANGDXDLL_API void GetD3DViewMatrix( D3DXMATRIXA16* viewMatrix );
 }
 //단일 변수 out sample
 //extern YAMANGDXDLL_API int nyaMangDxDll;

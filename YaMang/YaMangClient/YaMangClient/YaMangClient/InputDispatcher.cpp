@@ -183,10 +183,10 @@ REGISTER_KEY_HANDLER( VK_F )
 
 REGISTER_KEY_HANDLER( VK_C )
 {
-	CameraController::GetInstance()->AddHeight( -10.0f );
+
 }
 
 REGISTER_KEY_HANDLER( VK_V )
 {
-	CameraController::GetInstance()->AddHeight( 10.0f );
+
 }
