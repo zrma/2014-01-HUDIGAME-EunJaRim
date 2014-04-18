@@ -93,9 +93,6 @@
     <ClInclude Include="..\..\SharedPreference\PacketType.h">
       <Filter>SharedPreference</Filter>
     </ClInclude>
-    <ClInclude Include="YaMangServer.h">
-      <Filter>YaMang</Filter>
-    </ClInclude>
     <ClInclude Include="RoomManager.h">
       <Filter>YaMang</Filter>
     </ClInclude>
@@ -103,9 +100,6 @@
       <Filter>Unit</Filter>
     </ClInclude>
     <ClInclude Include="Guard.h">
-      <Filter>Unit</Filter>
-    </ClInclude>
-    <ClInclude Include="knight.h">
       <Filter>Unit</Filter>
     </ClInclude>
     <ClInclude Include="Pike.h">
@@ -156,6 +150,15 @@
     <ClInclude Include="..\..\SharedPreference\SharedDefine.h">
       <Filter>SharedPreference</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\SharedPreference\EnumSet.h">
+      <Filter>SharedPreference</Filter>
+    </ClInclude>
+    <ClInclude Include="YaMangServer.h">
+      <Filter>YaMang</Filter>
+    </ClInclude>
+    <ClInclude Include="Knight.h">
+      <Filter>Unit</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DatabaseJobContext.cpp">
@@ -198,9 +201,6 @@
       <Filter>Unit</Filter>
     </ClCompile>
     <ClCompile Include="Guard.cpp">
-      <Filter>Unit</Filter>
-    </ClCompile>
-    <ClCompile Include="knight.cpp">
       <Filter>Unit</Filter>
     </ClCompile>
     <ClCompile Include="Pike.cpp">
@@ -247,6 +247,9 @@
     </ClCompile>
     <ClCompile Include="WorldMap.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Knight.cpp">
+      <Filter>Unit</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

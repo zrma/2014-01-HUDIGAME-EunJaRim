@@ -198,12 +198,106 @@ void ClientSession::HandleRoomChangeRequest( RoomChangeRequest& inPacket )
 		RoomChangeResult outPacket;
 		outPacket.m_RoomNumber = roomTo;
 
-		if ( !DirectSend( &outPacket ) )
+		if ( !Broadcast( &outPacket ) )
+		{
+			Disconnect( );
+		}
+
+		g_RoomManager->PrintClientList(); // 테스트 프린트
+	}
+	catch ( ... )
+	{
+		return;
+	}
+}
+
+
+
+
+REGISTER_HANDLER( PKT_CS_GENERATE_CORPS )
+{
+	GenerateCorpsRequest inPacket = static_cast<GenerateCorpsRequest&>( pktBase );
+	session->HandleGenerateCorpsRequest( inPacket );
+}
+
+void ClientSession::HandleGenerateCorpsRequest( GenerateCorpsRequest& inPacket )
+{
+
+	m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size );
+
+	try
+	{
+		UnitType unitType = inPacket.m_UnitType;
+		Position position = inPacket.m_Position;
+
+		int generatedCorpsID = GenerateCorps( unitType, position );
+
+		if ( generatedCorpsID == -1 )
 		{
 			Disconnect();
 		}
 
-		g_RoomManager->PrintClientList(); // 테스트 프린트
+		GenerateCorpsResult outPacket;
+		outPacket.m_UnitType = unitType;
+		outPacket.m_Position = position;
+		outPacket.m_CorpsID = generatedCorpsID;
+		outPacket.m_PlayerId = m_PlayerId;
+
+		if ( !Broadcast( &outPacket ) )
+		{
+			Disconnect();
+		}
+
+		printf_s( "GenerateCorps! Type:%d CorpID:%d PlayerID:%d CorpsListSize:%d \n", unitType, generatedCorpsID, m_PlayerId, static_cast<int>( m_CorpsList.size() ) );
+	}
+	catch ( ... )
+	{
+		return;
+	}
+}
+
+
+
+
+
+REGISTER_HANDLER( PKT_CS_MOVE_CORPS )
+{
+	MoveCorpsRequest inPacket = static_cast<MoveCorpsRequest&>( pktBase );
+	session->HandleMoveCorpsRequest( inPacket );
+}
+
+void ClientSession::HandleMoveCorpsRequest( MoveCorpsRequest& inPacket )
+{
+
+	m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size );
+
+	try
+	{
+		int corpsID = inPacket.m_CorpsID;
+		Position position = inPacket.m_Position;
+
+		if ( corpsID == -1 )
+		{
+			Disconnect();
+		}
+
+		// MOVE!!!!!!;
+		// 미구현
+
+		MoveCorpsResult outPacket;
+		outPacket.m_PlayerId = m_PlayerId;
+		outPacket.m_CorpsID = corpsID; // 미구현
+		outPacket.m_Position = position;
+		outPacket.m_CorpsID = -1; // 미구현
+
+
+
+		if ( !Broadcast( &outPacket ) )
+		{
+			Disconnect();
+		}
+
+		printf_s( "CorpsMoved CorpID:%d PlayerID:%d PosX:%f PosZ:%f \n", corpsID, m_PlayerId, position.posX, position.posZ );
 	}
 	catch ( ... )
 	{

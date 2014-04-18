@@ -83,6 +83,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\SharedPreference\EnumSet.h" />
     <ClInclude Include="..\..\SharedPreference\PacketType.h" />
     <ClInclude Include="..\..\SharedPreference\SharedDefine.h" />
     <ClInclude Include="Action.h" />
@@ -103,7 +104,7 @@
     <ClInclude Include="GameStartHandler.h" />
     <ClInclude Include="Guard.h" />
     <ClInclude Include="HoldPosition.h" />
-    <ClInclude Include="knight.h" />
+    <ClInclude Include="Knight.h" />
     <ClInclude Include="MacroSet.h" />
     <ClInclude Include="MovePosition.h" />
     <ClInclude Include="ObjectPool.h" />
@@ -142,7 +143,7 @@
     <ClCompile Include="GameStartHandler.cpp" />
     <ClCompile Include="Guard.cpp" />
     <ClCompile Include="HoldPosition.cpp" />
-    <ClCompile Include="knight.cpp" />
+    <ClCompile Include="Knight.cpp" />
     <ClCompile Include="MovePosition.cpp" />
     <ClCompile Include="Pike.cpp" />
     <ClCompile Include="RoomManager.cpp" />

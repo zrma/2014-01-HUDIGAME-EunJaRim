@@ -1,4 +1,6 @@
 ﻿#pragma once
+#include "EnumSet.h"
+#include "SharedDefine.h"
 
 #define MAX_CHAT_LEN	1024
 
@@ -23,6 +25,12 @@ enum PacketTypes
 
 	PKT_CS_ROOM_CHANGE = 9,
 	PKT_SC_ROOM_CHANGE = 10,
+
+	PKT_CS_GENERATE_CORPS = 100,
+	PKT_SC_GENERATE_CORPS = 101,
+
+	PKT_CS_MOVE_CORPS = 102,
+	PKT_SC_MOVE_CORPS = 103,
 
 	PKT_MAX = 1024
 };
@@ -181,5 +189,77 @@ struct RoomChangeResult: public PacketHeader
 
 	int	m_RoomNumber;
 };
+
+
+// 사실 request는 테스트용
+struct GenerateCorpsRequest: public PacketHeader
+{
+	GenerateCorpsRequest( )
+	{
+		m_Size = sizeof( GenerateCorpsRequest );
+		m_Type = PKT_CS_GENERATE_CORPS;
+		m_UnitType = UNIT_NONE;
+		m_Position = { NOT_A_NUMBER_FLOAT, NOT_A_NUMBER_FLOAT };
+	}
+
+	UnitType m_UnitType;
+	Position m_Position;
+};
+
+struct GenerateCorpsResult: public PacketHeader
+{
+	GenerateCorpsResult( )
+	{
+		m_Size = sizeof( GenerateCorpsResult );
+		m_Type = PKT_SC_GENERATE_CORPS;
+		m_UnitType = UNIT_NONE;
+		m_Position = { NOT_A_NUMBER_FLOAT, NOT_A_NUMBER_FLOAT };
+		m_CorpsID = -1;
+		m_PlayerId = -1;
+	}
+
+	UnitType m_UnitType;
+	Position m_Position;
+	int		 m_CorpsID;
+	int		 m_PlayerId;
+};
+
+
+// 사실 request는 테스트용
+struct MoveCorpsRequest: public PacketHeader
+{
+	MoveCorpsRequest( )
+	{
+		m_Size = sizeof( MoveCorpsRequest );
+		m_Type = PKT_CS_MOVE_CORPS;
+		m_CorpsID = -1;
+		m_Position = { NOT_A_NUMBER_FLOAT, NOT_A_NUMBER_FLOAT };
+		
+	}
+
+	int		 m_CorpsID;
+	Position m_Position;
+	
+};
+
+struct MoveCorpsResult: public PacketHeader
+{
+	MoveCorpsResult( )
+	{
+		m_Size = sizeof( MoveCorpsResult );
+		m_Type = PKT_SC_MOVE_CORPS;
+		m_PlayerId = -1;
+		m_CorpsID = -1;
+		m_Position = { NOT_A_NUMBER_FLOAT, NOT_A_NUMBER_FLOAT };
+		m_Time = -1;
+	}
+
+	int			m_PlayerId;
+	int			m_CorpsID;
+	Position	m_Position;
+	int			m_Time;
+};
+
+
 
 #pragma pack(pop)

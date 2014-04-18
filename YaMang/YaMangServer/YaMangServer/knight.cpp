@@ -1,12 +1,12 @@
-﻿#include "stdafx.h"
-#include "knight.h"
+#include "stdafx.h"
+#include "Knight.h"
 
 
-knight::knight()
+Knight::Knight()
 {
 }
 
 
-knight::~knight()
+Knight::~Knight()
 {
 }

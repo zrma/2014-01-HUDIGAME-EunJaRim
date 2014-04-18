@@ -1,10 +1,10 @@
-﻿#pragma once
+#pragma once
 #include "Unit.h"
-class knight:
+class Knight:
 	public Unit
 {
 public:
-	knight();
-	~knight();
+	Knight();
+	~Knight();
 };
 

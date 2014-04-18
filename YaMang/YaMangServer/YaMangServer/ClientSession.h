@@ -6,6 +6,7 @@
 #include "ObjectPool.h"
 #include "Corps.h"
 #include <hash_map>
+#include "EnumSet.h"
 
 #define BUFSIZE	(1024*10)
 
@@ -67,7 +68,13 @@ public:
 	void	HandleGameOverRequest( GameOverRequest& inPacket );
 	void	HandleRoomCreateRequest( RoomCreateRequest& inPacket );
 	void	HandleRoomChangeRequest( RoomChangeRequest& inPacket );
+	void	HandleGenerateCorpsRequest( GenerateCorpsRequest& inPacket );
+	void	HandleMoveCorpsRequest( MoveCorpsRequest& inPacket );
 
+	//////////////////////////////////////////////////////////////////////////
+	// 게임 컨텐츠
+	//////////////////////////////////////////////////////////////////////////
+	int		GenerateCorps( UnitType type, Position position );
 
 private:
 
@@ -77,7 +84,6 @@ private:
 	void	LoginDone( int pid, const char* name );
 	void	UpdateDone();
 
-	int		GenerateCorps();
 
 private:
 	char			m_PlayerName[MAX_NAME_LEN];
@@ -100,6 +106,7 @@ private:
 
 	typedef std::hash_map<int, Corps*> CorpsList;
 	CorpsList		m_CorpsList;
+	int				m_CorpsIDCount = 0;
 
 	ClientManager*	m_ClientManager;
 
