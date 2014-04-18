@@ -13,7 +13,6 @@ struct Room
 	ClientManager* clientManager;
 };
 
-
 class RoomManager
 {
 public:
@@ -32,13 +31,17 @@ public:
 
 	void			PrintClientList(); // 테스트용 함수
 
+
 public:
-	ClientManager*				m_Lobby;
+	ClientManager*					m_Lobby;
 
 private:
 
-	std::list<Room>				m_RoomList;
-	int							m_RoomCount = 0;
+	std::list<Room>					m_RoomList;
+	int								m_RoomCount = 0;
+
+
+
 };
 extern std::hash_map<int, SOCKET>	g_PidSocketTable;
 extern RoomManager*					g_RoomManager;

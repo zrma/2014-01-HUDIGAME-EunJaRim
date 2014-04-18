@@ -11,7 +11,3 @@ GameStartHandler::~GameStartHandler()
 {
 }
 
-void LoadBitmapMapData()
-{
-	//
-}

@@ -7,6 +7,14 @@
 #include "DatabaseJobManager.h"
 
 
+
+void ClientManager::GameStart()
+{
+	ReadMapFile( "../../SharedPreference/ServerMap1.bmp" );
+	m_IsGameStart = true;
+}
+
+
 // 클라 생성
 // _tmain() 쪽의 클라이언트 핸들링 스레드에서 WaitForSingleObjectEx(hEvent, INFINITE, TRUE) 가
 // 이벤트를 발생하기를 기다려서 이벤트 발생 신호가 오면(클라이언트 쪽에서 접속 요청하면)
@@ -278,4 +286,55 @@ void ClientManager::PrintClientList()
 		ClientSession* client = it.second;
 		printf_s( "[%d][%s] \n", client->m_PlayerId, client->m_PlayerName );
 	}
+}
+
+
+
+
+void ClientManager::ReadMapFile( const char* filename )
+{
+	FILE* f;
+	fopen_s( &f, filename, "rb" );
+
+	if ( f == NULL )
+	{
+		return;
+	}
+
+	unsigned char info[54];
+	fread( info, sizeof( unsigned char ), 54, f ); // read the 54-byte header
+
+	// extract image height and width from header
+	int width = *(int*)&info[18];
+	int height = *(int*)&info[22];
+
+	m_Map.reserve( height );
+
+	int row_padded = ( width * 3 + 3 ) & ( ~3 );
+	unsigned char* data = new unsigned char[row_padded];
+
+
+	unsigned char tmp;
+	for ( int i = 0; i < height; i++ )
+	{
+		std::vector<Tile> row;
+		row.reserve( width );
+		fread( data, sizeof( unsigned char ), row_padded, f );
+		for ( int j = 0; j < width * 3; j += 3 )
+		{
+			// Convert (B, G, R) to (R, G, B)
+			tmp = data[j];
+			data[j] = data[j + 2];
+			data[j + 2] = tmp;
+
+			Tile tile = { (int)data[j], (int)data[j + 1], (int)data[j + 2] };
+
+			// 맵이 뒤집어져 있을 것 같다!!
+			row.push_back( tile );
+		}
+		m_Map.push_back( row );
+	}
+	printf_s( "[%d][%d] Map Loaded! \n", m_Map.size(), m_Map.at( 0 ).size() );
+
+	fclose( f );
 }

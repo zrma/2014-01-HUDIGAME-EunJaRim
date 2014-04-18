@@ -12,6 +12,7 @@
 #include "tinyxml.h"
 #include "xpath_static.h"
 #include "RoomManager.h"
+#include "GameStartHandler.h"
 
 
 #pragma comment(lib,"ws2_32.lib")
@@ -44,6 +45,8 @@ int _tmain( int argc, _TCHAR* argv[] )
 	{
 		printf_s( "PORT Load Fail! \n" );
 	}
+
+
 
 	LThreadType = THREAD_MAIN;
 

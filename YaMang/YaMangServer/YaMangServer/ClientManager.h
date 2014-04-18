@@ -7,6 +7,12 @@ class ClientSession;
 
 struct PacketHeader;
 struct DatabaseJobContext;
+struct Tile
+{
+	unsigned char R;
+	unsigned char G;
+	unsigned char B;
+};
 
 class ClientManager
 {
@@ -14,6 +20,9 @@ public:
 	ClientManager(): m_LastGCTick( 0 ), m_LastClientWorkTick( 0 )
 	{
 	}
+
+	void				GameStart();
+
 
 	ClientSession*		CreateClient( SOCKET sock );
 	ClientSession*		DeleteClient( SOCKET sock );
@@ -26,6 +35,10 @@ public:
 
 	void				OnPeriodWork();
 
+
+	void				ReadMapFile( const char* filename );
+
+
 	/// DB에 플레이어 정보를 생성하거나 삭제하는 함수
 	void				DBCreatePlayer( int pid, double x, double y, double z, const char* name, const char* comment );
 	void				DBDeletePlayer( int pid );
@@ -33,6 +46,8 @@ public:
 	void				FlushClientSend();
 
 	void				PrintClientList( ); // 테스트용 함수
+
+
 
 
 private:
@@ -51,4 +66,9 @@ private:
 
 	DWORD				m_LastGCTick;
 	DWORD				m_LastClientWorkTick;
+
+
+	std::vector<std::vector<Tile>>	m_Map;
+
+	bool				m_IsGameStart = false;
 };

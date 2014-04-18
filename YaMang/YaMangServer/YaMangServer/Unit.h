@@ -16,14 +16,14 @@ private:
 	int		m_UnitId = -1;
 
 
-	int		m_AttackRange = -1;
-	int		m_AttackPower = -1;
+	int		m_AttackRange = 0;
+	int		m_AttackPower = 0;
 	int		m_AttackPowerBonus = 0;
 
-	int		m_Defense = -1;
+	int		m_Defense = 0;
 	int		m_DefenseBonus = 0;
 
-	int		m_MoveSpeed = -1;
+	int		m_MoveSpeed = 0;
 	int		m_MoveSpeedBonus = 0;
 
 

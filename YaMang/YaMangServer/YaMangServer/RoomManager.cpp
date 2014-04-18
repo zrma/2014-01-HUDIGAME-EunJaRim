@@ -3,6 +3,8 @@
 #include "ClientSession.h"
 #include "ClientManager.h"
 
+
+
 std::hash_map<int, SOCKET>	g_PidSocketTable;
 RoomManager* g_RoomManager = nullptr;
 RoomManager::RoomManager()
@@ -35,6 +37,10 @@ int RoomManager::AddRoom()
 	Room room;
 	room.roomNumber = ++m_RoomCount;
 	room.clientManager = new ClientManager( );
+
+	// Test room start;
+	room.clientManager->GameStart( );
+
 	m_RoomList.push_back( room );
 
 	printf_s( "ROOM [%d] CREATED! \n", room.roomNumber );
@@ -135,4 +141,3 @@ void RoomManager::PrintClientList()
 		room->PrintClientList();
 	}
 }
-
