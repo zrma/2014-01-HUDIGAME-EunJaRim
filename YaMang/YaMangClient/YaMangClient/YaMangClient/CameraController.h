@@ -16,10 +16,10 @@ public:
 	D3DXMATRIXA16	GetInvViewMatrix();
 	D3DXMATRIXA16	GetInvProjMatrix();
 
-	void	MoveForward( float speed ); //< 앞뒤이동
-	void	MoveSide( float speed ); //< 좌우이동
-	void	RotateUp( float angle ); //< 상하회전
-	void	RotateSide( float angle ); //< 좌우회전
+	void	MoveForward( float speed );
+	void	MoveSide( float speed );
+	void	RotateUp( float angle );
+	void	RotateSide( float angle );
 
 private:
 	FLOAT			m_Axis = 0;

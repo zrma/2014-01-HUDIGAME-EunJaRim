@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "ClientSession.h"
 #include "PacketType.h"
 #include "DatabaseJobContext.h"
@@ -7,7 +7,7 @@
 //////////////////////////////////////////////////////////////////////////
 #include "RoomManager.h"
 #include "ClientManager.h"
-// Å×½ºÆ®¿ë Çì´õ
+// í…ŒìŠ¤íŠ¸ìš© í—¤ë”
 
 extern RoomManager* g_RoomManager;
 //////////////////////////////////////////////////////////////////////////
@@ -55,7 +55,7 @@ void ClientSession::HandleLoginRequest( LoginRequest& inPacket )
 {
 	m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size );
 
-	/// ·Î±×ÀÎÀº DB ÀÛ¾÷À» °ÅÃÄ¾ß ÇÏ±â ¶§¹®¿¡ DB ÀÛ¾÷ ¿äÃ»ÇÑ´Ù.
+	/// ë¡œê·¸ì¸ì€ DB ìž‘ì—…ì„ ê±°ì³ì•¼ í•˜ê¸° ë•Œë¬¸ì— DB ìž‘ì—… ìš”ì²­í•œë‹¤.
 	LoadPlayerDataContext* newDbJob = new LoadPlayerDataContext( m_Socket, inPacket.m_PlayerId );
 	g_DatabaseJobManager->PushDatabaseJobRequest( newDbJob );
 }
@@ -75,7 +75,7 @@ void ClientSession::HandleChatRequest( ChatBroadcastRequest& inPacket )
 	strcpy_s( outPacket.m_Name, m_PlayerName );
 	strcpy_s( outPacket.m_Chat, inPacket.m_Chat );
 
-	/// Ã¤ÆÃÀº ¹Ù·Î ¹æ¼Û ÇÏ¸é ³¡
+	/// ì±„íŒ…ì€ ë°”ë¡œ ë°©ì†¡ í•˜ë©´ ë
 	if ( !Broadcast( &outPacket ) )
 	{
 		Disconnect();
@@ -97,15 +97,15 @@ void ClientSession::HandleGameOverRequest( GameOverRequest& inPacket )
 	packetMessage.append( inPacket.m_Chat );
 
 	//////////////////////////////////////////////////////////////////////////
-	// Å×½ºÆ®¿ëÀ¸·Î ÀÓ½Ã·Î ºÙ¿©µÒ
+	// í…ŒìŠ¤íŠ¸ìš©ìœ¼ë¡œ ìž„ì‹œë¡œ ë¶™ì—¬ë‘ 
 	//////////////////////////////////////////////////////////////////////////
 	try
 	{
 		int pid = stoi( packetMessage.substr( 1, 4 ) );
-		// ¿¹¿Ü »óÈ²ÀÌ ¹ß»ý ÇÒ ¼ö ÀÖÀ½
+		// ì˜ˆì™¸ ìƒí™©ì´ ë°œìƒ í•  ìˆ˜ ìžˆìŒ
 		//
-		// 1) 4±ÛÀÚ ¹Ì¸¸ÀÏ °æ¿ì Æã!
-		// 2) ¼ýÀÚ°¡ ¾Æ´Ò °æ¿ì Æã!
+		// 1) 4ê¸€ìž ë¯¸ë§Œì¼ ê²½ìš° íŽ‘!
+		// 2) ìˆ«ìžê°€ ì•„ë‹ ê²½ìš° íŽ‘!
 
 		GameOverResult outPacket;
 		outPacket.m_PlayerId = pid;
@@ -121,7 +121,7 @@ void ClientSession::HandleGameOverRequest( GameOverRequest& inPacket )
 
 		printf_s( "[GameOverMessage][%d]%s \n", inPacket.m_PlayerId, inPacket.m_Chat );
 
-		/// Ã¤ÆÃÀº ¹Ù·Î ¹æ¼Û ÇÏ¸é ³¡
+		/// ì±„íŒ…ì€ ë°”ë¡œ ë°©ì†¡ í•˜ë©´ ë
 		if ( !Broadcast( &outPacket ) )
 		{
 			Disconnect();
@@ -148,7 +148,7 @@ void ClientSession::HandleRoomCreateRequest( RoomCreateRequest& inPacket )
 
 	try
 	{
-		// ¾îÂ÷ÇÇ ¹æ ¸¸µé°í ¿äÃ»ÇÏ´Â »ç¶÷À» ±×¹æÀ¸·Î ³Ö¾îÁÖ´Â°Ô ÁÁÀ»±î?
+		// ì–´ì°¨í”¼ ë°© ë§Œë“¤ê³  ìš”ì²­í•˜ëŠ” ì‚¬ëžŒì„ ê·¸ë°©ìœ¼ë¡œ ë„£ì–´ì£¼ëŠ”ê²Œ ì¢‹ì„ê¹Œ?
 		int pid = inPacket.m_PlayerId;
 
 		int roomNumber = g_RoomManager->AddRoom();
@@ -203,7 +203,7 @@ void ClientSession::HandleRoomChangeRequest( RoomChangeRequest& inPacket )
 			Disconnect( );
 		}
 
-		g_RoomManager->PrintClientList(); // Å×½ºÆ® ÇÁ¸°Æ®
+		g_RoomManager->PrintClientList(); // í…ŒìŠ¤íŠ¸ í”„ë¦°íŠ¸
 	}
 	catch ( ... )
 	{
@@ -282,13 +282,13 @@ void ClientSession::HandleMoveCorpsRequest( MoveCorpsRequest& inPacket )
 		}
 
 		// MOVE!!!!!!;
-		// ¹Ì±¸Çö
+		// ë¯¸êµ¬í˜„
 
 		MoveCorpsResult outPacket;
 		outPacket.m_PlayerId = m_PlayerId;
-		outPacket.m_CorpsID = corpsID; // ¹Ì±¸Çö
+		outPacket.m_CorpsID = corpsID; // ë¯¸êµ¬í˜„
 		outPacket.m_Position = position;
-		outPacket.m_CorpsID = -1; // ¹Ì±¸Çö
+		outPacket.m_CorpsID = -1; // ë¯¸êµ¬í˜„
 
 
 
