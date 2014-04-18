@@ -6,6 +6,7 @@
 #include "DummyRender.h"
 #include "InputDispatcher.h"
 #include "CameraController.h"
+#include "Timer.h"
 
 
 
@@ -63,6 +64,7 @@ bool GameManager::Process()
 	}
 	// 업데이트
 
+	Timer::GetInstance()->Tick();
 	InputDispatcher::GetInstance()->DispatchKeyInput();
 	NetworkManager::GetInstance()->ProcessPacket();
 	
@@ -81,6 +83,11 @@ bool GameManager::Process()
 		Renderer::GetInstance()->RenderMap();
 		Renderer::GetInstance()->Render( m_Mesh );
 	}
+
+	UINT deltaTime = Timer::GetInstance()->GetElapsedTime();
+	wchar_t ws[100] = { 0, };
+	wsprintf( ws, L"Elapsed : %d", deltaTime );
+	Renderer::GetInstance()->WriteText( ws, 20, 20 );
 
 	return true;
 }
@@ -103,4 +110,6 @@ void GameManager::Destroy()
 
 	CameraController::Release();
 	InputDispatcher::Release();
+
+	Timer::Release();
 }

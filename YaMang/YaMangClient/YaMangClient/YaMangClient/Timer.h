@@ -6,13 +6,12 @@ class Timer : public Singleton<Timer>
 public:
 	Timer();
 	~Timer();
-
-
-	UINT	GetNowTime();
-	UINT	GetElapsedTime() { return m_GameStartTime - GetNowTime(); }
+	
+	void	Tick();
+	UINT	GetElapsedTime() { return m_DeltaTime; }
 
 private:
-	UINT	m_GameStartTime = 0;
-
+	UINT	m_PrevTime = 0;
+	UINT	m_DeltaTime = 0;
 };
 

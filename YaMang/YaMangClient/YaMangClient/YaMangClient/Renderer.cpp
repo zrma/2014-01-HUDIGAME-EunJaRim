@@ -21,6 +21,8 @@ bool Renderer::Init()
 		GetWindowRect( MainWindow::GetInstance()->Window(), &rect );
 		LONG width = rect.right - rect.left;
 		LONG height = rect.bottom - rect.left;
+
+		m_PrevTime = timeGetTime();
 	}
 
 	return m_Result;
@@ -63,6 +65,19 @@ void Renderer::Render( MESHOBJECT* mesh )
 
 		Rendering( mesh );
 	}
+
+	UINT nowTime = timeGetTime();
+	if ( m_PrevTime + 1000 < nowTime )
+	{
+		m_PrevTime = nowTime;
+		m_FPS = m_Frame;
+		m_Frame = 0;	
+	}
+
+	wchar_t ws[100] = { 0, };
+	wsprintf( ws, L"FPS : %d", m_FPS );
+	RenderText( ws, 20, 40 );
+	m_Frame++;
 }
 
 void Renderer::RenderMap()

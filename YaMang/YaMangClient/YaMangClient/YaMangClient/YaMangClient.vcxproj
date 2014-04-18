@@ -84,6 +84,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\SharedPreference\EnumSet.h" />
     <ClInclude Include="..\..\..\SharedPreference\PacketType.h" />
     <ClInclude Include="..\..\..\SharedPreference\SharedDefine.h" />
     <ClInclude Include="Action.h" />

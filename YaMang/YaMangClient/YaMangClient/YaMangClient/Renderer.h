@@ -38,4 +38,8 @@ private:
 	bool	m_Result = false;
 	bool	m_IsReady = false;
 	bool	m_IsMapReady = false;
+	
+	UINT	m_PrevTime = 0;
+	UINT	m_Frame = 0;
+	UINT	m_FPS = 0;
 };

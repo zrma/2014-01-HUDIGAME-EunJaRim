@@ -151,6 +151,9 @@
     <ClInclude Include="TextObject.h">
       <Filter>Render</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\SharedPreference\EnumSet.h">
+      <Filter>SharedPreference</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
