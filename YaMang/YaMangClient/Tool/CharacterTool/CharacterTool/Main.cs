@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 
-namespace CharacterTool
+namespace YamangTools
 {
     public partial class Main : Form
     {
