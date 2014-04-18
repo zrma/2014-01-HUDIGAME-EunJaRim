@@ -36,8 +36,10 @@ public:
 	void	AddHeight( FLOAT height ) { m_Height += height; }
 	void	SetHeight( FLOAT height ) { m_Height = height; }
 
-	D3DXMATRIXA16	GetMatrix();
-	D3DXMATRIXA16	GetInvMatrix();
+	D3DXMATRIXA16	GetViewMatrix() { m_ViewMatrix; }
+	D3DXMATRIXA16	GetProjMatrix() { m_ProjMatrix; }
+	D3DXMATRIXA16	GetInvViewMatrix();
+	D3DXMATRIXA16	GetInvProjMatrix();
 
 	void	MoveForward( float speed ); //< 앞뒤이동
 	void	MoveSide( float speed ); //< 좌우이동

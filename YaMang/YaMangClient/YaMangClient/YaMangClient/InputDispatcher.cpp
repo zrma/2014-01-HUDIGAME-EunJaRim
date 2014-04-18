@@ -110,43 +110,30 @@ void NetworkManager::RequestChat( ChatBroadcastRequest& outPacket )
 	}
 }
 
-REGISTER_KEY_HANDLER( VK_UP )
+REGISTER_KEY_HANDLER( VK_SPACE )
 {
 	switch ( inputKey.GetKeyStatus() )
 	{
 		case KeyStatus::KEY_DOWN:
-			Log( "Up키 눌렀다! \n" );
+		{
+			ChatBroadcastRequest reqPacket;
+			strcpy_s( reqPacket.m_Chat, "Key Down!" );
+			NetworkManager::GetInstance()->RequestChat( reqPacket );
+		}
 			break;
 		case KeyStatus::KEY_PRESSED:
-			Log( "Up키 누르고 있다! \n" );
+			// Log( "** 키 누르고 있다! ** \n" );
 			break;
 		case KeyStatus::KEY_UP:
-			Log( "Up키 뗐다! \n" );
+		{
+			ChatBroadcastRequest reqPacket;
+			strcpy_s( reqPacket.m_Chat, "Key Up!" );
+			NetworkManager::GetInstance()->RequestChat( reqPacket );
+		}
 			break;
 		default:
 			break;
 	}
-}
-
-REGISTER_KEY_HANDLER( VK_DOWN )
-{
-}
-
-REGISTER_KEY_HANDLER( VK_LEFT )
-{
-}
-
-REGISTER_KEY_HANDLER( VK_RIGHT )
-{
-// 	ChatBroadcastRequest reqPacket;
-// 	strcpy_s( reqPacket.m_Chat, "IsMoveRightOK" );
-// 
-// 	NetworkManager::GetInstance()->RequestChat( reqPacket );
-}
-
-REGISTER_KEY_HANDLER( VK_SPACE )
-{
-	CameraController::GetInstance()->Init();
 }
 
 REGISTER_KEY_HANDLER( VK_ESCAPE )
@@ -176,22 +163,22 @@ REGISTER_KEY_HANDLER( VK_D )
 
 REGISTER_KEY_HANDLER( VK_Q )
 {
-	CameraController::GetInstance()->TransCamera( TransType::TRANS_TYPE_ROTATE_Y, 0.05f );
+	CameraController::GetInstance()->RotateSide( -0.05f );
 }
 
 REGISTER_KEY_HANDLER( VK_E )
 {
-	CameraController::GetInstance()->TransCamera( TransType::TRANS_TYPE_ROTATE_Y, -0.05f );
+	CameraController::GetInstance()->RotateSide( 0.05f );
 }
 
 REGISTER_KEY_HANDLER( VK_R )
 {
-	CameraController::GetInstance()->AddAxis( 0.02f );
+	CameraController::GetInstance()->RotateUp( -0.05f );
 }
 
 REGISTER_KEY_HANDLER( VK_F )
 {
-	CameraController::GetInstance()->AddAxis( -0.02f );
+	CameraController::GetInstance()->RotateUp( 0.05f );
 }
 
 REGISTER_KEY_HANDLER( VK_C )
