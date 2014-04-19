@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "PacketType.h"
 #include "NetworkManager.h"
 #include "GameManager.h"
@@ -49,10 +49,10 @@ void NetworkManager::HandleLoginResult( LoginResult& inPacket )
 {
 	if ( m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size ) )
 	{
-		// ÆĞÅ¶Ã³¸®
+		// íŒ¨í‚·ì²˜ë¦¬
 		if ( inPacket.m_PlayerId == -1 )
 		{
-			/// ¿©±â °É¸®¸é ·Î±×ÀÎ ½ÇÆĞ´Ù.
+			/// ì—¬ê¸° ê±¸ë¦¬ë©´ ë¡œê·¸ì¸ ì‹¤íŒ¨ë‹¤.
 			GameManager::GetInstance()->Stop();
 		}
 
@@ -75,7 +75,7 @@ void NetworkManager::HandleGameOverResult( GameOverResult& inPacket )
 {
 	if ( m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size ) )
 	{
-		/// ¿©±â °É¸®¸é ¼­¹ö·ÎºÎÅÍ Àß¸øµÈ ¾ÆÀÌµğ°¡ ³Ñ¾î¿Â°Í
+		/// ì—¬ê¸° ê±¸ë¦¬ë©´ ì„œë²„ë¡œë¶€í„° ì˜ëª»ëœ ì•„ì´ë””ê°€ ë„˜ì–´ì˜¨ê²ƒ
 		assert( inPacket.m_PlayerId != -1 );
 
 		if ( m_MyPlayerId != inPacket.m_PlayerId )
@@ -108,7 +108,7 @@ void NetworkManager::HandleChatResult( ChatBroadcastResult& inPacket )
 {
 	if ( m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size ) )
 	{
-		/// ¿©±â °É¸®¸é ·Î±×ÀÎ ¾ÈµÈ³ğÀÌ º¸³½°Å´Ù
+		/// ì—¬ê¸° ê±¸ë¦¬ë©´ ë¡œê·¸ì¸ ì•ˆëœë†ˆì´ ë³´ë‚¸ê±°ë‹¤
 		assert( inPacket.m_PlayerId != -1 );
 
 		char buff[MAX_CHAT_LEN] = { 0, };
@@ -145,7 +145,7 @@ void NetworkManager::HandleGenerateCorpsResult( GenerateCorpsResult& inPacket )
 {
 	if ( m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size ) )
 	{
-		/// ¿©±â °É¸®¸é ·Î±×ÀÎ ¾ÈµÈ³ğÀÌ º¸³½°Å´Ù
+		/// ì—¬ê¸° ê±¸ë¦¬ë©´ ë¡œê·¸ì¸ ì•ˆëœë†ˆì´ ë³´ë‚¸ê±°ë‹¤
 		assert( inPacket.m_PlayerId != -1 );
 
 		UnitType unitType = inPacket.m_UnitType;
@@ -155,8 +155,8 @@ void NetworkManager::HandleGenerateCorpsResult( GenerateCorpsResult& inPacket )
 
 		if ( m_MyPlayerId != inPacket.m_PlayerId )
 		{
-			// ¿ø·¡´Â ¸®½ºÆ®¿¡ ³Ö±ä ÇØ¾ßÇÔ
-			// ¾Æ´Ï¸é Corps±¸Á¶¿¡ ´©±¸²¨ÀÎÁö°¡ ÇÊ¿ä
+			// ì›ë˜ëŠ” ë¦¬ìŠ¤íŠ¸ì— ë„£ê¸´ í•´ì•¼í•¨
+			// ì•„ë‹ˆë©´ Corpsêµ¬ì¡°ì— ëˆ„êµ¬êº¼ì¸ì§€ê°€ í•„ìš”
 			//return;
 		}
 		else
@@ -177,7 +177,7 @@ void NetworkManager::HandleGenerateCorpsResult( GenerateCorpsResult& inPacket )
 		}
 		else
 		{
-			//ÇÃ·¹ÀÌÁßÀÌ ¾Æ´Ñµ¥ ÇÃ·¹ÀÌ¿ë ÆĞÅ¶À» ¹ŞÀ½ 
+			//í”Œë ˆì´ì¤‘ì´ ì•„ë‹Œë° í”Œë ˆì´ìš© íŒ¨í‚·ì„ ë°›ìŒ 
 			assert( false );
 		}
 		
