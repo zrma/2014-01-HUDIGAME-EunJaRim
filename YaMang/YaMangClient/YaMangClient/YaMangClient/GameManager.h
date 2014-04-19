@@ -17,6 +17,4 @@ public:
 
 private:
 	bool			m_Continue = true;
-
-	MESHOBJECT*		m_Mesh;
 };

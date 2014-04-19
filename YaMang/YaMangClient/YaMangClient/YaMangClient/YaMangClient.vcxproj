@@ -114,6 +114,7 @@
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Interface3D.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="RushFormation.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneLoad.h" />
@@ -157,6 +158,7 @@
     <ClCompile Include="Pike.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Interface3D.cpp" />
+    <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="RushFormation.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneLoad.cpp" />

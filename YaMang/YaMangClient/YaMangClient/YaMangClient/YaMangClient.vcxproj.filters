@@ -29,6 +29,9 @@
     <Filter Include="Scene">
       <UniqueIdentifier>{36ad6daa-b950-43b1-9c25-c04abfb0ea0a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource">
+      <UniqueIdentifier>{90d90dd2-378d-4724-a957-884336741d01}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -169,6 +172,9 @@
     <ClInclude Include="SceneResult.h">
       <Filter>Scene</Filter>
     </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -290,6 +296,9 @@
     </ClCompile>
     <ClCompile Include="SceneResult.cpp">
       <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>Resource</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
