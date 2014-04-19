@@ -6,6 +6,7 @@
 #include "DatabaseJobManager.h"
 #include "RoomManager.h"
 #include "Unit.h"
+#include "Corps.h"
 
 // EasyServer.cpp 에서 클라이언트 매니저에서 CreateClient 한 후에
 // 소켓 객체로부터 getpeername()를 이용해 주소 값을 뽑아 와서 OnConnect() 호출

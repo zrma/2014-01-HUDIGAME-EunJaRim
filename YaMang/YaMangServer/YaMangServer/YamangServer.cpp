@@ -12,8 +12,6 @@
 #include "tinyxml.h"
 #include "xpath_static.h"
 #include "RoomManager.h"
-#include "GameStartHandler.h"
-
 
 #pragma comment(lib,"ws2_32.lib")
 

@@ -101,7 +101,6 @@
     <ClInclude Include="DefenseFormation.h" />
     <ClInclude Include="DestroyFormation.h" />
     <ClInclude Include="Exception.h" />
-    <ClInclude Include="GameStartHandler.h" />
     <ClInclude Include="Guard.h" />
     <ClInclude Include="HoldPosition.h" />
     <ClInclude Include="Knight.h" />
@@ -140,7 +139,6 @@
     <ClCompile Include="DestroyFormation.cpp" />
     <ClCompile Include="EventHandler.cpp" />
     <ClCompile Include="Exception.cpp" />
-    <ClCompile Include="GameStartHandler.cpp" />
     <ClCompile Include="Guard.cpp" />
     <ClCompile Include="HoldPosition.cpp" />
     <ClCompile Include="Knight.cpp" />

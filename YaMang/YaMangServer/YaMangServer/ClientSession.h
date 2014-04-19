@@ -4,8 +4,6 @@
 #include "PacketType.h"
 #include "CircularBuffer.h"
 #include "ObjectPool.h"
-#include "Corps.h"
-#include <hash_map>
 #include "EnumSet.h"
 
 #define BUFSIZE	(1024*10)
@@ -13,6 +11,7 @@
 class ClientSession;
 class ClientManager;
 struct DatabaseJobContext;
+class Corps;
 
 struct OverlappedIO: public OVERLAPPED
 {

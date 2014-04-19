@@ -28,9 +28,6 @@
     <Filter Include="Event">
       <UniqueIdentifier>{6c02102e-cbb6-4bdf-a200-187a3965d68f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="temp">
-      <UniqueIdentifier>{04646a2e-5cd4-42a4-8c2a-9c57ea94a1c9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="SharedPreference">
       <UniqueIdentifier>{480bf115-e28e-4614-b6c4-3bbe6d7b7492}</UniqueIdentifier>
     </Filter>
@@ -141,9 +138,6 @@
     <ClInclude Include="TakeArea.h">
       <Filter>Event</Filter>
     </ClInclude>
-    <ClInclude Include="GameStartHandler.h">
-      <Filter>temp</Filter>
-    </ClInclude>
     <ClInclude Include="WorldMap.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -241,9 +235,6 @@
     </ClCompile>
     <ClCompile Include="TakeArea.cpp">
       <Filter>Event</Filter>
-    </ClCompile>
-    <ClCompile Include="GameStartHandler.cpp">
-      <Filter>temp</Filter>
     </ClCompile>
     <ClCompile Include="WorldMap.cpp">
       <Filter>소스 파일</Filter>
