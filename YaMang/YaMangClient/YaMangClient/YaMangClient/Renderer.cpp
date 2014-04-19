@@ -2,6 +2,7 @@
 #include "YaMangDxDll.h"
 #include "Renderer.h"
 #include "MainWindow.h"
+#include "ResourceManager.h"
 
 Renderer::Renderer()
 {
@@ -30,8 +31,6 @@ bool Renderer::Init()
 
 void Renderer::Destroy()
 {
-	DeleteMap();
-
 	if ( m_Result )
 	{
 		D3DCleanUp( );
@@ -78,44 +77,9 @@ void Renderer::RenderMesh( MESHOBJECT* mesh )
 
 void Renderer::RenderMap()
 {
-	if ( m_IsMapReady )
+	if ( ResourceManager::GetInstance()->IsMapReady() )
 	{
 		HeightMapRender( );
-	}
-}
-
-bool Renderer::CreateMap( LPCTSTR& heightMapFileName, LPCTSTR& textureFileName )
-{
-	m_IsMapReady = ( S_OK == HeightMapTextureImport(
-		MainWindow::GetInstance()->Window(), heightMapFileName, textureFileName ) );
-
-	return m_IsMapReady;
-}
-
-void Renderer::DeleteMap()
-{
-	if ( m_IsMapReady )
-	{
-		HeightMapCleanup( );
-	}
-
-	m_IsMapReady = false;
-}
-
-bool Renderer::CreateMesh( LPCTSTR& fileName, MESHOBJECT* mesh )
-{
-	if ( S_OK == InitGeometry( MainWindow::GetInstance( )->Window( ), fileName, mesh ) )
-	{
-		return true;
-	}
-	return false;
-}
-
-void Renderer::DeleteMesh( MESHOBJECT* mesh )
-{
-	if ( mesh )
-	{
-		MeshObjectCleanUp( mesh );
 	}
 }
 

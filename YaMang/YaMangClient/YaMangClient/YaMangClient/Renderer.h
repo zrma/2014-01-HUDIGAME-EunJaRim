@@ -19,13 +19,7 @@ public:
 	void	RenderMesh( MESHOBJECT* mesh );
 	void	RenderMap();
 	void	ResizeWindow( LONG width, LONG height );
-	
-	bool	CreateMap( LPCTSTR& heightMapFileName, LPCTSTR& textureFileName );
-	void	DeleteMap();
 
-	bool	CreateMesh( LPCTSTR& fileName, MESHOBJECT* mesh );
-	void	DeleteMesh( MESHOBJECT* mesh );
-	
 	void	SetCamera( D3DXMATRIXA16& matrix );
 	
 	D3DVIEWPORT9	GetViewPort();
@@ -39,7 +33,6 @@ public:
 private:
 	bool	m_Result = false;
 	bool	m_IsReady = false;
-	bool	m_IsMapReady = false;
 	
 	UINT	m_PrevTime = 0;
 	UINT	m_Frame = 0;

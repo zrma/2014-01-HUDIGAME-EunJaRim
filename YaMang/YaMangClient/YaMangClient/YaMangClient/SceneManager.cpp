@@ -26,11 +26,10 @@ void SceneManager::Init()
 
 void SceneManager::Destroy()
 {
-	for ( auto iter : m_SceneList )
+	for ( auto& toBeDelete : m_SceneList )
 	{
-		if ( iter != nullptr )
+		if ( toBeDelete != nullptr )
 		{
-			auto& toBeDelete = iter;
 			toBeDelete->Destroy();
 			delete toBeDelete;
 		}

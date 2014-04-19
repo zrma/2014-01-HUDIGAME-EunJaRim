@@ -10,22 +10,17 @@ struct Resource
 	ResourceType m_Type;
 };
 
-struct ResourceWidgetMesh: public Resource
+struct ResourceMesh: public Resource
 {
-	ResourceWidgetMesh()
+	ResourceMesh()
 	{
-		m_Type = RESOURCE_WIDGET_MESH;
+		m_Type = RESOURCE_MESH;
 	}
 	MESHOBJECT*	m_MeshObject = nullptr;
 };
 
-struct ResourceWidgetBitmap: public Resource
+struct ResourceMap: public Resource
 {
-	ResourceWidgetBitmap()
-	{
-		m_Type = RESOURCE_WIDGET_BITMAP;
-	}
-	
 	LPCTSTR	m_HeightMap = nullptr;
 	LPCTSTR m_TextureMap = nullptr;
 };
@@ -36,10 +31,23 @@ public:
 	ResourceManager();
 	~ResourceManager();
 
-	void Init();
-	void Destroy();
+	void	Init();
+	void	Destroy();
+	bool	IsMapReady() { return m_IsMapReady; }
+	
+	ResourceMesh*	GetMeshByKey( MeshKeyType key ) const;
 
 private:
-	std::hash_map<WidgetType, Resource*>	m_ResourceManager;
-};
+	void	AddMap( LPCTSTR& heightMapFileName, LPCTSTR& textureFileName, MapKeyType key );
+	bool	CreateMap( MeshKeyType key );
+	void	DeleteMap();
 
+	bool	AddMesh( LPCTSTR& fileName, MeshKeyType key );
+	bool	CreateMesh( LPCTSTR& fileName, MESHOBJECT* mesh );
+	void	DeleteMesh( MESHOBJECT* mesh );
+
+	std::array<ResourceMesh*, MESH_KEY_MAX>	m_MeshList;
+	std::array<ResourceMap*, MAP_KEY_MAX> m_MapList;
+	
+	bool	m_IsMapReady = false;
+};

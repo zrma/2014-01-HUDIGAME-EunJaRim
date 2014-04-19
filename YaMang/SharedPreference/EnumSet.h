@@ -24,35 +24,32 @@ enum SceneType
 	SCENE_MAX
 };
 
-enum WidgetType
+enum MeshKeyType
 {
-	WIDGET_NONE,
-	//////////////////////////////////////////////////////////////////////////
-	WIDGET_MESH_NONE,
+	MESH_KEY_NONE,
+	
+	MESH_KEY_UNIT_SWORD,
+	MESH_KEY_UNIT_PIKE,
+	MESH_KEY_UNIT_ARROW,
+	MESH_KEY_UNIT_KNIGHT,
 
-	WIDGET_MESH_UNIT_SWORD,
-	WIDGET_MESH_UNIT_PIKE,
-	WIDGET_MESH_UNIT_ARROW,
-	WIDGET_MESH_UNIT_KNIGHT,
+	MESH_KEY_MAX
+};
 
-	WIDGET_MESH_MAX,
-	//////////////////////////////////////////////////////////////////////////
-	WIDGET_MAP_NONE,
+enum MapKeyType
+{
+	MAP_KEY_NONE,
 
-	WIDGET_MAP_HEIGHT,
-	WIDGET_MAP_TEXTURE,
+	MAP_KEY_KOREA,
 
-	WIDGET_MAP_MAX,
-	//////////////////////////////////////////////////////////////////////////
-	WIDGET_MAX
+	MAP_KEY_MAX
 };
 
 enum ResourceType
 {
 	RESOURCE_NONE,
 
-	RESOURCE_WIDGET_MESH,
-	RESOURCE_WIDGET_BITMAP,
+	RESOURCE_MESH,
 	RESOURCE_SOUNDE,
 
 	RESOURCE_MAX
