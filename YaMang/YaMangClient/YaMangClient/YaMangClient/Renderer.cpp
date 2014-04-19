@@ -164,3 +164,16 @@ D3DXMATRIXA16 Renderer::GetViewMatrix()
 	return viewMatrix;
 }
 
+void Renderer::CreateTextRenderer( LPCWSTR fontType /*= L"맑은 고딕"*/, int fontHeight /*= 20*/, int fontWidth /*= 0 */ )
+{
+	InitTextRenderer( fontType, fontHeight, fontWidth );
+}
+
+void Renderer::DeleteTextRenderer()
+{
+	if ( m_Result )
+	{
+		CleanUpTextRenderer();
+	}
+}
+
