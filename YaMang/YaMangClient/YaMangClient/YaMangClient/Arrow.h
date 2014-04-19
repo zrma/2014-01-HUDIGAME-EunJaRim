@@ -6,5 +6,7 @@ class Arrow:
 public:
 	Arrow();
 	~Arrow();
+
+	void	Update();
 };
 

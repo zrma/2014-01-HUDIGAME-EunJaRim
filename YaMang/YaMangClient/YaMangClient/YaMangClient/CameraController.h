@@ -26,7 +26,7 @@ private:
 	FLOAT			m_Height = 0;
 
 	D3DXVECTOR3		m_EyePoint = { 0, 0, 0 };
-	D3DXVECTOR3		m_LookAtPoint = { 0, -0.01f, -1.0f };
+	D3DXVECTOR3		m_LookAtPoint = { 0, -0.01f, 1.0f };
 	D3DXVECTOR3		m_UpVector = { 0, 1, 0 };
 
 	static CameraController*		m_Instance;
