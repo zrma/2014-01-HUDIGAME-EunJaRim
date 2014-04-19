@@ -21,6 +21,7 @@ public:
 	void	HandleLoginResult( LoginResult& inPacket );
 	void	HandleGameOverResult( GameOverResult& inPacket );
 	void	HandleChatResult( ChatBroadcastResult& inPacket );
+	void	HandleGenerateCorpsResult( GenerateCorpsResult& inPacket );
 
 	//////////////////////////////////////////////////////////////////////////
 	// 리퀘스트 패킷 보내기

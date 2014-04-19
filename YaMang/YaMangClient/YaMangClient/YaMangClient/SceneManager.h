@@ -16,6 +16,8 @@ public:
 	void	Update();
 	void	Render();
 
+	Scene*	GetNowScene() { return m_NowScene; }
+
 private:
 	std::array<Scene*, SCENE_MAX>		m_SceneList;
 	Scene*	m_NowScene = nullptr;

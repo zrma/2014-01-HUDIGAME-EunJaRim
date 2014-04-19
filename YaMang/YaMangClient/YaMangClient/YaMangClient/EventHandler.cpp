@@ -2,6 +2,9 @@
 #include "PacketType.h"
 #include "NetworkManager.h"
 #include "GameManager.h"
+#include "Corps.h"
+#include "SceneManager.h"
+#include "ScenePlay.h"
 
 HandlerFunc HandlerTable[PKT_MAX];
 
@@ -112,6 +115,63 @@ void NetworkManager::HandleChatResult( ChatBroadcastResult& inPacket )
 		sprintf_s( buff, "CHAT from Player[%s]: %s \n", inPacket.m_Name, inPacket.m_Chat );
 
 		Log( "%s \n", buff );
+	}
+	else
+	{
+		assert( false );
+	}
+}
+
+
+// m_Size = sizeof( GenerateCorpsResult );
+// m_Type = PKT_SC_GENERATE_CORPS;
+// m_UnitType = UNIT_NONE;
+// m_Position = { NOT_A_NUMBER_FLOAT, NOT_A_NUMBER_FLOAT };
+// m_CorpsID = -1;
+// m_PlayerId = -1;
+// 	}
+// 
+// 	UnitType m_UnitType;
+// 	Position m_Position;
+// 	int		 m_CorpsID;
+// 	int		 m_PlayerId;
+REGISTER_HANDLER( PKT_SC_GENERATE_CORPS )
+{
+		GenerateCorpsResult recvData = static_cast<GenerateCorpsResult&>( pktBase );
+		NetworkManager::GetInstance( )->HandleGenerateCorpsResult( recvData );
+}
+
+void NetworkManager::HandleGenerateCorpsResult( GenerateCorpsResult& inPacket )
+{
+	if ( m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size ) )
+	{
+		/// 여기 걸리면 로그인 안된놈이 보낸거다
+		assert( inPacket.m_PlayerId != -1 );
+
+		UnitType unitType = inPacket.m_UnitType;
+		Position position = inPacket.m_Position;
+		int corpsID = inPacket.m_CorpsID;
+		int playerID = inPacket.m_PlayerId;
+
+		if ( m_MyPlayerId != inPacket.m_PlayerId )
+		{
+			// 원래는 리스트에 넣긴 해야함
+			// 아니면 Corps구조에 누구꺼인지가 필요
+			//return;
+		}
+		else
+		{
+			
+		}
+
+		Corps* corps = new Corps();
+		corps->Create( 1, unitType );
+		corps->SetVisible( true );
+		ScenePlay* scenePlay = static_cast<ScenePlay*>(SceneManager::GetInstance( )->GetNowScene( ));
+		scenePlay->AddCorps( corpsID, corps );
+
+		Log( "GenerateCorps! Type:%d CorpID:%d \n", unitType, corpsID );
+	
 	}
 	else
 	{
