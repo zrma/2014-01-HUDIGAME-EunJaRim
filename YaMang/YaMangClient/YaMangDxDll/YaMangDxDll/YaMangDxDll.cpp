@@ -82,6 +82,23 @@ YAMANGDXDLL_API HRESULT InitD3D( HWND hWnd, long width, long height )
 
 	SetAspectRatio( width, height );
 
+	//텍스트 출력 자원 초기화
+	D3DXCreateFont(
+		g_D3dDevice						// Device 객체 
+		, 30					// 폰트 높이 
+		, 0					// 폰트 길이 
+		, FW_NORMAL						// 폰트 굵기 (기본 FW_BOLD) 
+		, 1								// 밉레벨 
+		, false							// 폰트 기울기 켜기/끄기 설정 
+		, DEFAULT_CHARSET				// 문자셋 
+		, OUT_DEFAULT_PRECIS			// 출력 정확도 설정 
+		, DEFAULT_QUALITY				// 퀄리티 설정 
+		, DEFAULT_PITCH | FF_DONTCARE	// 피치 설정 
+		, L"맑은 고딕"						// 글꼴 설정 
+		, &g_Font						// 초기화할 Font 
+		);								// 폰트 초기화
+
+	D3DXCreateSprite( g_D3dDevice, &g_Sprite ); // 스프라이트 초기화 
 #ifdef _PRINT_CONSOLE
 	Logger::GetInstance();
 #endif
@@ -353,6 +370,17 @@ YAMANGDXDLL_API void D3DCleanUp()
 		g_D3D->Release();
 	}
 
+	// 텍스트 소멸자 합침
+	if ( g_Font != NULL )
+	{
+		g_Font->Release();
+	}
+
+	if ( g_Sprite != NULL )
+	{
+		g_Sprite->Release();
+	}
+
 #ifdef _PRINT_CONSOLE
 	Logger::Release();
 #endif
@@ -591,41 +619,6 @@ YAMANGDXDLL_API void GetD3DViewMatrix( D3DXMATRIXA16* viewMatrix )
 	if ( g_D3dDevice )
 	{
 		g_D3dDevice->GetTransform( D3DTS_VIEW, viewMatrix );
-	}
-}
-
-YAMANGDXDLL_API void InitTextRenderer( LPCWSTR fontType, int fontHeight, int fontWidth )
-{
-	//텍스트 출력 자원 초기화
-	D3DXCreateFont( 
-		g_D3dDevice						// Device 객체 
-		, fontHeight					// 폰트 높이 
-		, fontWidth						// 폰트 길이 
-		, FW_NORMAL						// 폰트 굵기 (기본 FW_BOLD) 
-		, 1								// 밉레벨 
-		, false							// 폰트 기울기 켜기/끄기 설정 
-		, DEFAULT_CHARSET				// 문자셋 
-		, OUT_DEFAULT_PRECIS			// 출력 정확도 설정 
-		, DEFAULT_QUALITY				// 퀄리티 설정 
-		, DEFAULT_PITCH | FF_DONTCARE	// 피치 설정 
-		, fontType						// 글꼴 설정 
-		, &g_Font						// 초기화할 Font 
-		);								// 폰트 초기화
-
-	D3DXCreateSprite( g_D3dDevice, &g_Sprite ); // 스프라이트 초기화 
-}
-
-YAMANGDXDLL_API void CleanUpTextRenderer()
-{
-	// 텍스트 소멸자 합침
-	if ( g_Font != NULL )
-	{
-		g_Font->Release();
-	}
-
-	if ( g_Sprite != NULL )
-	{
-		g_Sprite->Release();
 	}
 }
 

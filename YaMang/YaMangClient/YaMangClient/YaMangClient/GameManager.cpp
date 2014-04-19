@@ -44,9 +44,6 @@ bool GameManager::Init()
 	// 카메라 초기화
 	CameraController::GetInstance()->Init();
 
-	//텍스트 렌더러 초기화
-	Renderer::GetInstance()->CreateTextRenderer();
-
 	return true;
 }
 
@@ -99,8 +96,6 @@ void GameManager::Destroy()
 
 	CameraController::Release();
 	InputDispatcher::Release();
-
-	Renderer::GetInstance()->DeleteTextRenderer();
 
 	Timer::Release();
 }

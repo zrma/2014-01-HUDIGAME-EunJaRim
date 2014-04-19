@@ -26,9 +26,7 @@ public:
 	D3DXMATRIXA16	GetProjMatrix();
 	D3DXMATRIXA16	GetViewMatrix();
 
-	void	CreateTextRenderer( LPCWSTR fontType = L"맑은 고딕", int fontHeight = 20, int fontWidth = 0 );
 	void	WriteText( LPCWSTR text, float left, float top, int RGB_R = 255, int RGB_G = 255, int RGB_B = 255, float right = 0, float bottom = 0 );
-	void	DeleteTextRenderer();
 
 private:
 	bool	m_Result = false;
