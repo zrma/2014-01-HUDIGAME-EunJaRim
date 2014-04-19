@@ -1,7 +1,7 @@
 #pragma once
 #include "Scene.h"
 
-class Interface3D;
+class Corps;
 
 class ScenePlay:
 	public Scene
@@ -16,6 +16,6 @@ public:
 	void	Render();
 
 private:
-	std::hash_map<int, Interface3D*>	m_CorpsList;
+	std::hash_map<int, Corps*>	m_CorpsList;
 };
 

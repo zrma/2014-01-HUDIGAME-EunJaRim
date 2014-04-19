@@ -15,6 +15,12 @@ CameraController::~CameraController()
 
 void CameraController::Init()
 {
+// 	m_EyePoint = { 0.0f, 50.0f, 0.0f };
+// 	m_LookAtPoint = { 0.0f, 49.8f, -1.0f };
+
+	D3DXMATRIXA16 viewMatrix;
+	D3DXMatrixLookAtLH( &viewMatrix, &m_EyePoint, &m_LookAtPoint, &m_UpVector );
+	Renderer::GetInstance()->SetViewMatrix( viewMatrix );
 }
 
 D3DXMATRIXA16 CameraController::GetInvViewMatrix()
@@ -44,7 +50,7 @@ void CameraController::MoveForward( float speed )
 
 	D3DXMATRIXA16 viewMatrix;
 	D3DXMatrixLookAtLH( &viewMatrix, &m_EyePoint, &m_LookAtPoint, &m_UpVector );
-	Renderer::GetInstance()->SetCamera( viewMatrix );
+	Renderer::GetInstance()->SetViewMatrix( viewMatrix );
 }
 
 void CameraController::MoveSide( float speed )
@@ -57,7 +63,7 @@ void CameraController::MoveSide( float speed )
 
 	D3DXMATRIXA16 viewMatrix;
 	D3DXMatrixLookAtLH( &viewMatrix, &m_EyePoint, &m_LookAtPoint, &m_UpVector );
-	Renderer::GetInstance()->SetCamera( viewMatrix );
+	Renderer::GetInstance()->SetViewMatrix( viewMatrix );
 }
 
 void CameraController::RotateUp( float angle )
@@ -80,7 +86,7 @@ void CameraController::RotateUp( float angle )
 
 	D3DXMATRIXA16 viewMatrix;
 	D3DXMatrixLookAtLH( &viewMatrix, &m_EyePoint, &m_LookAtPoint, &m_UpVector );
-	Renderer::GetInstance()->SetCamera( viewMatrix );
+	Renderer::GetInstance()->SetViewMatrix( viewMatrix );
 }
 
 void CameraController::RotateSide( float angle )
@@ -96,7 +102,7 @@ void CameraController::RotateSide( float angle )
 
 	D3DXMATRIXA16 viewMatrix;
 	D3DXMatrixLookAtLH( &viewMatrix, &m_EyePoint, &m_LookAtPoint, &m_UpVector );
-	Renderer::GetInstance()->SetCamera( viewMatrix );
+	Renderer::GetInstance()->SetViewMatrix( viewMatrix );
 }
 
 D3DXMATRIXA16 CameraController::GetViewMatrix()

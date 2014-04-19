@@ -119,6 +119,8 @@ REGISTER_KEY_HANDLER( VK_SPACE )
 			ChatBroadcastRequest reqPacket;
 			strcpy_s( reqPacket.m_Chat, "Key Down!" );
 			NetworkManager::GetInstance()->RequestChat( reqPacket );
+
+			CameraController::GetInstance()->Init();
 		}
 			break;
 		case KeyStatus::KEY_PRESSED:

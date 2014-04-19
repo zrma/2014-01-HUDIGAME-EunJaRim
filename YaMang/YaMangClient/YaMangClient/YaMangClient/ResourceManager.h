@@ -35,11 +35,11 @@ public:
 	void	Destroy();
 	bool	IsMapReady() { return m_IsMapReady; }
 	
-	ResourceMesh*	GetMeshByKey( MeshKeyType key ) const;
+	ResourceMesh*	GetMeshByKey( MeshKeyType key ) { return m_MeshList[key]; }
 
 private:
 	void	AddMap( LPCTSTR& heightMapFileName, LPCTSTR& textureFileName, MapKeyType key );
-	bool	CreateMap( MeshKeyType key );
+	bool	CreateMap( MapKeyType key );
 	void	DeleteMap();
 
 	bool	AddMesh( LPCTSTR& fileName, MeshKeyType key );

@@ -33,7 +33,6 @@ bool GameManager::Init()
 	Renderer::GetInstance()->Init();
 	// 방어코드 필요함
 
-
 	// 리소스 로딩 및 초기화
 	ResourceManager::GetInstance()->Init();
 	
@@ -66,6 +65,8 @@ bool GameManager::Process()
 
 	// 더미 렌더
 	DummyRender dRender;
+
+	Renderer::GetInstance()->RenderMap();
 	SceneManager::GetInstance()->Render();
 
 	UINT deltaTime = Timer::GetInstance()->GetElapsedTime();
@@ -82,6 +83,8 @@ bool GameManager::Process()
 void GameManager::Destroy()
 {
 	// 씬 해제
+	SceneManager::GetInstance()->Destroy();
+	SceneManager::Release();
 
 	// 리소스 해제
 	ResourceManager::GetInstance()->Destroy();

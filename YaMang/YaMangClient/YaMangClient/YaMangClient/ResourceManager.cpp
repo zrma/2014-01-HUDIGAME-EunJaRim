@@ -24,6 +24,8 @@ void ResourceManager::Init()
 	AddMesh( fileName, MESH_KEY_UNIT_ARROW );
 	fileName = L"UnitKnight.x";
 	AddMesh( fileName, MESH_KEY_UNIT_KNIGHT );
+	fileName = L"UnitGuard.x";
+	AddMesh( fileName, MESH_KEY_UNIT_GUARD );
 
 	LPCTSTR heightMapFileName = L"heightmap_1024_1024_korea.bmp";
 	LPCTSTR textureFileName = L"heightmap_texture_1024_1024_korea.bmp";
@@ -36,7 +38,12 @@ void ResourceManager::Destroy()
 
 	for ( auto& toBeDelete : m_MeshList )
 	{
-		SafeDelete( toBeDelete );
+		if ( toBeDelete )
+		{
+			DeleteMesh( toBeDelete->m_MeshObject );
+			SafeDelete( toBeDelete->m_MeshObject );
+			delete toBeDelete;
+		}
 	}
 	for ( auto& toBeDelete : m_MapList )
 	{
@@ -48,12 +55,15 @@ void ResourceManager::AddMap( LPCTSTR& heightMapFileName, LPCTSTR& textureFileNa
 {
 	SafeDelete( m_MapList[key] );
 	ResourceMap* map = new ResourceMap();
+	m_MapList[key] = map;
 
 	map->m_HeightMap = heightMapFileName;
 	map->m_TextureMap = textureFileName;
+
+	m_IsMapReady = CreateMap( key );
 }
 
-bool ResourceManager::CreateMap( MeshKeyType key )
+bool ResourceManager::CreateMap( MapKeyType key )
 {
 	if ( m_MapList[key] )
 	{
@@ -80,6 +90,8 @@ void ResourceManager::DeleteMap()
 bool ResourceManager::AddMesh( LPCTSTR& fileName, MeshKeyType key )
 {
 	ResourceMesh* mesh = new ResourceMesh();
+	mesh->m_MeshObject = new MESHOBJECT();
+
 	bool result = CreateMesh( fileName, mesh->m_MeshObject );
 
 	if ( result )

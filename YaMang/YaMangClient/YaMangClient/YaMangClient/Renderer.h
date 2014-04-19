@@ -20,7 +20,8 @@ public:
 	void	RenderMap();
 	void	ResizeWindow( LONG width, LONG height );
 
-	void	SetCamera( D3DXMATRIXA16& matrix );
+	void	SetViewMatrix( D3DXMATRIXA16& matrix );
+	void	SetWorldMatrix( D3DXMATRIXA16& matrix );
 	
 	D3DVIEWPORT9	GetViewPort();
 	D3DXMATRIXA16	GetProjMatrix();
