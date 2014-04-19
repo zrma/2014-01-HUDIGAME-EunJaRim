@@ -81,14 +81,14 @@ bool GameManager::Process()
 		//////////////////////////////////////////////////////////////////////////
 
 		Renderer::GetInstance()->RenderMap();
-		Renderer::GetInstance()->Render( m_Mesh );
+		Renderer::GetInstance()->RenderMesh( m_Mesh );
 	}
 
 	UINT deltaTime = Timer::GetInstance()->GetElapsedTime();
 	wchar_t ws[100] = { 0, };
 	wsprintf( ws, L"Elapsed : %d", deltaTime );
 	Renderer::GetInstance()->WriteText( ws, 20, 20 );
-
+	
 	return true;
 }
 

@@ -62,13 +62,20 @@ void CameraController::MoveSide( float speed )
 
 void CameraController::RotateUp( float angle )
 {
-	D3DXVECTOR3 view = m_LookAtPoint - m_EyePoint;
+	D3DXVECTOR3 preView = m_LookAtPoint - m_EyePoint;
+	D3DXVECTOR3 view = { 0, 0, 0 };
 	D3DXVECTOR3 axis = { 0, 0, 0 };
 
-	D3DXVec3Cross( &axis, &m_UpVector, &view );
+	D3DXVec3Cross( &axis, &m_UpVector, &preView );
 	D3DXMATRIXA16 rotateMatrix;
 	D3DXMatrixRotationAxis( &rotateMatrix, &axis, angle );
-	D3DXVec3TransformCoord( &view, &view, &rotateMatrix );
+	D3DXVec3TransformCoord( &view, &preView, &rotateMatrix );
+
+	if ( preView.x * view.x < 0 || preView.y * view.y < 0 || preView.z * view.z < 0 )
+	{
+		// 회전각에 제한을 둠
+		return;
+	}
 	m_LookAtPoint = m_EyePoint + view;
 
 	D3DXMATRIXA16 viewMatrix;

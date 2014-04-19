@@ -26,6 +26,9 @@
     <Filter Include="Render">
       <UniqueIdentifier>{bed35af9-c826-4a2b-8672-e989610c4c61}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{36ad6daa-b950-43b1-9c25-c04abfb0ea0a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -127,9 +130,6 @@
     <ClInclude Include="MouseInput.h">
       <Filter>Event</Filter>
     </ClInclude>
-    <ClInclude Include="SceneManager.h">
-      <Filter>MainLoop</Filter>
-    </ClInclude>
     <ClInclude Include="UIManager.h">
       <Filter>MainLoop</Filter>
     </ClInclude>
@@ -153,6 +153,21 @@
     </ClInclude>
     <ClInclude Include="..\..\..\SharedPreference\EnumSet.h">
       <Filter>SharedPreference</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneLoad.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="ScenePlay.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneResult.h">
+      <Filter>Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -243,9 +258,6 @@
     <ClCompile Include="MouseInput.cpp">
       <Filter>Event</Filter>
     </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>MainLoop</Filter>
-    </ClCompile>
     <ClCompile Include="UIManager.cpp">
       <Filter>MainLoop</Filter>
     </ClCompile>
@@ -263,6 +275,21 @@
     </ClCompile>
     <ClCompile Include="TextObject.cpp">
       <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneLoad.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="ScenePlay.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneResult.cpp">
+      <Filter>Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

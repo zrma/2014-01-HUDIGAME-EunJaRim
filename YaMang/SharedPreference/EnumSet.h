@@ -12,3 +12,14 @@ enum UnitType
 
 	UNIT_MAX = 1024
 };
+
+enum SceneType
+{
+	SCENE_NONE = 0,
+
+	SCENE_LOAD,
+	SCENE_PLAY,
+	SCENE_RESULT,
+
+	SCENE_MAX
+};

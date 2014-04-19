@@ -16,7 +16,7 @@ public:
 	void	RenderBegin();
 	void	RenderEnd();
 
-	void	Render( MESHOBJECT* mesh );
+	void	RenderMesh( MESHOBJECT* mesh );
 	void	RenderMap();
 	void	ResizeWindow( LONG width, LONG height );
 	

@@ -115,7 +115,11 @@
     <ClInclude Include="Interface3D.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="RushFormation.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneLoad.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="ScenePlay.h" />
+    <ClInclude Include="SceneResult.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Sword.h" />
     <ClInclude Include="TakeArea.h" />
@@ -154,7 +158,11 @@
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Interface3D.cpp" />
     <ClCompile Include="RushFormation.cpp" />
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SceneLoad.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="ScenePlay.cpp" />
+    <ClCompile Include="SceneResult.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

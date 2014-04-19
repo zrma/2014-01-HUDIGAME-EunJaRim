@@ -28,3 +28,5 @@
 #include <assert.h>
 #include <list>
 #include <array>
+#include <vector>
+#include <hash_map>

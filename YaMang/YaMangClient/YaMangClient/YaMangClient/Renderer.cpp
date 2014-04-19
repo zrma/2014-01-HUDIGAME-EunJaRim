@@ -50,34 +50,30 @@ void Renderer::RenderEnd()
 {
 	if ( m_Result && m_IsReady )
 	{
+		UINT nowTime = timeGetTime();
+		if ( m_PrevTime + 1000 < nowTime )
+		{
+			m_PrevTime = nowTime;
+			m_FPS = m_Frame;
+			m_Frame = 0;
+		}
+
+		wchar_t ws[100] = { 0, };
+		wsprintf( ws, L"FPS : %d", m_FPS );
+		RenderText( ws, 20, 40 );
+		m_Frame++;
+
 		PostRendering( );
 		m_IsReady = false;
 	}
 }
 
-void Renderer::Render( MESHOBJECT* mesh )
+void Renderer::RenderMesh( MESHOBJECT* mesh )
 {
 	if ( mesh && m_IsReady )
 	{	
-// 		char szDebug[64] = { 0, };
-// 		sprintf_s(szDebug, "matrixSize : %d \n", sizeof(matrix));
-// 		OutputDebugStringA(szDebug);
-
 		Rendering( mesh );
 	}
-
-	UINT nowTime = timeGetTime();
-	if ( m_PrevTime + 1000 < nowTime )
-	{
-		m_PrevTime = nowTime;
-		m_FPS = m_Frame;
-		m_Frame = 0;	
-	}
-
-	wchar_t ws[100] = { 0, };
-	wsprintf( ws, L"FPS : %d", m_FPS );
-	RenderText( ws, 20, 40 );
-	m_Frame++;
 }
 
 void Renderer::RenderMap()
