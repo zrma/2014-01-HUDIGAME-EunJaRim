@@ -167,10 +167,22 @@ void NetworkManager::HandleGenerateCorpsResult( GenerateCorpsResult& inPacket )
 		Corps* corps = new Corps();
 		corps->Create( 1, unitType );
 		corps->SetVisible( true );
-		ScenePlay* scenePlay = static_cast<ScenePlay*>(SceneManager::GetInstance( )->GetNowScene( ));
-		scenePlay->AddCorps( corpsID, corps );
 
-		Log( "GenerateCorps! Type:%d CorpID:%d \n", unitType, corpsID );
+		Scene* scene =  SceneManager::GetInstance()->GetNowScene();
+		if ( typeid( ScenePlay ) == typeid( *scene ) )
+		{
+			ScenePlay* scenePlay = static_cast<ScenePlay*>( SceneManager::GetInstance()->GetNowScene() );
+			scenePlay->AddCorps( corpsID, corps );
+			Log( "GenerateCorps! Type:%d CorpID:%d \n", unitType, corpsID );
+		}
+		else
+		{
+			//플레이중이 아닌데 플레이용 패킷을 받음 
+			assert( false );
+		}
+		
+
+		
 	
 	}
 	else
