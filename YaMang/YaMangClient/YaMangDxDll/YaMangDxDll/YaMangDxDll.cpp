@@ -31,6 +31,16 @@ DWORD g_ZHeight = 0;
 ID3DXFont*		g_Font = nullptr;		// 글자를 그릴 폰트 스타일 객체
 ID3DXSprite*	g_Sprite = nullptr;		// 폰트를 그릴 스프라이트 객체 
 
+//////////////////////////////////////////////////////////////////////////
+///D3D cursor Set에 필요한 자원
+//////////////////////////////////////////////////////////////////////////
+//IDirect3DSurface9* g_surfcursor = nullptr; //테스트 중
+//IDirect3DTexture9* g_cursortex = nullptr; //테스트 중
+
+LPDIRECT3DTEXTURE9 g_cursorTex = 0;
+LPD3DXSPRITE g_cursorSprite = 0;
+D3DXVECTOR3 g_cursorPos;
+
 struct CUSTOMVERTEX
 {
 	D3DXVECTOR3 vertexPoint;
@@ -641,6 +651,80 @@ YAMANGDXDLL_API void CalcPickingRay( int mouseX, int mouseY, D3DXVECTOR3* rayOri
 
 }
 
+//////////////////////////////////////////////////////////////////////////
+/// D3D cursor Set을 위한 부분
+//////////////////////////////////////////////////////////////////////////
+YAMANGDXDLL_API void SetD3DCursor( LPCWSTR textureName )
+{
+	//테스트 중
+	//d3d 자체 커서 만드는 방법 1
+	// 	D3DXLoadSurfaceFromFile( g_surfcursor, NULL, NULL, textureName, NULL, D3DX_FILTER_NONE, 0, NULL );
+	// 	g_D3dDevice->SetCursorProperties( 0, 0, g_surfcursor );
+	// 	g_D3dDevice->SetCursorPosition( 220, 220, D3DCURSOR_IMMEDIATE_UPDATE );
+	// 	g_D3dDevice->ShowCursor( TRUE );
+
+	//d3d 자체 커서 만드는 방법 2
+	// 	g_D3dDevice->CreateTexture( 32, 32, 1, 0, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, &g_cursortex, nullptr );
+	// 	g_D3dDevice->CreateOffscreenPlainSurface( 32, 32, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, &g_surfcursor, nullptr );
+	// 	
+	// 	D3DXCreateTextureFromFile( g_D3dDevice, L"cursor1.bmp", &g_cursortex );
+	// 
+	// 	g_cursortex->GetSurfaceLevel( 0, &g_surfcursor );
+	// 	g_D3dDevice->SetCursorProperties( 0, 0, g_surfcursor );
+	// 
+	// 	g_D3dDevice->ShowCursor( TRUE );
+	
+}
+
+YAMANGDXDLL_API HRESULT InitCursor( LPCWSTR cursorImagePath, float cursorPosX, float cursorPosY)
+{
+	if ( FAILED( D3DXCreateTextureFromFile( g_D3dDevice, cursorImagePath, &g_cursorTex ) ) )
+	{
+		return E_FAIL;
+	}
+	if ( FAILED( D3DXCreateSprite( g_D3dDevice, &g_cursorSprite ) ) )//first parameter is our device, second is a empty sprite variable
+	{
+		return E_FAIL;
+	}
+
+	SetCursorPosition();// 0,0,0으로 초기화
+
+	return S_OK;
+}
+
+YAMANGDXDLL_API HRESULT CursorRender( )
+{
+	if ( SUCCEEDED( g_D3dDevice->BeginScene() ) ) 
+	{
+		g_cursorSprite->Begin( D3DXSPRITE_ALPHABLEND ); 
+		g_cursorSprite->Draw( g_cursorTex, NULL, NULL, &g_cursorPos, 0xFFFFFFFF ); 
+		g_cursorSprite->End(); 
+		g_D3dDevice->EndScene();
+		return S_OK;
+	}
+	return E_FAIL;
+}
+
+YAMANGDXDLL_API void CursorCleanUp( )
+{
+	if ( g_cursorSprite )
+	{
+		g_cursorSprite->Release();
+	}
+
+	if ( g_cursorTex )
+	{
+		g_cursorTex->Release();
+	}
+}
+
+YAMANGDXDLL_API void SetCursorPosition( float PosX, float PosY )
+{
+	g_cursorPos.x = PosX;
+	g_cursorPos.y = PosY;
+	g_cursorPos.z = 0.0f;
+}
+
+
 // 내보낸 변수의 예제입니다.
 // YAMANGDXDLL_API int nyaMangDxDll=0;
-

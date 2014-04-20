@@ -60,6 +60,17 @@ extern "C"{
 	// Picking Ray를 위한 부분
 	//////////////////////////////////////////////////////////////////////////
 	YAMANGDXDLL_API void CalcPickingRay( int mouseX, int mouseY, D3DXVECTOR3* rayOrigin, D3DXVECTOR3* rayDirection );
+	
+	//////////////////////////////////////////////////////////////////////////
+	// D3D Cursor Set을 위한 부분
+	//////////////////////////////////////////////////////////////////////////
+	YAMANGDXDLL_API void SetD3DCursor( LPCWSTR textureName = L"cursor1.bmp" ); //테스트 중
+
+	YAMANGDXDLL_API HRESULT InitCursor( LPCWSTR cursorImagePath = L"cursor1.bmp", float cursorPosX = 0, float cursorPosY = 0 );
+	YAMANGDXDLL_API HRESULT CursorRender();
+	YAMANGDXDLL_API void CursorCleanUp();
+	YAMANGDXDLL_API void SetCursorPosition( float PosX = 0, float PosY = 0 );
+
 }
 //단일 변수 out sample
 //extern YAMANGDXDLL_API int nyaMangDxDll;
