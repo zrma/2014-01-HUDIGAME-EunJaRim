@@ -23,15 +23,21 @@ void Unit::Render()
 	if ( !m_Visible || !m_MeshKey )
 		return;
 
-	D3DXMATRIXA16 worldMatrix, invMatrix;
-	
-	D3DXMatrixLookAtLH( &worldMatrix, &m_EyePoint, &m_LookAtPoint, &m_UpVector );
-	D3DXMatrixInverse( &invMatrix, NULL, &worldMatrix );
+	D3DXMATRIXA16 rotateMatrix;
+	D3DXMatrixLookAtLH( &rotateMatrix, &m_EyePoint, &m_LookAtPoint, &m_UpVector );
+	rotateMatrix._41 = rotateMatrix._42 = rotateMatrix._43 = 0.0f;
+	D3DXMatrixTranspose( &rotateMatrix, &rotateMatrix );
+
+	D3DXMATRIXA16 transMatrix;
+	D3DXMatrixTranslation( &transMatrix, m_EyePoint.x, m_EyePoint.y, m_EyePoint.z );
 
 	D3DXMATRIXA16 scaleMatrix;
 	D3DXMatrixScaling( &scaleMatrix, m_Scale.x, m_Scale.y, m_Scale.z );
-	D3DXMatrixMultiply( &worldMatrix, &scaleMatrix, &invMatrix );
+	
+	D3DXMATRIXA16 worldMatrix;
+	D3DXMatrixIdentity( &worldMatrix );
 
+	worldMatrix = scaleMatrix * rotateMatrix * transMatrix;
 	Renderer::GetInstance()->SetWorldMatrix( worldMatrix );
 
 	ResourceMesh* mesh = ResourceManager::GetInstance()->GetMeshByKey( m_MeshKey );

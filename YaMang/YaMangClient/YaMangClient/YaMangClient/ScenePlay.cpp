@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "ScenePlay.h"
 #include "Interface3D.h"
 #include "Corps.h"
@@ -16,9 +16,9 @@ ScenePlay::~ScenePlay()
 void ScenePlay::Create()
 {
 	//////////////////////////////////////////////////////////////////////////
-	// ÀÓ½Ã·Î ÀÌ·¸°Ô ÇØ µÎ¾úÁö¸¸
-	// ³ªÁß¿¡ ³»ºÎÀûÀ¸·Î Corps¸¦ Ãß°¡ÇÏ°Å³ª Á¦°ÅÇÏ´Â ÄÚµå ÀÛ¼ºÇØ¾ß ÇÔ
-	/*
+	// ìž„ì‹œë¡œ ì´ë ‡ê²Œ í•´ ë‘ì—ˆì§€ë§Œ
+	// ë‚˜ì¤‘ì— ë‚´ë¶€ì ìœ¼ë¡œ Corpsë¥¼ ì¶”ê°€í•˜ê±°ë‚˜ ì œê±°í•˜ëŠ” ì½”ë“œ ìž‘ì„±í•´ì•¼ í•¨
+	
 	Corps* corps = new Corps();
 	corps->Create( 1, UNIT_ARROW );
 	corps->SetVisible( true );
@@ -43,7 +43,7 @@ void ScenePlay::Create()
 	corps->Create( 1, UNIT_SWORD );
 	corps->SetVisible( true );
 	m_CorpsList[500] = corps;
-	*/
+	
 }
 
 void ScenePlay::Destroy()

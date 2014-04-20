@@ -31,5 +31,5 @@ void Arrow::Update()
 
 	m_LookAtPoint = m_EyePoint + view;
 
-	// printf_s( "\n%f %f %f ", m_LookAtPoint.x, m_LookAtPoint.y, m_LookAtPoint.z );
+	// printf_s( "\n%f %f %f - %f %f %f ", m_EyePoint.x, m_EyePoint.y, m_EyePoint.z, m_LookAtPoint.x, m_LookAtPoint.y, m_LookAtPoint.z );
 }
