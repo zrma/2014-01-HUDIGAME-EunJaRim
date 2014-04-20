@@ -41,6 +41,6 @@ private:
 
 
 };
-extern std::hash_map<int, SOCKET>	g_PidSocketTable;
-extern RoomManager*					g_RoomManager;
+extern std::hash_map<int, ClientSession*>	g_PidSessionTable;
+extern RoomManager*							g_RoomManager;
 

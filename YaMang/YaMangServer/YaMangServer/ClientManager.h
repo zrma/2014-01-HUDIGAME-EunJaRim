@@ -24,7 +24,8 @@ public:
 
 
 	ClientSession*		CreateClient( SOCKET sock );
-	ClientSession*		DeleteClient( SOCKET sock );
+
+	bool				DeleteClient( ClientSession* client );
 	void				InputClient( ClientSession* client );
 
 	int					GetClientSize() { return static_cast<int>(m_ClientList.size()); }

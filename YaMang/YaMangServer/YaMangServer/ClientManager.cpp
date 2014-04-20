@@ -70,19 +70,12 @@ void ClientManager::BroadcastPacket( ClientSession* from, PacketHeader* pkt )
 bool ClientManager::DirectPacket( int pid, PacketHeader* pkt )
 {
 	// 뭔가 이상하지만 어떻게 바꿔볼려고 해도 안됨...
-	auto it = g_PidSocketTable.find( pid );
-	if ( it != g_PidSocketTable.end( ) )
+	auto it = g_PidSessionTable.find( pid );
+	if ( it != g_PidSessionTable.end( ) )
 	{
-		SOCKET socket = it->second;
-
-		auto itClient = m_ClientList.find( socket );
-		if ( itClient != m_ClientList.end( ) )
-		{
-			ClientSession* client = itClient->second;
-
-			client->SendRequest( pkt );
-			return true;
-		}
+		ClientSession* client = it->second;
+		client->SendRequest( pkt );
+		return true;
 	}
 
 	return false;
@@ -275,15 +268,12 @@ void ClientManager::DeletePlayerDone( DatabaseJobContext* dbJob )
 
 }
 
-ClientSession* ClientManager::DeleteClient( SOCKET sock )
+bool ClientManager::DeleteClient( ClientSession* client )
 {
-	// 바로 erase해도 되나?
-	auto toBeDelete = m_ClientList.find( sock );
-	if ( toBeDelete != m_ClientList.end( ) )
+	if ( client->m_Socket != NULL )
 	{
-		ClientSession* client = toBeDelete->second;
-		m_ClientList.erase( toBeDelete );
-		return client;
+		m_ClientList.erase( client->m_Socket );
+		return true;
 	}
 
 	return false;

@@ -79,10 +79,10 @@ void ClientSession::Disconnect()
 	}
 	
 	// g_PidSocketTable.erase( m_PlayerId ); 이거 한줄로 될것 같은데 교수님이 find하고 뭐 하라고 했던게 자꾸 생각남
-	auto toBeDelete = g_PidSocketTable.find( m_PlayerId );
-	if ( toBeDelete != g_PidSocketTable.end( ) )
+	auto toBeDelete = g_PidSessionTable.find( m_PlayerId );
+	if ( toBeDelete != g_PidSessionTable.end( ) )
 	{
-		g_PidSocketTable.erase( toBeDelete );
+		g_PidSessionTable.erase( toBeDelete );
 	}
 
 	printf( "[DEBUG] Client Disconnected: IP=%s, PORT=%d\n", inet_ntoa( m_ClientAddr.sin_addr ), ntohs( m_ClientAddr.sin_port ) );
@@ -301,7 +301,7 @@ void ClientSession::UpdateDone()
 // 로그인을 시도해서 유저 데이터를 불러오면, 데이터를 읽어서 클라이언트 쪽에 Send()
 void ClientSession::LoginDone( int pid, const char* name )
 {
-	g_PidSocketTable.insert( std::pair<int, SOCKET>( pid, m_Socket ) );
+	g_PidSessionTable.insert( std::pair<int, ClientSession*>( pid, this ) );
 
 	LoginResult outPacket;
 

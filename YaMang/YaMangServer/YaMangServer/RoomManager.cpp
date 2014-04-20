@@ -5,11 +5,11 @@
 
 
 
-std::hash_map<int, SOCKET>	g_PidSocketTable;
+std::hash_map<int, ClientSession*>	g_PidSessionTable;
 RoomManager* g_RoomManager = nullptr;
 RoomManager::RoomManager()
 {
-	g_PidSocketTable.clear();
+	g_PidSessionTable.clear( );
 
 	m_Lobby = new ClientManager( );
 
@@ -52,7 +52,7 @@ bool RoomManager::ChangeRoom( int roomNumberFrom, int roomNumberTo, int pid )
 {
 	ClientManager* roomFrom = nullptr;
 	ClientManager* roomTo = nullptr;
-	SOCKET socketMover = g_PidSocketTable.find( pid )->second;
+	ClientSession* sessionMover = g_PidSessionTable.find( pid )->second;
 
 	int roomCount = 0;
 	for ( auto it = m_RoomList.begin(); it != m_RoomList.end(); ++it )
@@ -80,10 +80,15 @@ bool RoomManager::ChangeRoom( int roomNumberFrom, int roomNumberTo, int pid )
 		return false;
 	}
 
-	ClientSession* client = roomFrom->DeleteClient( socketMover );
-	roomTo->InputClient( client );
-
-	return true;
+	if ( roomFrom->DeleteClient( sessionMover ) )
+	{
+		roomTo->InputClient( sessionMover );
+		return true;
+	}
+	
+	
+	return false;
+	
 }
 
 bool RoomManager::DeleteRoom( int roomNumber )
