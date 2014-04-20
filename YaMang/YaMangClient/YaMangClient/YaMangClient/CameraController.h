@@ -10,11 +10,6 @@ public:
 	~CameraController();
 
 	void	Init();
-	
-	D3DXMATRIXA16	GetViewMatrix();
-	D3DXMATRIXA16	GetProjMatrix();
-	D3DXMATRIXA16	GetInvViewMatrix();
-	D3DXMATRIXA16	GetInvProjMatrix();
 
 	void	MoveForward( float speed );
 	void	MoveSide( float speed );

@@ -59,9 +59,7 @@ extern "C"{
 	//////////////////////////////////////////////////////////////////////////
 	// Picking Ray를 위한 부분
 	//////////////////////////////////////////////////////////////////////////
-	YAMANGDXDLL_API void GetViewPort9( D3DVIEWPORT9* viewport );
-	YAMANGDXDLL_API void GetD3DProjMatrix( D3DXMATRIXA16* projMatrix );
-	YAMANGDXDLL_API void GetD3DViewMatrix( D3DXMATRIXA16* viewMatrix );
+	YAMANGDXDLL_API void CalcPickingRay( int mouseX, int mouseY, D3DXVECTOR3* rayOrigin, D3DXVECTOR3* rayDirection );
 }
 //단일 변수 out sample
 //extern YAMANGDXDLL_API int nyaMangDxDll;

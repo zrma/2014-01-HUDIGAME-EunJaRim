@@ -26,24 +26,6 @@ void CameraController::Init()
 	Renderer::GetInstance()->SetViewMatrix( viewMatrix );
 }
 
-D3DXMATRIXA16 CameraController::GetInvViewMatrix()
-{
-	D3DXMATRIXA16 viewMatrix = GetViewMatrix();
-	D3DXMATRIXA16 outMatrix;
-	D3DXMatrixInverse( &outMatrix, NULL, &viewMatrix );
-
-	return outMatrix;
-}
-
-D3DXMATRIXA16 CameraController::GetInvProjMatrix()
-{
-	D3DXMATRIXA16 projMatrix = GetProjMatrix();
-	D3DXMATRIXA16 outMatrix;
-	D3DXMatrixInverse( &outMatrix, NULL, &projMatrix );
-
-	return outMatrix;
-}
-
 void CameraController::MoveForward( float speed )
 {
 	D3DXVECTOR3 view = m_LookAtPoint - m_EyePoint;
@@ -106,14 +88,4 @@ void CameraController::RotateSide( float angle )
 	D3DXMATRIXA16 viewMatrix;
 	D3DXMatrixLookAtLH( &viewMatrix, &m_EyePoint, &m_LookAtPoint, &m_UpVector );
 	Renderer::GetInstance()->SetViewMatrix( viewMatrix );
-}
-
-D3DXMATRIXA16 CameraController::GetViewMatrix()
-{
-	return Renderer::GetInstance()->GetViewMatrix();
-}
-
-D3DXMATRIXA16 CameraController::GetProjMatrix()
-{
-	return Renderer::GetInstance()->GetProjMatrix();
 }

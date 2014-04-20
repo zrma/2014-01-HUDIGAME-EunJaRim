@@ -597,28 +597,48 @@ YAMANGDXDLL_API void RenderText( LPCWSTR text, float left, float top, int RGB_R,
 	g_Sprite->End();											// 스프라이트 그리기 끝 
 }
 
-YAMANGDXDLL_API void GetViewPort9( D3DVIEWPORT9* viewport )
-{
-	if ( g_D3dDevice )
-	{
-		g_D3dDevice->GetViewport( viewport );
-	}
-}
+//////////////////////////////////////////////////////////////////////////
+// Picking Ray를 위한 부분
+//////////////////////////////////////////////////////////////////////////
 
-YAMANGDXDLL_API void GetD3DProjMatrix( D3DXMATRIXA16* projMatrix )
+YAMANGDXDLL_API void CalcPickingRay( int mouseX, int mouseY, D3DXVECTOR3* rayOrigin, D3DXVECTOR3* rayDirection )
 {
-	if ( g_D3dDevice )
-	{
-		g_D3dDevice->GetTransform( D3DTS_PROJECTION, projMatrix );
-	}
-}
+	D3DVIEWPORT9 veiwPort;
+	D3DXMATRIXA16 projectionMatrix;
 
-YAMANGDXDLL_API void GetD3DViewMatrix( D3DXMATRIXA16* viewMatrix )
-{
-	if ( g_D3dDevice )
-	{
-		g_D3dDevice->GetTransform( D3DTS_VIEW, viewMatrix );
-	}
+	float rayX = 0.f;
+	float rayY = 0.f;
+
+	g_D3dDevice->GetViewport( &veiwPort );
+	g_D3dDevice->GetTransform( D3DTS_PROJECTION, &projectionMatrix );
+
+	rayX = ( ( ( mouseX *2.f ) / (float) veiwPort.Width ) - 1.f ) / projectionMatrix._11;
+	rayY = ( ( ( mouseY *-2.f ) / (float) veiwPort.Height ) + 1.f ) / projectionMatrix._22;
+
+	//viewport트랜스, 프로젝션 트랜스 역행
+	*rayOrigin = D3DXVECTOR3( 0.f, 0.f, 0.f );
+	*rayDirection = D3DXVECTOR3( rayX, rayY, 1.f );
+	Log( "뷰포트, 프로젝션 역행" );
+
+	//뷰잉 트랜스 역행
+	D3DXMATRIXA16 viewingMatrix;
+	g_D3dDevice->GetTransform( D3DTS_VIEW, &viewingMatrix );
+	D3DXMatrixInverse( &viewingMatrix, 0, &viewingMatrix );
+
+	D3DXVec3TransformCoord( rayOrigin, rayOrigin, &viewingMatrix );
+	D3DXVec3TransformCoord( rayDirection, rayDirection, &viewingMatrix );
+	Log( "뷰잉 좌표 역행" );
+
+	//월드 좌표로 역행
+	D3DXMATRIXA16 worldMatrix;
+	g_D3dDevice->GetTransform( D3DTS_WORLD, &worldMatrix );
+	D3DXMatrixInverse( &worldMatrix, 0, &worldMatrix );
+
+	D3DXVec3TransformCoord( rayOrigin, rayOrigin, &worldMatrix );
+	D3DXVec3TransformCoord( rayDirection, rayDirection, &worldMatrix );
+	Log( "월드 좌표 역행" );
+	Log( "origin: %f,%f,%f\n direction: %f, %f, %f\n", rayOrigin->x, rayOrigin->y, rayOrigin->z, rayDirection->x, rayDirection->y, rayDirection->z );
+
 }
 
 // 내보낸 변수의 예제입니다.
