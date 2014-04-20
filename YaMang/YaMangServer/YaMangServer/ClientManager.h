@@ -30,7 +30,7 @@ public:
 	int					GetClientSize() { return static_cast<int>(m_ClientList.size()); }
 
 	void				BroadcastPacket( ClientSession* from, PacketHeader* pkt );
-	void				DirectPacket( int pid, PacketHeader* pkt );
+	bool				DirectPacket( int pid, PacketHeader* pkt );
 
 	void				OnPeriodWork();
 

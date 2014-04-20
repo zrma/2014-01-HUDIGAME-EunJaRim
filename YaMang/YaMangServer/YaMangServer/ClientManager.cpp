@@ -5,6 +5,7 @@
 #include "ClientManager.h"
 #include "DatabaseJobContext.h"
 #include "DatabaseJobManager.h"
+#include "RoomManager.h"
 
 
 
@@ -66,17 +67,26 @@ void ClientManager::BroadcastPacket( ClientSession* from, PacketHeader* pkt )
 }
 
 
-void ClientManager::DirectPacket( int pid, PacketHeader* pkt )
+bool ClientManager::DirectPacket( int pid, PacketHeader* pkt )
 {
-	for ( ClientList::const_iterator it = m_ClientList.begin(); it != m_ClientList.end(); ++it )
+	// 뭔가 이상하지만 어떻게 바꿔볼려고 해도 안됨...
+	auto it = g_PidSocketTable.find( pid );
+	if ( it != g_PidSocketTable.end( ) )
 	{
-		ClientSession* client = it->second;
-		if ( pid == client->m_PlayerId )
+		SOCKET socket = it->second;
+
+		auto itClient = m_ClientList.find( socket );
+		if ( itClient != m_ClientList.end( ) )
 		{
+			ClientSession* client = itClient->second;
+
 			client->SendRequest( pkt );
-			break;
+			return true;
 		}
 	}
+
+	return false;
+	
 }
 
 

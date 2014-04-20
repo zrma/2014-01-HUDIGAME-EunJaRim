@@ -237,9 +237,13 @@ bool ClientSession::DirectSend( PacketHeader* pkt )
 		return false;
 	}
 
-	m_ClientManager->DirectPacket( m_PlayerId, pkt );
+	if ( m_ClientManager->DirectPacket( m_PlayerId, pkt ) )
+	{
+		return true;
+	}
 
-	return true;
+	return false;
+
 }
 
 void ClientSession::OnTick()
