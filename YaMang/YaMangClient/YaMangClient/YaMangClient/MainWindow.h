@@ -4,6 +4,8 @@
 
 static const WCHAR WINDOW_NAME[] = L"YaMang";
 const int WM_SOCKET = 104;
+const int WINDOW_WIDTH = 1280; // 1280;
+const int WINDOW_HEIGHT = 720; // 720;
 
 class GameManager;
 
@@ -25,12 +27,9 @@ public:
 
 	BOOL	Create( PCWSTR lpWindowName, DWORD dwStyle, DWORD dwExStyle = 0,
 					int x = CW_USEDEFAULT, int y = CW_USEDEFAULT, 
-					int nWidth = MainWindow::WINDOW_WIDTH, int nHeight = MainWindow::WINDOW_HEIGHT,
+					int nWidth = WINDOW_WIDTH, int nHeight = WINDOW_HEIGHT,
 					HWND hWndParent = 0, HMENU hMenu = 0 );
 private:
-	static const int WINDOW_WIDTH = 640; // 1280;
-	static const int WINDOW_HEIGHT = 360; // 720;
-
 	HWND	m_HandleOfWindow = nullptr;
 	HACCEL	m_HandleOfAccelTable = nullptr;
 };
