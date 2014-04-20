@@ -80,7 +80,7 @@ YAMANGDXDLL_API HRESULT InitD3D( HWND hWnd, long width, long height )
 	d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
 
 	if ( FAILED( g_D3D->CreateDevice( D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, 
-		hWnd, D3DCREATE_SOFTWARE_VERTEXPROCESSING, &d3dpp, &g_D3dDevice ) ) )
+		hWnd, D3DCREATE_HARDWARE_VERTEXPROCESSING, &d3dpp, &g_D3dDevice ) ) )
 	{
 		MessageBox( NULL, L"Could not CreateDevice", L"YaMang.exe", MB_OK );
 		return E_FAIL;
