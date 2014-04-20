@@ -2,27 +2,38 @@
 #include "SharedDefine.h"
 #include "EnumSet.h"
 
-class Unit;
+extern const float NOT_A_NUMBER_FLOAT;
 class Corps
 {
 public:
 	Corps( );
-	~Corps();
+	virtual ~Corps();
 	
-	void			GenerateCorps( UnitType type, int corpsID, Position position );
+	virtual void			GenerateCorps( int corpsID, Position position ) = 0;
 
-	int				GetCorpsID() { return m_CorpsId; }
-	short			GetCorpsSize() { return static_cast<short>( m_UnitList.size( ) ); }
-	Position		GetPosition() { return m_Position; }
+	int						GetCorpsID() { return m_CorpsId; }
+	short					GetCorpsSize() { return m_UnitNum; }
+	Position				GetPosition() { return m_Position; }
 
-private:
-	std::vector<Unit*>		m_UnitList;
+protected:
 	int						m_CorpsId;
+	int						m_HP;
+	short					m_UnitNum;
 
 	Position				m_Position;
 	
-	// 방향은 어떻게 하지?? 지금부터 벡터로??
-	// 유닛 속성과 여기 속성과 뭔가 섞여있는 느낌 다시 굴다리가 필요할듯
 
+	float	m_PosX = NOT_A_NUMBER_FLOAT;
+	float	m_PosY = NOT_A_NUMBER_FLOAT;
+
+	int		m_AttackRange = 0;
+	int		m_AttackPower = 0;
+	int		m_AttackPowerBonus = 0;
+
+	int		m_Defense = 0;
+	int		m_DefenseBonus = 0;
+
+	int		m_MoveSpeed = 0;
+	int		m_MoveSpeedBonus = 0;
 };
 

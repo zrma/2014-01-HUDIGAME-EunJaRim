@@ -5,8 +5,12 @@
 #include "DatabaseJobContext.h"
 #include "DatabaseJobManager.h"
 #include "RoomManager.h"
-#include "Unit.h"
 #include "Corps.h"
+#include "Arrow.h"
+#include "Guard.h"
+#include "knight.h"
+#include "Pike.h"
+#include "Sword.h"
 
 // EasyServer.cpp 에서 클라이언트 매니저에서 CreateClient 한 후에
 // 소켓 객체로부터 getpeername()를 이용해 주소 값을 뽑아 와서 OnConnect() 호출
@@ -316,8 +320,29 @@ void ClientSession::LoginDone( int pid, const char* name )
 
 int ClientSession::GenerateCorps( UnitType type, Position position )
 {
-	Corps* corps = new Corps();
-	corps->GenerateCorps( type, ++m_CorpsIDCount, position );
+	Corps* corps = nullptr;
+	switch ( type )
+	{
+		case UNIT_ARROW:
+			corps = new Arrow();
+			break;
+		case UNIT_GUARD:
+			corps = new Guard( );
+			break;
+		case UNIT_KNIGHT:
+			corps = new Knight( );
+			break;
+		case UNIT_PIKE:
+			corps = new Pike( );
+			break;
+		case UNIT_SWORD:
+			corps = new Sword( );
+			break;
+		default:
+			return -1;
+	}
+
+	corps->GenerateCorps( ++m_CorpsIDCount, position );
 	m_CorpsList.insert( CorpsList::value_type( m_CorpsIDCount, corps ) );
 	return corps->GetCorpsID();
 }

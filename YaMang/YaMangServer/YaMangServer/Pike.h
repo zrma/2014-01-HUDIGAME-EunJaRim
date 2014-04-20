@@ -1,10 +1,13 @@
 ﻿#pragma once
-#include "Unit.h"
+#include "Corps.h"
+
 class Pike:
-	public Unit
+	public Corps
 {
 public:
 	Pike();
 	~Pike();
+
+	void	GenerateCorps( int corpsID, Position position );
 };
 
