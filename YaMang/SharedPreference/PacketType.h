@@ -32,6 +32,9 @@ enum PacketTypes
 	PKT_CS_MOVE_CORPS = 102,
 	PKT_SC_MOVE_CORPS = 103,
 
+	PKT_CS_CORPS_CHANGE_FORMATION = 200,
+	PKT_SC_CORPS_CHANGE_FORMATION = 201,
+
 	PKT_MAX = 1024
 };
 
@@ -225,7 +228,7 @@ struct GenerateCorpsResult: public PacketHeader
 };
 
 
-// 사실 request는 테스트용
+// 사실 request는 테스트용 이동 아직 안만듬!!!!
 struct MoveCorpsRequest: public PacketHeader
 {
 	MoveCorpsRequest( )
@@ -261,5 +264,33 @@ struct MoveCorpsResult: public PacketHeader
 };
 
 
+
+struct ChangeCorpsFormationRequest: public PacketHeader
+{
+	ChangeCorpsFormationRequest( )
+	{
+		m_Size = sizeof( ChangeCorpsFormationRequest );
+		m_Type = PKT_CS_CORPS_CHANGE_FORMATION;
+		m_CorpsID = -1;
+		m_FormationType = FORMATION_NONE;
+	}
+
+	int				m_CorpsID;
+	FormationType	m_FormationType;
+};
+
+struct ChangeCorpsFormationResult: public PacketHeader
+{
+	ChangeCorpsFormationResult( )
+	{
+		m_Size = sizeof( ChangeCorpsFormationResult );
+		m_Type = PKT_SC_CORPS_CHANGE_FORMATION;
+		m_CorpsID = -1;
+		m_FormationType = FORMATION_NONE;
+	}
+
+	int				m_CorpsID;
+	FormationType	m_FormationType;
+};
 
 #pragma pack(pop)

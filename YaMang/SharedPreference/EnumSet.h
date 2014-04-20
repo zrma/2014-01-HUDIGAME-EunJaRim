@@ -13,6 +13,17 @@ enum UnitType
 	UNIT_MAX = 1024
 };
 
+enum FormationType
+{
+	FORMATION_NONE = 0,
+
+	FORMATION_DEFENSE = 10,
+	FORMATION_DESTROY = 20,
+	FORMATION_RUSH = 30,
+
+	FORMATION_MAX = 1024
+};
+
 enum SceneType
 {
 	SCENE_NONE,

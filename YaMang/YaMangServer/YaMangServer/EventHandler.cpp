@@ -305,3 +305,49 @@ void ClientSession::HandleMoveCorpsRequest( MoveCorpsRequest& inPacket )
 		return;
 	}
 }
+
+
+
+
+
+REGISTER_HANDLER( PKT_CS_CORPS_CHANGE_FORMATION )
+{
+	ChangeCorpsFormationRequest inPacket = static_cast<ChangeCorpsFormationRequest&>( pktBase );
+	session->HandleChangeCorpsFormationRequest( inPacket );
+}
+
+void ClientSession::HandleChangeCorpsFormationRequest( ChangeCorpsFormationRequest& inPacket )
+{
+
+	m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size );
+
+	try
+	{
+		int corpsID = inPacket.m_CorpsID;
+		FormationType formation = inPacket.m_FormationType;
+
+		if ( corpsID == -1 )
+		{
+			Disconnect();
+		}
+
+		// 내 콥스 맵에서 포메이션바꿔주자
+
+		ChangeCorpsFormationResult outPacket;
+		outPacket.m_CorpsID = corpsID;
+		outPacket.m_FormationType = formation;
+
+
+
+		if ( !Broadcast( &outPacket ) )
+		{
+			Disconnect();
+		}
+
+		printf_s( "Corps Change Formation CorpID:%d Formation:%d \n", corpsID, formation );
+	}
+	catch ( ... )
+	{
+		return;
+	}
+}

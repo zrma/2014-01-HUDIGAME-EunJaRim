@@ -21,6 +21,7 @@ PKT_CS_ROOM_CREATE = 7;
 PKT_CS_ROOM_CHANGE = 9;
 PKT_CS_GENERATE_CORPS = 100;
 PKT_CS_MOVE_CORPS = 102;
+PKT_CS_CORPS_CHANGE_FORMATION = 200;
 
 UNIT_ARROW = 10;
 UNIT_GUARD = 20;
@@ -40,7 +41,7 @@ s.send(struct.pack('hhi', 8, PKT_CS_LOGIN, pid));
 
 while True:
         try:
-                mode = input("[SELECT MODE- EXIT:0, CHAT:3, GAMEOVER:5 \n ROOM_CREATE:7, ROOM_CHANGE:9, GENERATE_CORPS:100]");
+                mode = input("[SELECT MODE- EXIT:0, CHAT:3, GAMEOVER:5 \n ROOM_CREATE:7, ROOM_CHANGE:9, GENERATE_CORPS:100 \n Corps_CHANGE_FORMATION:200]");
         except:
                 continue;
 
@@ -66,5 +67,10 @@ while True:
                 posX = float(raw_input("PosX: "));
                 posZ = float(raw_input("PosZ: "));
                 s.send(struct.pack('hhiff', 16, mode, typeNum, posX, posZ));
+        elif mode == PKT_CS_CORPS_CHANGE_FORMATION:
+                corpsID = input("corpsID:");
+                typeNum = input("FormationType[DEFENSE:10, DESTROY:20, RUSH:30]:");
+                s.send(struct.pack('hhii', 12, mode, corpsID, typeNum));
+                
 print "close!";
 s.close()

@@ -69,6 +69,7 @@ public:
 	void	HandleRoomChangeRequest( RoomChangeRequest& inPacket );
 	void	HandleGenerateCorpsRequest( GenerateCorpsRequest& inPacket );
 	void	HandleMoveCorpsRequest( MoveCorpsRequest& inPacket );
+	void	HandleChangeCorpsFormationRequest( ChangeCorpsFormationRequest& inPacket );
 
 	//////////////////////////////////////////////////////////////////////////
 	// 게임 컨텐츠
