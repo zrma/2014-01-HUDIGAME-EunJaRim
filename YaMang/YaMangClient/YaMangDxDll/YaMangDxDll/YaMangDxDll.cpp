@@ -419,7 +419,7 @@ HRESULT InitVertexBuffer( HWND hWnd )
 	g_XHeight = ddsd.Width;
 	g_ZHeight = ddsd.Height;
 
-	if ( FAILED( g_D3dDevice->CreateVertexBuffer( ddsd.Width*ddsd.Height*sizeof( CUSTOMVERTEX ), 0, D3DFVF_CUSTOMVERTEX, D3DPOOL_DEFAULT, &g_VertexBuffer, NULL ) ) )
+	if ( FAILED( g_D3dDevice->CreateVertexBuffer( ddsd.Width*ddsd.Height*sizeof( CUSTOMVERTEX ), D3DUSAGE_WRITEONLY, D3DFVF_CUSTOMVERTEX, D3DPOOL_MANAGED, &g_VertexBuffer, NULL ) ) )
 	{
 		MessageBox( NULL, L"Fail in Creating VertexBuffer", L"YaMang.exe", MB_OK );
 		return E_FAIL;
@@ -473,7 +473,7 @@ HRESULT InitVertexBuffer( HWND hWnd )
 
 HRESULT InitIdxBuffer( HWND hWnd )
 {
-	if ( FAILED( g_D3dDevice->CreateIndexBuffer( ( g_XHeight - 1 )*( g_ZHeight - 1 ) * 2 * sizeof( MYINDEX ), 0, D3DFMT_INDEX32, D3DPOOL_DEFAULT, &g_IdxBuffer, NULL ) ) )
+	if ( FAILED( g_D3dDevice->CreateIndexBuffer( ( g_XHeight - 1 )*( g_ZHeight - 1 ) * 2 * sizeof( MYINDEX ), D3DUSAGE_WRITEONLY, D3DFMT_INDEX32, D3DPOOL_MANAGED, &g_IdxBuffer, NULL ) ) )
 	{
 		MessageBox( NULL, L"Fail in CreateIndexBuffer", L"YaMang.exe", MB_OK );
 		return E_FAIL;
