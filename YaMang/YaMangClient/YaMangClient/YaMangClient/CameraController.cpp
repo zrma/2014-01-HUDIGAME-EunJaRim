@@ -72,6 +72,11 @@ void CameraController::RotateUp( float angle )
 	D3DXMATRIXA16 viewMatrix;
 	D3DXMatrixLookAtLH( &viewMatrix, &m_EyePoint, &m_LookAtPoint, &m_UpVector );
 	Renderer::GetInstance()->SetViewMatrix( viewMatrix );
+
+// 	printf_s( "\n%f %f %f %f \n", viewMatrix._11, viewMatrix._21, viewMatrix._31, viewMatrix._41 );
+// 	printf_s( "%f %f %f %f \n", viewMatrix._12, viewMatrix._22, viewMatrix._32, viewMatrix._42 );
+// 	printf_s( "%f %f %f %f \n", viewMatrix._13, viewMatrix._23, viewMatrix._33, viewMatrix._43 );
+// 	printf_s( "%f %f %f %f \n", viewMatrix._14, viewMatrix._24, viewMatrix._34, viewMatrix._44 );
 }
 
 void CameraController::RotateSide( float angle )

@@ -24,6 +24,7 @@ void Unit::Render()
 		return;
 
 	D3DXMATRIXA16 worldMatrix, invMatrix;
+	
 	D3DXMatrixLookAtLH( &worldMatrix, &m_EyePoint, &m_LookAtPoint, &m_UpVector );
 	D3DXMatrixInverse( &invMatrix, NULL, &worldMatrix );
 

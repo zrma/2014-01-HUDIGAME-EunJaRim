@@ -30,4 +30,6 @@ void Arrow::Update()
 	D3DXVec3TransformCoord( &view, &view, &matrix );
 
 	m_LookAtPoint = m_EyePoint + view;
+
+	// printf_s( "\n%f %f %f ", m_LookAtPoint.x, m_LookAtPoint.y, m_LookAtPoint.z );
 }
