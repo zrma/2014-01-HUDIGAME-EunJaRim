@@ -30,63 +30,50 @@
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.settingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.button1 = new System.Windows.Forms.Button();
-            this.MainWindow = new System.Windows.Forms.PictureBox();
+            this.RenderTarget = new System.Windows.Forms.PictureBox();
+            this.eunjarimInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sideMenu = new System.Windows.Forms.TabControl();
+            this.Terrain = new System.Windows.Forms.TabPage();
+            this.Texture = new System.Windows.Forms.TabPage();
+            this.Object = new System.Windows.Forms.TabPage();
             this.menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.MainWindow)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RenderTarget)).BeginInit();
+            this.sideMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.editToolStripMenuItem,
-            this.viewToolStripMenuItem,
-            this.settingToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1120, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(946, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // fileToolStripMenuItem
             // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
-            // editToolStripMenuItem
-            // 
-            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
-            this.editToolStripMenuItem.Text = "Edit";
-            // 
-            // viewToolStripMenuItem
-            // 
-            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
-            this.viewToolStripMenuItem.Size = new System.Drawing.Size(45, 20);
-            this.viewToolStripMenuItem.Text = "View";
-            // 
-            // settingToolStripMenuItem
-            // 
-            this.settingToolStripMenuItem.Name = "settingToolStripMenuItem";
-            this.settingToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
-            this.settingToolStripMenuItem.Text = "Setting";
-            // 
             // helpToolStripMenuItem
             // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.eunjarimInfoToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "Help";
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(12, 27);
+            this.button1.Location = new System.Drawing.Point(104, 0);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(122, 23);
             this.button1.TabIndex = 1;
@@ -94,27 +81,82 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // MainWindow
+            // RenderTarget
             // 
-            this.MainWindow.Location = new System.Drawing.Point(292, 27);
-            this.MainWindow.Name = "MainWindow";
-            this.MainWindow.Size = new System.Drawing.Size(816, 660);
-            this.MainWindow.TabIndex = 2;
-            this.MainWindow.TabStop = false;
+            this.RenderTarget.Location = new System.Drawing.Point(295, 51);
+            this.RenderTarget.Name = "RenderTarget";
+            this.RenderTarget.Size = new System.Drawing.Size(639, 452);
+            this.RenderTarget.TabIndex = 2;
+            this.RenderTarget.TabStop = false;
+            // 
+            // eunjarimInfoToolStripMenuItem
+            // 
+            this.eunjarimInfoToolStripMenuItem.Name = "eunjarimInfoToolStripMenuItem";
+            this.eunjarimInfoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.eunjarimInfoToolStripMenuItem.Text = "Eunjarim info";
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
+            // 
+            // sideMenu
+            // 
+            this.sideMenu.Controls.Add(this.Terrain);
+            this.sideMenu.Controls.Add(this.Texture);
+            this.sideMenu.Controls.Add(this.Object);
+            this.sideMenu.Location = new System.Drawing.Point(12, 29);
+            this.sideMenu.Name = "sideMenu";
+            this.sideMenu.SelectedIndex = 0;
+            this.sideMenu.Size = new System.Drawing.Size(277, 478);
+            this.sideMenu.TabIndex = 4;
+            // 
+            // Terrain
+            // 
+            this.Terrain.Location = new System.Drawing.Point(4, 22);
+            this.Terrain.Name = "Terrain";
+            this.Terrain.Padding = new System.Windows.Forms.Padding(3);
+            this.Terrain.Size = new System.Drawing.Size(269, 452);
+            this.Terrain.TabIndex = 0;
+            this.Terrain.Text = "Terrain";
+            this.Terrain.UseVisualStyleBackColor = true;
+            // 
+            // Texture
+            // 
+            this.Texture.Location = new System.Drawing.Point(4, 22);
+            this.Texture.Name = "Texture";
+            this.Texture.Padding = new System.Windows.Forms.Padding(3);
+            this.Texture.Size = new System.Drawing.Size(269, 452);
+            this.Texture.TabIndex = 1;
+            this.Texture.Text = "Texture";
+            this.Texture.UseVisualStyleBackColor = true;
+            // 
+            // Object
+            // 
+            this.Object.Location = new System.Drawing.Point(4, 22);
+            this.Object.Name = "Object";
+            this.Object.Padding = new System.Windows.Forms.Padding(3);
+            this.Object.Size = new System.Drawing.Size(269, 452);
+            this.Object.TabIndex = 2;
+            this.Object.Text = "Object";
+            this.Object.UseVisualStyleBackColor = true;
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1120, 698);
-            this.Controls.Add(this.MainWindow);
+            this.ClientSize = new System.Drawing.Size(946, 532);
+            this.Controls.Add(this.sideMenu);
+            this.Controls.Add(this.RenderTarget);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.menuStrip1);
             this.Name = "Main";
             this.Text = "HeightMap Tool";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.MainWindow)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RenderTarget)).EndInit();
+            this.sideMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -124,12 +166,15 @@
 
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem settingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.PictureBox MainWindow;
+        private System.Windows.Forms.PictureBox RenderTarget;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem eunjarimInfoToolStripMenuItem;
+        private System.Windows.Forms.TabControl sideMenu;
+        private System.Windows.Forms.TabPage Terrain;
+        private System.Windows.Forms.TabPage Texture;
+        private System.Windows.Forms.TabPage Object;
     }
 }
 
