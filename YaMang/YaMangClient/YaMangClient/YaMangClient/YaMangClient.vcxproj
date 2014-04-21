@@ -97,7 +97,6 @@
     <ClInclude Include="DefenseFormation.h" />
     <ClInclude Include="DestroyFormation.h" />
     <ClInclude Include="DummyRender.h" />
-    <ClInclude Include="BreadBoard.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Guard.h" />
     <ClInclude Include="HoldPosition.h" />
@@ -126,6 +125,7 @@
     <ClInclude Include="Sword.h" />
     <ClInclude Include="TakeArea.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="TextManager.h" />
     <ClInclude Include="TextObject.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="UIManager.h" />
@@ -172,6 +172,7 @@
     </ClCompile>
     <ClCompile Include="Sword.cpp" />
     <ClCompile Include="TakeArea.cpp" />
+    <ClCompile Include="TextManager.cpp" />
     <ClCompile Include="TextObject.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="UIManager.cpp" />
