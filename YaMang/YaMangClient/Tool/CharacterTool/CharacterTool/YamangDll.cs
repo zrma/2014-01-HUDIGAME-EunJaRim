@@ -33,6 +33,9 @@ namespace YamangTools
         public static extern void PostRendering();
 
         [DllImport("yaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void RenderingTool(ref IntPtr inputVal);
+
+        [DllImport("yaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void MeshObjectCleanUp(ref IntPtr inputVal);
 
         //[DllImport("yaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]

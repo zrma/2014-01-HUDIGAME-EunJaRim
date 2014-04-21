@@ -30,6 +30,10 @@ extern "C"{
 	//rendering 후 디바이스 endScene
 	YAMANGDXDLL_API void PostRendering();
 
+	//tool용 렌더링 함수
+	YAMANGDXDLL_API void RenderingTool( MESHOBJECT* inputVal);
+	YAMANGDXDLL_API void SetCameraTool( float x, float y, float z );
+
 	//각 object 해제시 사용
 	YAMANGDXDLL_API void MeshObjectCleanUp( MESHOBJECT* inputVal );
 

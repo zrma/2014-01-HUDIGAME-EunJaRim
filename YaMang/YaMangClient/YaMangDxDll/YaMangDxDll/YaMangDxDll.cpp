@@ -52,6 +52,13 @@ struct CUSTOMVERTEX
 	D3DXVECTOR2 vertexTexturePoint;
 };
 
+//////////////////////////////////////////////////////////////////////////
+/// tool Camera 관련 벡터
+//////////////////////////////////////////////////////////////////////////
+D3DXVECTOR3		g_EyePoint = { 0, 0, 0 };
+D3DXVECTOR3		g_LookAtPoint = { 0, 0, 1.0f };
+D3DXVECTOR3		g_UpVector = { 0, 1, 0 };
+
 #define D3DFVF_CUSTOMVERTEX ( D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_TEX1)
 
 struct MYINDEX
@@ -346,6 +353,76 @@ YAMANGDXDLL_API void PostRendering()
 	g_D3dDevice->Present( NULL, NULL, NULL, NULL );
 }
 
+//////////////////////////////////////////////////////////////////////////
+///rendering for tool
+//////////////////////////////////////////////////////////////////////////
+void SetupTranslateMatricesTool()
+{
+	D3DXMATRIXA16 matWorld;
+	D3DXMatrixIdentity( &matWorld );
+	g_D3dDevice->SetTransform( D3DTS_WORLD, &matWorld );
+
+	//x, y, z축 입력 값에 대해 이동 처리
+	D3DXMATRIXA16 thisMatrix;
+	D3DXMatrixTranslation( &thisMatrix, 0, 0, 10 );
+	g_D3dDevice->MultiplyTransform( D3DTS_WORLD, &thisMatrix );
+
+	//향후 추가 매트릭스 처리 필요 내용에 대해 추가 예정
+}
+
+YAMANGDXDLL_API void RenderingTool( MESHOBJECT* inputVal )
+{
+	if ( NULL == g_D3dDevice )
+	{
+		return;
+	}
+
+	g_D3dDevice->Clear( 0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB( 30, 10, 10 ), 1.0f, 0 );
+
+	//렌더 방어코드
+	if ( SUCCEEDED( g_D3dDevice->BeginScene() ) )
+	{
+		SetupTranslateMatricesTool();
+		//ViewSetting();
+
+		//lightsetting
+		//일단 1로 진행, 향후 라이트 개수 등 확정되면 인자 받아 설정
+		int lightNum = 1;
+		Lighting( lightNum );
+		//Log( "라이팅 세팅!\n" );
+
+		g_D3dDevice->SetTextureStageState( 0, D3DTSS_COLOROP, D3DTOP_MODULATE );
+		g_D3dDevice->SetTextureStageState( 0, D3DTSS_COLORARG1, D3DTA_TEXTURE );
+		g_D3dDevice->SetTextureStageState( 0, D3DTSS_COLORARG2, D3DTA_DIFFUSE );
+		g_D3dDevice->SetTextureStageState( 0, D3DTSS_ALPHAOP, D3DTOP_DISABLE );
+
+		//Log( "Render Begin \n" );
+		//Log( "pre render 완료!\n" );
+	}
+
+	//카메라 셋팅
+	D3DXMATRIXA16 viewMatrix;
+	D3DXMatrixLookAtLH( &viewMatrix, &g_EyePoint, &g_LookAtPoint, &g_UpVector );
+	SetMatrix( &viewMatrix , true);
+
+	//Log( "Now Render : %p \n", inputVal );
+	for ( DWORD i = 0; i < inputVal->NumMaterials; ++i )
+	{
+		g_D3dDevice->SetMaterial( &inputVal->MeshMarterials[i] );
+		g_D3dDevice->SetTexture( 0, inputVal->MeshTexture[i] );
+
+		( inputVal->importedMesh )->DrawSubset( i );
+	}
+	g_D3dDevice->EndScene();
+
+	//Log( "Render End \n" );
+	g_D3dDevice->Present( NULL, NULL, NULL, NULL );
+}
+
+YAMANGDXDLL_API void SetCameraTool( float x, float y, float z )
+{
+
+}
 
 YAMANGDXDLL_API void MeshObjectCleanUp( MESHOBJECT* inputVal )
 {
@@ -728,7 +805,6 @@ YAMANGDXDLL_API void SetCursorPosition( float PosX, float PosY )
 	g_cursorPos.y = PosY;
 	g_cursorPos.z = 0.0f;
 }
-
 
 // 내보낸 변수의 예제입니다.
 // YAMANGDXDLL_API int nyaMangDxDll=0;

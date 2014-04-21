@@ -36,9 +36,7 @@ namespace YamangTools
             int i = 0;
             while (isRunning)
             {
-                YamangDll.PreRendering();
-                YamangDll.Rendering(ref infoPtr);
-                YamangDll.PostRendering();
+                YamangDll.RenderingTool(ref infoPtr);
 
                 button1.Text = "" + i;
                 await Task.Delay(10);
