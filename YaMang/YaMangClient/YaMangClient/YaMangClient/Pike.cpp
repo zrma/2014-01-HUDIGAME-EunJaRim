@@ -8,7 +8,7 @@ Pike::Pike()
 	// 중국
 
 	m_EyePoint = { 7.0f, -1.7f, 20.0f };
-	m_LookAtPoint = { 8.0f, -1.7f, 21.0f };
+	m_LookAtPoint = { 6.0f, -1.7f, 19.0f };
 	m_UpVector = { 0.0f, 1.0f, 0.0f };
 	m_Scale = { 0.8f, 0.8f, 0.8f };
 }

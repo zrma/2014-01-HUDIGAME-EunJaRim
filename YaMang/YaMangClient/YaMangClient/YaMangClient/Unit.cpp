@@ -24,7 +24,7 @@ void Unit::Render()
 		return;
 
 	D3DXMATRIXA16 rotateMatrix;
-	D3DXMatrixLookAtLH( &rotateMatrix, &m_EyePoint, &m_LookAtPoint, &m_UpVector );
+	D3DXMatrixLookAtRH( &rotateMatrix, &m_EyePoint, &m_LookAtPoint, &m_UpVector );
 	rotateMatrix._41 = rotateMatrix._42 = rotateMatrix._43 = 0.0f;
 	D3DXMatrixTranspose( &rotateMatrix, &rotateMatrix );
 

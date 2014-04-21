@@ -15,9 +15,6 @@ CameraController::~CameraController()
 
 void CameraController::Init()
 {
-// 	m_EyePoint = { 0.0f, 50.0f, 0.0f };
-// 	m_LookAtPoint = { 0.0f, 49.8f, -1.0f };
-
 	m_EyePoint = { 0, 0, 0 };
 	m_LookAtPoint = { 0, -0.01f, 1.0f };
 	
