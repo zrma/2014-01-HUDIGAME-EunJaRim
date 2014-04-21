@@ -13,6 +13,7 @@ public:
 
 	void	MoveForward( float speed );
 	void	MoveSide( float speed );
+	void	MoveElevate( float speed );
 	void	RotateUp( float angle );
 	void	RotateSide( float angle );
 

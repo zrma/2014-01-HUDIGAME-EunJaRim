@@ -37,9 +37,9 @@ bool NetworkManager::Init()
 		return false;
 	}
 
-	nResult = WSAAsyncSelect( m_Socket, MainWindow::GetInstance()->Window(), WM_SOCKET, ( FD_CLOSE | FD_CONNECT ) );
 	// 소켓에 오는 것들은 WM_SOCKET 이벤트로 처리하겠음
-
+	nResult = WSAAsyncSelect( m_Socket, MainWindow::GetInstance()->Window(), WM_SOCKET, ( FD_CLOSE | FD_CONNECT ) );
+	
 	if ( nResult )
 	{
 		MessageBox( MainWindow::GetInstance()->Window(), L"WSAAsyncSelect failed", L"Critical Error", MB_ICONERROR );
@@ -105,15 +105,12 @@ bool NetworkManager::Connect()
 
 void NetworkManager::ProcessPacket()
 {
-	// 하단의 것들 각각 이벤트 핸들링 해 줘야 됨
-
 	PacketHeader header;
 
 	if ( false == m_RecvBuffer.Peek( (char*)&header, sizeof( PacketHeader ) ) )
 	{
 		return;
 	}
-
 
 	if ( header.m_Size > static_cast<short> ( m_RecvBuffer.GetCurrentSize() ) )
 	{
@@ -131,21 +128,23 @@ void NetworkManager::ProcessPacket()
 
 bool NetworkManager::HandleMessage( WPARAM wParam, LPARAM lParam )
 {
-	// agebreak : 서버와 연결이 되지 않아도, 기본적인 테스트는 가능하도록 기능 추가
-
 	// lParam 이 에러인지 검출 해보기
 	if ( WSAGETSELECTERROR( lParam ) )
 	{
 		MessageBox( MainWindow::GetInstance()->Window(), L"WSAGETSELECTERROR", L"Error", MB_OK | MB_ICONERROR );
-		SendMessage( MainWindow::GetInstance()->Window(), WM_DESTROY, NULL, NULL );
+		
+		// agebreak 교수님 피드백을 적용해서 일단 이 부분 블록처리 해 둠
+		// 서버와 연결이 되지 않아도, 기본적인 테스트는 가능하도록 함
+		// SendMessage( MainWindow::GetInstance()->Window(), WM_DESTROY, NULL, NULL );
+
 		return false;
 	}
 
 	// 에러 아니면 이벤트 검출해서 switch
 	switch ( WSAGETSELECTEVENT( lParam ) )
 	{
+		// 연결이 되었다
 		case FD_CONNECT:
-			// 연결이 되었다
 		{
 			/// NAGLE 끈다
 			int opt = 1;
@@ -175,28 +174,23 @@ bool NetworkManager::HandleMessage( WPARAM wParam, LPARAM lParam )
 		{
 			char inBuf[4096] = { 0, };
 
-			int recvLen = recv( m_Socket, inBuf, 4096, 0 );
 			// send() 함수와 반대
-
+			int recvLen = recv( m_Socket, inBuf, 4096, 0 );
+			
 			// 소켓에서 읽어온 데이터를 일단 버퍼에 쓰자
 			if ( !m_RecvBuffer.Write( inBuf, recvLen ) )
 			{
 				/// 버퍼 꽉찼다.
-				// assert( false );
-
-				//////////////////////////////////////////////////////////////////////////
-				// 임시로 테스트를 위해 여기 주석 쳐 놨음
-				//
-				// 테스트가 끝난 후 제거하자
-				//////////////////////////////////////////////////////////////////////////
+				assert( false );
 			}
 
-			ProcessPacket();
 			//////////////////////////////////////////////////////////////////////////
 			// 패킷 핸들링!
 			//////////////////////////////////////////////////////////////////////////
+			ProcessPacket();
 		}
 			break;
+			
 			//////////////////////////////////////////////////////////////////////////
 			// 데이터를 받으면 -> 버퍼에 쓴 후에, 핸들링 하는 쪽에서 버퍼 데이터 뽑아서 처리
 			//

@@ -21,8 +21,10 @@ struct ResourceMesh: public Resource
 
 struct ResourceMap: public Resource
 {
-	LPCTSTR	m_HeightMap = nullptr;
-	LPCTSTR m_TextureMap = nullptr;
+// 	LPCTSTR	m_HeightMap = nullptr;
+// 	LPCTSTR m_TextureMap = nullptr;
+	std::wstring	m_HeightMap;
+	std::wstring	m_TextureMap;
 };
 
 class ResourceManager: public Singleton<ResourceManager>
@@ -43,7 +45,7 @@ private:
 	void	DeleteMap();
 
 	bool	AddMesh( LPCTSTR& fileName, MeshKeyType key );
-	bool	CreateMesh( LPCTSTR& fileName, MESHOBJECT* mesh );
+	void	CreateMesh( LPCTSTR& fileName, MESHOBJECT* mesh );
 	void	DeleteMesh( MESHOBJECT* mesh );
 
 	std::array<ResourceMesh*, MESH_KEY_MAX>	m_MeshList;

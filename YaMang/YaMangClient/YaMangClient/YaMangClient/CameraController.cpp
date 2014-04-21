@@ -16,7 +16,7 @@ CameraController::~CameraController()
 void CameraController::Init()
 {
 	m_EyePoint = { 0, 0, 0 };
-	m_LookAtPoint = { 0, -0.01f, 1.0f };
+	m_LookAtPoint = { 0, 0, 1.0f };
 	
 	D3DXMATRIXA16 viewMatrix;
 	D3DXMatrixLookAtLH( &viewMatrix, &m_EyePoint, &m_LookAtPoint, &m_UpVector );
@@ -48,8 +48,23 @@ void CameraController::MoveSide( float speed )
 	Renderer::GetInstance()->SetViewMatrix( viewMatrix );
 }
 
+void CameraController::MoveElevate( float speed )
+{
+	m_LookAtPoint.y += speed;
+	m_EyePoint.y += speed;
+
+	D3DXMATRIXA16 viewMatrix;
+	D3DXMatrixLookAtLH( &viewMatrix, &m_EyePoint, &m_LookAtPoint, &m_UpVector );
+	Renderer::GetInstance()->SetViewMatrix( viewMatrix );
+}
+
 void CameraController::RotateUp( float angle )
 {
+	// 회전각 제한 1
+	if ( m_LookAtPoint.y >= m_EyePoint.y && angle < 0 )
+	{
+		return;
+	}
 	D3DXVECTOR3 preView = m_LookAtPoint - m_EyePoint;
 	D3DXVECTOR3 view = { 0, 0, 0 };
 	D3DXVECTOR3 axis = { 0, 0, 0 };
@@ -59,9 +74,9 @@ void CameraController::RotateUp( float angle )
 	D3DXMatrixRotationAxis( &rotateMatrix, &axis, angle );
 	D3DXVec3TransformCoord( &view, &preView, &rotateMatrix );
 
+	// 회전각 제한 2
 	if ( preView.x * view.x < 0 || preView.y * view.y < 0 || preView.z * view.z < 0 )
 	{
-		// 회전각에 제한을 둠
 		return;
 	}
 	m_LookAtPoint = m_EyePoint + view;

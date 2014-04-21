@@ -6,7 +6,7 @@
 
 SceneManager::SceneManager()
 {
-	ZeroMemory( &m_SceneList, sizeof( m_SceneList ) );
+	m_SceneList.fill( nullptr );
 }
 
 
