@@ -676,7 +676,7 @@ YAMANGDXDLL_API void SetD3DCursor( LPCWSTR textureName )
 	
 }
 
-YAMANGDXDLL_API HRESULT InitCursor( LPCWSTR cursorImagePath, float cursorPosX, float cursorPosY)
+YAMANGDXDLL_API HRESULT InitCursor( LPCWSTR cursorImagePath, float cursorPosX, float cursorPosY )
 {
 	if ( FAILED( D3DXCreateTextureFromFile( g_D3dDevice, cursorImagePath, &g_cursorTex ) ) )
 	{
@@ -694,7 +694,7 @@ YAMANGDXDLL_API HRESULT InitCursor( LPCWSTR cursorImagePath, float cursorPosX, f
 
 YAMANGDXDLL_API HRESULT CursorRender( )
 {
-	if ( SUCCEEDED( g_D3dDevice->BeginScene() ) ) 
+	if ( g_cursorSprite ) 
 	{
 		g_cursorSprite->Begin( D3DXSPRITE_ALPHABLEND ); 
 		g_cursorSprite->Draw( g_cursorTex, NULL, NULL, &g_cursorPos, 0xFFFFFFFF ); 

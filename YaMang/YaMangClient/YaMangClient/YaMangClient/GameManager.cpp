@@ -9,6 +9,7 @@
 #include "Timer.h"
 #include "SceneManager.h"
 #include "ResourceManager.h"
+#include "MouseManager.h"
 
 
 GameManager::GameManager()
@@ -43,6 +44,9 @@ bool GameManager::Init()
 	// 카메라 초기화
 	CameraController::GetInstance()->Init();
 
+	//커서 초기화
+	MouseManager::GetInstance()->CreateCursor( L"cursor1.bmp", 200, 200);
+
 	return true;
 }
 
@@ -74,6 +78,8 @@ bool GameManager::Process()
 	wsprintf( ws, L"Elapsed : %d", deltaTime );
 	Renderer::GetInstance()->WriteText( ws, 20, 20 );
 	
+	MouseManager::GetInstance()->RenderCursor();
+
 	return true;
 }
 
@@ -101,4 +107,7 @@ void GameManager::Destroy()
 	InputDispatcher::Release();
 
 	Timer::Release();
+
+	MouseManager::GetInstance()->CleanupCursor();
+	MouseManager::Release();
 }
