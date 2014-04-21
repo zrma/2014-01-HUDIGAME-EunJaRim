@@ -97,6 +97,7 @@
     <ClInclude Include="DefenseFormation.h" />
     <ClInclude Include="DestroyFormation.h" />
     <ClInclude Include="DummyRender.h" />
+    <ClInclude Include="Formation.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Guard.h" />
     <ClInclude Include="HoldPosition.h" />

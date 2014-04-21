@@ -53,6 +53,8 @@ void Corps::Create( UINT num, UnitType unitType )
 			unit->SetSelfCorps( this );
 			unit->SetUnitId( i );
 			m_UnitList.push_back( unit );
+
+			unit = nullptr;
 		}
 	}
 }
