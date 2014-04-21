@@ -10,6 +10,7 @@
 #include "SceneManager.h"
 #include "ResourceManager.h"
 #include "MouseManager.h"
+#include "TextManager.h"
 
 
 GameManager::GameManager()
@@ -76,8 +77,10 @@ bool GameManager::Process()
 	UINT deltaTime = Timer::GetInstance()->GetElapsedTime();
 	wchar_t ws[100] = { 0, };
 	wsprintf( ws, L"Elapsed : %d", deltaTime );
-	Renderer::GetInstance()->WriteText( ws, 20, 20 );
-	
+	//Renderer::GetInstance()->WriteText( ws, 20, 20 );
+	TextManager::GetInstance()->RegistText( ws, 20, 20 ); // 애 었다 치워야 될것같은데... 것보다 key값을 잘못잡았나. 역시 배열인가...
+	TextManager::GetInstance()->DrawTexts();
+
 	MouseManager::GetInstance()->RenderCursor();
 
 	return true;

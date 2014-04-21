@@ -5,6 +5,7 @@
 #include "Corps.h"
 #include "SceneManager.h"
 #include "ScenePlay.h"
+#include "TextManager.h"
 
 HandlerFunc HandlerTable[PKT_MAX];
 
@@ -86,10 +87,12 @@ void NetworkManager::HandleGameOverResult( GameOverResult& inPacket )
 		if ( inPacket.m_IsWon )
 		{
 			Log( "I'm WIN!! \n" );
+			TextManager::GetInstance( )->RegistText( L"I'm WIN!!", 50, 50 );
 		}
 		else
 		{
 			Log( "I'm Lose... \n" );
+			TextManager::GetInstance( )->RegistText( L"I'm Lose... ", 50, 50 );
 		}
 	}
 	else
