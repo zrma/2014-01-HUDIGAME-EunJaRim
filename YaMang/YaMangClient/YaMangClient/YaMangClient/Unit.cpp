@@ -26,7 +26,7 @@ void Unit::Render()
 	D3DXMATRIXA16 rotateMatrix;
 	D3DXMatrixLookAtRH( &rotateMatrix, &m_EyePoint, &m_LookAtPoint, &m_UpVector );
 	rotateMatrix._41 = rotateMatrix._42 = rotateMatrix._43 = 0.0f;
-	D3DXMatrixTranspose( &rotateMatrix, &rotateMatrix );
+	D3DXMatrixTranspose( &rotateMatrix, &rotateMatrix );	// agebreak : 역행렬을 만드는 이유를 모르겠음??
 
 	D3DXMATRIXA16 transMatrix;
 	D3DXMatrixTranslation( &transMatrix, m_EyePoint.x, m_EyePoint.y, m_EyePoint.z );

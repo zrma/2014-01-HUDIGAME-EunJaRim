@@ -131,6 +131,8 @@ void NetworkManager::ProcessPacket()
 
 bool NetworkManager::HandleMessage( WPARAM wParam, LPARAM lParam )
 {
+	// agebreak : 서버와 연결이 되지 않아도, 기본적인 테스트는 가능하도록 기능 추가
+
 	// lParam 이 에러인지 검출 해보기
 	if ( WSAGETSELECTERROR( lParam ) )
 	{

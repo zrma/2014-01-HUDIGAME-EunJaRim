@@ -75,5 +75,6 @@ void ScenePlay::Render()
 
 void ScenePlay::AddCorps( int corpsID, Corps* corps )
 {
+	// agebreak : 이미 존재하는 ID면 어떻게 되나?
 	m_CorpsList[corpsID] = corps;
 }
