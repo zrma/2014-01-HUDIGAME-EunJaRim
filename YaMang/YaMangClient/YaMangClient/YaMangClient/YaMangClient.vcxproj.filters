@@ -29,7 +29,7 @@
     <Filter Include="Resource">
       <UniqueIdentifier>{90d90dd2-378d-4724-a957-884336741d01}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainLoop\Event">
+    <Filter Include="Event">
       <UniqueIdentifier>{781a1a04-c0ee-4c90-8b4d-8ad63d625aa6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -71,10 +71,10 @@
       <Filter>SharedPreference</Filter>
     </ClInclude>
     <ClInclude Include="InputDispatcher.h">
-      <Filter>MainLoop\Event</Filter>
+      <Filter>Event</Filter>
     </ClInclude>
     <ClInclude Include="KeyInput.h">
-      <Filter>MainLoop\Event</Filter>
+      <Filter>Event</Filter>
     </ClInclude>
     <ClInclude Include="NetworkManager.h">
       <Filter>Network</Filter>
@@ -104,34 +104,34 @@
       <Filter>MainLoop</Filter>
     </ClInclude>
     <ClInclude Include="Action.h">
-      <Filter>MainLoop\Event</Filter>
+      <Filter>Event</Filter>
     </ClInclude>
     <ClInclude Include="Attack.h">
-      <Filter>MainLoop\Event</Filter>
+      <Filter>Event</Filter>
     </ClInclude>
     <ClInclude Include="CorpsSpawn.h">
-      <Filter>MainLoop\Event</Filter>
+      <Filter>Event</Filter>
     </ClInclude>
     <ClInclude Include="DefenseFormation.h">
-      <Filter>MainLoop\Event</Filter>
+      <Filter>Event</Filter>
     </ClInclude>
     <ClInclude Include="DestroyFormation.h">
-      <Filter>MainLoop\Event</Filter>
+      <Filter>Event</Filter>
     </ClInclude>
     <ClInclude Include="HoldPosition.h">
-      <Filter>MainLoop\Event</Filter>
+      <Filter>Event</Filter>
     </ClInclude>
     <ClInclude Include="MovePosition.h">
-      <Filter>MainLoop\Event</Filter>
+      <Filter>Event</Filter>
     </ClInclude>
     <ClInclude Include="RushFormation.h">
-      <Filter>MainLoop\Event</Filter>
+      <Filter>Event</Filter>
     </ClInclude>
     <ClInclude Include="TakeArea.h">
-      <Filter>MainLoop\Event</Filter>
+      <Filter>Event</Filter>
     </ClInclude>
     <ClInclude Include="MouseInput.h">
-      <Filter>MainLoop\Event</Filter>
+      <Filter>Event</Filter>
     </ClInclude>
     <ClInclude Include="UIManager.h">
       <Filter>MainLoop</Filter>
@@ -175,7 +175,7 @@
     <ClInclude Include="ResourceManager.h">
       <Filter>Resource</Filter>
     </ClInclude>
-    <ClInclude Include="Formation.h">
+    <ClInclude Include="BreadBoard.h">
       <Filter>Unit</Filter>
     </ClInclude>
   </ItemGroup>
@@ -202,10 +202,10 @@
       <Filter>MainLoop</Filter>
     </ClCompile>
     <ClCompile Include="InputDispatcher.cpp">
-      <Filter>MainLoop\Event</Filter>
+      <Filter>Event</Filter>
     </ClCompile>
     <ClCompile Include="KeyInput.cpp">
-      <Filter>MainLoop\Event</Filter>
+      <Filter>Event</Filter>
     </ClCompile>
     <ClCompile Include="EventHandler.cpp">
       <Filter>Network</Filter>
@@ -238,34 +238,34 @@
       <Filter>MainLoop</Filter>
     </ClCompile>
     <ClCompile Include="Action.cpp">
-      <Filter>MainLoop\Event</Filter>
+      <Filter>Event</Filter>
     </ClCompile>
     <ClCompile Include="Attack.cpp">
-      <Filter>MainLoop\Event</Filter>
+      <Filter>Event</Filter>
     </ClCompile>
     <ClCompile Include="CorpsSpawn.cpp">
-      <Filter>MainLoop\Event</Filter>
+      <Filter>Event</Filter>
     </ClCompile>
     <ClCompile Include="DefenseFormation.cpp">
-      <Filter>MainLoop\Event</Filter>
+      <Filter>Event</Filter>
     </ClCompile>
     <ClCompile Include="DestroyFormation.cpp">
-      <Filter>MainLoop\Event</Filter>
+      <Filter>Event</Filter>
     </ClCompile>
     <ClCompile Include="HoldPosition.cpp">
-      <Filter>MainLoop\Event</Filter>
+      <Filter>Event</Filter>
     </ClCompile>
     <ClCompile Include="MovePosition.cpp">
-      <Filter>MainLoop\Event</Filter>
+      <Filter>Event</Filter>
     </ClCompile>
     <ClCompile Include="RushFormation.cpp">
-      <Filter>MainLoop\Event</Filter>
+      <Filter>Event</Filter>
     </ClCompile>
     <ClCompile Include="TakeArea.cpp">
-      <Filter>MainLoop\Event</Filter>
+      <Filter>Event</Filter>
     </ClCompile>
     <ClCompile Include="MouseInput.cpp">
-      <Filter>MainLoop\Event</Filter>
+      <Filter>Event</Filter>
     </ClCompile>
     <ClCompile Include="UIManager.cpp">
       <Filter>MainLoop</Filter>
