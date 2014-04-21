@@ -31,26 +31,28 @@ void Corps::Create( UINT num, UnitType unitType )
 		{
 			case UNIT_ARROW:
 				unit = new Arrow();
-				m_UnitList.push_back( unit );
 				break;
 			case UNIT_GUARD:
 				unit = new Guard();
-				m_UnitList.push_back( unit );
 				break;
 			case UNIT_KNIGHT:
 				unit = new Knight();
-				m_UnitList.push_back( unit );
 				break;
 			case UNIT_PIKE:
 				unit = new Pike();
-				m_UnitList.push_back( unit );
 				break;
 			case UNIT_SWORD:
 				unit = new Sword();
-				m_UnitList.push_back( unit );
 				break;
 			default:
 				return;
+		}
+
+		if ( unit )
+		{
+			unit->SetSelfCorps( this );
+			unit->SetUnitId( i );
+			m_UnitList.push_back( unit );
 		}
 	}
 }
