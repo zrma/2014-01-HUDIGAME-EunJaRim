@@ -327,7 +327,8 @@ void ClientManager::ReadMapFile( const char* filename )
 			data[j] = data[j + 2];
 			data[j + 2] = tmp;
 
-			Tile tile = { (int)data[j], (int)data[j + 1], (int)data[j + 2] };
+			//Tile tile = { (int)data[j], (int)data[j + 1], (int)data[j + 2] };
+			Tile tile = { data[j], data[j + 1], data[j + 2] };
 
 			// 맵이 뒤집어져 있을 것 같다!!
 			row.push_back( tile );

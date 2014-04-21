@@ -202,7 +202,7 @@ struct GenerateCorpsRequest: public PacketHeader
 		m_Size = sizeof( GenerateCorpsRequest );
 		m_Type = PKT_CS_GENERATE_CORPS;
 		m_UnitType = UNIT_NONE;
-		m_Position = { NOT_A_NUMBER_FLOAT, NOT_A_NUMBER_FLOAT };
+		m_Position;
 	}
 
 	UnitType m_UnitType;
@@ -216,7 +216,7 @@ struct GenerateCorpsResult: public PacketHeader
 		m_Size = sizeof( GenerateCorpsResult );
 		m_Type = PKT_SC_GENERATE_CORPS;
 		m_UnitType = UNIT_NONE;
-		m_Position = { NOT_A_NUMBER_FLOAT, NOT_A_NUMBER_FLOAT };
+		m_Position;
 		m_CorpsID = -1;
 		m_PlayerId = -1;
 	}
@@ -236,7 +236,7 @@ struct MoveCorpsRequest: public PacketHeader
 		m_Size = sizeof( MoveCorpsRequest );
 		m_Type = PKT_CS_MOVE_CORPS;
 		m_CorpsID = -1;
-		m_Position = { NOT_A_NUMBER_FLOAT, NOT_A_NUMBER_FLOAT };
+		m_Position;
 		
 	}
 
@@ -253,7 +253,7 @@ struct MoveCorpsResult: public PacketHeader
 		m_Type = PKT_SC_MOVE_CORPS;
 		m_PlayerId = -1;
 		m_CorpsID = -1;
-		m_Position = { NOT_A_NUMBER_FLOAT, NOT_A_NUMBER_FLOAT };
+		m_Position;
 		m_Time = -1;
 	}
 

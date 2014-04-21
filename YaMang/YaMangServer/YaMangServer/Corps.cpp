@@ -9,11 +9,14 @@
 
 Corps::Corps()
 {
-	m_Position.posX = NOT_A_NUMBER_FLOAT;
-	m_Position.posZ = NOT_A_NUMBER_FLOAT;
 }
 
 
 Corps::~Corps()
 {
+}
+
+void Corps::AddDamage( int damage )
+{
+	m_HP = m_HP - damage;
 }

@@ -15,16 +15,19 @@ public:
 	short					GetCorpsSize() { return m_UnitNum; }
 	Position				GetPosition() { return m_Position; }
 
+	void					ChangeFormation( FormationType formation ) { m_Formation = formation; }
+	void					AddDamage( int damage );
+
 protected:
-	int						m_CorpsId;
-	int						m_HP;
-	short					m_UnitNum;
+	int						m_CorpsId = -1;
+	int						m_HP = 100;
+	short					m_UnitNum = -1;
 
 	Position				m_Position;
-	
+	FormationType			m_Formation = FORMATION_NONE;
 
-	float	m_PosX = NOT_A_NUMBER_FLOAT;
-	float	m_PosY = NOT_A_NUMBER_FLOAT;
+	int		m_MoveSpeed = 0;
+	int		m_MoveSpeedBonus = 0;
 
 	int		m_AttackRange = 0;
 	int		m_AttackPower = 0;
@@ -33,7 +36,6 @@ protected:
 	int		m_Defense = 0;
 	int		m_DefenseBonus = 0;
 
-	int		m_MoveSpeed = 0;
-	int		m_MoveSpeedBonus = 0;
+
 };
 

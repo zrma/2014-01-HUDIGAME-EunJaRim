@@ -298,7 +298,7 @@ void ClientSession::HandleMoveCorpsRequest( MoveCorpsRequest& inPacket )
 			Disconnect();
 		}
 
-		printf_s( "CorpsMoved CorpID:%d PlayerID:%d PosX:%f PosZ:%f \n", corpsID, m_PlayerId, position.posX, position.posZ );
+		printf_s( "CorpsMoved CorpID:%d PlayerID:%d PosX:%f PosZ:%f \n", corpsID, m_PlayerId, position.m_EyePoint.x, position.m_EyePoint.y );
 	}
 	catch ( ... )
 	{
