@@ -323,25 +323,26 @@ int ClientSession::GenerateCorps( UnitType type, Position position )
 	Corps* corps = nullptr;
 	switch ( type )
 	{
-		case UNIT_ARROW:
+	case UnitType::UNIT_ARROW:
 			corps = new Arrow();
 			break;
-		case UNIT_GUARD:
+	case UnitType::UNIT_GUARD:
 			corps = new Guard( );
 			break;
-		case UNIT_KNIGHT:
+	case UnitType::UNIT_KNIGHT:
 			corps = new Knight( );
 			break;
-		case UNIT_PIKE:
+	case UnitType::UNIT_PIKE:
 			corps = new Pike( );
 			break;
-		case UNIT_SWORD:
+	case UnitType::UNIT_SWORD:
 			corps = new Sword( );
 			break;
 		default:
 			return -1;
 	}
 
+	///# 마찬가지로 new할때 생성자로 생성하면 되는디...
 	corps->GenerateCorps( ++m_CorpsIDCount, position );
 	m_CorpsList.insert( CorpsList::value_type( m_CorpsIDCount, corps ) );
 	return corps->GetCorpsID();

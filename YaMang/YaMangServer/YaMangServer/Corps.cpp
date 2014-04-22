@@ -18,5 +18,6 @@ Corps::~Corps()
 
 void Corps::AddDamage( int damage )
 {
+	///# 경계값 체크해라카마
 	m_HP = m_HP - damage;
 }

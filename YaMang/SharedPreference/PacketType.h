@@ -195,13 +195,16 @@ struct RoomChangeResult: public PacketHeader
 
 
 // 사실 request는 테스트용
+
+///# 패킷 안에 복합객체(Position) 넣어 쓰는거는 항상 주의해야 한다. 특히 packing 여부 고려 잘 할 것
+/// Quiz: 패킷 멤버로 있는 m_Postion은 packing이 몇 바이트 정렬로 될까?
 struct GenerateCorpsRequest: public PacketHeader
 {
 	GenerateCorpsRequest( )
 	{
 		m_Size = sizeof( GenerateCorpsRequest );
 		m_Type = PKT_CS_GENERATE_CORPS;
-		m_UnitType = UNIT_NONE;
+		m_UnitType = UnitType::UNIT_NONE;
 		m_Position;
 	}
 
@@ -215,7 +218,7 @@ struct GenerateCorpsResult: public PacketHeader
 	{
 		m_Size = sizeof( GenerateCorpsResult );
 		m_Type = PKT_SC_GENERATE_CORPS;
-		m_UnitType = UNIT_NONE;
+		m_UnitType = UnitType::UNIT_NONE;
 		m_Position;
 		m_CorpsID = -1;
 		m_PlayerId = -1;

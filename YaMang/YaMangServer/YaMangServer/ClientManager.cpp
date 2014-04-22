@@ -11,6 +11,9 @@
 
 void ClientManager::GameStart()
 {
+	///# 문자열 이렇게 박아 넣지 말고... 반드시 xml로 뺄 것.. 지금 바쁘면 최소한 config.h로도 뺄 것.
+	///# 그리고 반드시 bool 리턴 받아서 맵 로딩 잘 안되면 게임 시작 시키지 말도록... 
+	///# one more thing: 서버에서 맵을 bmp 읽어와서 사용하려고?? 고민해보삼..
 	ReadMapFile( "../../SharedPreference/ServerMap1.bmp" );
 	m_IsGameStart = true;
 }
@@ -70,6 +73,7 @@ void ClientManager::BroadcastPacket( ClientSession* from, PacketHeader* pkt )
 bool ClientManager::DirectPacket( int pid, PacketHeader* pkt )
 {
 	// 뭔가 이상하지만 어떻게 바꿔볼려고 해도 안됨...
+	///# 뭐가 안됨? ㅋ
 	auto it = g_PidSessionTable.find( pid );
 	if ( it != g_PidSessionTable.end( ) )
 	{
@@ -293,7 +297,7 @@ void ClientManager::PrintClientList()
 
 void ClientManager::ReadMapFile( const char* filename )
 {
-	FILE* f;
+	FILE* f; ///# 초기화.
 	fopen_s( &f, filename, "rb" );
 
 	if ( f == NULL )

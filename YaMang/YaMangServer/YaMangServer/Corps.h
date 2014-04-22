@@ -9,6 +9,7 @@ public:
 	Corps( );
 	virtual ~Corps();
 	
+	///# 생성자에서 하면 되는데 왜 GenerateCorps를 만들었을까?
 	virtual void			GenerateCorps( int corpsID, Position position ) = 0;
 
 	int						GetCorpsID() { return m_CorpsId; }

@@ -10,7 +10,7 @@ RoomManager* g_RoomManager = nullptr;
 RoomManager::RoomManager()
 {
 	g_PidSessionTable.clear( );
-
+	
 	m_Lobby = new ClientManager( );
 
 	Room room;
@@ -54,6 +54,8 @@ bool RoomManager::ChangeRoom( int roomNumberFrom, int roomNumberTo, int pid )
 	ClientManager* roomTo = nullptr;
 	ClientSession* sessionMover = g_PidSessionTable.find( pid )->second;
 
+	///# 리스트로 하니까 이렇게 복잡해지는거다.
+
 	int roomCount = 0;
 	for ( auto it = m_RoomList.begin(); it != m_RoomList.end(); ++it )
 	{
@@ -93,6 +95,7 @@ bool RoomManager::ChangeRoom( int roomNumberFrom, int roomNumberTo, int pid )
 
 bool RoomManager::DeleteRoom( int roomNumber )
 {
+	///# QUIZ: 리스트는 순회중에 자신의 원소를 하나 지우면 안전한가?
 	for ( auto it = m_RoomList.begin(); it != m_RoomList.end(); ++it )
 	{
 		if ( roomNumber == it->roomNumber )

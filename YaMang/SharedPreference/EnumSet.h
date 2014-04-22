@@ -1,6 +1,7 @@
 #pragma once
 
-enum UnitType
+///# 패킷에 enum 값을 넣어서 보낼거면 반드시 enum의 크기를 아래처럼 지정해줄 것. 
+enum class UnitType : short
 {
 	UNIT_NONE = 0,
 

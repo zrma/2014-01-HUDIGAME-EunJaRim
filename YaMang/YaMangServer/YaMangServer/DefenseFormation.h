@@ -5,6 +5,6 @@ class DefenseFormation:
 {
 public:
 	DefenseFormation();
-	~DefenseFormation();
+	~DefenseFormation(); ///# ㅋㅋ
 };
 

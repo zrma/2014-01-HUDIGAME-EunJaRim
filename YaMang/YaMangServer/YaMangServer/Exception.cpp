@@ -23,6 +23,7 @@ LONG WINAPI ExceptionFilter( EXCEPTION_POINTERS* exceptionInfo )
 		++offSet;
 	}
 	
+	///# 사실 여기 진입하면, 다른 스레드도 SuspendThread API로 멈추게 한 다음 덤프 남기도록 하는게 정석~^^
 
 	/// dump file 남기자.
 	// 디버깅 중이 아닐 때 생긴 Crash에 대해서 dmp 파일을 남기는 부분

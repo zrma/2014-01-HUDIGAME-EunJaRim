@@ -24,6 +24,10 @@ static int LISTEN_PORT = 9001;
 
 int _tmain( int argc, _TCHAR* argv[] )
 {
+
+	printf("%d\n", sizeof(GenerateCorpsRequest));
+	printf("%d\n", sizeof(Position));
+
 	/// crash 발생시 dump 남기기 위해서
 	// Exception.cpp 쪽에서 전역 함수로 선언 되어 있음
 	SetUnhandledExceptionFilter( ExceptionFilter );

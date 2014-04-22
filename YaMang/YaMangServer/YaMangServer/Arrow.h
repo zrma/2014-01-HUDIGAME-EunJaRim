@@ -6,7 +6,7 @@ class Arrow:
 {
 public:
 	Arrow();
-	~Arrow();
+	~Arrow(); ///# corps 자식들의 소멸자는 모두 virtual
 
 	void	GenerateCorps( int corpsID, Position position );
 };

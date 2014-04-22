@@ -226,6 +226,8 @@ void ClientSession::HandleGenerateCorpsRequest( GenerateCorpsRequest& inPacket )
 
 	m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size );
 
+	///# 헐... try catch 왜 쓴거? 서버 코드에서는 절대로 try catch 쓰지 말것.. SetExceptionHandler로 익셉션 처리기 등록해놨는데.. try-catch쓰면 무용지물
+	///# 게임쪽에서는(클라도 마찬가지) try-catch 안쓴다.
 	try
 	{
 		UnitType unitType = inPacket.m_UnitType;
