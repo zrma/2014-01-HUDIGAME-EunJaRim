@@ -20,16 +20,17 @@ Arrow::~Arrow()
 
 void Arrow::Update()
 {
-// 	D3DXVECTOR3 view = m_LookAtPoint - m_EyePoint;
-// 	D3DXMATRIXA16 matrix;
-// 
-// 	UINT time = Timer::GetInstance()->GetElapsedTime();
-// 	float angle = D3DX_PI * static_cast<float>(time)/ 1000;
-// 
-// 	D3DXMatrixRotationY( &matrix, angle );
-// 	D3DXVec3TransformCoord( &view, &view, &matrix );
-// 
-// 	m_LookAtPoint = m_EyePoint + view;
+	/*
+	D3DXVECTOR3 view = m_LookAtPoint - m_EyePoint;
+	D3DXMATRIXA16 matrix;
 
+	UINT time = Timer::GetInstance()->GetElapsedTime();
+	float angle = D3DX_PI * static_cast<float>( time ) / 1000;
+
+	D3DXMatrixRotationY( &matrix, angle );
+	D3DXVec3TransformCoord( &view, &view, &matrix );
+
+	m_LookAtPoint = m_EyePoint + view;
+	*/
 	// printf_s( "\n%f %f %f - %f %f %f ", m_EyePoint.x, m_EyePoint.y, m_EyePoint.z, m_LookAtPoint.x, m_LookAtPoint.y, m_LookAtPoint.z );
 }

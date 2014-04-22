@@ -21,5 +21,5 @@ TextObject::~TextObject()
 
 void TextObject::DrawText()
 {
-	Renderer::GetInstance( )->WriteText( m_Text, m_Left, m_Top, m_RGB_R, m_RGB_G, m_RGB_B, m_Right, m_Bottom );
+	Renderer::GetInstance( )->WriteText( m_Text.c_str(), m_Left, m_Top, m_RGB_R, m_RGB_G, m_RGB_B, m_Right, m_Bottom );
 }
