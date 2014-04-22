@@ -342,7 +342,7 @@ int ClientSession::GenerateCorps( UnitType type, Position position )
 			return -1;
 	}
 
-	//corps->GenerateCorps( ++m_CorpsIDCount, position );
+	// corps->GenerateCorps( ++m_CorpsIDCount, position );
 	m_CorpsList.insert( CorpsList::value_type( m_CorpsIDCount, corps ) );
 	return corps->GetCorpsID();
 }

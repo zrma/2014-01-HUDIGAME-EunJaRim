@@ -144,8 +144,6 @@ void NetworkManager::HandleGenerateCorpsResult( GenerateCorpsResult& inPacket )
 		int corpsID = inPacket.m_CorpsID;
 		int playerID = inPacket.m_PlayerId;
 
-		
-
 		Corps* corps = new Corps( corpsID, playerID, position );
 		corps->Create( 6, UnitType::UNIT_ARROW );
 		corps->SetVisible( true );
@@ -162,10 +160,6 @@ void NetworkManager::HandleGenerateCorpsResult( GenerateCorpsResult& inPacket )
 			//플레이중이 아닌데 플레이용 패킷을 받음 
 			assert( false );
 		}
-		
-
-		
-	
 	}
 	else
 	{

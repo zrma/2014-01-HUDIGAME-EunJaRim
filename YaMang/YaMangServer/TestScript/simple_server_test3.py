@@ -68,7 +68,7 @@ while True:
                 posZ = float(raw_input("PosZ: "));
                 lookX = float(raw_input("LookX: "));
                 lookZ = float(raw_input("LookZ: "));
-                s.send(struct.pack('hhiffffff', 31, mode, typeNum, posX, float(0), posZ, lookX, float(0), lookZ));
+                s.send(struct.pack('hhiffffff', 32, mode, typeNum, posX, float(0), posZ, lookX, float(0), lookZ));
         elif mode == PKT_CS_CORPS_CHANGE_FORMATION:
                 corpsID = input("corpsID:");
                 typeNum = ord(input("FormationType[DEFENSE:10, DESTROY:20, RUSH:30]:"));

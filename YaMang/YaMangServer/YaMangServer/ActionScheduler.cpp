@@ -51,7 +51,6 @@ void ActionScheduler::DoScheduledAction()
 		//상태가 좋으면 owner corps id 탐색 후 action 지정
 
 		int ownerID = headAction->GetOwnerCorpsID();
-
 	}
 }
 

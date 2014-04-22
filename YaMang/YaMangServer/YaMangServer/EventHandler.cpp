@@ -91,7 +91,6 @@ REGISTER_HANDLER( PKT_CS_GAMEOVER )
 
 void ClientSession::HandleGameOverRequest( GameOverRequest& inPacket )
 {
-
 	m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size );
 
 	bool isWon = inPacket.m_IsWon;
@@ -110,8 +109,6 @@ void ClientSession::HandleGameOverRequest( GameOverRequest& inPacket )
 		Disconnect();
 	}
 }
-
-
 
 REGISTER_HANDLER( PKT_CS_ROOM_CREATE )
 {
@@ -140,8 +137,6 @@ void ClientSession::HandleRoomCreateRequest( RoomCreateRequest& inPacket )
 
 
 }
-
-
 
 
 REGISTER_HANDLER( PKT_CS_ROOM_CHANGE )
@@ -178,8 +173,6 @@ void ClientSession::HandleRoomChangeRequest( RoomChangeRequest& inPacket )
 }
 
 
-
-
 REGISTER_HANDLER( PKT_CS_GENERATE_CORPS )
 {
 	GenerateCorpsRequest inPacket = static_cast<GenerateCorpsRequest&>( pktBase );
@@ -188,12 +181,12 @@ REGISTER_HANDLER( PKT_CS_GENERATE_CORPS )
 
 void ClientSession::HandleGenerateCorpsRequest( GenerateCorpsRequest& inPacket )
 {
-
 	m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size );
-
 
 	UnitType unitType = inPacket.m_UnitType;
 	Position position = inPacket.m_Position;
+
+	printf_s( "어흥! \n" );
 
 	int generatedCorpsID = GenerateCorps( unitType, position );
 
@@ -201,6 +194,8 @@ void ClientSession::HandleGenerateCorpsRequest( GenerateCorpsRequest& inPacket )
 	{
 		Disconnect();
 	}
+
+	printf_s( "냐옹! \n" );
 
 	GenerateCorpsResult outPacket;
 	outPacket.m_UnitType = unitType;
@@ -218,9 +213,6 @@ void ClientSession::HandleGenerateCorpsRequest( GenerateCorpsRequest& inPacket )
 }
 
 
-
-
-
 REGISTER_HANDLER( PKT_CS_MOVE_CORPS )
 {
 	MoveCorpsRequest inPacket = static_cast<MoveCorpsRequest&>( pktBase );
@@ -229,7 +221,6 @@ REGISTER_HANDLER( PKT_CS_MOVE_CORPS )
 
 void ClientSession::HandleMoveCorpsRequest( MoveCorpsRequest& inPacket )
 {
-
 	m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size );
 
 	int corpsID = inPacket.m_CorpsID;
@@ -261,9 +252,6 @@ void ClientSession::HandleMoveCorpsRequest( MoveCorpsRequest& inPacket )
 }
 
 
-
-
-
 REGISTER_HANDLER( PKT_CS_CORPS_CHANGE_FORMATION )
 {
 	ChangeCorpsFormationRequest inPacket = static_cast<ChangeCorpsFormationRequest&>( pktBase );
@@ -289,7 +277,6 @@ void ClientSession::HandleChangeCorpsFormationRequest( ChangeCorpsFormationReque
 	ChangeCorpsFormationResult outPacket;
 	outPacket.m_CorpsID = corpsID;
 	outPacket.m_FormationType = formation;
-
 
 
 	if ( !Broadcast( &outPacket ) )
