@@ -89,6 +89,7 @@
     <ClInclude Include="..\..\SharedPreference\PacketType.h" />
     <ClInclude Include="..\..\SharedPreference\SharedDefine.h" />
     <ClInclude Include="Action.h" />
+    <ClInclude Include="ActionScheduler.h" />
     <ClInclude Include="Arrow.h" />
     <ClInclude Include="Attack.h" />
     <ClInclude Include="CircularBuffer.h" />
@@ -122,11 +123,11 @@
     <ClInclude Include="Sword.h" />
     <ClInclude Include="TakeArea.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="WorldMap.h" />
     <ClInclude Include="YaMangServer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Action.cpp" />
+    <ClCompile Include="ActionScheduler.cpp" />
     <ClCompile Include="Arrow.cpp" />
     <ClCompile Include="Attack.cpp" />
     <ClCompile Include="CircularBuffer.cpp" />
@@ -158,7 +159,6 @@
     </ClCompile>
     <ClCompile Include="Sword.cpp" />
     <ClCompile Include="TakeArea.cpp" />
-    <ClCompile Include="WorldMap.cpp" />
     <ClCompile Include="YaMangServer.cpp" />
   </ItemGroup>
   <ItemGroup>
