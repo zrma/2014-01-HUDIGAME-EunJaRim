@@ -6,7 +6,7 @@ extern const float NOT_A_NUMBER_FLOAT;
 class Corps
 {
 public:
-	Corps( );
+	Corps( int corpsID, Position position );
 	virtual ~Corps();
 	
 	virtual void			GenerateCorps( int corpsID, Position position ) = 0;
@@ -17,6 +17,9 @@ public:
 
 	void					ChangeFormation( FormationType formation ) { m_Formation = formation; }
 	void					AddDamage( int damage );
+
+private:
+	Corps();
 
 protected:
 	int						m_CorpsId = -1;

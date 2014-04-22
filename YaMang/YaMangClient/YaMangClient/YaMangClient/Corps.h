@@ -17,6 +17,7 @@ public:
 
 private:
 	std::vector<Unit*>		m_UnitList;
-	int						m_CorpsId;
+	int						m_CorpsId = -1;
+	int						m_OwnerPlayerID = -1;
 };
 

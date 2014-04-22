@@ -4,9 +4,9 @@ class Action;
 
 struct ActionComparator
 {
-	bool operator()( const Action& lhs, const Action& rhs )
+	bool operator()( const Action* lhs, const Action* rhs ) const
 	{
-		return (lhs.GetTime() > rhs.GetTime());
+		return (lhs->GetTime() > rhs->GetTime());
 	}
 };
 

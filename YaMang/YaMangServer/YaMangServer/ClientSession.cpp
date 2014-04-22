@@ -324,25 +324,25 @@ int ClientSession::GenerateCorps( UnitType type, Position position )
 	switch ( type )
 	{
 		case UnitType::UNIT_ARROW:
-			corps = new Arrow();
+			corps = new Arrow( ++m_CorpsIDCount, position );
 			break;
 		case  UnitType::UNIT_GUARD:
-			corps = new Guard();
+			corps = new Guard( ++m_CorpsIDCount, position );
 			break;
 		case  UnitType::UNIT_KNIGHT:
-			corps = new Knight();
+			corps = new Knight( ++m_CorpsIDCount, position );
 			break;
 		case  UnitType::UNIT_PIKE:
-			corps = new Pike();
+			corps = new Pike( ++m_CorpsIDCount, position );
 			break;
 		case  UnitType::UNIT_SWORD:
-			corps = new Sword();
+			corps = new Sword( ++m_CorpsIDCount, position );
 			break;
 		default:
 			return -1;
 	}
 
-	corps->GenerateCorps( ++m_CorpsIDCount, position );
+	//corps->GenerateCorps( ++m_CorpsIDCount, position );
 	m_CorpsList.insert( CorpsList::value_type( m_CorpsIDCount, corps ) );
 	return corps->GetCorpsID();
 }

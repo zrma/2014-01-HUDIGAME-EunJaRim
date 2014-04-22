@@ -5,9 +5,12 @@ class Guard:
 	public Corps
 {
 public:
-	Guard();
+	Guard( int corpsID, Position position ):Corps( corpsID, position ) {};
 	virtual ~Guard();
 
 	void	GenerateCorps( int corpsID, Position position );
+
+private:
+	Guard();
 };
 
