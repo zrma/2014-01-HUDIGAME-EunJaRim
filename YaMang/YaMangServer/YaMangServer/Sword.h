@@ -6,7 +6,7 @@ class Sword:
 {
 public:
 	Sword();
-	~Sword();
+	virtual ~Sword( );
 
 	void	GenerateCorps( int corpsID, Position position );
 };

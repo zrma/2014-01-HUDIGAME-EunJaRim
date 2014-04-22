@@ -6,7 +6,7 @@ class Guard:
 {
 public:
 	Guard();
-	~Guard();
+	virtual ~Guard();
 
 	void	GenerateCorps( int corpsID, Position position );
 };

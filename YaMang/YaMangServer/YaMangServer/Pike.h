@@ -6,7 +6,7 @@ class Pike:
 {
 public:
 	Pike();
-	~Pike();
+	virtual ~Pike( );
 
 	void	GenerateCorps( int corpsID, Position position );
 };

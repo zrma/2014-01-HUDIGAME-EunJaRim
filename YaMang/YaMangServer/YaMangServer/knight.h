@@ -6,7 +6,7 @@ class Knight:
 {
 public:
 	Knight();
-	~Knight();
+	virtual ~Knight( );
 
 	void	GenerateCorps( int corpsID, Position position );
 };
