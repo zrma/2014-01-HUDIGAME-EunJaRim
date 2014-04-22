@@ -20,27 +20,27 @@ void ScenePlay::Create()
 	// 나중에 내부적으로 Corps를 추가하거나 제거하는 코드 작성해야 함
 	
 	Corps* corps = new Corps();
-	corps->Create( 1, UNIT_ARROW );
+	corps->Create( 1, UnitType::UNIT_ARROW );
 	corps->SetVisible( true );
 	m_CorpsList[100] = corps;
 
 	corps = new Corps();
-	corps->Create( 1, UNIT_GUARD );
+	corps->Create( 1, UnitType::UNIT_GUARD );
 	corps->SetVisible( true );
 	m_CorpsList[200] = corps;
 
 	corps = new Corps();
-	corps->Create( 1, UNIT_KNIGHT );
+	corps->Create( 1, UnitType::UNIT_KNIGHT );
 	corps->SetVisible( true );
 	m_CorpsList[300] = corps;
 
 	corps = new Corps();
-	corps->Create( 1, UNIT_PIKE );
+	corps->Create( 1, UnitType::UNIT_PIKE );
 	corps->SetVisible( true );
 	m_CorpsList[400] = corps;
 
 	corps = new Corps();
-	corps->Create( 1, UNIT_SWORD );
+	corps->Create( 1, UnitType::UNIT_SWORD );
 	corps->SetVisible( true );
 	m_CorpsList[500] = corps;
 	

@@ -323,20 +323,20 @@ int ClientSession::GenerateCorps( UnitType type, Position position )
 	Corps* corps = nullptr;
 	switch ( type )
 	{
-		case UNIT_ARROW:
+		case UnitType::UNIT_ARROW:
 			corps = new Arrow();
 			break;
-		case UNIT_GUARD:
-			corps = new Guard( );
+		case  UnitType::UNIT_GUARD:
+			corps = new Guard();
 			break;
-		case UNIT_KNIGHT:
-			corps = new Knight( );
+		case  UnitType::UNIT_KNIGHT:
+			corps = new Knight();
 			break;
-		case UNIT_PIKE:
-			corps = new Pike( );
+		case  UnitType::UNIT_PIKE:
+			corps = new Pike();
 			break;
-		case UNIT_SWORD:
-			corps = new Sword( );
+		case  UnitType::UNIT_SWORD:
+			corps = new Sword();
 			break;
 		default:
 			return -1;

@@ -24,7 +24,7 @@ protected:
 	short					m_UnitNum = -1;
 
 	Position				m_Position;
-	FormationType			m_Formation = FORMATION_NONE;
+	FormationType			m_Formation = FormationType::FORMATION_NONE;
 
 	int		m_MoveSpeed = 0;
 	int		m_MoveSpeedBonus = 0;

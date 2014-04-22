@@ -201,7 +201,7 @@ struct GenerateCorpsRequest: public PacketHeader
 	{
 		m_Size = sizeof( GenerateCorpsRequest );
 		m_Type = PKT_CS_GENERATE_CORPS;
-		m_UnitType = UNIT_NONE;
+		m_UnitType = UnitType::UNIT_NONE;
 		m_Position;
 	}
 
@@ -215,7 +215,7 @@ struct GenerateCorpsResult: public PacketHeader
 	{
 		m_Size = sizeof( GenerateCorpsResult );
 		m_Type = PKT_SC_GENERATE_CORPS;
-		m_UnitType = UNIT_NONE;
+		m_UnitType = UnitType::UNIT_NONE;
 		m_Position;
 		m_CorpsID = -1;
 		m_PlayerId = -1;
@@ -272,7 +272,7 @@ struct ChangeCorpsFormationRequest: public PacketHeader
 		m_Size = sizeof( ChangeCorpsFormationRequest );
 		m_Type = PKT_CS_CORPS_CHANGE_FORMATION;
 		m_CorpsID = -1;
-		m_FormationType = FORMATION_NONE;
+		m_FormationType = FormationType::FORMATION_NONE;
 	}
 
 	int				m_CorpsID;
@@ -286,7 +286,7 @@ struct ChangeCorpsFormationResult: public PacketHeader
 		m_Size = sizeof( ChangeCorpsFormationResult );
 		m_Type = PKT_SC_CORPS_CHANGE_FORMATION;
 		m_CorpsID = -1;
-		m_FormationType = FORMATION_NONE;
+		m_FormationType = FormationType::FORMATION_NONE;
 	}
 
 	int				m_CorpsID;

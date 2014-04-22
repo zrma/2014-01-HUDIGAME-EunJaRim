@@ -29,19 +29,19 @@ void Corps::Create( UINT num, UnitType unitType )
 	{
 		switch ( unitType )
 		{
-			case UNIT_ARROW:
+			case  UnitType::UNIT_ARROW:
 				unit = new Arrow();
 				break;
-			case UNIT_GUARD:
+			case  UnitType::UNIT_GUARD:
 				unit = new Guard();
 				break;
-			case UNIT_KNIGHT:
+			case  UnitType::UNIT_KNIGHT:
 				unit = new Knight();
 				break;
-			case UNIT_PIKE:
+			case  UnitType::UNIT_PIKE:
 				unit = new Pike();
 				break;
-			case UNIT_SWORD:
+			case  UnitType::UNIT_SWORD:
 				unit = new Sword();
 				break;
 			default:

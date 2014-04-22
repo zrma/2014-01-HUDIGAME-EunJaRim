@@ -1,6 +1,6 @@
 #pragma once
 
-enum UnitType
+enum class UnitType: short
 {
 	UNIT_NONE = 0,
 
@@ -13,7 +13,7 @@ enum UnitType
 	UNIT_MAX = 1024
 };
 
-enum FormationType
+enum class FormationType: short
 {
 	FORMATION_NONE = 0,
 
