@@ -37,7 +37,7 @@ public:
 	void	Destroy();
 	bool	IsMapReady() { return m_IsMapReady; }
 	
-	ResourceMesh*	GetMeshByKey( MeshKeyType key ) { return m_MeshList[key]; }
+	ResourceMesh*	GetMeshByKey( MeshKeyType key ) { return m_MeshArray[key]; }
 
 private:
 	void	AddMap( LPCTSTR& heightMapFileName, LPCTSTR& textureFileName, MapKeyType key );
@@ -48,8 +48,8 @@ private:
 	void	CreateMesh( LPCTSTR& fileName, MESHOBJECT* mesh );
 	void	DeleteMesh( MESHOBJECT* mesh );
 
-	std::array<ResourceMesh*, MESH_KEY_MAX>	m_MeshList;
-	std::array<ResourceMap*, MAP_KEY_MAX> m_MapList;
+	std::array<ResourceMesh*, MESH_KEY_MAX>	m_MeshArray;
+	std::array<ResourceMap*, MAP_KEY_MAX> m_HeightMapArray;
 	
 	bool	m_IsMapReady = false;
 };

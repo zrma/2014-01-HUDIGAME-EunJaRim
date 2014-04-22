@@ -5,8 +5,8 @@
 
 ResourceManager::ResourceManager()
 {
-	m_MeshList.fill( nullptr );
-	m_MapList.fill( nullptr );
+	m_MeshArray.fill( nullptr );
+	m_HeightMapArray.fill( nullptr );
 }
 
 
@@ -36,7 +36,7 @@ void ResourceManager::Destroy()
 {
 	DeleteMap();
 
-	for ( auto& toBeDelete : m_MeshList )
+	for ( auto& toBeDelete : m_MeshArray )
 	{
 		if ( toBeDelete )
 		{
@@ -45,7 +45,7 @@ void ResourceManager::Destroy()
 			delete toBeDelete;
 		}
 	}
-	for ( auto& toBeDelete : m_MapList )
+	for ( auto& toBeDelete : m_HeightMapArray )
 	{
 		SafeDelete( toBeDelete );
 	}
@@ -53,10 +53,10 @@ void ResourceManager::Destroy()
 
 void ResourceManager::AddMap( LPCTSTR& heightMapFileName, LPCTSTR& textureFileName, MapKeyType key )
 {
-	SafeDelete( m_MapList[key] );
+	SafeDelete( m_HeightMapArray[key] );
 		
 	ResourceMap* map = new ResourceMap();
-	m_MapList[key] = map;
+	m_HeightMapArray[key] = map;
 
 	map->m_HeightMap.append( heightMapFileName );
 	map->m_TextureMap.append( textureFileName );
@@ -66,10 +66,10 @@ void ResourceManager::AddMap( LPCTSTR& heightMapFileName, LPCTSTR& textureFileNa
 
 bool ResourceManager::CreateMap( MapKeyType key )
 {
-	if ( m_MapList[key] )
+	if ( m_HeightMapArray[key] )
 	{
 		return ( S_OK == HeightMapTextureImport(
-			MainWindow::GetInstance()->Window(), m_MapList[key]->m_HeightMap.c_str(), m_MapList[key]->m_TextureMap.c_str() ) );
+			MainWindow::GetInstance()->Window(), m_HeightMapArray[key]->m_HeightMap.c_str(), m_HeightMapArray[key]->m_TextureMap.c_str() ) );
 	}
 	return false;
 }
@@ -97,8 +97,8 @@ bool ResourceManager::AddMesh( LPCTSTR& fileName, MeshKeyType key )
 
 	if ( mesh->m_MeshObject )
 	{
-		SafeDelete( m_MeshList[key] );
-		m_MeshList[key] = mesh;
+		SafeDelete( m_MeshArray[key] );
+		m_MeshArray[key] = mesh;
 
 		return true;
 	}
