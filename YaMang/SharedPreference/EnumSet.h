@@ -1,6 +1,6 @@
 #pragma once
 
-enum class UnitType: unsigned char
+enum class UnitType: int
 {
 	UNIT_NONE = 0,
 

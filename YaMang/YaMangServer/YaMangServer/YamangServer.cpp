@@ -24,6 +24,10 @@ static int LISTEN_PORT = 9001;
 
 int _tmain( int argc, _TCHAR* argv[] )
 {
+	// 패키징 테스트 ?? 정상인듯?
+	printf( "[PACKET SIZE]%d\n", sizeof( GenerateCorpsRequest ) );
+	printf( "[POSITION SIZE]%d\n", sizeof( Position ) );
+
 	/// crash 발생시 dump 남기기 위해서
 	// Exception.cpp 쪽에서 전역 함수로 선언 되어 있음
 	SetUnhandledExceptionFilter( ExceptionFilter );

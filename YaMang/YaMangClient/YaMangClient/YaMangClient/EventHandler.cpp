@@ -126,18 +126,6 @@ void NetworkManager::HandleChatResult( ChatBroadcastResult& inPacket )
 }
 
 
-// m_Size = sizeof( GenerateCorpsResult );
-// m_Type = PKT_SC_GENERATE_CORPS;
-// m_UnitType = UNIT_NONE;
-// m_Position = { NOT_A_NUMBER_FLOAT, NOT_A_NUMBER_FLOAT };
-// m_CorpsID = -1;
-// m_PlayerId = -1;
-// 	}
-// 
-// 	UnitType m_UnitType;
-// 	Position m_Position;
-// 	int		 m_CorpsID;
-// 	int		 m_PlayerId;
 REGISTER_HANDLER( PKT_SC_GENERATE_CORPS )
 {
 		GenerateCorpsResult recvData = static_cast<GenerateCorpsResult&>( pktBase );
@@ -156,19 +144,10 @@ void NetworkManager::HandleGenerateCorpsResult( GenerateCorpsResult& inPacket )
 		int corpsID = inPacket.m_CorpsID;
 		int playerID = inPacket.m_PlayerId;
 
-		if ( m_MyPlayerId != inPacket.m_PlayerId )
-		{
-			// 원래는 리스트에 넣긴 해야함
-			// 아니면 Corps구조에 누구꺼인지가 필요
-			//return;
-		}
-		else
-		{
-			
-		}
+		
 
-		/*Corps* corps = new Corps();
-		corps->Create( 1, unitType );
+		Corps* corps = new Corps( corpsID, playerID, position );
+		corps->Create( 6, UnitType::UNIT_ARROW );
 		corps->SetVisible( true );
 
 		Scene* scene =  SceneManager::GetInstance()->GetNowScene();
@@ -182,7 +161,7 @@ void NetworkManager::HandleGenerateCorpsResult( GenerateCorpsResult& inPacket )
 		{
 			//플레이중이 아닌데 플레이용 패킷을 받음 
 			assert( false );
-		}*/
+		}
 		
 
 		

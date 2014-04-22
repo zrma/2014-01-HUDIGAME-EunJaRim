@@ -198,10 +198,10 @@ struct GenerateCorpsRequest: public PacketHeader
 {
 	GenerateCorpsRequest( )
 	{
-		m_Size = sizeof( GenerateCorpsRequest );
-		m_Type = PKT_CS_GENERATE_CORPS;
-		m_UnitType = UnitType::UNIT_NONE;
-		m_Position;
+		m_Size = sizeof( GenerateCorpsRequest );//2
+		m_Type = PKT_CS_GENERATE_CORPS;//2
+		m_UnitType = UnitType::UNIT_NONE;//1
+		m_Position;//24
 	}
 
 	UnitType m_UnitType;

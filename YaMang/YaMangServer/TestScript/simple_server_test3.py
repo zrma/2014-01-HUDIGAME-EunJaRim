@@ -66,11 +66,13 @@ while True:
                 typeNum = input("UnitType[ARROW:10, GUARD:20, KNIGHT:30, PIKE:40, SWORD:50]:");
                 posX = float(raw_input("PosX: "));
                 posZ = float(raw_input("PosZ: "));
-                s.send(struct.pack('hhiff', 16, mode, typeNum, posX, posZ));
+                lookX = float(raw_input("LookX: "));
+                lookZ = float(raw_input("LookZ: "));
+                s.send(struct.pack('hhiffffff', 31, mode, typeNum, posX, float(0), posZ, lookX, float(0), lookZ));
         elif mode == PKT_CS_CORPS_CHANGE_FORMATION:
                 corpsID = input("corpsID:");
-                typeNum = input("FormationType[DEFENSE:10, DESTROY:20, RUSH:30]:");
-                s.send(struct.pack('hhii', 12, mode, corpsID, typeNum));
+                typeNum = ord(input("FormationType[DEFENSE:10, DESTROY:20, RUSH:30]:"));
+                s.send(struct.pack('hhiB', 12, mode, corpsID, typeNum));
                 
 print "close!";
 s.close()
