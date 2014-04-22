@@ -30,10 +30,6 @@ extern "C"{
 	//rendering 후 디바이스 endScene
 	YAMANGDXDLL_API void PostRendering();
 
-	//tool용 렌더링 함수
-	YAMANGDXDLL_API void RenderingTool( MESHOBJECT* inputVal);
-	YAMANGDXDLL_API void SetCameraTool( float x, float y, float z );
-
 	//각 object 해제시 사용
 	YAMANGDXDLL_API void MeshObjectCleanUp( MESHOBJECT* inputVal );
 
@@ -75,6 +71,12 @@ extern "C"{
 	YAMANGDXDLL_API void CursorCleanUp();
 	YAMANGDXDLL_API void SetCursorPosition( float PosX = 0, float PosY = 0 );
 
+	//////////////////////////////////////////////////////////////////////////
+	// Tool 용 함수
+	//////////////////////////////////////////////////////////////////////////
+	//tool용 렌더링 함수
+	YAMANGDXDLL_API void RenderingTool(MESHOBJECT* inputVal);
+	YAMANGDXDLL_API void SetCameraTool(float x, float y, float z);
 }
 //단일 변수 out sample
 //extern YAMANGDXDLL_API int nyaMangDxDll;

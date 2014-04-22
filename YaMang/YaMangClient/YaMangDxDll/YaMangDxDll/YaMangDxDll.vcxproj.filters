@@ -12,6 +12,9 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="DllDefault">
+      <UniqueIdentifier>{2da69dfa-204b-41a5-b470-898e3cced746}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -23,27 +26,33 @@
     <ClInclude Include="MeshObject.h">
       <Filter>YaMangDxDll</Filter>
     </ClInclude>
-    <ClInclude Include="stdafx.h">
+    <ClInclude Include="YaMangDxDll.h">
       <Filter>YaMangDxDll</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>DllDefault</Filter>
     </ClInclude>
     <ClInclude Include="targetver.h">
-      <Filter>YaMangDxDll</Filter>
+      <Filter>DllDefault</Filter>
     </ClInclude>
-    <ClInclude Include="YaMangDxDll.h">
+    <ClInclude Include="InnerResource.h">
       <Filter>YaMangDxDll</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>YaMangDxDll</Filter>
-    </ClCompile>
-    <ClCompile Include="dllmain.cpp">
-      <Filter>YaMangDxDll</Filter>
-    </ClCompile>
     <ClCompile Include="Logger.cpp">
       <Filter>console</Filter>
     </ClCompile>
     <ClCompile Include="YaMangDxDll.cpp">
+      <Filter>YaMangDxDll</Filter>
+    </ClCompile>
+    <ClCompile Include="dllmain.cpp">
+      <Filter>DllDefault</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>DllDefault</Filter>
+    </ClCompile>
+    <ClCompile Include="InnerResource.cpp">
       <Filter>YaMangDxDll</Filter>
     </ClCompile>
   </ItemGroup>
