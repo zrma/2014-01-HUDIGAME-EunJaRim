@@ -1,6 +1,6 @@
 #pragma once
 
-enum class UnitType: short
+enum class UnitType: unsigned char
 {
 	UNIT_NONE = 0,
 
@@ -10,10 +10,10 @@ enum class UnitType: short
 	UNIT_PIKE = 40,
 	UNIT_SWORD = 50,
 
-	UNIT_MAX = 1024
+	UNIT_MAX = 255
 };
 
-enum class FormationType: short
+enum class FormationType: unsigned char
 {
 	FORMATION_NONE = 0,
 
@@ -21,7 +21,7 @@ enum class FormationType: short
 	FORMATION_DESTROY = 20,
 	FORMATION_RUSH = 30,
 
-	FORMATION_MAX = 1024
+	FORMATION_MAX = 255
 };
 
 enum SceneType
