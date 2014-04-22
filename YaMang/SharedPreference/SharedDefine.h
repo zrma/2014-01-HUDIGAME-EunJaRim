@@ -2,7 +2,6 @@
 #include <d3dx9math.h>
 
 const int	MAX_UNIT_IN_CORPS = 10;
-
 const float NOT_A_NUMBER_FLOAT = -9999.0f;
 
 struct Position

@@ -14,6 +14,7 @@ public:
 	virtual void	Render() = 0;
 
 	virtual void	SetVisible( bool visible ) { m_Visible = visible; }
+	D3DXMATRIXA16	GetMatrix( bool leftHand = true );
 
 protected:
 	D3DXVECTOR3		m_EyePoint = { NOT_A_NUMBER_FLOAT, NOT_A_NUMBER_FLOAT, NOT_A_NUMBER_FLOAT };

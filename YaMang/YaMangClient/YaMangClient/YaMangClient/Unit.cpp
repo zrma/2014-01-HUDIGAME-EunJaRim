@@ -1,4 +1,5 @@
 ﻿#include "stdafx.h"
+#include "Corps.h"
 #include "Unit.h"
 #include "SharedDefine.h"
 #include "Renderer.h"
@@ -10,7 +11,6 @@ Unit::~Unit()
 
 void Unit::Update()
 {
-
 }
 
 void Unit::Render()
@@ -18,22 +18,21 @@ void Unit::Render()
 	if ( !m_Visible || !m_MeshKey )
 		return;
 
-	D3DXMATRIXA16 rotateMatrix;
-	D3DXMatrixLookAtRH( &rotateMatrix, &m_EyePoint, &m_LookAtPoint, &m_UpVector );
-	rotateMatrix._41 = rotateMatrix._42 = rotateMatrix._43 = 0.0f;
-	D3DXMatrixTranspose( &rotateMatrix, &rotateMatrix );
+	if ( !m_Corps )
+	{
+		assert( false );
+	}
+	D3DXMATRIXA16 parentMatrix = m_Corps->GetMatrix();
 
-	D3DXMATRIXA16 transMatrix;
-	D3DXMatrixTranslation( &transMatrix, m_EyePoint.x, m_EyePoint.y, m_EyePoint.z );
+	D3DXMATRIXA16 formMatrix;
+	D3DXMatrixIdentity( &formMatrix );
 
-	D3DXMATRIXA16 scaleMatrix;
-	D3DXMatrixScaling( &scaleMatrix, m_Scale.x, m_Scale.y, m_Scale.z );
-	
-	D3DXMATRIXA16 worldMatrix;
-	D3DXMatrixIdentity( &worldMatrix );
+	D3DXVECTOR3 formationVector = ( m_Corps->GetFormation( m_UnitId ) ) * 3;
+	D3DXMatrixTranslation( &formMatrix, formationVector.x, formationVector.y, formationVector.z );
+	formMatrix = formMatrix * parentMatrix;
 
-	worldMatrix = scaleMatrix * rotateMatrix * transMatrix;
-	Renderer::GetInstance()->SetWorldMatrix( worldMatrix );
+	D3DXMATRIXA16 thisMatrix = GetMatrix( false ) * formMatrix;
+	Renderer::GetInstance()->SetWorldMatrix( thisMatrix );
 
 	ResourceMesh* mesh = ResourceManager::GetInstance()->GetMeshByKey( m_MeshKey );
 

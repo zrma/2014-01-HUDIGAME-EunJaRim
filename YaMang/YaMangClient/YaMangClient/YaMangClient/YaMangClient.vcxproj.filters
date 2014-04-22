@@ -64,9 +64,6 @@
     <ClInclude Include="Logger.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="DummyRender.h">
-      <Filter>MainLoop</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\SharedPreference\PacketType.h">
       <Filter>SharedPreference</Filter>
     </ClInclude>
@@ -178,6 +175,12 @@
     <ClInclude Include="TextManager.h">
       <Filter>Render</Filter>
     </ClInclude>
+    <ClInclude Include="DummyRender.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="BreadBoard.h">
+      <Filter>Unit</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -197,9 +200,6 @@
     </ClCompile>
     <ClCompile Include="Logger.cpp">
       <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="DummyRender.cpp">
-      <Filter>MainLoop</Filter>
     </ClCompile>
     <ClCompile Include="InputDispatcher.cpp">
       <Filter>Event</Filter>
@@ -304,6 +304,9 @@
       <Filter>Resource</Filter>
     </ClCompile>
     <ClCompile Include="TextManager.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="DummyRender.cpp">
       <Filter>Render</Filter>
     </ClCompile>
   </ItemGroup>

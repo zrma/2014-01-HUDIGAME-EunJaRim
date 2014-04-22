@@ -150,7 +150,7 @@ REGISTER_KEY_HANDLER( VK_W )
 	float delta = time * 10.0f;
 	CameraController::GetInstance()->MoveForward( delta );
 
-	Log( "Time : %f \n", delta );
+//	Log( "Time : %f \n", delta );
 }
 
 REGISTER_KEY_HANDLER( VK_S )

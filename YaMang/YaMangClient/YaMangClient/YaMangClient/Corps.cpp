@@ -1,20 +1,37 @@
 ﻿#include "stdafx.h"
-#include "Corps.h"
+#include "BreadBoard.h"
 #include "Arrow.h"
 #include "Guard.h"
 #include "Knight.h"
 #include "Pike.h"
 #include "Sword.h"
 #include "MacroSet.h"
+#include "Corps.h"
 
-Corps::Corps()
+Corps::Corps( int corpsId, int playerId, Position pos )
+: m_CorpsId( corpsId ), m_OwnerPlayerID( playerId )
 {
-}
+	m_FormationArray.fill( nullptr );
+	m_FormationArray[static_cast<size_t>( FormationType::FORMATION_DEFENSE )] = new DefenseBread();
+	m_FormationArray[static_cast<size_t>( FormationType::FORMATION_DESTROY )] = new DestroyBread();
+	m_FormationArray[static_cast<size_t>( FormationType::FORMATION_RUSH )] = new RushBread();
 
+	m_EyePoint = pos.m_EyePoint;
+	m_LookAtPoint = pos.m_LookAtPoint;
+	m_UpVector = { 0.0f, 1.0f, 0.0f };
+	m_Scale = { 1.0f, 1.0f, 1.0f };
+
+	m_Formation = FormationType::FORMATION_RUSH;
+}
 
 Corps::~Corps()
 {
 	for ( auto& toBeDelete : m_UnitList )
+	{
+		SafeDelete( toBeDelete );
+	}
+
+	for ( auto& toBeDelete : m_FormationArray )
 	{
 		SafeDelete( toBeDelete );
 	}
@@ -78,4 +95,9 @@ void Corps::SetVisible( bool visible )
 	{
 		iter->SetVisible( visible );
 	}
+}
+
+D3DXVECTOR3 Corps::GetFormation( int unitId ) const
+{
+	return m_FormationArray[static_cast<size_t>(m_Formation)]->m_Position[unitId];
 }

@@ -90,6 +90,7 @@
     <ClInclude Include="Action.h" />
     <ClInclude Include="Arrow.h" />
     <ClInclude Include="Attack.h" />
+    <ClInclude Include="BreadBoard.h" />
     <ClInclude Include="CameraController.h" />
     <ClInclude Include="CircularBuffer.h" />
     <ClInclude Include="Corps.h" />

@@ -167,7 +167,7 @@ void NetworkManager::HandleGenerateCorpsResult( GenerateCorpsResult& inPacket )
 			
 		}
 
-		Corps* corps = new Corps();
+		/*Corps* corps = new Corps();
 		corps->Create( 1, unitType );
 		corps->SetVisible( true );
 
@@ -182,7 +182,7 @@ void NetworkManager::HandleGenerateCorpsResult( GenerateCorpsResult& inPacket )
 		{
 			//플레이중이 아닌데 플레이용 패킷을 받음 
 			assert( false );
-		}
+		}*/
 		
 
 		
