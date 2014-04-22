@@ -116,12 +116,11 @@ struct GameOverRequest: public PacketHeader
 		m_Size = sizeof( GameOverRequest );
 		m_Type = PKT_CS_GAMEOVER;
 		m_PlayerId = -1;
-
-		memset( m_Chat, 0, MAX_CHAT_LEN );
+		m_IsWon = false;
 	}
 
 	int	m_PlayerId;
-	char m_Chat[MAX_CHAT_LEN];
+	bool m_IsWon;
 };
 
 struct GameOverResult: public PacketHeader

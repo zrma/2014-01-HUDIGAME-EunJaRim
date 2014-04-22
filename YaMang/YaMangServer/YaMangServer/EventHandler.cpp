@@ -94,31 +94,15 @@ void ClientSession::HandleGameOverRequest( GameOverRequest& inPacket )
 
 	m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size );
 
-	std::string packetMessage;
-	packetMessage.append( inPacket.m_Chat );
-
-	//////////////////////////////////////////////////////////////////////////
-	// 테스트용으로 임시로 붙여둠
-	//////////////////////////////////////////////////////////////////////////
-	int pid = stoi( packetMessage.substr( 1, 4 ) );
-	// 예외 상황이 발생 할 수 있음
-	//
-	// 1) 4글자 미만일 경우 펑!
-	// 2) 숫자가 아닐 경우 펑!
+	bool isWon = inPacket.m_IsWon;
+	int playerID = inPacket.m_PlayerId;
 
 	GameOverResult outPacket;
-	outPacket.m_PlayerId = pid;
+	outPacket.m_PlayerId = playerID;
 
-	if ( packetMessage.at( 0 ) == 'W' )
-	{
-		outPacket.m_IsWon = true;
-	}
-	else
-	{
-		outPacket.m_IsWon = false;
-	}
+	outPacket.m_IsWon = isWon;
 
-	printf_s( "[GameOverMessage][%d]%s \n", inPacket.m_PlayerId, inPacket.m_Chat );
+	printf_s( "[GameOverMessage][%d]%d \n", inPacket.m_PlayerId, isWon );
 
 	/// 채팅은 바로 방송 하면 끝
 	if ( !Broadcast( &outPacket ) )

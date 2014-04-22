@@ -52,9 +52,9 @@ while True:
                 message = message + str_generator(1000-len(message));
                 s.send(struct.pack('<hhi1024s', 1032, mode, pid, message));
         elif mode == PKT_CS_GAMEOVER:
-                message = raw_input("message:");
-                message = message + str_generator(1000-len(message));
-                s.send(struct.pack('<hhi1024s', 1032, mode, pid, message));
+                targetID = input("TargetID:");
+                isWON = input("isWON?[Win = 1 Lose = 0]:");
+                s.send(struct.pack('<hhi?', 9, mode, targetID, bool(isWON)));
         elif mode == PKT_CS_ROOM_CREATE:
                 s.send(struct.pack('hhi', 8, mode, pid));
         elif mode == PKT_CS_ROOM_CHANGE:
