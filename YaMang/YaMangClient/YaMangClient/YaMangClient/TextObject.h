@@ -9,6 +9,10 @@ public:
 
 	void	DrawText();
 
+	void	SetText( LPCWSTR text ) { m_Text = text; }
+	void	SetLeft( float left ) { m_Left = left; }
+	void	SetTop( float top ) { m_Top = top; }
+
 private:
 	LPCWSTR m_Text;
 	float m_Left;

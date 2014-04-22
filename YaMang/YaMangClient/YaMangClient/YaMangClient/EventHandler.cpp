@@ -87,12 +87,12 @@ void NetworkManager::HandleGameOverResult( GameOverResult& inPacket )
 		if ( inPacket.m_IsWon )
 		{
 			Log( "I'm WIN!! \n" );
-			TextManager::GetInstance( )->RegistText( L"I'm WIN!!", 50, 50 );
+			TextManager::GetInstance( )->RegistText( 300, L"I'm WIN!!", 50, 50 );
 		}
 		else
 		{
 			Log( "I'm Lose... \n" );
-			TextManager::GetInstance( )->RegistText( L"I'm Lose... ", 50, 50 );
+			TextManager::GetInstance( )->RegistText( 300, L"I'm Lose... ", 50, 50 );
 		}
 	}
 	else
