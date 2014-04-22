@@ -26,15 +26,16 @@ GameManager::~GameManager()
 //////////////////////////////////////////////////////////////////////////
 bool GameManager::Init()
 {
-	NetworkManager::GetInstance()->Init();
-	// 방어코드 필요함
+	//////////////////////////////////////////////////////////////////////////
+	// 하단의 코드들은 방어코드가 필요합니다.
+	//////////////////////////////////////////////////////////////////////////
 
+	NetworkManager::GetInstance()->Init();
 	NetworkManager::GetInstance()->Connect();
 
 	// 렌더러 생성 및 초기화
 	Renderer::GetInstance()->Init();
-	// 방어코드 필요함
-
+	
 	// 리소스 로딩 및 초기화
 	ResourceManager::GetInstance()->Init();
 	
@@ -45,8 +46,11 @@ bool GameManager::Init()
 	// 카메라 초기화
 	CameraController::GetInstance()->Init();
 
-	//커서 초기화
+	// 커서 초기화
 	MouseManager::GetInstance()->CreateCursor( L"cursor1.bmp", 200, 200);
+
+	// 텍스트 매니저
+	// 타이머
 
 	return true;
 }
@@ -91,6 +95,12 @@ bool GameManager::Process()
 //////////////////////////////////////////////////////////////////////////
 void GameManager::Destroy()
 {
+	// 텍스트 매니저 해제
+	TextManager::Release();
+
+	MouseManager::GetInstance()->CleanupCursor();
+	MouseManager::Release();
+
 	// 씬 해제
 	SceneManager::GetInstance()->Destroy();
 	SceneManager::Release();
@@ -110,7 +120,4 @@ void GameManager::Destroy()
 	InputDispatcher::Release();
 
 	Timer::Release();
-
-	MouseManager::GetInstance()->CleanupCursor();
-	MouseManager::Release();
 }

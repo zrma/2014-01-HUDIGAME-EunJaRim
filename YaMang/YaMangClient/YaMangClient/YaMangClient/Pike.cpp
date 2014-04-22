@@ -2,7 +2,8 @@
 #include "Pike.h"
 
 
-Pike::Pike()
+Pike::Pike( Corps* owner, UINT unitId )
+: Unit( owner, unitId )
 {
 	m_MeshKey = MESH_KEY_UNIT_PIKE;
 	// 중국

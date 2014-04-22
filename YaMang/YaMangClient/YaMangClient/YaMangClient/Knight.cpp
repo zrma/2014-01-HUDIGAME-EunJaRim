@@ -2,7 +2,8 @@
 #include "Knight.h"
 
 
-Knight::Knight()
+Knight::Knight( Corps* owner, UINT unitId )
+: Unit( owner, unitId )
 {
 	m_MeshKey = MESH_KEY_UNIT_KNIGHT;
 	// 소녀

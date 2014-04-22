@@ -30,19 +30,19 @@ void Corps::Create( UINT num, UnitType unitType )
 		switch ( unitType )
 		{
 			case  UnitType::UNIT_ARROW:
-				unit = new Arrow();
+				unit = new Arrow( this, i );
 				break;
 			case  UnitType::UNIT_GUARD:
-				unit = new Guard();
+				unit = new Guard( this, i );
 				break;
 			case  UnitType::UNIT_KNIGHT:
-				unit = new Knight();
+				unit = new Knight( this, i );
 				break;
 			case  UnitType::UNIT_PIKE:
-				unit = new Pike();
+				unit = new Pike( this, i );
 				break;
 			case  UnitType::UNIT_SWORD:
-				unit = new Sword();
+				unit = new Sword( this, i );
 				break;
 			default:
 				return;
@@ -50,10 +50,7 @@ void Corps::Create( UINT num, UnitType unitType )
 
 		if ( unit )
 		{
-			unit->SetSelfCorps( this );
-			unit->SetUnitId( i );
 			m_UnitList.push_back( unit );
-
 			unit = nullptr;
 		}
 	}

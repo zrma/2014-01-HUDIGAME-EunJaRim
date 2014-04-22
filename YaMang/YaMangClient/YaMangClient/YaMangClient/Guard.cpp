@@ -2,7 +2,8 @@
 #include "Guard.h"
 
 
-Guard::Guard()
+Guard::Guard( Corps* owner, UINT unitId )
+: Unit( owner, unitId )
 {
 	m_MeshKey = MESH_KEY_UNIT_GUARD;
 	// 배트맨

@@ -4,11 +4,6 @@
 #include "Renderer.h"
 #include "ResourceManager.h"
 
-Unit::Unit()
-{
-}
-
-
 Unit::~Unit()
 {
 }

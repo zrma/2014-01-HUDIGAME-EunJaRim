@@ -2,7 +2,8 @@
 #include "Sword.h"
 
 
-Sword::Sword()
+Sword::Sword( Corps* owner, UINT unitId )
+: Unit( owner, unitId )
 {
 	m_MeshKey = MESH_KEY_UNIT_SWORD;
 	// 호랑이

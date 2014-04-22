@@ -4,9 +4,14 @@ class Arrow:
 	public Unit
 {
 public:
-	Arrow();
-	~Arrow();
+	Arrow( Corps* owner, UINT unitId );
+	virtual ~Arrow();
 
-	void	Update();
+	// virtual void	Update();
+
+private:
+	Arrow();
+	Arrow( const Arrow& );
+	Arrow& operator=( const Arrow& );
 };
 
