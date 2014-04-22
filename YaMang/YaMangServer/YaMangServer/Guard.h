@@ -11,6 +11,9 @@ public:
 	void	GenerateCorps( int corpsID, Position position );
 
 private:
-	Guard();
+	Guard( );
+	Guard( const Guard& );
+	Guard& operator=( const Guard& );
+
 };
 

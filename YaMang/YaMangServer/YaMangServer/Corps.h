@@ -20,6 +20,8 @@ public:
 
 private:
 	Corps();
+	Corps( const Corps& );
+	Corps& operator=( const Corps& );
 
 protected:
 	int						m_CorpsId = -1;

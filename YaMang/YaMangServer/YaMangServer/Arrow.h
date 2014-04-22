@@ -9,7 +9,11 @@ public:
 	virtual ~Arrow( );
 
 	void	GenerateCorps( int corpsID, Position position );
+
 private:
 	Arrow();
+	Arrow( const Arrow& );
+	Arrow& operator=( const Arrow& );
+
 };
 

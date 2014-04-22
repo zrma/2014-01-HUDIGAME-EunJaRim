@@ -11,6 +11,9 @@ public:
 	void	GenerateCorps( int corpsID, Position position );
 
 private:
-	Pike();
+	Pike( );
+	Pike( const Pike& );
+	Pike& operator=( const Pike& );
+
 };
 

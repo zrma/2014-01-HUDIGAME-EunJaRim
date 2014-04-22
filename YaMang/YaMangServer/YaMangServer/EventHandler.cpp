@@ -100,37 +100,30 @@ void ClientSession::HandleGameOverRequest( GameOverRequest& inPacket )
 	//////////////////////////////////////////////////////////////////////////
 	// 테스트용으로 임시로 붙여둠
 	//////////////////////////////////////////////////////////////////////////
-	try
+	int pid = stoi( packetMessage.substr( 1, 4 ) );
+	// 예외 상황이 발생 할 수 있음
+	//
+	// 1) 4글자 미만일 경우 펑!
+	// 2) 숫자가 아닐 경우 펑!
+
+	GameOverResult outPacket;
+	outPacket.m_PlayerId = pid;
+
+	if ( packetMessage.at( 0 ) == 'W' )
 	{
-		int pid = stoi( packetMessage.substr( 1, 4 ) );
-		// 예외 상황이 발생 할 수 있음
-		//
-		// 1) 4글자 미만일 경우 펑!
-		// 2) 숫자가 아닐 경우 펑!
-
-		GameOverResult outPacket;
-		outPacket.m_PlayerId = pid;
-
-		if ( packetMessage.at( 0 ) == 'W' )
-		{
-			outPacket.m_IsWon = true;
-		}
-		else
-		{
-			outPacket.m_IsWon = false;
-		}
-
-		printf_s( "[GameOverMessage][%d]%s \n", inPacket.m_PlayerId, inPacket.m_Chat );
-
-		/// 채팅은 바로 방송 하면 끝
-		if ( !Broadcast( &outPacket ) )
-		{
-			Disconnect();
-		}
+		outPacket.m_IsWon = true;
 	}
-	catch (...)
+	else
 	{
-		return;
+		outPacket.m_IsWon = false;
+	}
+
+	printf_s( "[GameOverMessage][%d]%s \n", inPacket.m_PlayerId, inPacket.m_Chat );
+
+	/// 채팅은 바로 방송 하면 끝
+	if ( !Broadcast( &outPacket ) )
+	{
+		Disconnect();
 	}
 }
 
@@ -147,27 +140,21 @@ void ClientSession::HandleRoomCreateRequest( RoomCreateRequest& inPacket )
 
 	m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size );
 
-	try
+	// 어차피 방 만들고 요청하는 사람을 그방으로 넣어주는게 좋을까?
+	int pid = inPacket.m_PlayerId;
+
+	int roomNumber = g_RoomManager->AddRoom();
+
+	RoomCreateResult outPacket;
+
+	outPacket.m_RoomNumber = roomNumber;
+
+	if ( !DirectSend( &outPacket ) )
 	{
-		// 어차피 방 만들고 요청하는 사람을 그방으로 넣어주는게 좋을까?
-		int pid = inPacket.m_PlayerId;
-
-		int roomNumber = g_RoomManager->AddRoom();
-
-		RoomCreateResult outPacket;
-
-		outPacket.m_RoomNumber = roomNumber;
-
-		if ( !DirectSend( &outPacket ) )
-		{
-			Disconnect();
-		}
-
+		Disconnect();
 	}
-	catch ( ... )
-	{
-		return;
-	}
+
+
 }
 
 
@@ -184,32 +171,26 @@ void ClientSession::HandleRoomChangeRequest( RoomChangeRequest& inPacket )
 
 	m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size );
 
-	try
+	int pid = inPacket.m_PlayerId;
+
+	int roomFrom = inPacket.m_RoomFrom;
+	int roomTo = inPacket.m_RoomTo;
+
+	if ( !g_RoomManager->ChangeRoom( roomFrom, roomTo, pid ) )
 	{
-		int pid = inPacket.m_PlayerId;
-
-		int roomFrom = inPacket.m_RoomFrom;
-		int roomTo = inPacket.m_RoomTo;
-
-		if ( !g_RoomManager->ChangeRoom( roomFrom, roomTo, pid ) )
-		{
-			Disconnect();
-		}
-
-		RoomChangeResult outPacket;
-		outPacket.m_RoomNumber = roomTo;
-
-		if ( !Broadcast( &outPacket ) )
-		{
-			Disconnect( );
-		}
-
-		g_RoomManager->PrintClientList(); // 테스트 프린트
+		Disconnect();
 	}
-	catch ( ... )
+
+	RoomChangeResult outPacket;
+	outPacket.m_RoomNumber = roomTo;
+
+	if ( !Broadcast( &outPacket ) )
 	{
-		return;
+		Disconnect();
 	}
+
+	g_RoomManager->PrintClientList(); // 테스트 프린트
+
 }
 
 
@@ -226,35 +207,30 @@ void ClientSession::HandleGenerateCorpsRequest( GenerateCorpsRequest& inPacket )
 
 	m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size );
 
-	try
+
+	UnitType unitType = inPacket.m_UnitType;
+	Position position = inPacket.m_Position;
+
+	int generatedCorpsID = GenerateCorps( unitType, position );
+
+	if ( generatedCorpsID == -1 )
 	{
-		UnitType unitType = inPacket.m_UnitType;
-		Position position = inPacket.m_Position;
-
-		int generatedCorpsID = GenerateCorps( unitType, position );
-
-		if ( generatedCorpsID == -1 )
-		{
-			Disconnect();
-		}
-
-		GenerateCorpsResult outPacket;
-		outPacket.m_UnitType = unitType;
-		outPacket.m_Position = position;
-		outPacket.m_CorpsID = generatedCorpsID;
-		outPacket.m_PlayerId = m_PlayerId;
-
-		if ( !Broadcast( &outPacket ) )
-		{
-			Disconnect();
-		}
-
-		printf_s( "GenerateCorps! Type:%d CorpID:%d PlayerID:%d CorpsListSize:%d \n", unitType, generatedCorpsID, m_PlayerId, static_cast<int>( m_CorpsList.size() ) );
+		Disconnect();
 	}
-	catch ( ... )
+
+	GenerateCorpsResult outPacket;
+	outPacket.m_UnitType = unitType;
+	outPacket.m_Position = position;
+	outPacket.m_CorpsID = generatedCorpsID;
+	outPacket.m_PlayerId = m_PlayerId;
+
+	if ( !Broadcast( &outPacket ) )
 	{
-		return;
+		Disconnect();
 	}
+
+	printf_s( "GenerateCorps! Type:%d CorpID:%d PlayerID:%d CorpsListSize:%d \n", unitType, generatedCorpsID, m_PlayerId, static_cast<int>( m_CorpsList.size() ) );
+
 }
 
 
@@ -272,38 +248,32 @@ void ClientSession::HandleMoveCorpsRequest( MoveCorpsRequest& inPacket )
 
 	m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size );
 
-	try
+	int corpsID = inPacket.m_CorpsID;
+	Position position = inPacket.m_Position;
+
+	if ( corpsID == -1 )
 	{
-		int corpsID = inPacket.m_CorpsID;
-		Position position = inPacket.m_Position;
-
-		if ( corpsID == -1 )
-		{
-			Disconnect();
-		}
-
-		// MOVE!!!!!!;
-		// 미구현
-
-		MoveCorpsResult outPacket;
-		outPacket.m_PlayerId = m_PlayerId;
-		outPacket.m_CorpsID = corpsID; // 미구현
-		outPacket.m_Position = position;
-		outPacket.m_CorpsID = -1; // 미구현
-
-
-
-		if ( !Broadcast( &outPacket ) )
-		{
-			Disconnect();
-		}
-
-		printf_s( "CorpsMoved CorpID:%d PlayerID:%d PosX:%f PosZ:%f \n", corpsID, m_PlayerId, position.m_EyePoint.x, position.m_EyePoint.y );
+		Disconnect();
 	}
-	catch ( ... )
+
+	// MOVE!!!!!!;
+	// 미구현
+
+	MoveCorpsResult outPacket;
+	outPacket.m_PlayerId = m_PlayerId;
+	outPacket.m_CorpsID = corpsID; // 미구현
+	outPacket.m_Position = position;
+	outPacket.m_CorpsID = -1; // 미구현
+
+
+
+	if ( !Broadcast( &outPacket ) )
 	{
-		return;
+		Disconnect();
 	}
+
+	printf_s( "CorpsMoved CorpID:%d PlayerID:%d PosX:%f PosZ:%f \n", corpsID, m_PlayerId, position.m_EyePoint.x, position.m_EyePoint.y );
+
 }
 
 
@@ -321,33 +291,28 @@ void ClientSession::HandleChangeCorpsFormationRequest( ChangeCorpsFormationReque
 
 	m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size );
 
-	try
+
+	int corpsID = inPacket.m_CorpsID;
+	FormationType formation = inPacket.m_FormationType;
+
+	if ( corpsID == -1 )
 	{
-		int corpsID = inPacket.m_CorpsID;
-		FormationType formation = inPacket.m_FormationType;
-
-		if ( corpsID == -1 )
-		{
-			Disconnect();
-		}
-
-		// 내 콥스 맵에서 포메이션바꿔주자
-
-		ChangeCorpsFormationResult outPacket;
-		outPacket.m_CorpsID = corpsID;
-		outPacket.m_FormationType = formation;
-
-
-
-		if ( !Broadcast( &outPacket ) )
-		{
-			Disconnect();
-		}
-
-		printf_s( "Corps Change Formation CorpID:%d Formation:%d \n", corpsID, formation );
+		Disconnect();
 	}
-	catch ( ... )
+
+	// 내 콥스 맵에서 포메이션바꿔주자
+
+	ChangeCorpsFormationResult outPacket;
+	outPacket.m_CorpsID = corpsID;
+	outPacket.m_FormationType = formation;
+
+
+
+	if ( !Broadcast( &outPacket ) )
 	{
-		return;
+		Disconnect();
 	}
+
+	printf_s( "Corps Change Formation CorpID:%d Formation:%d \n", corpsID, formation );
+
 }
