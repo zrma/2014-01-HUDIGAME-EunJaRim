@@ -145,7 +145,7 @@ void NetworkManager::HandleGenerateCorpsResult( GenerateCorpsResult& inPacket )
 		int playerID = inPacket.m_PlayerId;
 
 		Corps* corps = new Corps( corpsID, playerID, position );
-		corps->Create( 6, UnitType::UNIT_ARROW );
+		corps->Create( 10, unitType );
 		corps->SetVisible( true );
 
 		Scene* scene =  SceneManager::GetInstance()->GetNowScene();

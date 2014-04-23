@@ -36,7 +36,6 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
 print 'Connecting...';
 s.connect((HOST, PORT));
 
-
 s.send(struct.pack('hhi', 8, PKT_CS_LOGIN, pid));
 
 while True:
@@ -72,7 +71,7 @@ while True:
         elif mode == PKT_CS_CORPS_CHANGE_FORMATION:
                 corpsID = input("corpsID:");
                 typeNum = ord(input("FormationType[DEFENSE:10, DESTROY:20, RUSH:30]:"));
-                s.send(struct.pack('hhiB', 12, mode, corpsID, typeNum));
+                s.send(struct.pack('hhii', 12, mode, corpsID, typeNum));
                 
 print "close!";
 s.close()

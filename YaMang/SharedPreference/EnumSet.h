@@ -13,7 +13,7 @@ enum class UnitType: int
 	UNIT_MAX = 255
 };
 
-enum class FormationType: unsigned char
+enum class FormationType: int
 {
 	FORMATION_NONE = 0,
 

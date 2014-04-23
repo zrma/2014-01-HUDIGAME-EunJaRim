@@ -186,16 +186,12 @@ void ClientSession::HandleGenerateCorpsRequest( GenerateCorpsRequest& inPacket )
 	UnitType unitType = inPacket.m_UnitType;
 	Position position = inPacket.m_Position;
 
-	printf_s( "어흥! \n" );
-
 	int generatedCorpsID = GenerateCorps( unitType, position );
 
 	if ( generatedCorpsID == -1 )
 	{
 		Disconnect();
 	}
-
-	printf_s( "냐옹! \n" );
 
 	GenerateCorpsResult outPacket;
 	outPacket.m_UnitType = unitType;
@@ -208,8 +204,8 @@ void ClientSession::HandleGenerateCorpsRequest( GenerateCorpsRequest& inPacket )
 		Disconnect();
 	}
 
-	printf_s( "GenerateCorps! Type:%d CorpID:%d PlayerID:%d CorpsListSize:%d \n", unitType, generatedCorpsID, m_PlayerId, static_cast<int>( m_CorpsList.size() ) );
-
+	printf_s( "GenerateCorps! Type:%d CorpID:%d PlayerID:%d CorpsListSize:%d \n",
+			  unitType, generatedCorpsID, m_PlayerId, static_cast<int>( m_CorpsList.size() ) );
 }
 
 
@@ -239,8 +235,6 @@ void ClientSession::HandleMoveCorpsRequest( MoveCorpsRequest& inPacket )
 	outPacket.m_CorpsID = corpsID; // 미구현
 	outPacket.m_Position = position;
 	outPacket.m_CorpsID = -1; // 미구현
-
-
 
 	if ( !Broadcast( &outPacket ) )
 	{
@@ -277,7 +271,6 @@ void ClientSession::HandleChangeCorpsFormationRequest( ChangeCorpsFormationReque
 	ChangeCorpsFormationResult outPacket;
 	outPacket.m_CorpsID = corpsID;
 	outPacket.m_FormationType = formation;
-
 
 	if ( !Broadcast( &outPacket ) )
 	{
