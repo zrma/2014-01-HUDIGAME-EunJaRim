@@ -37,7 +37,7 @@ public:
 	void				OnPeriodWork();
 
 
-	void				ReadMapFile( const char* filename );
+	bool				ReadMapFile( const char* filename );
 
 
 

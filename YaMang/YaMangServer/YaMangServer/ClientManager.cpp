@@ -19,15 +19,21 @@
 void ClientManager::GameStart()
 {
 	TiXmlDocument document = TiXmlDocument( "../../SharedPreference/ServerConfig.xml" );
-	bool m_LoadSuccess = document.LoadFile();
+	bool xmlLoadSuccess = document.LoadFile();
 
-	if ( m_LoadSuccess )
+	if ( xmlLoadSuccess )
 	{
 		std::string mapFilePath;
 		mapFilePath = TinyXPath::S_xpath_string( document.RootElement( ), "/server/mapFilePath/text()" ).c_str( );
 		printf_s( "Map Path Loaded! :%s \n", mapFilePath.c_str( ) );
-		ReadMapFile( mapFilePath.c_str() );
-		m_IsGameStart = true;
+		if ( ReadMapFile( mapFilePath.c_str( ) ) )
+		{
+			m_IsGameStart = true;
+		}
+		else
+		{
+			m_IsGameStart = false;
+		}
 	}
 	else
 	{
@@ -171,6 +177,11 @@ void ClientManager::CollectGarbageSessions()
 // 클라이언트 세션 별로 주기적으로 할 일
 void ClientManager::ClientPeriodWork()
 {
+	// 실행이 안된 룸막기... 근데 Tick이 없어질텐데...
+	if ( !m_IsGameStart )
+	{
+		return;
+	}
 	/// FYI: C++ 11 스타일의 루프
 	for ( auto& it : m_ClientList )
 	{
@@ -315,14 +326,14 @@ void ClientManager::PrintClientList()
 
 
 
-void ClientManager::ReadMapFile( const char* filename )
+bool ClientManager::ReadMapFile( const char* filename )
 {
-	FILE* f;
+	FILE* f = NULL;
 	fopen_s( &f, filename, "rb" );
 
 	if ( f == NULL )
 	{
-		return;
+		return false;
 	}
 
 	unsigned char info[54];
@@ -362,6 +373,8 @@ void ClientManager::ReadMapFile( const char* filename )
 	printf_s( "[%d][%d] Map Loaded! \n", m_Map.size(), m_Map.at( 0 ).size() );
 
 	fclose( f );
+
+	return true;
 }
 
 int ClientManager::GenerateCorps( int playerID, UnitType type, Position position )
