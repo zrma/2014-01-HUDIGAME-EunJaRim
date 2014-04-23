@@ -11,13 +11,32 @@
 #include "knight.h"
 #include "Pike.h"
 #include "Sword.h"
+#include "tinyxml.h"
+#include "xpath_static.h"
 
 
 
 void ClientManager::GameStart()
 {
-	ReadMapFile( "../../SharedPreference/ServerMap1.bmp" );
-	m_IsGameStart = true;
+	TiXmlDocument document = TiXmlDocument( "../../SharedPreference/ServerConfig.xml" );
+	bool m_LoadSuccess = document.LoadFile();
+
+	if ( m_LoadSuccess )
+	{
+		std::string mapFilePath;
+		mapFilePath = TinyXPath::S_xpath_string( document.RootElement( ), "/server/mapFilePath/text()" ).c_str( );
+		printf_s( "Map Path Loaded! :%s \n", mapFilePath.c_str( ) );
+		ReadMapFile( mapFilePath.c_str() );
+		m_IsGameStart = true;
+	}
+	else
+	{
+		printf_s( "Map Path Load Fail! \n" );
+		m_IsGameStart = false;
+	}
+
+	
+	
 }
 
 

@@ -33,13 +33,13 @@ int _tmain( int argc, _TCHAR* argv[] )
 	SetUnhandledExceptionFilter( ExceptionFilter );
 	
 	// xml 로드 테스트
-	TiXmlDocument document = TiXmlDocument( "../../SharedPreference/Config.xml" );
+	TiXmlDocument document = TiXmlDocument( "../../SharedPreference/ServerConfig.xml" );
 	bool m_LoadSuccess = document.LoadFile();
 
 	if ( m_LoadSuccess )
 	{
 		std::string port;
-		port = TinyXPath::S_xpath_string( document.RootElement( ), "/host/port/text()" ).c_str( );
+		port = TinyXPath::S_xpath_string( document.RootElement( ), "/server/port/text()" ).c_str( );
 		LISTEN_PORT = std::stoi( port );
 		printf_s( "Loaded Port Number :%s \n", port.c_str( ) );
 	}
