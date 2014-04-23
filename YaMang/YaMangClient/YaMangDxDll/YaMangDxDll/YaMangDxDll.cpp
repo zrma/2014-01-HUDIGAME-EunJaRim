@@ -402,7 +402,7 @@ YAMANGDXDLL_API void HeightMapCleanup()
 
 YAMANGDXDLL_API void HeightMapRender()
 {
-	Log("start");
+	/*Log("start");
 	//카메라 셋팅
 	D3DXMATRIXA16 world;
 	D3DXMatrixIdentity(&world);
@@ -425,7 +425,7 @@ YAMANGDXDLL_API void HeightMapRender()
 	Log("%f, %f, %f, %f \n", worldMatrix._41, worldMatrix._42, worldMatrix._43, worldMatrix._44);
 	Log("==============================");
 
-	SetAspectRatio(729, 588);
+	SetAspectRatio(729, 588);*/
 
 	g_D3dDevice->SetStreamSource( 0, g_VertexBuffer, 0, sizeof( CUSTOMVERTEX ) );
 	g_D3dDevice->SetFVF( D3DFVF_CUSTOMVERTEX );

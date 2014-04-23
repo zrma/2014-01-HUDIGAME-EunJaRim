@@ -35,20 +35,20 @@ void Unit::Update()
 	
 	if ( targetEyePoint.x - m_EyePoint.x > 0.5f || targetEyePoint.x - m_EyePoint.x < -0.5f )
 	{
-		m_EyePoint.x += ( targetEyePoint.x - m_EyePoint.x ) * time / 100;
+		m_EyePoint.x += ( targetEyePoint.x - m_EyePoint.x ) * time / 1000;
 	}
 	if ( targetEyePoint.z - m_EyePoint.z > 0.5f || targetEyePoint.z - m_EyePoint.z < -0.5f )
 	{
-		m_EyePoint.z += ( targetEyePoint.z - m_EyePoint.z ) * time / 100;
+		m_EyePoint.z += ( targetEyePoint.z - m_EyePoint.z ) * time / 1000;
 	}
 
 	if ( targetLookAtPoint.x - m_LookAtPoint.x > 0.5f || targetLookAtPoint.x - m_LookAtPoint.x < -0.5f )
 	{
-		m_LookAtPoint.x += ( targetLookAtPoint.x - m_LookAtPoint.x ) * time / 100;
+		m_LookAtPoint.x += ( targetLookAtPoint.x - m_LookAtPoint.x ) * time / 1000;
 	}
 	if ( targetLookAtPoint.z - m_LookAtPoint.z > 0.5f || targetLookAtPoint.z - m_LookAtPoint.z < -0.5f )
 	{
-		m_LookAtPoint.z += ( targetLookAtPoint.z - m_LookAtPoint.z ) * time / 100;
+		m_LookAtPoint.z += ( targetLookAtPoint.z - m_LookAtPoint.z ) * time / 1000;
 	}
 }
 
