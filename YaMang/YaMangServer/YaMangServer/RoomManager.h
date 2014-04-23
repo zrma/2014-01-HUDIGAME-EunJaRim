@@ -3,13 +3,6 @@
 class ClientSession;
 class ClientManager;
 
-struct Room
-{
-	Room(): roomNumber( -1 ), clientManager( nullptr ) {}
-
-	int roomNumber;
-	ClientManager* clientManager;
-};
 
 class RoomManager
 {
@@ -18,7 +11,10 @@ public:
 	~RoomManager();
 
 	int 	AddRoom(); // 방 생성
-	bool	ChangeRoom( int roomNumberFrom, int roomNumberTo, int pid ); // 클라이언트를 다른 방으로 이동 (클라 매니저 아님)
+	
+	bool	EnterRoom( int roomNumber, int pid );
+	bool	LeaveRoom( int roomNumber, int pid );
+
 	bool	DeleteRoom( int roomNumber ); // 방 삭제
 
 	ClientSession*	CreateClient( SOCKET sock );
@@ -34,8 +30,8 @@ public:
 	ClientManager*					m_Lobby;
 
 private:
-
-	std::list<Room>					m_RoomList;
+	typedef std::hash_map<int, ClientManager*> RoomList;
+	RoomList						m_RoomList;
 	int								m_RoomCount = 0;
 
 

@@ -66,7 +66,8 @@ public:
 	void	HandleChatRequest( ChatBroadcastRequest& inPacket );
 	void	HandleGameOverRequest( GameOverRequest& inPacket );
 	void	HandleRoomCreateRequest( RoomCreateRequest& inPacket );
-	void	HandleRoomChangeRequest( RoomChangeRequest& inPacket );
+	void	HandleEnterRoomRequest( EnterRoomRequest& inPacket );
+	void	HandleLeaveRoomRequest( LeaveRoomRequest& inPacket );
 	void	HandleGenerateCorpsRequest( GenerateCorpsRequest& inPacket );
 	void	HandleMoveCorpsRequest( MoveCorpsRequest& inPacket );
 	void	HandleChangeCorpsFormationRequest( ChangeCorpsFormationRequest& inPacket );

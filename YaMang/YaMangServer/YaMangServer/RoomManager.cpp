@@ -11,14 +11,10 @@ RoomManager::RoomManager()
 {
 	g_PidSessionTable.clear( );
 
-	m_Lobby = new ClientManager( );
-
-	Room room;
-	room.roomNumber = 0;
-	room.clientManager = m_Lobby;
+	m_Lobby = new ClientManager( 0 );
 
 	m_RoomList.clear();
-	m_RoomList.push_back( room ); // 0은 대기방을 뜻함
+	m_RoomList.insert( RoomList::value_type( 0, m_Lobby ) );
 }
 
 
@@ -26,7 +22,7 @@ RoomManager::~RoomManager()
 {
 	for ( auto it = m_RoomList.begin( ); it != m_RoomList.end( ); ++it )
 	{
-		ClientManager* room = it->clientManager;
+		ClientManager* room = it->second;
 		delete room;
 	}
 	m_RoomList.clear();
@@ -34,84 +30,81 @@ RoomManager::~RoomManager()
 
 int RoomManager::AddRoom()
 {
-	Room room;
-	room.roomNumber = ++m_RoomCount;
-	room.clientManager = new ClientManager( );
+	ClientManager* room = new ClientManager( ++m_RoomCount );
 
 	// Test room start;
-	room.clientManager->GameStart( );
+	room->GameStart( );
+	m_RoomList.insert( RoomList::value_type( m_RoomCount, room ) );
 
-	m_RoomList.push_back( room );
+	printf_s( "ROOM [%d] CREATED! \n", room->GetRoomNumber() );
 
-	printf_s( "ROOM [%d] CREATED! \n", room.roomNumber );
-
-	return room.roomNumber;
+	return room->GetRoomNumber( );
 }
 
-bool RoomManager::ChangeRoom( int roomNumberFrom, int roomNumberTo, int pid )
+bool RoomManager::EnterRoom( int roomNumber, int pid )
 {
-	ClientManager* roomFrom = nullptr;
-	ClientManager* roomTo = nullptr;
-	ClientSession* sessionMover = g_PidSessionTable.find( pid )->second;
 
-	int roomCount = 0;
-	for ( auto it = m_RoomList.begin(); it != m_RoomList.end(); ++it )
-	{
-		if ( roomNumberFrom == it->roomNumber )
-		{
-			roomFrom = it->clientManager;
-			++roomCount;
-		}
-		else if ( roomNumberTo == it->roomNumber )
-		{
-			roomTo = it->clientManager;
-			++roomCount;
-		}
-
-		if ( roomCount == 2 )
-		{
-			break;
-		}
-	}
-
-
-	if ( nullptr == roomFrom || nullptr == roomTo )
+	if ( m_RoomList.find( roomNumber ) == m_RoomList.end() )
 	{
 		return false;
 	}
-
-	if ( roomFrom->DeleteClient( sessionMover ) )
+	else
 	{
-		roomTo->InputClient( sessionMover );
-		return true;
-	}
-	
-	
-	return false;
-	
-}
-
-bool RoomManager::DeleteRoom( int roomNumber )
-{
-	for ( auto it = m_RoomList.begin(); it != m_RoomList.end(); ++it )
-	{
-		if ( roomNumber == it->roomNumber )
+		if ( g_PidSessionTable.find( pid ) != g_PidSessionTable.end() )
 		{
-
-			ClientManager* toBeDelete = it->clientManager;
-			if ( 0 == toBeDelete->GetClientSize( ) )
+			ClientSession* mover = g_PidSessionTable.find( pid )->second;
+			if ( m_Lobby->DeleteClient( mover ) )
 			{
-				delete toBeDelete;
-				m_RoomList.erase( it );
+				m_RoomList.find( roomNumber )->second->InputClient( mover );
 				return true;
 			}
-
-			return false;
-
 		}
 	}
 
 	return false;
+}
+
+bool RoomManager::LeaveRoom( int roomNumber, int pid )
+{
+	if ( m_RoomList.find( roomNumber ) == m_RoomList.end() )
+	{
+		return false;
+	}
+	else
+	{
+		if ( g_PidSessionTable.find( pid ) != g_PidSessionTable.end() )
+		{
+			ClientSession* mover = g_PidSessionTable.find( pid )->second;
+			if ( m_RoomList.find( roomNumber )->second->DeleteClient( mover ) )
+			{
+				m_Lobby->InputClient( mover );
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
+
+bool RoomManager::DeleteRoom( int roomNumber )
+{
+	if ( m_RoomList.find( roomNumber ) == m_RoomList.end() )
+	{
+		return false;
+	}
+	else
+	{
+		ClientManager* toBeDelete = m_RoomList.find( roomNumber )->second;
+		if ( 0 == toBeDelete->GetClientSize() )
+		{
+			delete toBeDelete;
+			m_RoomList.erase( roomNumber );
+			return true;
+		}
+
+		return false;
+	}
 }
 
 ClientSession* RoomManager::CreateClient( SOCKET sock )
@@ -123,7 +116,7 @@ void RoomManager::FlushClientSend()
 {
 	for ( auto it = m_RoomList.begin(); it != m_RoomList.end(); ++it )
 	{
-		ClientManager* room = it->clientManager;
+		ClientManager* room = it->second;
 		room->FlushClientSend( );
 	}
 }
@@ -132,7 +125,7 @@ void RoomManager::OnPeriodWork()
 {
 	for ( auto it = m_RoomList.begin(); it != m_RoomList.end(); ++it )
 	{
-		ClientManager* room = it->clientManager;
+		ClientManager* room = it->second;
 		room->OnPeriodWork( );
 	}
 }
@@ -141,8 +134,8 @@ void RoomManager::PrintClientList()
 {
 	for ( auto it = m_RoomList.begin(); it != m_RoomList.end(); ++it )
 	{
-		ClientManager* room = it->clientManager;
-		printf_s( "-ROOM %d ClientList- \n", it->roomNumber );
+		ClientManager* room = it->second;
+		printf_s( "-ROOM %d ClientList- \n", room->GetRoomNumber() );
 		room->PrintClientList();
 	}
 }

@@ -139,35 +139,65 @@ void ClientSession::HandleRoomCreateRequest( RoomCreateRequest& inPacket )
 }
 
 
-REGISTER_HANDLER( PKT_CS_ROOM_CHANGE )
+REGISTER_HANDLER( PKT_CS_ENTER_ROOM )
 {
-	RoomChangeRequest inPacket = static_cast<RoomChangeRequest&>( pktBase );
-	session->HandleRoomChangeRequest( inPacket );
+	EnterRoomRequest inPacket = static_cast<EnterRoomRequest&>( pktBase );
+	session->HandleEnterRoomRequest( inPacket );
 }
 
-void ClientSession::HandleRoomChangeRequest( RoomChangeRequest& inPacket )
+void ClientSession::HandleEnterRoomRequest( EnterRoomRequest& inPacket )
 {
 
 	m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size );
 
-	int pid = inPacket.m_PlayerId;
+	int roomNumber = inPacket.m_RoomNumber;
 
-	int roomFrom = inPacket.m_RoomFrom;
-	int roomTo = inPacket.m_RoomTo;
-
-	if ( !g_RoomManager->ChangeRoom( roomFrom, roomTo, pid ) )
+	if ( !g_RoomManager->EnterRoom( roomNumber, m_PlayerId ) )
 	{
 		Disconnect();
 	}
 
-	RoomChangeResult outPacket;
-	outPacket.m_RoomNumber = roomTo;
+	EnterRoomResult outPacket;
+	outPacket.m_RoomNumber = roomNumber;
 
 	if ( !Broadcast( &outPacket ) )
 	{
 		Disconnect();
 	}
 
+	printf_s( "Enter Room! ID:%d ROOM:%d \n", m_PlayerId, roomNumber );
+	g_RoomManager->PrintClientList(); // 테스트 프린트
+
+}
+
+
+REGISTER_HANDLER( PKT_CS_LEAVE_ROOM )
+{
+	LeaveRoomRequest inPacket = static_cast<LeaveRoomRequest&>( pktBase );
+	session->HandleLeaveRoomRequest( inPacket );
+}
+
+void ClientSession::HandleLeaveRoomRequest( LeaveRoomRequest& inPacket )
+{
+
+	m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size );
+
+	int roomNumber = inPacket.m_RoomNumber;
+
+	if ( !g_RoomManager->LeaveRoom( roomNumber, m_PlayerId ) )
+	{
+		Disconnect();
+	}
+
+	EnterRoomResult outPacket;
+	outPacket.m_RoomNumber = roomNumber;
+
+	if ( !Broadcast( &outPacket ) )
+	{
+		Disconnect();
+	}
+
+	printf_s( "Leave Room! ID:%d ROOM:%d \n", m_PlayerId, roomNumber );
 	g_RoomManager->PrintClientList(); // 테스트 프린트
 
 }

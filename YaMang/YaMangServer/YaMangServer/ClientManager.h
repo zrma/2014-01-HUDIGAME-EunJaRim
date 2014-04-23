@@ -16,7 +16,7 @@ struct Tile
 class ClientManager
 {
 public:
-	ClientManager(): m_LastGCTick( 0 ), m_LastClientWorkTick( 0 )
+	ClientManager( int roomNumber ): m_RoomNumber(roomNumber), m_LastGCTick( 0 ), m_LastClientWorkTick( 0 )
 	{
 	}
 
@@ -29,6 +29,7 @@ public:
 	void				InputClient( ClientSession* client );
 
 	int					GetClientSize() { return static_cast<int>(m_ClientList.size()); }
+	int					GetRoomNumber() { return m_RoomNumber; }
 
 	void				BroadcastPacket( ClientSession* from, PacketHeader* pkt );
 	bool				DirectPacket( int pid, PacketHeader* pkt );
@@ -67,6 +68,8 @@ private:
 
 
 private:
+	int					m_RoomNumber;
+
 	typedef std::map<SOCKET, ClientSession*> ClientList;
 	ClientList			m_ClientList;
 

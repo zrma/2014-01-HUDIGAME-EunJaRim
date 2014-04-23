@@ -23,8 +23,11 @@ enum PacketTypes
 	PKT_CS_ROOM_CREATE = 7,
 	PKT_SC_ROOM_CREATE = 8,
 
-	PKT_CS_ROOM_CHANGE = 9,
-	PKT_SC_ROOM_CHANGE = 10,
+	PKT_CS_ENTER_ROOM = 9,
+	PKT_SC_ENTER_ROOM = 10,
+
+	PKT_CS_LEAVE_ROOM = 11,
+	PKT_SC_LEAVE_ROOM = 12,
 
 	PKT_CS_GENERATE_CORPS = 100,
 	PKT_SC_GENERATE_CORPS = 101,
@@ -164,34 +167,53 @@ struct RoomCreateResult: public PacketHeader
 
 
 
-struct RoomChangeRequest: public PacketHeader
+struct EnterRoomRequest: public PacketHeader
 {
-	RoomChangeRequest( )
+	EnterRoomRequest( )
 	{
-		m_Size = sizeof( RoomChangeRequest );
-		m_Type = PKT_CS_ROOM_CHANGE;
-		m_RoomFrom = -1;
-		m_RoomTo = -1;
-		m_PlayerId = -1;
+		m_Size = sizeof( EnterRoomRequest );
+		m_Type = PKT_CS_ENTER_ROOM;
+		m_RoomNumber = -1;
 	}
 
-	int m_RoomFrom;
-	int m_RoomTo;
-	int	m_PlayerId;
+	int m_RoomNumber;
 };
 
-struct RoomChangeResult: public PacketHeader
+struct EnterRoomResult: public PacketHeader
 {
-	RoomChangeResult( )
+	EnterRoomResult( )
 	{
-		m_Size = sizeof( RoomChangeResult );
-		m_Type = PKT_SC_ROOM_CHANGE;
+		m_Size = sizeof( EnterRoomResult );
+		m_Type = PKT_SC_ENTER_ROOM;
 		m_RoomNumber = -1;
 	}
 
 	int	m_RoomNumber;
 };
 
+struct LeaveRoomRequest: public PacketHeader
+{
+	LeaveRoomRequest( )
+	{
+		m_Size = sizeof( LeaveRoomRequest );
+		m_Type = PKT_CS_LEAVE_ROOM;
+		m_RoomNumber = -1;
+	}
+
+	int m_RoomNumber;
+};
+
+struct LeaveRoomResult: public PacketHeader
+{
+	LeaveRoomResult( )
+	{
+		m_Size = sizeof( LeaveRoomResult );
+		m_Type = PKT_SC_LEAVE_ROOM;
+		m_RoomNumber = -1;
+	}
+
+	int	m_RoomNumber;
+};
 
 // 사실 request는 테스트용
 struct GenerateCorpsRequest: public PacketHeader

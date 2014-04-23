@@ -18,7 +18,8 @@ PKT_CS_CHAT = 3;
 PKT_CS_CHAT = 3;
 PKT_CS_GAMEOVER = 5;
 PKT_CS_ROOM_CREATE = 7;
-PKT_CS_ROOM_CHANGE = 9;
+PKT_CS_ENTER_ROOM = 9;
+PKT_CS_LEAVE_ROOM = 11;
 PKT_CS_GENERATE_CORPS = 100;
 PKT_CS_MOVE_CORPS = 102;
 PKT_CS_CORPS_CHANGE_FORMATION = 200;
@@ -40,7 +41,8 @@ s.send(struct.pack('hhi', 8, PKT_CS_LOGIN, pid));
 
 while True:
         try:
-                mode = input("[SELECT MODE- EXIT:0, CHAT:3, GAMEOVER:5 \n ROOM_CREATE:7, ROOM_CHANGE:9, GENERATE_CORPS:100 \n Corps_CHANGE_FORMATION:200]");
+                print "";
+                mode = input("[SELECT MODE- EXIT:0, CHAT:3, GAMEOVER:5 \n ROOM_CREATE:7, ENTER_ROOM:9, LEAVE_ROOM:11 \n GENERATE_CORPS:100 Corps_CHANGE_FORMATION:200]");
         except:
                 continue;
 
@@ -56,11 +58,12 @@ while True:
                 s.send(struct.pack('<hhi?', 9, mode, targetID, bool(isWON)));
         elif mode == PKT_CS_ROOM_CREATE:
                 s.send(struct.pack('hhi', 8, mode, pid));
-        elif mode == PKT_CS_ROOM_CHANGE:
-                roomFrom = input("ROOM FROM:");
-                roomTO = input("ROOM TO:");
-                whoMove = input("WHO MOVE:");
-                s.send(struct.pack('hhiii', 16, mode, roomFrom, roomTO, whoMove));
+        elif mode == PKT_CS_ENTER_ROOM:
+                room = input("ROOM NUMBER:");
+                s.send(struct.pack('hhi', 8, mode, room));
+        elif mode == PKT_CS_LEAVE_ROOM:
+                room = input("ROOM NUMBER:");
+                s.send(struct.pack('hhi', 8, mode, room));
         elif mode == PKT_CS_GENERATE_CORPS:
                 typeNum = input("UnitType[ARROW:10, GUARD:20, KNIGHT:30, PIKE:40, SWORD:50]:");
                 posX = float(raw_input("PosX: "));
