@@ -38,6 +38,9 @@
     <ClInclude Include="InnerResource.h">
       <Filter>YaMangDxDll</Filter>
     </ClInclude>
+    <ClInclude Include="GlobalVar.h">
+      <Filter>YaMangDxDll</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Logger.cpp">
@@ -53,6 +56,9 @@
       <Filter>DllDefault</Filter>
     </ClCompile>
     <ClCompile Include="InnerResource.cpp">
+      <Filter>YaMangDxDll</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalVar.cpp">
       <Filter>YaMangDxDll</Filter>
     </ClCompile>
   </ItemGroup>

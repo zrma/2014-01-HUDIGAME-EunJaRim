@@ -13,11 +13,11 @@ namespace YamangTools
 {
     public partial class Main : Form
     {
-        bool isRunning = false;
+        bool objectAttach = false;
 
         ~Main()
         {
-            isRunning = false;
+            objectAttach = false;
             
             YamangDll.HeightMapCleanup();
             YamangDll.D3DCleanUp();
@@ -32,36 +32,33 @@ namespace YamangTools
         
         async private void Render()
         {
-            int i = 0;
-            while (isRunning)
+            while (true)
             {
                 YamangDll.PreRendering();
                 
-                YamangDll.RenderText("hi", 50, 50);
-                YamangDll.HeightMapRender();
+                //YamangDll.RenderText("hi", 50, 50);
+                if (objectAttach == true)
+                {
+                    YamangDll.HeightMapRender();
+                }
 
                 YamangDll.PostRendering();
 
-                button1.Text = "" + i;
                 await Task.Delay(10);
-                ++i;
             }
         }
 
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (!isRunning)
+            if (!objectAttach)
             {
-                isRunning = true;
-                
                 string heightMap = ".\\Resource\\heightmap_1024_1024_korea.bmp";
                 string mapTexture = ".\\Resource\\heightmap_texture_1024_1024_korea.bmp";
 
                 YamangDll.HeightMapTextureImport(this.RenderTarget.Handle, heightMap, mapTexture);
 
-
-                Render();
+                objectAttach = true;
             }
         }
 

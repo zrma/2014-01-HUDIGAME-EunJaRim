@@ -5,6 +5,7 @@
 #include "yaMangDxDll.h"
 #include "Logger.h"
 #include <stdio.h>
+#include "GlobalVar.h"
 #include "InnerResource.h"
 
 
@@ -160,7 +161,7 @@ YAMANGDXDLL_API bool PreRendering()
 		return false;
 	}
 
-	g_D3dDevice->Clear( 0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB( 30, 10, 10 ), 1.0f, 0 );
+	g_D3dDevice->Clear( 0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB( 10, 10, 10 ), 1.0f, 0 );
 
 	bool flag = false;
 
@@ -175,7 +176,7 @@ YAMANGDXDLL_API bool PreRendering()
 		//일단 1로 진행, 향후 라이트 개수 등 확정되면 인자 받아 설정
 		int lightNum = 1;
 		Lighting( lightNum );
-		//Log( "라이팅 세팅!\n" );
+		// Log( "라이팅 세팅!\n" );
 
 		g_D3dDevice->SetTextureStageState( 0, D3DTSS_COLOROP, D3DTOP_MODULATE );
 		g_D3dDevice->SetTextureStageState( 0, D3DTSS_COLORARG1, D3DTA_TEXTURE );
@@ -401,13 +402,40 @@ YAMANGDXDLL_API void HeightMapCleanup()
 
 YAMANGDXDLL_API void HeightMapRender()
 {
+	Log("start");
+	//카메라 셋팅
+	D3DXMATRIXA16 world;
+	D3DXMatrixIdentity(&world);
+	g_D3dDevice->SetTransform(D3DTS_WORLD, &world);
+
+	D3DXVECTOR3 vEyePt(0.f, 300.f, -1000.f);
+	D3DXVECTOR3 vLookatPt(0.f, 299.7f, -999.0f);
+	D3DXVECTOR3 vUpVec(0.f, 1.f, 0.f);
+	D3DXMATRIXA16 matView;
+	D3DXMatrixLookAtLH(&matView, &vEyePt, &vLookatPt, &vUpVec);
+	g_D3dDevice->SetTransform(D3DTS_VIEW, &matView);
+	Log("end\n");
+
+	D3DXMATRIXA16 worldMatrix;
+	g_D3dDevice->GetTransform(D3DTS_WORLD, &worldMatrix);
+
+	Log("%f, %f, %f, %f \n", worldMatrix._11, worldMatrix._12, worldMatrix._13, worldMatrix._14);
+	Log("%f, %f, %f, %f \n", worldMatrix._21, worldMatrix._22, worldMatrix._23, worldMatrix._24);
+	Log("%f, %f, %f, %f \n", worldMatrix._31, worldMatrix._32, worldMatrix._33, worldMatrix._34);
+	Log("%f, %f, %f, %f \n", worldMatrix._41, worldMatrix._42, worldMatrix._43, worldMatrix._44);
+	Log("==============================");
+
+	SetAspectRatio(729, 588);
+
 	g_D3dDevice->SetStreamSource( 0, g_VertexBuffer, 0, sizeof( CUSTOMVERTEX ) );
 	g_D3dDevice->SetFVF( D3DFVF_CUSTOMVERTEX );
 
 	g_D3dDevice->SetTexture( 0, g_TexDiffuse );
 
 	g_D3dDevice->SetIndices( g_IdxBuffer );
+	Log("go\n");
 	g_D3dDevice->DrawIndexedPrimitive( D3DPT_TRIANGLELIST, 0, 0, g_XHeight*g_ZHeight, 0, ( g_XHeight - 1 )*( g_ZHeight - 1 ) * 2 );
+	Log("stop\n");
 }
 
 //////////////////////////////////////////////////////////////////////////

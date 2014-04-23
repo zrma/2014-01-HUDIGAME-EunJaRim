@@ -83,6 +83,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GlobalVar.h" />
     <ClInclude Include="InnerResource.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="MeshObject.h" />
@@ -91,6 +92,7 @@
     <ClInclude Include="YaMangDxDll.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GlobalVar.cpp" />
     <ClCompile Include="InnerResource.cpp" />
     <ClCompile Include="dllmain.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
