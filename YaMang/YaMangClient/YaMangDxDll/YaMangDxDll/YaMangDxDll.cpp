@@ -346,6 +346,7 @@ YAMANGDXDLL_API void SetMatrix( D3DXMATRIXA16* matrix, bool cameraSet /*= false 
 // :)
 //////////////////////////////////////////////////////////////////////////
 
+
 YAMANGDXDLL_API HRESULT HeightMapTextureImport ( HWND hWnd, LPCTSTR heightMap, LPCTSTR mapTexture )
 {
 	if ( FAILED( D3DXCreateTextureFromFileEx( g_D3dDevice, heightMap, D3DX_DEFAULT, D3DX_DEFAULT, D3DX_DEFAULT, 0, D3DFMT_X8B8G8R8, D3DPOOL_MANAGED, D3DX_DEFAULT, D3DX_DEFAULT, 0, NULL, NULL, &g_TexHeight ) ) )
@@ -371,6 +372,7 @@ YAMANGDXDLL_API HRESULT HeightMapTextureImport ( HWND hWnd, LPCTSTR heightMap, L
 		MessageBox( NULL, L"Fail in InitIdxBuffer", L"YaMang.exe", MB_OK );
 		return E_FAIL;
 	}
+
 	
 	return S_OK;
 }
@@ -402,14 +404,14 @@ YAMANGDXDLL_API void HeightMapCleanup()
 
 YAMANGDXDLL_API void HeightMapRender()
 {
-	/*Log("start");
+	Log("start");
 	//카메라 셋팅
 	D3DXMATRIXA16 world;
 	D3DXMatrixIdentity(&world);
 	g_D3dDevice->SetTransform(D3DTS_WORLD, &world);
 
-	D3DXVECTOR3 vEyePt(0.f, 300.f, -1000.f);
-	D3DXVECTOR3 vLookatPt(0.f, 299.7f, -999.0f);
+	D3DXVECTOR3 vEyePt(0.f, 40.f, -100.f);
+	D3DXVECTOR3 vLookatPt(0.f, 39.9f, -99.0f);
 	D3DXVECTOR3 vUpVec(0.f, 1.f, 0.f);
 	D3DXMATRIXA16 matView;
 	D3DXMatrixLookAtLH(&matView, &vEyePt, &vLookatPt, &vUpVec);
@@ -425,7 +427,8 @@ YAMANGDXDLL_API void HeightMapRender()
 	Log("%f, %f, %f, %f \n", worldMatrix._41, worldMatrix._42, worldMatrix._43, worldMatrix._44);
 	Log("==============================");
 
-	SetAspectRatio(729, 588);*/
+	SetAspectRatio(729, 588);
+	g_D3dDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_WIREFRAME );
 
 	g_D3dDevice->SetStreamSource( 0, g_VertexBuffer, 0, sizeof( CUSTOMVERTEX ) );
 	g_D3dDevice->SetFVF( D3DFVF_CUSTOMVERTEX );
@@ -436,6 +439,83 @@ YAMANGDXDLL_API void HeightMapRender()
 	Log("go\n");
 	g_D3dDevice->DrawIndexedPrimitive( D3DPT_TRIANGLELIST, 0, 0, g_XHeight*g_ZHeight, 0, ( g_XHeight - 1 )*( g_ZHeight - 1 ) * 2 );
 	Log("stop\n");
+}
+
+YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
+{
+	int verticesCount = ( col + 1 )* ( row + 1 );
+	int indicesCount = col * row * 6;
+
+	CUSTOMVERTEX* baseVertex = new CUSTOMVERTEX[verticesCount];
+
+	int startIdx = 0;
+	CUSTOMVERTEX vPos0;
+
+	vPos0.vertexPoint.x = -1.f * col * pixelSize * 0.5f;
+	vPos0.vertexPoint.y = 0.0f;
+	vPos0.vertexPoint.z = row*pixelSize*0.5f;
+	for ( int z = 0; z <= row; ++z )
+	{
+		for ( int x = 0; x <= col; ++x )
+		{
+			baseVertex[startIdx].vertexPoint.x = vPos0.vertexPoint.x + ( pixelSize * x );
+			baseVertex[startIdx].vertexPoint.y = 0.f;
+			baseVertex[startIdx].vertexPoint.z = vPos0.vertexPoint.z + ( -1.0f )*( pixelSize * z );
+			baseVertex[startIdx].Diffuse = D3DCOLOR_ARGB( 255, 255, 50, 255 );
+			++startIdx;
+		}
+	}
+
+	if ( FAILED( g_D3dDevice->CreateVertexBuffer( verticesCount*sizeof( CUSTOMVERTEX ), 0, D3DFVF_CUSTOMVERTEX, D3DPOOL_DEFAULT, &g_VertexBuffer, 0 ) ) )
+	{
+		MessageBox( NULL, L"Fail in Create VertexBuffer", L"YaMang.exe", MB_OK );
+		return;
+	}
+
+	void *pVertices;
+	if ( FAILED( g_VertexBuffer->Lock( 0, 0, &pVertices, NULL ) ) )
+	{
+		MessageBox( NULL, L"Fail in lock VertexBuffer", L"YaMang.exe", MB_OK );
+		return;
+	}
+	memcpy( pVertices, baseVertex, verticesCount*sizeof( CUSTOMVERTEX ) );
+	g_VertexBuffer->Unlock();
+
+	UINT* baseIndex = new UINT[indicesCount];
+	startIdx = 0;
+
+	for ( int z = 0; z < row; ++z )
+	{
+		for ( int x = 0; x < col; ++x )
+		{
+			baseIndex[startIdx++] = static_cast<UINT>( z*( col + 1 ) + x );
+			baseIndex[startIdx++] = static_cast<UINT>( ( z + 1 )*( col + 1 ) + x + 1 );
+			baseIndex[startIdx++] = static_cast<UINT>( ( z + 1 )*( col + 1 ) + x );
+
+			baseIndex[startIdx++] = static_cast<UINT>( z*( col + 1 ) + x );
+			baseIndex[startIdx++] = static_cast<UINT>( z*( col + 1 ) + x + 1 );
+			baseIndex[startIdx++] = static_cast<UINT>( ( z + 1 )*( col + 1 ) + x + 1 );
+		}
+	}
+
+	void* pIndices;
+	if ( FAILED( g_D3dDevice->CreateIndexBuffer( indicesCount*sizeof( UINT ), 0, D3DFMT_INDEX32, D3DPOOL_DEFAULT, &g_IdxBuffer, NULL ) ) )
+	{
+		MessageBox( NULL, L"Fail in Create IndexBuffer", L"YaMang.exe", MB_OK );
+		return;
+	}
+
+	if ( FAILED( g_IdxBuffer->Lock( 0, 0, (void**) &pIndices, 0 ) ) )
+	{
+		MessageBox( NULL, L"Fail in lock IndexBuffer", L"YaMang.exe", MB_OK );
+		return;
+	}
+	memcpy( pIndices, baseIndex, sizeof(UINT) *indicesCount );
+
+	g_IdxBuffer->Unlock();
+
+	delete[] baseIndex;
+	delete[] baseVertex;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -579,6 +659,8 @@ YAMANGDXDLL_API void SetCursorPosition( float PosX, float PosY )
 	g_cursorPos.y = PosY;
 	g_cursorPos.z = 0.0f;
 }
+
+
 
 // 내보낸 변수의 예제입니다.
 // YAMANGDXDLL_API int nyaMangDxDll=0;

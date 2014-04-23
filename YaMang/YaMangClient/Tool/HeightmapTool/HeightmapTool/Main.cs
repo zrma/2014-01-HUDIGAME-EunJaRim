@@ -36,7 +36,6 @@ namespace YamangTools
             {
                 YamangDll.PreRendering();
                 
-                //YamangDll.RenderText("hi", 50, 50);
                 if (objectAttach == true)
                 {
                     YamangDll.HeightMapRender();
@@ -53,10 +52,11 @@ namespace YamangTools
         {
             if (!objectAttach)
             {
-                string heightMap = ".\\Resource\\heightmap_1024_1024_korea.bmp";
-                string mapTexture = ".\\Resource\\heightmap_texture_1024_1024_korea.bmp";
+                //string heightMap = ".\\Resource\\heightmap_1024_1024_korea.bmp";
+                //string mapTexture = ".\\Resource\\heightmap_texture_1024_1024_korea.bmp";
 
-                YamangDll.HeightMapTextureImport(this.RenderTarget.Handle, heightMap, mapTexture);
+                //YamangDll.HeightMapTextureImport(this.RenderTarget.Handle, heightMap, mapTexture);
+                YamangDll.CreateRawGround(1000, 1000, 1.0f);
 
                 objectAttach = true;
             }

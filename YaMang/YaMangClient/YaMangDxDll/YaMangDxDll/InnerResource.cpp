@@ -108,6 +108,7 @@ void SetupTranslateMatricesTool()
 //height map 세계에 오신 것을 환영합니다.
 // :)
 //////////////////////////////////////////////////////////////////////////
+
 HRESULT InitVertexBuffer(HWND hWnd)
 {
 	D3DSURFACE_DESC ddsd;
@@ -149,13 +150,13 @@ HRESULT InitVertexBuffer(HWND hWnd)
 
 			//normal 값이고
 			//0,0,0 기준으로 각 지점의 normal 값을 계산
-			vertex.vertexNormal.x = vertex.vertexPoint.x;
-			vertex.vertexNormal.y = vertex.vertexPoint.y;
-			vertex.vertexNormal.z = vertex.vertexPoint.z;
-
-			//단위 벡터로 만드는 것
-			//정규화 벡터로 변경하는 연산
-			D3DXVec3Normalize(&vertex.vertexNormal, &vertex.vertexNormal);
+// 			vertex.vertexNormal.x = vertex.vertexPoint.x;
+// 			vertex.vertexNormal.y = vertex.vertexPoint.y;
+// 			vertex.vertexNormal.z = vertex.vertexPoint.z;
+// 
+// 			//단위 벡터로 만드는 것
+// 			//정규화 벡터로 변경하는 연산
+// 			D3DXVec3Normalize(&vertex.vertexNormal, &vertex.vertexNormal);
 
 			vertex.vertexTexturePoint.x = (float)x / (g_XHeight - 1);
 			vertex.vertexTexturePoint.y = (float)z / (g_ZHeight - 1);
@@ -168,6 +169,7 @@ HRESULT InitVertexBuffer(HWND hWnd)
 
 	return S_OK;
 }
+
 
 HRESULT InitIdxBuffer(HWND hWnd)
 {
@@ -204,6 +206,5 @@ HRESULT InitIdxBuffer(HWND hWnd)
 
 	return S_OK;
 }
-
 
 

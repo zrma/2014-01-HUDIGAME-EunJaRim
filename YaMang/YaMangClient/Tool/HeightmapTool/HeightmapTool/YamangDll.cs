@@ -56,6 +56,9 @@ namespace YamangTools
         [DllImport("yaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void HeightMapRender();
 
+        [DllImport("yaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void CreateRawGround( int row, int col, float pixelSize = 0.5f );
+
 
         //////////////////////////////////////////////////////////////////////////
         //Text Render를 위한 함수
