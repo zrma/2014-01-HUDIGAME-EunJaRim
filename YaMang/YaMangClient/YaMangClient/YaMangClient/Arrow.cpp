@@ -12,6 +12,8 @@ Arrow::Arrow( Corps* owner, UINT unitId )
 	m_LookAtPoint = { 0.0f, -1.2f, 1.0f };
 	m_UpVector = { 0.0f, 1.0f, 0.0f };
 	m_Scale = { 1.0f, 1.0f, 1.0f };
+
+	SetStartPosition();
 }
 
 Arrow::~Arrow()

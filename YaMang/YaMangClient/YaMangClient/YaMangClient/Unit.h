@@ -14,6 +14,7 @@ public:
 	virtual void	Render();
 	
 	int			GetUnitId() { return m_UnitId; }
+	void		SetStartPosition();
 
 protected:
 	int			m_UnitId = -1;
