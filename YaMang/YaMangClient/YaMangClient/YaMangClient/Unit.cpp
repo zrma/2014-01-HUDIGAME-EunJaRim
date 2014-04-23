@@ -4,6 +4,7 @@
 #include "SharedDefine.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
+#include "Timer.h"
 
 Unit::~Unit()
 {
@@ -11,6 +12,44 @@ Unit::~Unit()
 
 void Unit::Update()
 {
+	if ( !m_Corps )
+	{
+		assert( false );
+	}
+	D3DXMATRIXA16 parentMatrix = m_Corps->GetMatrix();
+	
+	D3DXMATRIXA16 formMatrix;
+	D3DXMatrixIdentity( &formMatrix );
+
+	D3DXVECTOR3 formationVector = ( m_Corps->GetFormation( m_UnitId ) ) * 3;
+	D3DXMatrixTranslation( &formMatrix, formationVector.x, formationVector.y, formationVector.z );
+
+	formMatrix = formMatrix * parentMatrix;
+
+	D3DXVECTOR3	targetEyePoint = { 0.0f, 0.0f, 0.0f };
+	D3DXVECTOR3 targetLookAtPoint = { 0.0f, 0.0f, 1.0f };
+	D3DXVec3TransformCoord( &targetEyePoint, &targetEyePoint, &formMatrix );
+	D3DXVec3TransformCoord( &targetLookAtPoint, &targetLookAtPoint, &formMatrix );
+	
+	float time = static_cast<float>(Timer::GetInstance()->GetElapsedTime());
+	
+	if ( targetEyePoint.x - m_EyePoint.x > 0.5f || targetEyePoint.x - m_EyePoint.x < -0.5f )
+	{
+		m_EyePoint.x += ( targetEyePoint.x - m_EyePoint.x ) * time / 100;
+	}
+	if ( targetEyePoint.z - m_EyePoint.z > 0.5f || targetEyePoint.z - m_EyePoint.z < -0.5f )
+	{
+		m_EyePoint.z += ( targetEyePoint.z - m_EyePoint.z ) * time / 100;
+	}
+
+	if ( targetLookAtPoint.x - m_LookAtPoint.x > 0.5f || targetLookAtPoint.x - m_LookAtPoint.x < -0.5f )
+	{
+		m_LookAtPoint.x += ( targetLookAtPoint.x - m_LookAtPoint.x ) * time / 100;
+	}
+	if ( targetLookAtPoint.z - m_LookAtPoint.z > 0.5f || targetLookAtPoint.z - m_LookAtPoint.z < -0.5f )
+	{
+		m_LookAtPoint.z += ( targetLookAtPoint.z - m_LookAtPoint.z ) * time / 100;
+	}
 }
 
 void Unit::Render()
@@ -18,20 +57,7 @@ void Unit::Render()
 	if ( !m_Visible || !m_MeshKey )
 		return;
 
-	if ( !m_Corps )
-	{
-		assert( false );
-	}
-	D3DXMATRIXA16 parentMatrix = m_Corps->GetMatrix();
-
-	D3DXMATRIXA16 formMatrix;
-	D3DXMatrixIdentity( &formMatrix );
-
-	D3DXVECTOR3 formationVector = ( m_Corps->GetFormation( m_UnitId ) ) * 3;
-	D3DXMatrixTranslation( &formMatrix, formationVector.x, formationVector.y, formationVector.z );
-	formMatrix = formMatrix * parentMatrix;
-
-	D3DXMATRIXA16 thisMatrix = GetMatrix( false ) * formMatrix;
+	D3DXMATRIXA16 thisMatrix = GetMatrix( false );
 	Renderer::GetInstance()->SetWorldMatrix( thisMatrix );
 
 	ResourceMesh* mesh = ResourceManager::GetInstance()->GetMeshByKey( m_MeshKey );

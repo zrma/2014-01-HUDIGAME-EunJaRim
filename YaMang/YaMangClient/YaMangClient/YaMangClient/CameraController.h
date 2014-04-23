@@ -11,7 +11,7 @@ public:
 
 	void	Init();
 
-	void	MoveForward( float speed );
+	void	MoveForward( float speed, bool zoom = false );
 	void	MoveSide( float speed );
 	void	MoveElevate( float speed );
 	void	RotateUp( float angle );

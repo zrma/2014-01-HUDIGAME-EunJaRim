@@ -23,9 +23,15 @@ void CameraController::Init()
 	Renderer::GetInstance()->SetViewMatrix( viewMatrix );
 }
 
-void CameraController::MoveForward( float speed )
+void CameraController::MoveForward( float speed, bool zoom )
 {
 	D3DXVECTOR3 view = m_LookAtPoint - m_EyePoint;
+	
+	if ( !zoom )
+	{
+		// 크레인에 매달린 카메라 같은 효과를 주기 위해 y값 0으로 고정
+		view.y = 0;
+	}
 	D3DXVec3Normalize( &view, &view );
 	m_EyePoint += view * speed;
 	m_LookAtPoint += view * speed;
