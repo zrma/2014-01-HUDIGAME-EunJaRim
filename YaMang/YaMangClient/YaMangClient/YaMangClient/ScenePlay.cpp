@@ -100,3 +100,11 @@ void ScenePlay::AddCorps( int corpsID, Corps* corps )
 		assert( false );
 	}
 }
+
+void ScenePlay::ChangeCorpsFormation( int corpsID, FormationType formationType )
+{
+	if ( m_CorpsList.find( corpsID ) != m_CorpsList.end() )
+	{
+		m_CorpsList[corpsID]->SetFormation( formationType );
+	}
+}

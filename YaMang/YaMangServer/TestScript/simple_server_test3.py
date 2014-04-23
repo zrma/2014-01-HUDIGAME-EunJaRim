@@ -70,7 +70,7 @@ while True:
                 s.send(struct.pack('hhiffffff', 32, mode, typeNum, posX, float(0), posZ, lookX, float(0), lookZ));
         elif mode == PKT_CS_CORPS_CHANGE_FORMATION:
                 corpsID = input("corpsID:");
-                typeNum = ord(input("FormationType[DEFENSE:10, DESTROY:20, RUSH:30]:"));
+                typeNum = input("FormationType[DEFENSE:10, DESTROY:20, RUSH:30]:");
                 s.send(struct.pack('hhii', 12, mode, corpsID, typeNum));
                 
 print "close!";

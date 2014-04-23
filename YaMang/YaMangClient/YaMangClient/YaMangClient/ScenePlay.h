@@ -16,6 +16,7 @@ public:
 	void	Render();
 
 	void	AddCorps( int corpsID, Corps* corps );
+	void	ChangeCorpsFormation( int corpsID, FormationType formationType );
 
 private:
 	std::hash_map<int, Corps*>	m_CorpsList;

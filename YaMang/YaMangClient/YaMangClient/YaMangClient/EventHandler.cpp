@@ -166,3 +166,40 @@ void NetworkManager::HandleGenerateCorpsResult( GenerateCorpsResult& inPacket )
 		assert( false );
 	}
 }
+
+
+
+REGISTER_HANDLER( PKT_SC_CORPS_CHANGE_FORMATION )
+{
+	ChangeCorpsFormationResult recvData = static_cast<ChangeCorpsFormationResult&>( pktBase );
+	NetworkManager::GetInstance()->HandleChangeCorpsFormationResult( recvData );
+}
+
+void NetworkManager::HandleChangeCorpsFormationResult( ChangeCorpsFormationResult& inPacket )
+{
+	if ( m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size ) )
+	{
+
+		int corpsID = inPacket.m_CorpsID;
+		FormationType formationType = inPacket.m_FormationType;
+
+
+
+		Scene* scene = SceneManager::GetInstance()->GetNowScene();
+		if ( typeid( ScenePlay ) == typeid( *scene ) )
+		{
+			ScenePlay* scenePlay = static_cast<ScenePlay*>( SceneManager::GetInstance()->GetNowScene() );
+			scenePlay->ChangeCorpsFormation( corpsID, formationType );
+			Log( "ChangeCorpsFormation! CorpID:%d Type:%d  \n", corpsID, formationType );
+		}
+		else
+		{
+			//플레이중이 아닌데 플레이용 패킷을 받음 
+			assert( false );
+		}
+	}
+	else
+	{
+		assert( false );
+	}
+}

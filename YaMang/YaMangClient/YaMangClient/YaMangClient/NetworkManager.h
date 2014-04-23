@@ -22,6 +22,7 @@ public:
 	void	HandleGameOverResult( GameOverResult& inPacket );
 	void	HandleChatResult( ChatBroadcastResult& inPacket );
 	void	HandleGenerateCorpsResult( GenerateCorpsResult& inPacket );
+	void	HandleChangeCorpsFormationResult( ChangeCorpsFormationResult& inPacket );
 
 	//////////////////////////////////////////////////////////////////////////
 	// 리퀘스트 패킷 보내기
