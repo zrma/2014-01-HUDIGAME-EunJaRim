@@ -6,12 +6,10 @@ extern const float NOT_A_NUMBER_FLOAT;
 class Corps
 {
 public:
-	Corps( int corpsID, Position position );
+	Corps( int playerID, int corpsID, Position position );
 	virtual ~Corps();
-	
-	virtual void			GenerateCorps( int corpsID, Position position ) = 0;
 
-	int						GetCorpsID() { return m_CorpsId; }
+	int						GetCorpsID() { return m_CorpsID; }
 	short					GetCorpsSize() { return m_UnitNum; }
 	Position				GetPosition() { return m_Position; }
 
@@ -24,7 +22,8 @@ private:
 	Corps& operator=( const Corps& );
 
 protected:
-	int						m_CorpsId = -1;
+	int						m_PlayerID = -1;
+	int						m_CorpsID = -1;
 	int						m_HP = 100;
 	short					m_UnitNum = -1;
 

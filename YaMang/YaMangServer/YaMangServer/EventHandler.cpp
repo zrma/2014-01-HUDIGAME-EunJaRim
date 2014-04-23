@@ -185,8 +185,8 @@ void ClientSession::HandleGenerateCorpsRequest( GenerateCorpsRequest& inPacket )
 
 	UnitType unitType = inPacket.m_UnitType;
 	Position position = inPacket.m_Position;
-
-	int generatedCorpsID = GenerateCorps( unitType, position );
+	
+	int generatedCorpsID = m_ClientManager->GenerateCorps( m_PlayerId, unitType, position );
 
 	if ( generatedCorpsID == -1 )
 	{
@@ -204,8 +204,8 @@ void ClientSession::HandleGenerateCorpsRequest( GenerateCorpsRequest& inPacket )
 		Disconnect();
 	}
 
-	printf_s( "GenerateCorps! Type:%d CorpID:%d PlayerID:%d CorpsListSize:%d \n",
-			  unitType, generatedCorpsID, m_PlayerId, static_cast<int>( m_CorpsList.size() ) );
+	printf_s( "GenerateCorps! Type:%d CorpID:%d PlayerID:%d \n",
+			  unitType, generatedCorpsID, m_PlayerId );
 }
 
 

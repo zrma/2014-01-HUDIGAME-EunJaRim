@@ -71,10 +71,7 @@ public:
 	void	HandleMoveCorpsRequest( MoveCorpsRequest& inPacket );
 	void	HandleChangeCorpsFormationRequest( ChangeCorpsFormationRequest& inPacket );
 
-	//////////////////////////////////////////////////////////////////////////
-	// 게임 컨텐츠
-	//////////////////////////////////////////////////////////////////////////
-	int		GenerateCorps( UnitType type, Position position );
+
 
 private:
 
@@ -102,11 +99,6 @@ private:
 	OverlappedIO	m_OverlappedSend;
 	OverlappedIO	m_OverlappedRecv;
 	int				m_OverlappedRequested;
-
-
-	typedef std::hash_map<int, Corps*> CorpsList;
-	CorpsList		m_CorpsList;
-	int				m_CorpsIDCount = 0;
 
 	ClientManager*	m_ClientManager;
 

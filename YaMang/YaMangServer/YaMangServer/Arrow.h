@@ -5,10 +5,8 @@ class Arrow:
 	public Corps
 {
 public:
-	Arrow( int corpsID, Position position ):Corps( corpsID, position ) {};
+	Arrow( int playerID, int corpsID, Position position ):Corps( playerID, corpsID, position ) {};
 	virtual ~Arrow( );
-
-	void	GenerateCorps( int corpsID, Position position );
 
 private:
 	Arrow();

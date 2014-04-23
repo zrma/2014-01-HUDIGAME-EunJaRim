@@ -7,10 +7,9 @@
 #include "knight.h"
 #include "EnumSet.h"
 
-Corps::Corps( int corpsID, Position position )
+Corps::Corps( int playerID, int corpsID, Position position )
+: m_PlayerID( playerID ), m_CorpsID( corpsID ), m_Position(position)
 {
-	m_CorpsId = corpsID;
-	m_Position = position;
 }
 
 

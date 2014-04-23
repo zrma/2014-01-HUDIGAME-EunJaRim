@@ -6,6 +6,11 @@
 #include "DatabaseJobContext.h"
 #include "DatabaseJobManager.h"
 #include "RoomManager.h"
+#include "Arrow.h"
+#include "Guard.h"
+#include "knight.h"
+#include "Pike.h"
+#include "Sword.h"
 
 
 
@@ -338,4 +343,32 @@ void ClientManager::ReadMapFile( const char* filename )
 	printf_s( "[%d][%d] Map Loaded! \n", m_Map.size(), m_Map.at( 0 ).size() );
 
 	fclose( f );
+}
+
+int ClientManager::GenerateCorps( int playerID, UnitType type, Position position )
+{
+	Corps* corps = nullptr;
+	switch ( type )
+	{
+		case UnitType::UNIT_ARROW:
+			corps = new Arrow( playerID, ++m_CorpsIDCount, position );
+			break;
+		case  UnitType::UNIT_GUARD:
+			corps = new Guard( playerID, ++m_CorpsIDCount, position );
+			break;
+		case  UnitType::UNIT_KNIGHT:
+			corps = new Knight( playerID, ++m_CorpsIDCount, position );
+			break;
+		case  UnitType::UNIT_PIKE:
+			corps = new Pike( playerID, ++m_CorpsIDCount, position );
+			break;
+		case  UnitType::UNIT_SWORD:
+			corps = new Sword( playerID, ++m_CorpsIDCount, position );
+			break;
+		default:
+			return -1;
+	}
+
+	m_CorpsList.insert( CorpsList::value_type( m_CorpsIDCount, corps ) );
+	return corps->GetCorpsID();
 }

@@ -5,12 +5,6 @@
 #include "DatabaseJobContext.h"
 #include "DatabaseJobManager.h"
 #include "RoomManager.h"
-#include "Corps.h"
-#include "Arrow.h"
-#include "Guard.h"
-#include "knight.h"
-#include "Pike.h"
-#include "Sword.h"
 
 // EasyServer.cpp 에서 클라이언트 매니저에서 CreateClient 한 후에
 // 소켓 객체로부터 getpeername()를 이용해 주소 값을 뽑아 와서 OnConnect() 호출
@@ -318,34 +312,6 @@ void ClientSession::LoginDone( int pid, const char* name )
 	m_Logon = true;
 }
 
-int ClientSession::GenerateCorps( UnitType type, Position position )
-{
-	Corps* corps = nullptr;
-	switch ( type )
-	{
-		case UnitType::UNIT_ARROW:
-			corps = new Arrow( ++m_CorpsIDCount, position );
-			break;
-		case  UnitType::UNIT_GUARD:
-			corps = new Guard( ++m_CorpsIDCount, position );
-			break;
-		case  UnitType::UNIT_KNIGHT:
-			corps = new Knight( ++m_CorpsIDCount, position );
-			break;
-		case  UnitType::UNIT_PIKE:
-			corps = new Pike( ++m_CorpsIDCount, position );
-			break;
-		case  UnitType::UNIT_SWORD:
-			corps = new Sword( ++m_CorpsIDCount, position );
-			break;
-		default:
-			return -1;
-	}
-
-	// corps->GenerateCorps( ++m_CorpsIDCount, position );
-	m_CorpsList.insert( CorpsList::value_type( m_CorpsIDCount, corps ) );
-	return corps->GetCorpsID();
-}
 
 ///////////////////////////////////////////////////////////
 // 비동기 입력 WSARecv()에 의해서, 입력이 완료 되면 콜백으로 RecvCompletion 실행

@@ -5,10 +5,8 @@ class Pike:
 	public Corps
 {
 public:
-	Pike( int corpsID, Position position ):Corps( corpsID, position ) {};
+	Pike( int playerID, int corpsID, Position position ):Corps( playerID, corpsID, position ) {};
 	virtual ~Pike( );
-
-	void	GenerateCorps( int corpsID, Position position );
 
 private:
 	Pike( );

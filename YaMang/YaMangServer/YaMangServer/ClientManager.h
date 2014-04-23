@@ -39,6 +39,12 @@ public:
 	void				ReadMapFile( const char* filename );
 
 
+
+
+	int					GenerateCorps( int playerID, UnitType type, Position position );
+
+
+
 	/// DB에 플레이어 정보를 생성하거나 삭제하는 함수
 	void				DBCreatePlayer( int pid, double x, double y, double z, const char* name, const char* comment );
 	void				DBDeletePlayer( int pid );
@@ -63,6 +69,10 @@ private:
 private:
 	typedef std::map<SOCKET, ClientSession*> ClientList;
 	ClientList			m_ClientList;
+
+	typedef std::hash_map<int, Corps*> CorpsList;
+	CorpsList			m_CorpsList;
+	int					m_CorpsIDCount = 0;
 
 	DWORD				m_LastGCTick;
 	DWORD				m_LastClientWorkTick;
