@@ -109,63 +109,63 @@ void SetupTranslateMatricesTool()
 // :)
 //////////////////////////////////////////////////////////////////////////
 
-HRESULT InitVertexBuffer(HWND hWnd)
+HRESULT InitVertexBuffer( HWND hWnd )
 {
 	D3DSURFACE_DESC ddsd;
 	D3DLOCKED_RECT d3drc;
 
-	g_TexHeight->GetLevelDesc(0, &ddsd);
+	g_TexHeight->GetLevelDesc( 0, &ddsd );
 	g_XHeight = ddsd.Width;
 	g_ZHeight = ddsd.Height;
 
-	if (FAILED(g_D3dDevice->CreateVertexBuffer(ddsd.Width*ddsd.Height*sizeof(CUSTOMVERTEX), D3DUSAGE_WRITEONLY, D3DFVF_CUSTOMVERTEX, D3DPOOL_MANAGED, &g_VertexBuffer, NULL)))
+	if ( FAILED( g_D3dDevice->CreateVertexBuffer( ddsd.Width * ddsd.Height * sizeof( CUSTOMVERTEX ), D3DUSAGE_WRITEONLY, D3DFVF_CUSTOMVERTEX, D3DPOOL_MANAGED, &g_VertexBuffer, NULL ) ) )
 	{
-		MessageBox(NULL, L"Fail in Creating VertexBuffer", L"YaMang.exe", MB_OK);
+		MessageBox( NULL, L"Fail in Creating VertexBuffer", L"YaMang.exe", MB_OK );
 		return E_FAIL;
 	}
 
 	//surface lock
 	//확인만 하고 쓸일은 없으므로 readonly
-	g_TexHeight->LockRect(0, &d3drc, NULL, D3DLOCK_READONLY);
+	g_TexHeight->LockRect( 0, &d3drc, NULL, D3DLOCK_READONLY );
 
 	VOID* vertices;
-	if (FAILED(g_VertexBuffer->Lock(0, g_XHeight*g_ZHeight*sizeof(CUSTOMVERTEX), (void**)&vertices, 0)))
+	if ( FAILED( g_VertexBuffer->Lock( 0, g_XHeight*g_ZHeight*sizeof( CUSTOMVERTEX ), (void**)&vertices, 0 ) ) )
 	{
-		MessageBox(NULL, L"Fail in lock VertexBuffer", L"YaMang.exe", MB_OK);
+		MessageBox( NULL, L"Fail in lock VertexBuffer", L"YaMang.exe", MB_OK );
 		return E_FAIL;
 	}
 
 
-	//Vertex 구조체 채우기
+	// Vertex 구조체 채우기
 	CUSTOMVERTEX vertex;
 	CUSTOMVERTEX* vertexPointer = (CUSTOMVERTEX*)vertices;
 
-	for (DWORD z = 0; z < g_ZHeight; ++z)
+	for ( DWORD z = 0; z < g_ZHeight; ++z )
 	{
-		for (DWORD x = 0; x < g_XHeight; ++x)
+		for ( DWORD x = 0; x < g_XHeight; ++x )
 		{
 			vertex.vertexPoint.x = (float)x - g_XHeight / 2.0f;
-			vertex.vertexPoint.z = -((float)z - g_ZHeight / 2.0f);
-			vertex.vertexPoint.y = ((float)(*((LPDWORD)d3drc.pBits + x + z*(d3drc.Pitch / 4)) & 0x000000ff)) / 10.f;
+			vertex.vertexPoint.z = -( (float)z - g_ZHeight / 2.0f );
+			vertex.vertexPoint.y = ( (float)( *( (LPDWORD)d3drc.pBits + x + z*( d3drc.Pitch / 4 ) ) & 0x000000ff ) ) / 10.f;
 
-			//normal 값이고
-			//0,0,0 기준으로 각 지점의 normal 값을 계산
-// 			vertex.vertexNormal.x = vertex.vertexPoint.x;
-// 			vertex.vertexNormal.y = vertex.vertexPoint.y;
-// 			vertex.vertexNormal.z = vertex.vertexPoint.z;
-// 
-// 			//단위 벡터로 만드는 것
-// 			//정규화 벡터로 변경하는 연산
-// 			D3DXVec3Normalize(&vertex.vertexNormal, &vertex.vertexNormal);
+			// normal 값이고
+			// 0,0,0 기준으로 각 지점의 normal 값을 계산
+			// vertex.vertexNormal.x = vertex.vertexPoint.x;
+			// vertex.vertexNormal.y = vertex.vertexPoint.y;
+			// vertex.vertexNormal.z = vertex.vertexPoint.z;
+			// 
+			// // 단위 벡터로 만드는 것
+			// // 정규화 벡터로 변경하는 연산
+			// D3DXVec3Normalize(&vertex.vertexNormal, &vertex.vertexNormal);
 
-			vertex.vertexTexturePoint.x = (float)x / (g_XHeight - 1);
-			vertex.vertexTexturePoint.y = (float)z / (g_ZHeight - 1);
+			vertex.vertexTexturePoint.x = (float)x / ( g_XHeight - 1 );
+			vertex.vertexTexturePoint.y = (float)z / ( g_ZHeight - 1 );
 			*vertexPointer++ = vertex;
 		}
 	}
 	g_VertexBuffer->Unlock();
 
-	g_TexHeight->UnlockRect(0);
+	g_TexHeight->UnlockRect( 0 );
 
 	return S_OK;
 }
@@ -192,13 +192,13 @@ HRESULT InitIdxBuffer(HWND hWnd)
 	{
 		for (UINT x = 0; x < g_XHeight - 1; ++x)
 		{
-			idx._0 = static_cast<UINT>(z*g_XHeight + x);
-			idx._1 = static_cast<UINT>(z*g_XHeight + x + 1);
-			idx._2 = static_cast<UINT>((z + 1)*g_XHeight + x);
+			idx._0 = static_cast<UINT>( z * g_XHeight + x );
+			idx._1 = static_cast<UINT>( z * g_XHeight + x + 1 );
+			idx._2 = static_cast<UINT>( ( z + 1 ) * g_XHeight + x );
 			*idxPointer++ = idx;
-			idx._0 = static_cast<UINT>((z + 1)*g_XHeight + x);
-			idx._1 = static_cast<UINT>(z*g_XHeight + x + 1);
-			idx._2 = static_cast<UINT>((z + 1) *g_XHeight + x + 1);
+			idx._0 = static_cast<UINT>( ( z + 1 ) * g_XHeight + x );
+			idx._1 = static_cast<UINT>( z * g_XHeight + x + 1 );
+			idx._2 = static_cast<UINT>( ( z + 1 ) * g_XHeight + x + 1 );
 			*idxPointer++ = idx;
 		}
 	}

@@ -57,6 +57,8 @@ namespace YamangTools
 
                 //YamangDll.HeightMapTextureImport(this.RenderTarget.Handle, heightMap, mapTexture);
                 YamangDll.CreateRawGround(50, 50, 1.0f);
+                YamangDll.PreSettingForTool();
+
 
                 objectAttach = true;
             }
