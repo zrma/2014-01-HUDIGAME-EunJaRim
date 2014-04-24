@@ -13,11 +13,9 @@ namespace YamangTools
 {
     public partial class Main : Form
     {
-        bool objectAttach = false;
 
         ~Main()
         {
-            objectAttach = false;
 
             YamangDll.HeightMapCleanup();
             YamangDll.D3DCleanUp();
@@ -30,37 +28,44 @@ namespace YamangTools
             Render();
         }
         
+        
+
+        private float GetNumber(object target)
+        {
+            float result;
+
+            try
+            {
+                result = Convert.ToSingle(((TextBox)target).Text);
+                if(result < 0 )
+                {
+                    ((TextBox)target).Text = "0";
+                    result = 0;
+                }
+            }
+            catch
+            {
+                ((TextBox)target).Text = "0";
+                result = 0;
+            }
+            return result;
+        }
+
+
+
         async private void Render()
         {
             while (true)
             {
                 YamangDll.PreRendering();
+                YamangDll.CreateRawGround(Convert.ToInt32(GetNumber(MapWidthVal)), Convert.ToInt32(GetNumber(MapHeightVal)), GetNumber(MapVertexSpacingVal));
+                YamangDll.PreSettingForTool();
 
-                //YamangDll.RenderText("Hi 욤", 10, 10);
-                if (objectAttach)
-                {
-                    YamangDll.HeightMapRender();
-                }
+                YamangDll.HeightMapRender();
 
                 YamangDll.PostRendering();
 
                 await Task.Delay(10);
-            }
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            if (!objectAttach)
-            {
-                //string heightMap = ".\\Resource\\heightmap_1024_1024_korea.bmp";
-                //string mapTexture = ".\\Resource\\heightmap_texture_1024_1024_korea.bmp";
-
-                //YamangDll.HeightMapTextureImport(this.RenderTarget.Handle, heightMap, mapTexture);
-                YamangDll.CreateRawGround(50, 50, 1.0f);
-                YamangDll.PreSettingForTool();
-
-
-                objectAttach = true;
             }
         }
 
