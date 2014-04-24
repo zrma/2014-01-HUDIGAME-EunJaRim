@@ -165,15 +165,15 @@ YAMANGDXDLL_API bool PreRendering()
 
 	bool flag = false;
 
-	// 렌더 방어코드
-	// pre rendering 단계에서 진행되지 않으면 향후 render 모두 실패
+	//렌더 방어코드
+	//pre rendering 단계에서 진행되지 않으면 향후 render 모두 실패
 	if ( SUCCEEDED( g_D3dDevice->BeginScene() ) )
 	{
 		SetupTranslateMatrices();
-		// ViewSetting();
+		//ViewSetting();
 
-		// lightsetting
-		// 일단 1로 진행, 향후 라이트 개수 등 확정되면 인자 받아 설정
+		//lightsetting
+		//일단 1로 진행, 향후 라이트 개수 등 확정되면 인자 받아 설정
 		int lightNum = 1;
 		Lighting( lightNum );
 		// Log( "라이팅 세팅!\n" );
@@ -183,8 +183,8 @@ YAMANGDXDLL_API bool PreRendering()
 		g_D3dDevice->SetTextureStageState( 0, D3DTSS_COLORARG2, D3DTA_DIFFUSE );
 		g_D3dDevice->SetTextureStageState( 0, D3DTSS_ALPHAOP, D3DTOP_DISABLE );
 
-		// Log( "Render Begin \n" );
-		// Log( "pre render 완료!\n" );
+		//Log( "Render Begin \n" );
+		//Log( "pre render 완료!\n" );
 
 		flag = true;
 	}
@@ -195,7 +195,7 @@ YAMANGDXDLL_API bool PreRendering()
 
 YAMANGDXDLL_API void Rendering( MESHOBJECT* inputVal )
 {
-	// Log( "Now Render : %p \n", inputVal );
+	//Log( "Now Render : %p \n", inputVal );
 	for ( DWORD i = 0; i < inputVal->NumMaterials; ++i )
 	{
 		g_D3dDevice->SetMaterial( &inputVal->MeshMarterials[i] );
@@ -224,33 +224,33 @@ YAMANGDXDLL_API void RenderingTool( MESHOBJECT* inputVal )
 
 	g_D3dDevice->Clear( 0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB( 30, 10, 10 ), 1.0f, 0 );
 
-	// 렌더 방어코드
+	//렌더 방어코드
 	if ( SUCCEEDED( g_D3dDevice->BeginScene() ) )
 	{
 		SetupTranslateMatricesTool();
-		// ViewSetting();
+		//ViewSetting();
 
-		// lightsetting
-		// 일단 1로 진행, 향후 라이트 개수 등 확정되면 인자 받아 설정
+		//lightsetting
+		//일단 1로 진행, 향후 라이트 개수 등 확정되면 인자 받아 설정
 		int lightNum = 1;
 		Lighting( lightNum );
-		// Log( "라이팅 세팅!\n" );
+		//Log( "라이팅 세팅!\n" );
 
 		g_D3dDevice->SetTextureStageState( 0, D3DTSS_COLOROP, D3DTOP_MODULATE );
 		g_D3dDevice->SetTextureStageState( 0, D3DTSS_COLORARG1, D3DTA_TEXTURE );
 		g_D3dDevice->SetTextureStageState( 0, D3DTSS_COLORARG2, D3DTA_DIFFUSE );
 		g_D3dDevice->SetTextureStageState( 0, D3DTSS_ALPHAOP, D3DTOP_DISABLE );
 
-		// Log( "Render Begin \n" );
-		// Log( "pre render 완료!\n" );
+		//Log( "Render Begin \n" );
+		//Log( "pre render 완료!\n" );
 	}
 
-	// 카메라 셋팅
+	//카메라 셋팅
 	D3DXMATRIXA16 viewMatrix;
 	D3DXMatrixLookAtLH( &viewMatrix, &g_EyePoint, &g_LookAtPoint, &g_UpVector );
 	SetMatrix( &viewMatrix , true);
 
-	// Log( "Now Render : %p \n", inputVal );
+	//Log( "Now Render : %p \n", inputVal );
 	for ( DWORD i = 0; i < inputVal->NumMaterials; ++i )
 	{
 		g_D3dDevice->SetMaterial( &inputVal->MeshMarterials[i] );
@@ -260,7 +260,7 @@ YAMANGDXDLL_API void RenderingTool( MESHOBJECT* inputVal )
 	}
 	g_D3dDevice->EndScene();
 
-	// Log( "Render End \n" );
+	//Log( "Render End \n" );
 	g_D3dDevice->Present( NULL, NULL, NULL, NULL );
 }
 
@@ -411,8 +411,8 @@ YAMANGDXDLL_API void HeightMapRender()
 	g_D3dDevice->SetTransform(D3DTS_WORLD, &world);
 
 	// 뷰 행렬
-	D3DXVECTOR3 vEyePt(0.f, 20.f, -100.f);
-	D3DXVECTOR3 vLookatPt(0.f, 19.9f, -99.0f);
+	D3DXVECTOR3 vEyePt(0.f, 40.f, -100.f);
+	D3DXVECTOR3 vLookatPt(0.f, 39.9f, -99.0f);
 	D3DXVECTOR3 vUpVec(0.f, 1.f, 0.f);
 	D3DXMATRIXA16 matView;
 	D3DXMatrixLookAtLH(&matView, &vEyePt, &vLookatPt, &vUpVec);
@@ -445,10 +445,6 @@ YAMANGDXDLL_API void HeightMapRender()
 
 YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 {
-	// 이걸 빼먹으면 DrawIndexedPrimitive에서 버퍼 사이즈를 0으로 잡겠지?
-	g_XHeight = row;
-	g_ZHeight = col;
-
 	int verticesCount = ( col + 1 )* ( row + 1 );
 	int indicesCount = col * row * 6;
 
@@ -467,7 +463,7 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 			baseVertex[startIdx].vertexPoint.x = vPos0.vertexPoint.x + ( pixelSize * x );
 			baseVertex[startIdx].vertexPoint.y = 0.f;
 			baseVertex[startIdx].vertexPoint.z = vPos0.vertexPoint.z + ( -1.0f )*( pixelSize * z );
-			baseVertex[startIdx].Diffuse = D3DCOLOR_ARGB( 255, 20, 0, 0 );
+			baseVertex[startIdx].Diffuse = D3DCOLOR_ARGB( 255, 255, 50, 255 );
 			++startIdx;
 		}
 	}
