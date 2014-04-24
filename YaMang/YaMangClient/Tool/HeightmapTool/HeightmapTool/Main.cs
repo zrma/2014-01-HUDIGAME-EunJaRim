@@ -56,7 +56,7 @@ namespace YamangTools
                 //string mapTexture = ".\\Resource\\heightmap_texture_1024_1024_korea.bmp";
 
                 //YamangDll.HeightMapTextureImport(this.RenderTarget.Handle, heightMap, mapTexture);
-                YamangDll.CreateRawGround(1000, 1000, 1.0f);
+                YamangDll.CreateRawGround(100, 100, 1.0f);
                 YamangDll.PreSettingForTool();
 
                 objectAttach = true;

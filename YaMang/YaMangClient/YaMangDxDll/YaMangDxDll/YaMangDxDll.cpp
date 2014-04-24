@@ -450,8 +450,8 @@ YAMANGDXDLL_API void HeightMapRender()
 YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 {
 	// 이걸 빼먹으면 DrawIndexedPrimitive에서 버퍼 사이즈를 0으로 잡겠지?
-	g_XHeight = row;
-	g_ZHeight = col;
+	g_XHeight = row + 1;
+	g_ZHeight = col + 1;
 
 	int verticesCount = ( col + 1 )* ( row + 1 );
 	int indicesCount = col * row * 6;
