@@ -64,6 +64,13 @@ void CameraController::MoveElevate( float speed )
 	Renderer::GetInstance()->SetViewMatrix( viewMatrix );
 }
 
+//////////////////////////////////////////////////////////////////////////
+// Rotate Up과 Rotate Side는 Picking Ray 쏴서
+// 피킹 된 점을 기준으로 회전해야 함
+//
+// 수정해야 됨
+//////////////////////////////////////////////////////////////////////////
+
 void CameraController::RotateUp( float angle )
 {
 	// 회전각 제한 1

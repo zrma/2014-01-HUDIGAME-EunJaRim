@@ -402,23 +402,27 @@ YAMANGDXDLL_API void HeightMapCleanup()
 
 }
 
-YAMANGDXDLL_API void HeightMapRender()
+YAMANGDXDLL_API void PreSettingForTool()
 {
-	// Log("Start \n");
 	// 월드 행렬
 	D3DXMATRIXA16 world;
-	D3DXMatrixIdentity(&world);
-	g_D3dDevice->SetTransform(D3DTS_WORLD, &world);
+	D3DXMatrixIdentity( &world );
+	g_D3dDevice->SetTransform( D3DTS_WORLD, &world );
 
 	// 뷰 행렬
-	D3DXVECTOR3 vEyePt(0.f, 20.f, -100.f);
-	D3DXVECTOR3 vLookatPt(0.f, 19.9f, -99.0f);
-	D3DXVECTOR3 vUpVec(0.f, 1.f, 0.f);
+	D3DXVECTOR3 vEyePt( 0.f, 20.f, -100.f );
+	D3DXVECTOR3 vLookatPt( 0.f, 19.9f, -99.0f );
+	D3DXVECTOR3 vUpVec( 0.f, 1.f, 0.f );
 	D3DXMATRIXA16 matView;
-	D3DXMatrixLookAtLH(&matView, &vEyePt, &vLookatPt, &vUpVec);
-	g_D3dDevice->SetTransform(D3DTS_VIEW, &matView);
-	// Log("Ready \n");
+	D3DXMatrixLookAtLH( &matView, &vEyePt, &vLookatPt, &vUpVec );
+	g_D3dDevice->SetTransform( D3DTS_VIEW, &matView );
 
+	// 프로젝션 행렬
+	SetAspectRatio( 729, 588 );	
+}
+
+YAMANGDXDLL_API void HeightMapRender()
+{
 	/*D3DXMATRIXA16 worldMatrix;
 	g_D3dDevice->GetTransform(D3DTS_WORLD, &worldMatrix);
 
@@ -428,13 +432,10 @@ YAMANGDXDLL_API void HeightMapRender()
 	Log("%f, %f, %f, %f \n", worldMatrix._41, worldMatrix._42, worldMatrix._43, worldMatrix._44);
 	Log("============================== \n");*/
 
-	// 프로젝션 행렬
-	SetAspectRatio(729, 588);
-
 	// 조명이 들어가면 버텍스 쪽 와이어가 색을 제대로 못 뿌림
 	g_D3dDevice->SetRenderState( D3DRS_LIGHTING, FALSE );
-
 	g_D3dDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_WIREFRAME );
+
 	g_D3dDevice->SetStreamSource( 0, g_VertexBuffer, 0, sizeof( CUSTOMVERTEX ) );
 	g_D3dDevice->SetFVF( D3DFVF_CUSTOMVERTEX );
 
@@ -668,8 +669,6 @@ YAMANGDXDLL_API void SetCursorPosition( float PosX, float PosY )
 	g_cursorPos.y = PosY;
 	g_cursorPos.z = 0.0f;
 }
-
-
 
 // 내보낸 변수의 예제입니다.
 // YAMANGDXDLL_API int nyaMangDxDll=0;
