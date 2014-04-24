@@ -411,7 +411,7 @@ YAMANGDXDLL_API void HeightMapRender()
 	g_D3dDevice->SetTransform(D3DTS_WORLD, &world);
 
 	D3DXVECTOR3 vEyePt(0.f, 40.f, -100.f);
-	D3DXVECTOR3 vLookatPt(0.f, 39.9f, -99.0f);
+	D3DXVECTOR3 vLookatPt(0.f, 39.5f, -99.0f);
 	D3DXVECTOR3 vUpVec(0.f, 1.f, 0.f);
 	D3DXMATRIXA16 matView;
 	D3DXMatrixLookAtLH(&matView, &vEyePt, &vLookatPt, &vUpVec);
@@ -421,11 +421,11 @@ YAMANGDXDLL_API void HeightMapRender()
 	D3DXMATRIXA16 worldMatrix;
 	g_D3dDevice->GetTransform(D3DTS_WORLD, &worldMatrix);
 
-	Log("%f, %f, %f, %f \n", worldMatrix._11, worldMatrix._12, worldMatrix._13, worldMatrix._14);
-	Log("%f, %f, %f, %f \n", worldMatrix._21, worldMatrix._22, worldMatrix._23, worldMatrix._24);
-	Log("%f, %f, %f, %f \n", worldMatrix._31, worldMatrix._32, worldMatrix._33, worldMatrix._34);
-	Log("%f, %f, %f, %f \n", worldMatrix._41, worldMatrix._42, worldMatrix._43, worldMatrix._44);
-	Log("==============================");
+// 	Log("%f, %f, %f, %f \n", worldMatrix._11, worldMatrix._12, worldMatrix._13, worldMatrix._14);
+// 	Log("%f, %f, %f, %f \n", worldMatrix._21, worldMatrix._22, worldMatrix._23, worldMatrix._24);
+// 	Log("%f, %f, %f, %f \n", worldMatrix._31, worldMatrix._32, worldMatrix._33, worldMatrix._34);
+// 	Log("%f, %f, %f, %f \n", worldMatrix._41, worldMatrix._42, worldMatrix._43, worldMatrix._44);
+// 	Log("==============================");
 
 	SetAspectRatio(729, 588);
 	g_D3dDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_WIREFRAME );
@@ -443,8 +443,13 @@ YAMANGDXDLL_API void HeightMapRender()
 
 YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 {
-	int verticesCount = ( col + 1 )* ( row + 1 );
+	g_XHeight = col + 1;
+	g_ZHeight = row + 1;
+	
+	int verticesCount = ( g_XHeight )* ( g_ZHeight );
 	int indicesCount = col * row * 6;
+
+	
 
 	CUSTOMVERTEX* baseVertex = new CUSTOMVERTEX[verticesCount];
 

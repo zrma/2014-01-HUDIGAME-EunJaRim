@@ -127,7 +127,7 @@
             this.Texture.Location = new System.Drawing.Point(4, 22);
             this.Texture.Name = "Texture";
             this.Texture.Padding = new System.Windows.Forms.Padding(3);
-            this.Texture.Size = new System.Drawing.Size(269, 452);
+            this.Texture.Size = new System.Drawing.Size(269, 588);
             this.Texture.TabIndex = 1;
             this.Texture.Text = "Texture";
             this.Texture.UseVisualStyleBackColor = true;
@@ -137,7 +137,7 @@
             this.Object.Location = new System.Drawing.Point(4, 22);
             this.Object.Name = "Object";
             this.Object.Padding = new System.Windows.Forms.Padding(3);
-            this.Object.Size = new System.Drawing.Size(269, 452);
+            this.Object.Size = new System.Drawing.Size(269, 588);
             this.Object.TabIndex = 2;
             this.Object.Text = "Object";
             this.Object.UseVisualStyleBackColor = true;
