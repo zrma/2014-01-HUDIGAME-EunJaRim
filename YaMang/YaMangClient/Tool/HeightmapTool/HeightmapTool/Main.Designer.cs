@@ -170,7 +170,7 @@
             this.MapWidthVal.Location = new System.Drawing.Point(420, 27);
             this.MapWidthVal.Name = "MapWidthVal";
             this.MapWidthVal.Size = new System.Drawing.Size(48, 21);
-            this.MapWidthVal.TabIndex = 8;
+            this.MapWidthVal.TabIndex = 6;
             this.MapWidthVal.Text = "30";
             this.MapWidthVal.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -179,7 +179,7 @@
             this.MapHeightVal.Location = new System.Drawing.Point(556, 27);
             this.MapHeightVal.Name = "MapHeightVal";
             this.MapHeightVal.Size = new System.Drawing.Size(48, 21);
-            this.MapHeightVal.TabIndex = 8;
+            this.MapHeightVal.TabIndex = 7;
             this.MapHeightVal.Text = "30";
             this.MapHeightVal.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 

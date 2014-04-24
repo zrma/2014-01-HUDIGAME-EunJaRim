@@ -37,16 +37,16 @@ namespace YamangTools
             try
             {
                 result = Convert.ToSingle(((TextBox)target).Text);
-                if(result < 0 )
+                if(result <= 0 )
                 {
-                    ((TextBox)target).Text = "0";
-                    result = 0;
+                    ((TextBox)target).Text = "1";
+                    result = 1;
                 }
             }
             catch
             {
-                ((TextBox)target).Text = "0";
-                result = 0;
+                ((TextBox)target).Text = "1";
+                result = 1;
             }
             return result;
         }
@@ -58,7 +58,7 @@ namespace YamangTools
             while (true)
             {
                 YamangDll.PreRendering();
-                YamangDll.CreateRawGround(Convert.ToInt32(GetNumber(MapWidthVal)), Convert.ToInt32(GetNumber(MapHeightVal)), GetNumber(MapVertexSpacingVal));
+                YamangDll.CreateRawGround(Convert.ToInt32(GetNumber(MapHeightVal)), Convert.ToInt32(GetNumber(MapWidthVal)), GetNumber(MapVertexSpacingVal));
                 YamangDll.PreSettingForTool();
 
                 YamangDll.HeightMapRender();
