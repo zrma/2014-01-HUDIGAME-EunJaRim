@@ -431,6 +431,9 @@ YAMANGDXDLL_API void HeightMapRender()
 	// 프로젝션 행렬
 	SetAspectRatio(729, 588);
 
+	// 조명이 들어가면 버텍스 쪽 와이어가 색을 제대로 못 뿌림
+	g_D3dDevice->SetRenderState( D3DRS_LIGHTING, FALSE );
+
 	g_D3dDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_WIREFRAME );
 	g_D3dDevice->SetStreamSource( 0, g_VertexBuffer, 0, sizeof( CUSTOMVERTEX ) );
 	g_D3dDevice->SetFVF( D3DFVF_CUSTOMVERTEX );
@@ -467,7 +470,7 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 			baseVertex[startIdx].vertexPoint.x = vPos0.vertexPoint.x + ( pixelSize * x );
 			baseVertex[startIdx].vertexPoint.y = 0.f;
 			baseVertex[startIdx].vertexPoint.z = vPos0.vertexPoint.z + ( -1.0f )*( pixelSize * z );
-			baseVertex[startIdx].Diffuse = D3DCOLOR_ARGB( 255, 20, 0, 0 );
+			baseVertex[startIdx].Diffuse = D3DCOLOR_ARGB( 255, 150, 30, 30 );
 			++startIdx;
 		}
 	}
