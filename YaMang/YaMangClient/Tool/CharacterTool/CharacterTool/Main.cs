@@ -61,6 +61,9 @@ namespace YamangTools
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            isRunning = false;
+            YamangDll.D3DCleanUp();
+            YamangDll.MeshObjectCleanUp(ref infoPtr);
             Application.Exit();
         }
 

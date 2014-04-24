@@ -76,7 +76,12 @@ extern "C"{
 	YAMANGDXDLL_API void RenderingTool(MESHOBJECT* inputVal);
 	YAMANGDXDLL_API void SetCameraTool(float x, float y, float z);
 
-	
+	//////////////////////////////////////////////////////////////////////////
+	// Camera 함수
+	//////////////////////////////////////////////////////////////////////////
+	YAMANGDXDLL_API void MoveCamera( float x = 0, float y = 0, float z = 0);
+	YAMANGDXDLL_API void ZoomCamera( float zoom );
+
 }
 //단일 변수 out sample
 //extern YAMANGDXDLL_API int nyaMangDxDll;
