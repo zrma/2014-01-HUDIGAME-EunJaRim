@@ -9,6 +9,8 @@ public:
 	virtual void OnTick( ) = 0;
 	virtual void OnEnd( ) = 0;
 
+	// 액션이 꼭 콥스만의 고유 행동이 아니면 corpsID는 따로 빼야할듯 
+	void	SetOwnerCorpsID( int ownerCropsID ) { m_OwnerCropsID = ownerCropsID; }
 	int		GetOwnerCorpsID() { return m_OwnerCropsID; }
 
 	bool	Gozarani( ) { return m_NoEgg; }

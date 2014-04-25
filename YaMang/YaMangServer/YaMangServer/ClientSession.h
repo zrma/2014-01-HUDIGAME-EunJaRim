@@ -101,7 +101,7 @@ private:
 	OverlappedIO	m_OverlappedRecv;
 	int				m_OverlappedRequested;
 
-	ClientManager*	m_ClientManager;
+	ClientManager*	m_ClientManager = nullptr;
 
 	friend class ClientManager;
 };

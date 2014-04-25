@@ -6,5 +6,9 @@ class MovePosition:
 public:
 	MovePosition();
 	~MovePosition();
+
+	void OnBegin();
+	void OnTick();
+	void OnEnd();
 };
 

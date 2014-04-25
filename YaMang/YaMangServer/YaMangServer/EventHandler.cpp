@@ -8,6 +8,7 @@
 #include "RoomManager.h"
 #include "ClientManager.h"
 #include "Corps.h"
+#include "MovePosition.h"
 
 // 테스트용 헤더
 extern RoomManager* g_RoomManager;
@@ -263,8 +264,13 @@ void ClientSession::HandleMoveCorpsRequest( MoveCorpsRequest& inPacket )
 		Disconnect();
 	}
 
+	
+
 	// MOVE!!!!!!;
 	// 미구현 그냥 클라쪽 패킷만 일단 구현
+	Action* action = new MovePosition();
+	m_ClientManager->AddActionToScheduler( action, 3000 );
+
 
 	MoveCorpsResult outPacket;
 	outPacket.m_PlayerID = playerID;

@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "SharedDefine.h"
 #include "EnumSet.h"
+#include "Action.h"
 
 extern const float NOT_A_NUMBER_FLOAT;
 class Corps
@@ -13,9 +14,13 @@ public:
 	short					GetCorpsSize() { return m_UnitNum; }
 	Position				GetPosition() { return m_Position; }
 
+	void					SetHoldingAction( Action* holdAction ) { m_HoldAction = holdAction; }
+	Action*					GetHoldingAction( ) { return m_HoldAction; }
+
 	void					ChangeFormation( FormationType formation ) { m_Formation = formation; }
 	void					AddDamage( int damage );
 
+	
 private:
 	Corps();
 	Corps( const Corps& );
@@ -29,6 +34,8 @@ protected:
 
 	Position				m_Position;
 	FormationType			m_Formation = FormationType::FORMATION_NONE;
+
+	Action*					m_HoldAction = nullptr;
 
 	int		m_MoveSpeed = 0;
 	int		m_MoveSpeedBonus = 0;

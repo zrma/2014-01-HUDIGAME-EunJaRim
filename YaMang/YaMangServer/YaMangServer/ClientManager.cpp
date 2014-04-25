@@ -13,8 +13,38 @@
 #include "Sword.h"
 #include "tinyxml.h"
 #include "xpath_static.h"
+#include "ActionScheduler.h"
 
 
+ClientManager::ClientManager( int roomNumber ): m_RoomNumber( roomNumber ), m_LastGCTick( 0 ), m_LastClientWorkTick( 0 )
+{
+
+	// 액션 스케쥴러 실행
+	m_ActionScheduler = new ActionScheduler( this );
+}
+
+
+ClientManager::~ClientManager()
+{
+	for ( auto& it : m_ClientList )
+	{
+		ClientSession* toBeDelete = it.second;
+		delete toBeDelete;
+	}
+	for ( auto& it : m_CorpsList )
+	{
+		Corps* toBeDelete = it.second;
+		delete toBeDelete;
+	}
+
+	for( int i = 0; i < m_Map.size( ); ++i )
+	{
+		m_Map.at( i ).clear();
+	}
+	m_Map.clear();
+
+	delete m_ActionScheduler;
+}
 
 void ClientManager::GameStart()
 {
@@ -34,6 +64,7 @@ void ClientManager::GameStart()
 		{
 			m_IsGameStart = false;
 		}
+
 	}
 	else
 	{
@@ -137,6 +168,20 @@ void ClientManager::OnPeriodWork()
 		m_LastClientWorkTick = currTick;
 	}
 
+
+	// 방을 만들어야지만 실행됨 로비에서는 불가
+	#ifndef DEBUG
+		if ( m_IsGameStart )
+	#endif // DEBUG
+	{
+		// 0.01초마다 타이머 확인 
+		if ( currTick - m_LastClientWorkTick >= 10 )
+		{
+			m_ActionScheduler->DoScheduledAction();
+		}
+	}
+
+
 	/// 처리 완료된 DB 작업들 각각의 Client로 dispatch
 	DispatchDatabaseJobResults();
 }
@@ -182,6 +227,8 @@ void ClientManager::ClientPeriodWork()
 	{
 		return;
 	}
+
+	// 쓰게 될까? 일단은 남겨둠...
 	/// FYI: C++ 11 스타일의 루프
 	for ( auto& it : m_ClientList )
 	{
@@ -404,3 +451,19 @@ int ClientManager::GenerateCorps( int playerID, UnitType type, Position position
 	m_CorpsList.insert( CorpsList::value_type( m_CorpsIDCount, corps ) );
 	return corps->GetCorpsID();
 }
+
+Corps* ClientManager::GetCorpsByCorpsID( int corpsID )
+{
+	if ( m_CorpsList.find( corpsID ) != m_CorpsList.end( ) )
+	{
+		return m_CorpsList.find( corpsID )->second;
+	}
+
+	return nullptr;
+}
+
+void ClientManager::AddActionToScheduler( Action* addedAction, int64_t remainTime )
+{
+	m_ActionScheduler->AddActionToScheduler( addedAction, remainTime );
+}
+

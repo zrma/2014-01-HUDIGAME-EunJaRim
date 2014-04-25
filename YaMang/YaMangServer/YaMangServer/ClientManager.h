@@ -1,9 +1,13 @@
 ﻿#pragma once
 
 #include <WinSock2.h>
+#include "EnumSet.h"
 
+class Corps;
 class ClientSession;
-
+class ActionScheduler;
+class Action;
+struct Position;
 struct PacketHeader;
 struct DatabaseJobContext;
 struct Tile
@@ -16,9 +20,8 @@ struct Tile
 class ClientManager
 {
 public:
-	ClientManager( int roomNumber ): m_RoomNumber(roomNumber), m_LastGCTick( 0 ), m_LastClientWorkTick( 0 )
-	{
-	}
+	ClientManager( int roomNumber );
+	~ClientManager();
 
 	void				GameStart();
 
@@ -43,7 +46,7 @@ public:
 
 
 	int					GenerateCorps( int playerID, UnitType type, Position position );
-
+	void				AddActionToScheduler( Action* addedAction, int64_t remainTime );
 
 
 	/// DB에 플레이어 정보를 생성하거나 삭제하는 함수
@@ -54,7 +57,7 @@ public:
 
 	void				PrintClientList( ); // 테스트용 함수
 
-
+	Corps*				GetCorpsByCorpsID( int corpsID );
 
 
 private:
@@ -84,4 +87,5 @@ private:
 	std::vector<std::vector<Tile>>	m_Map;
 
 	bool				m_IsGameStart = false;
+	ActionScheduler*	m_ActionScheduler = nullptr;
 };

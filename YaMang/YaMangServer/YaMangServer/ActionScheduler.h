@@ -1,6 +1,7 @@
 #pragma once
 
 class Action;
+class ClientManager;
 
 struct ActionComparator
 {
@@ -15,12 +16,12 @@ typedef std::chrono::high_resolution_clock Clock;
 class ActionScheduler
 {
 public:
-	ActionScheduler();
+	ActionScheduler( ClientManager* clientManager );
 	~ActionScheduler();
 
 	void	AddActionToScheduler( Action* addedAction, int64_t remainTime );
 	void	DoScheduledAction();
-		
+
 private:
 	int64_t		GetCurrentTick();
 
@@ -28,5 +29,7 @@ private:
 	int64_t				m_CurrentTime = 0;
 
 	std::priority_queue<Action*, std::vector<Action*>, ActionComparator>	m_ActionQueue;
+
+	ClientManager*	m_ClientManager = nullptr;
 };
 
