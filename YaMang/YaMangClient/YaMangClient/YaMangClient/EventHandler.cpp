@@ -168,7 +168,6 @@ void NetworkManager::HandleGenerateCorpsResult( GenerateCorpsResult& inPacket )
 }
 
 
-
 REGISTER_HANDLER( PKT_SC_CORPS_CHANGE_FORMATION )
 {
 	ChangeCorpsFormationResult recvData = static_cast<ChangeCorpsFormationResult&>( pktBase );
@@ -182,8 +181,6 @@ void NetworkManager::HandleChangeCorpsFormationResult( ChangeCorpsFormationResul
 
 		int corpsID = inPacket.m_CorpsID;
 		FormationType formationType = inPacket.m_FormationType;
-
-
 
 		Scene* scene = SceneManager::GetInstance()->GetNowScene();
 		if ( typeid( ScenePlay ) == typeid( *scene ) )

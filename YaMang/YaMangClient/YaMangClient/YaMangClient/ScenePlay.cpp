@@ -4,6 +4,9 @@
 #include "ScenePlay.h"
 #include "MacroSet.h"
 
+#include "EnumSet.h"
+#include "Action.h"
+
 ScenePlay::ScenePlay()
 {
 }
@@ -107,3 +110,15 @@ void ScenePlay::ChangeCorpsFormation( int corpsID, FormationType formationType )
 		m_CorpsList[corpsID]->SetFormation( formationType );
 	}
 }
+
+void ScenePlay::MoveCorpsStart( int corpsID, float x, float z )
+{
+	if ( m_CorpsList.find( corpsID ) != m_CorpsList.end() )
+	{
+		m_CorpsList[corpsID]->SetTargetPosition( x, z );
+
+		ActionMovePosition action;
+		m_CorpsList[corpsID]->ChangeAction( action );
+	}
+}
+

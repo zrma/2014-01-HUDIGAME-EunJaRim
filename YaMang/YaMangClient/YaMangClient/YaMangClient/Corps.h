@@ -17,13 +17,18 @@ public:
 	void	Create(UINT num, UnitType unitType );
 	void	SetVisible( bool visible );
 
+	int		GetCorpsID() { return m_CorpsId; }
+	int		GetCorpsHP() { return m_UnitList.size(); }
+
 	void			SetFormation( FormationType formation ) { m_Formation = formation; }
 	D3DXVECTOR3		GetFormation( int unitId ) const;
 
-	typedef std::function<void( const Corps& )>	ActionFunc;
+	typedef std::function<void( Corps& )>	ActionFunc;
 
 	void	ChangeAction( ActionFunc action ) { m_Action = action; }
 	void	DoAction() { m_Action( *this ); }
+
+	void	SetTargetPosition( float x, float z ) { m_TargetPosition.x = x; m_TargetPosition.z = z; }
 	
 private:
 	Corps();
@@ -38,4 +43,5 @@ private:
 	std::array<BreadBoard*, static_cast<size_t>(FormationType::FORMATION_MAX)> m_FormationArray;
 
 	ActionFunc	m_Action;
+	D3DXVECTOR3	m_TargetPosition = { NOT_A_NUMBER_FLOAT, 0.0f, NOT_A_NUMBER_FLOAT };
 };

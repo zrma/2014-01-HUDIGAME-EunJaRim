@@ -17,7 +17,7 @@ public:
 	int			GetUnitId() { return m_UnitId; }
 	void		SetStartPosition();
 
-	typedef std::function<void( const Unit& )> ActFunc;
+	typedef std::function<void( Unit& )> ActFunc;
 
 	void	ChangeAct( ActFunc act ) { m_Act = act; }
 	void	DoAct() { m_Act( *this ); }

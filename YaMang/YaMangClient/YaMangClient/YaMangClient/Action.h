@@ -1,13 +1,12 @@
 ﻿#pragma once
 #include "Logger.h"
 #include "EnumSet.h"
-
-class Corps;
+#include "Corps.h"
 
 struct Action
 {
 public:
-	virtual void operator()( const Corps& ) = 0;
+	virtual void operator()( Corps& ) {}
 };
 
 struct ActionDefault: public Action
@@ -20,9 +19,9 @@ struct ActionDefault: public Action
 
 struct ActionAttack: public Action
 {
-	virtual void operator() ( const Corps& )
+	virtual void operator() ( Corps& corps )
 	{
-		Log( "공격! \n" );
+		Log( "%d번 부대가 공격! \n", corps.GetCorpsID() );
 	}
 };
 
@@ -48,7 +47,10 @@ struct ActionHoldPosition: public Action
 
 struct ActionMovePosition: public Action
 {
-
+	virtual void operator() ( Corps& corps )
+	{
+		Log( "%d번 부대가 공격! \n", corps.GetCorpsID() );
+	}
 };
 
 struct ActionTakeArea: public Action
