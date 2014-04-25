@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "Action.h"
 #include "ActionScheduler.h"
 #include "ClientManager.h"
@@ -43,15 +43,15 @@ void ActionScheduler::DoScheduledAction()
 			break;
 		}
 
-		//@author ½Åµ¿Âù
-		//ActionÀ» ¶â¾î¼­ »óÅÂ¸¦ È®ÀÎ
-		//»óÅÂ°¡ ¿µ ÁÁÁö ¾ÊÀº °÷¿¡ ¸Â¾Ò´Ù¸é Á¦°Å
+		// @author ì‹ ë™ì°¬
+		// Actionì„ ëœ¯ì–´ì„œ ìƒíƒœë¥¼ í™•ì¸
+		// ìƒíƒœê°€ ì˜ ì¢‹ì§€ ì•Šì€ ê³³ì— ë§žì•˜ë‹¤ë©´ ì œê±°
 		if ( headAction->Gozarani() )
 		{
 			delete headAction;
 			continue;
 		}
-		//»óÅÂ°¡ ÁÁÀ¸¸é owner corps id Å½»ö ÈÄ action ÁöÁ¤
+		// ìƒíƒœê°€ ì¢‹ìœ¼ë©´ owner corps id íƒìƒ‰ í›„ action ì§€ì •
 
 		int ownerCorpsID = headAction->GetOwnerCorpsID();
 		Corps* corp = m_ClientManager->GetCorpsByCorpsID( ownerCorpsID );
@@ -60,7 +60,7 @@ void ActionScheduler::DoScheduledAction()
 		{
 			Action* holdingAction = corp->GetHoldingAction();
 
-			// Ã³À½ ¾×¼ÇÀ» ¹Þ´Â Äß½ºÀÏ°æ¿ì
+			// ì²˜ìŒ ì•¡ì…˜ì„ ë°›ëŠ” ì½¥ìŠ¤ì¼ê²½ìš°
 			if ( nullptr != holdingAction )
 			{
 				holdingAction->LowKick();
