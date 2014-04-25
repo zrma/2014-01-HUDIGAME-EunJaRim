@@ -1,0 +1,64 @@
+﻿#pragma once
+#include "Logger.h"
+#include "EnumSet.h"
+
+class Corps;
+
+struct Action
+{
+public:
+	virtual ActionStatusType operator()( const Corps& ) = 0;
+};
+
+struct DefaultAction: public Action
+{
+	virtual ActionStatusType operator() ( const Corps& )
+	{
+		// Log( "디폴트입니다. \n" );
+		return ACTION_STATUS_DONE;
+	}
+};
+
+struct ActionAttack: public Action
+{
+	virtual ActionStatusType operator() ( const Corps& )
+	{
+		Log( "공격! \n" );
+		return ACTION_STATUS_DONE;
+	}
+};
+
+struct CorpsSpawn: public Action
+{
+
+};
+
+struct DefenseFormation: public Action
+{
+
+};
+
+struct DestroyFormation: public Action
+{
+
+};
+
+struct HoldPosition: public Action
+{
+
+};
+
+struct MovePosition: public Action
+{
+
+};
+
+struct RushFormation: public Action
+{
+
+};
+
+struct TakeArea: public Action
+{
+
+};

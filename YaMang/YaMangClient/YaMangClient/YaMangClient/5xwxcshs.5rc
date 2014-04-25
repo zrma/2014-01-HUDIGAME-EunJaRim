@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "EnumSet.h"
 #include "Interface3D.h"
+#include "Action.h"
 
 struct Position;
 struct BreadBoard;
@@ -20,10 +21,10 @@ public:
 	void			SetFormation( FormationType formation ) { m_Formation = formation; }
 	D3DXVECTOR3		GetFormation( int unitId ) const;
 
-	typedef std::function<void( const Corps& )>	ActionFunc;
+	typedef std::function<ActionStatusType( const Corps& )>	ActionFunc;
 
 	void	ChangeAction( ActionFunc action ) { m_Action = action; }
-	void	DoAction() { m_Action( *this ); }
+	void	DoAction() { return m_Action( *this ); }
 	
 private:
 	Corps();

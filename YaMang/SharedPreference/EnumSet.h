@@ -66,3 +66,13 @@ enum ResourceType
 
 	RESOURCE_MAX
 };
+
+enum ActionStatusType
+{
+	ACTION_STATUS_NONE,
+
+	ACTION_STATUS_DOING,
+	ACTION_STATUS_DONE,
+
+	ACTION_STATUS_MAX
+};

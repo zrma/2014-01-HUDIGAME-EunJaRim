@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "SharedDefine.h"
 
 extern const int	MAX_UNIT_IN_CORPS;

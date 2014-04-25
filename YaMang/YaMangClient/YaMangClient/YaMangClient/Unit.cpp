@@ -12,6 +12,7 @@ Unit::~Unit()
 
 void Unit::Update()
 {
+
 	if ( !m_Corps )
 	{
 		assert( false );

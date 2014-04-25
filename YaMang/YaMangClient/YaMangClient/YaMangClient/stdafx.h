@@ -31,3 +31,4 @@
 #include <vector>
 #include <hash_map>
 #include <map>
+#include <functional>

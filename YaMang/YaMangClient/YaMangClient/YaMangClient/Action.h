@@ -1,4 +1,6 @@
 ﻿#pragma once
+#include "Logger.h"
+#include "EnumSet.h"
 
 class Corps;
 
@@ -8,42 +10,56 @@ public:
 	virtual void operator()( const Corps& ) = 0;
 };
 
-struct Attack: public Action
+struct ActionDefault: public Action
+{
+	virtual void operator() ( const Corps& )
+	{
+		// Log( "디폴트입니다. \n" );
+	}
+};
+
+struct ActionAttack: public Action
+{
+	virtual void operator() ( const Corps& )
+	{
+		Log( "공격! \n" );
+	}
+};
+
+struct ActionCorpsSpawn: public Action
 {
 
 };
 
-struct CorpsSpawn: public Action
+struct ActionDefenseFormation: public Action
 {
 
 };
 
-struct DefenseFormation: public Action
+struct ActionDestroyFormation: public Action
 {
 
 };
 
-struct DestroyFormation: public Action
+struct ActionHoldPosition: public Action
 {
 
 };
 
-struct HoldPosition: public Action
+struct ActionMovePosition: public Action
 {
 
 };
 
-struct MovePosition: public Action
+struct ActionFormation: public Action
 {
-
+	virtual void operator() ( Corps* corps )
+	{
+		Log( "대형 변경 중! \n" );
+	}
 };
 
-struct RushFormation: public Action
-{
-
-};
-
-struct TakeArea: public Action
+struct ActionTakeArea: public Action
 {
 
 };

@@ -8,7 +8,6 @@
 #include "MacroSet.h"
 #include "Corps.h"
 #include "MacroSet.h"
-#include "Action.h"
 
 Corps::Corps( int corpsId, int playerId, Position pos )
 : m_CorpsId( corpsId ), m_OwnerPlayerID( playerId ), m_Formation( FormationType::FORMATION_RUSH )

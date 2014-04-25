@@ -8,7 +8,6 @@
 #include "MacroSet.h"
 #include "Corps.h"
 #include "MacroSet.h"
-#include "Action.h"
 
 Corps::Corps( int corpsId, int playerId, Position pos )
 : m_CorpsId( corpsId ), m_OwnerPlayerID( playerId ), m_Formation( FormationType::FORMATION_RUSH )
@@ -83,11 +82,10 @@ void Corps::Update()
 
 	for ( auto& iter : m_UnitList )
 	{
+		// 유닛들로부터 actionStatus 리턴 받아옴
+		// actionStatus |= iter->Update();
 		iter->Update();
-		if ( actionStatus != ( iter->GetActionStatus() ) )
-		{
-			actionStatus = ACTION_STATUS_DOING;
-		}
+		actionStatus |= (iter->GetActionStatus());
 	}
 
 	if ( ACTION_STATUS_DONE == actionStatus )

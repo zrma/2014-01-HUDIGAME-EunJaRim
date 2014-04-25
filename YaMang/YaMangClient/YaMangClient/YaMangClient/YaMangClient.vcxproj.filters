@@ -145,30 +145,6 @@
     <ClInclude Include="Action.h">
       <Filter>UnitObject\Corps</Filter>
     </ClInclude>
-    <ClInclude Include="Attack.h">
-      <Filter>UnitObject\Corps</Filter>
-    </ClInclude>
-    <ClInclude Include="CorpsSpawn.h">
-      <Filter>UnitObject\Corps</Filter>
-    </ClInclude>
-    <ClInclude Include="DefenseFormation.h">
-      <Filter>UnitObject\Corps</Filter>
-    </ClInclude>
-    <ClInclude Include="DestroyFormation.h">
-      <Filter>UnitObject\Corps</Filter>
-    </ClInclude>
-    <ClInclude Include="HoldPosition.h">
-      <Filter>UnitObject\Corps</Filter>
-    </ClInclude>
-    <ClInclude Include="MovePosition.h">
-      <Filter>UnitObject\Corps</Filter>
-    </ClInclude>
-    <ClInclude Include="RushFormation.h">
-      <Filter>UnitObject\Corps</Filter>
-    </ClInclude>
-    <ClInclude Include="TakeArea.h">
-      <Filter>UnitObject\Corps</Filter>
-    </ClInclude>
     <ClInclude Include="Arrow.h">
       <Filter>UnitObject\Unit</Filter>
     </ClInclude>
@@ -185,6 +161,9 @@
       <Filter>UnitObject\Unit</Filter>
     </ClInclude>
     <ClInclude Include="Unit.h">
+      <Filter>UnitObject\Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="Act.h">
       <Filter>UnitObject\Unit</Filter>
     </ClInclude>
   </ItemGroup>
@@ -268,33 +247,6 @@
       <Filter>Render</Filter>
     </ClCompile>
     <ClCompile Include="Corps.cpp">
-      <Filter>UnitObject\Corps</Filter>
-    </ClCompile>
-    <ClCompile Include="Action.cpp">
-      <Filter>UnitObject\Corps</Filter>
-    </ClCompile>
-    <ClCompile Include="Attack.cpp">
-      <Filter>UnitObject\Corps</Filter>
-    </ClCompile>
-    <ClCompile Include="CorpsSpawn.cpp">
-      <Filter>UnitObject\Corps</Filter>
-    </ClCompile>
-    <ClCompile Include="DefenseFormation.cpp">
-      <Filter>UnitObject\Corps</Filter>
-    </ClCompile>
-    <ClCompile Include="DestroyFormation.cpp">
-      <Filter>UnitObject\Corps</Filter>
-    </ClCompile>
-    <ClCompile Include="HoldPosition.cpp">
-      <Filter>UnitObject\Corps</Filter>
-    </ClCompile>
-    <ClCompile Include="MovePosition.cpp">
-      <Filter>UnitObject\Corps</Filter>
-    </ClCompile>
-    <ClCompile Include="RushFormation.cpp">
-      <Filter>UnitObject\Corps</Filter>
-    </ClCompile>
-    <ClCompile Include="TakeArea.cpp">
       <Filter>UnitObject\Corps</Filter>
     </ClCompile>
     <ClCompile Include="Arrow.cpp">
