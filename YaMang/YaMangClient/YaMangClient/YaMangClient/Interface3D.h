@@ -22,7 +22,6 @@ protected:
 	D3DXVECTOR3		m_UpVector = { NOT_A_NUMBER_FLOAT, NOT_A_NUMBER_FLOAT, NOT_A_NUMBER_FLOAT };
 	D3DXVECTOR3		m_Scale = { NOT_A_NUMBER_FLOAT, NOT_A_NUMBER_FLOAT, NOT_A_NUMBER_FLOAT };
 
-	int		m_Speed = 0;
 	bool	m_Visible = false;
 };
 

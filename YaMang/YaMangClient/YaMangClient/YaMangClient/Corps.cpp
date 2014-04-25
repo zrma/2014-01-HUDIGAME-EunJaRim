@@ -105,3 +105,11 @@ D3DXVECTOR3 Corps::GetFormation( int unitId ) const
 {
 	return m_FormationArray[static_cast<size_t>(m_Formation)]->m_Position[unitId];
 }
+
+void Corps::GoFoward()
+{
+	D3DXVECTOR3 view = m_LookAtPoint - m_EyePoint;
+
+	m_EyePoint += m_TargetVector;
+	m_LookAtPoint += m_TargetVector;
+}

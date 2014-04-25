@@ -28,7 +28,9 @@ public:
 	void	ChangeAction( ActionFunc action ) { m_Action = action; }
 	void	DoAction() { m_Action( *this ); }
 
-	void	SetTargetPosition( float x, float z ) { m_TargetPosition.x = x; m_TargetPosition.z = z; }
+	void	SetTargetVector( float x, float z ) { m_TargetVector.x = x; m_TargetVector.z = z; }
+	void	SetSpeed( float speed ) { m_Speed = speed; }
+	void	GoFoward();
 	
 private:
 	Corps();
@@ -39,9 +41,11 @@ private:
 	int						m_CorpsId = -1;
 	int						m_OwnerPlayerID = -1;
 
+	float	m_Speed;
+
 	FormationType			m_Formation = FormationType::FORMATION_NONE;
 	std::array<BreadBoard*, static_cast<size_t>(FormationType::FORMATION_MAX)> m_FormationArray;
 
 	ActionFunc	m_Action;
-	D3DXVECTOR3	m_TargetPosition = { NOT_A_NUMBER_FLOAT, 0.0f, NOT_A_NUMBER_FLOAT };
+	D3DXVECTOR3	m_TargetVector = { NOT_A_NUMBER_FLOAT, 0.0f, NOT_A_NUMBER_FLOAT };
 };

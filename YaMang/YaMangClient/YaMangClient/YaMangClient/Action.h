@@ -49,7 +49,7 @@ struct ActionMovePosition: public Action
 {
 	virtual void operator() ( Corps& corps )
 	{
-		Log( "%d번 부대가 공격! \n", corps.GetCorpsID() );
+		corps.GoFoward();
 	}
 };
 

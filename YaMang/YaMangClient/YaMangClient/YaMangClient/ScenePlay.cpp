@@ -111,11 +111,12 @@ void ScenePlay::ChangeCorpsFormation( int corpsID, FormationType formationType )
 	}
 }
 
-void ScenePlay::MoveCorpsStart( int corpsID, float x, float z )
+void ScenePlay::MoveCorpsStart( int corpsID, float x, float z, float speed )
 {
 	if ( m_CorpsList.find( corpsID ) != m_CorpsList.end() )
 	{
-		m_CorpsList[corpsID]->SetTargetPosition( x, z );
+		m_CorpsList[corpsID]->SetTargetVector( x, z );
+		m_CorpsList[corpsID]->SetSpeed( speed );
 
 		ActionMovePosition action;
 		m_CorpsList[corpsID]->ChangeAction( action );
