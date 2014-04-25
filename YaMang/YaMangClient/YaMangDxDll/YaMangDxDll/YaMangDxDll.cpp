@@ -250,6 +250,12 @@ YAMANGDXDLL_API void RenderingTool( MESHOBJECT* inputVal )
 	D3DXMatrixLookAtLH( &viewMatrix, &g_EyePoint, &g_LookAtPoint, &g_UpVector );
 	SetMatrix( &viewMatrix , true);
 
+	// 보여주기 위한 땅을 조그맣게 만듬
+	CreateRawGround(10, 10, 10);
+	HeightMapRender();
+	//와이어 프레임 해제
+	g_D3dDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+
 	// Log( "Now Render : %p \n", inputVal );
 	for ( DWORD i = 0; i < inputVal->NumMaterials; ++i )
 	{

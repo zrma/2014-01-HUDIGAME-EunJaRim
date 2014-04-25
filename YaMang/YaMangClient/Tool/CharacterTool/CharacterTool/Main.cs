@@ -62,8 +62,8 @@ namespace YamangTools
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             isRunning = false;
-            YamangDll.MeshObjectCleanUp(ref infoPtr);
             YamangDll.D3DCleanUp();
+            //YamangDll.MeshObjectCleanUp(ref infoPtr);
             Application.Exit();
         }
 
@@ -78,7 +78,7 @@ namespace YamangTools
                 Marshal.StructureToPtr(info, infoPtr, false);
                 info = (YamangDll.MESHOBJECT)Marshal.PtrToStructure(infoPtr, typeof(YamangDll.MESHOBJECT));
 
-                string filename = "UnitArrow.x";
+                string filename = "tiger.x";
                 YamangDll.InitGeometry(this.Window.Handle, filename, ref infoPtr);
                 YamangDll.MoveCamera(0.0f, 1.0f, -10.0f);
                 Render();
