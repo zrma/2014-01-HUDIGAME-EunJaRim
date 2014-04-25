@@ -2,6 +2,7 @@
 #include "Logger.h"
 #include "EnumSet.h"
 #include "Corps.h"
+#include "Act.h"
 
 struct Action
 {
@@ -11,9 +12,19 @@ public:
 
 struct ActionDefault: public Action
 {
-	virtual void operator() ( const Corps& )
+	virtual void operator() ( Corps& corps )
 	{
-		// Log( "디폴트입니다. \n" );
+		ActDefault act;
+		corps.SetAct( act );
+	}
+};
+
+struct ActionHoldPosition: public Action
+{
+	virtual void operator() ( Corps& corps )
+	{
+		ActDefault act;
+		corps.SetAct( act );
 	}
 };
 
@@ -21,28 +32,36 @@ struct ActionAttack: public Action
 {
 	virtual void operator() ( Corps& corps )
 	{
-		Log( "%d번 부대가 공격! \n", corps.GetCorpsID() );
+		ActAttackSeries act;
+		corps.SetAct( act );
+	}
+};
+
+struct ActionTakeArea: public Action
+{
+	virtual void operator() ( Corps& corps )
+	{
+		ActAttackSeries act;
+		corps.SetAct( act );
+	}
+};
+
+struct ActionTransFormation: public Action
+{
+	virtual void operator() ( Corps& corps )
+	{
+		ActMoveSeries act;
+		corps.SetAct( act );
 	}
 };
 
 struct ActionCorpsSpawn: public Action
 {
-
-};
-
-struct ActionDefenseFormation: public Action
-{
-
-};
-
-struct ActionDestroyFormation: public Action
-{
-
-};
-
-struct ActionHoldPosition: public Action
-{
-
+	virtual void operator() ( Corps& corps )
+	{
+		ActMoveSeries act;
+		corps.SetAct( act );
+	}
 };
 
 struct ActionMovePosition: public Action
@@ -50,10 +69,8 @@ struct ActionMovePosition: public Action
 	virtual void operator() ( Corps& corps )
 	{
 		corps.GoFoward();
+
+		ActMoveSeries act;
+		corps.SetAct( act );
 	}
-};
-
-struct ActionTakeArea: public Action
-{
-
 };

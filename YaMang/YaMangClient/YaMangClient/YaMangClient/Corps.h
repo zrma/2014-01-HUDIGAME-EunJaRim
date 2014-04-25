@@ -20,13 +20,18 @@ public:
 	int		GetCorpsID() { return m_CorpsId; }
 	int		GetCorpsHP() { return m_UnitList.size(); }
 
-	void			SetFormation( FormationType formation ) { m_Formation = formation; }
+	void			SetFormation( FormationType formation ) { m_TargetFormation = formation; }
 	D3DXVECTOR3		GetFormation( int unitId ) const;
 
 	typedef std::function<void( Corps& )>	ActionFunc;
 
-	void	ChangeAction( ActionFunc action ) { m_Action = action; }
-	void	DoAction() { m_Action( *this ); }
+	void			ChangeAction( ActionFunc action ) { m_Action = action; }
+	void			DoAction() { m_Action( *this ); }
+	void			ClearAction();
+
+	typedef std::function<void( Unit& )> ActFunc;
+
+	void			SetAct( ActFunc act );
 
 	void			SetTargetVector( float x, float z ) { m_TargetVector.x = x; m_TargetVector.z = z; }
 	D3DXVECTOR3		GetTargetVector( ) { return m_TargetVector; }
@@ -44,7 +49,8 @@ private:
 
 	float	m_Speed;
 
-	FormationType			m_Formation = FormationType::FORMATION_NONE;
+	FormationType			m_NowFormation = FormationType::FORMATION_NONE;
+	FormationType			m_TargetFormation = FormationType::FORMATION_NONE;
 	std::array<BreadBoard*, static_cast<size_t>(FormationType::FORMATION_MAX)> m_FormationArray;
 
 	ActionFunc	m_Action;

@@ -1,14 +1,13 @@
 ﻿#pragma once
 #include "Interface3D.h"
 #include "EnumSet.h"
-#include "Act.h"
 
 class Corps;
 
 class Unit: public Interface3D
 {
 public:
-	Unit( Corps* owner, UINT unitId ): m_Corps( owner ), m_UnitId( unitId ) { ActDefault act; m_Act = act; }
+	Unit( Corps* owner, UINT unitId ): m_Corps( owner ), m_UnitId( unitId ) { ClearAct(); }
 	virtual ~Unit();
 
 	virtual void	Update();
@@ -21,6 +20,7 @@ public:
 
 	void	ChangeAct( ActFunc act ) { m_Act = act; }
 	void	DoAct() { m_Act( *this ); }
+	void	ClearAct();
 
 	ActionStatusType	GetActionStatus() { return m_ActionStatus; }
 

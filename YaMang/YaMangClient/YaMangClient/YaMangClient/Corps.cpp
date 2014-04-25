@@ -11,7 +11,7 @@
 #include "Action.h"
 
 Corps::Corps( int corpsId, int playerId, Position pos )
-: m_CorpsId( corpsId ), m_OwnerPlayerID( playerId ), m_Formation( FormationType::FORMATION_RUSH )
+: m_CorpsId( corpsId ), m_OwnerPlayerID( playerId ), m_TargetFormation( FormationType::FORMATION_RUSH )
 {
 	m_FormationArray.fill( nullptr );
 	m_FormationArray[static_cast<size_t>( FormationType::FORMATION_DEFENSE )] = new DefenseBread();
@@ -103,7 +103,7 @@ void Corps::SetVisible( bool visible )
 
 D3DXVECTOR3 Corps::GetFormation( int unitId ) const
 {
-	return m_FormationArray[static_cast<size_t>(m_Formation)]->m_Position[unitId];
+	return m_FormationArray[static_cast<size_t>(m_TargetFormation)]->m_Position[unitId];
 }
 
 void Corps::GoFoward()
@@ -112,4 +112,17 @@ void Corps::GoFoward()
 
 	m_EyePoint += m_TargetVector;
 	m_LookAtPoint += m_TargetVector;
+}
+
+void Corps::ClearAction()
+{
+	ActionDefault act; m_Action = act;
+}
+
+void Corps::SetAct( ActFunc act )
+{
+	for ( auto& iter : m_UnitList )
+	{
+		iter->ChangeAct( act );
+	}
 }

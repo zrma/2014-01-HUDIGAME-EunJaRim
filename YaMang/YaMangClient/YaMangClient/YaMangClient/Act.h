@@ -18,7 +18,12 @@ struct ActDefault: public Act
 	}
 };
 
-struct ActAttack: public Act
+//////////////////////////////////////////////////////////////////////////
+// 공격 형태의 FSM을 구현합니다.
+//
+// 공격 명령, 이동공격(적을 직접 어택해서 거리 좁혀가면서 이동이나 추적 할 때) 등등
+//////////////////////////////////////////////////////////////////////////
+struct ActAttackSeries: public Act
 {
 	virtual void operator() ( Unit& unit )
 	{
@@ -26,18 +31,15 @@ struct ActAttack: public Act
 	}
 };
 
-struct ActRotate: public Act
+//////////////////////////////////////////////////////////////////////////
+// 이동 형태의 FSM을 구현합니다.
+//
+// 진형 변경, 전진, 회전 등등 모두 이곳에서 처리
+//////////////////////////////////////////////////////////////////////////
+struct ActMoveSeries: public Act
 {
 	virtual void operator() ( Unit& unit )
 	{
-		Log( "유닛이 회전! \n" );
-	}
-};
-
-struct ActMoveForward: public Act
-{
-	virtual void operator() ( Unit& unit )
-	{
-		Log( "유닛이 전진! \n" );
+		Log( "유닛이 이동! \n" );
 	}
 };

@@ -5,6 +5,7 @@
 #include "Renderer.h"
 #include "ResourceManager.h"
 #include "Timer.h"
+#include "Act.h"
 
 Unit::~Unit()
 {
@@ -82,4 +83,9 @@ void Unit::SetStartPosition()
 
 	D3DXVec3TransformCoord( &m_EyePoint, &m_EyePoint, &formMatrix );
 	D3DXVec3TransformCoord( &m_LookAtPoint, &m_LookAtPoint, &formMatrix );
+}
+
+void Unit::ClearAct()
+{
+	ActDefault act; m_Act = act;
 }
