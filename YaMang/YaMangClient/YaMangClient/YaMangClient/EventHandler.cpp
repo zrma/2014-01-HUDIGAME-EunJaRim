@@ -200,3 +200,74 @@ void NetworkManager::HandleChangeCorpsFormationResult( ChangeCorpsFormationResul
 		assert( false );
 	}
 }
+
+
+
+REGISTER_HANDLER( PKT_SC_MOVE_CORPS )
+{
+	MoveCorpsResult recvData = static_cast<MoveCorpsResult&>( pktBase );
+	NetworkManager::GetInstance( )->HandleMoveCorpsResult( recvData );
+}
+
+void NetworkManager::HandleMoveCorpsResult( MoveCorpsResult& inPacket )
+{
+	if ( m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size ) )
+	{
+
+		int playerID = inPacket.m_PlayerID;
+		int corpsID = inPacket.m_CorpsID;
+		float speed = inPacket.m_Speed;
+		Position destination = inPacket.m_Destination;
+
+		Scene* scene = SceneManager::GetInstance()->GetNowScene();
+		if ( typeid( ScenePlay ) == typeid( *scene ) )
+		{
+			ScenePlay* scenePlay = static_cast<ScenePlay*>( SceneManager::GetInstance()->GetNowScene() );
+			scenePlay->MoveCorpsStart( corpsID, destination.m_EyePoint.x, destination.m_EyePoint.z, speed );
+			Log( "CorpsMoving! CorpID:%d DesX:%f DesZ:%f Speed:%f \n", corpsID, destination.m_EyePoint.x, destination.m_EyePoint.z, speed );
+		}
+		else
+		{
+			//플레이중이 아닌데 플레이용 패킷을 받음 
+			assert( false );
+		}
+	}
+	else
+	{
+		assert( false );
+	}
+}
+
+
+REGISTER_HANDLER( PKT_SC_STOP_CORPS )
+{
+	StopCorpsResult recvData = static_cast<StopCorpsResult&>( pktBase );
+	NetworkManager::GetInstance()->HandleStopCorpsResult( recvData );
+}
+
+void NetworkManager::HandleStopCorpsResult( StopCorpsResult& inPacket )
+{
+	if ( m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size ) )
+	{
+
+		int playerID = inPacket.m_PlayerID;
+		int corpsID = inPacket.m_CorpsID;
+
+		Scene* scene = SceneManager::GetInstance()->GetNowScene();
+		if ( typeid( ScenePlay ) == typeid( *scene ) )
+		{
+			ScenePlay* scenePlay = static_cast<ScenePlay*>( SceneManager::GetInstance()->GetNowScene() );
+			scenePlay->MoveCorpsStop( corpsID );
+			Log( "CorpsStop! CorpID:%d \n", corpsID );
+		}
+		else
+		{
+			//플레이중이 아닌데 플레이용 패킷을 받음 
+			assert( false );
+		}
+	}
+	else
+	{
+		assert( false );
+	}
+}

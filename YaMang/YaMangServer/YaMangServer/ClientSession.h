@@ -71,7 +71,7 @@ public:
 	void	HandleGenerateCorpsRequest( GenerateCorpsRequest& inPacket );
 	void	HandleMoveCorpsRequest( MoveCorpsRequest& inPacket );
 	void	HandleChangeCorpsFormationRequest( ChangeCorpsFormationRequest& inPacket );
-
+	void	HandleStopCorpsRequest( StopCorpsRequest& inPacket );
 
 
 private:

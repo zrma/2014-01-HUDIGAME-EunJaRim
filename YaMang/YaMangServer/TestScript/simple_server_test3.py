@@ -22,6 +22,7 @@ PKT_CS_ENTER_ROOM = 9;
 PKT_CS_LEAVE_ROOM = 11;
 PKT_CS_GENERATE_CORPS = 100;
 PKT_CS_MOVE_CORPS = 102;
+PKT_CS_STOP_CORPS = 104;
 PKT_CS_CORPS_CHANGE_FORMATION = 200;
 
 UNIT_ARROW = 10;
@@ -42,7 +43,7 @@ s.send(struct.pack('hhi', 8, PKT_CS_LOGIN, pid));
 while True:
         try:
                 print "";
-                mode = input("[SELECT MODE- EXIT:0, CHAT:3, GAMEOVER:5 \n ROOM_CREATE:7, ENTER_ROOM:9, LEAVE_ROOM:11 \n GENERATE_CORPS:100 Corps_CHANGE_FORMATION:200]");
+                mode = input("[SELECT MODE- EXIT:0, CHAT:3, GAMEOVER:5 \n ROOM_CREATE:7, ENTER_ROOM:9, LEAVE_ROOM:11 \n GENERATE_CORPS:100 MOVE_CORPS:102 STOP_CORPS:104 \n Corps_CHANGE_FORMATION:200]");
         except:
                 continue;
 
@@ -71,6 +72,17 @@ while True:
                 lookX = float(raw_input("LookX: "));
                 lookZ = float(raw_input("LookZ: "));
                 s.send(struct.pack('hhiffffff', 32, mode, typeNum, posX, float(0), posZ, lookX, float(0), lookZ));
+        elif mode == PKT_CS_MOVE_CORPS:
+                playerID = input("playerID:");
+                corpsID = input("corpsID:");
+                speed = float(raw_input("speed: "));
+                posX = float(raw_input("PosX: "));
+                posZ = float(raw_input("PosZ: "));
+                s.send(struct.pack('hhiifffffff', 40, mode, playerID, corpsID, speed, posX, float(0), posZ, float(0), float(0), float(0)));
+        elif mode == PKT_CS_STOP_CORPS:
+                playerID = input("playerID:");
+                corpsID = input("corpsID:");
+                s.send(struct.pack('hhii', 12, mode, playerID, corpsID));
         elif mode == PKT_CS_CORPS_CHANGE_FORMATION:
                 corpsID = input("corpsID:");
                 typeNum = input("FormationType[DEFENSE:10, DESTROY:20, RUSH:30]:");

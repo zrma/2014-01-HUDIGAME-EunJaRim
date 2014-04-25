@@ -248,30 +248,75 @@ REGISTER_HANDLER( PKT_CS_MOVE_CORPS )
 void ClientSession::HandleMoveCorpsRequest( MoveCorpsRequest& inPacket )
 {
 	m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size );
-
+	
+	int playerID = inPacket.m_PlayerID;
 	int corpsID = inPacket.m_CorpsID;
-	Position position = inPacket.m_Position;
+	float speed = inPacket.m_Speed;
+	Position destination = inPacket.m_Destination;
 
+	if ( playerID == -1 )
+	{
+		Disconnect();
+	}
 	if ( corpsID == -1 )
 	{
 		Disconnect();
 	}
 
 	// MOVE!!!!!!;
-	// 미구현
+	// 미구현 그냥 클라쪽 패킷만 일단 구현
 
 	MoveCorpsResult outPacket;
-	outPacket.m_PlayerId = m_PlayerId;
-	outPacket.m_CorpsID = corpsID; // 미구현
-	outPacket.m_Position = position;
-	outPacket.m_CorpsID = -1; // 미구현
+	outPacket.m_PlayerID = playerID;
+	outPacket.m_CorpsID = corpsID;
+	outPacket.m_Speed = speed;
+	outPacket.m_Destination = destination;
 
 	if ( !Broadcast( &outPacket ) )
 	{
 		Disconnect();
 	}
 
-	printf_s( "CorpsMoved CorpID:%d PlayerID:%d PosX:%f PosZ:%f \n", corpsID, m_PlayerId, position.m_EyePoint.x, position.m_EyePoint.y );
+	printf_s( "CorpsMoved CorpID:%d PlayerID:%d DesX:%f DesZ:%f Speed:%f \n", corpsID, m_PlayerId, destination.m_EyePoint.x, destination.m_EyePoint.z, speed );
+
+}
+
+
+REGISTER_HANDLER( PKT_CS_STOP_CORPS )
+{
+	StopCorpsRequest inPacket = static_cast<StopCorpsRequest&>( pktBase );
+	session->HandleStopCorpsRequest( inPacket );
+}
+
+void ClientSession::HandleStopCorpsRequest( StopCorpsRequest& inPacket )
+{
+	m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size );
+
+	int playerID = inPacket.m_PlayerID;
+	int corpsID = inPacket.m_CorpsID;
+
+	if ( playerID == -1 )
+	{
+		Disconnect();
+	}
+	if ( corpsID == -1 )
+	{
+		Disconnect();
+	}
+
+	// MOVE!!!!!!;
+	// 미구현 그냥 클라쪽 패킷만 일단 구현
+
+	MoveCorpsResult outPacket;
+	outPacket.m_PlayerID = playerID;
+	outPacket.m_CorpsID = corpsID;
+
+	if ( !Broadcast( &outPacket ) )
+	{
+		Disconnect();
+	}
+
+	printf_s( "CorpsStopped! CorpID:%d PlayerID:%d \n", corpsID, m_PlayerId );
 
 }
 

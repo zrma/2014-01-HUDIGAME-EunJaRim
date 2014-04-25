@@ -23,6 +23,8 @@ public:
 	void	HandleChatResult( ChatBroadcastResult& inPacket );
 	void	HandleGenerateCorpsResult( GenerateCorpsResult& inPacket );
 	void	HandleChangeCorpsFormationResult( ChangeCorpsFormationResult& inPacket );
+	void	HandleMoveCorpsResult( MoveCorpsResult& inPacket );
+	void	HandleStopCorpsResult( StopCorpsResult& inPacket );
 
 	//////////////////////////////////////////////////////////////////////////
 	// 리퀘스트 패킷 보내기

@@ -34,6 +34,8 @@ enum PacketTypes
 
 	PKT_CS_MOVE_CORPS = 102,
 	PKT_SC_MOVE_CORPS = 103,
+	PKT_CS_STOP_CORPS = 104,
+	PKT_SC_STOP_CORPS = 105,
 
 	PKT_CS_CORPS_CHANGE_FORMATION = 200,
 	PKT_SC_CORPS_CHANGE_FORMATION = 201,
@@ -249,20 +251,22 @@ struct GenerateCorpsResult: public PacketHeader
 };
 
 
-// 사실 request는 테스트용 이동 아직 안만듬!!!!
 struct MoveCorpsRequest: public PacketHeader
 {
 	MoveCorpsRequest( )
 	{
 		m_Size = sizeof( MoveCorpsRequest );
 		m_Type = PKT_CS_MOVE_CORPS;
+		m_PlayerID = -1;
 		m_CorpsID = -1;
-		m_Position;
+		m_Speed = 0;
+		m_Destination;
 		
 	}
-
+	int		 m_PlayerID;
 	int		 m_CorpsID;
-	Position m_Position;
+	float	 m_Speed;
+	Position m_Destination;
 	
 };
 
@@ -272,18 +276,47 @@ struct MoveCorpsResult: public PacketHeader
 	{
 		m_Size = sizeof( MoveCorpsResult );
 		m_Type = PKT_SC_MOVE_CORPS;
-		m_PlayerId = -1;
+		m_PlayerID = -1;
 		m_CorpsID = -1;
-		m_Position;
-		m_Time = -1;
+		m_Speed = 0;
+		m_Destination;
 	}
 
-	int			m_PlayerId;
-	int			m_CorpsID;
-	Position	m_Position;
-	int			m_Time;
+	int		 m_PlayerID;
+	int		 m_CorpsID;
+	float	 m_Speed;
+	Position m_Destination;
 };
 
+
+struct StopCorpsRequest: public PacketHeader
+{
+	StopCorpsRequest( )
+	{
+		m_Size = sizeof( StopCorpsRequest );
+		m_Type = PKT_CS_STOP_CORPS;
+		m_PlayerID = -1;
+		m_CorpsID = -1;
+
+	}
+	int		 m_PlayerID;
+	int		 m_CorpsID;
+
+};
+
+struct StopCorpsResult: public PacketHeader
+{
+	StopCorpsResult( )
+	{
+		m_Size = sizeof( StopCorpsResult );
+		m_Type = PKT_SC_STOP_CORPS;
+		m_PlayerID = -1;
+		m_CorpsID = -1;
+	}
+
+	int		 m_PlayerID;
+	int		 m_CorpsID;
+};
 
 
 struct ChangeCorpsFormationRequest: public PacketHeader

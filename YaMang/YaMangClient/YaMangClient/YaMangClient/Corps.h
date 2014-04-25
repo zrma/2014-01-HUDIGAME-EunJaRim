@@ -28,9 +28,10 @@ public:
 	void	ChangeAction( ActionFunc action ) { m_Action = action; }
 	void	DoAction() { m_Action( *this ); }
 
-	void	SetTargetVector( float x, float z ) { m_TargetVector.x = x; m_TargetVector.z = z; }
-	void	SetSpeed( float speed ) { m_Speed = speed; }
-	void	GoFoward();
+	void			SetTargetVector( float x, float z ) { m_TargetVector.x = x; m_TargetVector.z = z; }
+	D3DXVECTOR3		GetTargetVector( ) { return m_TargetVector; }
+	void			SetSpeed( float speed ) { m_Speed = speed; }
+	void			GoFoward();
 	
 private:
 	Corps();
