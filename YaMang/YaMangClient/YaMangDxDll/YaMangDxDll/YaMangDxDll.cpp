@@ -679,9 +679,10 @@ YAMANGDXDLL_API void SetCursorPosition( float PosX, float PosY )
 YAMANGDXDLL_API void MoveCamera(float x, float y, float z)
 {
 	D3DXVECTOR3 view = g_LookAtPoint - g_EyePoint;
-	D3DXVec3Normalize(&view, &view);
 	D3DXVECTOR3 cross;
 	D3DXVec3Cross(&cross, &g_UpVector, &view);
+	D3DXVec3Normalize(&view, &view);
+	view.y = 0;
 	g_EyePoint = g_EyePoint + cross * x + view * z;
 	g_LookAtPoint = g_LookAtPoint + cross * x + view * z;
 
@@ -695,7 +696,14 @@ YAMANGDXDLL_API void MoveCamera(float x, float y, float z)
 
 YAMANGDXDLL_API void ZoomCamera(float zoom)
 {
+	D3DXVECTOR3 view = g_LookAtPoint - g_EyePoint;
+	D3DXVec3Normalize(&view, &view);
+	g_EyePoint += view * zoom;
+	g_LookAtPoint += view * zoom;
 
+	D3DXMATRIXA16 viewMatrix;
+	D3DXMatrixLookAtLH(&viewMatrix, &g_EyePoint, &g_LookAtPoint, &g_UpVector);
+	SetMatrix(&viewMatrix, true);
 }
 
 // 내보낸 변수의 예제입니다.

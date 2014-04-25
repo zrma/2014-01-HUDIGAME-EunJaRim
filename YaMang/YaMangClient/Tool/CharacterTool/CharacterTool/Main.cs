@@ -84,5 +84,31 @@ namespace YamangTools
                 Render();
             }
         }
+
+        private float GetNumber(object target)
+        {
+            float result;
+
+            try
+            {
+                result = Convert.ToSingle(((TextBox)target).Text);
+            }
+            catch
+            {
+                ((TextBox)target).Text = "0";
+                result = 0;
+            }
+            return result;
+        }
+
+        private void MoveCamera_Click(object sender, EventArgs e)
+        {
+            YamangDll.MoveCamera(Convert.ToInt32(GetNumber(CameraXVal)), Convert.ToInt32(GetNumber(CameraYVal)), Convert.ToInt32(GetNumber(CameraZVal)));
+        }
+
+        private void SetCamera_Click(object sender, EventArgs e)
+        {
+            
+        }
     }
 }

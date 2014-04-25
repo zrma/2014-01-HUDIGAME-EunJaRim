@@ -65,6 +65,15 @@ namespace YamangTools
         [DllImport("YaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void RenderText([MarshalAs(UnmanagedType.LPWStr)] String text, Int32 left, Int32 top, int RGB_R = 255, int RGB_G = 255, int RGB_B = 255, Int32 right = 0, Int32 bottom = 0);
 
+        //////////////////////////////////////////////////////////////////////////
+        //Camera Set 함수
+        //////////////////////////////////////////////////////////////////////////
+        [DllImport("yaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void MoveCamera(float x, float y, float z);
+
+        [DllImport("yaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void ZoomCamera(float zoom);
+        
 
         //DLL 내부 MESHOBJECT 정의
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
