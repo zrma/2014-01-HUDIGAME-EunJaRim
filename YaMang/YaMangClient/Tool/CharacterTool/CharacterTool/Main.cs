@@ -103,7 +103,10 @@ namespace YamangTools
 
         private void MoveCamera_Click(object sender, EventArgs e)
         {
-            YamangDll.MoveCamera(Convert.ToInt32(GetNumber(CameraXVal)), Convert.ToInt32(GetNumber(CameraYVal)), Convert.ToInt32(GetNumber(CameraZVal)));
+            if (isRunning)
+            {
+                YamangDll.MoveCamera(Convert.ToInt32(GetNumber(CameraXVal)), Convert.ToInt32(GetNumber(CameraYVal)), Convert.ToInt32(GetNumber(CameraZVal)));
+            }
         }
 
         private void SetCamera_Click(object sender, EventArgs e)
