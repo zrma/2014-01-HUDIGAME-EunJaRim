@@ -458,6 +458,15 @@ YAMANGDXDLL_API void HeightMapRender()
 
 YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 {
+	if ( g_IdxBuffer != NULL )
+	{
+		g_IdxBuffer->Release();
+	}
+
+	if ( g_VertexBuffer != NULL )
+	{
+		g_VertexBuffer->Release();
+	}
 
 	g_XHeight = col + 1;
 	g_ZHeight = row + 1;
@@ -485,8 +494,14 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 		}
 	}
 
-	if ( FAILED( g_D3dDevice->CreateVertexBuffer( verticesCount * sizeof( CUSTOMVERTEX ), 0, D3DFVF_CUSTOMVERTEX, D3DPOOL_DEFAULT, &g_VertexBuffer, 0 ) ) )
+	HRESULT result = S_OK;
+	if ( FAILED( result = g_D3dDevice->CreateVertexBuffer( verticesCount * sizeof( CUSTOMVERTEX ), 0, D3DFVF_CUSTOMVERTEX, D3DPOOL_DEFAULT, &g_VertexBuffer, NULL ) ) )
 	{
+		if ( baseVertex )
+		{
+			delete[] baseVertex;
+			baseVertex = nullptr;
+		}
 		MessageBox( NULL, L"Fail in Create VertexBuffer", L"YaMang.exe", MB_OK );
 		return;
 	}
@@ -494,6 +509,11 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 	void *pVertices;
 	if ( FAILED( g_VertexBuffer->Lock( 0, 0, &pVertices, NULL ) ) )
 	{
+		if ( baseVertex )
+		{
+			delete[] baseVertex;
+			baseVertex = nullptr;
+		}
 		MessageBox( NULL, L"Fail in lock VertexBuffer", L"YaMang.exe", MB_OK );
 		return;
 	}
@@ -518,14 +538,34 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 	}
 
 	void* pIndices;
-	if ( FAILED( g_D3dDevice->CreateIndexBuffer( indicesCount * sizeof( UINT ), D3DUSAGE_WRITEONLY, D3DFMT_INDEX32, D3DPOOL_MANAGED, &g_IdxBuffer, NULL ) ) )
+	if ( FAILED( result = g_D3dDevice->CreateIndexBuffer( indicesCount * sizeof( UINT ), D3DUSAGE_WRITEONLY, D3DFMT_INDEX32, D3DPOOL_MANAGED, &g_IdxBuffer, NULL ) ) )
 	{
+		if ( baseVertex )
+		{
+			delete[] baseVertex;
+			baseVertex = nullptr;
+		}
+		if ( baseIndex )
+		{
+			delete[] baseIndex;
+			baseIndex = nullptr;
+		}
 		MessageBox( NULL, L"Fail in Create IndexBuffer", L"YaMang.exe", MB_OK );
 		return;
 	}
 
 	if ( FAILED( g_IdxBuffer->Lock( 0, indicesCount * sizeof(UINT), (void**) &pIndices, 0 ) ) )
 	{
+		if ( baseVertex )
+		{
+			delete[] baseVertex;
+			baseVertex = nullptr;
+		}
+		if ( baseIndex )
+		{
+			delete[] baseIndex;
+			baseIndex = nullptr;
+		}
 		MessageBox( NULL, L"Fail in lock IndexBuffer", L"YaMang.exe", MB_OK );
 		return;
 	}
@@ -533,8 +573,16 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 
 	g_IdxBuffer->Unlock();
 
-	delete[] baseIndex;
-	delete[] baseVertex;
+	if ( baseVertex )
+	{
+		delete[] baseVertex;
+		baseVertex = nullptr;
+	}
+	if ( baseIndex )
+	{
+		delete[] baseIndex;
+		baseIndex = nullptr;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
