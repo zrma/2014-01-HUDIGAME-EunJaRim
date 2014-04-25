@@ -41,7 +41,7 @@ namespace YamangTools
                 button1.Text = "" + i;
                 await Task.Delay(10);
                 ++i;
-            }   
+            }
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -62,8 +62,8 @@ namespace YamangTools
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             isRunning = false;
-            YamangDll.D3DCleanUp();
             YamangDll.MeshObjectCleanUp(ref infoPtr);
+            YamangDll.D3DCleanUp();
             Application.Exit();
         }
 
@@ -78,9 +78,9 @@ namespace YamangTools
                 Marshal.StructureToPtr(info, infoPtr, false);
                 info = (YamangDll.MESHOBJECT)Marshal.PtrToStructure(infoPtr, typeof(YamangDll.MESHOBJECT));
 
-                string filename = "tiger.x";
+                string filename = "UnitArrow.x";
                 YamangDll.InitGeometry(this.Window.Handle, filename, ref infoPtr);
-
+                YamangDll.MoveCamera(0.0f, 1.0f, -10.0f);
                 Render();
             }
         }

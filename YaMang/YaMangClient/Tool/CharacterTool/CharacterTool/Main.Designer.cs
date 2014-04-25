@@ -229,7 +229,7 @@
 
         #endregion
 
-        private System.Windows.Forms.MenuStrip Menu;
+        new private System.Windows.Forms.MenuStrip Menu;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
