@@ -79,21 +79,9 @@ void Corps::Create( UINT num, UnitType unitType )
 void Corps::Update()
 {
 	DoAction();
-	ActionStatusType actionStatus = ACTION_STATUS_DONE;
-
 	for ( auto& iter : m_UnitList )
 	{
 		iter->Update();
-		if ( actionStatus != ( iter->GetActionStatus() ) )
-		{
-			actionStatus = ACTION_STATUS_DOING;
-		}
-	}
-
-	if ( ACTION_STATUS_DONE == actionStatus )
-	{
-		ActionDefault action;
-		m_Action = action;
 	}
 }
 

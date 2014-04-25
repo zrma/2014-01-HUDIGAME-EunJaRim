@@ -51,14 +51,6 @@ struct ActionMovePosition: public Action
 
 };
 
-struct ActionFormation: public Action
-{
-	virtual void operator() ( Corps* corps )
-	{
-		Log( "대형 변경 중! \n" );
-	}
-};
-
 struct ActionTakeArea: public Action
 {
 

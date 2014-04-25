@@ -26,37 +26,18 @@ struct ActAttack: public Act
 	}
 };
 
-struct CorpsSpawn: public Act
+struct ActRotate: public Act
 {
-
+	virtual void operator() ( const Unit& unit )
+	{
+		Log( "유닛이 회전! \n" );
+	}
 };
 
-struct DefenseFormation: public Act
+struct ActMoveForward: public Act
 {
-
-};
-
-struct DestroyFormation: public Act
-{
-
-};
-
-struct HoldPosition: public Act
-{
-
-};
-
-struct MovePosition: public Act
-{
-
-};
-
-struct RushFormation: public Act
-{
-
-};
-
-struct TakeArea: public Act
-{
-
+	virtual void operator() ( const Unit& unit )
+	{
+		Log( "유닛이 전진! \n" );
+	}
 };
