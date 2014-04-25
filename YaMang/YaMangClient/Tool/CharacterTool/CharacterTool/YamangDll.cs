@@ -39,9 +39,6 @@ namespace YamangTools
         public static extern void MeshObjectCleanUp(ref IntPtr inputVal);
 
         [DllImport("YaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void MoveCamera(float x, float y, float z);
-
-        [DllImport("YaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void SetAspectRatio(Int32 width, Int32 height);
 
         //////////////////////////////////////////////////////////////////////////
