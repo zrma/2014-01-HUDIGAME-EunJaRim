@@ -323,7 +323,7 @@ void ClientSession::HandleStopCorpsRequest( StopCorpsRequest& inPacket )
 	// MOVE!!!!!!;
 	// 미구현 그냥 클라쪽 패킷만 일단 구현
 
-	MoveCorpsResult outPacket;
+	StopCorpsResult outPacket;
 	outPacket.m_PlayerID = playerID;
 	outPacket.m_CorpsID = corpsID;
 

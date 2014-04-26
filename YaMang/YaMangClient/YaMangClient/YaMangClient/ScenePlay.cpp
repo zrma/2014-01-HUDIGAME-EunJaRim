@@ -147,8 +147,7 @@ void ScenePlay::MoveCorpsStop( int corpsID )
 		m_CorpsList[corpsID]->SetLookAtPosition( targetVector.x, targetVector.z );
 		m_CorpsList[corpsID]->SetSpeed( 0 );
 
-		ActionDefault action;
-		m_CorpsList[corpsID]->ChangeAction( action );
+		m_CorpsList[corpsID]->ClearAction();
 	}
 }
 
