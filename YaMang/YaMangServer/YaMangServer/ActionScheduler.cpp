@@ -43,6 +43,9 @@ void ActionScheduler::DoScheduledAction()
 			break;
 		}
 
+		// 일단 위의 검증이 끝났으므로, 우선순위 큐에서 뽑는다.
+		m_ActionQueue.pop();
+
 		// @author 신동찬
 		// Action을 뜯어서 상태를 확인
 		// 상태가 영 좋지 않은 곳에 맞았다면 제거

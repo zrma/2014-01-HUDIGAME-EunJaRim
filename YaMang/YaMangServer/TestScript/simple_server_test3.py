@@ -79,7 +79,7 @@ while True:
                 nowZ = float(raw_input("NowZ: "));
                 targetX = float(raw_input("TargetX: "));
                 targetZ = float(raw_input("TargetZ: "));
-                s.send(struct.pack('hhiiffffff', 40, mode, playerID, corpsID, nowX, float(0), nowZ, targetX, float(0), targetZ));
+                s.send(struct.pack('hhiiffffff', 36, mode, playerID, corpsID, nowX, float(0), nowZ, targetX, float(0), targetZ));
         elif mode == PKT_CS_STOP_CORPS:
                 playerID = input("playerID:");
                 corpsID = input("corpsID:");
