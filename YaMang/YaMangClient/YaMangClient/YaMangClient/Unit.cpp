@@ -13,7 +13,9 @@ Unit::~Unit()
 
 void Unit::Update()
 {
-	if ( !m_Corps )
+	DoAct();
+	
+	/*if ( !m_Corps )
 	{
 		assert( false );
 	}
@@ -50,7 +52,7 @@ void Unit::Update()
 	if ( targetLookAtPoint.z - m_LookAtPoint.z > 0.5f || targetLookAtPoint.z - m_LookAtPoint.z < -0.5f )
 	{
 		m_LookAtPoint.z += ( targetLookAtPoint.z - m_LookAtPoint.z ) * time / 1000;
-	}
+	}*/
 }
 
 void Unit::Render()

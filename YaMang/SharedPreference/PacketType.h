@@ -259,15 +259,12 @@ struct MoveCorpsRequest: public PacketHeader
 		m_Type = PKT_CS_MOVE_CORPS;
 		m_PlayerID = -1;
 		m_CorpsID = -1;
-		m_Speed = 0;
 		m_Destination;
 		
 	}
 	int		 m_PlayerID;
 	int		 m_CorpsID;
-	float	 m_Speed;
 	Position m_Destination;
-	
 };
 
 struct MoveCorpsResult: public PacketHeader
@@ -279,13 +276,13 @@ struct MoveCorpsResult: public PacketHeader
 		m_PlayerID = -1;
 		m_CorpsID = -1;
 		m_Speed = 0;
-		m_Destination;
+		m_Direction;
 	}
 
 	int		 m_PlayerID;
 	int		 m_CorpsID;
 	float	 m_Speed;
-	Position m_Destination;
+	Position m_Direction;
 };
 
 

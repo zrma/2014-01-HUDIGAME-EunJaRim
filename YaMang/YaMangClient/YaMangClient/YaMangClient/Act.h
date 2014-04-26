@@ -7,12 +7,12 @@ class Unit;
 struct Act
 {
 public:
-	virtual void operator()( Unit& ) = 0;
+	virtual void operator()( Unit&, Corps& ) = 0;
 };
 
 struct ActDefault: public Act
 {
-	virtual void operator() ( Unit& )
+	virtual void operator() ( Unit&, Corps& )
 	{
 		// Log( "디폴트입니다. \n" );
 	}
@@ -25,7 +25,7 @@ struct ActDefault: public Act
 //////////////////////////////////////////////////////////////////////////
 struct ActAttackSeries: public Act
 {
-	virtual void operator() ( Unit& unit )
+	virtual void operator() ( Unit& unit, Corps& owner )
 	{
 		Log( "유닛이 공격! \n" );
 	}
@@ -38,7 +38,7 @@ struct ActAttackSeries: public Act
 //////////////////////////////////////////////////////////////////////////
 struct ActMoveSeries: public Act
 {
-	virtual void operator() ( Unit& unit )
+	virtual void operator() ( Unit& unit, Corps& owner )
 	{
 		Log( "유닛이 이동! \n" );
 	}

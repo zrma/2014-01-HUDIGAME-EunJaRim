@@ -16,10 +16,10 @@ public:
 	int			GetUnitId() { return m_UnitId; }
 	void		SetStartPosition();
 
-	typedef std::function<void( Unit& )> ActFunc;
+	typedef std::function<void( Unit&, Corps& )> ActFunc;
 
 	void	ChangeAct( ActFunc act ) { m_Act = act; }
-	void	DoAct() { m_Act( *this ); }
+	void	DoAct() { m_Act( *this, *m_Corps ); }
 	void	ClearAct();
 
 	ActionStatusType	GetActionStatus() { return m_ActionStatus; }

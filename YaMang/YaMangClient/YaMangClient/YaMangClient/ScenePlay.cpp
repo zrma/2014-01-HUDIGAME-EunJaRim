@@ -108,7 +108,14 @@ void ScenePlay::ChangeCorpsFormation( int corpsID, FormationType formationType )
 {
 	if ( m_CorpsList.find( corpsID ) != m_CorpsList.end() )
 	{
+		if ( m_CorpsList[corpsID] == nullptr )
+		{
+			assert( false );
+		}
 		m_CorpsList[corpsID]->SetFormation( formationType );
+
+		ActionTransFormation action;
+		m_CorpsList[corpsID]->ChangeAction( action );
 	}
 }
 
@@ -116,7 +123,11 @@ void ScenePlay::MoveCorpsStart( int corpsID, float x, float z, float speed )
 {
 	if ( m_CorpsList.find( corpsID ) != m_CorpsList.end() )
 	{
-		m_CorpsList[corpsID]->SetTargetVector( x, z );
+		if ( m_CorpsList[corpsID] == nullptr )
+		{
+			assert( false );
+		}
+		m_CorpsList[corpsID]->SetLookAtPosition( x, z );
 		m_CorpsList[corpsID]->SetSpeed( speed );
 
 		ActionMovePosition action;
@@ -128,11 +139,15 @@ void ScenePlay::MoveCorpsStop( int corpsID )
 {
 	if ( m_CorpsList.find( corpsID ) != m_CorpsList.end() )
 	{
-		D3DXVECTOR3 targetVector = m_CorpsList[corpsID]->GetTargetVector();
-		m_CorpsList[corpsID]->SetTargetVector( targetVector.x, targetVector.z );
+		if ( m_CorpsList[corpsID] == nullptr )
+		{
+			assert( false );
+		}
+		D3DXVECTOR3 targetVector = m_CorpsList[corpsID]->GetLookAtVector();
+		m_CorpsList[corpsID]->SetLookAtPosition( targetVector.x, targetVector.z );
 		m_CorpsList[corpsID]->SetSpeed( 0 );
 
-		ActionHoldPosition action;
+		ActionDefault action;
 		m_CorpsList[corpsID]->ChangeAction( action );
 	}
 }

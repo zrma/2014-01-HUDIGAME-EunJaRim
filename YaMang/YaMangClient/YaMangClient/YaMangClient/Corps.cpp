@@ -110,8 +110,8 @@ void Corps::GoFoward()
 {
 	D3DXVECTOR3 view = m_LookAtPoint - m_EyePoint;
 
-	m_EyePoint += m_TargetVector;
-	m_LookAtPoint += m_TargetVector;
+	m_EyePoint += view * m_Speed;
+	m_LookAtPoint += view * m_Speed;
 }
 
 void Corps::ClearAction()

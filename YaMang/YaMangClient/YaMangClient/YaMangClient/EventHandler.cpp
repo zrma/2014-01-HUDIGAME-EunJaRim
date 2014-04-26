@@ -213,18 +213,17 @@ void NetworkManager::HandleMoveCorpsResult( MoveCorpsResult& inPacket )
 {
 	if ( m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size ) )
 	{
-
 		int playerID = inPacket.m_PlayerID;
 		int corpsID = inPacket.m_CorpsID;
 		float speed = inPacket.m_Speed;
-		Position destination = inPacket.m_Destination;
+		Position direction = inPacket.m_Direction;
 
 		Scene* scene = SceneManager::GetInstance()->GetNowScene();
 		if ( typeid( ScenePlay ) == typeid( *scene ) )
 		{
 			ScenePlay* scenePlay = static_cast<ScenePlay*>( SceneManager::GetInstance()->GetNowScene() );
-			scenePlay->MoveCorpsStart( corpsID, destination.m_EyePoint.x, destination.m_EyePoint.z, speed );
-			Log( "CorpsMoving! CorpID:%d DesX:%f DesZ:%f Speed:%f \n", corpsID, destination.m_EyePoint.x, destination.m_EyePoint.z, speed );
+			scenePlay->MoveCorpsStart( corpsID, direction.m_LookAtPoint.x, direction.m_LookAtPoint.z, speed );
+			Log( "CorpsMoving! CorpID:%d DesX:%f DesZ:%f Speed:%f \n", corpsID, direction.m_LookAtPoint.x, direction.m_LookAtPoint.z, speed );
 		}
 		else
 		{

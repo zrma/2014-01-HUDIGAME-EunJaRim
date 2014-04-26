@@ -252,7 +252,6 @@ void ClientSession::HandleMoveCorpsRequest( MoveCorpsRequest& inPacket )
 	
 	int playerID = inPacket.m_PlayerID;
 	int corpsID = inPacket.m_CorpsID;
-	float speed = inPacket.m_Speed;
 	Position destination = inPacket.m_Destination;
 
 	if ( playerID == -1 )
@@ -263,20 +262,31 @@ void ClientSession::HandleMoveCorpsRequest( MoveCorpsRequest& inPacket )
 	{
 		Disconnect();
 	}
-
 	
-
 	// MOVE!!!!!!;
 	// 미구현 그냥 클라쪽 패킷만 일단 구현
+	//
+	// Corps를 탐색 한 후 Corps의 정체를 파악
+	// 적합한 이동인지 판정 후 스케쥴러에 등록
+	//
+	// 이후 스케쥴러는 해당 타이밍 마다 액션을 꺼내서 수행
+	// 이동 액션은 내부적으로 Corps의 상황을 파악하여
+	// 방향과 속도 등의 정보를 담아서 타이머 발생 때 마다 Result Packet을 보낸다.
 	Action* action = new MovePosition();
 	m_ClientManager->AddActionToScheduler( action, 3000 );
-
 
 	MoveCorpsResult outPacket;
 	outPacket.m_PlayerID = playerID;
 	outPacket.m_CorpsID = corpsID;
+
+	// 임시로 계산 해둔 식
+	D3DXVECTOR3	view = destination.m_LookAtPoint - destination.m_EyePoint;
+	float speed = D3DXVec3Length( &view );
 	outPacket.m_Speed = speed;
-	outPacket.m_Destination = destination;
+
+	// 걸어갈 방향을 지정
+	D3DXVec3Normalize( &view, &view );
+	outPacket.m_Direction.m_LookAtPoint = view;
 
 	if ( !Broadcast( &outPacket ) )
 	{

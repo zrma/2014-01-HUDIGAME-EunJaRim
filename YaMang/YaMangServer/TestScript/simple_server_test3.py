@@ -75,10 +75,11 @@ while True:
         elif mode == PKT_CS_MOVE_CORPS:
                 playerID = input("playerID:");
                 corpsID = input("corpsID:");
-                speed = float(raw_input("speed: "));
-                posX = float(raw_input("PosX: "));
-                posZ = float(raw_input("PosZ: "));
-                s.send(struct.pack('hhiifffffff', 40, mode, playerID, corpsID, speed, posX, float(0), posZ, float(0), float(0), float(0)));
+                nowX = float(raw_input("NowX: "));
+                nowZ = float(raw_input("NowZ: "));
+                targetX = float(raw_input("TargetX: "));
+                targetZ = float(raw_input("TargetZ: "));
+                s.send(struct.pack('hhiiffffff', 40, mode, playerID, corpsID, nowX, float(0), nowZ, targetX, float(0), targetZ));
         elif mode == PKT_CS_STOP_CORPS:
                 playerID = input("playerID:");
                 corpsID = input("corpsID:");

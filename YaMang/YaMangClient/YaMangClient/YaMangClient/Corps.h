@@ -29,12 +29,12 @@ public:
 	void			DoAction() { m_Action( *this ); }
 	void			ClearAction();
 
-	typedef std::function<void( Unit& )> ActFunc;
+	typedef std::function<void( Unit&, Corps& )> ActFunc;
 
 	void			SetAct( ActFunc act );
 
-	void			SetTargetVector( float x, float z ) { m_TargetVector.x = x; m_TargetVector.z = z; }
-	D3DXVECTOR3		GetTargetVector( ) { return m_TargetVector; }
+	void			SetLookAtPosition( float x, float z ) { m_LookAtPoint.x = m_EyePoint.x + x; m_LookAtPoint.y = m_EyePoint.y;  m_LookAtPoint.z = m_EyePoint.z + z; }
+	D3DXVECTOR3		GetLookAtVector( ) { return (m_LookAtPoint - m_EyePoint); }
 	void			SetSpeed( float speed ) { m_Speed = speed; }
 	void			GoFoward();
 	
@@ -54,5 +54,4 @@ private:
 	std::array<BreadBoard*, static_cast<size_t>(FormationType::FORMATION_MAX)> m_FormationArray;
 
 	ActionFunc	m_Action;
-	D3DXVECTOR3	m_TargetVector = { NOT_A_NUMBER_FLOAT, 0.0f, NOT_A_NUMBER_FLOAT };
 };
