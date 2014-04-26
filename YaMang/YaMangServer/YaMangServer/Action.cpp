@@ -26,3 +26,9 @@ void Action::ActIt()
 			break;
 	}
 }
+
+void Action::OnEnd()
+{
+	LowKick();
+	// 큐에 재 등록
+}

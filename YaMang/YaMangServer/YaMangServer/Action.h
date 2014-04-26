@@ -16,7 +16,7 @@ public:
 	virtual ~Action();
 
 	void	ActIt();
-
+	virtual void OnEnd( ) = 0;
 
 	// 액션이 꼭 콥스만의 고유 행동이 아니면 생성자에서는 corpsID는 따로 빼야할듯 
 	void	SetOwnerCorpsID( int ownerCropsID ) { m_OwnerCropsID = ownerCropsID; }
@@ -31,7 +31,7 @@ public:
 private:
 	virtual void OnBegin() = 0;
 	virtual void OnTick() = 0;
-	virtual void OnEnd() = 0;
+	
 
 private:
 	int		m_OwnerCropsID = -1;

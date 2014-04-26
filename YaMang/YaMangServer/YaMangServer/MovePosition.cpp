@@ -23,4 +23,6 @@ void MovePosition::OnTick()
 void MovePosition::OnEnd()
 {
 	printf_s( "MovePosition OnEnd \n" );
+
+	Action::OnEnd();
 }
