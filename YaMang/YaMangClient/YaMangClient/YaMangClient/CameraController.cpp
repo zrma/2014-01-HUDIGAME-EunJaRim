@@ -70,7 +70,6 @@ void CameraController::MoveElevate( float speed )
 //
 // 수정해야 됨
 //////////////////////////////////////////////////////////////////////////
-
 void CameraController::RotateUp( float angle )
 {
 	// 회전각 제한 1
@@ -107,9 +106,10 @@ void CameraController::RotateUp( float angle )
 void CameraController::RotateSide( float angle )
 {
 	D3DXVECTOR3 view = m_LookAtPoint - m_EyePoint;
-	D3DXVECTOR3 axis = { 0, 1, 0 };
+	
 	// 회전축
-
+	D3DXVECTOR3 axis = { 0, 1, 0 };
+	
 	D3DXMATRIXA16 rotateMatrix;
 	D3DXMatrixRotationAxis( &rotateMatrix, &axis, angle );
 	D3DXVec3TransformCoord( &view, &view, &rotateMatrix );

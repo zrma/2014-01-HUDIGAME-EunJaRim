@@ -1,4 +1,13 @@
-﻿#include "stdafx.h"
+﻿/**
+*@file		InputDispatcher.cpp
+*@brief		키 이벤트를 지속성 있게 관리해줍니다.
+*@details	MainWindow의 객체의 윈도우 메시지 핸들링에서 키 관련 메시지를 받아 이벤트 분석합니다.
+*			키 입력이 초기 한 번 들어오면 대략 1초의 딜레이 후 연속 발생하는데,
+			해당 부분을 해결하기 위해 처음 한 번 눌렸을 때와 손을 뗄 때의 사이에 눌리고 있음을
+			가상으로 만들어서 지속적으로 핸들링 함으로써 부드러운 키 입력을 구현합니다.
+*/
+
+#include "stdafx.h"
 #include "InputDispatcher.h"
 #include "KeyInput.h"
 #include "GameManager.h"
@@ -102,12 +111,9 @@ void NetworkManager::RequestChat( ChatBroadcastRequest& outPacket )
 
 	if ( m_SendBuffer.Write( (const char*)&outPacket, outPacket.m_Size ) )
 	{
-		PostMessage( MainWindow::GetInstance()->Window(), WM_SOCKET, NULL, FD_WRITE );
-		//////////////////////////////////////////////////////////////////////////
-		// http://blog.naver.com/gkqxhq324456/110177315036 참조
-		//
+		// @see http://blog.naver.com/gkqxhq324456/110177315036 참조
 		// 채팅을 날리려고 버퍼에 데이터도 넣어 두었으니, WM_SOCKET 이벤트를 발생시키자
-		//////////////////////////////////////////////////////////////////////////
+		PostMessage( MainWindow::GetInstance()->Window(), WM_SOCKET, NULL, FD_WRITE );
 	}
 }
 

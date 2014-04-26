@@ -5,9 +5,9 @@
 Guard::Guard( Corps* owner, UINT unitId )
 : Unit( owner, unitId )
 {
-	m_MeshKey = MESH_KEY_UNIT_GUARD;
 	// 배트맨
-
+	m_MeshKey = MESH_KEY_UNIT_GUARD;
+	
 	m_EyePoint = { 0.0f, -1.2f, 0.0f };
 	m_LookAtPoint = { 0.0f, -1.2f, 1.0f };
 	m_UpVector = { 0.0f, 1.0f, 0.0f };

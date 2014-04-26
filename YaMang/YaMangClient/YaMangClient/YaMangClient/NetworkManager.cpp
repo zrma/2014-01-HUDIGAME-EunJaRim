@@ -228,8 +228,6 @@ bool NetworkManager::HandleMessage( WPARAM wParam, LPARAM lParam )
 			MessageBox( MainWindow::GetInstance()->Window(), L"Server closed connection", L"Connection closed!", MB_ICONINFORMATION | MB_OK );
 			closesocket( m_Socket );
 			SendMessage( MainWindow::GetInstance()->Window(), WM_DESTROY, NULL, NULL );
-
-			// 여기는 네트워크 매니저에서 Destroy 하고 매니저를 Release 하도록 한다
 		}
 			break;
 	}

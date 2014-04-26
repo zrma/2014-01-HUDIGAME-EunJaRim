@@ -49,10 +49,10 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 		{	
 			if ( GameManager::GetInstance()->Process() )
 			{
-				GameManager::GetInstance()->Stop();
 				// 창이 강제 제거 되었을 때(창 닫기 등)
 				// 여기서 이 이벤트를 발생시켜서 RunGame()의 루프에서 빠져나오게 해야
 				// 안전하게 리소스가 해제 되면서 메모리 릭을 피할 수 있다.
+				GameManager::GetInstance()->Stop();
 			}
 			PostQuitMessage( 0 );
 		}
@@ -111,13 +111,11 @@ int MainWindow::RunGame()
 
 	if ( false == GameManager::GetInstance()->Init() )
 	{
-		GameManager::GetInstance()->Destroy();
-		GameManager::Release();
 		// 사실 여기 이렇게 그냥 두었지만,
 		// Init() 함수 내부에서 방어 코드 종류별로 케바케로 실패 뜬 부분 전부 잡아서 Release() 해줘야 됨.
-		//
-		// 뭔가 스마트 포인터의 필요성이 보이는 것 같다 =ㅅ=
-		
+		GameManager::GetInstance()->Destroy();
+		GameManager::Release();
+				
 		MessageBox( m_HandleOfWindow, L"Gama Manager Initialization Error", L"Game Manager Init Error!", MB_ICONINFORMATION | MB_OK );
 		SendMessage( m_HandleOfWindow, WM_DESTROY, NULL, NULL );
 		return false;

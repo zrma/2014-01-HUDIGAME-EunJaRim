@@ -157,7 +157,7 @@ void NetworkManager::HandleGenerateCorpsResult( GenerateCorpsResult& inPacket )
 		}
 		else
 		{
-			//플레이중이 아닌데 플레이용 패킷을 받음 
+			// 플레이중이 아닌데 플레이용 패킷을 받음 
 			assert( false );
 		}
 	}
@@ -191,7 +191,7 @@ void NetworkManager::HandleChangeCorpsFormationResult( ChangeCorpsFormationResul
 		}
 		else
 		{
-			//플레이중이 아닌데 플레이용 패킷을 받음 
+			// 플레이중이 아닌데 플레이용 패킷을 받음 
 			assert( false );
 		}
 	}
@@ -228,7 +228,7 @@ void NetworkManager::HandleMoveCorpsResult( MoveCorpsResult& inPacket )
 		}
 		else
 		{
-			//플레이중이 아닌데 플레이용 패킷을 받음 
+			// 플레이중이 아닌데 플레이용 패킷을 받음 
 			assert( false );
 		}
 	}
@@ -262,7 +262,7 @@ void NetworkManager::HandleStopCorpsResult( StopCorpsResult& inPacket )
 		}
 		else
 		{
-			//플레이중이 아닌데 플레이용 패킷을 받음 
+			// 플레이중이 아닌데 플레이용 패킷을 받음 
 			assert( false );
 		}
 	}

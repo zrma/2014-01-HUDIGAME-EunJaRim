@@ -98,6 +98,7 @@ void ScenePlay::AddCorps( int corpsID, Corps* corps )
 	else
 	{
 		SafeDelete( corps );
+
 		// 중복 ID로 다시 보냈음
 		assert( false );
 	}
