@@ -7,6 +7,7 @@ public:
 	MovePosition();
 	~MovePosition();
 
+private:
 	void OnBegin();
 	void OnTick();
 	void OnEnd();

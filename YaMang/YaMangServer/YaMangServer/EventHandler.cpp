@@ -273,6 +273,7 @@ void ClientSession::HandleMoveCorpsRequest( MoveCorpsRequest& inPacket )
 	// 이동 액션은 내부적으로 Corps의 상황을 파악하여
 	// 방향과 속도 등의 정보를 담아서 타이머 발생 때 마다 Result Packet을 보낸다.
 	Action* action = new MovePosition();
+	action->SetOwnerCorpsID( corpsID );
 	m_ClientManager->AddActionToScheduler( action, 3000 );
 
 	MoveCorpsResult outPacket;

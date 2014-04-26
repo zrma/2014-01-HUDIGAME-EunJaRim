@@ -63,12 +63,15 @@ void ActionScheduler::DoScheduledAction()
 		{
 			Action* holdingAction = corp->GetHoldingAction();
 
-			// 처음 액션을 받는 콥스일경우
+			// 처음 액션을 받는 콥스가 아닐 경우
 			if ( nullptr != holdingAction )
 			{
 				holdingAction->LowKick();
 			}
 			corp->SetHoldingAction( headAction );
+
+			// 이 액션의 주기적인 실행은 누가하지??;;;
+			headAction->ActIt();
 		}
 
 	}

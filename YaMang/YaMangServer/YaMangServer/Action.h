@@ -1,15 +1,24 @@
 ﻿#pragma once
+
+enum ActionStatus
+{
+	ACTION_NONE,
+	ACTION_BEGIN,
+	ACTION_TICK,
+	ACTION_END,
+	ACTION_MAX
+};
+
 class Action
 {
 public:
 	Action();
 	virtual ~Action();
 
-	virtual void OnBegin() = 0;
-	virtual void OnTick( ) = 0;
-	virtual void OnEnd( ) = 0;
+	void	ActIt();
 
-	// 액션이 꼭 콥스만의 고유 행동이 아니면 corpsID는 따로 빼야할듯 
+
+	// 액션이 꼭 콥스만의 고유 행동이 아니면 생성자에서는 corpsID는 따로 빼야할듯 
 	void	SetOwnerCorpsID( int ownerCropsID ) { m_OwnerCropsID = ownerCropsID; }
 	int		GetOwnerCorpsID() { return m_OwnerCropsID; }
 
@@ -20,8 +29,14 @@ public:
 	void	SetTime( int64_t inputTime ) { m_Time = inputTime; }
 
 private:
+	virtual void OnBegin() = 0;
+	virtual void OnTick() = 0;
+	virtual void OnEnd() = 0;
+
+private:
 	int		m_OwnerCropsID = -1;
 	int64_t	m_Time = 0;
-	bool	m_NoEgg = true;
+	bool	m_NoEgg = false;
+	ActionStatus m_ActionStatus = ACTION_BEGIN;
 };
 

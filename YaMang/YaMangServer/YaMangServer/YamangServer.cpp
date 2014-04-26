@@ -30,7 +30,6 @@ int _tmain( int argc, _TCHAR* argv[] )
 	// 메모리 릭을 체크하려면 위의 #### 칸에 릭 난 곳 { 숫자 } 표기 된 숫자를 넣어주면 됩니다.
 
 
-	// 패키징 테스트 ?? 정상인듯?
 	printf( "[PACKET SIZE]%d\n", sizeof( GenerateCorpsRequest ) );
 	printf( "[POSITION SIZE]%d\n", sizeof( Position ) );
 
