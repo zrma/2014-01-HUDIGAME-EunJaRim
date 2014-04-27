@@ -6,6 +6,7 @@
 
 #include "EnumSet.h"
 #include "Action.h"
+#include "SoundManager.h"
 
 ScenePlay::ScenePlay()
 {
@@ -18,6 +19,9 @@ ScenePlay::~ScenePlay()
 
 void ScenePlay::Create()
 {
+	SoundManager::GetInstance()->Initialize();
+	SoundManager::GetInstance()->test();
+
 	//////////////////////////////////////////////////////////////////////////
 	// 임시로 이렇게 해 두었지만
 	// 나중에 내부적으로 Corps를 추가하거나 제거하는 코드 작성해야 함

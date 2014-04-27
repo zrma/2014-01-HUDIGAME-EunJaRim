@@ -38,6 +38,9 @@
     <Filter Include="UnitObject\Unit">
       <UniqueIdentifier>{0b915cdb-237e-4d02-b28e-b8e54002a7d2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sound">
+      <UniqueIdentifier>{ecc00c02-8c42-4716-9011-bc6f0804997d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -166,6 +169,12 @@
     <ClInclude Include="Act.h">
       <Filter>UnitObject\Unit</Filter>
     </ClInclude>
+    <ClInclude Include="SoundLowLevel.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundManager.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -266,6 +275,12 @@
     </ClCompile>
     <ClCompile Include="Unit.cpp">
       <Filter>UnitObject\Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundLowLevel.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundManager.cpp">
+      <Filter>Sound</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
