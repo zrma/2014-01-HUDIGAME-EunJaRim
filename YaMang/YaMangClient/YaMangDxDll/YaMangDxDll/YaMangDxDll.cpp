@@ -329,7 +329,6 @@ YAMANGDXDLL_API void D3DCleanUp()
 #endif
 }
 
-
 YAMANGDXDLL_API void SetMatrix( D3DXMATRIXA16* matrix, bool cameraSet /*= false */ )
 {
 	//Log("%f, %f, %f, %f \n", matrix->_11, matrix->_12, matrix->_13, matrix->_14);
@@ -348,6 +347,17 @@ YAMANGDXDLL_API void SetMatrix( D3DXMATRIXA16* matrix, bool cameraSet /*= false 
 	}
 }
 
+YAMANGDXDLL_API void SetCameraView(float x /* = 0 */, float y /* = 0 */, float z/* = 0 */)
+{
+	g_EyePoint = { x, y, z };
+	g_LookAtPoint.x = x;
+	g_LookAtPoint.y = y;
+	g_LookAtPoint.z = z + 1;
+	D3DXMATRIXA16 mat;
+	D3DXMatrixIdentity(&mat);
+	D3DXMatrixLookAtLH(&mat, &g_EyePoint, &g_LookAtPoint, &g_UpVector);
+	SetMatrix(&mat, true);
+}
 
 //////////////////////////////////////////////////////////////////////////
 //height map 세계에 오신 것을 환영합니다.

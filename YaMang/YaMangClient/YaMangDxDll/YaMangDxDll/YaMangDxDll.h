@@ -35,6 +35,8 @@ extern "C"{
 
 	YAMANGDXDLL_API void SetMatrix( D3DXMATRIXA16* matrix, bool cameraSet = false );
 
+	YAMANGDXDLL_API void SetCameraView(float x = 0.f, float y = 0.f, float z = 0.f);
+
 	YAMANGDXDLL_API void SetAspectRatio( long width, long height );
 
 
