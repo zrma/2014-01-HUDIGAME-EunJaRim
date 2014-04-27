@@ -47,7 +47,7 @@ bool GameManager::Init()
 	CameraController::GetInstance()->Init();
 
 	// 커서 초기화
-	MouseManager::GetInstance()->CreateCursor( L"cursor1.bmp", 200, 200);
+	MouseManager::GetInstance()->CreateCursor( L"cursor2.png", 200, 200);
 
 	// 텍스트 매니저
 	// 타이머
