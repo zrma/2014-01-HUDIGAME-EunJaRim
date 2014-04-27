@@ -80,7 +80,7 @@ namespace YamangTools
 
                 string filename = "tiger.x";
                 YamangDll.InitGeometry(this.Window.Handle, filename, ref infoPtr);
-                YamangDll.MoveCamera(0.0f, 1.0f, -10.0f);
+                YamangDll.SetCameraView(0.0f, 1.0f, -10.0f);
                 Render();
             }
         }
@@ -111,7 +111,10 @@ namespace YamangTools
 
         private void SetCamera_Click(object sender, EventArgs e)
         {
-            
+            if(isRunning)
+            {
+                YamangDll.SetCameraView(Convert.ToInt32(GetNumber(CameraXVal)), Convert.ToInt32(GetNumber(CameraYVal)), Convert.ToInt32(GetNumber(CameraZVal)));
+            }
         }
     }
 }

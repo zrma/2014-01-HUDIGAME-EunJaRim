@@ -23,13 +23,17 @@ namespace TestClient1
             IPEndPoint serverEndPoint = new IPEndPoint(serverIP, port);
             socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-            socket.Connect(serverEndPoint);
-
-            if (socket.Connected)
+            try
             {
+                socket.Connect(serverEndPoint);
                 return true;
             }
-            return false;
+            catch (Exception)
+            {
+                return false;
+            }
+            
+            
         }
 
         public static unsafe bool SendLoginRequest(int playerID)
@@ -126,8 +130,7 @@ namespace TestClient1
 
 
         public static unsafe void SendMoveCorpsRequest(
-        int playerID
-        , int corpsID
+        int corpsID
         , float eyeX
         , float eyeY
         , float eyeZ
@@ -140,7 +143,6 @@ namespace TestClient1
             PacketStruct.MoveCorpsRequest request = new PacketStruct.MoveCorpsRequest();
             request.m_Size = (short)sizeof(PacketStruct.MoveCorpsRequest);
             request.m_Type = (short)PacketTypes.PKT_CS_MOVE_CORPS;
-            request.m_PlayerID = playerID;
             request.m_CorpsID = corpsID;
             request.m_EyeX = eyeX;
             request.m_EyeY = eyeY;
@@ -157,13 +159,11 @@ namespace TestClient1
 
 
         public static unsafe void SendStopCorpsRequest(
-        int playerID
-        , int corpsID)
+        int corpsID)
         {
             PacketStruct.StopCorpsRequest request = new PacketStruct.StopCorpsRequest();
             request.m_Size = (short)sizeof(PacketStruct.StopCorpsRequest);
             request.m_Type = (short)PacketTypes.PKT_CS_STOP_CORPS;
-            request.m_PlayerID = playerID;
             request.m_CorpsID = corpsID;
 
             byte[] sendData = RawSerializer<PacketStruct.StopCorpsRequest>.RawSerialize(request);

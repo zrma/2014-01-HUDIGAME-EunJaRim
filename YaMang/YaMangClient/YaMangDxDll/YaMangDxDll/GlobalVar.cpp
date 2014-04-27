@@ -39,3 +39,8 @@ D3DXVECTOR3		g_UpVector = { 0, 1, 0 };
 //Picking ฐüทร บคลอ
 D3DXVECTOR3		rayOrigin;
 D3DXVECTOR3		rayDirection;
+
+//
+float	g_Ratio = 1280 / 720;
+float	g_Width = 1280;
+

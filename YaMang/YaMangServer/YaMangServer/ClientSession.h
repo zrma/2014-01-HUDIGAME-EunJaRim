@@ -26,7 +26,7 @@ class ClientSession: public ObjectPool<ClientSession>
 {
 public:
 	ClientSession( SOCKET sock )
-		: m_Connected( false ), m_Logon( false ), m_Socket( sock ), m_PlayerId( -1 ), m_SendBuffer( BUFSIZE ), m_RecvBuffer( BUFSIZE ), m_OverlappedRequested( 0 )
+		: m_Connected( false ), m_Logon( false ), m_Socket( sock ), m_PlayerID( -1 ), m_SendBuffer( BUFSIZE ), m_RecvBuffer( BUFSIZE ), m_OverlappedRequested( 0 )
 		
 	{
 		memset( &m_ClientAddr, 0, sizeof( SOCKADDR_IN ) );
@@ -91,7 +91,7 @@ private:
 	bool			m_Logon;
 	SOCKET			m_Socket;
 
-	int				m_PlayerId;
+	int				m_PlayerID;
 	SOCKADDR_IN		m_ClientAddr;
 
 	CircularBuffer	m_SendBuffer;

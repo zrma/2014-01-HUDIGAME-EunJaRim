@@ -37,11 +37,11 @@ ClientManager::~ClientManager()
 		delete toBeDelete;
 	}
 
-	for( int i = 0; i < m_Map.size( ); ++i )
+	for( int i = 0; i < m_BattleMap.size( ); ++i )
 	{
-		m_Map.at( i ).clear();
+		m_BattleMap.at( i ).clear();
 	}
-	m_Map.clear();
+	m_BattleMap.clear();
 
 	delete m_ActionScheduler;
 }
@@ -366,7 +366,7 @@ void ClientManager::PrintClientList()
 	for ( auto& it : m_ClientList )
 	{
 		ClientSession* client = it.second;
-		printf_s( "[%d][%s] \n", client->m_PlayerId, client->m_PlayerName );
+		printf_s( "[%d][%s] \n", client->m_PlayerID, client->m_PlayerName );
 	}
 }
 
@@ -390,7 +390,7 @@ bool ClientManager::ReadMapFile( const char* filename )
 	int width = *(int*)&info[18];
 	int height = *(int*)&info[22];
 
-	m_Map.reserve( height );
+	m_BattleMap.reserve( height );
 
 	int row_padded = ( width * 3 + 3 ) & ( ~3 );
 	unsigned char* data = new unsigned char[row_padded];
@@ -415,16 +415,16 @@ bool ClientManager::ReadMapFile( const char* filename )
 			// 맵이 뒤집어져 있을 것 같다!!
 			row.push_back( tile );
 		}
-		m_Map.push_back( row );
+		m_BattleMap.push_back( row );
 	}
-	printf_s( "[%d][%d] Map Loaded! \n", m_Map.size(), m_Map.at( 0 ).size() );
+	printf_s( "[%d][%d] Map Loaded! \n", m_BattleMap.size(), m_BattleMap.at( 0 ).size() );
 
 	fclose( f );
 
 	return true;
 }
 
-int ClientManager::GenerateCorps( int playerID, UnitType type, Position position )
+int ClientManager::GenerateCorps( int playerID, UnitType type, PositionInfo position )
 {
 	Corps* corps = nullptr;
 	switch ( type )

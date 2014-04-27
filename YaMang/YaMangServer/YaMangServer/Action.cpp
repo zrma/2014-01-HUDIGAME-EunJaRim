@@ -1,5 +1,6 @@
 ﻿#include "stdafx.h"
 #include "Action.h"
+#include "ActionScheduler.h"
 
 
 Action::Action()
@@ -31,4 +32,5 @@ void Action::OnEnd()
 {
 	LowKick();
 	// 큐에 재 등록
+	m_ActionScheduler->AddActionToScheduler( this, 10 );
 }

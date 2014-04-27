@@ -2,14 +2,14 @@
 #include "EnumSet.h"
 #include "Interface3D.h"
 
-struct Position;
+struct PositionInfo;
 struct BreadBoard;
 class Unit;
 
 class Corps: public Interface3D
 {
 public:
-	Corps( int corpsId, int playerId, Position pos );
+	Corps( int corpsId, int playerId, PositionInfo pos );
 	~Corps();
 
 	void	Update();

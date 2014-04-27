@@ -9,6 +9,8 @@ enum ActionStatus
 	ACTION_MAX
 };
 
+class ClientManager;
+class ActionScheduler;
 class Action
 {
 public:
@@ -16,7 +18,8 @@ public:
 	virtual ~Action();
 
 	void	ActIt();
-	virtual void OnEnd( ) = 0;
+
+	void	SetClientManager( ClientManager* clientManager ) { m_ClientManager = clientManager; }
 
 	// 액션이 꼭 콥스만의 고유 행동이 아니면 생성자에서는 corpsID는 따로 빼야할듯 
 	void	SetOwnerCorpsID( int ownerCropsID ) { m_OwnerCropsID = ownerCropsID; }
@@ -28,15 +31,19 @@ public:
 	int64_t GetTime( ) const { return m_Time; }
 	void	SetTime( int64_t inputTime ) { m_Time = inputTime; }
 
-private:
+	void	SetScheduler( ActionScheduler* actionScheduler ) { m_ActionScheduler = actionScheduler; }
+
+protected:
 	virtual void OnBegin() = 0;
 	virtual void OnTick() = 0;
-	
+	virtual void OnEnd();
 
-private:
 	int		m_OwnerCropsID = -1;
 	int64_t	m_Time = 0;
 	bool	m_NoEgg = false;
 	ActionStatus m_ActionStatus = ACTION_BEGIN;
+
+	ActionScheduler* m_ActionScheduler = nullptr;
+	ClientManager* m_ClientManager = nullptr;
 };
 

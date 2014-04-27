@@ -27,6 +27,7 @@ void ActionScheduler::AddActionToScheduler( Action* addedAction, int64_t remainT
 {
 	int64_t workingTime = remainTime + m_CurrentTime;
 	addedAction->SetTime( workingTime );
+	addedAction->SetScheduler( this );
 	m_ActionQueue.push( addedAction );
 }
 
@@ -64,7 +65,7 @@ void ActionScheduler::DoScheduledAction()
 			Action* holdingAction = corp->GetHoldingAction();
 
 			// 처음 액션을 받는 콥스가 아닐 경우
-			if ( nullptr != holdingAction )
+			if ( nullptr != holdingAction && headAction != holdingAction)
 			{
 				holdingAction->LowKick();
 			}

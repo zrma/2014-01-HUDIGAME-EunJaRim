@@ -98,7 +98,7 @@ void SetupTranslateMatricesTool()
 
 	//x, y, z축 입력 값에 대해 이동 처리
 	D3DXMATRIXA16 thisMatrix;
-	D3DXMatrixTranslation(&thisMatrix, 0, 0, 10);
+	D3DXMatrixTranslation(&thisMatrix, 0, 0, 0);
 	g_D3dDevice->MultiplyTransform(D3DTS_WORLD, &thisMatrix);
 
 	//향후 추가 매트릭스 처리 필요 내용에 대해 추가 예정

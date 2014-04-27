@@ -143,7 +143,8 @@ YAMANGDXDLL_API void SetAspectRatio( long width, long height )
 {
 	D3DXMATRIXA16 matProj;
 	float aspectRatio = static_cast<float>( width ) / static_cast<float>( height );
-
+	g_Ratio = aspectRatio;
+	g_Width = static_cast<float>(width);
 	D3DXMatrixPerspectiveFovLH( &matProj, D3DX_PI / 5, aspectRatio, 1.0f, 2000.0f );
 	g_D3dDevice->SetTransform( D3DTS_PROJECTION, &matProj );
 }
@@ -251,9 +252,10 @@ YAMANGDXDLL_API void RenderingTool( MESHOBJECT* inputVal )
 	D3DXMatrixLookAtLH( &viewMatrix, &g_EyePoint, &g_LookAtPoint, &g_UpVector );
 	SetMatrix( &viewMatrix , true);
 
-	// 보여주기 위한 땅을 조그맣게 만듬
-	CreateRawGround(10, 10, 10);
+	// 보여주기 위한 땅을 만듬
+	CreateRawGround(100, 100, 10);
 	HeightMapRender();
+
 	//와이어 프레임 해제
 	g_D3dDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
@@ -328,7 +330,6 @@ YAMANGDXDLL_API void D3DCleanUp()
 #endif
 }
 
-
 YAMANGDXDLL_API void SetMatrix( D3DXMATRIXA16* matrix, bool cameraSet /*= false */ )
 {
 	//Log("%f, %f, %f, %f \n", matrix->_11, matrix->_12, matrix->_13, matrix->_14);
@@ -347,6 +348,17 @@ YAMANGDXDLL_API void SetMatrix( D3DXMATRIXA16* matrix, bool cameraSet /*= false 
 	}
 }
 
+YAMANGDXDLL_API void SetCameraView(float x /* = 0 */, float y /* = 0 */, float z/* = 0 */)
+{
+	g_EyePoint = { x, y, z };
+	g_LookAtPoint.x = x;
+	g_LookAtPoint.y = y;
+	g_LookAtPoint.z = z + 1;
+	D3DXMATRIXA16 mat;
+	D3DXMatrixIdentity(&mat);
+	D3DXMatrixLookAtLH(&mat, &g_EyePoint, &g_LookAtPoint, &g_UpVector);
+	SetMatrix(&mat, true);
+}
 
 //////////////////////////////////////////////////////////////////////////
 //height map 세계에 오신 것을 환영합니다.
@@ -479,15 +491,15 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 
 	g_XHeight = col + 1;
 	g_ZHeight = row + 1;
-	
-	int verticesCount = ( g_XHeight )* ( g_ZHeight );
+
+	int verticesCount = (g_XHeight) * ( g_ZHeight );
 	int indicesCount = col * row * 6;
 	int faceCount = ( g_XHeight - 1 ) * ( g_ZHeight - 1 ) * 2;
-	
+
 	//mesh를 직접 만들어 보자
 	//mesh를 직접 만들게 되면 사실 global vertex buffer와 index buffer가 무의미 하다.
-	HRESULT hr = 0;	
-	hr = D3DXCreateMeshFVF( faceCount, verticesCount, D3DXMESH_MANAGED|D3DXMESH_32BIT, D3DFVF_CUSTOMVERTEX, g_D3dDevice, &g_Mesh );
+	HRESULT hr = 0;
+	hr = D3DXCreateMeshFVF( faceCount, verticesCount, D3DXMESH_MANAGED | D3DXMESH_32BIT, D3DFVF_CUSTOMVERTEX, g_D3dDevice, &g_Mesh );
 	if ( FAILED( hr ) )
 	{
 		MessageBox( NULL, L"CreateMesh Failed", L"YaMang.DLL", MB_OK );
@@ -501,7 +513,7 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 	CUSTOMVERTEX vPos0;
 
 	vPos0.vertexPoint.x = -1.f * col * pixelSize * 0.5f;
-	vPos0.vertexPoint.y = 0.0f;
+	vPos0.vertexPoint.y = -10.0f;
 	vPos0.vertexPoint.z = row * pixelSize * 0.5f;
 	for ( int z = 0; z <= row; ++z )
 	{
@@ -529,30 +541,30 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 	memcpy( pVertices, baseVertex, verticesCount * sizeof( CUSTOMVERTEX ) );
 	g_Mesh->UnlockVertexBuffer();
 
-// 	HRESULT result = S_OK;
-// 	if ( FAILED( result = g_D3dDevice->CreateVertexBuffer( verticesCount * sizeof( CUSTOMVERTEX ), 0, D3DFVF_CUSTOMVERTEX, D3DPOOL_DEFAULT, &g_VertexBuffer, NULL ) ) )
-// 	{
-// 		if ( baseVertex )
-// 		{
-// 			delete[] baseVertex;
-// 			baseVertex = nullptr;
-// 		}
-// 		MessageBox( NULL, L"Fail in Create VertexBuffer", L"YaMang.DLL", MB_OK );
-// 		return;
-// 	}
-	
-// 	if ( FAILED( g_VertexBuffer->Lock( 0, 0, &pVertices, NULL ) ) )
-// 	{
-// 		if ( baseVertex )
-// 		{
-// 			delete[] baseVertex;
-// 			baseVertex = nullptr;
-// 		}
-// 		MessageBox( NULL, L"Fail in lock VertexBuffer", L"YaMang.DLL", MB_OK );
-// 		return;
-// 	}
-// 	memcpy( pVertices, baseVertex, verticesCount * sizeof( CUSTOMVERTEX ) );
-// 	g_VertexBuffer->Unlock();
+	// 	HRESULT result = S_OK;
+	// 	if ( FAILED( result = g_D3dDevice->CreateVertexBuffer( verticesCount * sizeof( CUSTOMVERTEX ), 0, D3DFVF_CUSTOMVERTEX, D3DPOOL_DEFAULT, &g_VertexBuffer, NULL ) ) )
+	// 	{
+	// 		if ( baseVertex )
+	// 		{
+	// 			delete[] baseVertex;
+	// 			baseVertex = nullptr;
+	// 		}
+	// 		MessageBox( NULL, L"Fail in Create VertexBuffer", L"YaMang.DLL", MB_OK );
+	// 		return;
+	// 	}
+
+	// 	if ( FAILED( g_VertexBuffer->Lock( 0, 0, &pVertices, NULL ) ) )
+	// 	{
+	// 		if ( baseVertex )
+	// 		{
+	// 			delete[] baseVertex;
+	// 			baseVertex = nullptr;
+	// 		}
+	// 		MessageBox( NULL, L"Fail in lock VertexBuffer", L"YaMang.DLL", MB_OK );
+	// 		return;
+	// 	}
+	// 	memcpy( pVertices, baseVertex, verticesCount * sizeof( CUSTOMVERTEX ) );
+	// 	g_VertexBuffer->Unlock();
 
 	UINT* baseIndex = new UINT[indicesCount];
 	startIdx = 0;
@@ -572,7 +584,7 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 	}
 
 	void* pIndices;
-	if ( FAILED( g_Mesh->LockIndexBuffer(0, &pIndices) ) )
+	if ( FAILED( g_Mesh->LockIndexBuffer( 0, &pIndices ) ) )
 	{
 		if ( baseVertex )
 		{
@@ -601,6 +613,7 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 		delete[] baseIndex;
 		baseIndex = nullptr;
 	}
+}
 
 // 	if ( FAILED( result = g_D3dDevice->CreateIndexBuffer( indicesCount * sizeof( UINT ), D3DUSAGE_WRITEONLY, D3DFMT_INDEX32, D3DPOOL_MANAGED, &g_IdxBuffer, NULL ) ) )
 // 	{
@@ -637,7 +650,7 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 // 
 // 	g_IdxBuffer->Unlock();
 
-}
+
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -771,7 +784,7 @@ YAMANGDXDLL_API HRESULT InitCursor( LPCWSTR cursorImagePath, float cursorPosX, f
 		return E_FAIL;
 	}
 
-	SetCursorPosition();// 0,0,0으로 초기화
+	SetCursorPosition( cursorPosX, cursorPosY );// 0,0,0으로 초기화
 
 	return S_OK;
 }
@@ -780,6 +793,12 @@ YAMANGDXDLL_API HRESULT CursorRender( )
 {
 	if ( g_cursorSprite ) 
 	{
+		D3DXMATRIXA16 ratioMat;
+
+		float ratio = (720.0f / g_Width) * g_Ratio;
+		D3DXMatrixIdentity(&ratioMat);
+		D3DXMatrixScaling(&ratioMat, 1280 / g_Width, ratio, 1);
+		g_cursorSprite->SetTransform(&ratioMat);
 		g_cursorSprite->Begin( D3DXSPRITE_ALPHABLEND ); 
 		g_cursorSprite->Draw( g_cursorTex, NULL, NULL, &g_cursorPos, 0xFFFFFFFF ); 
 		g_cursorSprite->End(); 

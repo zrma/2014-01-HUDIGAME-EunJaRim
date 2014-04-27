@@ -70,7 +70,9 @@ namespace YamangTools
 
         [DllImport("yaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void ZoomCamera(float zoom);
-        
+
+        [DllImport("YaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void SetCameraView(float x, float y, float z);
 
         //DLL 내부 MESHOBJECT 정의
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]

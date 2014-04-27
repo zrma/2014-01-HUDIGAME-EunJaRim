@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.lb_connect_server = new System.Windows.Forms.Label();
-            this.bu_login = new System.Windows.Forms.Button();
             this.bu_connect_server = new System.Windows.Forms.Button();
             this.lb_playerID = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -47,7 +46,22 @@
             this.label2 = new System.Windows.Forms.Label();
             this.bu_roomCreate = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.bu_corps_formation = new System.Windows.Forms.Button();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.rb_corps_formation_rush = new System.Windows.Forms.RadioButton();
+            this.rb_corps_formation_destroy = new System.Windows.Forms.RadioButton();
+            this.rb_corps_formation_defense = new System.Windows.Forms.RadioButton();
+            this.bu_corps_stop = new System.Windows.Forms.Button();
+            this.bu_corps_move = new System.Windows.Forms.Button();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.rb_unit_sword = new System.Windows.Forms.RadioButton();
+            this.rb_unit_pike = new System.Windows.Forms.RadioButton();
+            this.rb_unit_knight = new System.Windows.Forms.RadioButton();
+            this.rb_unit_arrow = new System.Windows.Forms.RadioButton();
+            this.rb_unit_guard = new System.Windows.Forms.RadioButton();
             this.bu_generate_corps = new System.Windows.Forms.Button();
+            this.tb_corpsID = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.tb_corps_look_z = new System.Windows.Forms.TextBox();
             this.tb_corps_look_y = new System.Windows.Forms.TextBox();
             this.tb_corps_look_x = new System.Windows.Forms.TextBox();
@@ -57,27 +71,12 @@
             this.tb_corps_eye_x = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.rb_unit_arrow = new System.Windows.Forms.RadioButton();
-            this.rb_unit_guard = new System.Windows.Forms.RadioButton();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.rb_unit_knight = new System.Windows.Forms.RadioButton();
-            this.rb_unit_pike = new System.Windows.Forms.RadioButton();
-            this.rb_unit_sword = new System.Windows.Forms.RadioButton();
-            this.label7 = new System.Windows.Forms.Label();
-            this.tb_corpsID = new System.Windows.Forms.TextBox();
-            this.bu_corps_move = new System.Windows.Forms.Button();
-            this.bu_corps_stop = new System.Windows.Forms.Button();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.rb_corps_formation_defense = new System.Windows.Forms.RadioButton();
-            this.rb_corps_formation_destroy = new System.Windows.Forms.RadioButton();
-            this.rb_corps_formation_rush = new System.Windows.Forms.RadioButton();
-            this.bu_corps_formation = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            this.groupBox5.SuspendLayout();
             this.groupBox6.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
             // lb_connect_server
@@ -89,22 +88,12 @@
             this.lb_connect_server.TabIndex = 1;
             this.lb_connect_server.Text = "연결상태";
             // 
-            // bu_login
-            // 
-            this.bu_login.Location = new System.Drawing.Point(216, 20);
-            this.bu_login.Name = "bu_login";
-            this.bu_login.Size = new System.Drawing.Size(75, 23);
-            this.bu_login.TabIndex = 2;
-            this.bu_login.Text = "2. login";
-            this.bu_login.UseVisualStyleBackColor = true;
-            this.bu_login.Click += new System.EventHandler(this.bu_login_Click);
-            // 
             // bu_connect_server
             // 
             this.bu_connect_server.Location = new System.Drawing.Point(6, 20);
             this.bu_connect_server.Name = "bu_connect_server";
             this.bu_connect_server.Size = new System.Drawing.Size(124, 23);
-            this.bu_connect_server.TabIndex = 5;
+            this.bu_connect_server.TabIndex = 10;
             this.bu_connect_server.Text = "1. connect_server";
             this.bu_connect_server.UseVisualStyleBackColor = true;
             this.bu_connect_server.Click += new System.EventHandler(this.bu_connect_server_Click);
@@ -120,7 +109,6 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.bu_login);
             this.groupBox1.Controls.Add(this.bu_connect_server);
             this.groupBox1.Controls.Add(this.lb_connect_server);
             this.groupBox1.Location = new System.Drawing.Point(31, 24);
@@ -158,7 +146,7 @@
             this.tb_gameOver_playerId.Location = new System.Drawing.Point(151, 20);
             this.tb_gameOver_playerId.Name = "tb_gameOver_playerId";
             this.tb_gameOver_playerId.Size = new System.Drawing.Size(100, 21);
-            this.tb_gameOver_playerId.TabIndex = 2;
+            this.tb_gameOver_playerId.TabIndex = 30;
             // 
             // cb_gameOver_isWin
             // 
@@ -166,7 +154,7 @@
             this.cb_gameOver_isWin.Location = new System.Drawing.Point(257, 24);
             this.cb_gameOver_isWin.Name = "cb_gameOver_isWin";
             this.cb_gameOver_isWin.Size = new System.Drawing.Size(54, 16);
-            this.cb_gameOver_isWin.TabIndex = 1;
+            this.cb_gameOver_isWin.TabIndex = 40;
             this.cb_gameOver_isWin.Text = "IsWin";
             this.cb_gameOver_isWin.UseVisualStyleBackColor = true;
             // 
@@ -175,7 +163,7 @@
             this.bu_gameOver_send.Location = new System.Drawing.Point(6, 20);
             this.bu_gameOver_send.Name = "bu_gameOver_send";
             this.bu_gameOver_send.Size = new System.Drawing.Size(75, 23);
-            this.bu_gameOver_send.TabIndex = 0;
+            this.bu_gameOver_send.TabIndex = 20;
             this.bu_gameOver_send.Text = "gameover";
             this.bu_gameOver_send.UseVisualStyleBackColor = true;
             this.bu_gameOver_send.Click += new System.EventHandler(this.bu_gameOver_send_Click);
@@ -201,7 +189,7 @@
             this.tb_roomLeaveNum.Location = new System.Drawing.Point(714, 20);
             this.tb_roomLeaveNum.Name = "tb_roomLeaveNum";
             this.tb_roomLeaveNum.Size = new System.Drawing.Size(100, 21);
-            this.tb_roomLeaveNum.TabIndex = 16;
+            this.tb_roomLeaveNum.TabIndex = 80;
             // 
             // label3
             // 
@@ -217,7 +205,7 @@
             this.bu_roomLeave.Location = new System.Drawing.Point(545, 18);
             this.bu_roomLeave.Name = "bu_roomLeave";
             this.bu_roomLeave.Size = new System.Drawing.Size(92, 23);
-            this.bu_roomLeave.TabIndex = 14;
+            this.bu_roomLeave.TabIndex = 90;
             this.bu_roomLeave.Text = "roomLeave";
             this.bu_roomLeave.UseVisualStyleBackColor = true;
             this.bu_roomLeave.Click += new System.EventHandler(this.bu_roomLeave_Click);
@@ -227,14 +215,14 @@
             this.tb_roomEnterNum.Location = new System.Drawing.Point(368, 21);
             this.tb_roomEnterNum.Name = "tb_roomEnterNum";
             this.tb_roomEnterNum.Size = new System.Drawing.Size(100, 21);
-            this.tb_roomEnterNum.TabIndex = 13;
+            this.tb_roomEnterNum.TabIndex = 60;
             // 
             // bu_roomEnter
             // 
             this.bu_roomEnter.Location = new System.Drawing.Point(215, 18);
             this.bu_roomEnter.Name = "bu_roomEnter";
             this.bu_roomEnter.Size = new System.Drawing.Size(75, 23);
-            this.bu_roomEnter.TabIndex = 11;
+            this.bu_roomEnter.TabIndex = 70;
             this.bu_roomEnter.Text = "roomEnter";
             this.bu_roomEnter.UseVisualStyleBackColor = true;
             this.bu_roomEnter.Click += new System.EventHandler(this.bu_roomEnter_Click);
@@ -253,7 +241,7 @@
             this.bu_roomCreate.Location = new System.Drawing.Point(6, 20);
             this.bu_roomCreate.Name = "bu_roomCreate";
             this.bu_roomCreate.Size = new System.Drawing.Size(96, 23);
-            this.bu_roomCreate.TabIndex = 11;
+            this.bu_roomCreate.TabIndex = 50;
             this.bu_roomCreate.Text = "roomCreate";
             this.bu_roomCreate.UseVisualStyleBackColor = true;
             this.bu_roomCreate.Click += new System.EventHandler(this.bu_roomCreate_Click);
@@ -284,36 +272,195 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "corps";
             // 
+            // bu_corps_formation
+            // 
+            this.bu_corps_formation.Location = new System.Drawing.Point(217, 187);
+            this.bu_corps_formation.Name = "bu_corps_formation";
+            this.bu_corps_formation.Size = new System.Drawing.Size(157, 23);
+            this.bu_corps_formation.TabIndex = 280;
+            this.bu_corps_formation.Text = "change formation";
+            this.bu_corps_formation.UseVisualStyleBackColor = true;
+            this.bu_corps_formation.Click += new System.EventHandler(this.bu_corps_formation_Click);
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.rb_corps_formation_rush);
+            this.groupBox6.Controls.Add(this.rb_corps_formation_destroy);
+            this.groupBox6.Controls.Add(this.rb_corps_formation_defense);
+            this.groupBox6.Location = new System.Drawing.Point(280, 17);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(71, 84);
+            this.groupBox6.TabIndex = 12;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "formation";
+            // 
+            // rb_corps_formation_rush
+            // 
+            this.rb_corps_formation_rush.AutoSize = true;
+            this.rb_corps_formation_rush.Location = new System.Drawing.Point(6, 64);
+            this.rb_corps_formation_rush.Name = "rb_corps_formation_rush";
+            this.rb_corps_formation_rush.Size = new System.Drawing.Size(48, 16);
+            this.rb_corps_formation_rush.TabIndex = 240;
+            this.rb_corps_formation_rush.Text = "rush";
+            this.rb_corps_formation_rush.UseVisualStyleBackColor = true;
+            // 
+            // rb_corps_formation_destroy
+            // 
+            this.rb_corps_formation_destroy.AutoSize = true;
+            this.rb_corps_formation_destroy.Location = new System.Drawing.Point(6, 42);
+            this.rb_corps_formation_destroy.Name = "rb_corps_formation_destroy";
+            this.rb_corps_formation_destroy.Size = new System.Drawing.Size(65, 16);
+            this.rb_corps_formation_destroy.TabIndex = 230;
+            this.rb_corps_formation_destroy.Text = "destroy";
+            this.rb_corps_formation_destroy.UseVisualStyleBackColor = true;
+            // 
+            // rb_corps_formation_defense
+            // 
+            this.rb_corps_formation_defense.AutoSize = true;
+            this.rb_corps_formation_defense.Checked = true;
+            this.rb_corps_formation_defense.Location = new System.Drawing.Point(6, 20);
+            this.rb_corps_formation_defense.Name = "rb_corps_formation_defense";
+            this.rb_corps_formation_defense.Size = new System.Drawing.Size(68, 16);
+            this.rb_corps_formation_defense.TabIndex = 220;
+            this.rb_corps_formation_defense.TabStop = true;
+            this.rb_corps_formation_defense.Text = "defense";
+            this.rb_corps_formation_defense.UseVisualStyleBackColor = true;
+            // 
+            // bu_corps_stop
+            // 
+            this.bu_corps_stop.Location = new System.Drawing.Point(299, 157);
+            this.bu_corps_stop.Name = "bu_corps_stop";
+            this.bu_corps_stop.Size = new System.Drawing.Size(75, 23);
+            this.bu_corps_stop.TabIndex = 270;
+            this.bu_corps_stop.Text = "stop";
+            this.bu_corps_stop.UseVisualStyleBackColor = true;
+            this.bu_corps_stop.Click += new System.EventHandler(this.bu_corps_stop_Click);
+            // 
+            // bu_corps_move
+            // 
+            this.bu_corps_move.Location = new System.Drawing.Point(217, 158);
+            this.bu_corps_move.Name = "bu_corps_move";
+            this.bu_corps_move.Size = new System.Drawing.Size(75, 23);
+            this.bu_corps_move.TabIndex = 260;
+            this.bu_corps_move.Text = "move";
+            this.bu_corps_move.UseVisualStyleBackColor = true;
+            this.bu_corps_move.Click += new System.EventHandler(this.bu_corps_move_Click);
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.rb_unit_sword);
+            this.groupBox5.Controls.Add(this.rb_unit_pike);
+            this.groupBox5.Controls.Add(this.rb_unit_knight);
+            this.groupBox5.Controls.Add(this.rb_unit_arrow);
+            this.groupBox5.Controls.Add(this.rb_unit_guard);
+            this.groupBox5.Location = new System.Drawing.Point(6, 84);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(185, 64);
+            this.groupBox5.TabIndex = 14;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "unitType";
+            // 
+            // rb_unit_sword
+            // 
+            this.rb_unit_sword.AutoSize = true;
+            this.rb_unit_sword.Location = new System.Drawing.Point(63, 42);
+            this.rb_unit_sword.Name = "rb_unit_sword";
+            this.rb_unit_sword.Size = new System.Drawing.Size(58, 16);
+            this.rb_unit_sword.TabIndex = 200;
+            this.rb_unit_sword.Text = "sword";
+            this.rb_unit_sword.UseVisualStyleBackColor = true;
+            // 
+            // rb_unit_pike
+            // 
+            this.rb_unit_pike.AutoSize = true;
+            this.rb_unit_pike.Location = new System.Drawing.Point(6, 42);
+            this.rb_unit_pike.Name = "rb_unit_pike";
+            this.rb_unit_pike.Size = new System.Drawing.Size(46, 16);
+            this.rb_unit_pike.TabIndex = 190;
+            this.rb_unit_pike.Text = "pike";
+            this.rb_unit_pike.UseVisualStyleBackColor = true;
+            // 
+            // rb_unit_knight
+            // 
+            this.rb_unit_knight.AutoSize = true;
+            this.rb_unit_knight.Location = new System.Drawing.Point(125, 20);
+            this.rb_unit_knight.Name = "rb_unit_knight";
+            this.rb_unit_knight.Size = new System.Drawing.Size(56, 16);
+            this.rb_unit_knight.TabIndex = 180;
+            this.rb_unit_knight.Text = "knight";
+            this.rb_unit_knight.UseVisualStyleBackColor = true;
+            // 
+            // rb_unit_arrow
+            // 
+            this.rb_unit_arrow.AutoSize = true;
+            this.rb_unit_arrow.Checked = true;
+            this.rb_unit_arrow.Location = new System.Drawing.Point(6, 20);
+            this.rb_unit_arrow.Name = "rb_unit_arrow";
+            this.rb_unit_arrow.Size = new System.Drawing.Size(55, 16);
+            this.rb_unit_arrow.TabIndex = 160;
+            this.rb_unit_arrow.TabStop = true;
+            this.rb_unit_arrow.Text = "arrow";
+            this.rb_unit_arrow.UseVisualStyleBackColor = true;
+            // 
+            // rb_unit_guard
+            // 
+            this.rb_unit_guard.AutoSize = true;
+            this.rb_unit_guard.Location = new System.Drawing.Point(64, 20);
+            this.rb_unit_guard.Name = "rb_unit_guard";
+            this.rb_unit_guard.Size = new System.Drawing.Size(55, 16);
+            this.rb_unit_guard.TabIndex = 170;
+            this.rb_unit_guard.Text = "guard";
+            this.rb_unit_guard.UseVisualStyleBackColor = true;
+            // 
             // bu_generate_corps
             // 
             this.bu_generate_corps.Location = new System.Drawing.Point(6, 158);
             this.bu_generate_corps.Name = "bu_generate_corps";
             this.bu_generate_corps.Size = new System.Drawing.Size(181, 23);
-            this.bu_generate_corps.TabIndex = 12;
+            this.bu_generate_corps.TabIndex = 210;
             this.bu_generate_corps.Text = "generate";
             this.bu_generate_corps.UseVisualStyleBackColor = true;
             this.bu_generate_corps.Click += new System.EventHandler(this.bu_generate_corps_Click);
+            // 
+            // tb_corpsID
+            // 
+            this.tb_corpsID.Location = new System.Drawing.Point(283, 126);
+            this.tb_corpsID.Name = "tb_corpsID";
+            this.tb_corpsID.Size = new System.Drawing.Size(68, 21);
+            this.tb_corpsID.TabIndex = 250;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(225, 129);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(52, 12);
+            this.label7.TabIndex = 12;
+            this.label7.Text = "corpsID:";
             // 
             // tb_corps_look_z
             // 
             this.tb_corps_look_z.Location = new System.Drawing.Point(207, 57);
             this.tb_corps_look_z.Name = "tb_corps_look_z";
             this.tb_corps_look_z.Size = new System.Drawing.Size(35, 21);
-            this.tb_corps_look_z.TabIndex = 12;
+            this.tb_corps_look_z.TabIndex = 150;
+            this.tb_corps_look_z.Text = "0";
             // 
             // tb_corps_look_y
             // 
             this.tb_corps_look_y.Location = new System.Drawing.Point(166, 57);
             this.tb_corps_look_y.Name = "tb_corps_look_y";
             this.tb_corps_look_y.Size = new System.Drawing.Size(35, 21);
-            this.tb_corps_look_y.TabIndex = 16;
+            this.tb_corps_look_y.TabIndex = 140;
+            this.tb_corps_look_y.Text = "0";
             // 
             // tb_corps_look_x
             // 
             this.tb_corps_look_x.Location = new System.Drawing.Point(125, 57);
             this.tb_corps_look_x.Name = "tb_corps_look_x";
             this.tb_corps_look_x.Size = new System.Drawing.Size(35, 21);
-            this.tb_corps_look_x.TabIndex = 15;
+            this.tb_corps_look_x.TabIndex = 130;
+            this.tb_corps_look_x.Text = "0";
             // 
             // label6
             // 
@@ -329,21 +476,24 @@
             this.tb_corps_eye_z.Location = new System.Drawing.Point(207, 32);
             this.tb_corps_eye_z.Name = "tb_corps_eye_z";
             this.tb_corps_eye_z.Size = new System.Drawing.Size(35, 21);
-            this.tb_corps_eye_z.TabIndex = 13;
+            this.tb_corps_eye_z.TabIndex = 120;
+            this.tb_corps_eye_z.Text = "0";
             // 
             // tb_corps_eye_y
             // 
             this.tb_corps_eye_y.Location = new System.Drawing.Point(166, 32);
             this.tb_corps_eye_y.Name = "tb_corps_eye_y";
             this.tb_corps_eye_y.Size = new System.Drawing.Size(35, 21);
-            this.tb_corps_eye_y.TabIndex = 12;
+            this.tb_corps_eye_y.TabIndex = 110;
+            this.tb_corps_eye_y.Text = "0";
             // 
             // tb_corps_eye_x
             // 
             this.tb_corps_eye_x.Location = new System.Drawing.Point(125, 32);
             this.tb_corps_eye_x.Name = "tb_corps_eye_x";
             this.tb_corps_eye_x.Size = new System.Drawing.Size(35, 21);
-            this.tb_corps_eye_x.TabIndex = 12;
+            this.tb_corps_eye_x.TabIndex = 100;
+            this.tb_corps_eye_x.Text = "0";
             // 
             // label5
             // 
@@ -362,162 +512,6 @@
             this.label4.Size = new System.Drawing.Size(26, 12);
             this.label4.TabIndex = 0;
             this.label4.Text = "eye";
-            // 
-            // rb_unit_arrow
-            // 
-            this.rb_unit_arrow.AutoSize = true;
-            this.rb_unit_arrow.Checked = true;
-            this.rb_unit_arrow.Location = new System.Drawing.Point(6, 20);
-            this.rb_unit_arrow.Name = "rb_unit_arrow";
-            this.rb_unit_arrow.Size = new System.Drawing.Size(55, 16);
-            this.rb_unit_arrow.TabIndex = 12;
-            this.rb_unit_arrow.TabStop = true;
-            this.rb_unit_arrow.Text = "arrow";
-            this.rb_unit_arrow.UseVisualStyleBackColor = true;
-            // 
-            // rb_unit_guard
-            // 
-            this.rb_unit_guard.AutoSize = true;
-            this.rb_unit_guard.Location = new System.Drawing.Point(64, 20);
-            this.rb_unit_guard.Name = "rb_unit_guard";
-            this.rb_unit_guard.Size = new System.Drawing.Size(55, 16);
-            this.rb_unit_guard.TabIndex = 13;
-            this.rb_unit_guard.Text = "guard";
-            this.rb_unit_guard.UseVisualStyleBackColor = true;
-            // 
-            // groupBox5
-            // 
-            this.groupBox5.Controls.Add(this.rb_unit_sword);
-            this.groupBox5.Controls.Add(this.rb_unit_pike);
-            this.groupBox5.Controls.Add(this.rb_unit_knight);
-            this.groupBox5.Controls.Add(this.rb_unit_arrow);
-            this.groupBox5.Controls.Add(this.rb_unit_guard);
-            this.groupBox5.Location = new System.Drawing.Point(6, 84);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(185, 64);
-            this.groupBox5.TabIndex = 14;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "unitType";
-            // 
-            // rb_unit_knight
-            // 
-            this.rb_unit_knight.AutoSize = true;
-            this.rb_unit_knight.Location = new System.Drawing.Point(125, 20);
-            this.rb_unit_knight.Name = "rb_unit_knight";
-            this.rb_unit_knight.Size = new System.Drawing.Size(56, 16);
-            this.rb_unit_knight.TabIndex = 14;
-            this.rb_unit_knight.Text = "knight";
-            this.rb_unit_knight.UseVisualStyleBackColor = true;
-            // 
-            // rb_unit_pike
-            // 
-            this.rb_unit_pike.AutoSize = true;
-            this.rb_unit_pike.Location = new System.Drawing.Point(6, 42);
-            this.rb_unit_pike.Name = "rb_unit_pike";
-            this.rb_unit_pike.Size = new System.Drawing.Size(46, 16);
-            this.rb_unit_pike.TabIndex = 15;
-            this.rb_unit_pike.Text = "pike";
-            this.rb_unit_pike.UseVisualStyleBackColor = true;
-            // 
-            // rb_unit_sword
-            // 
-            this.rb_unit_sword.AutoSize = true;
-            this.rb_unit_sword.Location = new System.Drawing.Point(63, 42);
-            this.rb_unit_sword.Name = "rb_unit_sword";
-            this.rb_unit_sword.Size = new System.Drawing.Size(58, 16);
-            this.rb_unit_sword.TabIndex = 16;
-            this.rb_unit_sword.Text = "sword";
-            this.rb_unit_sword.UseVisualStyleBackColor = true;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(225, 129);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(52, 12);
-            this.label7.TabIndex = 12;
-            this.label7.Text = "corpsID:";
-            // 
-            // tb_corpsID
-            // 
-            this.tb_corpsID.Location = new System.Drawing.Point(283, 126);
-            this.tb_corpsID.Name = "tb_corpsID";
-            this.tb_corpsID.Size = new System.Drawing.Size(68, 21);
-            this.tb_corpsID.TabIndex = 13;
-            // 
-            // bu_corps_move
-            // 
-            this.bu_corps_move.Location = new System.Drawing.Point(217, 158);
-            this.bu_corps_move.Name = "bu_corps_move";
-            this.bu_corps_move.Size = new System.Drawing.Size(75, 23);
-            this.bu_corps_move.TabIndex = 17;
-            this.bu_corps_move.Text = "move";
-            this.bu_corps_move.UseVisualStyleBackColor = true;
-            this.bu_corps_move.Click += new System.EventHandler(this.bu_corps_move_Click);
-            // 
-            // bu_corps_stop
-            // 
-            this.bu_corps_stop.Location = new System.Drawing.Point(299, 157);
-            this.bu_corps_stop.Name = "bu_corps_stop";
-            this.bu_corps_stop.Size = new System.Drawing.Size(75, 23);
-            this.bu_corps_stop.TabIndex = 18;
-            this.bu_corps_stop.Text = "stop";
-            this.bu_corps_stop.UseVisualStyleBackColor = true;
-            this.bu_corps_stop.Click += new System.EventHandler(this.bu_corps_stop_Click);
-            // 
-            // groupBox6
-            // 
-            this.groupBox6.Controls.Add(this.rb_corps_formation_rush);
-            this.groupBox6.Controls.Add(this.rb_corps_formation_destroy);
-            this.groupBox6.Controls.Add(this.rb_corps_formation_defense);
-            this.groupBox6.Location = new System.Drawing.Point(280, 17);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(71, 84);
-            this.groupBox6.TabIndex = 12;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "formation";
-            // 
-            // rb_corps_formation_defense
-            // 
-            this.rb_corps_formation_defense.AutoSize = true;
-            this.rb_corps_formation_defense.Checked = true;
-            this.rb_corps_formation_defense.Location = new System.Drawing.Point(6, 20);
-            this.rb_corps_formation_defense.Name = "rb_corps_formation_defense";
-            this.rb_corps_formation_defense.Size = new System.Drawing.Size(68, 16);
-            this.rb_corps_formation_defense.TabIndex = 0;
-            this.rb_corps_formation_defense.TabStop = true;
-            this.rb_corps_formation_defense.Text = "defense";
-            this.rb_corps_formation_defense.UseVisualStyleBackColor = true;
-            // 
-            // rb_corps_formation_destroy
-            // 
-            this.rb_corps_formation_destroy.AutoSize = true;
-            this.rb_corps_formation_destroy.Location = new System.Drawing.Point(6, 42);
-            this.rb_corps_formation_destroy.Name = "rb_corps_formation_destroy";
-            this.rb_corps_formation_destroy.Size = new System.Drawing.Size(65, 16);
-            this.rb_corps_formation_destroy.TabIndex = 1;
-            this.rb_corps_formation_destroy.Text = "destroy";
-            this.rb_corps_formation_destroy.UseVisualStyleBackColor = true;
-            // 
-            // rb_corps_formation_rush
-            // 
-            this.rb_corps_formation_rush.AutoSize = true;
-            this.rb_corps_formation_rush.Location = new System.Drawing.Point(6, 64);
-            this.rb_corps_formation_rush.Name = "rb_corps_formation_rush";
-            this.rb_corps_formation_rush.Size = new System.Drawing.Size(48, 16);
-            this.rb_corps_formation_rush.TabIndex = 2;
-            this.rb_corps_formation_rush.Text = "rush";
-            this.rb_corps_formation_rush.UseVisualStyleBackColor = true;
-            // 
-            // bu_corps_formation
-            // 
-            this.bu_corps_formation.Location = new System.Drawing.Point(217, 187);
-            this.bu_corps_formation.Name = "bu_corps_formation";
-            this.bu_corps_formation.Size = new System.Drawing.Size(157, 23);
-            this.bu_corps_formation.TabIndex = 19;
-            this.bu_corps_formation.Text = "change formation";
-            this.bu_corps_formation.UseVisualStyleBackColor = true;
-            this.bu_corps_formation.Click += new System.EventHandler(this.bu_corps_formation_Click);
             // 
             // Form1
             // 
@@ -539,10 +533,10 @@
             this.groupBox4.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            this.groupBox5.ResumeLayout(false);
-            this.groupBox5.PerformLayout();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -551,7 +545,6 @@
         #endregion
 
         private System.Windows.Forms.Label lb_connect_server;
-        private System.Windows.Forms.Button bu_login;
         private System.Windows.Forms.Button bu_connect_server;
         private System.Windows.Forms.Label lb_playerID;
         private System.Windows.Forms.GroupBox groupBox1;

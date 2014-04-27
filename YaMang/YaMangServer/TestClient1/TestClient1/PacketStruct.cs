@@ -133,7 +133,6 @@ namespace TestClient1
         {
             public short m_Size;
             public short m_Type;
-            public int m_PlayerID;
             public int m_CorpsID;
             public float m_EyeX;
             public float m_EyeY;
@@ -148,7 +147,6 @@ namespace TestClient1
         {
             public short m_Size;
             public short m_Type;
-            public int m_PlayerID;
             public int m_CorpsID;
         }
 

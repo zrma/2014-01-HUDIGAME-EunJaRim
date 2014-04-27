@@ -10,7 +10,7 @@
 #include "MacroSet.h"
 #include "Action.h"
 
-Corps::Corps( int corpsId, int playerId, Position pos )
+Corps::Corps( int corpsId, int playerId, PositionInfo pos )
 : m_CorpsId( corpsId ), m_OwnerPlayerID( playerId ), m_TargetFormation( FormationType::FORMATION_RUSH )
 {
 	m_FormationArray.fill( nullptr );

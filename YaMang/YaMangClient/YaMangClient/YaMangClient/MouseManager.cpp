@@ -45,3 +45,9 @@ void MouseManager::SetCursorPos( float PosX, float PosY )
 {
 	SetCursorPosition( PosX, PosY );
 }
+
+void MouseManager::RemoveWndCursor()
+{
+	SetCursor(NULL);
+	ShowCursor(false);
+}
