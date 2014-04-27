@@ -71,6 +71,14 @@ namespace YamangTools
         public static extern void RenderText([MarshalAs(UnmanagedType.LPWStr)] String text, float left, float top, int RGB_R = 255, int RGB_G = 255, int RGB_B = 255, float right = 0, float bottom = 0);
 
 
+        ////
+        //peeking 관련 함수
+        ///
+
+        [DllImport("YaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void CalcPickingRay( int mouseX, int mouseY );
+
+
         //DLL 내부 MESHOBJECT 정의
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
         public struct MESHOBJECT

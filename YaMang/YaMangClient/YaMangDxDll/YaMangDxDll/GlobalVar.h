@@ -27,11 +27,13 @@ extern LPDIRECT3DDEVICE9 g_D3dDevice;
 //////////////////////////////////////////////////////////////////////////
 //Height Map 생성용 공용 자원
 //////////////////////////////////////////////////////////////////////////
-extern LPDIRECT3DVERTEXBUFFER9 g_VertexBuffer;
-extern LPDIRECT3DINDEXBUFFER9 g_IdxBuffer;
+// extern LPDIRECT3DVERTEXBUFFER9 g_VertexBuffer;
+// extern LPDIRECT3DINDEXBUFFER9 g_IdxBuffer;
+extern LPD3DXMESH g_Mesh;
 
 extern LPDIRECT3DTEXTURE9 g_TexHeight;
 extern LPDIRECT3DTEXTURE9 g_TexDiffuse;
+
 
 extern DWORD g_XHeight;
 extern DWORD g_ZHeight;
@@ -59,3 +61,8 @@ extern D3DXVECTOR3			g_cursorPos;
 extern D3DXVECTOR3		g_EyePoint;
 extern D3DXVECTOR3		g_LookAtPoint;
 extern D3DXVECTOR3		g_UpVector;
+
+
+//peeking 관련 벡터
+extern D3DXVECTOR3		rayOrigin;
+extern D3DXVECTOR3		rayDirection;

@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include "GlobalVar.h"
 #include "InnerResource.h"
+#include <WinUser.h>
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -20,7 +21,7 @@ YAMANGDXDLL_API HRESULT InitD3D( HWND hWnd, long width, long height )
 	if ( nullptr == ( g_D3D = Direct3DCreate9( D3D_SDK_VERSION ) ) )
 	{
 		// 오류
-		MessageBox( NULL, L"Could not Create D3D", L"YaMang.exe", MB_OK );
+		MessageBox( NULL, L"Could not Create D3D", L"YaMang.DLL", MB_OK );
 		return E_FAIL;
 	}
 
@@ -36,7 +37,7 @@ YAMANGDXDLL_API HRESULT InitD3D( HWND hWnd, long width, long height )
 	if ( FAILED( g_D3D->CreateDevice( D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, 
 		hWnd, D3DCREATE_HARDWARE_VERTEXPROCESSING, &d3dpp, &g_D3dDevice ) ) )
 	{
-		MessageBox( NULL, L"Could not CreateDevice", L"YaMang.exe", MB_OK );
+		MessageBox( NULL, L"Could not CreateDevice", L"YaMang.DLL", MB_OK );
 		return E_FAIL;
 	}
 
@@ -77,7 +78,7 @@ YAMANGDXDLL_API HRESULT InitGeometry( HWND hWnd, LPCTSTR fileName, MESHOBJECT* i
 	if ( FAILED( D3DXLoadMeshFromX( fileName, D3DXMESH_SYSTEMMEM, g_D3dDevice, NULL, 
 		&D3dxMtrialBuffer, NULL, &( inputVal->NumMaterials ), &inputVal->importedMesh ) ) )
 	{
-		MessageBox( NULL, L"Could not find x file", L"YaMang.exe", MB_OK );
+		MessageBox( NULL, L"Could not find x file", L"YaMang.DLL", MB_OK );
 		return E_FAIL;
 	}
 
@@ -124,7 +125,7 @@ YAMANGDXDLL_API HRESULT InitGeometry( HWND hWnd, LPCTSTR fileName, MESHOBJECT* i
 
 				if ( FAILED( D3DXCreateTextureFromFileA( g_D3dDevice, strTexture, &( inputVal->MeshTexture[i] ) ) ) )
 				{
-					MessageBox( NULL, L"Could not find texture map", L"YaMang.exe", MB_OK );
+					MessageBox( NULL, L"Could not find texture map", L"YaMang.DLL", MB_OK );
 				}
 			}
 		}
@@ -357,27 +358,27 @@ YAMANGDXDLL_API HRESULT HeightMapTextureImport ( HWND hWnd, LPCTSTR heightMap, L
 {
 	if ( FAILED( D3DXCreateTextureFromFileEx( g_D3dDevice, heightMap, D3DX_DEFAULT, D3DX_DEFAULT, D3DX_DEFAULT, 0, D3DFMT_X8B8G8R8, D3DPOOL_MANAGED, D3DX_DEFAULT, D3DX_DEFAULT, 0, NULL, NULL, &g_TexHeight ) ) )
 	{
-		MessageBox( NULL, L"Could not find heightMap file", L"YaMang.exe", MB_OK );
+		MessageBox( NULL, L"Could not find heightMap file", L"YaMang.DLL", MB_OK );
 		return E_FAIL;
 	}
 
 	if ( FAILED( D3DXCreateTextureFromFile( g_D3dDevice, mapTexture, &g_TexDiffuse ) ) )
 	{
-		MessageBox( NULL, L"Could not find heightMapTexture file", L"YaMang.exe", MB_OK );
+		MessageBox( NULL, L"Could not find heightMapTexture file", L"YaMang.DLL", MB_OK );
 		return E_FAIL;
 	}
 
-	if ( FAILED( InitVertexBuffer( hWnd ) ) )
-	{
-		MessageBox( NULL, L"Fail in InitVertexBuffer", L"YaMang.exe", MB_OK );
-		return E_FAIL;
-	}
-
-	if ( FAILED( InitIdxBuffer( hWnd ) ) )
-	{
-		MessageBox( NULL, L"Fail in InitIdxBuffer", L"YaMang.exe", MB_OK );
-		return E_FAIL;
-	}
+// 	if ( FAILED( InitVertexBuffer( hWnd ) ) )
+// 	{
+// 		MessageBox( NULL, L"Fail in InitVertexBuffer", L"YaMang.DLL", MB_OK );
+// 		return E_FAIL;
+// 	}
+// 
+// 	if ( FAILED( InitIdxBuffer( hWnd ) ) )
+// 	{
+// 		MessageBox( NULL, L"Fail in InitIdxBuffer", L"YaMang.DLL", MB_OK );
+// 		return E_FAIL;
+// 	}
 
 	
 	return S_OK;
@@ -396,15 +397,15 @@ YAMANGDXDLL_API void HeightMapCleanup()
 		g_TexDiffuse->Release();
 	}
 
-	if ( g_IdxBuffer != NULL )
-	{
-		g_IdxBuffer->Release();
-	}
-
-	if ( g_VertexBuffer != NULL )
-	{
-		g_VertexBuffer->Release();
-	}
+// 	if ( g_IdxBuffer != NULL )
+// 	{
+// 		g_IdxBuffer->Release();
+// 	}
+// 
+// 	if ( g_VertexBuffer != NULL )
+// 	{
+// 		g_VertexBuffer->Release();
+// 	}
 
 }
 
@@ -440,16 +441,21 @@ YAMANGDXDLL_API void HeightMapRender()
 // 	Log("%f, %f, %f, %f \n", worldMatrix._41, worldMatrix._42, worldMatrix._43, worldMatrix._44);
 // 	Log("==============================");
 
+	IDirect3DVertexBuffer9* RenderVertexBuffer = nullptr;
+	g_Mesh->GetVertexBuffer( &RenderVertexBuffer );
+
+	IDirect3DIndexBuffer9* RenderIndexBuffer = nullptr;
+	g_Mesh->GetIndexBuffer( &RenderIndexBuffer );
 
 	// 조명이 들어가면 버텍스 쪽 와이어가 색을 제대로 못 뿌림
 	g_D3dDevice->SetRenderState( D3DRS_LIGHTING, FALSE );
 	g_D3dDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_WIREFRAME );
 
-	g_D3dDevice->SetStreamSource( 0, g_VertexBuffer, 0, sizeof( CUSTOMVERTEX ) );
+	g_D3dDevice->SetStreamSource( 0, RenderVertexBuffer, 0, sizeof( CUSTOMVERTEX ) );
 	g_D3dDevice->SetFVF( D3DFVF_CUSTOMVERTEX );
 
 	g_D3dDevice->SetTexture( 0, g_TexDiffuse );
-	g_D3dDevice->SetIndices( g_IdxBuffer );
+	g_D3dDevice->SetIndices( RenderIndexBuffer );
 
 	// Log("Go! \n");
 	g_D3dDevice->DrawIndexedPrimitive( D3DPT_TRIANGLELIST, 0, 0, g_XHeight * g_ZHeight, 0, ( g_XHeight - 1 ) * ( g_ZHeight - 1 ) * 2 );
@@ -458,22 +464,37 @@ YAMANGDXDLL_API void HeightMapRender()
 
 YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 {
-	if ( g_IdxBuffer != NULL )
+	if ( g_Mesh != NULL )
 	{
-		g_IdxBuffer->Release();
+		IDirect3DVertexBuffer9* tempVertexBuffer = nullptr;
+		g_Mesh->GetVertexBuffer( &tempVertexBuffer );
+		tempVertexBuffer->Release();
+
+		IDirect3DIndexBuffer9* tempIndexBuffer = nullptr;
+		g_Mesh->GetIndexBuffer( &tempIndexBuffer );
+		tempIndexBuffer->Release();
+		g_Mesh->Release();
 	}
 
-	if ( g_VertexBuffer != NULL )
-	{
-		g_VertexBuffer->Release();
-	}
 
 	g_XHeight = col + 1;
 	g_ZHeight = row + 1;
 	
 	int verticesCount = ( g_XHeight )* ( g_ZHeight );
 	int indicesCount = col * row * 6;
+	int faceCount = ( g_XHeight - 1 ) * ( g_ZHeight - 1 ) * 2;
 	
+	//mesh를 직접 만들어 보자
+	//mesh를 직접 만들게 되면 사실 global vertex buffer와 index buffer가 무의미 하다.
+	HRESULT hr = 0;	
+	hr = D3DXCreateMeshFVF( faceCount, verticesCount, D3DXMESH_MANAGED|D3DXMESH_32BIT, D3DFVF_CUSTOMVERTEX, g_D3dDevice, &g_Mesh );
+	if ( FAILED( hr ) )
+	{
+		MessageBox( NULL, L"CreateMesh Failed", L"YaMang.DLL", MB_OK );
+		return;
+	}
+
+
 	CUSTOMVERTEX* baseVertex = new CUSTOMVERTEX[verticesCount];
 
 	int startIdx = 0;
@@ -494,31 +515,44 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 		}
 	}
 
-	HRESULT result = S_OK;
-	if ( FAILED( result = g_D3dDevice->CreateVertexBuffer( verticesCount * sizeof( CUSTOMVERTEX ), 0, D3DFVF_CUSTOMVERTEX, D3DPOOL_DEFAULT, &g_VertexBuffer, NULL ) ) )
-	{
-		if ( baseVertex )
-		{
-			delete[] baseVertex;
-			baseVertex = nullptr;
-		}
-		MessageBox( NULL, L"Fail in Create VertexBuffer", L"YaMang.exe", MB_OK );
-		return;
-	}
-
 	void *pVertices;
-	if ( FAILED( g_VertexBuffer->Lock( 0, 0, &pVertices, NULL ) ) )
+	if ( FAILED( g_Mesh->LockVertexBuffer( 0, &pVertices ) ) )
 	{
 		if ( baseVertex )
 		{
 			delete[] baseVertex;
 			baseVertex = nullptr;
 		}
-		MessageBox( NULL, L"Fail in lock VertexBuffer", L"YaMang.exe", MB_OK );
+		MessageBox( NULL, L"Fail in lock VertexBuffer", L"YaMang.DLL", MB_OK );
 		return;
 	}
 	memcpy( pVertices, baseVertex, verticesCount * sizeof( CUSTOMVERTEX ) );
-	g_VertexBuffer->Unlock();
+	g_Mesh->UnlockVertexBuffer();
+
+// 	HRESULT result = S_OK;
+// 	if ( FAILED( result = g_D3dDevice->CreateVertexBuffer( verticesCount * sizeof( CUSTOMVERTEX ), 0, D3DFVF_CUSTOMVERTEX, D3DPOOL_DEFAULT, &g_VertexBuffer, NULL ) ) )
+// 	{
+// 		if ( baseVertex )
+// 		{
+// 			delete[] baseVertex;
+// 			baseVertex = nullptr;
+// 		}
+// 		MessageBox( NULL, L"Fail in Create VertexBuffer", L"YaMang.DLL", MB_OK );
+// 		return;
+// 	}
+	
+// 	if ( FAILED( g_VertexBuffer->Lock( 0, 0, &pVertices, NULL ) ) )
+// 	{
+// 		if ( baseVertex )
+// 		{
+// 			delete[] baseVertex;
+// 			baseVertex = nullptr;
+// 		}
+// 		MessageBox( NULL, L"Fail in lock VertexBuffer", L"YaMang.DLL", MB_OK );
+// 		return;
+// 	}
+// 	memcpy( pVertices, baseVertex, verticesCount * sizeof( CUSTOMVERTEX ) );
+// 	g_VertexBuffer->Unlock();
 
 	UINT* baseIndex = new UINT[indicesCount];
 	startIdx = 0;
@@ -538,7 +572,7 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 	}
 
 	void* pIndices;
-	if ( FAILED( result = g_D3dDevice->CreateIndexBuffer( indicesCount * sizeof( UINT ), D3DUSAGE_WRITEONLY, D3DFMT_INDEX32, D3DPOOL_MANAGED, &g_IdxBuffer, NULL ) ) )
+	if ( FAILED( g_Mesh->LockIndexBuffer(0, &pIndices) ) )
 	{
 		if ( baseVertex )
 		{
@@ -550,28 +584,12 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 			delete[] baseIndex;
 			baseIndex = nullptr;
 		}
-		MessageBox( NULL, L"Fail in Create IndexBuffer", L"YaMang.exe", MB_OK );
-		return;
-	}
-
-	if ( FAILED( g_IdxBuffer->Lock( 0, indicesCount * sizeof(UINT), (void**) &pIndices, 0 ) ) )
-	{
-		if ( baseVertex )
-		{
-			delete[] baseVertex;
-			baseVertex = nullptr;
-		}
-		if ( baseIndex )
-		{
-			delete[] baseIndex;
-			baseIndex = nullptr;
-		}
-		MessageBox( NULL, L"Fail in lock IndexBuffer", L"YaMang.exe", MB_OK );
+		MessageBox( NULL, L"Fail in lock IndexBuffer", L"YaMang.DLL", MB_OK );
 		return;
 	}
 	memcpy( pIndices, baseIndex, sizeof(UINT) *indicesCount );
 
-	g_IdxBuffer->Unlock();
+	g_Mesh->UnlockIndexBuffer();
 
 	if ( baseVertex )
 	{
@@ -583,37 +601,50 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 		delete[] baseIndex;
 		baseIndex = nullptr;
 	}
+
+// 	if ( FAILED( result = g_D3dDevice->CreateIndexBuffer( indicesCount * sizeof( UINT ), D3DUSAGE_WRITEONLY, D3DFMT_INDEX32, D3DPOOL_MANAGED, &g_IdxBuffer, NULL ) ) )
+// 	{
+// 		if ( baseVertex )
+// 		{
+// 			delete[] baseVertex;
+// 			baseVertex = nullptr;
+// 		}
+// 		if ( baseIndex )
+// 		{
+// 			delete[] baseIndex;
+// 			baseIndex = nullptr;
+// 		}
+// 		MessageBox( NULL, L"Fail in Create IndexBuffer", L"YaMang.DLL", MB_OK );
+// 		return;
+// 	}
+
+// 	if ( FAILED( g_IdxBuffer->Lock( 0, indicesCount * sizeof(UINT), (void**) &pIndices, 0 ) ) )
+// 	{
+// 		if ( baseVertex )
+// 		{
+// 			delete[] baseVertex;
+// 			baseVertex = nullptr;
+// 		}
+// 		if ( baseIndex )
+// 		{
+// 			delete[] baseIndex;
+// 			baseIndex = nullptr;
+// 		}
+// 		MessageBox( NULL, L"Fail in lock IndexBuffer", L"YaMang.DLL", MB_OK );
+// 		return;
+// 	}
+// 	memcpy( pIndices, baseIndex, sizeof(UINT) *indicesCount );
+// 
+// 	g_IdxBuffer->Unlock();
+
 }
 
-//////////////////////////////////////////////////////////////////////////
-//Text Render
-//////////////////////////////////////////////////////////////////////////
-
-YAMANGDXDLL_API void RenderText( LPCWSTR text, float left, float top, int RGB_R, int RGB_G, int RGB_B, float right, float bottom)
-{
-	g_Sprite->Begin( D3DXSPRITE_ALPHABLEND | D3DXSPRITE_SORT_TEXTURE );
-	// 스프라이트 그리기 시작
-	// 2D일 경우 D3DXSPRITE_SORT_TEXTURE, 3D일 경우 D3DXSPRITE_OBJECTSPACE
-	RECT rt = {
-		static_cast<LONG>( left ),
-		static_cast<LONG>( top ),
-		static_cast<LONG>( right ),
-		static_cast<LONG>( bottom )
-	}; // 그릴 위치
-	g_Font->DrawText( g_Sprite, text
-					, -1										// 총 문자열 수(그냥 -1 해도 됨.) 
-					, &rt									// 그릴 위치 
-					, DT_NOCLIP								// 옵션 플래그
-					, D3DCOLOR_XRGB( RGB_R, RGB_G, RGB_B )	// 그릴 색 , default로 흰색
-					);
-	g_Sprite->End();											// 스프라이트 그리기 끝 
-}
 
 //////////////////////////////////////////////////////////////////////////
 // Picking Ray를 위한 부분
 //////////////////////////////////////////////////////////////////////////
 
-YAMANGDXDLL_API void CalcPickingRay( int mouseX, int mouseY, D3DXVECTOR3* rayOrigin, D3DXVECTOR3* rayDirection )
+YAMANGDXDLL_API void CalcPickingRay( int mouseX, int mouseY )
 {
 	D3DVIEWPORT9 veiwPort;
 	D3DXMATRIXA16 projectionMatrix;
@@ -628,8 +659,8 @@ YAMANGDXDLL_API void CalcPickingRay( int mouseX, int mouseY, D3DXVECTOR3* rayOri
 	rayY = ( ( ( mouseY *-2.f ) / (float) veiwPort.Height ) + 1.f ) / projectionMatrix._22;
 
 	//viewport트랜스, 프로젝션 트랜스 역행
-	*rayOrigin = D3DXVECTOR3( 0.f, 0.f, 0.f );
-	*rayDirection = D3DXVECTOR3( rayX, rayY, 1.f );
+	rayOrigin = { 0.f, 0.f, 0.f };
+	rayDirection = { rayX, rayY, 1.f };
 	Log( "뷰포트, 프로젝션 역행" );
 
 	//뷰잉 트랜스 역행
@@ -637,8 +668,8 @@ YAMANGDXDLL_API void CalcPickingRay( int mouseX, int mouseY, D3DXVECTOR3* rayOri
 	g_D3dDevice->GetTransform( D3DTS_VIEW, &viewingMatrix );
 	D3DXMatrixInverse( &viewingMatrix, 0, &viewingMatrix );
 
-	D3DXVec3TransformCoord( rayOrigin, rayOrigin, &viewingMatrix );
-	D3DXVec3TransformCoord( rayDirection, rayDirection, &viewingMatrix );
+	D3DXVec3TransformCoord( &rayOrigin, &rayOrigin, &viewingMatrix );
+	D3DXVec3TransformCoord( &rayDirection, &rayDirection, &viewingMatrix );
 	Log( "뷰잉 좌표 역행" );
 
 	//월드 좌표로 역행
@@ -646,11 +677,62 @@ YAMANGDXDLL_API void CalcPickingRay( int mouseX, int mouseY, D3DXVECTOR3* rayOri
 	g_D3dDevice->GetTransform( D3DTS_WORLD, &worldMatrix );
 	D3DXMatrixInverse( &worldMatrix, 0, &worldMatrix );
 
-	D3DXVec3TransformCoord( rayOrigin, rayOrigin, &worldMatrix );
-	D3DXVec3TransformCoord( rayDirection, rayDirection, &worldMatrix );
+	D3DXVec3TransformCoord( &rayOrigin, &rayOrigin, &worldMatrix );
+	D3DXVec3TransformCoord( &rayDirection, &rayDirection, &worldMatrix );
 	Log( "월드 좌표 역행" );
-	Log( "origin: %f,%f,%f\n direction: %f, %f, %f\n", rayOrigin->x, rayOrigin->y, rayOrigin->z, rayDirection->x, rayDirection->y, rayDirection->z );
+	Log( "origin: %f,%f,%f\n direction: %f, %f, %f\n", rayOrigin.x, rayOrigin.y, rayOrigin.z, rayDirection.x, rayDirection.y, rayDirection.z );
 
+}
+
+YAMANGDXDLL_API void GetPickedTriangle()
+{
+	LPDIRECT3DVERTEXBUFFER9 presentVertexBuffer;
+	LPDIRECT3DINDEXBUFFER9 presentIndexBuffer;
+
+	g_Mesh->GetVertexBuffer( &presentVertexBuffer );
+	g_Mesh->GetIndexBuffer( &presentIndexBuffer );
+
+
+// 	tempVertexBuffer = g_VertexBuffer;
+// 	tempIndexBuffer = g_IdxBuffer;
+
+	WORD* IndicesStartPoint;
+	CUSTOMVERTEX* VerticesStartPoint;
+
+	presentIndexBuffer->Lock( 0, 0, (void**) &IndicesStartPoint, 0 );
+	presentVertexBuffer->Lock( 0, 0, (void**) &VerticesStartPoint, 0 );
+
+// 	BOOL bHit;
+// 	DWORD dwFace;
+// 	FLOAT fBary1, fBary2, fDist;
+// 	D3DXIntersect( pMesh, &vPickRayOrig, &vPickRayDir, &bHit, &dwFace, &fBary1, &fBary2, &fDist,
+// 				   NULL, NULL );
+
+	
+}
+
+//////////////////////////////////////////////////////////////////////////
+//Text Render
+//////////////////////////////////////////////////////////////////////////
+
+YAMANGDXDLL_API void RenderText( LPCWSTR text, float left, float top, int RGB_R, int RGB_G, int RGB_B, float right, float bottom )
+{
+	g_Sprite->Begin( D3DXSPRITE_ALPHABLEND | D3DXSPRITE_SORT_TEXTURE );
+	// 스프라이트 그리기 시작
+	// 2D일 경우 D3DXSPRITE_SORT_TEXTURE, 3D일 경우 D3DXSPRITE_OBJECTSPACE
+	RECT rt = {
+		static_cast<LONG>( left ),
+		static_cast<LONG>( top ),
+		static_cast<LONG>( right ),
+		static_cast<LONG>( bottom )
+	}; // 그릴 위치
+	g_Font->DrawText( g_Sprite, text
+					  , -1										// 총 문자열 수(그냥 -1 해도 됨.) 
+					  , &rt									// 그릴 위치 
+					  , DT_NOCLIP								// 옵션 플래그
+					  , D3DCOLOR_XRGB( RGB_R, RGB_G, RGB_B )	// 그릴 색 , default로 흰색
+					  );
+	g_Sprite->End();											// 스프라이트 그리기 끝 
 }
 
 //////////////////////////////////////////////////////////////////////////

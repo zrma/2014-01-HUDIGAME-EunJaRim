@@ -108,7 +108,7 @@ void SetupTranslateMatricesTool()
 //height map 세계에 오신 것을 환영합니다.
 // :)
 //////////////////////////////////////////////////////////////////////////
-
+/*
 HRESULT InitVertexBuffer( HWND hWnd )
 {
 	D3DSURFACE_DESC ddsd;
@@ -207,4 +207,4 @@ HRESULT InitIdxBuffer(HWND hWnd)
 	return S_OK;
 }
 
-
+*/
