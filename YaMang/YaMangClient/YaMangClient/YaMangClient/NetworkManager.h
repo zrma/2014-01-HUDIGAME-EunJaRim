@@ -38,5 +38,5 @@ private:
 	int				m_MyPlayerId;
 };
 
-typedef void( *HandlerFunc )( PacketHeader& pktBase ) AAAA;
+typedef void( *HandlerFunc )( PacketHeader& pktBase );
 extern HandlerFunc HandlerTable[];

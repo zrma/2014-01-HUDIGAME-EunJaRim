@@ -116,7 +116,6 @@
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="ScenePlay.h" />
     <ClInclude Include="SceneResult.h" />
-    <ClInclude Include="SoundLowLevel.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Sword.h" />
@@ -154,7 +153,6 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="ScenePlay.cpp" />
     <ClCompile Include="SceneResult.cpp" />
-    <ClCompile Include="SoundLowLevel.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

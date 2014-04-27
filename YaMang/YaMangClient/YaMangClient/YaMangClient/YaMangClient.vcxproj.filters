@@ -169,9 +169,6 @@
     <ClInclude Include="Act.h">
       <Filter>UnitObject\Unit</Filter>
     </ClInclude>
-    <ClInclude Include="SoundLowLevel.h">
-      <Filter>Sound</Filter>
-    </ClInclude>
     <ClInclude Include="SoundManager.h">
       <Filter>Sound</Filter>
     </ClInclude>
@@ -275,9 +272,6 @@
     </ClCompile>
     <ClCompile Include="Unit.cpp">
       <Filter>UnitObject\Unit</Filter>
-    </ClCompile>
-    <ClCompile Include="SoundLowLevel.cpp">
-      <Filter>Sound</Filter>
     </ClCompile>
     <ClCompile Include="SoundManager.cpp">
       <Filter>Sound</Filter>

@@ -7,7 +7,7 @@
 #include "ScenePlay.h"
 #include "TextManager.h"
 
-AAAA HandlerTable[PKT_MAX];
+HandlerFunc HandlerTable[PKT_MAX];
 
 static void DefaultHandler( PacketHeader& pktBase )
 {

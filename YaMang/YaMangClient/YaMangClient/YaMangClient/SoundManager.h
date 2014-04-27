@@ -1,17 +1,23 @@
-#pragma once
+﻿#pragma once
 #include "MacroSet.h"
+#include "fmod_studio.hpp"
 
-class SoundLowLevel;
+
 class SoundManager:public Singleton<SoundManager>
 {
 public:
 	SoundManager();
 	~SoundManager();
 
-	void	Initialize();
-	void	test();
+	void							Initialize();
+	void							test(); // 이벤트 인스턴스 관리를 어떻게 해줘야 할까...
+
+	void							LoadBank( const char* fileName );
+	FMOD::Studio::EventInstance*	GetEventInstance( const char* path ); // 안전 할려나...
 
 private:
-	SoundLowLevel* m_SoundLowLevel = nullptr;
+	FMOD::Studio::System*			m_System = NULL;
+	FMOD_RESULT						m_Result = FMOD_OK; // if(result) <-정상이 아니면 빠짐
+
 };
 
