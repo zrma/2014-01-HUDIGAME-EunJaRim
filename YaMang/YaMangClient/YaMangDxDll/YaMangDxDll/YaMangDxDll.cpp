@@ -672,8 +672,8 @@ YAMANGDXDLL_API void CalcPickingRay( int mouseX, int mouseY )
 	rayY = ( ( ( mouseY *-2.f ) / (float) veiwPort.Height ) + 1.f ) / projectionMatrix._22;
 
 	//viewport트랜스, 프로젝션 트랜스 역행
-	rayOrigin = { 0.f, 0.f, 0.f };
-	rayDirection = { rayX, rayY, 1.f };
+	g_RayOrigin = { 0.f, 0.f, 0.f };
+	g_RayDirection = { rayX, rayY, 1.f };
 	Log( "뷰포트, 프로젝션 역행" );
 
 	//뷰잉 트랜스 역행
@@ -681,8 +681,8 @@ YAMANGDXDLL_API void CalcPickingRay( int mouseX, int mouseY )
 	g_D3dDevice->GetTransform( D3DTS_VIEW, &viewingMatrix );
 	D3DXMatrixInverse( &viewingMatrix, 0, &viewingMatrix );
 
-	D3DXVec3TransformCoord( &rayOrigin, &rayOrigin, &viewingMatrix );
-	D3DXVec3TransformCoord( &rayDirection, &rayDirection, &viewingMatrix );
+	D3DXVec3TransformCoord( &g_RayOrigin, &g_RayOrigin, &viewingMatrix );
+	D3DXVec3TransformCoord( &g_RayDirection, &g_RayDirection, &viewingMatrix );
 	Log( "뷰잉 좌표 역행" );
 
 	//월드 좌표로 역행
@@ -690,10 +690,10 @@ YAMANGDXDLL_API void CalcPickingRay( int mouseX, int mouseY )
 	g_D3dDevice->GetTransform( D3DTS_WORLD, &worldMatrix );
 	D3DXMatrixInverse( &worldMatrix, 0, &worldMatrix );
 
-	D3DXVec3TransformCoord( &rayOrigin, &rayOrigin, &worldMatrix );
-	D3DXVec3TransformCoord( &rayDirection, &rayDirection, &worldMatrix );
+	D3DXVec3TransformCoord( &g_RayOrigin, &g_RayOrigin, &worldMatrix );
+	D3DXVec3TransformCoord( &g_RayDirection, &g_RayDirection, &worldMatrix );
 	Log( "월드 좌표 역행" );
-	Log( "origin: %f,%f,%f\n direction: %f, %f, %f\n", rayOrigin.x, rayOrigin.y, rayOrigin.z, rayDirection.x, rayDirection.y, rayDirection.z );
+	Log( "origin: %f,%f,%f\n direction: %f, %f, %f\n", g_RayOrigin.x, g_RayOrigin.y, g_RayOrigin.z, g_RayDirection.x, g_RayDirection.y, g_RayDirection.z );
 
 }
 
@@ -706,22 +706,68 @@ YAMANGDXDLL_API void GetPickedTriangle()
 	g_Mesh->GetIndexBuffer( &presentIndexBuffer );
 
 
-// 	tempVertexBuffer = g_VertexBuffer;
-// 	tempIndexBuffer = g_IdxBuffer;
-
 	WORD* IndicesStartPoint;
 	CUSTOMVERTEX* VerticesStartPoint;
 
 	presentIndexBuffer->Lock( 0, 0, (void**) &IndicesStartPoint, 0 );
 	presentVertexBuffer->Lock( 0, 0, (void**) &VerticesStartPoint, 0 );
 
-// 	BOOL bHit;
-// 	DWORD dwFace;
-// 	FLOAT fBary1, fBary2, fDist;
-// 	D3DXIntersect( pMesh, &vPickRayOrig, &vPickRayDir, &bHit, &dwFace, &fBary1, &fBary2, &fDist,
-// 				   NULL, NULL );
+	BOOL bHit;
+	DWORD dwFace;
+	FLOAT fBary1, fBary2, fDist;
+	D3DXIntersect( g_Mesh, &g_RayOrigin, &g_RayDirection, &bHit, &dwFace, &fBary1, &fBary2, &fDist,
+				   NULL, NULL );
 
+	if ( bHit )
+	{
+		g_NumIntersections = 1;
+		g_IntersectionArray[0].dwFace = dwFace;
+		g_IntersectionArray[0].fBary1 = fBary1;
+		g_IntersectionArray[0].fBary2 = fBary2;
+		g_IntersectionArray[0].fDist = fDist;
+	}
+	else
+	{
+		g_NumIntersections = 0;
+	}
+
+
+	if ( g_NumIntersections > 0 )
+	{
+		CUSTOMVERTEX* intersectedVertexBufferStart;
+		CUSTOMVERTEX* intersectedTriVertices;
+		WORD* intersectedTriIndices;
+		CUSTOMVERTEX v1, v2, v3;
+		INTERSECTION* intersection;
+
+		g_Mesh->LockVertexBuffer( 0, (void**) &intersectedVertexBufferStart );
+
+		for ( DWORD i = 0; i < g_NumIntersections; ++i )
+		{
+			intersection = &g_IntersectionArray[i];
+
+			//vertexBuffer 내에서 부딫힌 vertex 주소 값 찾는 부분
+			intersectedTriVertices = &intersectedVertexBufferStart[i * 3];
+			//index 주소 값 찾는 것
+			intersectedTriIndices = &IndicesStartPoint[3 * intersection->dwFace];
+
+			//vertex와 index 바인딩
+			intersectedTriVertices[0] = VerticesStartPoint[intersectedTriIndices[0]];
+			intersectedTriVertices[0].Diffuse = D3DCOLOR_ARGB( 255, 30, 30, 150 );
+			intersectedTriVertices[1] = VerticesStartPoint[intersectedTriIndices[1]];
+			intersectedTriVertices[1].Diffuse = D3DCOLOR_ARGB( 255, 30, 30, 150 );
+			intersectedTriVertices[2] = VerticesStartPoint[intersectedTriIndices[2]];
+			intersectedTriVertices[2].Diffuse = D3DCOLOR_ARGB( 255, 30, 30, 150 );
+		}
+
+		g_Mesh->UnlockVertexBuffer();
+	}
+
+	presentVertexBuffer->Unlock();
+	presentIndexBuffer->Unlock();
 	
+	presentVertexBuffer->Release();
+	presentIndexBuffer->Release();
 }
 
 //////////////////////////////////////////////////////////////////////////

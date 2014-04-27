@@ -1,14 +1,14 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "GlobalVar.h"
 
 //////////////////////////////////////////////////////////////////////////
-// °ø¿ë º¯¼ö ÃÊ±âÈ­ ¿µ¿ª
+// ê³µìš© ë³€ìˆ˜ ì´ˆê¸°í™” ì˜ì—­
 //////////////////////////////////////////////////////////////////////////
-//ºÎ¸ğ Process °ø¿ë ÀÚ¿ø
+//ë¶€ëª¨ Process ê³µìš© ìì›
 LPDIRECT3D9 g_D3D = nullptr;
 LPDIRECT3DDEVICE9 g_D3dDevice = nullptr;
 
-//Height Map »ı¼º¿ë °ø¿ë ÀÚ¿ø
+//Height Map ìƒì„±ìš© ê³µìš© ìì›
 //LPDIRECT3DVERTEXBUFFER9 g_VertexBuffer = nullptr;
 //LPDIRECT3DINDEXBUFFER9 g_IdxBuffer = nullptr;
 LPD3DXMESH g_Mesh = nullptr;
@@ -19,28 +19,30 @@ LPDIRECT3DTEXTURE9 g_TexDiffuse = nullptr;
 DWORD g_XHeight = 0;
 DWORD g_ZHeight = 0;
 
-//ÅØ½ºÆ® Ãâ·Â¿¡ ÇÊ¿äÇÑ ÀÚ¿ø
-ID3DXFont*		g_Font = nullptr;		// ±ÛÀÚ¸¦ ±×¸± ÆùÆ® ½ºÅ¸ÀÏ °´Ã¼
-ID3DXSprite*	g_Sprite = nullptr;		// ÆùÆ®¸¦ ±×¸± ½ºÇÁ¶óÀÌÆ® °´Ã¼ 
+//í…ìŠ¤íŠ¸ ì¶œë ¥ì— í•„ìš”í•œ ìì›
+ID3DXFont*		g_Font = nullptr;		// ê¸€ìë¥¼ ê·¸ë¦´ í°íŠ¸ ìŠ¤íƒ€ì¼ ê°ì²´
+ID3DXSprite*	g_Sprite = nullptr;		// í°íŠ¸ë¥¼ ê·¸ë¦´ ìŠ¤í”„ë¼ì´íŠ¸ ê°ì²´ 
 
 
-///D3D cursor Set¿¡ ÇÊ¿äÇÑ ÀÚ¿ø
-//IDirect3DSurface9* g_surfcursor = nullptr; //Å×½ºÆ® Áß
-//IDirect3DTexture9* g_cursortex = nullptr; //Å×½ºÆ® Áß
+///D3D cursor Setì— í•„ìš”í•œ ìì›
+//IDirect3DSurface9* g_surfcursor = nullptr; //í…ŒìŠ¤íŠ¸ ì¤‘
+//IDirect3DTexture9* g_cursortex = nullptr; //í…ŒìŠ¤íŠ¸ ì¤‘
 LPDIRECT3DTEXTURE9 g_cursorTex = 0;
 LPD3DXSPRITE g_cursorSprite = 0;
 D3DXVECTOR3 g_cursorPos;
 
-/// tool Camera °ü·Ã º¤ÅÍ
+/// tool Camera ê´€ë ¨ ë²¡í„°
 D3DXVECTOR3		g_EyePoint = { 0, 0, 0 };
 D3DXVECTOR3		g_LookAtPoint = { 0, 0, 1.0f };
 D3DXVECTOR3		g_UpVector = { 0, 1, 0 };
 
-//Picking °ü·Ã º¤ÅÍ
-D3DXVECTOR3		rayOrigin;
-D3DXVECTOR3		rayDirection;
+//Picking ê´€ë ¨ ë³€ìˆ˜
+D3DXVECTOR3		g_RayOrigin;
+D3DXVECTOR3		g_RayDirection;
+DWORD			g_NumIntersections;
+INTERSECTION	g_IntersectionArray[maxIntersections] = { 0, };
 
-//
+//í™”ë©´ ì¢…íš¡ë¹„ ê´€ë ¨ ë³€ìˆ˜
 float	g_Ratio = 1280 / 720;
 float	g_Width = 1280;
 

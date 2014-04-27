@@ -1,7 +1,7 @@
-#include <d3dx9.h>
+ï»¿#include <d3dx9.h>
 
 
-//vertex, index Á¤ÀÇ
+//vertex, index ì •ì˜
 struct CUSTOMVERTEX
 {
 	D3DXVECTOR3 vertexPoint;
@@ -16,16 +16,25 @@ struct MYINDEX
 	UINT _0, _1, _2;
 };
 
+struct INTERSECTION
+{
+	DWORD dwFace;
+	//ë¬´ê²Œ ì¤‘ì‹¬ì 
+	FLOAT fBary1, fBary2; 
+	//originë¶€í„°ì˜ ê±°ë¦¬
+	FLOAT fDist;
+	//FLOAT tu, tv;                 // texture coords of intersection
+};
 
 //////////////////////////////////////////////////////////////////////////
-//Global val ¼±¾ğ
+//Global val ì„ ì–¸
 //////////////////////////////////////////////////////////////////////////
-//ºÎ¸ğ Process °ø¿ë ÀÚ¿ø
+//ë¶€ëª¨ Process ê³µìš© ìì›
 extern LPDIRECT3D9 g_D3D;
 extern LPDIRECT3DDEVICE9 g_D3dDevice;
 
 //////////////////////////////////////////////////////////////////////////
-//Height Map »ı¼º¿ë °ø¿ë ÀÚ¿ø
+//Height Map ìƒì„±ìš© ê³µìš© ìì›
 //////////////////////////////////////////////////////////////////////////
 // extern LPDIRECT3DVERTEXBUFFER9 g_VertexBuffer;
 // extern LPDIRECT3DINDEXBUFFER9 g_IdxBuffer;
@@ -39,16 +48,16 @@ extern DWORD g_XHeight;
 extern DWORD g_ZHeight;
 
 //////////////////////////////////////////////////////////////////////////
-//ÅØ½ºÆ® Ãâ·Â¿¡ ÇÊ¿äÇÑ ÀÚ¿ø
+//í…ìŠ¤íŠ¸ ì¶œë ¥ì— í•„ìš”í•œ ìì›
 //////////////////////////////////////////////////////////////////////////
-extern ID3DXFont*	g_Font;		// ±ÛÀÚ¸¦ ±×¸± ÆùÆ® ½ºÅ¸ÀÏ °´Ã¼
-extern ID3DXSprite*	g_Sprite;		// ÆùÆ®¸¦ ±×¸± ½ºÇÁ¶óÀÌÆ® °´Ã¼ 
+extern ID3DXFont*	g_Font;		// ê¸€ìë¥¼ ê·¸ë¦´ í°íŠ¸ ìŠ¤íƒ€ì¼ ê°ì²´
+extern ID3DXSprite*	g_Sprite;		// í°íŠ¸ë¥¼ ê·¸ë¦´ ìŠ¤í”„ë¼ì´íŠ¸ ê°ì²´ 
 
 //////////////////////////////////////////////////////////////////////////
-///D3D cursor Set¿¡ ÇÊ¿äÇÑ ÀÚ¿ø
+///D3D cursor Setì— í•„ìš”í•œ ìì›
 //////////////////////////////////////////////////////////////////////////
-//IDirect3DSurface9* g_surfcursor = nullptr; //Å×½ºÆ® Áß
-//IDirect3DTexture9* g_cursortex = nullptr; //Å×½ºÆ® Áß
+//IDirect3DSurface9* g_surfcursor = nullptr; //í…ŒìŠ¤íŠ¸ ì¤‘
+//IDirect3DTexture9* g_cursortex = nullptr; //í…ŒìŠ¤íŠ¸ ì¤‘
 
 extern LPDIRECT3DTEXTURE9	g_cursorTex;
 extern LPD3DXSPRITE			g_cursorSprite;
@@ -56,20 +65,25 @@ extern D3DXVECTOR3			g_cursorPos;
 
 
 //////////////////////////////////////////////////////////////////////////
-/// tool Camera °ü·Ã º¤ÅÍ
+/// tool Camera ê´€ë ¨ ë²¡í„°
 //////////////////////////////////////////////////////////////////////////
 extern D3DXVECTOR3		g_EyePoint;
 extern D3DXVECTOR3		g_LookAtPoint;
 extern D3DXVECTOR3		g_UpVector;
 
 //////////////////////////////////////////////////////////////////////////
-//peeking °ü·Ã º¤ÅÍ
+//peeking ê´€ë ¨ ë³€ìˆ˜
 //////////////////////////////////////////////////////////////////////////
-extern D3DXVECTOR3		rayOrigin;
-extern D3DXVECTOR3		rayDirection;
+extern D3DXVECTOR3		g_RayOrigin;
+extern D3DXVECTOR3		g_RayDirection;
+extern DWORD			g_NumIntersections;
+//í•œ ë²ˆì— ì¶©ëŒì²´í¬ ê°€ëŠ¥í•œ ìˆ˜(ì„ì˜ ì„¤ì •)
+CONST DWORD maxIntersections = 10;
+extern INTERSECTION g_IntersectionArray[maxIntersections]; // Intersection info
+
 
 //////////////////////////////////////////////////////////////////////////
-/// È­¸é Á¾È¾ºñ
+/// í™”ë©´ ì¢…íš¡ë¹„
 //////////////////////////////////////////////////////////////////////////
 extern float			g_Ratio;
 extern float			g_Width;

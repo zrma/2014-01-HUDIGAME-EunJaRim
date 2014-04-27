@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "InnerResource.h"
 #include "GlobalVar.h"
 
@@ -8,16 +8,16 @@ void SetupTranslateMatrices()
 	D3DXMatrixIdentity(&matWorld);
 	g_D3dDevice->SetTransform(D3DTS_WORLD, &matWorld);
 
-	//x, y, zÃà ÀÔ·Â °ª¿¡ ´ëÇØ ÀÌµ¿ Ã³¸®
+	//x, y, zì¶• ì…ë ¥ ê°’ì— ëŒ€í•´ ì´ë™ ì²˜ë¦¬
 	D3DXMATRIXA16 thisMatrix;
 	D3DXMatrixTranslation(&thisMatrix, 0, 0, 0);
 	g_D3dDevice->MultiplyTransform(D3DTS_WORLD, &thisMatrix);
 
-	//ÇâÈÄ Ãß°¡ ¸ÅÆ®¸¯½º Ã³¸® ÇÊ¿ä ³»¿ë¿¡ ´ëÇØ Ãß°¡ ¿¹Á¤
+	//í–¥í›„ ì¶”ê°€ ë§¤íŠ¸ë¦­ìŠ¤ ì²˜ë¦¬ í•„ìš” ë‚´ìš©ì— ëŒ€í•´ ì¶”ê°€ ì˜ˆì •
 }
 
-//Ä«¸Ş¶ó ¼¼ÆÃÀº ÇâÈÄ¿¡ ÁøÇàÇÏµµ·Ï ÇÔ
-//default·Î ÀÏ´Ü ÀÌ·¸°Ô µÒ
+//ì¹´ë©”ë¼ ì„¸íŒ…ì€ í–¥í›„ì— ì§„í–‰í•˜ë„ë¡ í•¨
+//defaultë¡œ ì¼ë‹¨ ì´ë ‡ê²Œ ë‘ 
 void ViewSetting()
 {
 	D3DXVECTOR3 vEyePt(0.f, 3.f, -5.f);
@@ -28,12 +28,12 @@ void ViewSetting()
 	g_D3dDevice->SetTransform(D3DTS_VIEW, &matView);
 }
 
-//light ¼¼ÆÃ¿¡ ´ëÇØ¼­´Â ÇâÈÄ Ãß°¡
-//light´Â ¿©·¯°³¸¦ ¹Ì¸® °¡Áö°í ÀÖ°Ô ÇÒ °ÍÀÎ°¡?
-//¾Æ´Ï¸é »ç¿ëÀÚ°¡ ÃÖ¼Ò·Î Ãß°¡ÇÏ°í ÇØ´ç light¸¦ °ø¿ë ÀÚ¿øÀ¸·Î ÇÒ °ÍÀÎ°¡?
+//light ì„¸íŒ…ì— ëŒ€í•´ì„œëŠ” í–¥í›„ ì¶”ê°€
+//lightëŠ” ì—¬ëŸ¬ê°œë¥¼ ë¯¸ë¦¬ ê°€ì§€ê³  ìˆê²Œ í•  ê²ƒì¸ê°€?
+//ì•„ë‹ˆë©´ ì‚¬ìš©ìê°€ ìµœì†Œë¡œ ì¶”ê°€í•˜ê³  í•´ë‹¹ lightë¥¼ ê³µìš© ìì›ìœ¼ë¡œ í•  ê²ƒì¸ê°€?
 void Lighting(int lightNum)
 {
-	//ÀçÁú ¼Ó¼º ºÎ¿©
+	//ì¬ì§ˆ ì†ì„± ë¶€ì—¬
 	D3DMATERIAL9 mtrl;
 	ZeroMemory(&mtrl, sizeof(D3DMATERIAL9));
 	mtrl.Diffuse.r = mtrl.Ambient.r = 1.0f;
@@ -96,16 +96,16 @@ void SetupTranslateMatricesTool()
 	D3DXMatrixIdentity(&matWorld);
 	g_D3dDevice->SetTransform(D3DTS_WORLD, &matWorld);
 
-	//x, y, zÃà ÀÔ·Â °ª¿¡ ´ëÇØ ÀÌµ¿ Ã³¸®
+	//x, y, zì¶• ì…ë ¥ ê°’ì— ëŒ€í•´ ì´ë™ ì²˜ë¦¬
 	D3DXMATRIXA16 thisMatrix;
 	D3DXMatrixTranslation(&thisMatrix, 0, 0, 0);
 	g_D3dDevice->MultiplyTransform(D3DTS_WORLD, &thisMatrix);
 
-	//ÇâÈÄ Ãß°¡ ¸ÅÆ®¸¯½º Ã³¸® ÇÊ¿ä ³»¿ë¿¡ ´ëÇØ Ãß°¡ ¿¹Á¤
+	//í–¥í›„ ì¶”ê°€ ë§¤íŠ¸ë¦­ìŠ¤ ì²˜ë¦¬ í•„ìš” ë‚´ìš©ì— ëŒ€í•´ ì¶”ê°€ ì˜ˆì •
 }
 
 //////////////////////////////////////////////////////////////////////////
-//height map ¼¼°è¿¡ ¿À½Å °ÍÀ» È¯¿µÇÕ´Ï´Ù.
+//height map ì„¸ê³„ì— ì˜¤ì‹  ê²ƒì„ í™˜ì˜í•©ë‹ˆë‹¤.
 // :)
 //////////////////////////////////////////////////////////////////////////
 /*
@@ -125,7 +125,7 @@ HRESULT InitVertexBuffer( HWND hWnd )
 	}
 
 	//surface lock
-	//È®ÀÎ¸¸ ÇÏ°í ¾µÀÏÀº ¾øÀ¸¹Ç·Î readonly
+	//í™•ì¸ë§Œ í•˜ê³  ì“¸ì¼ì€ ì—†ìœ¼ë¯€ë¡œ readonly
 	g_TexHeight->LockRect( 0, &d3drc, NULL, D3DLOCK_READONLY );
 
 	VOID* vertices;
@@ -136,7 +136,7 @@ HRESULT InitVertexBuffer( HWND hWnd )
 	}
 
 
-	// Vertex ±¸Á¶Ã¼ Ã¤¿ì±â
+	// Vertex êµ¬ì¡°ì²´ ì±„ìš°ê¸°
 	CUSTOMVERTEX vertex;
 	CUSTOMVERTEX* vertexPointer = (CUSTOMVERTEX*)vertices;
 
@@ -148,14 +148,14 @@ HRESULT InitVertexBuffer( HWND hWnd )
 			vertex.vertexPoint.z = -( (float)z - g_ZHeight / 2.0f );
 			vertex.vertexPoint.y = ( (float)( *( (LPDWORD)d3drc.pBits + x + z*( d3drc.Pitch / 4 ) ) & 0x000000ff ) ) / 10.f;
 
-			// normal °ªÀÌ°í
-			// 0,0,0 ±âÁØÀ¸·Î °¢ ÁöÁ¡ÀÇ normal °ªÀ» °è»ê
+			// normal ê°’ì´ê³ 
+			// 0,0,0 ê¸°ì¤€ìœ¼ë¡œ ê° ì§€ì ì˜ normal ê°’ì„ ê³„ì‚°
 			// vertex.vertexNormal.x = vertex.vertexPoint.x;
 			// vertex.vertexNormal.y = vertex.vertexPoint.y;
 			// vertex.vertexNormal.z = vertex.vertexPoint.z;
 			// 
-			// // ´ÜÀ§ º¤ÅÍ·Î ¸¸µå´Â °Í
-			// // Á¤±ÔÈ­ º¤ÅÍ·Î º¯°æÇÏ´Â ¿¬»ê
+			// // ë‹¨ìœ„ ë²¡í„°ë¡œ ë§Œë“œëŠ” ê²ƒ
+			// // ì •ê·œí™” ë²¡í„°ë¡œ ë³€ê²½í•˜ëŠ” ì—°ì‚°
 			// D3DXVec3Normalize(&vertex.vertexNormal, &vertex.vertexNormal);
 
 			vertex.vertexTexturePoint.x = (float)x / ( g_XHeight - 1 );
