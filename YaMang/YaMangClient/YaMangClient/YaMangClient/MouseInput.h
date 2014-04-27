@@ -19,12 +19,12 @@ public:
 	void			SetMousePosition(int xPos, int yPos) { m_xPos = xPos; m_yPos = yPos; }
 	MouseStatus		GetMouseStatus() { return m_MouseStatus; }
 	void			SetMouseStatus(MouseStatus mouseStatus) { m_MouseStatus = mouseStatus; }
+	void			MoveMousePosition(int x, int y) { m_xPos += x; m_yPos += y; }
 
 private:
 	int				m_xPos = 200;
 	int				m_yPos = 200;
 	COORD			m_MousePosition;
-	unsigned char	m_KeyValue = 0;
 	MouseStatus		m_MouseStatus = MouseStatus::MOUSE_NONE;
 
 };

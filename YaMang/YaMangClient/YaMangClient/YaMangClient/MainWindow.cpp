@@ -58,15 +58,15 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 		}
 			return 0;
 
-		/*
+		case WM_SETCURSOR:
 		case WM_MOUSEMOVE:
 		{
-			MouseX = LOWORD( IParam );
-			MouseY = HIWORD( IParam );
+			int MouseX = LOWORD( lParam );
+			int MouseY = HIWORD( lParam );
+			
 		}
-			break;
-		*/
-
+			return 0;
+		
 		case WM_SYSKEYDOWN:
 		case WM_KEYDOWN:
 		{

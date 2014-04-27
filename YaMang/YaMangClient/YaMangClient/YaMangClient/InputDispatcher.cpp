@@ -10,6 +10,7 @@
 #include "stdafx.h"
 #include "InputDispatcher.h"
 #include "KeyInput.h"
+#include "MouseInput.h"
 #include "GameManager.h"
 #include "CameraController.h"
 #include "NetworkManager.h"
@@ -52,6 +53,7 @@ struct RegisterKeyHandler
 InputDispatcher::InputDispatcher()
 {
 	m_IsKeyPressed.fill( false );
+	m_MouseInput = new MouseInput;
 }
 
 
@@ -102,6 +104,11 @@ void InputDispatcher::DispatchKeyInput()
 			break;
 		}
 	}
+}
+
+void InputDispatcher::EventMouseMove(int XMove /*= 0*/, int YMove /*= 0*/)
+{
+	m_MouseInput->MoveMousePosition(XMove, YMove);
 }
 
 
