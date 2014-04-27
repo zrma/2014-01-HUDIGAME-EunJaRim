@@ -84,7 +84,7 @@ private:
 	DWORD				m_LastClientWorkTick;
 
 
-	std::vector<std::vector<Tile>>	m_Map;
+	std::vector<std::vector<Tile>>	m_BattleMap;
 
 	bool				m_IsGameStart = false;
 	ActionScheduler*	m_ActionScheduler = nullptr;
