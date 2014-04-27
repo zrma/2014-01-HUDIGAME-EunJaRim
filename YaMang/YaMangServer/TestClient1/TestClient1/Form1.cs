@@ -30,6 +30,7 @@ namespace TestClient1
             {
                 IsServerConnected = true;
                 lb_connect_server.Text = "CONNECTED!";
+                Network.SendLoginRequest(playerID);
             }
             else
             {
@@ -37,13 +38,6 @@ namespace TestClient1
             }
         }
 
-        private void bu_login_Click(object sender, EventArgs e)
-        {
-            if( IsServerConnected )
-            {
-                Network.SendLoginRequest(playerID);
-            }
-        }
 
         private void bu_gameOver_send_Click(object sender, EventArgs e)
         {

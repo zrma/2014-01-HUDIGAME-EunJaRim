@@ -23,13 +23,17 @@ namespace TestClient1
             IPEndPoint serverEndPoint = new IPEndPoint(serverIP, port);
             socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-            socket.Connect(serverEndPoint);
-
-            if (socket.Connected)
+            try
             {
+                socket.Connect(serverEndPoint);
                 return true;
             }
-            return false;
+            catch (Exception)
+            {
+                return false;
+            }
+            
+            
         }
 
         public static unsafe bool SendLoginRequest(int playerID)
