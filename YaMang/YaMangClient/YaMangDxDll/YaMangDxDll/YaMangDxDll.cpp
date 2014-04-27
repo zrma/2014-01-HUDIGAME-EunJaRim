@@ -304,16 +304,6 @@ YAMANGDXDLL_API void MeshObjectCleanUp( MESHOBJECT* inputVal )
 
 YAMANGDXDLL_API void D3DCleanUp()
 {
-	if ( NULL != g_D3dDevice )
-	{
-		g_D3dDevice->Release();
-	}
-
-	if ( NULL != g_D3D )
-	{
-		g_D3D->Release();
-	}
-
 	// 텍스트 소멸자 합침
 	if ( g_Font != NULL )
 	{
@@ -323,6 +313,22 @@ YAMANGDXDLL_API void D3DCleanUp()
 	if ( g_Sprite != NULL )
 	{
 		g_Sprite->Release();
+	}
+	/*
+	if ( g_Mesh != NULL )
+	{
+		g_Mesh->Release();
+	}
+	*/
+
+	if ( NULL != g_D3dDevice )
+	{
+		g_D3dDevice->Release();
+	}
+
+	if ( NULL != g_D3D )
+	{
+		g_D3D->Release();
 	}
 
 #ifdef _PRINT_CONSOLE

@@ -36,6 +36,8 @@
             this.RenderTarget = new System.Windows.Forms.PictureBox();
             this.sideMenu = new System.Windows.Forms.TabControl();
             this.Terrain = new System.Windows.Forms.TabPage();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.Texture = new System.Windows.Forms.TabPage();
             this.Object = new System.Windows.Forms.TabPage();
             this.label1 = new System.Windows.Forms.Label();
@@ -45,8 +47,6 @@
             this.MapHeightVal = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.MapVertexSpacingVal = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.RenderTarget)).BeginInit();
             this.sideMenu.SuspendLayout();
@@ -122,6 +122,22 @@
             this.Terrain.TabIndex = 0;
             this.Terrain.Text = "Terrain";
             this.Terrain.UseVisualStyleBackColor = true;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(7, 34);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(100, 21);
+            this.textBox2.TabIndex = 1;
+            this.textBox2.Text = "200";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(6, 6);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(100, 21);
+            this.textBox1.TabIndex = 0;
+            this.textBox1.Text = "200";
             // 
             // Texture
             // 
@@ -206,22 +222,6 @@
             this.MapVertexSpacingVal.Text = "1.0";
             this.MapVertexSpacingVal.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(6, 6);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 21);
-            this.textBox1.TabIndex = 0;
-            this.textBox1.Text = "200";
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(7, 34);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 21);
-            this.textBox2.TabIndex = 1;
-            this.textBox2.Text = "200";
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -239,6 +239,7 @@
             this.Controls.Add(this.menuStrip1);
             this.Name = "Main";
             this.Text = "HeightMap Tool";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.RenderTarget)).EndInit();

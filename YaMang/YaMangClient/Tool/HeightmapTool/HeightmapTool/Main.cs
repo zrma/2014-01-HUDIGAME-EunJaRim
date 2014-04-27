@@ -72,7 +72,7 @@ namespace YamangTools
             }
         }
 
-        private void Form_FormClosing(object sender, FormClosingEventArgs e)
+        private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason == CloseReason.UserClosing)
             {
