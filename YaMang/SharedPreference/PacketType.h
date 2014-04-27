@@ -229,7 +229,7 @@ struct GenerateCorpsRequest: public PacketHeader
 	}												// total = 32
 
 	UnitType m_UnitType;
-	Position m_Position;
+	PositionInfo m_Position;
 };
 
 struct GenerateCorpsResult: public PacketHeader
@@ -245,7 +245,7 @@ struct GenerateCorpsResult: public PacketHeader
 	}
 
 	UnitType m_UnitType;
-	Position m_Position;
+	PositionInfo m_Position;
 	int		 m_CorpsID;
 	int		 m_PlayerId;
 };
@@ -262,7 +262,7 @@ struct MoveCorpsRequest: public PacketHeader
 		
 	}
 	int		 m_CorpsID;
-	Position m_Destination;
+	PositionInfo m_Destination;
 };
 
 struct MoveCorpsResult: public PacketHeader
@@ -278,7 +278,7 @@ struct MoveCorpsResult: public PacketHeader
 
 	int		 m_CorpsID;
 	float	 m_Speed;
-	Position m_Direction;
+	PositionInfo m_Direction;
 };
 
 

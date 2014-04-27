@@ -7,12 +7,12 @@ extern const float NOT_A_NUMBER_FLOAT;
 class Corps
 {
 public:
-	Corps( int playerID, int corpsID, Position position );
+	Corps( int playerID, int corpsID, PositionInfo position );
 	virtual ~Corps();
 
 	int						GetCorpsID() { return m_CorpsID; }
 	short					GetCorpsSize() { return m_UnitNum; }
-	Position				GetPosition() { return m_Position; }
+	PositionInfo				GetPosition() { return m_Position; }
 
 	void					SetHoldingAction( Action* holdAction ) { m_HoldAction = holdAction; }
 	Action*					GetHoldingAction( ) { return m_HoldAction; }
@@ -32,7 +32,7 @@ protected:
 	int						m_HP = 100;
 	short					m_UnitNum = -1;
 
-	Position				m_Position;
+	PositionInfo				m_Position;
 	FormationType			m_Formation = FormationType::FORMATION_NONE;
 
 	Action*					m_HoldAction = nullptr;

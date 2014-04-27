@@ -424,7 +424,7 @@ bool ClientManager::ReadMapFile( const char* filename )
 	return true;
 }
 
-int ClientManager::GenerateCorps( int playerID, UnitType type, Position position )
+int ClientManager::GenerateCorps( int playerID, UnitType type, PositionInfo position )
 {
 	Corps* corps = nullptr;
 	switch ( type )

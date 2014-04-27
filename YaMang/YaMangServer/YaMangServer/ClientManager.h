@@ -7,14 +7,14 @@ class Corps;
 class ClientSession;
 class ActionScheduler;
 class Action;
-struct Position;
+struct PositionInfo;
 struct PacketHeader;
 struct DatabaseJobContext;
 struct Tile
 {
-	unsigned char R;
-	unsigned char G;
-	unsigned char B;
+	unsigned char R; // 맵 데이터의 R값 아직 어떤 속성값을 넣을지 정해지지 않음 맵툴쪽과 합의 필요
+	unsigned char G; 
+	unsigned char B; // 아마도 height값이 올 예정
 };
 
 class ClientManager
@@ -45,7 +45,7 @@ public:
 
 
 
-	int					GenerateCorps( int playerID, UnitType type, Position position );
+	int					GenerateCorps( int playerID, UnitType type, PositionInfo position );
 	void				AddActionToScheduler( Action* addedAction, int64_t remainTime );
 
 

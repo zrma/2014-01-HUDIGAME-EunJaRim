@@ -215,7 +215,7 @@ void ClientSession::HandleGenerateCorpsRequest( GenerateCorpsRequest& inPacket )
 	m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size );
 
 	UnitType unitType = inPacket.m_UnitType;
-	Position position = inPacket.m_Position;
+	PositionInfo position = inPacket.m_Position;
 	
 	int generatedCorpsID = m_ClientManager->GenerateCorps( m_PlayerID, unitType, position );
 
@@ -251,7 +251,7 @@ void ClientSession::HandleMoveCorpsRequest( MoveCorpsRequest& inPacket )
 	m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size );
 	
 	int corpsID = inPacket.m_CorpsID;
-	Position destination = inPacket.m_Destination;
+	PositionInfo destination = inPacket.m_Destination;
 
 	if ( corpsID == -1 )
 	{

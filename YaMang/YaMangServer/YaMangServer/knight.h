@@ -5,7 +5,7 @@ class Knight:
 	public Corps
 {
 public:
-	Knight( int playerID, int corpsID, Position position ):Corps( playerID, corpsID, position ) {};
+	Knight( int playerID, int corpsID, PositionInfo position ):Corps( playerID, corpsID, position ) {};
 	virtual ~Knight( );
 
 private:
