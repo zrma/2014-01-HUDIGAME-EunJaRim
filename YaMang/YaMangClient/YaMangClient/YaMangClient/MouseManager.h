@@ -12,6 +12,7 @@ public:
 	HRESULT		RenderCursor();
 	void		CleanupCursor();
 	void		SetCursorPos( float PosX, float PosY );
+	void		RemoveWndCursor();
 
 private:
 	bool		m_IsCursorReady = false;
