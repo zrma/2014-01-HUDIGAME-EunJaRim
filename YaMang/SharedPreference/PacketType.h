@@ -7,7 +7,7 @@
 #define MAX_NAME_LEN	30
 #define MAX_COMMENT_LEN	40
 
-enum PacketTypes
+enum PacketTypes: short
 {
 	PKT_NONE = 0,
 
@@ -222,11 +222,11 @@ struct GenerateCorpsRequest: public PacketHeader
 {
 	GenerateCorpsRequest( )
 	{
-		m_Size = sizeof( GenerateCorpsRequest );	// 2
-		m_Type = PKT_CS_GENERATE_CORPS;				// 2
-		m_UnitType = UnitType::UNIT_NONE;			// 4
-		m_Position;									// 24
-	}												// total = 32
+		m_Size = sizeof( GenerateCorpsRequest );
+		m_Type = PKT_CS_GENERATE_CORPS;
+		m_UnitType = UnitType::UNIT_NONE;
+		m_Position;
+	}
 
 	UnitType m_UnitType;
 	PositionInfo m_Position;

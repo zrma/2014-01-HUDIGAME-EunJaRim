@@ -100,7 +100,7 @@ namespace TestClient1
         }
 
         public static unsafe void SendGenerateCorpsRequest(
-              int unitType
+              byte unitType
             , float eyeX
             , float eyeY
             , float eyeZ
@@ -174,7 +174,7 @@ namespace TestClient1
 
         public static unsafe void SendChangeCorpsFormationRequest(
             int corpsID
-            , int formationType)
+            , byte formationType)
         {
             PacketStruct.ChangeCorpsFormationRequest request = new PacketStruct.ChangeCorpsFormationRequest();
             request.m_Size = (short)sizeof(PacketStruct.ChangeCorpsFormationRequest);

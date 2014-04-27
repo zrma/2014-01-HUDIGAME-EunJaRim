@@ -75,26 +75,26 @@ namespace TestClient1
         {
             if (IsServerConnected)
             {
-                int unitType = -1;
+                byte unitType = 0;
                 if (rb_unit_arrow.Checked)
                 {
-                    unitType = (int)UnitType.UNIT_ARROW;
+                    unitType = (byte)UnitType.UNIT_ARROW;
                 }
                 else if (rb_unit_guard.Checked)
                 {
-                    unitType = (int)UnitType.UNIT_GUARD;
+                    unitType = (byte)UnitType.UNIT_GUARD;
                 }
                 else if (rb_unit_knight.Checked)
                 {
-                    unitType = (int)UnitType.UNIT_KNIGHT;
+                    unitType = (byte)UnitType.UNIT_KNIGHT;
                 }
                 else if (rb_unit_pike.Checked)
                 {
-                    unitType = (int)UnitType.UNIT_PIKE;
+                    unitType = (byte)UnitType.UNIT_PIKE;
                 }
                 else if (rb_unit_sword.Checked)
                 {
-                    unitType = (int)UnitType.UNIT_SWORD;
+                    unitType = (byte)UnitType.UNIT_SWORD;
                 }
 
                 float eyeX = float.Parse(tb_corps_eye_x.Text);
@@ -139,18 +139,18 @@ namespace TestClient1
         {
             if (IsServerConnected)
             {
-                int formationType = -1;
+                byte formationType = 0;
                 if (rb_corps_formation_defense.Checked)
                 {
-                    formationType = (int)FormationType.FORMATION_DEFENSE;
+                    formationType = (byte)FormationType.FORMATION_DEFENSE;
                 }
                 else if (rb_corps_formation_destroy.Checked)
                 {
-                    formationType = (int)FormationType.FORMATION_DESTROY;
+                    formationType = (byte)FormationType.FORMATION_DESTROY;
                 }
                 else if (rb_corps_formation_rush.Checked)
                 {
-                    formationType = (int)FormationType.FORMATION_RUSH;
+                    formationType = (byte)FormationType.FORMATION_RUSH;
                 }
 
                 int corpsID = int.Parse(tb_corpsID.Text);

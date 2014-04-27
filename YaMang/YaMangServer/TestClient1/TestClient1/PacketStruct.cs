@@ -119,7 +119,7 @@ namespace TestClient1
         {
             public short m_Size;
             public short m_Type;
-            public int m_UnitType;
+            public byte  m_UnitType;
             public float m_EyeX;
             public float m_EyeY;
             public float m_EyeZ;
@@ -156,7 +156,7 @@ namespace TestClient1
             public short m_Size;
             public short m_Type;
             public int m_CorpsID;
-            public int m_FormationType;
+            public byte m_FormationType;
         }
     }
 }

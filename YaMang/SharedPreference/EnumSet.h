@@ -1,6 +1,6 @@
 #pragma once
 
-enum class UnitType: int
+enum class UnitType: unsigned char
 {
 	UNIT_NONE = 0,
 
@@ -13,7 +13,7 @@ enum class UnitType: int
 	UNIT_MAX = 255
 };
 
-enum class FormationType: int
+enum class FormationType: unsigned char
 {
 	FORMATION_NONE = 0,
 

@@ -19,5 +19,12 @@ Corps::~Corps()
 
 void Corps::AddDamage( int damage )
 {
-	m_HP = m_HP - damage;
+	if ( !m_IsDead )
+	{
+		m_HP = m_HP - damage;
+		if ( m_HP < 1)
+		{
+			m_IsDead = true;
+		}
+	}
 }

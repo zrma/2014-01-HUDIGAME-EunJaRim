@@ -5,16 +5,18 @@
 
 
 
+const int LOBBY_NUMBER = 0;
+
 std::hash_map<int, ClientSession*>	g_PidSessionTable;
 RoomManager* g_RoomManager = nullptr;
 RoomManager::RoomManager()
 {
 	g_PidSessionTable.clear( );
 
-	m_Lobby = new ClientManager( 0 );
+	m_Lobby = new ClientManager( LOBBY_NUMBER );
 
 	m_RoomList.clear();
-	m_RoomList.insert( RoomList::value_type( 0, m_Lobby ) );
+	m_RoomList.insert( RoomList::value_type( LOBBY_NUMBER, m_Lobby ) );
 }
 
 

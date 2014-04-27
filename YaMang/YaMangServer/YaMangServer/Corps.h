@@ -12,7 +12,7 @@ public:
 
 	int						GetCorpsID() { return m_CorpsID; }
 	short					GetCorpsSize() { return m_UnitNum; }
-	PositionInfo				GetPosition() { return m_Position; }
+	PositionInfo			GetPosition() { return m_Position; }
 
 	void					SetHoldingAction( Action* holdAction ) { m_HoldAction = holdAction; }
 	Action*					GetHoldingAction( ) { return m_HoldAction; }
@@ -29,10 +29,11 @@ private:
 protected:
 	int						m_PlayerID = -1;
 	int						m_CorpsID = -1;
+	bool					m_IsDead = false;
 	int						m_HP = 100;
 	short					m_UnitNum = -1;
 
-	PositionInfo				m_Position;
+	PositionInfo			m_Position;
 	FormationType			m_Formation = FormationType::FORMATION_NONE;
 
 	Action*					m_HoldAction = nullptr;
