@@ -59,3 +59,9 @@ extern D3DXVECTOR3			g_cursorPos;
 extern D3DXVECTOR3		g_EyePoint;
 extern D3DXVECTOR3		g_LookAtPoint;
 extern D3DXVECTOR3		g_UpVector;
+
+//////////////////////////////////////////////////////////////////////////
+/// È­¸é Á¾È¾ºñ
+//////////////////////////////////////////////////////////////////////////
+extern float			g_Ratio;
+extern float			g_Width;

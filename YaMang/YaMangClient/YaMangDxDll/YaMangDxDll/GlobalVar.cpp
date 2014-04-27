@@ -33,3 +33,6 @@ D3DXVECTOR3 g_cursorPos;
 D3DXVECTOR3		g_EyePoint = { 0, 0, 0 };
 D3DXVECTOR3		g_LookAtPoint = { 0, 0, 1.0f };
 D3DXVECTOR3		g_UpVector = { 0, 1, 0 };
+
+float	g_Ratio = 1280 / 720;
+float	g_Width = 1280;

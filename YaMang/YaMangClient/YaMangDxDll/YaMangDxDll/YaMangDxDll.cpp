@@ -142,7 +142,8 @@ YAMANGDXDLL_API void SetAspectRatio( long width, long height )
 {
 	D3DXMATRIXA16 matProj;
 	float aspectRatio = static_cast<float>( width ) / static_cast<float>( height );
-
+	g_Ratio = aspectRatio;
+	g_Width = static_cast<float>(width);
 	D3DXMatrixPerspectiveFovLH( &matProj, D3DX_PI / 5, aspectRatio, 1.0f, 2000.0f );
 	g_D3dDevice->SetTransform( D3DTS_PROJECTION, &matProj );
 }
@@ -250,9 +251,10 @@ YAMANGDXDLL_API void RenderingTool( MESHOBJECT* inputVal )
 	D3DXMatrixLookAtLH( &viewMatrix, &g_EyePoint, &g_LookAtPoint, &g_UpVector );
 	SetMatrix( &viewMatrix , true);
 
-	// 보여주기 위한 땅을 조그맣게 만듬
-	CreateRawGround(10, 10, 10);
+	// 보여주기 위한 땅을 만듬
+	CreateRawGround(100, 100, 10);
 	HeightMapRender();
+
 	//와이어 프레임 해제
 	g_D3dDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
@@ -480,7 +482,7 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 	CUSTOMVERTEX vPos0;
 
 	vPos0.vertexPoint.x = -1.f * col * pixelSize * 0.5f;
-	vPos0.vertexPoint.y = 0.0f;
+	vPos0.vertexPoint.y = -10.0f;
 	vPos0.vertexPoint.z = row * pixelSize * 0.5f;
 	for ( int z = 0; z <= row; ++z )
 	{
@@ -600,6 +602,13 @@ YAMANGDXDLL_API void RenderText( LPCWSTR text, float left, float top, int RGB_R,
 		static_cast<LONG>( right ),
 		static_cast<LONG>( bottom )
 	}; // 그릴 위치
+	D3DXMATRIXA16 ratioMat;
+
+	float ratio = (720.0f / g_Width) * g_Ratio;
+	D3DXMatrixIdentity(&ratioMat);
+	D3DXMatrixScaling(&ratioMat, 1280 / g_Width, ratio, 1);
+	g_Sprite->SetTransform(&ratioMat);
+	
 	g_Font->DrawText( g_Sprite, text
 					, -1										// 총 문자열 수(그냥 -1 해도 됨.) 
 					, &rt									// 그릴 위치 
@@ -689,7 +698,7 @@ YAMANGDXDLL_API HRESULT InitCursor( LPCWSTR cursorImagePath, float cursorPosX, f
 		return E_FAIL;
 	}
 
-	SetCursorPosition();// 0,0,0으로 초기화
+	SetCursorPosition( cursorPosX, cursorPosY );// 0,0,0으로 초기화
 
 	return S_OK;
 }
@@ -698,6 +707,12 @@ YAMANGDXDLL_API HRESULT CursorRender( )
 {
 	if ( g_cursorSprite ) 
 	{
+		D3DXMATRIXA16 ratioMat;
+
+		float ratio = (720.0f / g_Width) * g_Ratio;
+		D3DXMatrixIdentity(&ratioMat);
+		D3DXMatrixScaling(&ratioMat, 1280 / g_Width, ratio, 1);
+		g_cursorSprite->SetTransform(&ratioMat);
 		g_cursorSprite->Begin( D3DXSPRITE_ALPHABLEND ); 
 		g_cursorSprite->Draw( g_cursorTex, NULL, NULL, &g_cursorPos, 0xFFFFFFFF ); 
 		g_cursorSprite->End(); 
