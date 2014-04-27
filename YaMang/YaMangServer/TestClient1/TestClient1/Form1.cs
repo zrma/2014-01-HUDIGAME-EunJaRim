@@ -122,7 +122,7 @@ namespace TestClient1
                 float lookY = float.Parse(tb_corps_look_y.Text);
                 float lookZ = float.Parse(tb_corps_look_z.Text);
 
-                Network.SendMoveCorpsRequest(playerID, corpsID, eyeX, eyeY, eyeZ, lookX, lookY, lookZ);
+                Network.SendMoveCorpsRequest(corpsID, eyeX, eyeY, eyeZ, lookX, lookY, lookZ);
             }
         }
 
@@ -131,7 +131,7 @@ namespace TestClient1
             if (IsServerConnected)
             {
                 int corpsID = int.Parse(tb_corpsID.Text);
-                Network.SendStopCorpsRequest(playerID, corpsID);
+                Network.SendStopCorpsRequest(corpsID);
             }
         }
 

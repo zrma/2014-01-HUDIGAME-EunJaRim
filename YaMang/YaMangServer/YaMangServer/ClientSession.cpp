@@ -77,7 +77,7 @@ void ClientSession::Disconnect()
 	}
 	
 	// g_PidSocketTable.erase( m_PlayerId ); 이거 한줄로 될것 같은데 교수님이 find하고 뭐 하라고 했던게 자꾸 생각남
-	auto toBeDelete = g_PidSessionTable.find( m_PlayerId );
+	auto toBeDelete = g_PidSessionTable.find( m_PlayerID );
 	if ( toBeDelete != g_PidSessionTable.end( ) )
 	{
 		g_PidSessionTable.erase( toBeDelete );
@@ -235,7 +235,7 @@ bool ClientSession::DirectSend( PacketHeader* pkt )
 		return false;
 	}
 
-	if ( m_ClientManager->DirectPacket( m_PlayerId, pkt ) )
+	if ( m_ClientManager->DirectPacket( m_PlayerID, pkt ) )
 	{
 		return true;
 	}
@@ -292,7 +292,7 @@ void ClientSession::DatabaseJobDone( DatabaseJobContext* result )
 void ClientSession::UpdateDone()
 {
 	/// 콘텐츠를 넣기 전까지는 딱히 해줄 것이 없다. 단지 테스트를 위해서..
-	printf( "DEBUG: Player[%d] Update Done\n", m_PlayerId );
+	printf( "DEBUG: Player[%d] Update Done\n", m_PlayerID );
 }
 
 
@@ -303,7 +303,7 @@ void ClientSession::LoginDone( int pid, const char* name )
 
 	LoginResult outPacket;
 
-	outPacket.m_PlayerId = m_PlayerId = pid;
+	outPacket.m_PlayerId = m_PlayerID = pid;
 	strcpy_s( m_PlayerName, name );
 	strcpy_s( outPacket.m_Name, name );
 

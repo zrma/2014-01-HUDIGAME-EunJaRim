@@ -213,7 +213,6 @@ void NetworkManager::HandleMoveCorpsResult( MoveCorpsResult& inPacket )
 {
 	if ( m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size ) )
 	{
-		int playerID = inPacket.m_PlayerID;
 		int corpsID = inPacket.m_CorpsID;
 		float speed = inPacket.m_Speed;
 		Position direction = inPacket.m_Direction;
@@ -249,7 +248,6 @@ void NetworkManager::HandleStopCorpsResult( StopCorpsResult& inPacket )
 	if ( m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size ) )
 	{
 
-		int playerID = inPacket.m_PlayerID;
 		int corpsID = inPacket.m_CorpsID;
 
 		Scene* scene = SceneManager::GetInstance()->GetNowScene();

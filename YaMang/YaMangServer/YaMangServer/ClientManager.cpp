@@ -366,7 +366,7 @@ void ClientManager::PrintClientList()
 	for ( auto& it : m_ClientList )
 	{
 		ClientSession* client = it.second;
-		printf_s( "[%d][%s] \n", client->m_PlayerId, client->m_PlayerName );
+		printf_s( "[%d][%s] \n", client->m_PlayerID, client->m_PlayerName );
 	}
 }
 

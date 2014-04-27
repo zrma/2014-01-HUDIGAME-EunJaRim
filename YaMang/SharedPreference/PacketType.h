@@ -257,12 +257,10 @@ struct MoveCorpsRequest: public PacketHeader
 	{
 		m_Size = sizeof( MoveCorpsRequest );
 		m_Type = PKT_CS_MOVE_CORPS;
-		m_PlayerID = -1;
 		m_CorpsID = -1;
 		m_Destination;
 		
 	}
-	int		 m_PlayerID;
 	int		 m_CorpsID;
 	Position m_Destination;
 };
@@ -273,13 +271,11 @@ struct MoveCorpsResult: public PacketHeader
 	{
 		m_Size = sizeof( MoveCorpsResult );
 		m_Type = PKT_SC_MOVE_CORPS;
-		m_PlayerID = -1;
 		m_CorpsID = -1;
 		m_Speed = 0;
 		m_Direction;
 	}
 
-	int		 m_PlayerID;
 	int		 m_CorpsID;
 	float	 m_Speed;
 	Position m_Direction;
@@ -292,11 +288,8 @@ struct StopCorpsRequest: public PacketHeader
 	{
 		m_Size = sizeof( StopCorpsRequest );
 		m_Type = PKT_CS_STOP_CORPS;
-		m_PlayerID = -1;
 		m_CorpsID = -1;
-
 	}
-	int		 m_PlayerID;
 	int		 m_CorpsID;
 
 };
@@ -307,11 +300,9 @@ struct StopCorpsResult: public PacketHeader
 	{
 		m_Size = sizeof( StopCorpsResult );
 		m_Type = PKT_SC_STOP_CORPS;
-		m_PlayerID = -1;
 		m_CorpsID = -1;
 	}
 
-	int		 m_PlayerID;
 	int		 m_CorpsID;
 };
 

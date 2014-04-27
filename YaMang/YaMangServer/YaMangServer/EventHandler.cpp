@@ -153,7 +153,7 @@ void ClientSession::HandleEnterRoomRequest( EnterRoomRequest& inPacket )
 
 	int roomNumber = inPacket.m_RoomNumber;
 
-	if ( !g_RoomManager->EnterRoom( roomNumber, m_PlayerId ) )
+	if ( !g_RoomManager->EnterRoom( roomNumber, m_PlayerID ) )
 	{
 		Disconnect();
 	}
@@ -166,7 +166,7 @@ void ClientSession::HandleEnterRoomRequest( EnterRoomRequest& inPacket )
 		Disconnect();
 	}
 
-	printf_s( "Enter Room! ID:%d ROOM:%d \n", m_PlayerId, roomNumber );
+	printf_s( "Enter Room! ID:%d ROOM:%d \n", m_PlayerID, roomNumber );
 	g_RoomManager->PrintClientList(); // 테스트 프린트
 
 }
@@ -185,7 +185,7 @@ void ClientSession::HandleLeaveRoomRequest( LeaveRoomRequest& inPacket )
 
 	int roomNumber = inPacket.m_RoomNumber;
 
-	if ( !g_RoomManager->LeaveRoom( roomNumber, m_PlayerId ) )
+	if ( !g_RoomManager->LeaveRoom( roomNumber, m_PlayerID ) )
 	{
 		Disconnect();
 	}
@@ -198,7 +198,7 @@ void ClientSession::HandleLeaveRoomRequest( LeaveRoomRequest& inPacket )
 		Disconnect();
 	}
 
-	printf_s( "Leave Room! ID:%d ROOM:%d \n", m_PlayerId, roomNumber );
+	printf_s( "Leave Room! ID:%d ROOM:%d \n", m_PlayerID, roomNumber );
 	g_RoomManager->PrintClientList(); // 테스트 프린트
 
 }
@@ -217,7 +217,7 @@ void ClientSession::HandleGenerateCorpsRequest( GenerateCorpsRequest& inPacket )
 	UnitType unitType = inPacket.m_UnitType;
 	Position position = inPacket.m_Position;
 	
-	int generatedCorpsID = m_ClientManager->GenerateCorps( m_PlayerId, unitType, position );
+	int generatedCorpsID = m_ClientManager->GenerateCorps( m_PlayerID, unitType, position );
 
 	if ( generatedCorpsID == -1 )
 	{
@@ -228,7 +228,7 @@ void ClientSession::HandleGenerateCorpsRequest( GenerateCorpsRequest& inPacket )
 	outPacket.m_UnitType = unitType;
 	outPacket.m_Position = position;
 	outPacket.m_CorpsID = generatedCorpsID;
-	outPacket.m_PlayerId = m_PlayerId;
+	outPacket.m_PlayerId = m_PlayerID;
 
 	if ( !Broadcast( &outPacket ) )
 	{
@@ -236,7 +236,7 @@ void ClientSession::HandleGenerateCorpsRequest( GenerateCorpsRequest& inPacket )
 	}
 
 	printf_s( "GenerateCorps! Type:%d CorpID:%d PlayerID:%d \n",
-			  unitType, generatedCorpsID, m_PlayerId );
+			  unitType, generatedCorpsID, m_PlayerID );
 }
 
 
@@ -250,14 +250,9 @@ void ClientSession::HandleMoveCorpsRequest( MoveCorpsRequest& inPacket )
 {
 	m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size );
 	
-	int playerID = inPacket.m_PlayerID;
 	int corpsID = inPacket.m_CorpsID;
 	Position destination = inPacket.m_Destination;
 
-	if ( playerID == -1 )
-	{
-		Disconnect();
-	}
 	if ( corpsID == -1 )
 	{
 		Disconnect();
@@ -273,11 +268,11 @@ void ClientSession::HandleMoveCorpsRequest( MoveCorpsRequest& inPacket )
 	// 이동 액션은 내부적으로 Corps의 상황을 파악하여
 	// 방향과 속도 등의 정보를 담아서 타이머 발생 때 마다 Result Packet을 보낸다.
 	Action* action = new MovePosition();
+	action->SetClientManager( m_ClientManager );
 	action->SetOwnerCorpsID( corpsID );
 	m_ClientManager->AddActionToScheduler( action, 3000 );
 
 	MoveCorpsResult outPacket;
-	outPacket.m_PlayerID = playerID;
 	outPacket.m_CorpsID = corpsID;
 
 	// 임시로 계산 해둔 식
@@ -294,7 +289,7 @@ void ClientSession::HandleMoveCorpsRequest( MoveCorpsRequest& inPacket )
 		Disconnect();
 	}
 
-	printf_s( "CorpsMoved CorpID:%d PlayerID:%d DesX:%f DesZ:%f Speed:%f \n", corpsID, m_PlayerId, destination.m_EyePoint.x, destination.m_EyePoint.z, speed );
+	printf_s( "CorpsMoved CorpID:%d PlayerID:%d DesX:%f DesZ:%f Speed:%f \n", corpsID, m_PlayerID, destination.m_EyePoint.x, destination.m_EyePoint.z, speed );
 
 }
 
@@ -309,13 +304,8 @@ void ClientSession::HandleStopCorpsRequest( StopCorpsRequest& inPacket )
 {
 	m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size );
 
-	int playerID = inPacket.m_PlayerID;
 	int corpsID = inPacket.m_CorpsID;
 
-	if ( playerID == -1 )
-	{
-		Disconnect();
-	}
 	if ( corpsID == -1 )
 	{
 		Disconnect();
@@ -325,7 +315,6 @@ void ClientSession::HandleStopCorpsRequest( StopCorpsRequest& inPacket )
 	// 미구현 그냥 클라쪽 패킷만 일단 구현
 
 	StopCorpsResult outPacket;
-	outPacket.m_PlayerID = playerID;
 	outPacket.m_CorpsID = corpsID;
 
 	if ( !Broadcast( &outPacket ) )
@@ -333,7 +322,7 @@ void ClientSession::HandleStopCorpsRequest( StopCorpsRequest& inPacket )
 		Disconnect();
 	}
 
-	printf_s( "CorpsStopped! CorpID:%d PlayerID:%d \n", corpsID, m_PlayerId );
+	printf_s( "CorpsStopped! CorpID:%d PlayerID:%d \n", corpsID, m_PlayerID );
 
 }
 
