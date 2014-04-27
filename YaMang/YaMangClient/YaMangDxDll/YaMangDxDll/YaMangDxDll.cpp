@@ -674,7 +674,7 @@ YAMANGDXDLL_API void CalcPickingRay( int mouseX, int mouseY )
 	//viewport트랜스, 프로젝션 트랜스 역행
 	g_RayOrigin = { 0.f, 0.f, 0.f };
 	g_RayDirection = { rayX, rayY, 1.f };
-	Log( "뷰포트, 프로젝션 역행" );
+	Log( "뷰포트, 프로젝션 역행\n" );
 
 	//뷰잉 트랜스 역행
 	D3DXMATRIXA16 viewingMatrix;
@@ -683,7 +683,7 @@ YAMANGDXDLL_API void CalcPickingRay( int mouseX, int mouseY )
 
 	D3DXVec3TransformCoord( &g_RayOrigin, &g_RayOrigin, &viewingMatrix );
 	D3DXVec3TransformCoord( &g_RayDirection, &g_RayDirection, &viewingMatrix );
-	Log( "뷰잉 좌표 역행" );
+	Log( "뷰잉 좌표 역행\n" );
 
 	//월드 좌표로 역행
 	D3DXMATRIXA16 worldMatrix;
@@ -692,7 +692,7 @@ YAMANGDXDLL_API void CalcPickingRay( int mouseX, int mouseY )
 
 	D3DXVec3TransformCoord( &g_RayOrigin, &g_RayOrigin, &worldMatrix );
 	D3DXVec3TransformCoord( &g_RayDirection, &g_RayDirection, &worldMatrix );
-	Log( "월드 좌표 역행" );
+	Log( "월드 좌표 역행\n" );
 	Log( "origin: %f,%f,%f\n direction: %f, %f, %f\n", g_RayOrigin.x, g_RayOrigin.y, g_RayOrigin.z, g_RayDirection.x, g_RayDirection.y, g_RayDirection.z );
 
 }

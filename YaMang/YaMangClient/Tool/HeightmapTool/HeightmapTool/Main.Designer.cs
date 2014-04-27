@@ -45,9 +45,12 @@
             this.MapHeightVal = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.MapVertexSpacingVal = new System.Windows.Forms.TextBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.RenderTarget)).BeginInit();
             this.sideMenu.SuspendLayout();
+            this.Terrain.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -110,6 +113,8 @@
             // 
             // Terrain
             // 
+            this.Terrain.Controls.Add(this.textBox2);
+            this.Terrain.Controls.Add(this.textBox1);
             this.Terrain.Location = new System.Drawing.Point(4, 22);
             this.Terrain.Name = "Terrain";
             this.Terrain.Padding = new System.Windows.Forms.Padding(3);
@@ -201,6 +206,22 @@
             this.MapVertexSpacingVal.Text = "1.0";
             this.MapVertexSpacingVal.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(6, 6);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(100, 21);
+            this.textBox1.TabIndex = 0;
+            this.textBox1.Text = "200";
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(7, 34);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(100, 21);
+            this.textBox2.TabIndex = 1;
+            this.textBox2.Text = "200";
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -222,6 +243,8 @@
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.RenderTarget)).EndInit();
             this.sideMenu.ResumeLayout(false);
+            this.Terrain.ResumeLayout(false);
+            this.Terrain.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -250,6 +273,8 @@
         private System.Windows.Forms.TabPage Terrain;
         private System.Windows.Forms.TabPage Texture;
         private System.Windows.Forms.TabPage Object;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
 

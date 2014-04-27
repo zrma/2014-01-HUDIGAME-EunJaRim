@@ -61,7 +61,8 @@ namespace YamangTools
                 YamangDll.CreateRawGround(Convert.ToInt32(GetNumber(MapHeightVal)), Convert.ToInt32(GetNumber(MapWidthVal)), GetNumber(MapVertexSpacingVal));
                 YamangDll.PreSettingForTool();
 
-                YamangDll.CalcPickingRay( 100, 100 );
+                YamangDll.CalcPickingRay(Convert.ToInt32(GetNumber(textBox1)), Convert.ToInt32(GetNumber(textBox2)));
+                YamangDll.GetPickedTriangle();
 
                 YamangDll.HeightMapRender();
 

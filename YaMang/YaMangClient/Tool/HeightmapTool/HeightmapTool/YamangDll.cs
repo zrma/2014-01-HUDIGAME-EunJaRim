@@ -77,6 +77,8 @@ namespace YamangTools
 
         [DllImport("YaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void CalcPickingRay( int mouseX, int mouseY );
+        [DllImport("YaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void GetPickedTriangle();
 
 
         //DLL 내부 MESHOBJECT 정의
