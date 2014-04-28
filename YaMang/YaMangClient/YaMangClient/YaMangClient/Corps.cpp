@@ -12,7 +12,7 @@
 #include "Timer.h"
 
 Corps::Corps( int corpsId, int playerId, PositionInfo pos )
-: m_CorpsId( corpsId ), m_OwnerPlayerID( playerId ), m_TargetFormation( FormationType::FORMATION_RUSH )
+: m_CorpsID( corpsId ), m_OwnerPlayerID( playerId ), m_TargetFormation( FormationType::FORMATION_RUSH )
 {
 	m_FormationArray.fill( nullptr );
 	m_FormationArray[static_cast<size_t>( FormationType::FORMATION_DEFENSE )] = new DefenseBread();

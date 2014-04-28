@@ -44,13 +44,12 @@ void Unit::FindDestination()
 
 	formMatrix = formMatrix * parentMatrix;
 
-	D3DXVECTOR3	targetPoint = { 0.0f, 0.1f, 0.0f };
-	D3DXVec3TransformCoord( &m_TargetPoint, &targetPoint, &formMatrix );
+	D3DXVec3TransformCoord( &m_TargetPoint, &m_TargetPoint, &formMatrix );
 
-// 	if ( m_UnitID == 3 )
-// 	{
-// 		Log( " %d번 유닛 목표 좌표 : %f %f \n", m_UnitID, m_TargetPoint.x, m_TargetPoint.z );
-// 	}
+	if ( m_UnitID == 1 )
+	{
+		Log( "  %d번 유닛 - 목표 좌표 : %f %f \n", m_UnitID, m_TargetPoint.x, m_TargetPoint.z );
+	}
 }
 
 void Unit::SetStartPosition()

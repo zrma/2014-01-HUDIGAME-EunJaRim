@@ -17,7 +17,7 @@ public:
 	void	Create(UINT num, UnitType unitType );
 	void	SetVisible( bool visible );
 
-	int		GetCorpsID() { return m_CorpsId; }
+	int		GetCorpsID() { return m_CorpsID; }
 	int		GetCorpsHP() { return m_UnitList.size(); }
 
 	void			SetFormation( FormationType formation ) { m_TargetFormation = formation; }
@@ -41,7 +41,7 @@ private:
 	Corps& operator=( const Corps& );
 
 	std::vector<Unit*>		m_UnitList;
-	int						m_CorpsId = -1;
+	int						m_CorpsID = -1;
 	int						m_OwnerPlayerID = -1;
 
 	FormationType			m_NowFormation = FormationType::FORMATION_NONE;

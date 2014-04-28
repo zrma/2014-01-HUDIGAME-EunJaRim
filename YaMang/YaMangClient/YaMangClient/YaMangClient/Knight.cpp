@@ -8,9 +8,8 @@ Knight::Knight( Corps* owner, UINT unitId )
 	// 소녀
 	m_MeshKey = MESH_KEY_UNIT_KNIGHT;
 	
-	m_EyePoint = { 0.0f, -1.5f, 0.0f };
-	m_LookAtPoint = { 0.0f, -1.5f, 1.0f };
-	m_UpVector = { 0.0f, 1.0f, 0.0f };
+	m_EyePoint = { 0.0f, 0.0f, 0.0f };
+	m_LookAtPoint = { 0.0f, 0.0f, 1.0f };
 	m_Scale = { 0.26f, 0.26f, 0.26f };
 
 	SetStartPosition();

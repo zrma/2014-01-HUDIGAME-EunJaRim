@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "Logger.h"
 #include "EnumSet.h"
+#include "Unit.h"
 
 class Unit;
 
@@ -40,6 +41,8 @@ struct ActMoveSeries: public Act
 {
 	virtual void operator() ( Unit& unit, Corps& owner )
 	{
+		unit.FindDestination();
+
 		// Log( "유닛이 이동! \n" );
 
 		/*if ( !m_Corps )
