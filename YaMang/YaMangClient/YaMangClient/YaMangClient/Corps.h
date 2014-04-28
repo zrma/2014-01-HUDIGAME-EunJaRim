@@ -32,14 +32,15 @@ public:
 	typedef std::function<void( Unit&, Corps& )> ActFunc;
 
 	void			SetAct( ActFunc act );
+	void			SetActStatus( ActionStatusType actionStatus );
 
 	void			GoFoward();
+	void			LookForward();
 	
 private:
 	Corps();
 	Corps( const Corps& );
 	Corps& operator=( const Corps& );
-
 	std::vector<Unit*>		m_UnitList;
 	int						m_CorpsID = -1;
 	int						m_OwnerPlayerID = -1;

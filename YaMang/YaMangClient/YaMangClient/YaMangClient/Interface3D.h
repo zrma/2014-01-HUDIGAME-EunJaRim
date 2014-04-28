@@ -24,7 +24,7 @@ public:
 	D3DXVECTOR3		GetTargetPosition() { return m_TargetPoint; }
 	void			SetTargetPosition( D3DXVECTOR3 targetPosition ) { m_TargetPoint = targetPosition; }
 	D3DXVECTOR3		GetLookAtVector() { return ( m_LookAtPoint - m_EyePoint ); }
-	void			SetLookAtPosition( D3DXVECTOR3 lookAtVector ) { m_LookAtPoint = m_EyePoint + lookAtVector; }
+	void			SetLookAtVector( D3DXVECTOR3 lookAtVector ) { m_LookAtPoint = m_EyePoint + lookAtVector; }
 	float			GetSpeed() { return m_Speed; }
 	void			SetSpeed( float speed ) { m_Speed = speed; }
 

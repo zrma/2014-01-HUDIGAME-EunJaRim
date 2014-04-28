@@ -17,6 +17,8 @@ public:
 	void		SetStartPosition();
 	
 	void		FindDestination();
+	void		RotateToDestination();
+	void		MoveToDestination();
 
 	typedef std::function<void( Unit&, Corps& )> ActFunc;
 
@@ -25,6 +27,8 @@ public:
 	void	ClearAct();
 
 	ActionStatusType	GetActionStatus() { return m_ActionStatus; }
+	void				SetActionStatus( ActionStatusType actionStatus ) { m_ActionStatus = actionStatus; }
+	void				LookForward();
 
 protected:
 	int			m_UnitID = -1;
