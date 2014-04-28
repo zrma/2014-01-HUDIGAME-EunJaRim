@@ -17,7 +17,6 @@ public:
 
 private:
 	FMOD::Studio::System*			m_System = NULL;
-	FMOD_RESULT						m_Result = FMOD_OK; // if(result) <-정상이 아니면 빠짐
 
 };
 

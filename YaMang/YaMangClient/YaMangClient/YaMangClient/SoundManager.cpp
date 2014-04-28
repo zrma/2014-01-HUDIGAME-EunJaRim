@@ -14,9 +14,10 @@ SoundManager::~SoundManager()
 
 void SoundManager::Initialize()
 {
+	FMOD_RESULT result;
 	FMOD::Studio::System::create( &m_System );
-	m_Result = m_System->initialize( 32, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, NULL );
-	if ( m_Result )
+	result = m_System->initialize( 32, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, NULL );
+	if ( result )
 	{
 		Log( "System Initialize Fail \n" );
 		MessageBox( MainWindow::GetInstance( )->Window( ), L"System Initialize Fail", L"Sound Error", MB_ICONERROR );
@@ -39,9 +40,10 @@ void SoundManager::test()
 
 void SoundManager::LoadBank( const char* fileName )
 {
+	FMOD_RESULT result;
 	FMOD::Studio::Bank* bank = NULL;
-	m_Result = m_System->loadBankFile( fileName, FMOD_STUDIO_LOAD_BANK_NORMAL, &bank );
-	if ( m_Result )
+	result = m_System->loadBankFile( fileName, FMOD_STUDIO_LOAD_BANK_NORMAL, &bank );
+	if ( result )
 	{
 		Log( "Bank Load Fail:%s \n", fileName );
 		std::wstring message = std::wstring( L"Bank Load Fail:" ) + std::wstring( fileName, fileName + strlen( fileName ) );
@@ -51,10 +53,10 @@ void SoundManager::LoadBank( const char* fileName )
 
 FMOD::Studio::EventInstance* SoundManager::GetEventInstance( const char* path )
 {
-
+	FMOD_RESULT result;
 	FMOD::Studio::ID eventID = { 0 };
-	m_Result = m_System->lookupID( path, &eventID );
-	if ( m_Result )
+	result = m_System->lookupID( path, &eventID );
+	if ( result )
 	{
 		Log( "Event Load Fail:%s \n", path );
 		std::wstring message = std::wstring( L"Event Load Fail:" ) + std::wstring( path, path + strlen( path ) );
@@ -62,16 +64,16 @@ FMOD::Studio::EventInstance* SoundManager::GetEventInstance( const char* path )
 	}
 
 	FMOD::Studio::EventDescription* eventDescription = NULL;
-	m_Result = m_System->getEvent( &eventID, FMOD_STUDIO_LOAD_BEGIN_NOW, &eventDescription );
-	if ( m_Result )
+	result = m_System->getEvent( &eventID, FMOD_STUDIO_LOAD_BEGIN_NOW, &eventDescription );
+	if ( result )
 	{
 		Log( "GetEvent Fail \n" );
 		MessageBox( MainWindow::GetInstance()->Window(), L"GetEvent Fail", L"Sound Error", MB_ICONERROR );
 	}
 
 	FMOD::Studio::EventInstance* eventInstance = NULL;
-	m_Result = eventDescription->createInstance( &eventInstance );
-	if ( m_Result )
+	result = eventDescription->createInstance( &eventInstance );
+	if ( result )
 	{
 		Log( "Create Instance Fail \n" );
 		MessageBox( MainWindow::GetInstance()->Window(), L"Create Instance Fail", L"Sound Error", MB_ICONERROR );
