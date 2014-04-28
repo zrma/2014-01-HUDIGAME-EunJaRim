@@ -5,6 +5,7 @@
 
 MouseRender::MouseRender()
 {
+	CreateCursor(L"cursor3.png");
 }
 
 
@@ -54,5 +55,11 @@ void MouseRender::Update()
 
 void MouseRender::Render()
 {
-
+	RenderCursor();
 }
+
+void MouseRender::SetCursorPos(float PosX, float PosY)
+{
+	SetCursorPosition(PosX, PosY);
+}
+

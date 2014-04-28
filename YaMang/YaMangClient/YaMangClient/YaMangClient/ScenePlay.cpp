@@ -7,6 +7,7 @@
 #include "EnumSet.h"
 #include "Action.h"
 #include "SoundManager.h"
+#include "MouseRender.h"
 
 ScenePlay::ScenePlay()
 {
@@ -82,6 +83,8 @@ void ScenePlay::Update()
 		auto& corps = iter.second;
 		corps->Update();
 	}
+
+	/*m_MouseCursor->Update();*/
 }
 
 void ScenePlay::Render()
@@ -91,6 +94,8 @@ void ScenePlay::Render()
 		auto& corps = iter.second;
 		corps->Render();
 	}
+
+	/*m_MouseCursor->Render();*/
 }
 
 void ScenePlay::AddCorps( int corpsID, Corps* corps )

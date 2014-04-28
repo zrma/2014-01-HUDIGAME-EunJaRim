@@ -35,6 +35,15 @@ enum SceneType
 	SCENE_MAX
 };
 
+enum CursorType
+{
+	CURSOR_NONE,
+
+	CURSOR_PLAY,
+
+	CURSOR_MAX
+};
+
 enum MeshKeyType
 {
 	MESH_KEY_NONE,
