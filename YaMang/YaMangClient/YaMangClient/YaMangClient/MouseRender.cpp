@@ -1,18 +1,18 @@
 ﻿#include "stdafx.h"
-#include "MouseManager.h"
+#include "MouseRender.h"
 #include "YaMangDxDll.h"
 
 
-MouseManager::MouseManager()
+MouseRender::MouseRender()
 {
 }
 
 
-MouseManager::~MouseManager()
+MouseRender::~MouseRender()
 {
 }
 
-HRESULT MouseManager::CreateCursor( LPCWSTR cursorImagePath, float cursorPosX /*= 0*/, float cursorPosY /*= 0 */ )
+HRESULT MouseRender::CreateCursor( LPCWSTR cursorImagePath, float cursorPosX /*= 0*/, float cursorPosY /*= 0 */ )
 {
 	if ( FAILED( InitCursor( cursorImagePath, cursorPosX, cursorPosY ) ) )
 	{
@@ -23,7 +23,7 @@ HRESULT MouseManager::CreateCursor( LPCWSTR cursorImagePath, float cursorPosX /*
 	return S_OK;
 }
 
-HRESULT MouseManager::RenderCursor()
+HRESULT MouseRender::RenderCursor()
 {
 	if ( FAILED( CursorRender() ) )
 	{
@@ -32,7 +32,7 @@ HRESULT MouseManager::RenderCursor()
 	return S_OK;
 }
 
-void MouseManager::CleanupCursor()
+void MouseRender::CleanupCursor()
 {
 	if ( m_IsCursorReady )
 	{
@@ -41,12 +41,7 @@ void MouseManager::CleanupCursor()
 	}
 }
 
-void MouseManager::SetCursorPos( float PosX, float PosY )
-{
-	SetCursorPosition( PosX, PosY );
-}
-
-void MouseManager::RemoveWndCursor()
+void MouseRender::RemoveWndCursor()
 {
 	SetCursor(NULL);
 	ShowCursor(false);

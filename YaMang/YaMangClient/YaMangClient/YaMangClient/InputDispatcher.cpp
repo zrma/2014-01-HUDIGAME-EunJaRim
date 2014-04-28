@@ -53,7 +53,6 @@ struct RegisterKeyHandler
 InputDispatcher::InputDispatcher()
 {
 	m_IsKeyPressed.fill( false );
-	m_MouseInput = new MouseInput;
 }
 
 
@@ -87,6 +86,8 @@ void InputDispatcher::EventKeyInput( KeyInput key )
 
 void InputDispatcher::DispatchKeyInput()
 {
+	Log("현재 키 이벤트 발생 개수 : %d \n", m_KeyInputList.size());
+
 	auto iter = m_KeyInputList.begin();
 	while ( iter != m_KeyInputList.end() )
 	{
@@ -105,12 +106,6 @@ void InputDispatcher::DispatchKeyInput()
 		}
 	}
 }
-
-void InputDispatcher::EventMouseMove(int XMove /*= 0*/, int YMove /*= 0*/)
-{
-	m_MouseInput->MoveMousePosition(XMove, YMove);
-}
-
 
 void NetworkManager::RequestChat( ChatBroadcastRequest& outPacket )
 {

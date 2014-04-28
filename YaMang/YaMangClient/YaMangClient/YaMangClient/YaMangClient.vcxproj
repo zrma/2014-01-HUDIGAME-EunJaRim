@@ -104,7 +104,7 @@
     <ClInclude Include="MacroSet.h" />
     <ClInclude Include="MainWindow.h" />
     <ClInclude Include="MouseInput.h" />
-    <ClInclude Include="MouseManager.h" />
+    <ClInclude Include="MouseRender.h" />
     <ClInclude Include="NetworkManager.h" />
     <ClInclude Include="Pike.h" />
     <ClInclude Include="Renderer.h" />
@@ -142,7 +142,7 @@
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="MouseInput.cpp" />
-    <ClCompile Include="MouseManager.cpp" />
+    <ClCompile Include="MouseRender.cpp" />
     <ClCompile Include="NetworkManager.cpp" />
     <ClCompile Include="Pike.cpp" />
     <ClCompile Include="Renderer.cpp" />

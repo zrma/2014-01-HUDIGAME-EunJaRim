@@ -9,7 +9,7 @@
 #include "Timer.h"
 #include "SceneManager.h"
 #include "ResourceManager.h"
-#include "MouseManager.h"
+#include "MouseRender.h"
 #include "TextManager.h"
 
 
@@ -47,8 +47,8 @@ bool GameManager::Init()
 	CameraController::GetInstance()->Init();
 
 	// 커서 초기화
-	MouseManager::GetInstance()->CreateCursor( L"cursor2.png", 200, 200);
-	MouseManager::GetInstance()->RemoveWndCursor();
+	MouseRender::GetInstance()->CreateCursor( L"cursor2.png", 200, 200);
+	MouseRender::GetInstance()->RemoveWndCursor();
 	// 텍스트 매니저
 	// 타이머
 
@@ -85,7 +85,7 @@ bool GameManager::Process()
 	TextManager::GetInstance()->RegistText( 100, ws, 20, 20 ); // 애 었다 치워야 될것같은데... 것보다 key값을 잘못잡았나. 역시 배열인가...
 	TextManager::GetInstance()->DrawTexts();
 
-	MouseManager::GetInstance()->RenderCursor();
+	MouseRender::GetInstance()->RenderCursor();
 
 	return true;
 }
@@ -98,8 +98,8 @@ void GameManager::Destroy()
 	// 텍스트 매니저 해제
 	TextManager::Release();
 
-	MouseManager::GetInstance()->CleanupCursor();
-	MouseManager::Release();
+	MouseRender::GetInstance()->CleanupCursor();
+	MouseRender::Release();
 
 	// 씬 해제
 	SceneManager::GetInstance()->Destroy();

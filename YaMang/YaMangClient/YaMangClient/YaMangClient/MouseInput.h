@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include "MacroSet.h"
 
 enum class MouseStatus
 {
@@ -8,7 +9,7 @@ enum class MouseStatus
 	MOUSE_UP,
 };
 
-class MouseInput
+class MouseInput : public Singleton<MouseInput>
 {
 public:
 	MouseInput();
@@ -20,6 +21,8 @@ public:
 	MouseStatus		GetMouseStatus() { return m_MouseStatus; }
 	void			SetMouseStatus(MouseStatus mouseStatus) { m_MouseStatus = mouseStatus; }
 	void			MoveMousePosition(int x, int y) { m_xPos += x; m_yPos += y; }
+
+	void			SetCursorPos(float PosX, float PosY);
 
 private:
 	int				m_xPos = 200;

@@ -106,9 +106,6 @@
     <ClInclude Include="CameraController.h">
       <Filter>Render</Filter>
     </ClInclude>
-    <ClInclude Include="MouseManager.h">
-      <Filter>Render</Filter>
-    </ClInclude>
     <ClInclude Include="TextObject.h">
       <Filter>Render</Filter>
     </ClInclude>
@@ -172,6 +169,9 @@
     <ClInclude Include="SoundManager.h">
       <Filter>Sound</Filter>
     </ClInclude>
+    <ClInclude Include="MouseRender.h">
+      <Filter>Render</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -220,9 +220,6 @@
       <Filter>Render</Filter>
     </ClCompile>
     <ClCompile Include="CameraController.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="MouseManager.cpp">
       <Filter>Render</Filter>
     </ClCompile>
     <ClCompile Include="TextObject.cpp">
@@ -275,6 +272,9 @@
     </ClCompile>
     <ClCompile Include="SoundManager.cpp">
       <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="MouseRender.cpp">
+      <Filter>Render</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

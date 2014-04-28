@@ -1,17 +1,16 @@
 ﻿#pragma once
 #include "MacroSet.h"
 
-class MouseManager : public Singleton <MouseManager>
+class MouseRender : public Singleton <MouseRender>
 {
 public:
-	MouseManager();
-	~MouseManager();
+	MouseRender();
+	~MouseRender();
 
 public:
 	HRESULT		CreateCursor( LPCWSTR cursorImagePath, float cursorPosX = 0, float cursorPosY = 0 );
 	HRESULT		RenderCursor();
 	void		CleanupCursor();
-	void		SetCursorPos( float PosX, float PosY );
 	void		RemoveWndCursor();
 
 private:
