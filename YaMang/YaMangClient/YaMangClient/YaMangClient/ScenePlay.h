@@ -2,6 +2,7 @@
 #include "Scene.h"
 
 class Corps;
+class MouseRender;
 
 class ScenePlay:
 	public Scene
@@ -22,5 +23,7 @@ public:
 
 private:
 	std::hash_map<int, Corps*>	m_CorpsList;
+
+	MouseRender*	m_MouseCursor;
 };
 

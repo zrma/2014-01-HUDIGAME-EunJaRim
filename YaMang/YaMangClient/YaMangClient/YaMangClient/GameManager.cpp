@@ -47,8 +47,8 @@ bool GameManager::Init()
 	CameraController::GetInstance()->Init();
 
 	// 커서 초기화
-	MouseRender::GetInstance()->CreateCursor( L"cursor2.png", 200, 200);
-	MouseRender::GetInstance()->RemoveWndCursor();
+//	MouseRender::GetInstance()->CreateCursor( L"cursor2.png", 200, 200);
+//	MouseRender::GetInstance()->RemoveWndCursor();
 	// 텍스트 매니저
 	// 타이머
 
@@ -73,20 +73,21 @@ bool GameManager::Process()
 	SceneManager::GetInstance()->Update();
 
 	// 더미 렌더
-	DummyRender dRender;
+	{
+		DummyRender dRender;
 
-	Renderer::GetInstance()->RenderMap();
-	SceneManager::GetInstance()->Render();
+		Renderer::GetInstance()->RenderMap();
+		SceneManager::GetInstance()->Render();
 
-	UINT deltaTime = Timer::GetInstance()->GetElapsedTime();
-	wchar_t ws[100] = { 0, };
-	wsprintf( ws, L"Elapsed : %d", deltaTime );
-	//Renderer::GetInstance()->WriteText( ws, 20, 20 );
-	TextManager::GetInstance()->RegistText( 100, ws, 20, 20 ); // 애 었다 치워야 될것같은데... 것보다 key값을 잘못잡았나. 역시 배열인가...
-	TextManager::GetInstance()->DrawTexts();
+		UINT deltaTime = Timer::GetInstance()->GetElapsedTime();
+		wchar_t ws[100] = { 0, };
+		wsprintf(ws, L"Elapsed : %d", deltaTime);
+		//Renderer::GetInstance()->WriteText( ws, 20, 20 );
+		TextManager::GetInstance()->RegistText(100, ws, 20, 20); // 애 었다 치워야 될것같은데... 것보다 key값을 잘못잡았나. 역시 배열인가...
+		TextManager::GetInstance()->DrawTexts();
 
-	MouseRender::GetInstance()->RenderCursor();
-
+//		MouseRender::GetInstance()->RenderCursor();
+	}
 	return true;
 }
 
@@ -98,8 +99,9 @@ void GameManager::Destroy()
 	// 텍스트 매니저 해제
 	TextManager::Release();
 
-	MouseRender::GetInstance()->CleanupCursor();
-	MouseRender::Release();
+	//마우스 렌더 객체 씬이 상속하도록 바꿈
+// 	MouseRender::GetInstance()->CleanupCursor();
+// 	MouseRender::Release();
 
 	// 씬 해제
 	SceneManager::GetInstance()->Destroy();

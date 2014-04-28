@@ -46,3 +46,13 @@ void MouseRender::RemoveWndCursor()
 	SetCursor(NULL);
 	ShowCursor(false);
 }
+
+void MouseRender::Update()
+{
+	
+}
+
+void MouseRender::Render()
+{
+
+}
