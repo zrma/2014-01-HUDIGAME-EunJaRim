@@ -484,16 +484,16 @@ YAMANGDXDLL_API void HeightMapRender()
 
 YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 {
-	if ( g_Mesh != NULL )
+	if ( g_Mesh != nullptr )
 	{
-		IDirect3DVertexBuffer9* tempVertexBuffer = nullptr;
-		g_Mesh->GetVertexBuffer( &tempVertexBuffer );
-		tempVertexBuffer->Release();
-
-		IDirect3DIndexBuffer9* tempIndexBuffer = nullptr;
-		g_Mesh->GetIndexBuffer( &tempIndexBuffer );
-		tempIndexBuffer->Release();
-		g_Mesh->Release();
+		// 		IDirect3DVertexBuffer9* tempVertexBuffer = nullptr;
+		// 		g_Mesh->GetVertexBuffer( &tempVertexBuffer );
+		// 		tempVertexBuffer->Release();
+		// 
+		// 		IDirect3DIndexBuffer9* tempIndexBuffer = nullptr;
+		// 		g_Mesh->GetIndexBuffer( &tempIndexBuffer );
+		// 		tempIndexBuffer->Release();
+		//g_Mesh->Release();
 	}
 
 
@@ -507,15 +507,23 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 	//mesh를 직접 만들어 보자
 	//mesh를 직접 만들게 되면 사실 global vertex buffer와 index buffer가 무의미 하다.
 	HRESULT hr = 0;
-	hr = D3DXCreateMeshFVF( faceCount, verticesCount, D3DXMESH_MANAGED | D3DXMESH_32BIT, D3DFVF_CUSTOMVERTEX, g_D3dDevice, &g_Mesh );
-	if ( FAILED( hr ) )
+	if ( g_Mesh == nullptr )
 	{
-		MessageBox( NULL, L"CreateMesh Failed", L"YaMang.DLL", MB_OK );
-		return;
+		hr = D3DXCreateMeshFVF( faceCount, verticesCount, D3DXMESH_MANAGED | D3DXMESH_32BIT, D3DFVF_CUSTOMVERTEX, g_D3dDevice, &g_Mesh );
+		if ( hr != S_OK )
+		{
+			MessageBox( NULL, L"CreateMesh Failed", L"YaMang.DLL", MB_OK );
+			return;
+		}
 	}
 
 
+
 	CUSTOMVERTEX* baseVertex = new CUSTOMVERTEX[verticesCount];
+	if ( nullptr == baseVertex )
+	{
+		assert( false );
+	}
 
 	int startIdx = 0;
 	CUSTOMVERTEX vPos0;
@@ -549,32 +557,14 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 	memcpy( pVertices, baseVertex, verticesCount * sizeof( CUSTOMVERTEX ) );
 	g_Mesh->UnlockVertexBuffer();
 
-	// 	HRESULT result = S_OK;
-	// 	if ( FAILED( result = g_D3dDevice->CreateVertexBuffer( verticesCount * sizeof( CUSTOMVERTEX ), 0, D3DFVF_CUSTOMVERTEX, D3DPOOL_DEFAULT, &g_VertexBuffer, NULL ) ) )
-	// 	{
-	// 		if ( baseVertex )
-	// 		{
-	// 			delete[] baseVertex;
-	// 			baseVertex = nullptr;
-	// 		}
-	// 		MessageBox( NULL, L"Fail in Create VertexBuffer", L"YaMang.DLL", MB_OK );
-	// 		return;
-	// 	}
 
-	// 	if ( FAILED( g_VertexBuffer->Lock( 0, 0, &pVertices, NULL ) ) )
-	// 	{
-	// 		if ( baseVertex )
-	// 		{
-	// 			delete[] baseVertex;
-	// 			baseVertex = nullptr;
-	// 		}
-	// 		MessageBox( NULL, L"Fail in lock VertexBuffer", L"YaMang.DLL", MB_OK );
-	// 		return;
-	// 	}
-	// 	memcpy( pVertices, baseVertex, verticesCount * sizeof( CUSTOMVERTEX ) );
-	// 	g_VertexBuffer->Unlock();
 
 	UINT* baseIndex = new UINT[indicesCount];
+	if ( nullptr == baseIndex )
+	{
+		assert( false );
+	}
+
 	startIdx = 0;
 
 	for ( int z = 0; z < row; ++z )
@@ -622,42 +612,6 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 		baseIndex = nullptr;
 	}
 }
-
-// 	if ( FAILED( result = g_D3dDevice->CreateIndexBuffer( indicesCount * sizeof( UINT ), D3DUSAGE_WRITEONLY, D3DFMT_INDEX32, D3DPOOL_MANAGED, &g_IdxBuffer, NULL ) ) )
-// 	{
-// 		if ( baseVertex )
-// 		{
-// 			delete[] baseVertex;
-// 			baseVertex = nullptr;
-// 		}
-// 		if ( baseIndex )
-// 		{
-// 			delete[] baseIndex;
-// 			baseIndex = nullptr;
-// 		}
-// 		MessageBox( NULL, L"Fail in Create IndexBuffer", L"YaMang.DLL", MB_OK );
-// 		return;
-// 	}
-
-// 	if ( FAILED( g_IdxBuffer->Lock( 0, indicesCount * sizeof(UINT), (void**) &pIndices, 0 ) ) )
-// 	{
-// 		if ( baseVertex )
-// 		{
-// 			delete[] baseVertex;
-// 			baseVertex = nullptr;
-// 		}
-// 		if ( baseIndex )
-// 		{
-// 			delete[] baseIndex;
-// 			baseIndex = nullptr;
-// 		}
-// 		MessageBox( NULL, L"Fail in lock IndexBuffer", L"YaMang.DLL", MB_OK );
-// 		return;
-// 	}
-// 	memcpy( pIndices, baseIndex, sizeof(UINT) *indicesCount );
-// 
-// 	g_IdxBuffer->Unlock();
-
 
 
 
@@ -714,7 +668,7 @@ YAMANGDXDLL_API void GetPickedTriangle()
 	g_Mesh->GetIndexBuffer( &presentIndexBuffer );
 
 
-	WORD* IndicesStartPoint;
+	DWORD* IndicesStartPoint;
 	CUSTOMVERTEX* VerticesStartPoint;
 
 	presentIndexBuffer->Lock( 0, 0, (void**) &IndicesStartPoint, 0 );
@@ -723,8 +677,15 @@ YAMANGDXDLL_API void GetPickedTriangle()
 	BOOL bHit;
 	DWORD dwFace;
 	FLOAT fBary1, fBary2, fDist;
-	D3DXIntersect( g_Mesh, &g_RayOrigin, &g_RayDirection, &bHit, &dwFace, &fBary1, &fBary2, &fDist,
-				   NULL, NULL );
+
+	D3DXVECTOR3 ray = g_RayDirection - g_RayOrigin;
+	D3DXVec3Normalize( &ray, &ray );
+	Log( "changed %f, %f, %f\n", ray.x, ray.y, ray.z );
+
+	D3DXVECTOR3 testOrg = D3DXVECTOR3( 0, 400, 0 );
+	D3DXVECTOR3 testRay = D3DXVECTOR3( 0, -1, 0 );
+	D3DXIntersect( g_Mesh, &testOrg, &testRay, &bHit, &dwFace, &fBary1, &fBary2, &fDist, NULL, NULL );
+	Log( "개수 %d\n", dwFace );
 
 	if ( bHit )
 	{
@@ -744,7 +705,7 @@ YAMANGDXDLL_API void GetPickedTriangle()
 	{
 		CUSTOMVERTEX* intersectedVertexBufferStart;
 		CUSTOMVERTEX* intersectedTriVertices;
-		WORD* intersectedTriIndices;
+		DWORD* intersectedTriIndices;
 		CUSTOMVERTEX v1, v2, v3;
 		INTERSECTION* intersection;
 
@@ -755,17 +716,26 @@ YAMANGDXDLL_API void GetPickedTriangle()
 			intersection = &g_IntersectionArray[i];
 
 			//vertexBuffer 내에서 부딫힌 vertex 주소 값 찾는 부분
-			intersectedTriVertices = &intersectedVertexBufferStart[i * 3];
+			//intersectedTriVertices = &intersectedVertexBufferStart[i * 3];
 			//index 주소 값 찾는 것
-			intersectedTriIndices = &IndicesStartPoint[3 * intersection->dwFace];
+			intersectedTriIndices = &IndicesStartPoint[3*intersection->dwFace];
+// 			Log( "1번째: %d %d %d \n", intersectedTriIndices[0], intersectedTriIndices[1], intersectedTriIndices[2] );
+// 			Log( "2번째: %d %d %d \n", intersectedTriIndices[3], intersectedTriIndices[4], intersectedTriIndices[5] );
+// 			Log( "3번째: %d %d %d \n", intersectedTriIndices[6], intersectedTriIndices[7], intersectedTriIndices[8] );
+// 			Log( "4번째: %d %d %d \n", intersectedTriIndices[9], intersectedTriIndices[10], intersectedTriIndices[11] );
 
 			//vertex와 index 바인딩
-			intersectedTriVertices[0] = VerticesStartPoint[intersectedTriIndices[0]];
-			intersectedTriVertices[0].Diffuse = D3DCOLOR_ARGB( 255, 30, 30, 150 );
-			intersectedTriVertices[1] = VerticesStartPoint[intersectedTriIndices[1]];
-			intersectedTriVertices[1].Diffuse = D3DCOLOR_ARGB( 255, 30, 30, 150 );
-			intersectedTriVertices[2] = VerticesStartPoint[intersectedTriIndices[2]];
-			intersectedTriVertices[2].Diffuse = D3DCOLOR_ARGB( 255, 30, 30, 150 );
+			VerticesStartPoint[intersectedTriIndices[0]].Diffuse = D3DCOLOR_ARGB( 255, 30, 30, 150 );
+			VerticesStartPoint[intersectedTriIndices[0]].vertexPoint.y = 2;
+			VerticesStartPoint[intersectedTriIndices[1]].Diffuse = D3DCOLOR_ARGB( 255, 30, 30, 150 );
+			VerticesStartPoint[intersectedTriIndices[2]].Diffuse = D3DCOLOR_ARGB( 255, 30, 30, 150 );
+			// 			intersectedTriVertices[0] = VerticesStartPoint[intersectedTriIndices[0]];
+			// 			intersectedTriVertices[0].Diffuse = D3DCOLOR_ARGB( 255, 30, 30, 150 );
+			// 			intersectedTriVertices[1] = VerticesStartPoint[intersectedTriIndices[1]];
+			// 			intersectedTriVertices[1].Diffuse = D3DCOLOR_ARGB( 255, 30, 30, 150 );
+			// 			intersectedTriVertices[2] = VerticesStartPoint[intersectedTriIndices[2]];
+			// 			intersectedTriVertices[2].Diffuse = D3DCOLOR_ARGB( 255, 30, 30, 150 );
+
 		}
 
 		g_Mesh->UnlockVertexBuffer();
