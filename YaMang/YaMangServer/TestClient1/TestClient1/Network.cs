@@ -102,10 +102,8 @@ namespace TestClient1
         public static unsafe void SendGenerateCorpsRequest(
               byte unitType
             , float eyeX
-            , float eyeY
             , float eyeZ
             , float lookX
-            , float lookY
             , float lookZ)
         {
             
@@ -115,10 +113,8 @@ namespace TestClient1
             request.m_Type = (short)PacketTypes.PKT_CS_GENERATE_CORPS;
             request.m_UnitType = unitType;
             request.m_EyeX = eyeX;
-            request.m_EyeY = eyeY;
             request.m_EyeZ = eyeZ;
             request.m_LookX = lookX;
-            request.m_LookY = lookY;
             request.m_LookZ = lookZ;
 
             byte[] sendData = RawSerializer<PacketStruct.GenerateCorpsRequest>.RawSerialize(request);
@@ -132,10 +128,8 @@ namespace TestClient1
         public static unsafe void SendMoveCorpsRequest(
         int corpsID
         , float eyeX
-        , float eyeY
         , float eyeZ
         , float lookX
-        , float lookY
         , float lookZ)
         {
 
@@ -145,10 +139,8 @@ namespace TestClient1
             request.m_Type = (short)PacketTypes.PKT_CS_MOVE_CORPS;
             request.m_CorpsID = corpsID;
             request.m_EyeX = eyeX;
-            request.m_EyeY = eyeY;
             request.m_EyeZ = eyeZ;
             request.m_LookX = lookX;
-            request.m_LookY = lookY;
             request.m_LookZ = lookZ;
 
             byte[] sendData = RawSerializer<PacketStruct.MoveCorpsRequest>.RawSerialize(request);

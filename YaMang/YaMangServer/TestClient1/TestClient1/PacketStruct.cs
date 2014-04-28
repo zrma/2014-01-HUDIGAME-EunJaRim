@@ -121,10 +121,8 @@ namespace TestClient1
             public short m_Type;
             public byte  m_UnitType;
             public float m_EyeX;
-            public float m_EyeY;
             public float m_EyeZ;
             public float m_LookX;
-            public float m_LookY;
             public float m_LookZ;
         }
 
@@ -135,10 +133,8 @@ namespace TestClient1
             public short m_Type;
             public int m_CorpsID;
             public float m_EyeX;
-            public float m_EyeY;
             public float m_EyeZ;
             public float m_LookX;
-            public float m_LookY;
             public float m_LookZ;
         }
 

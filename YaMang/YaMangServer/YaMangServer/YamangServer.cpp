@@ -30,9 +30,6 @@ int _tmain( int argc, _TCHAR* argv[] )
 	// 메모리 릭을 체크하려면 위의 #### 칸에 릭 난 곳 { 숫자 } 표기 된 숫자를 넣어주면 됩니다.
 
 
-	printf( "[PACKET SIZE]%d\n", sizeof( GenerateCorpsRequest ) );
-	printf( "[POSITION SIZE]%d\n", sizeof( PositionInfo ) );
-
 	/// crash 발생시 dump 남기기 위해서
 	// Exception.cpp 쪽에서 전역 함수로 선언 되어 있음
 	SetUnhandledExceptionFilter( ExceptionFilter );

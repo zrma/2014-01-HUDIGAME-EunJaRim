@@ -9,6 +9,7 @@
 #include "ClientManager.h"
 #include "Corps.h"
 #include "MovePosition.h"
+#include "SharedDefine.h"
 
 // 테스트용 헤더
 extern RoomManager* g_RoomManager;
@@ -215,8 +216,16 @@ void ClientSession::HandleGenerateCorpsRequest( GenerateCorpsRequest& inPacket )
 	m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size );
 
 	UnitType unitType = inPacket.m_UnitType;
-	PositionInfo position = inPacket.m_Position;
+
+	float nowX = inPacket.m_NowX;
+	float nowZ = inPacket.m_NowZ;
+	float lookX = inPacket.m_LookX;
+	float lookZ = inPacket.m_LookZ;
 	
+	PositionInfo position;
+	position.m_EyePoint = { nowX, 0.0f, nowZ };
+	position.m_LookAtPoint = { lookX, 0.0f, lookZ };
+
 	int generatedCorpsID = m_ClientManager->GenerateCorps( m_PlayerID, unitType, position );
 
 	if ( generatedCorpsID == -1 )
@@ -226,7 +235,10 @@ void ClientSession::HandleGenerateCorpsRequest( GenerateCorpsRequest& inPacket )
 
 	GenerateCorpsResult outPacket;
 	outPacket.m_UnitType = unitType;
-	outPacket.m_Position = position;
+	outPacket.m_NowX = nowX;
+	outPacket.m_NowZ = nowZ;
+	outPacket.m_LookX = lookX;
+	outPacket.m_LookZ = lookZ;
 	outPacket.m_CorpsID = generatedCorpsID;
 	outPacket.m_PlayerId = m_PlayerID;
 
@@ -251,7 +263,15 @@ void ClientSession::HandleMoveCorpsRequest( MoveCorpsRequest& inPacket )
 	m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size );
 	
 	int corpsID = inPacket.m_CorpsID;
-	PositionInfo destination = inPacket.m_Destination;
+
+	float nowX = inPacket.m_NowX;
+	float nowZ = inPacket.m_NowZ;
+	float targetX = inPacket.m_TargetX;
+	float targetZ = inPacket.m_TargetZ;
+
+	PositionInfo destination;
+	destination.m_EyePoint = { nowX, 0.0f, nowZ };
+	destination.m_LookAtPoint = { targetX, 0.0f, targetZ };
 
 	if ( corpsID == -1 )
 	{
@@ -282,7 +302,12 @@ void ClientSession::HandleMoveCorpsRequest( MoveCorpsRequest& inPacket )
 
 	// 걸어갈 방향을 지정
 	D3DXVec3Normalize( &view, &view );
-	outPacket.m_Direction.m_LookAtPoint = view;
+	
+	// target위치를 서버가 계산해줘야함
+	outPacket.m_TargetX = targetX;
+	outPacket.m_TargetZ = targetZ;
+	outPacket.m_LookX = view.x;
+	outPacket.m_LookZ = view.z;
 
 	if ( !Broadcast( &outPacket ) )
 	{

@@ -63,14 +63,13 @@
             this.tb_corpsID = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.tb_corps_look_z = new System.Windows.Forms.TextBox();
-            this.tb_corps_look_y = new System.Windows.Forms.TextBox();
             this.tb_corps_look_x = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.tb_corps_eye_z = new System.Windows.Forms.TextBox();
-            this.tb_corps_eye_y = new System.Windows.Forms.TextBox();
             this.tb_corps_eye_x = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -257,11 +256,9 @@
             this.groupBox2.Controls.Add(this.tb_corpsID);
             this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Controls.Add(this.tb_corps_look_z);
-            this.groupBox2.Controls.Add(this.tb_corps_look_y);
             this.groupBox2.Controls.Add(this.tb_corps_look_x);
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Controls.Add(this.tb_corps_eye_z);
-            this.groupBox2.Controls.Add(this.tb_corps_eye_y);
             this.groupBox2.Controls.Add(this.tb_corps_eye_x);
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.label4);
@@ -440,19 +437,11 @@
             // 
             // tb_corps_look_z
             // 
-            this.tb_corps_look_z.Location = new System.Drawing.Point(207, 57);
+            this.tb_corps_look_z.Location = new System.Drawing.Point(166, 57);
             this.tb_corps_look_z.Name = "tb_corps_look_z";
             this.tb_corps_look_z.Size = new System.Drawing.Size(35, 21);
             this.tb_corps_look_z.TabIndex = 150;
             this.tb_corps_look_z.Text = "0";
-            // 
-            // tb_corps_look_y
-            // 
-            this.tb_corps_look_y.Location = new System.Drawing.Point(166, 57);
-            this.tb_corps_look_y.Name = "tb_corps_look_y";
-            this.tb_corps_look_y.Size = new System.Drawing.Size(35, 21);
-            this.tb_corps_look_y.TabIndex = 140;
-            this.tb_corps_look_y.Text = "0";
             // 
             // tb_corps_look_x
             // 
@@ -467,25 +456,17 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(125, 17);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(102, 12);
+            this.label6.Size = new System.Drawing.Size(63, 12);
             this.label6.TabIndex = 14;
-            this.label6.Text = "   x        y        z";
+            this.label6.Text = "   x        z";
             // 
             // tb_corps_eye_z
             // 
-            this.tb_corps_eye_z.Location = new System.Drawing.Point(207, 32);
+            this.tb_corps_eye_z.Location = new System.Drawing.Point(166, 32);
             this.tb_corps_eye_z.Name = "tb_corps_eye_z";
             this.tb_corps_eye_z.Size = new System.Drawing.Size(35, 21);
             this.tb_corps_eye_z.TabIndex = 120;
             this.tb_corps_eye_z.Text = "0";
-            // 
-            // tb_corps_eye_y
-            // 
-            this.tb_corps_eye_y.Location = new System.Drawing.Point(166, 32);
-            this.tb_corps_eye_y.Name = "tb_corps_eye_y";
-            this.tb_corps_eye_y.Size = new System.Drawing.Size(35, 21);
-            this.tb_corps_eye_y.TabIndex = 110;
-            this.tb_corps_eye_y.Text = "0";
             // 
             // tb_corps_eye_x
             // 
@@ -513,11 +494,21 @@
             this.label4.TabIndex = 0;
             this.label4.Text = "eye";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(529, 192);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(184, 46);
+            this.button1.TabIndex = 12;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(863, 367);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
@@ -565,11 +556,9 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox tb_corps_look_z;
-        private System.Windows.Forms.TextBox tb_corps_look_y;
         private System.Windows.Forms.TextBox tb_corps_look_x;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox tb_corps_eye_z;
-        private System.Windows.Forms.TextBox tb_corps_eye_y;
         private System.Windows.Forms.TextBox tb_corps_eye_x;
         private System.Windows.Forms.Button bu_generate_corps;
         private System.Windows.Forms.RadioButton rb_unit_arrow;
@@ -587,6 +576,7 @@
         private System.Windows.Forms.RadioButton rb_corps_formation_destroy;
         private System.Windows.Forms.RadioButton rb_corps_formation_defense;
         private System.Windows.Forms.Button bu_corps_formation;
+        private System.Windows.Forms.Button button1;
     }
 }
 

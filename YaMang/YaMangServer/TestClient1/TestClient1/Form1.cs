@@ -98,14 +98,12 @@ namespace TestClient1
                 }
 
                 float eyeX = float.Parse(tb_corps_eye_x.Text);
-                float eyeY = float.Parse(tb_corps_eye_y.Text);
                 float eyeZ = float.Parse(tb_corps_eye_z.Text);
 
                 float lookX = float.Parse(tb_corps_look_x.Text);
-                float lookY = float.Parse(tb_corps_look_y.Text);
                 float lookZ = float.Parse(tb_corps_look_z.Text);
 
-                Network.SendGenerateCorpsRequest(unitType, eyeX, eyeY, eyeZ, lookX, lookY, lookZ);
+                Network.SendGenerateCorpsRequest(unitType, eyeX, eyeZ, lookX,lookZ);
             }
         }
 
@@ -115,14 +113,12 @@ namespace TestClient1
             {
                 int corpsID = int.Parse(tb_corpsID.Text);
                 float eyeX = float.Parse(tb_corps_eye_x.Text);
-                float eyeY = float.Parse(tb_corps_eye_y.Text);
                 float eyeZ = float.Parse(tb_corps_eye_z.Text);
 
                 float lookX = float.Parse(tb_corps_look_x.Text);
-                float lookY = float.Parse(tb_corps_look_y.Text);
                 float lookZ = float.Parse(tb_corps_look_z.Text);
 
-                Network.SendMoveCorpsRequest(corpsID, eyeX, eyeY, eyeZ, lookX, lookY, lookZ);
+                Network.SendMoveCorpsRequest(corpsID, eyeX, eyeZ, lookX, lookZ);
             }
         }
 

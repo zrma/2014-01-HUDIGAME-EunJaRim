@@ -7,6 +7,7 @@
 #define MAX_NAME_LEN	30
 #define MAX_COMMENT_LEN	40
 
+
 enum PacketTypes: short
 {
 	PKT_NONE = 0,
@@ -220,34 +221,46 @@ struct LeaveRoomResult: public PacketHeader
 // 사실 request는 테스트용
 struct GenerateCorpsRequest: public PacketHeader
 {
-	GenerateCorpsRequest( )
+	GenerateCorpsRequest()
 	{
 		m_Size = sizeof( GenerateCorpsRequest );
 		m_Type = PKT_CS_GENERATE_CORPS;
 		m_UnitType = UnitType::UNIT_NONE;
-		m_Position;
+		m_NowX = NOT_A_NUMBER_FLOAT;
+		m_NowZ = NOT_A_NUMBER_FLOAT;
+		m_LookX = NOT_A_NUMBER_FLOAT;
+		m_LookZ = NOT_A_NUMBER_FLOAT;
 	}
 
 	UnitType m_UnitType;
-	PositionInfo m_Position;
+	float	m_NowX;
+	float	m_NowZ;
+	float	m_LookX;
+	float	m_LookZ;
 };
 
 struct GenerateCorpsResult: public PacketHeader
 {
-	GenerateCorpsResult( )
+	GenerateCorpsResult()
 	{
 		m_Size = sizeof( GenerateCorpsResult );
 		m_Type = PKT_SC_GENERATE_CORPS;
 		m_UnitType = UnitType::UNIT_NONE;
-		m_Position;
+		m_NowX = NOT_A_NUMBER_FLOAT;
+		m_NowZ = NOT_A_NUMBER_FLOAT;
+		m_LookX = NOT_A_NUMBER_FLOAT;
+		m_LookZ = NOT_A_NUMBER_FLOAT;
 		m_CorpsID = -1;
 		m_PlayerId = -1;
 	}
 
 	UnitType m_UnitType;
-	PositionInfo m_Position;
-	int		 m_CorpsID;
-	int		 m_PlayerId;
+	float	m_NowX;
+	float	m_NowZ;
+	float	m_LookX;
+	float	m_LookZ;
+	int		m_CorpsID;
+	int		m_PlayerId;
 };
 
 
@@ -258,11 +271,16 @@ struct MoveCorpsRequest: public PacketHeader
 		m_Size = sizeof( MoveCorpsRequest );
 		m_Type = PKT_CS_MOVE_CORPS;
 		m_CorpsID = -1;
-		m_Destination;
-		
+		m_NowX = NOT_A_NUMBER_FLOAT;
+		m_NowZ = NOT_A_NUMBER_FLOAT;
+		m_TargetX = NOT_A_NUMBER_FLOAT;
+		m_TargetZ = NOT_A_NUMBER_FLOAT;
 	}
-	int		 m_CorpsID;
-	PositionInfo m_Destination;
+	int		m_CorpsID;
+	float	m_NowX;
+	float	m_NowZ;
+	float	m_TargetX;
+	float	m_TargetZ;
 };
 
 struct MoveCorpsResult: public PacketHeader
@@ -273,12 +291,19 @@ struct MoveCorpsResult: public PacketHeader
 		m_Type = PKT_SC_MOVE_CORPS;
 		m_CorpsID = -1;
 		m_Speed = 0;
-		m_Direction;
+		m_TargetX = NOT_A_NUMBER_FLOAT;
+		m_TargetZ = NOT_A_NUMBER_FLOAT;
+		m_LookX = NOT_A_NUMBER_FLOAT;
+		m_LookZ = NOT_A_NUMBER_FLOAT;
 	}
 
 	int		 m_CorpsID;
 	float	 m_Speed;
-	PositionInfo m_Direction;
+
+	float	m_TargetX;
+	float	m_TargetZ;
+	float	m_LookX;
+	float	m_LookZ;
 };
 
 

@@ -140,7 +140,16 @@ void NetworkManager::HandleGenerateCorpsResult( GenerateCorpsResult& inPacket )
 		assert( inPacket.m_PlayerId != -1 );
 
 		UnitType unitType = inPacket.m_UnitType;
-		PositionInfo position = inPacket.m_Position;
+
+		float nowX = inPacket.m_NowX;
+		float nowZ = inPacket.m_NowZ;
+		float lookX = inPacket.m_LookX;
+		float lookZ = inPacket.m_LookZ;
+
+		PositionInfo position;
+		position.m_EyePoint = { nowX, 0.0f, nowZ };
+		position.m_LookAtPoint = { lookX, 0.0f, lookZ };
+
 		int corpsID = inPacket.m_CorpsID;
 		int playerID = inPacket.m_PlayerId;
 
@@ -215,7 +224,15 @@ void NetworkManager::HandleMoveCorpsResult( MoveCorpsResult& inPacket )
 	{
 		int corpsID = inPacket.m_CorpsID;
 		float speed = inPacket.m_Speed;
-		PositionInfo direction = inPacket.m_Direction;
+
+		float targetX = inPacket.m_TargetX;
+		float targetZ = inPacket.m_TargetZ;
+		float lookX = inPacket.m_LookX;
+		float lookZ = inPacket.m_LookZ;
+
+		PositionInfo direction;
+		direction.m_EyePoint = { targetX, 0.0f, targetZ };
+		direction.m_LookAtPoint = { lookX, 0.0f, lookZ };
 
 		Scene* scene = SceneManager::GetInstance()->GetNowScene();
 		if ( typeid( ScenePlay ) == typeid( *scene ) )
