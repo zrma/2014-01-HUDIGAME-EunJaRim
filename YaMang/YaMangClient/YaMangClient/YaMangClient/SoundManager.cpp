@@ -31,13 +31,6 @@ void SoundManager::Initialize()
 
 }
 
-void SoundManager::test()
-{
-	FMOD::Studio::EventInstance* eventInstance = GetEventInstance( "event:/loop/scene_play_01" );
-	eventInstance->start();
-	m_System->update();
-}
-
 void SoundManager::LoadBank( const char* fileName )
 {
 	FMOD_RESULT result;
@@ -81,4 +74,18 @@ FMOD::Studio::EventInstance* SoundManager::GetEventInstance( const char* path )
 
 	
 	return eventInstance;
+}
+
+void SoundManager::test()
+{
+	FMOD::Studio::EventInstance* eventInstance = GetEventInstance( "event:/loop/scene_play_01" );
+	eventInstance->start();
+	m_System->update();
+}
+
+void SoundManager::test2()
+{
+	FMOD::Studio::EventInstance* eventInstance = GetEventInstance( "event:/sfx/rm_random" );
+	eventInstance->start();
+	m_System->update();
 }

@@ -6,6 +6,7 @@
 #include "SceneManager.h"
 #include "ScenePlay.h"
 #include "TextManager.h"
+#include "SoundManager.h"
 
 HandlerFunc HandlerTable[PKT_MAX];
 
@@ -163,6 +164,8 @@ void NetworkManager::HandleGenerateCorpsResult( GenerateCorpsResult& inPacket )
 			ScenePlay* scenePlay = static_cast<ScenePlay*>( SceneManager::GetInstance()->GetNowScene() );
 			scenePlay->AddCorps( corpsID, corps );
 			Log( "GenerateCorps! Type:%d CorpID:%d \n", unitType, corpsID );
+
+			SoundManager::GetInstance( )->test2( );
 		}
 		else
 		{
