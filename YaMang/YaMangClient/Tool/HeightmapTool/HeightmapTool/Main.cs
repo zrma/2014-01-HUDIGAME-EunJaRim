@@ -15,8 +15,14 @@ namespace YamangTools
     {
         bool renderStop = false;
         bool meshSizeChanged = true;
+        bool mouseEventFlag = false;
+
         int preWidth = 0;
         int preHeight = 0;
+        int preMapSpace = 0;
+
+        int mouseXPosition = 0;
+        int mouseYPosition = 0;
 
         ~Main()
         {
@@ -58,8 +64,9 @@ namespace YamangTools
                 YamangDll.PreRendering();
                 int curWidth = Convert.ToInt32(GetNumber(MapHeightVal));
                 int curHeight = Convert.ToInt32(GetNumber(MapWidthVal));
+                int curMapSpace = Convert.ToInt32(GetNumber(MapVertexSpacingVal));
                 
-                if((preWidth != curWidth) || (preHeight != curHeight))
+                if((preWidth != curWidth) || (preHeight != curHeight) || (preMapSpace != curMapSpace))
                 {
                     meshSizeChanged = true;
                 }
@@ -68,14 +75,19 @@ namespace YamangTools
                 {
                     meshSizeChanged = false;
                     YamangDll.InitGroundMesh( curWidth, curHeight );
+                    YamangDll.CreateRawGround(curWidth, curHeight, curMapSpace);
                 }
 
-
-                YamangDll.CreateRawGround(Convert.ToInt32(GetNumber(MapHeightVal)), Convert.ToInt32(GetNumber(MapWidthVal)), GetNumber(MapVertexSpacingVal));
+                
                 YamangDll.PreSettingForTool();
 
-                YamangDll.CalcPickingRay(Convert.ToInt32(GetNumber(textBox1)), Convert.ToInt32(GetNumber(textBox2)));
-                YamangDll.GetPickedTriangle();
+                if(mouseEventFlag)
+                {
+                    YamangDll.CalcPickingRay(mouseXPosition, mouseYPosition);
+                    YamangDll.TransPickedTriangle();
+                    mouseEventFlag = false;
+                }
+                
 
                 YamangDll.HeightMapRender();
 
@@ -83,6 +95,7 @@ namespace YamangTools
 
                 preWidth = curWidth;
                 preHeight = curHeight;
+                preMapSpace = curMapSpace;
 
                 await Task.Delay(10);
             }
@@ -97,6 +110,17 @@ namespace YamangTools
                 YamangDll.D3DCleanUp();
                 MessageBox.Show(this, "맵툴을 종료합니다", "Closing...", MessageBoxButtons.OK, MessageBoxIcon.Question);
             }
+        }
+
+        private void RenderFrameClick(object sender, MouseEventArgs e)
+        {
+            mouseEventFlag = true;
+
+            mouseXPosition = (e.X + ((Control)sender).Location.X) - 295;
+            mouseYPosition = (e.Y + ((Control)sender).Location.Y) - 51;
+
+            Console.WriteLine(mouseXPosition);
+            Console.WriteLine(mouseYPosition);
         }
     }
 }

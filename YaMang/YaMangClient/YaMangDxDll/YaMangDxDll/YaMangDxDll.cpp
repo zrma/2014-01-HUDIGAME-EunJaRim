@@ -591,17 +591,18 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 
 YAMANGDXDLL_API void CalcPickingRay( int mouseX, int mouseY )
 {
-	D3DVIEWPORT9 veiwPort;
+	D3DVIEWPORT9 viewPort;
 	D3DXMATRIXA16 projectionMatrix;
 
 	float rayX = 0.f;
 	float rayY = 0.f;
 
-	g_D3dDevice->GetViewport( &veiwPort );
+	g_D3dDevice->GetViewport( &viewPort );
 	g_D3dDevice->GetTransform( D3DTS_PROJECTION, &projectionMatrix );
 
-	rayX = ( ( ( mouseX *2.f ) / (float) veiwPort.Width ) - 1.f ) / projectionMatrix._11;
-	rayY = ( ( ( mouseY *-2.f ) / (float) veiwPort.Height ) + 1.f ) / projectionMatrix._22;
+	rayX = ( ( ( ( ( mouseX - viewPort.X ) * 2.0f / (float) viewPort.Width ) - 1.0f ) ) - projectionMatrix( 2, 0 ) ) / projectionMatrix( 0, 0 );
+	rayY = ( ( -( ( ( mouseY - viewPort.Y ) * 2.0f / (float) viewPort.Height ) - 1.0f ) ) - projectionMatrix( 2, 1 ) ) / projectionMatrix( 1, 1 );
+	Log( "%f\n%f\n", rayX, rayY );
 
 	//viewport트랜스, 프로젝션 트랜스 역행
 	g_RayOrigin = { 0.f, 0.f, 0.f };
@@ -614,7 +615,7 @@ YAMANGDXDLL_API void CalcPickingRay( int mouseX, int mouseY )
 	D3DXMatrixInverse( &viewingMatrix, 0, &viewingMatrix );
 
 	D3DXVec3TransformCoord( &g_RayOrigin, &g_RayOrigin, &viewingMatrix );
-	D3DXVec3TransformCoord( &g_RayDirection, &g_RayDirection, &viewingMatrix );
+	D3DXVec3TransformNormal( &g_RayDirection, &g_RayDirection, &viewingMatrix );
 	Log( "뷰잉 좌표 역행\n" );
 
 	//월드 좌표로 역행
@@ -623,13 +624,13 @@ YAMANGDXDLL_API void CalcPickingRay( int mouseX, int mouseY )
 	D3DXMatrixInverse( &worldMatrix, 0, &worldMatrix );
 
 	D3DXVec3TransformCoord( &g_RayOrigin, &g_RayOrigin, &worldMatrix );
-	D3DXVec3TransformCoord( &g_RayDirection, &g_RayDirection, &worldMatrix );
+	D3DXVec3TransformNormal( &g_RayDirection, &g_RayDirection, &worldMatrix );
 	Log( "월드 좌표 역행\n" );
 	Log( "origin: %f,%f,%f\n direction: %f, %f, %f\n", g_RayOrigin.x, g_RayOrigin.y, g_RayOrigin.z, g_RayDirection.x, g_RayDirection.y, g_RayDirection.z );
 
 }
 
-YAMANGDXDLL_API void GetPickedTriangle( int modeSelector )
+YAMANGDXDLL_API void TransPickedTriangle( int modeSelector )
 {
 	LPDIRECT3DVERTEXBUFFER9 presentVertexBuffer;
 	LPDIRECT3DINDEXBUFFER9 presentIndexBuffer;
@@ -650,12 +651,13 @@ YAMANGDXDLL_API void GetPickedTriangle( int modeSelector )
 
 	D3DXVECTOR3 ray = g_RayDirection - g_RayOrigin;
 	D3DXVec3Normalize( &ray, &ray );
-	Log( "changed %f, %f, %f\n", ray.x, ray.y, ray.z );
+	//Log( "changed %f, %f, %f\n", ray.x, ray.y, ray.z );
 
-	D3DXVECTOR3 testOrg = D3DXVECTOR3( 0, 400, 0 );
-	D3DXVECTOR3 testRay = D3DXVECTOR3( 0, -1, 0 );
-	D3DXIntersect( g_Mesh, &testOrg, &testRay, &bHit, &dwFace, &fBary1, &fBary2, &fDist, NULL, NULL );
-	Log( "개수 %d\n", dwFace );
+	//test code 
+// 	D3DXVECTOR3 testOrg = D3DXVECTOR3( 0, 400, 0 );
+// 	D3DXVECTOR3 testRay = D3DXVECTOR3( 0, -1, 0 );
+	D3DXIntersect( g_Mesh, &g_RayOrigin, &g_RayDirection, &bHit, &dwFace, &fBary1, &fBary2, &fDist, NULL, NULL );
+	//Log( "개수 %d\n", dwFace );
 
 	if ( bHit )
 	{
