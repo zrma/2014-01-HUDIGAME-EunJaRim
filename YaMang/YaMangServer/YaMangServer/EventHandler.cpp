@@ -386,3 +386,59 @@ void ClientSession::HandleChangeCorpsFormationRequest( ChangeCorpsFormationReque
 	printf_s( "Corps Change Formation CorpID:%d Formation:%d \n", corpsID, formation );
 
 }
+
+
+
+
+
+REGISTER_HANDLER( PKT_CS_CORPS_ATTACK )
+{
+	AttackCorpsRequest inPacket = static_cast<AttackCorpsRequest&>( pktBase );
+	session->HandleAttackCorpsRequest( inPacket );
+}
+
+void ClientSession::HandleAttackCorpsRequest( AttackCorpsRequest& inPacket )
+{
+
+	m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size );
+
+
+	int myCorpsID = inPacket.m_MyCorpsID;
+	int targetCorpsID = inPacket.m_TargetCorpsID;
+
+	Corps* myCorps = m_ClientManager->GetCorpsByCorpsID( myCorpsID );
+	Corps* targetCorps = m_ClientManager->GetCorpsByCorpsID( targetCorpsID );
+
+	// 사실 nowXZ targetXZ는 서버도 들고있는정보인데 클라로 부터 받을까? 근데 받으면 편하긴 함
+	float nowX = inPacket.m_NowX;
+	float nowZ = inPacket.m_NowZ;
+	float targetX = inPacket.m_TargetX;
+	float targetZ = inPacket.m_TargetZ;
+
+	D3DXVECTOR2* vector = nullptr;
+	vector->x = targetX - nowX;
+	vector->y = targetZ - nowZ;
+	float length = GetVectorLength( vector );
+
+	if ( length < myCorps->GetAttackRange() )
+	{
+		// 공격 하세요
+		targetCorps->AddDamage( myCorps->GetAttackPower() );
+	}
+	else
+	{
+		// 이동하세요
+	}
+
+}
+
+
+
+
+//////////////////////////////////////////////////////////////////////////
+
+
+float ClientSession::GetVectorLength( D3DXVECTOR2* vector )
+{
+	return D3DXVec2Length( vector );
+}

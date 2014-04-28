@@ -21,10 +21,15 @@ void Corps::AddDamage( int damage )
 {
 	if ( !m_IsDead )
 	{
-		m_HP = m_HP - damage;
-		if ( m_HP < 1)
+		int defense = m_Defense + m_DefenseBonus - damage;
+		if ( defense < 0 )
 		{
-			m_IsDead = true;
+			m_HP = m_HP + defense;
+			if ( m_HP < 1 )
+			{
+				m_IsDead = true;
+			}
 		}
+		
 	}
 }

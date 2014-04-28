@@ -72,7 +72,11 @@ public:
 	void	HandleMoveCorpsRequest( MoveCorpsRequest& inPacket );
 	void	HandleChangeCorpsFormationRequest( ChangeCorpsFormationRequest& inPacket );
 	void	HandleStopCorpsRequest( StopCorpsRequest& inPacket );
+	void	HandleAttackCorpsRequest( AttackCorpsRequest& inPacket );
 
+
+
+	float	GetVectorLength( D3DXVECTOR2* vector );
 
 private:
 
