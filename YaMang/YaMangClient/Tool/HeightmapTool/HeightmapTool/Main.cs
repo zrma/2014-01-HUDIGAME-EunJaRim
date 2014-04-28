@@ -15,8 +15,8 @@ namespace YamangTools
     {
         bool renderStop = false;
         bool meshSizeChanged = true;
-        float curWidth = .0f;
-        float curHeight = .0f;
+        int preWidth = 0;
+        int preHeight = 0;
 
         ~Main()
         {
@@ -51,17 +51,26 @@ namespace YamangTools
         }
 
 
-
         async private void Render()
         {
             while (!renderStop)
             {
                 YamangDll.PreRendering();
+                int curWidth = Convert.ToInt32(GetNumber(MapHeightVal));
+                int curHeight = Convert.ToInt32(GetNumber(MapWidthVal));
+                
+                if((preWidth != curWidth) || (preHeight != curHeight))
+                {
+                    meshSizeChanged = true;
+                }
+
                 if(meshSizeChanged)
                 {
                     meshSizeChanged = false;
-                    YamangDll.InitGroundMesh(Convert.ToInt32(GetNumber(MapHeightVal)), Convert.ToInt32(GetNumber(MapWidthVal)));
+                    YamangDll.InitGroundMesh( curWidth, curHeight );
                 }
+
+
                 YamangDll.CreateRawGround(Convert.ToInt32(GetNumber(MapHeightVal)), Convert.ToInt32(GetNumber(MapWidthVal)), GetNumber(MapVertexSpacingVal));
                 YamangDll.PreSettingForTool();
 
@@ -71,6 +80,9 @@ namespace YamangTools
                 YamangDll.HeightMapRender();
 
                 YamangDll.PostRendering();
+
+                preWidth = curWidth;
+                preHeight = curHeight;
 
                 await Task.Delay(10);
             }
