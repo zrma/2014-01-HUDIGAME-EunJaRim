@@ -16,6 +16,7 @@ namespace YamangTools
         bool renderStop = false;
         bool meshSizeChanged = true;
         bool mouseEventFlag = false;
+        int actionFlag = 0;
 
         int preWidth = 0;
         int preHeight = 0;
@@ -56,6 +57,21 @@ namespace YamangTools
             return result;
         }
 
+        private void SetAction()
+        {
+            if(Higher.Checked)
+            {
+                actionFlag = 1;
+            }
+            else if(Lower.Checked)
+            {
+                actionFlag = 2;
+            }
+            else 
+            {
+                actionFlag = 0;
+            }
+        }
 
         async private void Render()
         {
@@ -74,6 +90,7 @@ namespace YamangTools
                 if(meshSizeChanged)
                 {
                     meshSizeChanged = false;
+
                     YamangDll.InitGroundMesh( curWidth, curHeight );
                     YamangDll.CreateRawGround(curWidth, curHeight, curMapSpace);
                 }
@@ -83,8 +100,10 @@ namespace YamangTools
 
                 if(mouseEventFlag)
                 {
+                    SetAction();
+
                     YamangDll.CalcPickingRay(mouseXPosition, mouseYPosition);
-                    YamangDll.TransPickedTriangle();
+                    YamangDll.TransPickedTriangle(actionFlag);
                     mouseEventFlag = false;
                 }
                 

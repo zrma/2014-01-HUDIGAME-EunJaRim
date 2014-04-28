@@ -45,9 +45,13 @@
             this.MapHeightVal = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.MapVertexSpacingVal = new System.Windows.Forms.TextBox();
+            this.ColorChange = new System.Windows.Forms.CheckBox();
+            this.Higher = new System.Windows.Forms.CheckBox();
+            this.Lower = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.RenderTarget)).BeginInit();
             this.sideMenu.SuspendLayout();
+            this.Terrain.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -111,6 +115,9 @@
             // 
             // Terrain
             // 
+            this.Terrain.Controls.Add(this.Lower);
+            this.Terrain.Controls.Add(this.Higher);
+            this.Terrain.Controls.Add(this.ColorChange);
             this.Terrain.Location = new System.Drawing.Point(4, 22);
             this.Terrain.Name = "Terrain";
             this.Terrain.Padding = new System.Windows.Forms.Padding(3);
@@ -202,6 +209,38 @@
             this.MapVertexSpacingVal.Text = "1.0";
             this.MapVertexSpacingVal.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // ColorChange
+            // 
+            this.ColorChange.AutoSize = true;
+            this.ColorChange.Checked = true;
+            this.ColorChange.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ColorChange.Location = new System.Drawing.Point(6, 6);
+            this.ColorChange.Name = "ColorChange";
+            this.ColorChange.Size = new System.Drawing.Size(98, 16);
+            this.ColorChange.TabIndex = 0;
+            this.ColorChange.Text = "ColorChange";
+            this.ColorChange.UseVisualStyleBackColor = true;
+            // 
+            // Higher
+            // 
+            this.Higher.AutoSize = true;
+            this.Higher.Location = new System.Drawing.Point(6, 28);
+            this.Higher.Name = "Higher";
+            this.Higher.Size = new System.Drawing.Size(60, 16);
+            this.Higher.TabIndex = 1;
+            this.Higher.Text = "Higher";
+            this.Higher.UseVisualStyleBackColor = true;
+            // 
+            // Lower
+            // 
+            this.Lower.AutoSize = true;
+            this.Lower.Location = new System.Drawing.Point(6, 51);
+            this.Lower.Name = "Lower";
+            this.Lower.Size = new System.Drawing.Size(59, 16);
+            this.Lower.TabIndex = 2;
+            this.Lower.Text = "Lower";
+            this.Lower.UseVisualStyleBackColor = true;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -224,6 +263,8 @@
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.RenderTarget)).EndInit();
             this.sideMenu.ResumeLayout(false);
+            this.Terrain.ResumeLayout(false);
+            this.Terrain.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -252,6 +293,9 @@
         private System.Windows.Forms.TabPage Terrain;
         private System.Windows.Forms.TabPage Texture;
         private System.Windows.Forms.TabPage Object;
+        private System.Windows.Forms.CheckBox Lower;
+        private System.Windows.Forms.CheckBox Higher;
+        private System.Windows.Forms.CheckBox ColorChange;
     }
 }
 
