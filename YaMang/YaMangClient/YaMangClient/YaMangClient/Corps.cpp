@@ -120,7 +120,8 @@ void Corps::GoFoward()
 
 void Corps::ClearAction()
 {
-	ActionDefault act; m_Action = act;
+	ActionDefault act;
+	m_Action = act;
 }
 
 void Corps::SetAct( ActFunc act )
@@ -128,5 +129,21 @@ void Corps::SetAct( ActFunc act )
 	for ( auto& iter : m_UnitList )
 	{
 		iter->ChangeAct( act );
+	}
+}
+
+void Corps::SetActStatus( ActionStatusType actionStatus )
+{
+	for ( auto& iter : m_UnitList )
+	{
+		iter->SetActionStatus( actionStatus );
+	}
+}
+
+void Corps::LookForward()
+{
+	for ( auto& iter : m_UnitList )
+	{
+		iter->LookForward();
 	}
 }

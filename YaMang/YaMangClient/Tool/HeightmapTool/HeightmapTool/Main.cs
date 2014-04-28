@@ -13,12 +13,13 @@ namespace YamangTools
 {
     public partial class Main : Form
     {
+        bool renderStop = false;
+        bool meshSizeChanged = true;
+        float curWidth = .0f;
+        float curHeight = .0f;
 
         ~Main()
         {
-
-            YamangDll.HeightMapCleanup();
-            YamangDll.D3DCleanUp();
         }
 
         public Main()
@@ -28,8 +29,6 @@ namespace YamangTools
             Render();
         }
         
-        
-
         private float GetNumber(object target)
         {
             float result;
@@ -55,9 +54,14 @@ namespace YamangTools
 
         async private void Render()
         {
-            while (true)
+            while (!renderStop)
             {
                 YamangDll.PreRendering();
+                if(meshSizeChanged)
+                {
+                    meshSizeChanged = false;
+                    YamangDll.InitGroundMesh(Convert.ToInt32(GetNumber(MapHeightVal)), Convert.ToInt32(GetNumber(MapWidthVal)));
+                }
                 YamangDll.CreateRawGround(Convert.ToInt32(GetNumber(MapHeightVal)), Convert.ToInt32(GetNumber(MapWidthVal)), GetNumber(MapVertexSpacingVal));
                 YamangDll.PreSettingForTool();
 
@@ -76,12 +80,10 @@ namespace YamangTools
         {
             if (e.CloseReason == CloseReason.UserClosing)
             {
+                renderStop = true;
                 YamangDll.HeightMapCleanup();
                 YamangDll.D3DCleanUp();
-                if (MessageBox.Show(this, "Really?", "Closing...", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
-                {
-                    e.Cancel = true;
-                }
+                MessageBox.Show(this, "맵툴을 종료합니다", "Closing...", MessageBoxButtons.OK, MessageBoxIcon.Question);
             }
         }
     }

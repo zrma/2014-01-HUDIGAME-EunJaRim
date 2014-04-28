@@ -64,6 +64,7 @@ struct ActionTransFormation: public Action
 	{
 		ActMoveSeries act;
 		corps.SetAct( act );
+		corps.LookForward();
 	}
 };
 

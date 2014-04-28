@@ -47,16 +47,16 @@ extern "C"{
 
 	YAMANGDXDLL_API HRESULT HeightMapTextureImport( HWND hWnd, LPCTSTR heightMap, LPCTSTR mapTexture );
 	YAMANGDXDLL_API void HeightMapCleanup();
-
 	YAMANGDXDLL_API void PreSettingForTool();
 	YAMANGDXDLL_API void HeightMapRender();
+	YAMANGDXDLL_API void InitGroundMesh( int row, int col );
 	YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize );
 	
 	//////////////////////////////////////////////////////////////////////////
 	// Picking Ray를 위한 부분
 	//////////////////////////////////////////////////////////////////////////
 	YAMANGDXDLL_API void CalcPickingRay( int mouseX, int mouseY );
-	YAMANGDXDLL_API void GetPickedTriangle();
+	YAMANGDXDLL_API void GetPickedTriangle(int modeSelector = 0);
 
 	//////////////////////////////////////////////////////////////////////////
 	//Text Render 를 위한 함수

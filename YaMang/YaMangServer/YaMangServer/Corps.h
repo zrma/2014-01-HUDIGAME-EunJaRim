@@ -21,6 +21,12 @@ public:
 	void					AddDamage( int damage );
 
 	
+	int						GetSpeed() { return m_MoveSpeed + m_MoveSpeedBonus; }
+	int						GetAttackRange( ) { return m_AttackRange + m_AttackRangeBonus; }
+	int						GetAttackPower( ) { return m_AttackPower + m_AttackPowerBonus; }
+	int						GetDefense( ) { return m_Defense + m_DefenseBonus; }
+
+
 private:
 	Corps();
 	Corps( const Corps& );
@@ -42,6 +48,8 @@ protected:
 	int		m_MoveSpeedBonus = 0;
 
 	int		m_AttackRange = 0;
+	int		m_AttackRangeBonus = 0;
+
 	int		m_AttackPower = 0;
 	int		m_AttackPowerBonus = 0;
 

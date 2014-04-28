@@ -31,8 +31,6 @@ void MovePosition::OnTick()
 void MovePosition::OnEnd()
 {
 	printf_s( "MovePosition OnEnd \n" );
-	// 종료 패킷 브로드 캐스팅 해야함
-	// 그런데 어디서 클라매니저를 갖고올까 ㅇㅅㅇ;
 
 	StopCorpsResult outPacket;
 	outPacket.m_CorpsID = m_OwnerCropsID;

@@ -316,12 +316,11 @@ YAMANGDXDLL_API void D3DCleanUp()
 	{
 		g_Sprite->Release();
 	}
-	/*
+	
 	if ( g_Mesh != NULL )
 	{
 		g_Mesh->Release();
 	}
-	*/
 
 	if ( NULL != g_D3dDevice )
 	{
@@ -388,18 +387,6 @@ YAMANGDXDLL_API HRESULT HeightMapTextureImport ( HWND hWnd, LPCTSTR heightMap, L
 		return E_FAIL;
 	}
 
-// 	if ( FAILED( InitVertexBuffer( hWnd ) ) )
-// 	{
-// 		MessageBox( NULL, L"Fail in InitVertexBuffer", L"YaMang.DLL", MB_OK );
-// 		return E_FAIL;
-// 	}
-// 
-// 	if ( FAILED( InitIdxBuffer( hWnd ) ) )
-// 	{
-// 		MessageBox( NULL, L"Fail in InitIdxBuffer", L"YaMang.DLL", MB_OK );
-// 		return E_FAIL;
-// 	}
-
 	
 	return S_OK;
 }
@@ -416,16 +403,6 @@ YAMANGDXDLL_API void HeightMapCleanup()
 	{
 		g_TexDiffuse->Release();
 	}
-
-// 	if ( g_IdxBuffer != NULL )
-// 	{
-// 		g_IdxBuffer->Release();
-// 	}
-// 
-// 	if ( g_VertexBuffer != NULL )
-// 	{
-// 		g_VertexBuffer->Release();
-// 	}
 
 }
 
@@ -482,42 +459,35 @@ YAMANGDXDLL_API void HeightMapRender()
 	// Log("Stop \n");
 }
 
-YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
+YAMANGDXDLL_API void InitGroundMesh( int row, int col )
 {
-	if ( g_Mesh != nullptr )
+	if (g_Mesh != nullptr)
 	{
-		// 		IDirect3DVertexBuffer9* tempVertexBuffer = nullptr;
-		// 		g_Mesh->GetVertexBuffer( &tempVertexBuffer );
-		// 		tempVertexBuffer->Release();
-		// 
-		// 		IDirect3DIndexBuffer9* tempIndexBuffer = nullptr;
-		// 		g_Mesh->GetIndexBuffer( &tempIndexBuffer );
-		// 		tempIndexBuffer->Release();
-		//g_Mesh->Release();
+		g_Mesh->Release();
 	}
-
-
 	g_XHeight = col + 1;
 	g_ZHeight = row + 1;
 
 	int verticesCount = (g_XHeight) * ( g_ZHeight );
-	int indicesCount = col * row * 6;
 	int faceCount = ( g_XHeight - 1 ) * ( g_ZHeight - 1 ) * 2;
 
 	//mesh를 직접 만들어 보자
 	//mesh를 직접 만들게 되면 사실 global vertex buffer와 index buffer가 무의미 하다.
-	HRESULT hr = 0;
-	if ( g_Mesh == nullptr )
+
+	HRESULT hr = NULL;
+	hr = D3DXCreateMeshFVF( faceCount, verticesCount, D3DXMESH_MANAGED | D3DXMESH_32BIT, D3DFVF_CUSTOMVERTEX, g_D3dDevice, &g_Mesh );
+	if ( hr != S_OK )
 	{
-		hr = D3DXCreateMeshFVF( faceCount, verticesCount, D3DXMESH_MANAGED | D3DXMESH_32BIT, D3DFVF_CUSTOMVERTEX, g_D3dDevice, &g_Mesh );
-		if ( hr != S_OK )
-		{
-			MessageBox( NULL, L"CreateMesh Failed", L"YaMang.DLL", MB_OK );
-			return;
-		}
+		MessageBox( NULL, L"CreateMesh Failed", L"YaMang.DLL", MB_OK );
+		return;
 	}
+}
 
 
+YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
+{
+	int verticesCount = (g_XHeight) * ( g_ZHeight );
+	int indicesCount = col * row * 6;
 
 	CUSTOMVERTEX* baseVertex = new CUSTOMVERTEX[verticesCount];
 	if ( nullptr == baseVertex )
@@ -659,7 +629,7 @@ YAMANGDXDLL_API void CalcPickingRay( int mouseX, int mouseY )
 
 }
 
-YAMANGDXDLL_API void GetPickedTriangle()
+YAMANGDXDLL_API void GetPickedTriangle( int modeSelector )
 {
 	LPDIRECT3DVERTEXBUFFER9 presentVertexBuffer;
 	LPDIRECT3DINDEXBUFFER9 presentIndexBuffer;
@@ -704,9 +674,7 @@ YAMANGDXDLL_API void GetPickedTriangle()
 	if ( g_NumIntersections > 0 )
 	{
 		CUSTOMVERTEX* intersectedVertexBufferStart;
-		CUSTOMVERTEX* intersectedTriVertices;
 		DWORD* intersectedTriIndices;
-		CUSTOMVERTEX v1, v2, v3;
 		INTERSECTION* intersection;
 
 		g_Mesh->LockVertexBuffer( 0, (void**) &intersectedVertexBufferStart );
@@ -726,16 +694,26 @@ YAMANGDXDLL_API void GetPickedTriangle()
 
 			//vertex와 index 바인딩
 			VerticesStartPoint[intersectedTriIndices[0]].Diffuse = D3DCOLOR_ARGB( 255, 30, 30, 150 );
-			VerticesStartPoint[intersectedTriIndices[0]].vertexPoint.y = 2;
 			VerticesStartPoint[intersectedTriIndices[1]].Diffuse = D3DCOLOR_ARGB( 255, 30, 30, 150 );
 			VerticesStartPoint[intersectedTriIndices[2]].Diffuse = D3DCOLOR_ARGB( 255, 30, 30, 150 );
-			// 			intersectedTriVertices[0] = VerticesStartPoint[intersectedTriIndices[0]];
-			// 			intersectedTriVertices[0].Diffuse = D3DCOLOR_ARGB( 255, 30, 30, 150 );
-			// 			intersectedTriVertices[1] = VerticesStartPoint[intersectedTriIndices[1]];
-			// 			intersectedTriVertices[1].Diffuse = D3DCOLOR_ARGB( 255, 30, 30, 150 );
-			// 			intersectedTriVertices[2] = VerticesStartPoint[intersectedTriIndices[2]];
-			// 			intersectedTriVertices[2].Diffuse = D3DCOLOR_ARGB( 255, 30, 30, 150 );
 
+			modeSelector = static_cast<MODESELECTOR>( modeSelector );
+
+			switch ( modeSelector )
+			{
+				case AREA_HIGHER:
+					VerticesStartPoint[intersectedTriIndices[0]].vertexPoint.y += 2;
+					VerticesStartPoint[intersectedTriIndices[1]].vertexPoint.y += 2;
+					VerticesStartPoint[intersectedTriIndices[2]].vertexPoint.y += 2;
+					break;
+				case AREA_LOWER:
+					VerticesStartPoint[intersectedTriIndices[0]].vertexPoint.y += 2;
+					VerticesStartPoint[intersectedTriIndices[1]].vertexPoint.y += 2;
+					VerticesStartPoint[intersectedTriIndices[2]].vertexPoint.y += 2;
+					break;
+				default:
+					break;
+			}
 		}
 
 		g_Mesh->UnlockVertexBuffer();

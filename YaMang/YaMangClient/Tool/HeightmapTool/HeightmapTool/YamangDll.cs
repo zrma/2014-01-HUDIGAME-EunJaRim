@@ -60,7 +60,20 @@ namespace YamangTools
         public static extern void HeightMapRender();
 
         [DllImport("YaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void CreateRawGround( int row, int col, float pixelSize = 0.5f );
+        public static extern void InitGroundMesh( int row, int col );
+
+        [DllImport("YaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void CreateRawGround( int row, int col, float pixelSize );
+
+
+        /////////////////////////////////////////////////////////////////////////
+        //peeking 관련 함수
+        /////////////////////////////////////////////////////////////////////////
+
+        [DllImport("YaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void CalcPickingRay(int mouseX, int mouseY);
+        [DllImport("YaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void GetPickedTriangle(int modeSelector = 0);
 
 
         //////////////////////////////////////////////////////////////////////////
@@ -69,16 +82,6 @@ namespace YamangTools
 
         [DllImport("YaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void RenderText([MarshalAs(UnmanagedType.LPWStr)] String text, float left, float top, int RGB_R = 255, int RGB_G = 255, int RGB_B = 255, float right = 0, float bottom = 0);
-
-
-        ////
-        //peeking 관련 함수
-        ///
-
-        [DllImport("YaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void CalcPickingRay( int mouseX, int mouseY );
-        [DllImport("YaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void GetPickedTriangle();
 
 
         //DLL 내부 MESHOBJECT 정의
