@@ -9,6 +9,7 @@
 #include "Corps.h"
 #include "MacroSet.h"
 #include "Action.h"
+#include "Timer.h"
 
 Corps::Corps( int corpsId, int playerId, PositionInfo pos )
 : m_CorpsId( corpsId ), m_OwnerPlayerID( playerId ), m_TargetFormation( FormationType::FORMATION_RUSH )
@@ -110,8 +111,11 @@ void Corps::GoFoward()
 {
 	D3DXVECTOR3 view = m_LookAtPoint - m_EyePoint;
 
-	m_EyePoint += view * m_Speed;
-	m_LookAtPoint += view * m_Speed;
+	float time = static_cast<float>( Timer::GetInstance()->GetElapsedTime() ) / 1000;
+	float delta = time * m_Speed;
+
+	m_EyePoint += view * delta;
+	m_LookAtPoint += view * delta;
 }
 
 void Corps::ClearAction()

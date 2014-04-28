@@ -69,6 +69,8 @@ void ScenePlay::Create()
 
 void ScenePlay::Destroy()
 {
+	SoundManager::Release();
+
 	for ( auto iter : m_CorpsList )
 	{
 		auto& toBeDelete = iter.second;
@@ -128,7 +130,7 @@ void ScenePlay::ChangeCorpsFormation( int corpsID, FormationType formationType )
 	}
 }
 
-void ScenePlay::MoveCorpsStart( int corpsID, float x, float z, float speed )
+void ScenePlay::MoveCorpsStart( int corpsID, D3DXVECTOR3 targetPosition, D3DXVECTOR3 lookAtVector, float speed )
 {
 	if ( m_CorpsList.find( corpsID ) != m_CorpsList.end() )
 	{
@@ -136,7 +138,8 @@ void ScenePlay::MoveCorpsStart( int corpsID, float x, float z, float speed )
 		{
 			assert( false );
 		}
-		m_CorpsList[corpsID]->SetLookAtPosition( x, z );
+		m_CorpsList[corpsID]->SetTargetPosition( targetPosition );
+		m_CorpsList[corpsID]->SetLookAtPosition( lookAtVector );
 		m_CorpsList[corpsID]->SetSpeed( speed );
 
 		ActionMovePosition action;
@@ -153,9 +156,8 @@ void ScenePlay::MoveCorpsStop( int corpsID )
 			assert( false );
 		}
 		D3DXVECTOR3 targetVector = m_CorpsList[corpsID]->GetLookAtVector();
-		m_CorpsList[corpsID]->SetLookAtPosition( targetVector.x, targetVector.z );
+		m_CorpsList[corpsID]->SetLookAtPosition( targetVector );
 		m_CorpsList[corpsID]->SetSpeed( 0 );
-
 		m_CorpsList[corpsID]->ClearAction();
 	}
 }

@@ -232,17 +232,16 @@ void NetworkManager::HandleMoveCorpsResult( MoveCorpsResult& inPacket )
 		float targetZ = inPacket.m_TargetZ;
 		float lookX = inPacket.m_LookX;
 		float lookZ = inPacket.m_LookZ;
-
-		PositionInfo direction;
-		direction.m_EyePoint = { targetX, 0.0f, targetZ };
-		direction.m_LookAtPoint = { lookX, 0.0f, lookZ };
+		
+		D3DXVECTOR3 targetPosition = { targetX, 0.0f, targetZ };
+		D3DXVECTOR3 lookAtVector = { lookX, 0.0f, lookZ };
 
 		Scene* scene = SceneManager::GetInstance()->GetNowScene();
 		if ( typeid( ScenePlay ) == typeid( *scene ) )
 		{
 			ScenePlay* scenePlay = static_cast<ScenePlay*>( SceneManager::GetInstance()->GetNowScene() );
-			scenePlay->MoveCorpsStart( corpsID, direction.m_LookAtPoint.x, direction.m_LookAtPoint.z, speed );
-			Log( "CorpsMoving! CorpID:%d DesX:%f DesZ:%f Speed:%f \n", corpsID, direction.m_LookAtPoint.x, direction.m_LookAtPoint.z, speed );
+			scenePlay->MoveCorpsStart( corpsID, targetPosition, lookAtVector, speed );
+			Log( "CorpsMoving! CorpID:%d - Move To X:%f Z:%f Speed:%f \n", corpsID, lookAtVector.x, lookAtVector.z, speed );
 		}
 		else
 		{

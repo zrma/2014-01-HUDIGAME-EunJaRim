@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "Scene.h"
+#include <d3dx9math.h>
 
 class Corps;
 class MouseRender;
@@ -18,7 +19,7 @@ public:
 
 	void	AddCorps( int corpsID, Corps* corps );
 	void	ChangeCorpsFormation( int corpsID, FormationType formationType );
-	void	MoveCorpsStart( int corpsID, float x, float z, float speed );
+	void	MoveCorpsStart( int corpsID, D3DXVECTOR3 targetPosition, D3DXVECTOR3 lookAtVector, float speed );
 	void	MoveCorpsStop( int corpsID );
 
 private:

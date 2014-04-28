@@ -82,6 +82,8 @@ struct ActionMovePosition: public Action
 	{
 		corps.GoFoward();
 
+		// Log( "현 좌표 : %f %f \n", corps.GetEyePoint().x, corps.GetEyePoint().z );
+
 		ActMoveSeries act;
 		corps.SetAct( act );
 	}

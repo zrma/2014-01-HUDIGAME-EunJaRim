@@ -33,9 +33,6 @@ public:
 
 	void			SetAct( ActFunc act );
 
-	void			SetLookAtPosition( float x, float z ) { m_LookAtPoint.x = m_EyePoint.x + x; m_LookAtPoint.y = m_EyePoint.y;  m_LookAtPoint.z = m_EyePoint.z + z; }
-	D3DXVECTOR3		GetLookAtVector( ) { return (m_LookAtPoint - m_EyePoint); }
-	void			SetSpeed( float speed ) { m_Speed = speed; }
 	void			GoFoward();
 	
 private:
@@ -46,8 +43,6 @@ private:
 	std::vector<Unit*>		m_UnitList;
 	int						m_CorpsId = -1;
 	int						m_OwnerPlayerID = -1;
-
-	float	m_Speed;
 
 	FormationType			m_NowFormation = FormationType::FORMATION_NONE;
 	FormationType			m_TargetFormation = FormationType::FORMATION_NONE;

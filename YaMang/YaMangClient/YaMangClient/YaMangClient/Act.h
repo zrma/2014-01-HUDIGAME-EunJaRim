@@ -27,7 +27,7 @@ struct ActAttackSeries: public Act
 {
 	virtual void operator() ( Unit& unit, Corps& owner )
 	{
-		Log( "유닛이 공격! \n" );
+		// Log( "유닛이 공격! \n" );
 	}
 };
 
@@ -40,7 +40,7 @@ struct ActMoveSeries: public Act
 {
 	virtual void operator() ( Unit& unit, Corps& owner )
 	{
-		Log( "유닛이 이동! \n" );
+		// Log( "유닛이 이동! \n" );
 
 		/*if ( !m_Corps )
 		{
