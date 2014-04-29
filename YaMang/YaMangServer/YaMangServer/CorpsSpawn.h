@@ -5,6 +5,6 @@ class CorpsSpawn:
 {
 public:
 	CorpsSpawn();
-	~CorpsSpawn();
+	virtual ~CorpsSpawn( );
 };
 

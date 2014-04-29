@@ -17,7 +17,7 @@ public:
 	Action();
 	virtual ~Action();
 
-	void	ActIt();
+	void	DoAction();
 
 	void	SetClientManager( ClientManager* clientManager ) { m_ClientManager = clientManager; }
 

@@ -5,6 +5,6 @@ class DestroyFormation:
 {
 public:
 	DestroyFormation();
-	~DestroyFormation();
+	virtual ~DestroyFormation( );
 };
 

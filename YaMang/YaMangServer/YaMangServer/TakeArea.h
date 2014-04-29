@@ -5,6 +5,6 @@ class TakeArea:
 {
 public:
 	TakeArea();
-	~TakeArea();
+	virtual ~TakeArea( );
 };
 

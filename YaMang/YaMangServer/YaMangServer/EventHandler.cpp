@@ -409,11 +409,13 @@ void ClientSession::HandleAttackCorpsRequest( AttackCorpsRequest& inPacket )
 	Corps* myCorps = m_ClientManager->GetCorpsByCorpsID( myCorpsID );
 	Corps* targetCorps = m_ClientManager->GetCorpsByCorpsID( targetCorpsID );
 
-	// 사실 nowXZ targetXZ는 서버도 들고있는정보인데 클라로 부터 받을까? 근데 받으면 편하긴 함
-	float nowX = inPacket.m_NowX;
-	float nowZ = inPacket.m_NowZ;
-	float targetX = inPacket.m_TargetX;
-	float targetZ = inPacket.m_TargetZ;
+	PositionInfo myCorpsPositionInfo = myCorps->GetPositionInfo();
+	PositionInfo targetPositionInfo = targetCorps->GetPositionInfo( );
+
+	float nowX = myCorpsPositionInfo.m_EyePoint.x;
+	float nowZ = myCorpsPositionInfo.m_EyePoint.z;
+	float targetX = targetPositionInfo.m_EyePoint.x;
+	float targetZ = targetPositionInfo.m_EyePoint.z;
 
 	D3DXVECTOR2* vector = nullptr;
 	vector->x = targetX - nowX;
@@ -423,7 +425,8 @@ void ClientSession::HandleAttackCorpsRequest( AttackCorpsRequest& inPacket )
 	if ( length < myCorps->GetAttackRange() )
 	{
 		// 공격 하세요
-		targetCorps->AddDamage( myCorps->GetAttackPower() );
+		// 액션에서 하자...
+		// targetCorps->AddDamage( myCorps->GetAttackPower() );
 	}
 	else
 	{

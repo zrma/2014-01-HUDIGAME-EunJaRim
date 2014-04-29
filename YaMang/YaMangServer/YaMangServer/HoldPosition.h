@@ -5,6 +5,6 @@ class HoldPosition:
 {
 public:
 	HoldPosition();
-	~HoldPosition();
+	virtual ~HoldPosition( );
 };
 

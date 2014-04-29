@@ -5,6 +5,6 @@ class RushFormation:
 {
 public:
 	RushFormation();
-	~RushFormation();
+	virtual ~RushFormation( );
 };
 

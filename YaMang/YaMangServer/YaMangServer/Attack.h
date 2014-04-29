@@ -5,6 +5,6 @@ class Attack:
 {
 public:
 	Attack();
-	~Attack();
+	virtual ~Attack();
 };
 

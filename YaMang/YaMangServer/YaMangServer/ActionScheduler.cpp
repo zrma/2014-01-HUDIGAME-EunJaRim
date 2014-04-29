@@ -72,7 +72,7 @@ void ActionScheduler::DoScheduledAction()
 			corp->SetHoldingAction( headAction );
 
 			// 이 액션의 주기적인 실행은 누가하지??;;;
-			headAction->ActIt();
+			headAction->DoAction();
 		}
 
 	}

@@ -5,7 +5,7 @@ class MovePosition:
 {
 public:
 	MovePosition();
-	~MovePosition();
+	virtual ~MovePosition( );
 
 private:
 	void OnBegin();

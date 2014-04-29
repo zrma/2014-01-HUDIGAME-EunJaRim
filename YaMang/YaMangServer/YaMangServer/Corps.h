@@ -12,7 +12,7 @@ public:
 
 	int						GetCorpsID() { return m_CorpsID; }
 	short					GetCorpsSize() { return m_UnitNum; }
-	PositionInfo			GetPosition() { return m_Position; }
+	PositionInfo			GetPositionInfo() { return m_Position; }
 
 	void					SetHoldingAction( Action* holdAction ) { m_HoldAction = holdAction; }
 	Action*					GetHoldingAction( ) { return m_HoldAction; }
