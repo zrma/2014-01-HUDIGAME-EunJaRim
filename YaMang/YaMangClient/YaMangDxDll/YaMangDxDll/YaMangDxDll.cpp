@@ -749,10 +749,12 @@ YAMANGDXDLL_API void RenderText( LPCWSTR text, float left, float top, int RGB_R,
 		static_cast<LONG>( bottom )
 	}; // 그릴 위치
 	//비율 고정
+
 	D3DXMATRIXA16 ratioMat;
 	float ratio = (720.0f / g_Width) * g_Ratio;
 	D3DXMatrixIdentity(&ratioMat);
 	D3DXMatrixScaling(&ratioMat, 1280 / g_Width, ratio, 1);
+	g_Sprite->SetTransform(&ratioMat);
 
 	g_Font->DrawText( g_Sprite, text
 					  , -1										// 총 문자열 수(그냥 -1 해도 됨.) 
@@ -809,7 +811,7 @@ YAMANGDXDLL_API HRESULT CursorRender( )
 	if ( g_cursorSprite ) 
 	{
 		D3DXMATRIXA16 ratioMat;
-
+		
 		float ratio = (720.0f / g_Width) * g_Ratio;
 		D3DXMatrixIdentity(&ratioMat);
 		D3DXMatrixScaling(&ratioMat, 1280 / g_Width, ratio, 1);

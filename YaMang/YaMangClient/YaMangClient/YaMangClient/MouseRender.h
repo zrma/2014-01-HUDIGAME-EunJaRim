@@ -22,10 +22,10 @@ public:
 
 	void				RemoveWndCursor();
 
-	void				SetSceneType();
+	void				SetSceneType(CursorType cursorType) { m_NowCursorType = cursorType; }
 
 private:
 	bool				m_IsCursorReady = false;
-	CursorType			m_NowSceneType = CURSOR_NONE;
+	CursorType			m_NowCursorType = CURSOR_NONE;
 };
 
