@@ -8,24 +8,24 @@
 ActionScheduler::ActionScheduler( ClientManager* clientManager ):
 m_ClientManager( clientManager )
 {
-	m_BeginTime = Clock::now();
+	m_BeginTime = GetTickCount64( );
 }
 
 
 ActionScheduler::~ActionScheduler()
 {
-	m_BeginTime = Clock::now();
-	m_CurrentTime = GetCurrentTick();
+	m_BeginTime = GetTickCount64( );
+	m_CurrentTime = GetTickCount64( );
 }
 
-int64_t ActionScheduler::GetCurrentTick()
+ULONGLONG ActionScheduler::GetCurrentTick( )
 {
-	return std::chrono::duration_cast<std::chrono::milliseconds>( Clock::now() - m_BeginTime ).count();
+	return GetTickCount64( ) - m_BeginTime;
 }
 
-void ActionScheduler::AddActionToScheduler( Action* addedAction, int64_t remainTime )
+void ActionScheduler::AddActionToScheduler( Action* addedAction, ULONGLONG remainTime )
 {
-	int64_t workingTime = remainTime + m_CurrentTime;
+	ULONGLONG workingTime = remainTime + m_CurrentTime;
 	addedAction->SetTime( workingTime );
 	addedAction->SetScheduler( this );
 	m_ActionQueue.push( addedAction );

@@ -19,14 +19,14 @@ public:
 	ActionScheduler( ClientManager* clientManager );
 	~ActionScheduler();
 
-	void	AddActionToScheduler( Action* addedAction, int64_t remainTime );
+	void	AddActionToScheduler( Action* addedAction, ULONGLONG remainTime );
 	void	DoScheduledAction();
 
 private:
-	int64_t		GetCurrentTick();
+	ULONGLONG		GetCurrentTick( );
 
-	Clock::time_point	m_BeginTime;
-	int64_t				m_CurrentTime = 0;
+	ULONGLONG		m_BeginTime;
+	ULONGLONG		m_CurrentTime = 0;
 
 	std::priority_queue<Action*, std::vector<Action*>, ActionComparator>	m_ActionQueue;
 
