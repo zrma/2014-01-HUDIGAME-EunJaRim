@@ -31,6 +31,7 @@ void ResourceManager::Init()
 // 	LPCTSTR textureFileName = L"heightmap_texture_1024_1024_korea.bmp";
 // 	AddMap( heightMapFileName, textureFileName, MAP_KEY_KOREA );
 
+	InitGroundMesh( 100, 100 );
 	CreateRawGround( 100, 100, 1.0f );
 	m_IsMapReady = true;
 }

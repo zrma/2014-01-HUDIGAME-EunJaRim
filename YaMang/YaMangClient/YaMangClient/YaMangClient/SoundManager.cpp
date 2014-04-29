@@ -85,7 +85,7 @@ void SoundManager::test()
 
 void SoundManager::test2()
 {
-	FMOD::Studio::EventInstance* eventInstance = GetEventInstance( "event:/sfx/rm_random" );
+	FMOD::Studio::EventInstance* eventInstance = GetEventInstance( "event:/sfx/generate_corps" );
 	eventInstance->start();
 	m_System->update();
 }

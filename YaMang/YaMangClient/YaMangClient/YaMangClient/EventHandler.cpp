@@ -242,6 +242,7 @@ void NetworkManager::HandleMoveCorpsResult( MoveCorpsResult& inPacket )
 			ScenePlay* scenePlay = static_cast<ScenePlay*>( SceneManager::GetInstance()->GetNowScene() );
 			scenePlay->MoveCorpsStart( corpsID, targetPosition, lookAtVector, speed );
 			Log( "CorpsMoving! CorpID:%d - Move To X:%f Z:%f Speed:%f \n", corpsID, lookAtVector.x, lookAtVector.z, speed );
+			SoundManager::GetInstance( )->test2( );
 		}
 		else
 		{
