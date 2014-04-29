@@ -155,7 +155,15 @@ void NetworkManager::HandleGenerateCorpsResult( GenerateCorpsResult& inPacket )
 		int playerID = inPacket.m_PlayerId;
 
 		Corps* corps = new Corps( corpsID, playerID, position );
-		corps->Create( 10, unitType );
+		if ( unitType == UnitType::UNIT_PIKE )
+		{
+			corps->Create( 1, unitType );
+		}
+		else
+		{
+			corps->Create( 10, unitType );
+		}
+		
 		corps->SetVisible( true );
 
 		Scene* scene =  SceneManager::GetInstance()->GetNowScene();
@@ -165,7 +173,18 @@ void NetworkManager::HandleGenerateCorpsResult( GenerateCorpsResult& inPacket )
 			scenePlay->AddCorps( corpsID, corps );
 			Log( "GenerateCorps! Type:%d CorpID:%d \n", unitType, corpsID );
 
-			SoundManager::GetInstance( )->test2( );
+
+			if ( unitType == UnitType::UNIT_PIKE )
+			{
+				SoundManager::GetInstance()->testHyunChan();
+				TextManager::GetInstance( )->RegistText( 300, L"생일축하함", 200, 20 );
+
+			}
+			else
+			{
+				SoundManager::GetInstance( )->test2( );
+			}
+			
 		}
 		else
 		{

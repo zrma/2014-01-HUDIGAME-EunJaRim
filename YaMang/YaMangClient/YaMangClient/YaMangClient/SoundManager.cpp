@@ -89,3 +89,10 @@ void SoundManager::test2()
 	eventInstance->start();
 	m_System->update();
 }
+
+void SoundManager::testHyunChan()
+{
+	FMOD::Studio::EventInstance* eventInstance = GetEventInstance( "event:/sfx/hyun_chan" );
+	eventInstance->start();
+	m_System->update();
+}

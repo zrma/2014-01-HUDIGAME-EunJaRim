@@ -12,6 +12,7 @@ public:
 	void							Initialize();
 	void							test(); // 이벤트 인스턴스 관리를 어떻게 해줘야 할까...
 	void							test2( );
+	void							testHyunChan( );
 
 	void							LoadBank( const char* fileName );
 	FMOD::Studio::EventInstance*	GetEventInstance( const char* path ); // 안전 할려나...

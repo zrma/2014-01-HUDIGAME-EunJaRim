@@ -69,7 +69,6 @@
             this.tb_corps_eye_x = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -494,21 +493,11 @@
             this.label4.TabIndex = 0;
             this.label4.Text = "eye";
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(529, 192);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(184, 46);
-            this.button1.TabIndex = 12;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(863, 367);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
@@ -576,7 +565,6 @@
         private System.Windows.Forms.RadioButton rb_corps_formation_destroy;
         private System.Windows.Forms.RadioButton rb_corps_formation_defense;
         private System.Windows.Forms.Button bu_corps_formation;
-        private System.Windows.Forms.Button button1;
     }
 }
 
