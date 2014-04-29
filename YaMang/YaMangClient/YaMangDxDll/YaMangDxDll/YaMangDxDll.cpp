@@ -226,6 +226,10 @@ YAMANGDXDLL_API void RenderingTool( MESHOBJECT* inputVal )
 		return;
 	}
 
+	if (g_Mesh == nullptr)
+	{
+		InitGroundMesh(100, 100);
+	}
 	g_D3dDevice->Clear( 0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB( 30, 10, 10 ), 1.0f, 0 );
 
 	// 렌더 방어코드
@@ -255,6 +259,7 @@ YAMANGDXDLL_API void RenderingTool( MESHOBJECT* inputVal )
 	SetMatrix( &viewMatrix , true);
 
 	// 보여주기 위한 땅을 만듬
+	//InitGroundMesh(100, 100);
 	CreateRawGround(100, 100, 10);
 	HeightMapRender();
 

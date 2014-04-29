@@ -4,6 +4,7 @@
 #include "NetworkManager.h"
 #include "Renderer.h"
 #include "InputDispatcher.h"
+#include "MouseInput.h"
 
 MainWindow::MainWindow()
 {
@@ -63,7 +64,6 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 		{
 			int MouseX = LOWORD( lParam );
 			int MouseY = HIWORD( lParam );
-			
 		}
 			return 0;
 		
