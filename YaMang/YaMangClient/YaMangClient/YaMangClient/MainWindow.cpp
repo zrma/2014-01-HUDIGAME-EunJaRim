@@ -42,7 +42,7 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 			Renderer::GetInstance()->ResizeWindow( width, height );
 			InvalidateRect( m_HandleOfWindow, NULL, FALSE );
 
-			Log( " 사이즈 : %d %d \n", width, height );
+			// Log( " 사이즈 : %d %d \n", width, height );
 		}
 			return 0;
 
@@ -66,7 +66,11 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 // 			int MouseY = HIWORD( lParam );
 // 		}
 // 			return 0;
+<<<<<<< HEAD
 		
+=======
+// 		
+>>>>>>> 6cd1b391c68521de4d2c27bcf828003cb033c163
 		case WM_SYSKEYDOWN:
 		case WM_KEYDOWN:
 		{
