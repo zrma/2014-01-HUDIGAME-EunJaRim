@@ -9,7 +9,7 @@ public:
 	virtual ~Arrow( );
 
 private:
-	Arrow();
+	Arrow(); ///# 부모 생성자가 private이면 여기에 굳이 이렇게 계속 해놓을 필요 없다.
 	Arrow( const Arrow& );
 	Arrow& operator=( const Arrow& );
 

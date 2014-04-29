@@ -5,6 +5,6 @@ class Attack:
 {
 public:
 	Attack();
-	~Attack();
+	~Attack(); ///#  퍅셔미!
 };
 

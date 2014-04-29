@@ -410,6 +410,7 @@ void ClientSession::HandleAttackCorpsRequest( AttackCorpsRequest& inPacket )
 	Corps* targetCorps = m_ClientManager->GetCorpsByCorpsID( targetCorpsID );
 
 	// 사실 nowXZ targetXZ는 서버도 들고있는정보인데 클라로 부터 받을까? 근데 받으면 편하긴 함
+	///# 똑같이 가지고 있는 정보라면... 무조건 서버 정보를 기반으로 처리할 것.
 	float nowX = inPacket.m_NowX;
 	float nowZ = inPacket.m_NowZ;
 	float targetX = inPacket.m_TargetX;
@@ -423,6 +424,7 @@ void ClientSession::HandleAttackCorpsRequest( AttackCorpsRequest& inPacket )
 	if ( length < myCorps->GetAttackRange() )
 	{
 		// 공격 하세요
+		///# 데미지 처리를 Action안에서 해야 되는데?
 		targetCorps->AddDamage( myCorps->GetAttackPower() );
 	}
 	else

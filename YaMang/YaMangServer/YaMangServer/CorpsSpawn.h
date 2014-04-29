@@ -5,6 +5,6 @@ class CorpsSpawn:
 {
 public:
 	CorpsSpawn();
-	~CorpsSpawn();
+	~CorpsSpawn(); ///#퍅셔미!
 };
 

@@ -3,7 +3,7 @@
 #include "EnumSet.h"
 #include "Action.h"
 
-extern const float NOT_A_NUMBER_FLOAT;
+extern const float NOT_A_NUMBER_FLOAT; ///# 이건 왜?
 class Corps
 {
 public:
@@ -21,7 +21,7 @@ public:
 	void					AddDamage( int damage );
 
 	
-	int						GetSpeed() { return m_MoveSpeed + m_MoveSpeedBonus; }
+	int						GetSpeed() { return m_MoveSpeed + m_MoveSpeedBonus; } ///# const의 생활화
 	int						GetAttackRange( ) { return m_AttackRange + m_AttackRangeBonus; }
 	int						GetAttackPower( ) { return m_AttackPower + m_AttackPowerBonus; }
 	int						GetDefense( ) { return m_Defense + m_DefenseBonus; }
@@ -36,7 +36,7 @@ protected:
 	int						m_PlayerID = -1;
 	int						m_CorpsID = -1;
 	bool					m_IsDead = false;
-	int						m_HP = 100;
+	int						m_HP = 100; ///# 기술 부채
 	short					m_UnitNum = -1;
 
 	PositionInfo			m_Position;

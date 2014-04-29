@@ -5,6 +5,6 @@ class HoldPosition:
 {
 public:
 	HoldPosition();
-	~HoldPosition();
+	~HoldPosition(); ///# 님아 ㅜㅜ
 };
 

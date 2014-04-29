@@ -5,6 +5,6 @@ class DestroyFormation:
 {
 public:
 	DestroyFormation();
-	~DestroyFormation();
+	~DestroyFormation(); ///# 고마해라 마이해따 아이가
 };
 

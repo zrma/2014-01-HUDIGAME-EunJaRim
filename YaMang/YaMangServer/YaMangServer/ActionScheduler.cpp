@@ -20,6 +20,7 @@ ActionScheduler::~ActionScheduler()
 
 int64_t ActionScheduler::GetCurrentTick()
 {
+	///# 윈도 전용 플랫폼에서는 그냥  GetTickCount64() 
 	return std::chrono::duration_cast<std::chrono::milliseconds>( Clock::now() - m_BeginTime ).count();
 }
 
@@ -72,6 +73,8 @@ void ActionScheduler::DoScheduledAction()
 			corp->SetHoldingAction( headAction );
 
 			// 이 액션의 주기적인 실행은 누가하지??;;;
+			///# 누가하긴... 액션 자신이 하는거지.. 
+			///# 예를 들어, holding action이라면 OnEnd가 언제 불리느냐? 다른 액션이 들어올 때, holding action이 캔슬 되면서 OnEnd()가 강제로 불리는거지..
 			headAction->ActIt();
 		}
 

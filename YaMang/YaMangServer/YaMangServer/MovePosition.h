@@ -8,7 +8,7 @@ public:
 	~MovePosition();
 
 private:
-	void OnBegin();
+	void OnBegin(); ///# 왜 갑자기 private로 바꾸고...  virtual은 앞에 안붙여줌?
 	void OnTick();
 	void OnEnd();
 };
