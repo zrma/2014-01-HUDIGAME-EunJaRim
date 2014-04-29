@@ -66,11 +66,7 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 // 			int MouseY = HIWORD( lParam );
 // 		}
 // 			return 0;
-<<<<<<< HEAD
-		
-=======
-// 		
->>>>>>> 6cd1b391c68521de4d2c27bcf828003cb033c163
+
 		case WM_SYSKEYDOWN:
 		case WM_KEYDOWN:
 		{
