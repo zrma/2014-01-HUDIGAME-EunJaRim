@@ -5,12 +5,16 @@
 
 MouseRender::MouseRender()
 {
-	CreateCursor(L"cursor3.png");
 }
 
 
 MouseRender::~MouseRender()
 {
+}
+
+void MouseRender::Create()
+{
+	CreateCursor(L"cursor2.png",200,200);
 }
 
 HRESULT MouseRender::CreateCursor( LPCWSTR cursorImagePath, float cursorPosX /*= 0*/, float cursorPosY /*= 0 */ )
@@ -44,8 +48,11 @@ void MouseRender::CleanupCursor()
 
 void MouseRender::RemoveWndCursor()
 {
-	SetCursor(NULL);
-	ShowCursor(false);
+	if (m_IsCursorReady)
+	{
+		SetCursor(NULL);
+		ShowCursor(false);
+	}
 }
 
 void MouseRender::Update()
@@ -61,5 +68,10 @@ void MouseRender::Render()
 void MouseRender::SetCursorPos(float PosX, float PosY)
 {
 	SetCursorPosition(PosX, PosY);
+}
+
+void MouseRender::Delete()
+{
+	CleanupCursor();
 }
 

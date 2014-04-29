@@ -23,6 +23,7 @@ void ScenePlay::Create()
 	SoundManager::GetInstance()->Initialize();
 	SoundManager::GetInstance()->test();
 
+	m_MouseCursor = new MouseRender();
 	//////////////////////////////////////////////////////////////////////////
 	// 임시로 이렇게 해 두었지만
 	// 나중에 내부적으로 Corps를 추가하거나 제거하는 코드 작성해야 함
@@ -86,7 +87,7 @@ void ScenePlay::Update()
 		corps->Update();
 	}
 
-	/*m_MouseCursor->Update();*/
+	m_MouseCursor->Update();
 }
 
 void ScenePlay::Render()
@@ -97,7 +98,7 @@ void ScenePlay::Render()
 		corps->Render();
 	}
 
-	/*m_MouseCursor->Render();*/
+	m_MouseCursor->Render();
 }
 
 void ScenePlay::AddCorps( int corpsID, Corps* corps )
