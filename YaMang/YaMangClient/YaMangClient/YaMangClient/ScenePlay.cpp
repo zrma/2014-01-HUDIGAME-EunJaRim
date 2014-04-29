@@ -77,6 +77,8 @@ void ScenePlay::Destroy()
 		auto& toBeDelete = iter.second;
 		SafeDelete( toBeDelete );
 	}
+
+	delete(m_MouseCursor);
 }
 
 void ScenePlay::Update()

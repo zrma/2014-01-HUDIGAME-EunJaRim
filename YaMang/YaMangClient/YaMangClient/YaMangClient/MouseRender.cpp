@@ -5,11 +5,13 @@
 
 MouseRender::MouseRender()
 {
+	Create();
 }
 
 
 MouseRender::~MouseRender()
 {
+	CleanupCursor();
 }
 
 void MouseRender::Create()
