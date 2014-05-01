@@ -5,7 +5,7 @@ class Guard:
 	public Corps
 {
 public:
-	Guard( int playerID, int corpsID, PositionInfo position ):Corps( playerID, corpsID, position ) {};
+	Guard( int playerID, int corpsID, PositionInfo position, ActionScheduler* actionScheduler ):Corps( playerID, corpsID, position, actionScheduler ) {};
 	virtual ~Guard();
 
 private:

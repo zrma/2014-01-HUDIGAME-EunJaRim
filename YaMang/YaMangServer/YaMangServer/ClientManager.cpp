@@ -430,19 +430,19 @@ int ClientManager::GenerateCorps( int playerID, UnitType type, PositionInfo posi
 	switch ( type )
 	{
 		case UnitType::UNIT_ARROW:
-			corps = new Arrow( playerID, ++m_CorpsIDCount, position );
+			corps = new Arrow( playerID, ++m_CorpsIDCount, position, m_ActionScheduler );
 			break;
 		case  UnitType::UNIT_GUARD:
-			corps = new Guard( playerID, ++m_CorpsIDCount, position );
+			corps = new Guard( playerID, ++m_CorpsIDCount, position, m_ActionScheduler );
 			break;
 		case  UnitType::UNIT_KNIGHT:
-			corps = new Knight( playerID, ++m_CorpsIDCount, position );
+			corps = new Knight( playerID, ++m_CorpsIDCount, position, m_ActionScheduler );
 			break;
 		case  UnitType::UNIT_PIKE:
-			corps = new Pike( playerID, ++m_CorpsIDCount, position );
+			corps = new Pike( playerID, ++m_CorpsIDCount, position, m_ActionScheduler );
 			break;
 		case  UnitType::UNIT_SWORD:
-			corps = new Sword( playerID, ++m_CorpsIDCount, position );
+			corps = new Sword( playerID, ++m_CorpsIDCount, position, m_ActionScheduler );
 			break;
 		default:
 			return -1;

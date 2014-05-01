@@ -28,7 +28,6 @@ void ActionScheduler::AddActionToScheduler( Action* addedAction, ULONGLONG remai
 {
 	ULONGLONG workingTime = remainTime + m_CurrentTime;
 	addedAction->SetTime( workingTime );
-	addedAction->SetScheduler( this );
 	m_ActionQueue.push( addedAction );
 }
 

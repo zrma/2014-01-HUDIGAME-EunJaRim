@@ -6,9 +6,10 @@
 #include "Pike.h"
 #include "knight.h"
 #include "EnumSet.h"
+#include "ActionScheduler.h"
 
-Corps::Corps( int playerID, int corpsID, PositionInfo position )
-: m_PlayerID( playerID ), m_CorpsID( corpsID ), m_Position(position)
+Corps::Corps( int playerID, int corpsID, PositionInfo position, ActionScheduler* actionScheduler )
+: m_PlayerID( playerID ), m_CorpsID( corpsID ), m_Position( position ), m_ActionScheduler(actionScheduler)
 {
 }
 
@@ -32,4 +33,9 @@ void Corps::AddDamage( int damage )
 		}
 		
 	}
+}
+
+void Corps::DoNextAction( Action* addedAction, ULONGLONG remainTime )
+{
+	m_ActionScheduler->AddActionToScheduler( addedAction, remainTime );
 }

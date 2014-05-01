@@ -11,7 +11,6 @@ enum ActionStatus
 
 class Corps;
 class ClientManager;
-class ActionScheduler;
 class Action
 {
 public:
@@ -32,8 +31,6 @@ public:
 	ULONGLONG	GetTime( ) const { return m_Time; }
 	void		SetTime( ULONGLONG inputTime ) { m_Time = inputTime; }
 
-	void		SetScheduler( ActionScheduler* actionScheduler ) { m_ActionScheduler = actionScheduler; }
-
 protected:
 	virtual void OnBegin() = 0;
 	virtual void OnTick() = 0;
@@ -44,7 +41,7 @@ protected:
 	bool				m_NoEgg = false;
 	ActionStatus		m_ActionStatus = ACTION_BEGIN;
 
-	ActionScheduler*	m_ActionScheduler = nullptr;
+	
 	ClientManager*		m_ClientManager = nullptr;
 };
 

@@ -5,7 +5,7 @@ class Arrow:
 	public Corps
 {
 public:
-	Arrow( int playerID, int corpsID, PositionInfo position ):Corps( playerID, corpsID, position ) {};
+	Arrow( int playerID, int corpsID, PositionInfo position, ActionScheduler* actionScheduler ):Corps( playerID, corpsID, position, actionScheduler ) {};
 	virtual ~Arrow( );
 
 private:

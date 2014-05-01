@@ -3,11 +3,11 @@
 #include "EnumSet.h"
 #include "Action.h"
 
-extern const float NOT_A_NUMBER_FLOAT;
+class ActionScheduler;
 class Corps
 {
 public:
-	Corps( int playerID, int corpsID, PositionInfo position );
+	Corps( int playerID, int corpsID, PositionInfo position, ActionScheduler* actionScheduler );
 	virtual ~Corps();
 
 	int						GetCorpsID() { return m_CorpsID; }
@@ -26,6 +26,7 @@ public:
 	int						GetAttackPower( ) { return m_AttackPower + m_AttackPowerBonus; }
 	int						GetDefense( ) { return m_Defense + m_DefenseBonus; }
 
+	void					DoNextAction( Action* addedAction, ULONGLONG remainTime );
 
 private:
 	Corps();
@@ -56,6 +57,7 @@ protected:
 	int		m_Defense = 0;
 	int		m_DefenseBonus = 0;
 
-
+private:
+	ActionScheduler*	m_ActionScheduler = nullptr;
 };
 
