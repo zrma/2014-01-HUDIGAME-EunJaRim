@@ -3,6 +3,7 @@
 #include "ActionScheduler.h"
 #include "ClientManager.h"
 #include "Corps.h"
+#include "MacroSet.h"
 
 
 ActionScheduler::ActionScheduler( ClientManager* clientManager ):
@@ -52,7 +53,7 @@ void ActionScheduler::DoScheduledAction()
 		// 상태가 영 좋지 않은 곳에 맞았다면 제거
 		if ( headAction->Gozarani() )
 		{
-			delete headAction;
+			SafeDelete( headAction );
 			continue;
 		}
 		// 상태가 좋으면 owner corps id 탐색 후 action 지정
