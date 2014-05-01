@@ -107,6 +107,12 @@ void InputDispatcher::DispatchKeyInput()
 	}
 }
 
+void InputDispatcher::ClearList()
+{
+	m_IsKeyPressed.fill( false );
+	m_KeyInputList.clear();
+}
+
 void NetworkManager::RequestChat( ChatBroadcastRequest& outPacket )
 {
 	outPacket.m_PlayerId = m_MyPlayerId;

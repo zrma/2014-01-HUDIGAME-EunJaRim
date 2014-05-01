@@ -98,6 +98,9 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 		case WM_ERASEBKGND:
 			return 1;
 
+		case WM_KILLFOCUS:
+			InputDispatcher::GetInstance()->ClearList();
+			return 0;
 		default:
 			return DefWindowProc( m_HandleOfWindow, uMsg, wParam, lParam );
 	}
