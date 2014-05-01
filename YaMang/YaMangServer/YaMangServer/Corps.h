@@ -10,21 +10,21 @@ public:
 	Corps( int playerID, int corpsID, PositionInfo position, ActionScheduler* actionScheduler );
 	virtual ~Corps();
 
-	int						GetCorpsID() { return m_CorpsID; }
-	short					GetCorpsSize() { return m_UnitNum; }
-	PositionInfo			GetPositionInfo() { return m_Position; }
+	int						GetCorpsID( ) const { return m_CorpsID; }
+	short					GetCorpsSize( ) const { return m_UnitNum; }
+	PositionInfo			GetPositionInfo( ) const { return m_Position; }
 
 	void					SetHoldingAction( Action* holdAction ) { m_HoldAction = holdAction; }
-	Action*					GetHoldingAction( ) { return m_HoldAction; }
+	Action*					GetHoldingAction( ) const { return m_HoldAction; }
 
 	void					ChangeFormation( FormationType formation ) { m_Formation = formation; }
 	void					AddDamage( int damage );
 
 	
-	int						GetSpeed() { return m_MoveSpeed + m_MoveSpeedBonus; }
-	int						GetAttackRange( ) { return m_AttackRange + m_AttackRangeBonus; }
-	int						GetAttackPower( ) { return m_AttackPower + m_AttackPowerBonus; }
-	int						GetDefense( ) { return m_Defense + m_DefenseBonus; }
+	int						GetSpeed( ) const { return m_MoveSpeed + m_MoveSpeedBonus; }
+	int						GetAttackRange( ) const { return m_AttackRange + m_AttackRangeBonus; }
+	int						GetAttackPower( ) const { return m_AttackPower + m_AttackPowerBonus; }
+	int						GetDefense( ) const { return m_Defense + m_DefenseBonus; }
 
 	void					DoNextAction( Action* addedAction, ULONGLONG remainTime );
 

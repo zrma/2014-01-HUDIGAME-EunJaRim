@@ -23,8 +23,9 @@ public:
 	void	DoScheduledAction();
 
 private:
-	ULONGLONG		GetCurrentTick( );
+	ULONGLONG		const GetCurrentTick( );
 
+private:
 	ULONGLONG		m_BeginTime;
 	ULONGLONG		m_CurrentTime = 0;
 

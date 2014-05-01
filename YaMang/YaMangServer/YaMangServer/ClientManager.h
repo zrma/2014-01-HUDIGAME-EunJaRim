@@ -31,8 +31,8 @@ public:
 	bool				DeleteClient( ClientSession* client );
 	void				InputClient( ClientSession* client );
 
-	int					GetClientSize() { return static_cast<int>(m_ClientList.size()); }
-	int					GetRoomNumber() { return m_RoomNumber; }
+	int					GetClientSize( ) const { return static_cast<int>( m_ClientList.size( ) ); }
+	int					GetRoomNumber( ) const { return m_RoomNumber; }
 
 	void				BroadcastPacket( ClientSession* from, PacketHeader* pkt );
 	bool				DirectPacket( int pid, PacketHeader* pkt );
