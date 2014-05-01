@@ -58,8 +58,7 @@ void ActionScheduler::DoScheduledAction()
 		}
 		// 상태가 좋으면 owner corps id 탐색 후 action 지정
 
-		int ownerCorpsID = headAction->GetOwnerCorpsID();
-		Corps* corp = m_ClientManager->GetCorpsByCorpsID( ownerCorpsID );
+		Corps* corp = headAction->GetOwnerCorps( );
 		
 		if ( nullptr != corp )
 		{

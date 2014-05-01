@@ -4,6 +4,7 @@
 #include "ActionScheduler.h"
 #include "PacketType.h"
 #include "ClientManager.h"
+#include "Corps.h"
 
 
 MovePosition::MovePosition()
@@ -33,7 +34,7 @@ void MovePosition::OnEnd()
 	printf_s( "MovePosition OnEnd \n" );
 
 	StopCorpsResult outPacket;
-	outPacket.m_CorpsID = m_OwnerCropsID;
+	outPacket.m_CorpsID = m_OwnerCrops->GetCorpsID();
 
 	m_ClientManager->BroadcastPacket( NULL ,&outPacket );
 
