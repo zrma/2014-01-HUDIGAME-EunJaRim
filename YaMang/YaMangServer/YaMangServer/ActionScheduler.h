@@ -23,7 +23,7 @@ public:
 	void	DoScheduledAction();
 
 private:
-	ULONGLONG		const GetCurrentTick( );
+	ULONGLONG		GetCurrentTick() const;
 
 private:
 	ULONGLONG		m_BeginTime;

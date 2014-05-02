@@ -19,7 +19,7 @@ ActionScheduler::~ActionScheduler()
 	m_CurrentTime = GetTickCount64( );
 }
 
-ULONGLONG const ActionScheduler::GetCurrentTick( )
+ULONGLONG ActionScheduler::GetCurrentTick( ) const
 {
 	return GetTickCount64( ) - m_BeginTime;
 }

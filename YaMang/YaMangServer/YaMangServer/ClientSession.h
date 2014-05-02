@@ -76,7 +76,7 @@ public:
 
 
 
-	float	const GetVectorLength( D3DXVECTOR2* vector );
+	float	GetVectorLength( D3DXVECTOR2* vector ) const;
 
 private:
 

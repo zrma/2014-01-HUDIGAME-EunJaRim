@@ -444,7 +444,7 @@ void ClientSession::HandleAttackCorpsRequest( AttackCorpsRequest& inPacket )
 //////////////////////////////////////////////////////////////////////////
 
 
-float const ClientSession::GetVectorLength( D3DXVECTOR2* vector )
+float ClientSession::GetVectorLength( D3DXVECTOR2* vector ) const
 {
 	return D3DXVec2Length( vector );
 }

@@ -13,6 +13,12 @@
 #include "xpath_static.h"
 #include "RoomManager.h"
 
+// 자 Alloc버그를 잡아보자... 지만 이미 default로 켜져있다는데...
+#ifdef _DEBUG
+	#define _HAS_ITERATOR_DEBUGGING 1
+	#define _SECURE_SCL	1
+#endif
+
 #pragma comment(lib,"ws2_32.lib")
 
 

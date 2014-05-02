@@ -31,8 +31,8 @@ public:
 	bool				DeleteClient( ClientSession* client );
 	void				InputClient( ClientSession* client );
 
-	int					GetClientSize( ) const { return static_cast<int>( m_ClientList.size( ) ); }
-	int					GetRoomNumber( ) const { return m_RoomNumber; }
+	int					GetClientSize() const { return static_cast<int>( m_ClientList.size() ); }
+	int					GetRoomNumber() const { return m_RoomNumber; }
 
 	void				BroadcastPacket( ClientSession* from, PacketHeader* pkt );
 	bool				DirectPacket( int pid, PacketHeader* pkt );
@@ -55,7 +55,7 @@ public:
 
 	void				FlushClientSend();
 
-	void				PrintClientList( ); // 테스트용 함수
+	void				PrintClientList(); // 테스트용 함수
 
 	Corps*				GetCorpsByCorpsID( int corpsID );
 

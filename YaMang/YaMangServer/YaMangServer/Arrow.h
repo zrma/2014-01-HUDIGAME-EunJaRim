@@ -6,7 +6,7 @@ class Arrow:
 {
 public:
 	Arrow( int playerID, int corpsID, PositionInfo position, ActionScheduler* actionScheduler ):Corps( playerID, corpsID, position, actionScheduler ) {};
-	virtual ~Arrow( );
+	virtual ~Arrow();
 
 private:
 	Arrow();
