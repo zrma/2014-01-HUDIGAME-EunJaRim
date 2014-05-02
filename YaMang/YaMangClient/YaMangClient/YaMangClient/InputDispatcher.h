@@ -13,8 +13,8 @@ public:
 	void	EventKeyInput( KeyInput key );
 	void	DispatchKeyInput();
 
-	bool	IsPressed( KeyInput key ) { return IsPressed( key.GetKeyValue() ); }
-	bool	IsPressed( unsigned char key ) { return m_IsKeyPressed[key]; }
+	bool	IsPressed( KeyInput key ) const { return IsPressed( key.GetKeyValue() ); }
+	bool	IsPressed( unsigned char key ) const { return m_IsKeyPressed[key]; }
 
 	void	ClearList();
 private:

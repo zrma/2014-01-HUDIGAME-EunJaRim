@@ -16,7 +16,7 @@ void Unit::Update()
 	DoAct();
 }
 
-void Unit::Render()
+void Unit::Render() const
 {
 	if ( !m_Visible || !m_MeshKey )
 		return;

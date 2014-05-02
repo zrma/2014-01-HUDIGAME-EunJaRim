@@ -18,9 +18,9 @@ public:
 	static LRESULT CALLBACK WindowProc( HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
 	
 	PCWSTR	ClassName() const { return WINDOW_NAME; }
-	LRESULT	HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam );
+	LRESULT	HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam ) const;
 
-	int		RunGame();
+	int		RunGame() const;
 
 	HWND	Window() const { return m_HandleOfWindow; }
 	BOOL	Display( int nCmdShow ) const { return ShowWindow( Window(), nCmdShow ); }

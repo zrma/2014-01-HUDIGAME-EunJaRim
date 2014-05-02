@@ -11,21 +11,21 @@ public:
 	virtual ~Interface3D();
 
 	virtual void	Update() = 0;
-	virtual void	Render() = 0;
+	virtual void	Render() const = 0;
 
 	virtual void	SetVisible( bool visible ) { m_Visible = visible; }
-	D3DXMATRIXA16	GetMatrix( bool leftHand = true );
+	D3DXMATRIXA16	GetMatrix( bool leftHand = true ) const;
 
-	D3DXVECTOR3		GetEyePoint() { return m_EyePoint; }
+	D3DXVECTOR3		GetEyePoint() const { return m_EyePoint; }
 	void			SetEyePoint( D3DXVECTOR3 eyePoint ) { m_EyePoint = eyePoint; }
-	D3DXVECTOR3		GetLookAtPoint() { return m_LookAtPoint; }
+	D3DXVECTOR3		GetLookAtPoint() const { return m_LookAtPoint; }
 	void			SetLookAtPoint( D3DXVECTOR3 lookAtPoint ) { m_LookAtPoint = lookAtPoint; }
 	
-	D3DXVECTOR3		GetTargetPosition() { return m_TargetPoint; }
+	D3DXVECTOR3		GetTargetPosition() const { return m_TargetPoint; }
 	void			SetTargetPosition( D3DXVECTOR3 targetPosition ) { m_TargetPoint = targetPosition; }
-	D3DXVECTOR3		GetLookAtVector() { return ( m_LookAtPoint - m_EyePoint ); }
+	D3DXVECTOR3		GetLookAtVector() const { return ( m_LookAtPoint - m_EyePoint ); }
 	void			SetLookAtVector( D3DXVECTOR3 lookAtVector ) { m_LookAtPoint = m_EyePoint + lookAtVector; }
-	float			GetSpeed() { return m_Speed; }
+	float			GetSpeed() const { return m_Speed; }
 	void			SetSpeed( float speed ) { m_Speed = speed; }
 
 protected:

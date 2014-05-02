@@ -24,7 +24,7 @@ public:
   bool Read(char* data, size_t bytes) ;
 
   /// 데이터 훔쳐보기 (제거하지 않고)
-  void Peek(char* data) ;
+  void Peek(char* data) const;
   bool Peek(char* data, size_t bytes) ;
 
   /// 데이터 제거
@@ -33,8 +33,6 @@ public:
   void Reset() { m_CurrentSize = 0; m_BeginIndex = 0; m_EndIndex = 0; }
 
 private:
-
-
   size_t m_BeginIndex ;
   size_t m_EndIndex ;
   size_t m_CurrentSize ;

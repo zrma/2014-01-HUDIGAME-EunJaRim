@@ -10,18 +10,18 @@ public:
 	~MouseRender();
 
 public:
-	void				Create();
-	void				Delete();
+	void				Init();
+	void				Destroy();
 	virtual void		Update();
-	virtual void		Render();
+	virtual void		Render() const;
 
 	HRESULT				CreateCursor( LPCWSTR cursorImagePath, float cursorPosX = 0, float cursorPosY = 0 );
-	HRESULT				RenderCursor();
-	void				CleanupCursor();
+	void				DestroyCursor();
+
+	HRESULT				RenderCursor() const;
 	void				SetCursorPos(float PosX, float PosY);
 
 	void				RemoveWndCursor();
-
 	void				SetCursorType(CursorType cursorType) { m_NowCursorType = cursorType; }
 
 private:

@@ -11,9 +11,9 @@ public:
 	virtual ~Unit();
 
 	virtual void	Update();
-	virtual void	Render();
+	virtual void	Render() const;
 
-	int			GetUnitId() { return m_UnitID; }
+	int			GetUnitId() const { return m_UnitID; }
 	void		SetStartPosition();
 	
 	void		FindDestination();
@@ -26,7 +26,7 @@ public:
 	void	DoAct() { m_Act( *this, *m_Corps ); }
 	void	ClearAct();
 
-	ActionStatusType	GetActionStatus() { return m_ActionStatus; }
+	ActionStatusType	GetActionStatus() const { return m_ActionStatus; }
 	void				SetActionStatus( ActionStatusType actionStatus ) { m_ActionStatus = actionStatus; }
 	void				LookForward();
 

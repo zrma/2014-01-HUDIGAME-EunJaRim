@@ -13,12 +13,12 @@ public:
 	~Corps();
 
 	void	Update();
-	void	Render();
+	void	Render() const;
 	void	Create(UINT num, UnitType unitType );
 	void	SetVisible( bool visible );
 
-	int		GetCorpsID() { return m_CorpsID; }
-	int		GetCorpsHP() { return m_UnitList.size(); }
+	int		GetCorpsID() const { return m_CorpsID; }
+	int		GetCorpsHP() const { return m_UnitList.size(); }
 
 	void			SetFormation( FormationType formation ) { m_TargetFormation = formation; }
 	D3DXVECTOR3		GetFormation( int unitId ) const;

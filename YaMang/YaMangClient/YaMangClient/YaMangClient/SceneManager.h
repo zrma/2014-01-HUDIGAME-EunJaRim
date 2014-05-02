@@ -13,10 +13,10 @@ public:
 	void	Init();
 	void	Destroy();
 	void	ChangeScene( SceneType scene );
-	void	Update();
-	void	Render();
+	void	Update() const;
+	void	Render() const;
 
-	Scene*	GetNowScene() { return m_NowScene; }
+	Scene*	GetNowScene() const { return m_NowScene; }
 
 private:
 	std::array<Scene*, SCENE_MAX>		m_SceneList;

@@ -43,9 +43,9 @@ public:
 	KeyInput();
 	~KeyInput();
 
-	unsigned char	GetKeyValue() { return m_KeyValue; }
+	unsigned char	GetKeyValue() const { return m_KeyValue; }
 	void			SetKeyValue( unsigned char key ) { m_KeyValue = key; }
-	KeyStatus		GetKeyStatus() { return m_KeyStatus; }
+	KeyStatus		GetKeyStatus() const { return m_KeyStatus; }
 	void			SetKeyStatus( KeyStatus keyStatus ) { m_KeyStatus = keyStatus; }
 
 private:

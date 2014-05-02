@@ -35,9 +35,9 @@ public:
 
 	void	Init();
 	void	Destroy();
-	bool	IsMapReady() { return m_IsMapReady; }
+	bool	IsMapReady() const { return m_IsMapReady; }
 	
-	ResourceMesh*	GetMeshByKey( MeshKeyType key ) { return m_MeshArray[key]; }
+	ResourceMesh*	GetMeshByKey( MeshKeyType key ) const { return m_MeshArray[key]; }
 
 private:
 	void	AddMap( LPCTSTR& heightMapFileName, LPCTSTR& textureFileName, MapKeyType key );

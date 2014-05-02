@@ -45,7 +45,7 @@ void TextManager::DeleteText( UINT key )
 	}
 }
 
-void TextManager::DrawTexts()
+void TextManager::DrawTexts() const
 {
 	for ( auto it : m_TextList )
 	{

@@ -11,7 +11,7 @@ Interface3D::~Interface3D()
 {
 }
 
-D3DXMATRIXA16 Interface3D::GetMatrix( bool leftHand /* = true */ )
+D3DXMATRIXA16 Interface3D::GetMatrix( bool leftHand /* = true */ ) const
 {
 	D3DXMATRIXA16 rotateMatrix;
 	if ( leftHand )

@@ -7,7 +7,7 @@ public:
 	TextObject( LPCWSTR text, float left, float top, int RGB_R, int RGB_G, int RGB_B, float right, float bottom );
 	~TextObject();
 
-	void	DrawText();
+	void	DrawText() const;
 
 	void	SetText( LPCWSTR text ) { m_Text.clear(); m_Text.append( text ); }
 	void	SetLeft( float left ) { m_Left = left; }

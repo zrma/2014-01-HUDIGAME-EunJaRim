@@ -21,12 +21,12 @@ public:
 	MouseInput();
 	~MouseInput();
 
-	MousePos		GetMousePosition() { return m_MousePosition; }
-	int				GetMousePositionX() { return m_xPos; }
-	int				GetMousePositionY() { return m_yPos; }
-	void			SetMousePosition(int xPos, int yPos) { m_xPos = xPos; m_yPos = yPos; }
+	MousePos		GetMousePosition() const { return m_MousePosition; }
+	int				GetMousePositionX() const { return m_xPos; }
+	int				GetMousePositionY() const { return m_yPos; }
+	void			SetMousePosition( int xPos, int yPos ) { m_xPos = xPos; m_yPos = yPos; }
 
-	MouseStatus		GetMouseStatus() { return m_MouseStatus; }
+	MouseStatus		GetMouseStatus() const { return m_MouseStatus; }
 	void			SetMouseStatus(MouseStatus mouseStatus) { m_MouseStatus = mouseStatus; }
 
 	void			MoveMousePosition(int x, int y) { m_xPos += x; m_yPos += y; }

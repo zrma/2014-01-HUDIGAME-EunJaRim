@@ -119,7 +119,7 @@ bool CircularBuffer::Read( char* data, size_t bytes )
 // 내부 변수 변경이 없다.
 //////////////////////////////////////////////////////////////////////////
 // 데이터 들어 있는 만큼 통째로 Peek
-void CircularBuffer::Peek( char* data )
+void CircularBuffer::Peek( char* data ) const
 {
 	/// 바로 한번에 읽어 올 수 있는 경우
 	if ( m_CurrentSize <= m_Capacity - m_BeginIndex )

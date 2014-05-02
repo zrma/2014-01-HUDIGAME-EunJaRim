@@ -63,7 +63,7 @@ void SceneManager::ChangeScene( SceneType scene )
 	}
 }
 
-void SceneManager::Update()
+void SceneManager::Update() const
 {
 	if ( m_NowScene )
 	{
@@ -71,7 +71,7 @@ void SceneManager::Update()
 	}
 }
 
-void SceneManager::Render()
+void SceneManager::Render() const
 {
 	if ( m_NowScene )
 	{

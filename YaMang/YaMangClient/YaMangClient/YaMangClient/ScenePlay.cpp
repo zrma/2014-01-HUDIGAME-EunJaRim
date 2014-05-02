@@ -92,7 +92,7 @@ void ScenePlay::Update()
 	m_MouseCursor->Update();
 }
 
-void ScenePlay::Render()
+void ScenePlay::Render() const
 {
 	for ( auto& iter : m_CorpsList )
 	{

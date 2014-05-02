@@ -15,7 +15,7 @@ public:
 	void	Create();
 	void	Destroy();
 	void	Update();
-	void	Render();
+	void	Render() const;
 
 	void	AddCorps( int corpsID, Corps* corps );
 	void	ChangeCorpsFormation( int corpsID, FormationType formationType );

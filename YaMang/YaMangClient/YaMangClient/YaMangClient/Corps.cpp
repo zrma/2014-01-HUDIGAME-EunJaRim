@@ -86,7 +86,7 @@ void Corps::Update()
 	}
 }
 
-void Corps::Render()
+void Corps::Render() const
 {
 	for ( auto& iter : m_UnitList )
 	{

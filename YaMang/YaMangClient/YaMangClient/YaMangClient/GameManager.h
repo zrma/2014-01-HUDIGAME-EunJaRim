@@ -10,9 +10,9 @@ public:
 	GameManager();
 	~GameManager();
 
-	bool Init();
-	bool Process();
-	void Destroy();
+	bool Init() const;
+	bool Process() const;
+	void Destroy() const;
 	void Stop() { m_Continue = false;  }
 
 private:

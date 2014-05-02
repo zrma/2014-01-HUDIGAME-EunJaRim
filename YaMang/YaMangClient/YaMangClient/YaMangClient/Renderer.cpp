@@ -67,7 +67,7 @@ void Renderer::RenderEnd()
 	}
 }
 
-void Renderer::RenderMesh( MESHOBJECT* mesh )
+void Renderer::RenderMesh( MESHOBJECT* mesh ) const
 {
 	if ( mesh && m_IsReady )
 	{	
@@ -75,7 +75,7 @@ void Renderer::RenderMesh( MESHOBJECT* mesh )
 	}
 }
 
-void Renderer::RenderMap()
+void Renderer::RenderMap() const
 {
 	if ( ResourceManager::GetInstance()->IsMapReady() )
 	{
@@ -83,12 +83,12 @@ void Renderer::RenderMap()
 	}
 }
 
-void Renderer::SetViewMatrix( D3DXMATRIXA16& matrix )
+void Renderer::SetViewMatrix( D3DXMATRIXA16& matrix ) const
 {
 	SetMatrix( &matrix, true );
 }
 
-void Renderer::SetWorldMatrix( D3DXMATRIXA16& matrix )
+void Renderer::SetWorldMatrix( D3DXMATRIXA16& matrix ) const
 {
 	SetMatrix( &matrix, false );
 }
@@ -101,7 +101,7 @@ void Renderer::ResizeWindow( LONG width, LONG height )
 	}
 }
 
-void Renderer::WriteText( LPCWSTR text, float left, float top, int RGB_R /*= 255*/, int RGB_G /*= 255*/, int RGB_B /*= 255*/, float right /*= 0*/, float bottom /*= 0 */ )
+void Renderer::WriteText( LPCWSTR text, float left, float top, int RGB_R /*= 255*/, int RGB_G /*= 255*/, int RGB_B /*= 255*/, float right /*= 0*/, float bottom /*= 0 */ ) const
 {
 	if ( m_Result )
 	{

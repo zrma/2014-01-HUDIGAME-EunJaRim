@@ -8,7 +8,7 @@ public:
 	~Timer();
 	
 	void	Tick();
-	UINT	GetElapsedTime() { return m_DeltaTime; }
+	UINT	GetElapsedTime() const { return m_DeltaTime; }
 
 private:
 	UINT	m_PrevTime = 0;

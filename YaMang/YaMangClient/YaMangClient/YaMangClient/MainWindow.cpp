@@ -15,7 +15,7 @@ MainWindow::~MainWindow()
 {
 }
 
-LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
+LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam ) const
 {
 	switch ( uMsg )
 	{
@@ -108,7 +108,7 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 	return 0;
 }
 
-int MainWindow::RunGame()
+int MainWindow::RunGame() const
 {
 	MSG msg = {0,};
 
