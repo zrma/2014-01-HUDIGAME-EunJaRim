@@ -700,9 +700,9 @@ YAMANGDXDLL_API void TransPickedTriangle( int modeSelector )
 // 			Log( "4번째: %d %d %d \n", intersectedTriIndices[9], intersectedTriIndices[10], intersectedTriIndices[11] );
 
 			//vertex와 index 바인딩
-			VerticesStartPoint[intersectedTriIndices[0]].Diffuse = D3DCOLOR_ARGB( 255, 30, 30, 150 );
-			VerticesStartPoint[intersectedTriIndices[1]].Diffuse = D3DCOLOR_ARGB( 255, 30, 30, 150 );
-			VerticesStartPoint[intersectedTriIndices[2]].Diffuse = D3DCOLOR_ARGB( 255, 30, 30, 150 );
+			VerticesStartPoint[intersectedTriIndices[0]].Diffuse = D3DCOLOR_ARGB( 255, 30, 100, 100 );
+			VerticesStartPoint[intersectedTriIndices[1]].Diffuse = D3DCOLOR_ARGB( 255, 30, 100, 100 );
+			VerticesStartPoint[intersectedTriIndices[2]].Diffuse = D3DCOLOR_ARGB( 255, 30, 100, 100 );
 
 			modeSelector = static_cast<MODESELECTOR>( modeSelector );
 
@@ -714,9 +714,9 @@ YAMANGDXDLL_API void TransPickedTriangle( int modeSelector )
 					VerticesStartPoint[intersectedTriIndices[2]].vertexPoint.y += 2;
 					break;
 				case AREA_LOWER:
-					VerticesStartPoint[intersectedTriIndices[0]].vertexPoint.y += 2;
-					VerticesStartPoint[intersectedTriIndices[1]].vertexPoint.y += 2;
-					VerticesStartPoint[intersectedTriIndices[2]].vertexPoint.y += 2;
+					VerticesStartPoint[intersectedTriIndices[0]].vertexPoint.y -= 2;
+					VerticesStartPoint[intersectedTriIndices[1]].vertexPoint.y -= 2;
+					VerticesStartPoint[intersectedTriIndices[2]].vertexPoint.y -= 2;
 					break;
 				default:
 					break;
