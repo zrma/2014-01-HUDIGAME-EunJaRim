@@ -18,11 +18,11 @@ Corps::~Corps()
 {
 }
 
-void Corps::AddDamage( int damage )
+void Corps::AddDamage( float damage )
 {
 	if ( !m_IsDead )
 	{
-		int defense = m_Defense + m_DefenseBonus - damage;
+		float defense = m_Defense + m_DefenseBonus - damage;
 		if ( defense < 0 )
 		{
 			m_HP = m_HP + defense;

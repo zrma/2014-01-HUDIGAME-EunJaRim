@@ -71,8 +71,9 @@ void Attack::OnTick()
 
 		// 임시로 계산 해둔 식
 		D3DXVECTOR3	view = myCorpsPositionInfo.m_EyePoint - targetPositionInfo.m_EyePoint;
-		float speed = D3DXVec3Length( &view );
-		outPacket.m_Speed = speed;
+		float length = D3DXVec3Length( &view );
+		float speed = m_OwnerCrops->GetSpeed();
+		float time = ( length / speed ) * 1000;
 
 		// 걸어갈 방향을 지정
 		D3DXVec3Normalize( &view, &view );
@@ -82,12 +83,18 @@ void Attack::OnTick()
 		outPacket.m_TargetZ = targetPositionInfo.m_EyePoint.z;
 		outPacket.m_LookX = view.x;
 		outPacket.m_LookZ = view.z;
+		
+		PositionInfo position;
+		position.m_EyePoint = { targetPositionInfo.m_EyePoint.x, 0.0f, targetPositionInfo.m_EyePoint.z };
+		position.m_LookAtPoint = { view.x, 0.0f, view.z };
+
+		m_OwnerCrops->SetPositionInfo( position );
 
 		m_ClientManager->BroadcastPacket( &outPacket );
 
 		printf_s( "Attack OnTick Chase \n" );
 		m_ActionStatus = ACTION_TICK;
-		m_OwnerCrops->DoNextAction( this, 100 );
+		m_OwnerCrops->DoNextAction( this, static_cast<ULONGLONG>( time ) );
 	}
 
 }

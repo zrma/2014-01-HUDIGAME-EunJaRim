@@ -22,7 +22,11 @@ void MovePosition::OnBegin()
 
 	// 임시로 계산 해둔 식
 	D3DXVECTOR3	view = m_Destination.m_LookAtPoint - m_Destination.m_EyePoint;
-	float speed = D3DXVec3Length( &view );
+	float length = D3DXVec3Length( &view );
+	float speed = m_OwnerCrops->GetSpeed();
+	float time = ( length / speed ) * 1000;
+
+
 	outPacket.m_Speed = speed;
 
 	// 걸어갈 방향을 지정
@@ -34,19 +38,25 @@ void MovePosition::OnBegin()
 	outPacket.m_LookX = view.x;
 	outPacket.m_LookZ = view.z;
 
+	PositionInfo position;
+	position.m_EyePoint = { m_Destination.m_LookAtPoint.x, 0.0f, m_Destination.m_LookAtPoint.z };
+	position.m_LookAtPoint = { view.x, 0.0f, view.z };
+
+	m_OwnerCrops->SetPositionInfo( position );
+
 	m_ClientManager->BroadcastPacket( &outPacket );
-
-
-	printf_s( "MovePosition OnBegin \n" );
+	
+	printf_s( "MovePosition OnBegin [time:%f][%f][%f][%f][%f] \n", time, m_Destination.m_LookAtPoint.x, m_Destination.m_LookAtPoint.z, view.x, view.z );
 	m_ActionStatus = ACTION_TICK;
-	m_OwnerCrops->DoNextAction( this, 1500 );
+	m_OwnerCrops->DoNextAction( this, static_cast<ULONGLONG>(time) );
 }
 
 void MovePosition::OnTick()
 {
+	// onTick의 역할은?
 	printf_s( "MovePosition OnTick \n" );
 	m_ActionStatus = ACTION_END;
-	m_OwnerCrops->DoNextAction( this, 1500 );
+	m_OwnerCrops->DoNextAction( this, 10 );
 }
 
 void MovePosition::OnEnd()

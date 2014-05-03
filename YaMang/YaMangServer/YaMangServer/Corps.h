@@ -13,18 +13,19 @@ public:
 	int						GetCorpsID( ) const { return m_CorpsID; }
 	short					GetCorpsSize( ) const { return m_UnitNum; }
 	PositionInfo			GetPositionInfo( ) const { return m_Position; }
+	void					SetPositionInfo( PositionInfo position ) { m_Position = position; };
 
 	void					SetHoldingAction( Action* holdAction ) { m_HoldAction = holdAction; }
 	Action*					GetHoldingAction( ) const { return m_HoldAction; }
 
 	void					ChangeFormation( FormationType formation ) { m_Formation = formation; }
-	void					AddDamage( int damage );
+	void					AddDamage( float damage );
 
 	
-	int						GetSpeed( ) const { return m_MoveSpeed + m_MoveSpeedBonus; }
-	int						GetAttackRange( ) const { return m_AttackRange + m_AttackRangeBonus; }
-	int						GetAttackPower( ) const { return m_AttackPower + m_AttackPowerBonus; }
-	int						GetDefense( ) const { return m_Defense + m_DefenseBonus; }
+	float					GetSpeed( ) const { return m_MoveSpeed + m_MoveSpeedBonus; }
+	float					GetAttackRange( ) const { return m_AttackRange + m_AttackRangeBonus; }
+	float					GetAttackPower( ) const { return m_AttackPower + m_AttackPowerBonus; }
+	float					GetDefense( ) const { return m_Defense + m_DefenseBonus; }
 	bool					IsDead() const { return m_IsDead; }
 
 	void					DoNextAction( Action* addedAction, ULONGLONG remainTime );
@@ -38,7 +39,6 @@ protected:
 	int						m_PlayerID = -1;
 	int						m_CorpsID = -1;
 	bool					m_IsDead = false;
-	int						m_HP = 100;
 	short					m_UnitNum = -1;
 
 	PositionInfo			m_Position;
@@ -46,17 +46,18 @@ protected:
 
 	Action*					m_HoldAction = nullptr;
 
-	int		m_MoveSpeed = 0;
-	int		m_MoveSpeedBonus = 0;
+	float					m_HP = 100.0f;
+	float					m_MoveSpeed = 0.0f;
+	float					m_MoveSpeedBonus = 0.0f;
 
-	int		m_AttackRange = 1;
-	int		m_AttackRangeBonus = 0;
+	float					m_AttackRange = 0.0f;
+	float					m_AttackRangeBonus = 0.0f;
 
-	int		m_AttackPower = 0;
-	int		m_AttackPowerBonus = 0;
+	float					m_AttackPower = 0.0f;
+	float					m_AttackPowerBonus = 0.0f;
 
-	int		m_Defense = 0;
-	int		m_DefenseBonus = 0;
+	float					m_Defense = 0.0f;
+	float					m_DefenseBonus = 0.0f;
 
 private:
 	ActionScheduler*	m_ActionScheduler = nullptr;
