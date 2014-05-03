@@ -93,6 +93,8 @@
     <ClInclude Include="BreadBoard.h" />
     <ClInclude Include="CameraController.h" />
     <ClInclude Include="CircularBuffer.h" />
+    <ClInclude Include="Collision.h" />
+    <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="Corps.h" />
     <ClInclude Include="DummyRender.h" />
     <ClInclude Include="GameManager.h" />
@@ -131,6 +133,8 @@
     <ClCompile Include="Arrow.cpp" />
     <ClCompile Include="CameraController.cpp" />
     <ClCompile Include="CircularBuffer.cpp" />
+    <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="Corps.cpp" />
     <ClCompile Include="DummyRender.cpp" />
     <ClCompile Include="EventHandler.cpp" />

@@ -41,6 +41,9 @@
     <Filter Include="Sound">
       <UniqueIdentifier>{ecc00c02-8c42-4716-9011-bc6f0804997d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UnitObject\Collision">
+      <UniqueIdentifier>{004e144e-b1f2-48a5-9563-fd3f16cc3089}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -172,6 +175,10 @@
     <ClInclude Include="MouseRender.h">
       <Filter>Render</Filter>
     </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>UnitObject\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -276,6 +283,10 @@
     <ClCompile Include="MouseRender.cpp">
       <Filter>Render</Filter>
     </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>UnitObject\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="YaMangClient.rc">
