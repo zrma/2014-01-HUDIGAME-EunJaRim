@@ -19,6 +19,24 @@ void CollisionList::AddCollision( Collision* collision )
 	}
 }
 
+void CollisionList::RemoveColiision( Collision* collision )
+{
+	if ( collision )
+	{
+		for ( auto iter = m_CollisionList.begin(); iter != m_CollisionList.end(); )
+		{
+			if ( collision == *iter )
+			{
+				iter = m_CollisionList.erase( iter );
+			}
+			else
+			{
+				++iter;
+			}
+		}
+	}
+}
+
 void CollisionList::CheckCollision( Collision* collision ) const
 {
 	for ( auto iter : m_CollisionList )

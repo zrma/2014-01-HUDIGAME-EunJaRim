@@ -9,7 +9,9 @@ public:
 	~CollisionList();
 
 	void	AddCollision( Collision* collision );
+	void	RemoveColiision( Collision* collision );
 	void	CheckCollision( Collision* collision ) const;
+	
 	void	ClearList() { m_CollisionList.clear(); }
 
 private:
