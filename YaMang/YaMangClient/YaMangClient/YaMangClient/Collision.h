@@ -26,4 +26,3 @@ private:
 	float			m_Radius = 0;
 	Interface3D*	m_Owner = nullptr;
 };
-

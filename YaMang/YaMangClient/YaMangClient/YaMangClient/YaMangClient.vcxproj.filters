@@ -178,7 +178,7 @@
     <ClInclude Include="Collision.h">
       <Filter>UnitObject\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="CollisionManager.h" />
+    <ClInclude Include="CollisionList.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -286,7 +286,7 @@
     <ClCompile Include="Collision.cpp">
       <Filter>UnitObject\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="CollisionManager.cpp" />
+    <ClCompile Include="CollisionList.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="YaMangClient.rc">
