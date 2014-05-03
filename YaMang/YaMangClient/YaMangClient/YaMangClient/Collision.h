@@ -12,6 +12,9 @@ public:
 	float	GetRadius() const { return m_Radius; }
 	void	SetRadius( float radius ) { m_Radius = radius; }
 	
+	bool	IsCollide() const { return m_IsCollide; }
+	void	SetCollide( bool isCollide = true ) { m_IsCollide = isCollide; }
+
 	D3DXVECTOR3		GetPosition() const;
 
 	bool	IsCollideWith( Collision& collision ) const;
@@ -19,7 +22,8 @@ public:
 private:
 	Collision();
 
-	float	m_Radius;
-	Interface3D*	m_Owner;
+	bool			m_IsCollide = false;
+	float			m_Radius = 0;
+	Interface3D*	m_Owner = nullptr;
 };
 
