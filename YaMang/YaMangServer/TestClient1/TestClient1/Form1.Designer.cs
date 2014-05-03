@@ -69,13 +69,19 @@
             this.tb_corps_eye_x = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.tb_Attack_from_corpsID = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.tb_Attack_to_corpsID = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.bu_Attack_Corps = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox5.SuspendLayout();
+            this.groupBox7.SuspendLayout();
             this.SuspendLayout();
             // 
             // lb_connect_server
@@ -494,21 +500,68 @@
             this.label4.TabIndex = 0;
             this.label4.Text = "eye";
             // 
-            // button1
+            // groupBox7
             // 
-            this.button1.Location = new System.Drawing.Point(529, 192);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(184, 46);
-            this.button1.TabIndex = 12;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.groupBox7.Controls.Add(this.bu_Attack_Corps);
+            this.groupBox7.Controls.Add(this.tb_Attack_to_corpsID);
+            this.groupBox7.Controls.Add(this.label9);
+            this.groupBox7.Controls.Add(this.tb_Attack_from_corpsID);
+            this.groupBox7.Controls.Add(this.label8);
+            this.groupBox7.Location = new System.Drawing.Point(417, 133);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(100, 222);
+            this.groupBox7.TabIndex = 12;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "CorpsAttack";
+            // 
+            // tb_Attack_from_corpsID
+            // 
+            this.tb_Attack_from_corpsID.Location = new System.Drawing.Point(14, 33);
+            this.tb_Attack_from_corpsID.Name = "tb_Attack_from_corpsID";
+            this.tb_Attack_from_corpsID.Size = new System.Drawing.Size(68, 21);
+            this.tb_Attack_from_corpsID.TabIndex = 282;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(6, 18);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(83, 12);
+            this.label8.TabIndex = 281;
+            this.label8.Text = "FromCorpsID:";
+            // 
+            // tb_Attack_to_corpsID
+            // 
+            this.tb_Attack_to_corpsID.Location = new System.Drawing.Point(14, 77);
+            this.tb_Attack_to_corpsID.Name = "tb_Attack_to_corpsID";
+            this.tb_Attack_to_corpsID.Size = new System.Drawing.Size(68, 21);
+            this.tb_Attack_to_corpsID.TabIndex = 284;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(13, 61);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(69, 12);
+            this.label9.TabIndex = 283;
+            this.label9.Text = "ToCorpsID:";
+            // 
+            // bu_Attack_Corps
+            // 
+            this.bu_Attack_Corps.Location = new System.Drawing.Point(8, 105);
+            this.bu_Attack_Corps.Name = "bu_Attack_Corps";
+            this.bu_Attack_Corps.Size = new System.Drawing.Size(75, 23);
+            this.bu_Attack_Corps.TabIndex = 285;
+            this.bu_Attack_Corps.Text = "Attack!";
+            this.bu_Attack_Corps.UseVisualStyleBackColor = true;
+            this.bu_Attack_Corps.Click += new System.EventHandler(this.bu_Attack_Corps_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(863, 367);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
@@ -528,6 +581,8 @@
             this.groupBox6.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -576,7 +631,12 @@
         private System.Windows.Forms.RadioButton rb_corps_formation_destroy;
         private System.Windows.Forms.RadioButton rb_corps_formation_defense;
         private System.Windows.Forms.Button bu_corps_formation;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.TextBox tb_Attack_to_corpsID;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox tb_Attack_from_corpsID;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button bu_Attack_Corps;
     }
 }
 

@@ -154,5 +154,16 @@ namespace TestClient1
             }
         }
 
+        private void bu_Attack_Corps_Click(object sender, EventArgs e)
+        {
+            if (IsServerConnected)
+            {
+                int corpsIDFrom = int.Parse(tb_Attack_from_corpsID.Text);
+                int corpsIDTo = int.Parse(tb_Attack_to_corpsID.Text);
+                Network.AttackCorpsRequest(corpsIDFrom, corpsIDTo);
+
+            }
+        }
+
     }
 }

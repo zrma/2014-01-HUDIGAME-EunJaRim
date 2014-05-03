@@ -35,6 +35,8 @@ public:
 	int					GetRoomNumber() const { return m_RoomNumber; }
 
 	void				BroadcastPacket( ClientSession* from, PacketHeader* pkt );
+	void				BroadcastPacket( PacketHeader* pkt );
+
 	bool				DirectPacket( int pid, PacketHeader* pkt );
 
 	void				OnPeriodWork();

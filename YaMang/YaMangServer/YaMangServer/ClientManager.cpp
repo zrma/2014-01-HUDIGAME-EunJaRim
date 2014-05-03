@@ -126,7 +126,14 @@ void ClientManager::BroadcastPacket( ClientSession* from, PacketHeader* pkt )
 		client->SendRequest( pkt );
 	}
 }
-
+void ClientManager::BroadcastPacket( PacketHeader* pkt )
+{
+	for ( ClientList::const_iterator it = m_ClientList.begin(); it != m_ClientList.end(); ++it )
+	{
+		ClientSession* client = it->second;
+		client->SendRequest( pkt );
+	}
+}
 
 bool ClientManager::DirectPacket( int pid, PacketHeader* pkt )
 {

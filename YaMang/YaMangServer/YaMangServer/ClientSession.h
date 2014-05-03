@@ -76,8 +76,6 @@ public:
 
 
 
-	float	GetVectorLength( D3DXVECTOR2* vector ) const;
-
 private:
 
 	bool	SendFlush(); ///< Send요청 중인것들 모아서 보냄

@@ -180,6 +180,19 @@ namespace TestClient1
         }
 
 
+        public static unsafe void AttackCorpsRequest(
+        int corpsIDFrom,int corpsIDTo)
+        {
+            PacketStruct.AttackCorpsRequest request = new PacketStruct.AttackCorpsRequest();
+            request.m_Size = (short)sizeof(PacketStruct.AttackCorpsRequest);
+            request.m_Type = (short)PacketTypes.PKT_CS_CORPS_ATTACK;
+            request.m_MyCorpsID = corpsIDFrom;
+            request.m_TargetCorpsID = corpsIDTo;
+
+            byte[] sendData = RawSerializer<PacketStruct.AttackCorpsRequest>.RawSerialize(request);
+
+            socket.Send(sendData, 0, sendData.Length, SocketFlags.None);
+        }
         //////////////////////////////////////////////////////////////////////
     }
 

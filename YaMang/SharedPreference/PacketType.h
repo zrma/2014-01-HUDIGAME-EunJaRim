@@ -372,17 +372,9 @@ struct AttackCorpsRequest: public PacketHeader
 		m_Type = PKT_CS_CORPS_ATTACK;
 		m_MyCorpsID = -1;
 		m_TargetCorpsID = -1;
-		m_NowX = NOT_A_NUMBER_FLOAT;
-		m_NowZ = NOT_A_NUMBER_FLOAT;
-		m_TargetX = NOT_A_NUMBER_FLOAT;
-		m_TargetZ = NOT_A_NUMBER_FLOAT;
 	}
 	int		m_MyCorpsID;
 	int		m_TargetCorpsID;
-	float	m_NowX;
-	float	m_NowZ;
-	float	m_TargetX;
-	float	m_TargetZ;
 };
 
 // 필요 하게 될까?

@@ -10,6 +10,7 @@
 #include "Corps.h"
 #include "MovePosition.h"
 #include "SharedDefine.h"
+#include "Attack.h"
 
 // 테스트용 헤더
 extern RoomManager* g_RoomManager;
@@ -278,11 +279,8 @@ void ClientSession::HandleMoveCorpsRequest( MoveCorpsRequest& inPacket )
 		Disconnect();
 	}
 	
-	// MOVE!!!!!!;
-	// 미구현 그냥 클라쪽 패킷만 일단 구현
-	//
 	// Corps를 탐색 한 후 Corps의 정체를 파악
-	// 적합한 이동인지 판정 후 스케쥴러에 등록
+	// -- 적합한 이동인지 판정 후 스케쥴러에 등록
 	//
 	// 이후 스케쥴러는 해당 타이밍 마다 액션을 꺼내서 수행
 	// 이동 액션은 내부적으로 Corps의 상황을 파악하여
@@ -290,34 +288,14 @@ void ClientSession::HandleMoveCorpsRequest( MoveCorpsRequest& inPacket )
 
 	Corps* corps = m_ClientManager->GetCorpsByCorpsID( corpsID );
 
-	Action* action = new MovePosition();
+	MovePosition* action = new MovePosition( );
 	action->SetClientManager( m_ClientManager );
 	action->SetOwnerCorps( corps );
-	m_ClientManager->AddActionToScheduler( action, 3000 );
+	action->SetDestination( destination );
 
-	MoveCorpsResult outPacket;
-	outPacket.m_CorpsID = corpsID;
+	m_ClientManager->AddActionToScheduler( action, 10 );
 
-	// 임시로 계산 해둔 식
-	D3DXVECTOR3	view = destination.m_LookAtPoint - destination.m_EyePoint;
-	float speed = D3DXVec3Length( &view );
-	outPacket.m_Speed = speed;
-
-	// 걸어갈 방향을 지정
-	D3DXVec3Normalize( &view, &view );
-	
-	// target위치를 서버가 계산해줘야함
-	outPacket.m_TargetX = targetX;
-	outPacket.m_TargetZ = targetZ;
-	outPacket.m_LookX = view.x;
-	outPacket.m_LookZ = view.z;
-
-	if ( !Broadcast( &outPacket ) )
-	{
-		Disconnect();
-	}
-
-	printf_s( "CorpsMoved CorpID:%d PlayerID:%d DesX:%f DesZ:%f Speed:%f \n", corpsID, m_PlayerID, destination.m_EyePoint.x, destination.m_EyePoint.z, speed );
+	printf_s( "CorpsMoved CorpID:%d PlayerID:%d DesX:%f DesZ:%f \n", corpsID, m_PlayerID, destination.m_EyePoint.x, destination.m_EyePoint.z );
 
 }
 
@@ -409,42 +387,25 @@ void ClientSession::HandleAttackCorpsRequest( AttackCorpsRequest& inPacket )
 	int myCorpsID = inPacket.m_MyCorpsID;
 	int targetCorpsID = inPacket.m_TargetCorpsID;
 
+	if ( myCorpsID == -1 || targetCorpsID == -1 )
+	{
+		Disconnect();
+	}
+
 	Corps* myCorps = m_ClientManager->GetCorpsByCorpsID( myCorpsID );
 	Corps* targetCorps = m_ClientManager->GetCorpsByCorpsID( targetCorpsID );
 
-	PositionInfo myCorpsPositionInfo = myCorps->GetPositionInfo();
-	PositionInfo targetPositionInfo = targetCorps->GetPositionInfo( );
+	Attack* action = new Attack( );
+	action->SetClientManager( m_ClientManager );
+	action->SetOwnerCorps( myCorps );
+	action->SetTargetCorps( targetCorps );
 
-	float nowX = myCorpsPositionInfo.m_EyePoint.x;
-	float nowZ = myCorpsPositionInfo.m_EyePoint.z;
-	float targetX = targetPositionInfo.m_EyePoint.x;
-	float targetZ = targetPositionInfo.m_EyePoint.z;
+	m_ClientManager->AddActionToScheduler( action, 10 );
 
-	D3DXVECTOR2* vector = nullptr;
-	vector->x = targetX - nowX;
-	vector->y = targetZ - nowZ;
-	float length = GetVectorLength( vector );
-
-	if ( length < myCorps->GetAttackRange() )
-	{
-		// 공격 하세요
-		// 액션에서 하자...
-		// targetCorps->AddDamage( myCorps->GetAttackPower() );
-	}
-	else
-	{
-		// 이동하세요
-	}
-
+	printf_s( "[Packet GET]AttackCorps FromCorpID:%d ToCorpID:%d \n", myCorpsID, targetCorpsID );
 }
 
 
 
 
 //////////////////////////////////////////////////////////////////////////
-
-
-float ClientSession::GetVectorLength( D3DXVECTOR2* vector ) const
-{
-	return D3DXVec2Length( vector );
-}

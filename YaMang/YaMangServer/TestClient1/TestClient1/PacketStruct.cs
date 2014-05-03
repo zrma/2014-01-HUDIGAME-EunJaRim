@@ -41,6 +41,9 @@ namespace TestClient1
         PKT_CS_CORPS_CHANGE_FORMATION = 200,
         PKT_SC_CORPS_CHANGE_FORMATION = 201,
 
+        PKT_CS_CORPS_ATTACK = 300,
+        PKT_SC_CORPS_ATTACK = 400,
+
         PKT_MAX = 1024
     };
 
@@ -153,6 +156,15 @@ namespace TestClient1
             public short m_Type;
             public int m_CorpsID;
             public byte m_FormationType;
+        }
+
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]
+        public unsafe struct AttackCorpsRequest
+        {
+            public short m_Size;
+            public short m_Type;
+            public int m_MyCorpsID;
+            public int m_TargetCorpsID;
         }
     }
 }
