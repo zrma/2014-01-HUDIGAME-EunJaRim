@@ -130,7 +130,7 @@ YAMANGDXDLL_API HRESULT InitGeometry( HWND hWnd, LPCTSTR fileName, MESHOBJECT* i
 			}
 		}
 	}
-
+	
 
 	D3dxMtrialBuffer->Release();
 
@@ -460,7 +460,7 @@ YAMANGDXDLL_API void HeightMapRender()
 	g_D3dDevice->SetIndices( RenderIndexBuffer );
 
 	// Log("Go! \n");
-	g_D3dDevice->DrawIndexedPrimitive( D3DPT_TRIANGLELIST, 0, 0, g_XHeight * g_ZHeight, 0, ( g_XHeight - 1 ) * ( g_ZHeight - 1 ) * 2 );
+	g_D3dDevice->DrawIndexedPrimitive( D3DPT_TRIANGLESTRIP, 0, 0, g_XHeight * g_ZHeight, 0, ( g_XHeight - 1 ) * ( g_ZHeight - 1 ) * 2 );
 	// Log("Stop \n");
 }
 
@@ -492,8 +492,7 @@ YAMANGDXDLL_API void InitGroundMesh( int row, int col )
 YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 {
 	int verticesCount = (g_XHeight) * ( g_ZHeight );
-	int indicesCount = col * row * 6;
-
+	
 	CUSTOMVERTEX* baseVertex = new CUSTOMVERTEX[verticesCount];
 	if ( nullptr == baseVertex )
 	{
@@ -504,15 +503,15 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 	CUSTOMVERTEX vPos0;
 
 	vPos0.vertexPoint.x = -1.f * col * pixelSize * 0.5f;
-	vPos0.vertexPoint.y = -10.0f;
-	vPos0.vertexPoint.z = row * pixelSize * 0.5f;
+	vPos0.vertexPoint.y = 0.0f;
+	vPos0.vertexPoint.z = -1.f * row * pixelSize * 0.5f;
 	for ( int z = 0; z <= row; ++z )
 	{
 		for ( int x = 0; x <= col; ++x )
 		{
 			baseVertex[startIdx].vertexPoint.x = vPos0.vertexPoint.x + ( pixelSize * x );
 			baseVertex[startIdx].vertexPoint.y = 0.f;
-			baseVertex[startIdx].vertexPoint.z = vPos0.vertexPoint.z + ( -1.0f )*( pixelSize * z );
+			baseVertex[startIdx].vertexPoint.z = vPos0.vertexPoint.z + ( pixelSize * z );
 			baseVertex[startIdx].Diffuse = D3DCOLOR_ARGB( 255, 150, 30, 30 );
 			++startIdx;
 		}
@@ -534,14 +533,14 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 
 
 
+	int indicesCount = g_XHeight * g_ZHeight + ( g_ZHeight - 2 )*( g_XHeight + 1 );
 	UINT* baseIndex = new UINT[indicesCount];
 	if ( nullptr == baseIndex )
 	{
 		assert( false );
 	}
 
-	startIdx = 0;
-
+	/*
 	for ( int z = 0; z < row; ++z )
 	{
 		for ( int x = 0; x < col; ++x )
@@ -553,6 +552,39 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 			baseIndex[startIdx++] = static_cast<UINT>( z * ( col + 1 ) + x );
 			baseIndex[startIdx++] = static_cast<UINT>( z * ( col + 1 ) + x + 1 );
 			baseIndex[startIdx++] = static_cast<UINT>( ( z + 1 ) * ( col + 1 ) + x + 1 );
+		}
+	}
+	*/
+
+	//퇴적 삼각형 적용 부분
+	startIdx = 0;
+	for ( int z = 0; z < row; ++z )
+	{
+		if ( z % 2 == 0 )
+		{
+			int x;
+			for (  x = 0; x < col+1; ++x )
+			{
+				baseIndex[startIdx++] = static_cast<UINT>( x + ( z*g_XHeight) );
+				baseIndex[startIdx++] = static_cast<UINT>( x + ( z*g_XHeight ) +g_XHeight );
+			}
+			if ( z != g_ZHeight-2 )
+			{
+				baseIndex[startIdx++] = static_cast<UINT>( ( x - 1 ) + ( z*g_XHeight ) + g_XHeight );
+			}
+		}
+		else
+		{
+			int x;
+			for ( x = col; x >=0; --x )
+			{
+				baseIndex[startIdx++] = static_cast<UINT>( x + ( z*g_XHeight ) );
+				baseIndex[startIdx++] = static_cast<UINT>( x + ( z*g_XHeight ) + g_XHeight );
+			}
+			if ( z != g_ZHeight - 2 )
+			{
+				baseIndex[startIdx++] = static_cast<UINT>( ( x + 1 ) + ( z*g_XHeight ) + g_XHeight );
+			}
 		}
 	}
 
