@@ -12,9 +12,9 @@ public:
 	void	SetDestination( PositionInfo destination ) { m_Destination = destination; };
 
 private:
-	void OnBegin();
-	void OnTick();
-	void OnEnd();
+	virtual void OnBegin( );
+	virtual void OnTick( );
+	virtual void OnEnd( );
 
 private:
 	PositionInfo m_Destination;

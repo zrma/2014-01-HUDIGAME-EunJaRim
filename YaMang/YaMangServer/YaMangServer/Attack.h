@@ -11,9 +11,9 @@ public:
 	Corps*		GetTargetCorps( ) const { return m_TargerCrops; }
 
 private:
-	void OnBegin();
-	void OnTick();
-	void OnEnd();
+	virtual void OnBegin( );
+	virtual void OnTick( );
+	virtual void OnEnd( );
 
 private:
 	Corps*		m_TargerCrops = nullptr;

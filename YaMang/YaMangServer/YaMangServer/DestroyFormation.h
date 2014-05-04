@@ -8,9 +8,9 @@ public:
 	virtual ~DestroyFormation( );
 
 private:
-	void OnBegin();
-	void OnTick();
-	void OnEnd();
+	virtual void OnBegin( );
+	virtual void OnTick( );
+	virtual void OnEnd( );
 
 };
 

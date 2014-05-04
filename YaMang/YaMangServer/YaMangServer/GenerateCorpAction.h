@@ -13,9 +13,9 @@ public:
 	void			SetClientSession( ClientSession* clientSession ) { m_ClientSession = clientSession; }
 
 private:
-	void OnBegin();
-	void OnTick();
-	void OnEnd();
+	virtual void OnBegin( );
+	virtual void OnTick( );
+	virtual void OnEnd( );
 
 private:
 	int				m_PlayerID = -1;

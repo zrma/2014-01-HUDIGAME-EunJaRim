@@ -8,10 +8,5 @@ public:
 	Pike( int playerID, int corpsID, PositionInfo position, ActionScheduler* actionScheduler );
 	virtual ~Pike( );
 
-private:
-	Pike( );
-	Pike( const Pike& );
-	Pike& operator=( const Pike& );
-
 };
 
