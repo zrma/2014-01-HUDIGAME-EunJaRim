@@ -7,6 +7,18 @@
 #include "Timer.h"
 #include "Act.h"
 
+#include "Collision.h"
+#include "CollisionManager.h"
+
+Unit::Unit( Corps* owner, UINT unitId )
+: m_Corps( owner ), m_UnitID( unitId )
+{
+	ClearAct();
+
+	m_Collision = new Collision( this, 1.0f );
+	CollisionManager::GetInstance()->AddCollision( m_Collision );
+}
+
 Unit::~Unit()
 {
 }
@@ -90,6 +102,12 @@ void Unit::RotateToDestination()
 
 void Unit::MoveToDestination()
 {
+	CollisionManager::GetInstance()->CheckCollision( m_Collision );
+	if ( m_Collision->IsCollide() )
+	{
+		Log( "충돌 중!!!! \n" );
+	}
+
 	float time = static_cast<float>( Timer::GetInstance()->GetElapsedTime() );
 	if ( m_TargetPoint.x - m_EyePoint.x > 0.5f || m_TargetPoint.x - m_EyePoint.x < -0.5f )
 	{

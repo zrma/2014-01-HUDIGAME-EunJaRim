@@ -41,7 +41,7 @@ YAMANGDXDLL_API HRESULT InitD3D( HWND hWnd, long width, long height )
 		return E_FAIL;
 	}
 
-	g_D3dDevice->SetRenderState( D3DRS_CULLMODE, D3DCULL_CCW );
+	g_D3dDevice->SetRenderState( D3DRS_CULLMODE, D3DCULL_NONE );
 	g_D3dDevice->SetRenderState( D3DRS_ZENABLE, TRUE );
 
 	SetAspectRatio( width, height );

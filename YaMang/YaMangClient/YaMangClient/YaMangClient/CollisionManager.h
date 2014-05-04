@@ -1,12 +1,13 @@
 #pragma once
+#include "MacroSet.h"
 
 class Collision;
 
-class CollisionList
+class CollisionManager:public Singleton<CollisionManager>
 {
 public:
-	CollisionList();
-	~CollisionList();
+	CollisionManager();
+	~CollisionManager();
 
 	void	AddCollision( Collision* collision );
 	void	RemoveColiision( Collision* collision );

@@ -3,6 +3,7 @@
 #include <d3dx9math.h>
 
 extern const float NOT_A_NUMBER_FLOAT;
+class Collision;
 
 class Interface3D
 {
@@ -37,5 +38,6 @@ protected:
 
 	float	m_Speed = 0.0f;
 	bool	m_Visible = false;
+	Collision*		m_Collision = nullptr;
 };
 

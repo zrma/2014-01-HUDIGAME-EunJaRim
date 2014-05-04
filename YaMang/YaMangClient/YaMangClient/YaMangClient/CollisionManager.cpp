@@ -1,17 +1,17 @@
 #include "stdafx.h"
-#include "CollisionList.h"
+#include "CollisionManager.h"
 #include "Collision.h"
 
-CollisionList::CollisionList()
+CollisionManager::CollisionManager()
 {
 }
 
 
-CollisionList::~CollisionList()
+CollisionManager::~CollisionManager()
 {
 }
 
-void CollisionList::AddCollision( Collision* collision )
+void CollisionManager::AddCollision( Collision* collision )
 {
 	if ( collision )
 	{
@@ -19,7 +19,7 @@ void CollisionList::AddCollision( Collision* collision )
 	}
 }
 
-void CollisionList::RemoveColiision( Collision* collision )
+void CollisionManager::RemoveColiision( Collision* collision )
 {
 	if ( collision )
 	{
@@ -37,7 +37,7 @@ void CollisionList::RemoveColiision( Collision* collision )
 	}
 }
 
-void CollisionList::CheckCollision( Collision* collision ) const
+void CollisionManager::CheckCollision( Collision* collision ) const
 {
 	for ( auto iter : m_CollisionList )
 	{

@@ -7,7 +7,7 @@ class Corps;
 class Unit: public Interface3D
 {
 public:
-	Unit( Corps* owner, UINT unitId ): m_Corps( owner ), m_UnitID( unitId ) { ClearAct(); }
+	Unit( Corps* owner, UINT unitId );
 	virtual ~Unit();
 
 	virtual void	Update();
