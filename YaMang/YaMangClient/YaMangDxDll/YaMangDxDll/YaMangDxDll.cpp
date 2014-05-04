@@ -41,7 +41,7 @@ YAMANGDXDLL_API HRESULT InitD3D( HWND hWnd, long width, long height )
 		return E_FAIL;
 	}
 
-	g_D3dDevice->SetRenderState( D3DRS_CULLMODE, D3DCULL_NONE );
+	g_D3dDevice->SetRenderState( D3DRS_CULLMODE, D3DCULL_CCW );
 	g_D3dDevice->SetRenderState( D3DRS_ZENABLE, TRUE );
 
 	SetAspectRatio( width, height );
@@ -459,9 +459,10 @@ YAMANGDXDLL_API void HeightMapRender()
 	g_D3dDevice->SetTexture( 0, g_TexDiffuse );
 	g_D3dDevice->SetIndices( RenderIndexBuffer );
 
-	// Log("Go! \n");
-	g_D3dDevice->DrawIndexedPrimitive( D3DPT_TRIANGLESTRIP, 0, 0, g_XHeight * g_ZHeight, 0, ( g_XHeight - 1 ) * ( g_ZHeight - 1 ) * 2 );
-	// Log("Stop \n");
+	g_D3dDevice->DrawIndexedPrimitive( 
+		D3DPT_TRIANGLESTRIP, 0, 0, 
+		g_XHeight * g_ZHeight, 0, 
+		( g_XHeight - 1 ) * ( g_ZHeight - 1 ) * 2 );
 }
 
 YAMANGDXDLL_API void InitGroundMesh( int row, int col )
@@ -517,6 +518,12 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 		}
 	}
 
+	//vertex 내용 확인
+	for ( int i = 0; i < startIdx; ++i )
+	{
+		printf_s( "vertex %d: (%f, %f)\n", i, baseVertex[i].vertexPoint.x, baseVertex[i].vertexPoint.z );
+	}
+
 	void *pVertices;
 	if ( FAILED( g_Mesh->LockVertexBuffer( 0, &pVertices ) ) )
 	{
@@ -565,12 +572,17 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 			int x;
 			for (  x = 0; x < col+1; ++x )
 			{
-				baseIndex[startIdx++] = static_cast<UINT>( x + ( z*g_XHeight) );
-				baseIndex[startIdx++] = static_cast<UINT>( x + ( z*g_XHeight ) +g_XHeight );
+				UINT a = static_cast<UINT>( x + ( z*g_XHeight ) );
+				baseIndex[startIdx++] = a;
+				UINT b = static_cast<UINT>( x + ( z*g_XHeight ) + g_XHeight );
+				baseIndex[startIdx++] = b;
+				Log( "a: %d | b: %d\n", a, b );
 			}
 			if ( z != g_ZHeight-2 )
 			{
-				baseIndex[startIdx++] = static_cast<UINT>( ( x - 1 ) + ( z*g_XHeight ) + g_XHeight );
+				UINT c = static_cast<UINT>( ( x - 1 ) + ( z*g_XHeight ) + g_XHeight );
+				baseIndex[startIdx++] = c;
+				Log( "c: %d \n", c );
 			}
 		}
 		else
@@ -578,14 +590,25 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 			int x;
 			for ( x = col; x >=0; --x )
 			{
-				baseIndex[startIdx++] = static_cast<UINT>( x + ( z*g_XHeight ) );
-				baseIndex[startIdx++] = static_cast<UINT>( x + ( z*g_XHeight ) + g_XHeight );
+				UINT a = static_cast<UINT>( x + ( z*g_XHeight ) );
+				baseIndex[startIdx++] = a;
+				UINT b = static_cast<UINT>( x + ( z*g_XHeight ) + g_XHeight );
+				baseIndex[startIdx++] = b;
+				Log( "a: %d | b: %d\n", a, b );
 			}
 			if ( z != g_ZHeight - 2 )
 			{
-				baseIndex[startIdx++] = static_cast<UINT>( ( x + 1 ) + ( z*g_XHeight ) + g_XHeight );
+				UINT c = static_cast<UINT>( ( x + 1 ) + ( z*g_XHeight ) + g_XHeight );
+				baseIndex[startIdx++] = c;
+				Log( "c: %d \n", c );
 			}
 		}
+	}
+
+	//index buffer에 뭐있나?
+	for ( int i = 0; i < startIdx; ++i )
+	{
+		printf_s( "index %d: %d\n", i, baseIndex[i] );
 	}
 
 	void* pIndices;
