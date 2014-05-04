@@ -83,26 +83,26 @@ FMOD::Studio::EventInstance* SoundManager::GetEventInstance( const char* path )
 	return eventInstance;
 }
 
-void SoundManager::test()
-{
-	FMOD::Studio::EventInstance* eventInstance = GetEventInstance( "event:/loop/scene_play_01" );
-	eventInstance->start();
-	m_System->update();
-}
-
-void SoundManager::test2()
-{
-	FMOD::Studio::EventInstance* eventInstance = GetEventInstance( "event:/sfx/generate_corps" );
-	eventInstance->start();
-	m_System->update();
-}
-
 bool SoundManager::PlaySound( SoundType soundType )
 {
-	return true;
+	if ( m_TextList[soundType] != nullptr)
+	{
+		m_TextList[soundType]->start();
+		m_System->update();
+
+		return true;
+	}
+	
+	return false;
 }
 
 bool SoundManager::StopSound( SoundType soundType )
 {
-	return true;
+	if ( m_TextList[soundType] != nullptr )
+	{
+
+		return true;
+	}
+
+	return false;
 }

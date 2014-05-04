@@ -165,7 +165,7 @@ void NetworkManager::HandleGenerateCorpsResult( GenerateCorpsResult& inPacket )
 			scenePlay->AddCorps( corpsID, corps );
 			Log( "GenerateCorps! Type:%d CorpID:%d \n", unitType, corpsID );
 
-			SoundManager::GetInstance( )->test2( );
+			SoundManager::GetInstance( )->PlaySound( SOUND_CORPS_GENERATE );
 		}
 		else
 		{
@@ -242,7 +242,7 @@ void NetworkManager::HandleMoveCorpsResult( MoveCorpsResult& inPacket )
 			ScenePlay* scenePlay = static_cast<ScenePlay*>( SceneManager::GetInstance()->GetNowScene() );
 			scenePlay->MoveCorpsStart( corpsID, targetPosition, lookAtVector, speed );
 			Log( "CorpsMoving! CorpID:%d - Move To X:%f Z:%f Speed:%f \n", corpsID, lookAtVector.x, lookAtVector.z, speed );
-			SoundManager::GetInstance( )->test2( );
+			SoundManager::GetInstance()->PlaySound( SOUND_CORPS_MOVE );
 		}
 		else
 		{

@@ -20,7 +20,7 @@ ScenePlay::~ScenePlay()
 
 void ScenePlay::Create()
 {
-	SoundManager::GetInstance()->test();
+	SoundManager::GetInstance()->PlaySound( SOUND_SCENE_PLAY_BGM1 );
 
 	m_MouseCursor = new MouseRender();
 	//////////////////////////////////////////////////////////////////////////

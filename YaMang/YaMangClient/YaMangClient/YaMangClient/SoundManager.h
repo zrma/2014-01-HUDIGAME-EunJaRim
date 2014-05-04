@@ -20,9 +20,6 @@ public:
 
 	bool							PlaySound( SoundType soundType );
 	bool							StopSound( SoundType soundType );
-
-	void							test(); // 이벤트 인스턴스 관리를 어떻게 해줘야 할까...
-	void							test2( );
 	
 private:
 	void							LoadBank( const char* fileName );
