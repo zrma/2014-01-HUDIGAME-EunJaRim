@@ -459,10 +459,7 @@ YAMANGDXDLL_API void HeightMapRender()
 	g_D3dDevice->SetTexture( 0, g_TexDiffuse );
 	g_D3dDevice->SetIndices( RenderIndexBuffer );
 
-	g_D3dDevice->DrawIndexedPrimitive( 
-		D3DPT_TRIANGLESTRIP, 0, 0, 
-		g_XHeight * g_ZHeight, 0, 
-		( g_XHeight - 1 ) * ( g_ZHeight - 1 ) * 2 );
+	g_D3dDevice->DrawIndexedPrimitive( D3DPT_TRIANGLESTRIP, 0, 0, g_XHeight * g_ZHeight, 0, ( g_XHeight - 1 ) * ( g_ZHeight - 1 ) * 2 + ( g_ZHeight - 2 ) * 3 );
 }
 
 YAMANGDXDLL_API void InitGroundMesh( int row, int col )
@@ -517,12 +514,13 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 			++startIdx;
 		}
 	}
-
+	/*
 	//vertex 내용 확인
 	for ( int i = 0; i < startIdx; ++i )
 	{
 		printf_s( "vertex %d: (%f, %f)\n", i, baseVertex[i].vertexPoint.x, baseVertex[i].vertexPoint.z );
 	}
+	*/
 
 	void *pVertices;
 	if ( FAILED( g_Mesh->LockVertexBuffer( 0, &pVertices ) ) )
@@ -547,22 +545,6 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 		assert( false );
 	}
 
-	/*
-	for ( int z = 0; z < row; ++z )
-	{
-		for ( int x = 0; x < col; ++x )
-		{
-			baseIndex[startIdx++] = static_cast<UINT>( z * ( col + 1 ) + x );
-			baseIndex[startIdx++] = static_cast<UINT>( ( z + 1 )*( col + 1 ) + x + 1 );
-			baseIndex[startIdx++] = static_cast<UINT>( ( z + 1 )*( col + 1 ) + x );
-
-			baseIndex[startIdx++] = static_cast<UINT>( z * ( col + 1 ) + x );
-			baseIndex[startIdx++] = static_cast<UINT>( z * ( col + 1 ) + x + 1 );
-			baseIndex[startIdx++] = static_cast<UINT>( ( z + 1 ) * ( col + 1 ) + x + 1 );
-		}
-	}
-	*/
-
 	//퇴적 삼각형 적용 부분
 	startIdx = 0;
 	for ( int z = 0; z < row; ++z )
@@ -576,13 +558,13 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 				baseIndex[startIdx++] = a;
 				UINT b = static_cast<UINT>( x + ( z*g_XHeight ) + g_XHeight );
 				baseIndex[startIdx++] = b;
-				Log( "a: %d | b: %d\n", a, b );
+				//Log( "a: %d | b: %d\n", a, b );
 			}
 			if ( z != g_ZHeight-2 )
 			{
 				UINT c = static_cast<UINT>( ( x - 1 ) + ( z*g_XHeight ) + g_XHeight );
 				baseIndex[startIdx++] = c;
-				Log( "c: %d \n", c );
+				//Log( "c: %d \n", c );
 			}
 		}
 		else
@@ -594,22 +576,24 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 				baseIndex[startIdx++] = a;
 				UINT b = static_cast<UINT>( x + ( z*g_XHeight ) + g_XHeight );
 				baseIndex[startIdx++] = b;
-				Log( "a: %d | b: %d\n", a, b );
+				//Log( "a: %d | b: %d\n", a, b );
 			}
 			if ( z != g_ZHeight - 2 )
 			{
 				UINT c = static_cast<UINT>( ( x + 1 ) + ( z*g_XHeight ) + g_XHeight );
 				baseIndex[startIdx++] = c;
-				Log( "c: %d \n", c );
+				//Log( "c: %d \n", c );
 			}
 		}
 	}
-
+	
+	/*
 	//index buffer에 뭐있나?
 	for ( int i = 0; i < startIdx; ++i )
 	{
 		printf_s( "index %d: %d\n", i, baseIndex[i] );
 	}
+	*/
 
 	void* pIndices;
 	if ( FAILED( g_Mesh->LockIndexBuffer( 0, &pIndices ) ) )
