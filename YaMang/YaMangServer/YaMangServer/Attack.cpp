@@ -48,6 +48,8 @@ void Attack::OnTick()
 
 	if ( length < m_OwnerCrops->GetAttackRange() )
 	{
+		
+
 		// 공격 하세요
 		// 그냥 stop이 아니라 따로 포메이션 같은걸로 공격 모션, 맞는 모션 있어야 할듯
 		// AttackCorpsResult에 적용 예정
@@ -58,6 +60,8 @@ void Attack::OnTick()
 
 		outPacket.m_CorpsID = m_TargerCrops->GetCorpsID();
 		m_ClientManager->BroadcastPacket( &outPacket );
+
+		printf_s( "length:%f  range:%f damage:%f \n", length, m_OwnerCrops->GetAttackRange( ), m_OwnerCrops->GetAttackPower( ) );
 
 		printf_s( "Attack OnTick Attack Success \n" );
 		m_ActionStatus = ACTION_END;

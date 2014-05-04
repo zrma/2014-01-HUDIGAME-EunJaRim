@@ -10,3 +10,18 @@ DefenseFormation::DefenseFormation()
 DefenseFormation::~DefenseFormation()
 {
 }
+
+void DefenseFormation::OnBegin()
+{
+
+}
+
+void DefenseFormation::OnTick()
+{
+
+}
+
+void DefenseFormation::OnEnd()
+{
+
+}

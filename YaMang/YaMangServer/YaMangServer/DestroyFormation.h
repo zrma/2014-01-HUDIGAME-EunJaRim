@@ -6,5 +6,11 @@ class DestroyFormation:
 public:
 	DestroyFormation();
 	virtual ~DestroyFormation( );
+
+private:
+	void OnBegin();
+	void OnTick();
+	void OnEnd();
+
 };
 

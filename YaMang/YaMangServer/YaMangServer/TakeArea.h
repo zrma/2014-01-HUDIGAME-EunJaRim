@@ -6,5 +6,11 @@ class TakeArea:
 public:
 	TakeArea();
 	virtual ~TakeArea( );
+
+private:
+	void OnBegin();
+	void OnTick();
+	void OnEnd();
+
 };
 

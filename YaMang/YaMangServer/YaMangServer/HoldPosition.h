@@ -6,5 +6,11 @@ class HoldPosition:
 public:
 	HoldPosition();
 	virtual ~HoldPosition( );
+
+private:
+	void OnBegin();
+	void OnTick();
+	void OnEnd();
+
 };
 

@@ -106,9 +106,6 @@
     <ClInclude Include="Attack.h">
       <Filter>Event</Filter>
     </ClInclude>
-    <ClInclude Include="CorpsSpawn.h">
-      <Filter>Event</Filter>
-    </ClInclude>
     <ClInclude Include="DefenseFormation.h">
       <Filter>Event</Filter>
     </ClInclude>
@@ -144,6 +141,9 @@
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>리소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="GenerateCorpAction.h">
+      <Filter>Event</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -204,9 +204,6 @@
     <ClCompile Include="Attack.cpp">
       <Filter>Event</Filter>
     </ClCompile>
-    <ClCompile Include="CorpsSpawn.cpp">
-      <Filter>Event</Filter>
-    </ClCompile>
     <ClCompile Include="DefenseFormation.cpp">
       <Filter>Event</Filter>
     </ClCompile>
@@ -230,6 +227,9 @@
     </ClCompile>
     <ClCompile Include="ActionScheduler.cpp">
       <Filter>YaMang</Filter>
+    </ClCompile>
+    <ClCompile Include="GenerateCorpAction.cpp">
+      <Filter>Event</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

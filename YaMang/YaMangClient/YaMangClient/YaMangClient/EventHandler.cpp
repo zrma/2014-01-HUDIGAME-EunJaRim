@@ -88,12 +88,12 @@ void NetworkManager::HandleGameOverResult( GameOverResult& inPacket )
 		if ( inPacket.m_IsWon )
 		{
 			Log( "I'm WIN!! \n" );
-			TextManager::GetInstance( )->RegistText( 300, L"I'm WIN!!", 200, 200 );
+			TextManager::GetInstance( )->RegistText( TEXT_GAME_RESULT, L"I'm WIN!!", 200, 200 );
 		}
 		else
 		{
 			Log( "I'm Lose... \n" );
-			TextManager::GetInstance( )->RegistText( 300, L"I'm Lose... ", 200, 200 );
+			TextManager::GetInstance( )->RegistText( TEXT_GAME_RESULT, L"I'm Lose... ", 200, 200 );
 		}
 	}
 	else
@@ -276,6 +276,47 @@ void NetworkManager::HandleStopCorpsResult( StopCorpsResult& inPacket )
 			ScenePlay* scenePlay = static_cast<ScenePlay*>( SceneManager::GetInstance()->GetNowScene() );
 			scenePlay->MoveCorpsStop( corpsID );
 			Log( "CorpsStop! CorpID:%d \n", corpsID );
+		}
+		else
+		{
+			// 플레이중이 아닌데 플레이용 패킷을 받음 
+			assert( false );
+		}
+	}
+	else
+	{
+		assert( false );
+	}
+}
+
+
+
+REGISTER_HANDLER( PKT_SC_REFRESH_UI )
+{
+	RefreshUIResult recvData = static_cast<RefreshUIResult&>( pktBase );
+	NetworkManager::GetInstance( )->HandleRefreshUIResult( recvData );
+}
+
+void NetworkManager::HandleRefreshUIResult( RefreshUIResult& inPacket )
+{
+	if ( m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size ) )
+	{
+
+		
+		Scene* scene = SceneManager::GetInstance()->GetNowScene();
+		if ( typeid( ScenePlay ) == typeid( *scene ) )
+		{
+			wchar_t wsFood[100] = { 0, };
+			wsprintf( wsFood, L"FOOD : %d", inPacket.m_Food );
+			wchar_t wsCorpsNum[100] = { 0, };
+			wsprintf( wsCorpsNum, L"CorpsNum : %d", inPacket.m_CorpsNum );
+			wchar_t wsBaseNum[100] = { 0, };
+			wsprintf( wsBaseNum, L"BaseNum : %d", inPacket.m_BaseNum );
+
+			TextManager::GetInstance( )->RegistText( TEXT_FOOD, wsFood, 20, 300 );
+			TextManager::GetInstance( )->RegistText( TEXT_CORPS_NUM, wsCorpsNum, 20, 350 );
+			TextManager::GetInstance( )->RegistText( TEXT_BASE_NUM, wsBaseNum, 20, 400 );
+			Log( "Refresh UI! \n" );
 		}
 		else
 		{

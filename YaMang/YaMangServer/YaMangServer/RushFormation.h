@@ -6,5 +6,11 @@ class RushFormation:
 public:
 	RushFormation();
 	virtual ~RushFormation( );
+
+private:
+	void OnBegin();
+	void OnTick();
+	void OnEnd();
+
 };
 

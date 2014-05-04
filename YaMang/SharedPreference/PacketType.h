@@ -44,6 +44,8 @@ enum PacketTypes: short
 	PKT_CS_CORPS_ATTACK = 300,
 	PKT_SC_CORPS_ATTACK = 400,
 
+	PKT_SC_REFRESH_UI = 500,
+
 	PKT_MAX = 1024
 };
 
@@ -400,5 +402,25 @@ struct AttackCorpsResult: public PacketHeader
 	float	m_LookX;
 	float	m_LookZ;
 };
+
+
+
+struct RefreshUIResult: public PacketHeader
+{
+	RefreshUIResult( )
+	{
+		m_Size = sizeof( RefreshUIResult );
+		m_Type = PKT_SC_REFRESH_UI;
+		m_Food = -1;
+		m_CorpsNum = -1;
+		m_BaseNum = -1;
+	}
+
+	int		 m_Food;
+	int		 m_CorpsNum;
+	int		 m_BaseNum;
+
+};
+
 
 #pragma pack(pop)

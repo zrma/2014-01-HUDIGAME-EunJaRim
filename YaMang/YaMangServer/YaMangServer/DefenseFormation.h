@@ -6,5 +6,11 @@ class DefenseFormation:
 public:
 	DefenseFormation();
 	virtual ~DefenseFormation( );
+
+private:
+	void OnBegin();
+	void OnTick();
+	void OnEnd();
+
 };
 

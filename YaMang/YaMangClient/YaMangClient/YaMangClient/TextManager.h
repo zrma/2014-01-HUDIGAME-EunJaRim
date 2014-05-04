@@ -1,6 +1,16 @@
 #pragma once
 #include "MacroSet.h"
 
+enum TextType
+{
+	TEXT_NONE,
+	TEXT_FPS,
+	TEXT_GAME_RESULT,
+	TEXT_FOOD,
+	TEXT_CORPS_NUM,
+	TEXT_BASE_NUM,
+	TEXT_MAX,
+};
 class TextObject;
 class TextManager:public Singleton<TextManager>
 {

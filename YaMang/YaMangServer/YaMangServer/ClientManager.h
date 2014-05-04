@@ -48,7 +48,7 @@ public:
 
 
 	int					GenerateCorps( int playerID, UnitType type, PositionInfo position );
-	void				AddActionToScheduler( Action* addedAction, int64_t remainTime );
+	void				AddActionToScheduler( Action* addedAction, ULONGLONG remainTime );
 
 
 	/// DB에 플레이어 정보를 생성하거나 삭제하는 함수
@@ -57,10 +57,12 @@ public:
 
 	void				FlushClientSend();
 
+
+
+
 	void				PrintClientList(); // 테스트용 함수
 
 	Corps*				GetCorpsByCorpsID( int corpsID );
-
 
 private:
 	void				CreatePlayerDone( DatabaseJobContext* dbJob );

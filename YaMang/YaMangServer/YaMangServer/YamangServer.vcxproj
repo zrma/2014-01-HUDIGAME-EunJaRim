@@ -97,13 +97,13 @@
     <ClInclude Include="ClientSession.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="Corps.h" />
-    <ClInclude Include="CorpsSpawn.h" />
     <ClInclude Include="DatabaseJobContext.h" />
     <ClInclude Include="DatabaseJobManager.h" />
     <ClInclude Include="DbHelper.h" />
     <ClInclude Include="DefenseFormation.h" />
     <ClInclude Include="DestroyFormation.h" />
     <ClInclude Include="Exception.h" />
+    <ClInclude Include="GenerateCorpAction.h" />
     <ClInclude Include="Guard.h" />
     <ClInclude Include="HoldPosition.h" />
     <ClInclude Include="Knight.h" />
@@ -134,7 +134,6 @@
     <ClCompile Include="ClientManager.cpp" />
     <ClCompile Include="ClientSession.cpp" />
     <ClCompile Include="Corps.cpp" />
-    <ClCompile Include="CorpsSpawn.cpp" />
     <ClCompile Include="DatabaseJobContext.cpp" />
     <ClCompile Include="DatabaseJobManager.cpp" />
     <ClCompile Include="DbHelper.cpp" />
@@ -142,6 +141,7 @@
     <ClCompile Include="DestroyFormation.cpp" />
     <ClCompile Include="EventHandler.cpp" />
     <ClCompile Include="Exception.cpp" />
+    <ClCompile Include="GenerateCorpAction.cpp" />
     <ClCompile Include="Guard.cpp" />
     <ClCompile Include="HoldPosition.cpp" />
     <ClCompile Include="Knight.cpp" />

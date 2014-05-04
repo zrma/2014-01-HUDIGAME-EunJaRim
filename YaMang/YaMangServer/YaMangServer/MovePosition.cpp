@@ -16,6 +16,8 @@ MovePosition::~MovePosition()
 
 void MovePosition::OnBegin()
 {
+	// 이걸로 dTime을 구하자
+	m_StartedTime = GetTickCount64( );
 
 	MoveCorpsResult outPacket;
 	outPacket.m_CorpsID = m_OwnerCrops->GetCorpsID();

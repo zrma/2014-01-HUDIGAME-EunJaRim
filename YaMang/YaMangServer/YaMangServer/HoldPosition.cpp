@@ -10,3 +10,18 @@ HoldPosition::HoldPosition()
 HoldPosition::~HoldPosition()
 {
 }
+
+void HoldPosition::OnBegin()
+{
+
+}
+
+void HoldPosition::OnTick()
+{
+
+}
+
+void HoldPosition::OnEnd()
+{
+
+}

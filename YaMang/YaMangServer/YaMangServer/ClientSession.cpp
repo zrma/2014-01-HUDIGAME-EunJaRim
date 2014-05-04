@@ -5,6 +5,7 @@
 #include "DatabaseJobContext.h"
 #include "DatabaseJobManager.h"
 #include "RoomManager.h"
+#include "GenerateCorpAction.h"
 
 // EasyServer.cpp 에서 클라이언트 매니저에서 CreateClient 한 후에
 // 소켓 객체로부터 getpeername()를 이용해 주소 값을 뽑아 와서 OnConnect() 호출
@@ -277,6 +278,16 @@ void ClientSession::DatabaseJobDone( DatabaseJobContext* result )
 		printf_s( "[DEBUG][%d] Login DONE! \n", login->m_PlayerId );
 		LoginDone( login->m_PlayerId, login->m_PlayerName );
 
+		// DEBUG!!!!
+		// 로비에서도 게임이 실행되도록 함 나중에 지워야함
+		GameStart();
+		GenerateCorpAction * action = new GenerateCorpAction();
+		action->SetClientManager( m_ClientManager );
+		action->SetPlayerID( m_PlayerID );
+		action->SetClientSession( this );
+
+		m_ClientManager->AddActionToScheduler( action, 10 );
+
 	}
 	else if ( typeInfo == typeid( UpdatePlayerDataContext ) )
 	{
@@ -310,6 +321,54 @@ void ClientSession::LoginDone( int pid, const char* name )
 	SendRequest( &outPacket );
 
 	m_Logon = true;
+}
+
+
+void ClientSession::GameStart()
+{
+	m_GameStarted = true;
+	CalculateRegenTime();
+}
+
+void ClientSession::AddCorpsNum()
+{
+	++m_CorpsNum;
+	CalculateRegenTime( );
+}
+
+void ClientSession::SubCorpsNum()
+{
+	--m_CorpsNum;
+	CalculateRegenTime( );
+}
+
+void ClientSession::AddBaseNum()
+{
+	++m_BaseNum;
+	CalculateRegenTime( );
+}
+
+void ClientSession::SubBaseNum()
+{
+	--m_BaseNum;
+	CalculateRegenTime( );
+}
+
+void ClientSession::CalculateRegenTime()
+{
+	// 하드 코딩~~ 베이스 하나당 식량 증가량과 기본값
+	m_Food = (m_BaseNum * 100) + 100;
+	m_CorpsRegenTime = static_cast<float>(m_CorpsNum / m_Food) * 1000 + 30000; // 공식을 만들어 봅시다.
+
+	RefreshUIResult outPacket;
+	outPacket.m_Food = m_Food;
+	outPacket.m_CorpsNum = m_CorpsNum;
+	outPacket.m_BaseNum = m_BaseNum;
+
+	if ( !DirectSend( &outPacket ) )
+	{
+		// Disconnect();
+	}
 }
 
 

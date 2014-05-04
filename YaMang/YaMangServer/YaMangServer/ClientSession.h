@@ -75,6 +75,27 @@ public:
 	void	HandleAttackCorpsRequest( AttackCorpsRequest& inPacket );
 
 
+	//////////////////////////////////////////////////////////////////////////
+	// 게임 컨텐츠 관련 메소드
+	//////////////////////////////////////////////////////////////////////////
+	bool	IsGameStarted() const { return m_GameStarted; }
+
+	void	GameStart();
+
+	int		GetFood() const { return m_Food; }
+
+	int		GetCorpsNum( ) const { return m_CorpsNum; }
+	void	AddCorpsNum( );
+	void	SubCorpsNum( );
+
+	int		GetBaseNum( ) const { return m_BaseNum; }
+	void	AddBaseNum( );
+	void	SubBaseNum( );
+
+	float	GetCorpsRegenTime() { return m_CorpsRegenTime; }
+
+private:
+	void	CalculateRegenTime();
 
 private:
 
@@ -104,6 +125,17 @@ private:
 	int				m_OverlappedRequested;
 
 	ClientManager*	m_ClientManager = nullptr;
+
+
+
+	//////////////////////////////////////////////////////////////////////////
+	// 게임 컨텐츠 관련 데이터
+	//////////////////////////////////////////////////////////////////////////
+	int				m_Food = 100;
+	int				m_CorpsNum = 0;
+	int				m_BaseNum = 0;
+	float			m_CorpsRegenTime = 10000.0f;
+	bool			m_GameStarted = false;
 
 	friend class ClientManager;
 };

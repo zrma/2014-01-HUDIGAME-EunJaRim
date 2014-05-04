@@ -73,6 +73,11 @@ void ActionScheduler::DoScheduledAction()
 			// 이 액션의 주기적인 실행은 누가하지??;;;
 			headAction->DoAction();
 		}
+		else
+		{
+			// 콥스 없이 움직이는 액션들 generateCorps등등...
+			headAction->DoAction( );
+		}
 
 	}
 }

@@ -59,6 +59,11 @@ void ClientManager::GameStart()
 		if ( ReadMapFile( mapFilePath.c_str( ) ) )
 		{
 			m_IsGameStart = true;
+			for ( auto& it : m_ClientList )
+			{
+				ClientSession* client = it.second;
+				client->GameStart();
+			}
 		}
 		else
 		{
@@ -191,6 +196,8 @@ void ClientManager::OnPeriodWork()
 
 	/// 처리 완료된 DB 작업들 각각의 Client로 dispatch
 	DispatchDatabaseJobResults();
+
+
 }
 
 void ClientManager::CollectGarbageSessions()
@@ -229,6 +236,7 @@ void ClientManager::CollectGarbageSessions()
 // 클라이언트 세션 별로 주기적으로 할 일
 void ClientManager::ClientPeriodWork()
 {
+
 	// 실행이 안된 룸막기... 근데 Tick이 없어질텐데...
 	if ( !m_IsGameStart )
 	{
@@ -469,7 +477,7 @@ Corps* ClientManager::GetCorpsByCorpsID( int corpsID )
 	return nullptr;
 }
 
-void ClientManager::AddActionToScheduler( Action* addedAction, int64_t remainTime )
+void ClientManager::AddActionToScheduler( Action* addedAction, ULONGLONG remainTime )
 {
 	m_ActionScheduler->AddActionToScheduler( addedAction, remainTime );
 }

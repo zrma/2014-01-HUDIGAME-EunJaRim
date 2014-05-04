@@ -18,5 +18,7 @@ private:
 
 private:
 	PositionInfo m_Destination;
+	ULONGLONG m_StartedTime;
+
 };
 
