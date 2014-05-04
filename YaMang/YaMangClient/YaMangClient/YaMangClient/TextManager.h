@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "MacroSet.h"
 
 enum TextType
@@ -11,6 +11,7 @@ enum TextType
 	TEXT_BASE_NUM,
 	TEXT_MAX,
 };
+
 class TextObject;
 class TextManager:public Singleton<TextManager>
 {
@@ -18,8 +19,8 @@ public:
 	TextManager();
 	~TextManager();
 
-	void	RegistText( UINT key, LPCWSTR text, float left, float top, int RGB_R = 255, int RGB_G = 255, int RGB_B = 255, float right = 0, float bottom = 0 );
-	void	DeleteText( UINT key );
+	void	RegistText( TextType key, LPCWSTR text, float left, float top, int RGB_R = 255, int RGB_G = 255, int RGB_B = 255, float right = 0, float bottom = 0 );
+	void	DeleteText( TextType key );
 
 	void	DrawTexts() const;
 

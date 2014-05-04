@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "TextManager.h"
 #include "TextObject.h"
 
@@ -21,7 +21,7 @@ TextManager::~TextManager()
 	}
 }
 
-void TextManager::RegistText( UINT key, LPCWSTR text, float left, float top, int RGB_R, int RGB_G, int RGB_B, float right, float bottom )
+void TextManager::RegistText( TextType key, LPCWSTR text, float left, float top, int RGB_R, int RGB_G, int RGB_B, float right, float bottom )
 {
 	TextObject* textOBJ = m_TextList[key];
 	textOBJ->SetText( text );
@@ -35,7 +35,7 @@ void TextManager::RegistText( UINT key, LPCWSTR text, float left, float top, int
 
 }
 
-void TextManager::DeleteText( UINT key )
+void TextManager::DeleteText( TextType key )
 {
 	TextObject* textOBJ = m_TextList[key];
 	textOBJ->SetText( L"" );

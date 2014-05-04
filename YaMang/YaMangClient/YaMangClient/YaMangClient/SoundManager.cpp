@@ -5,22 +5,15 @@
 
 SoundManager::SoundManager()
 {
-}
+	ZeroMemory( &m_TextList, sizeof( m_TextList ) );
 
-
-SoundManager::~SoundManager()
-{
-}
-
-void SoundManager::Initialize()
-{
 	FMOD_RESULT result;
 	FMOD::Studio::System::create( &m_System );
 	result = m_System->initialize( 32, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, NULL );
 	if ( result )
 	{
 		Log( "System Initialize Fail \n" );
-		MessageBox( MainWindow::GetInstance( )->Window( ), L"System Initialize Fail", L"Sound Error", MB_ICONERROR );
+		MessageBox( MainWindow::GetInstance()->Window(), L"System Initialize Fail", L"Sound Error", MB_ICONERROR );
 	}
 
 	LoadBank( "SoundFiles/Master Bank.bank" );
@@ -29,7 +22,21 @@ void SoundManager::Initialize()
 	LoadBank( "SoundFiles/loop.bank" );
 	LoadBank( "SoundFiles/sfx.bank" );
 
+	//////////////////////////////////////////////////////////////////////////
+
+
+	m_TextList[SOUND_SYSTEM_MOUSE_CLICK] = GetEventInstance( "event:/sfx/generate_corps" );
+	m_TextList[SOUND_SCENE_PLAY_BGM1] = GetEventInstance( "event:/loop/scene_play_01" );
+	m_TextList[SOUND_CORPS_GENERATE] = GetEventInstance( "event:/sfx/generate_corps" );
+	m_TextList[SOUND_CORPS_MOVE] = GetEventInstance( "event:/sfx/generate_corps" );
+
 }
+
+
+SoundManager::~SoundManager()
+{
+}
+
 
 void SoundManager::LoadBank( const char* fileName )
 {
@@ -88,4 +95,14 @@ void SoundManager::test2()
 	FMOD::Studio::EventInstance* eventInstance = GetEventInstance( "event:/sfx/generate_corps" );
 	eventInstance->start();
 	m_System->update();
+}
+
+bool SoundManager::PlaySound( SoundType soundType )
+{
+	return true;
+}
+
+bool SoundManager::StopSound( SoundType soundType )
+{
+	return true;
 }
