@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "GenerateCorpAction.h"
 #include "EnumSet.h"
 #include "SharedDefine.h"
@@ -56,7 +56,7 @@ void GenerateCorpAction::OnTick( )
 			break;
 	}
 
-	// ÇÏµå ÄÚµùÁß... ·£´ıÀ¸·Î ³ª¿Í¶ó1
+	// í•˜ë“œ ì½”ë”©ì¤‘... ëœë¤ìœ¼ë¡œ ë‚˜ì™€ë¼1
 	float nowX = static_cast<float>( rand() % 30 );
 	float nowZ = static_cast<float>( rand() % 30 );
 	float lookX = 0.0f;
