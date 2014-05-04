@@ -4,52 +4,50 @@
 
 TextManager::TextManager()
 {
+	for ( auto& it : m_TextList )
+	{
+		TextObject* textOBJ = new TextObject( L"", -9999.0f, -9999.0f, 255, 255, 255, 0, 0 );
+		it = textOBJ;
+	}
 }
 
 
 TextManager::~TextManager()
 {
-	for ( auto it : m_TextList )
+	for ( auto& it : m_TextList )
 	{
-		TextObject* toBeDelete = it.second;
-		delete toBeDelete;
+		TextObject* toBeDelete = it;
+		SafeDelete( toBeDelete );
 	}
-	m_TextList.clear();
 }
 
 void TextManager::RegistText( UINT key, LPCWSTR text, float left, float top, int RGB_R, int RGB_G, int RGB_B, float right, float bottom )
 {
-	auto it = m_TextList.find( key );
-	if ( it == m_TextList.end() )
-	{
-		TextObject* textOBJ = new TextObject( text, left, top, RGB_R, RGB_G, RGB_B, right, bottom );
-		m_TextList.insert( TextList::value_type( key, textOBJ ) );
-	}
-	else
-	{
-		TextObject* textOBJ = it->second;
-		textOBJ->SetText( text );
-		textOBJ->SetLeft( left );
-		textOBJ->SetTop( top );
-	}
+	TextObject* textOBJ = m_TextList[key];
+	textOBJ->SetText( text );
+	textOBJ->SetLeft( left );
+	textOBJ->SetTop( top );
+	textOBJ->SetColorR( RGB_R );
+	textOBJ->SetColorG( RGB_G );
+	textOBJ->SetColorB( RGB_B );
+	textOBJ->SetRight( right );
+	textOBJ->SetBottom( bottom );
+
 }
 
 void TextManager::DeleteText( UINT key )
 {
-	auto it = m_TextList.find( key );
-	if ( it != m_TextList.end() )
-	{
-		TextObject* toBeDelete = it->second;
-		delete toBeDelete;
-		m_TextList.erase( key );
-	}
+	TextObject* textOBJ = m_TextList[key];
+	textOBJ->SetText( L"" );
+	textOBJ->SetLeft( -9999.0f );
+	textOBJ->SetTop( -9999.0f );
 }
 
 void TextManager::DrawTexts() const
 {
-	for ( auto it : m_TextList )
+	for ( auto& it : m_TextList )
 	{
-		TextObject* textOBJ = it.second;
+		TextObject* textOBJ = it;
 		textOBJ->DrawText();
 	}
 }

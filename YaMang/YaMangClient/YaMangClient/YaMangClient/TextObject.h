@@ -12,6 +12,12 @@ public:
 	void	SetText( LPCWSTR text ) { m_Text.clear(); m_Text.append( text ); }
 	void	SetLeft( float left ) { m_Left = left; }
 	void	SetTop( float top ) { m_Top = top; }
+	void	SetRight( float right ) { m_Right = right; }
+	void	SetBottom( float bottom ) { m_Bottom = bottom; }
+
+	void	SetColorR( int red ) { m_RGB_R = red; }
+	void	SetColorG( int green ) { m_RGB_G = green; }
+	void	SetColorB( int blue ) { m_RGB_B = blue; }
 
 private:
 	std::wstring	m_Text;
