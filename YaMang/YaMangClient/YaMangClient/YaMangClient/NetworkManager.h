@@ -26,7 +26,7 @@ public:
 	void	HandleMoveCorpsResult( MoveCorpsResult& inPacket );
 	void	HandleStopCorpsResult( StopCorpsResult& inPacket );
 	void	HandleRefreshUIResult( RefreshUIResult& inPacket );
-
+	void	HandleAttackCorpsResult( AttackCorpsResult& inPacket );
 
 	//////////////////////////////////////////////////////////////////////////
 	// 리퀘스트 패킷 보내기

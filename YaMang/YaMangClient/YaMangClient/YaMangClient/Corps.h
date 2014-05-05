@@ -19,6 +19,7 @@ public:
 
 	int		GetCorpsID() const { return m_CorpsID; }
 	int		GetCorpsHP() const { return m_UnitList.size(); }
+	void	SetCorpsHP( int unitNum );
 
 	void			SetFormation( FormationType formation ) { m_TargetFormation = formation; }
 	D3DXVECTOR3		GetFormation( int unitId ) const;

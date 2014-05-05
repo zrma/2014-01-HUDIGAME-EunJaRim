@@ -291,6 +291,45 @@ void NetworkManager::HandleStopCorpsResult( StopCorpsResult& inPacket )
 
 
 
+REGISTER_HANDLER( PKT_SC_CORPS_ATTACK )
+{
+	AttackCorpsResult recvData = static_cast<AttackCorpsResult&>( pktBase );
+	NetworkManager::GetInstance()->HandleAttackCorpsResult( recvData );
+}
+
+void NetworkManager::HandleAttackCorpsResult( AttackCorpsResult& inPacket )
+{
+	if ( m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size ) )
+	{
+
+		int attackingCorpsID = inPacket.m_AttackingCorpsID;
+		int targetCorpsID = inPacket.m_TargetCorpsID;
+		int unitNum = inPacket.m_TargetUnitNum;
+
+		Scene* scene = SceneManager::GetInstance()->GetNowScene();
+		if ( typeid( ScenePlay ) == typeid( *scene ) )
+		{
+			ScenePlay* scenePlay = static_cast<ScenePlay*>( SceneManager::GetInstance()->GetNowScene() );
+			scenePlay->MoveCorpsStop( attackingCorpsID );
+			scenePlay->MoveCorpsStop( targetCorpsID );
+			scenePlay->SetCorpsHP( targetCorpsID, unitNum );
+
+			SoundManager::GetInstance( )->PlaySound( SOUND_CORPS_ATTACK_SWORD );
+			Log( "CorpsAttack! [%d]->[%d] \n", attackingCorpsID, targetCorpsID );
+		}
+		else
+		{
+			// 플레이중이 아닌데 플레이용 패킷을 받음 
+			assert( false );
+		}
+	}
+	else
+	{
+		assert( false );
+	}
+}
+
+
 REGISTER_HANDLER( PKT_SC_REFRESH_UI )
 {
 	RefreshUIResult recvData = static_cast<RefreshUIResult&>( pktBase );

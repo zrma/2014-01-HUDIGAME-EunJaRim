@@ -147,3 +147,21 @@ void Corps::LookForward()
 		iter->LookForward();
 	}
 }
+
+void Corps::SetCorpsHP( int unitNum )
+{
+	int nowUnitNum = m_UnitList.size();
+
+	while ( nowUnitNum > unitNum )
+	{
+		if ( nowUnitNum < 1)
+		{
+			return;
+		}
+		Unit* unit = m_UnitList.back( );
+		//unit->죽는모션?
+		m_UnitList.pop_back();
+
+		nowUnitNum = m_UnitList.size( );
+	}
+}

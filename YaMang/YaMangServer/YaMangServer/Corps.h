@@ -21,11 +21,12 @@ public:
 	void					ChangeFormation( FormationType formation ) { m_Formation = formation; }
 	void					AddDamage( float damage );
 
-	
+	float					GetHP() const { return m_HP; }
 	float					GetSpeed( ) const { return m_MoveSpeed + m_MoveSpeedBonus; }
 	float					GetAttackRange( ) const { return m_AttackRange + m_AttackRangeBonus; }
 	float					GetAttackPower( ) const { return m_AttackPower + m_AttackPowerBonus; }
 	float					GetDefense( ) const { return m_Defense + m_DefenseBonus; }
+	ULONGLONG				GetAttackDelay() const { return m_AttackDelay - m_AttackDelayBonus; }
 	bool					IsDead() const { return m_IsDead; }
 
 	void					DoNextAction( Action* addedAction, ULONGLONG remainTime );
@@ -58,6 +59,9 @@ protected:
 
 	float					m_Defense = 0.0f;
 	float					m_DefenseBonus = 0.0f;
+
+	ULONGLONG				m_AttackDelay = 0;
+	ULONGLONG				m_AttackDelayBonus = 0;
 
 private:
 	ActionScheduler*	m_ActionScheduler = nullptr;

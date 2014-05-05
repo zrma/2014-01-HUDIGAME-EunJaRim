@@ -9,6 +9,7 @@ Pike::Pike( int playerID, int corpsID, PositionInfo position, ActionScheduler* a
 	m_AttackRange = 3.0f;
 	m_AttackPower = 3.0f;
 	m_Defense = 3.0f;
+	m_AttackDelay = 3000;
 }
 
 Pike::~Pike()

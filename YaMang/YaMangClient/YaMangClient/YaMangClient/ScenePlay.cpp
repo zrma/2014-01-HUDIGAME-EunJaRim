@@ -161,3 +161,15 @@ void ScenePlay::MoveCorpsStop( int corpsID )
 	}
 }
 
+void ScenePlay::SetCorpsHP( int corpsID, int unitNum )
+{
+	if ( m_CorpsList.find( corpsID ) != m_CorpsList.end() )
+	{
+		if ( m_CorpsList[corpsID] == nullptr )
+		{
+			assert( false );
+		}
+		m_CorpsList[corpsID]->SetCorpsHP( unitNum );
+	}
+}
+

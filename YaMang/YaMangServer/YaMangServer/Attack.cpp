@@ -17,7 +17,33 @@ void Attack::OnBegin()
 {
 	printf_s( "Attack OnBegin \n" );
 	m_ActionStatus = ACTION_TICK;
-	m_OwnerCrops->DoNextAction( this, 0 );
+
+
+	// length를 구하기 위한 중복이지만 한번정도는 괜찮겠지...
+	PositionInfo myCorpsPositionInfo = m_OwnerCrops->GetPositionInfo();
+	PositionInfo targetPositionInfo = m_TargerCrops->GetPositionInfo();
+
+	float nowX = myCorpsPositionInfo.m_EyePoint.x;
+	float nowZ = myCorpsPositionInfo.m_EyePoint.z;
+	float targetX = targetPositionInfo.m_EyePoint.x;
+	float targetZ = targetPositionInfo.m_EyePoint.z;
+
+	D3DXVECTOR2 vector;
+	vector.x = targetX - nowX;
+	vector.y = targetZ - nowZ;
+
+	float length = D3DXVec2Length( &vector );
+
+	// 공격명령이 바로 앞에서 지시될때와 이동해야할 때를 구분 
+	if ( length < m_OwnerCrops->GetAttackRange() )
+	{
+		m_OwnerCrops->DoNextAction( this, m_OwnerCrops->GetAttackDelay( ) );
+	}
+	else
+	{
+		m_OwnerCrops->DoNextAction( this, 0 );
+	}
+	
 }
 
 void Attack::OnTick()
@@ -51,21 +77,39 @@ void Attack::OnTick()
 		
 
 		// 공격 하세요
-		// 그냥 stop이 아니라 따로 포메이션 같은걸로 공격 모션, 맞는 모션 있어야 할듯
-		// AttackCorpsResult에 적용 예정
+		// attack result packet 보내기
 		m_TargerCrops->AddDamage( m_OwnerCrops->GetAttackPower( ) );
-		StopCorpsResult outPacket;
-		outPacket.m_CorpsID = m_OwnerCrops->GetCorpsID( );
+
+		AttackCorpsResult outPacket;
+		outPacket.m_AttackingCorpsID = m_OwnerCrops->GetCorpsID( );
+		outPacket.m_TargetCorpsID = m_TargerCrops->GetCorpsID();
+
+		float targetHP = m_TargerCrops->GetHP() + 9;
+		int targetUnitNum = static_cast<int>( targetHP / 10 );
+		outPacket.m_TargetUnitNum = targetUnitNum;
+
+
 		m_ClientManager->BroadcastPacket( &outPacket );
 
-		outPacket.m_CorpsID = m_TargerCrops->GetCorpsID();
-		m_ClientManager->BroadcastPacket( &outPacket );
-
-		printf_s( "length:%f  range:%f damage:%f \n", length, m_OwnerCrops->GetAttackRange( ), m_OwnerCrops->GetAttackPower( ) );
-
+		printf_s( "[Attack] length:%f  range:%f damage:%f \n", length, m_OwnerCrops->GetAttackRange( ), m_OwnerCrops->GetAttackPower( ) );
 		printf_s( "Attack OnTick Attack Success \n" );
-		m_ActionStatus = ACTION_END;
-		m_OwnerCrops->DoNextAction( this, 0 );
+
+
+		if ( m_OwnerCrops->IsDead() || m_TargerCrops->IsDead() )
+		{
+			printf_s( "Dead! \n" );
+			m_ActionStatus = ACTION_END;
+			m_OwnerCrops->DoNextAction( this, 0 );
+		}
+		else
+		{
+			printf_s( "Ready Re Attack!! \n" );
+			m_ActionStatus = ACTION_TICK;
+			m_OwnerCrops->DoNextAction( this, m_OwnerCrops->GetAttackDelay() );
+		}
+		
+
+
 	}
 	else
 	{

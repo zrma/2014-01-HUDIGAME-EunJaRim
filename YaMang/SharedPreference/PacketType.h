@@ -379,28 +379,21 @@ struct AttackCorpsRequest: public PacketHeader
 	int		m_TargetCorpsID;
 };
 
-// 필요 하게 될까?
+
 struct AttackCorpsResult: public PacketHeader
 {
 	AttackCorpsResult( )
 	{
 		m_Size = sizeof( AttackCorpsResult );
 		m_Type = PKT_SC_CORPS_ATTACK;
-		m_CorpsID = -1;
-		m_Speed = 0;
-		m_TargetX = NOT_A_NUMBER_FLOAT;
-		m_TargetZ = NOT_A_NUMBER_FLOAT;
-		m_LookX = NOT_A_NUMBER_FLOAT;
-		m_LookZ = NOT_A_NUMBER_FLOAT;
+		m_AttackingCorpsID = -1;
+		m_TargetCorpsID = -1;
+		m_TargetUnitNum = -1;
 	}
 
-	int		 m_CorpsID;
-	float	 m_Speed;
-
-	float	m_TargetX;
-	float	m_TargetZ;
-	float	m_LookX;
-	float	m_LookZ;
+	int		m_AttackingCorpsID;
+	int		m_TargetCorpsID;
+	int		m_TargetUnitNum;
 };
 
 
