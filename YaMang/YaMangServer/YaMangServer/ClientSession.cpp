@@ -281,12 +281,12 @@ void ClientSession::DatabaseJobDone( DatabaseJobContext* result )
 		// DEBUG!!!!
 		// 로비에서도 게임이 실행되도록 함 나중에 지워야함
 		GameStart();
-		GenerateCorpAction * action = new GenerateCorpAction();
+		/*GenerateCorpAction * action = new GenerateCorpAction();
 		action->SetClientManager( m_ClientManager );
 		action->SetPlayerID( m_PlayerID );
 		action->SetClientSession( this );
 
-		m_ClientManager->AddActionToScheduler( action, 0 );
+		m_ClientManager->AddActionToScheduler( action, 0 );*/
 
 	}
 	else if ( typeInfo == typeid( UpdatePlayerDataContext ) )

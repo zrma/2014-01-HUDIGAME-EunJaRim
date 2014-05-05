@@ -2,6 +2,7 @@
 #include <d3dx9math.h>
 
 class Interface3D;
+extern const float NOT_A_NUMBER_FLOAT;
 
 class Collision
 {
@@ -16,13 +17,20 @@ public:
 	void	SetCollide( bool isCollide = true ) { m_IsCollide = isCollide; }
 
 	D3DXVECTOR3		GetPosition() const;
+	D3DXVECTOR3		GetReverseVector() { return m_ReverseVector; }
 
-	bool	IsCollideWith( Collision& collision ) const;
+	Interface3D*	GetOwner() const { return m_Owner; }
+	Interface3D*	GetCompetitor() const { return m_Competitor; }
+
+	bool	IsCollideWith( Collision& collision );
 	
 private:
 	Collision();
 
+	D3DXVECTOR3		m_ReverseVector = { NOT_A_NUMBER_FLOAT, NOT_A_NUMBER_FLOAT, NOT_A_NUMBER_FLOAT };
+
 	bool			m_IsCollide = false;
 	float			m_Radius = 0;
 	Interface3D*	m_Owner = nullptr;
+	Interface3D*	m_Competitor = nullptr;
 };

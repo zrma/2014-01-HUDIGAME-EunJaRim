@@ -12,6 +12,7 @@
 #include "MouseRender.h"
 #include "TextManager.h"
 
+#include "CollisionManager.h"
 
 GameManager::GameManager()
 {
@@ -101,6 +102,9 @@ void GameManager::Destroy() const
 	//마우스 렌더 객체 씬이 상속하도록 바꿈
 // 	MouseRender::GetInstance()->CleanupCursor();
 // 	MouseRender::Release();
+
+	CollisionManager::GetInstance()->ClearList();
+	CollisionManager::Release();
 
 	// 씬 해제
 	SceneManager::GetInstance()->Destroy();

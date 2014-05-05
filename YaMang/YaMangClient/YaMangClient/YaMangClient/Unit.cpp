@@ -15,12 +15,13 @@ Unit::Unit( Corps* owner, UINT unitId )
 {
 	ClearAct();
 
-	m_Collision = new Collision( this, 1.0f );
+	m_Collision = new Collision( this, 0.5f );
 	CollisionManager::GetInstance()->AddCollision( m_Collision );
 }
 
 Unit::~Unit()
 {
+	SafeDelete( m_Collision );
 }
 
 void Unit::Update()
@@ -102,13 +103,28 @@ void Unit::RotateToDestination()
 
 void Unit::MoveToDestination()
 {
+	float time = static_cast<float>( Timer::GetInstance()->GetElapsedTime() );
+
 	CollisionManager::GetInstance()->CheckCollision( m_Collision );
 	if ( m_Collision->IsCollide() )
 	{
-		Log( "충돌 중!!!! \n" );
+		D3DXVECTOR3 rev = m_Collision->GetReverseVector();
+		D3DXVECTOR3 view = m_LookAtPoint - m_EyePoint;
+		D3DXVec3Normalize( &view, &view );
+		rev.y = view.y = 0;
+		rev = rev + view;
+		
+		m_Collision->GetCompetitor()->SetEyePoint( m_Collision->GetCompetitor()->GetEyePoint() - rev * time / 1000 );
+		m_Collision->GetCompetitor()->SetLookAtPoint( m_Collision->GetCompetitor()->GetLookAtPoint() - rev * time / 1000 );
+
+		// Log( "충돌 중!!!! %f %f %f \n", rev.x, rev.y, rev.z );
+
+		m_EyePoint += rev * time / 1000;
+		m_LookAtPoint += rev * time / 1000;
+
+		return;
 	}
 
-	float time = static_cast<float>( Timer::GetInstance()->GetElapsedTime() );
 	if ( m_TargetPoint.x - m_EyePoint.x > 0.5f || m_TargetPoint.x - m_EyePoint.x < -0.5f )
 	{
 		m_EyePoint.x += ( m_TargetPoint.x - m_EyePoint.x ) * time / 1000;

@@ -48,7 +48,6 @@ void CollisionManager::CheckCollision( Collision* collision ) const
 
 		if ( collision->IsCollideWith( *iter ) )
 		{
-			collision->SetCollide();
 			break;
 		}
 	}

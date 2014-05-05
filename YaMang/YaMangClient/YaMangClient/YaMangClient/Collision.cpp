@@ -6,7 +6,7 @@ Collision::~Collision()
 {
 }
 
-bool Collision::IsCollideWith( Collision& collision ) const
+bool Collision::IsCollideWith( Collision& collision )
 {
 	if ( nullptr == m_Owner )
 	{
@@ -23,10 +23,14 @@ bool Collision::IsCollideWith( Collision& collision ) const
 
 	if ( D3DXVec3LengthSq( &distance ) < radiusSq )
 	{
-		return true;
+		m_ReverseVector = GetPosition() - collision.GetPosition();
+		D3DXVec3Normalize( &m_ReverseVector, &m_ReverseVector );
+
+		m_Competitor = collision.GetOwner();
+		return m_IsCollide = true;
 	}
 
-	return false;
+	return m_IsCollide = false;
 }
 
 D3DXVECTOR3 Collision::GetPosition() const
