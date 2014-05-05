@@ -174,3 +174,16 @@ void ScenePlay::SetCorpsHP( int corpsID, int unitNum )
 	}
 }
 
+UnitType ScenePlay::GetUnitTypeByID( int corpsID )
+{
+	if ( m_CorpsList.find( corpsID ) != m_CorpsList.end() )
+	{
+		if ( m_CorpsList[corpsID] == nullptr )
+		{
+			assert( false );
+		}
+		return m_CorpsList[corpsID]->GetUnitType();
+	}
+	return UnitType::UNIT_NONE;
+}
+

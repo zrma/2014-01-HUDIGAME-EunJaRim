@@ -45,6 +45,8 @@ Corps::~Corps()
 
 void Corps::Create( UINT num, UnitType unitType )
 {
+	m_UnitType = unitType;
+
 	m_UnitList.reserve( num );
 	Unit* unit = nullptr;
 
@@ -163,7 +165,7 @@ void Corps::SetCorpsHP( int unitNum )
 		Unit* unit = m_UnitList.back( );
 		//unit->죽는모션?
 		m_UnitList.pop_back();
-		// SafeDelete( unit ); 하지만 콜루전매니저에서 죽지...
+		SafeDelete( unit ); // 하지만 좀비매니저로 보내야겠지...
 		nowUnitNum = m_UnitList.size( );
 	}
 }
