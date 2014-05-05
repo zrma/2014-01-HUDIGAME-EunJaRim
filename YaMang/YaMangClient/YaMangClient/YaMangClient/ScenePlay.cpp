@@ -76,6 +76,7 @@ void ScenePlay::Destroy()
 		auto& toBeDelete = iter.second;
 		SafeDelete( toBeDelete );
 	}
+	m_CorpsList.clear();
 
 	delete(m_MouseCursor);
 }

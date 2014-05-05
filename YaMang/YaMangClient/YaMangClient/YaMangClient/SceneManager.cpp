@@ -34,6 +34,7 @@ void SceneManager::Destroy()
 			delete toBeDelete;
 		}
 	}
+	m_SceneList.fill( nullptr );
 }
 
 void SceneManager::ChangeScene( SceneType scene )

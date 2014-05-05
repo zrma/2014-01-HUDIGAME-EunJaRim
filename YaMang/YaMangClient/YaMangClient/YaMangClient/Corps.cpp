@@ -34,11 +34,13 @@ Corps::~Corps()
 	{
 		SafeDelete( toBeDelete );
 	}
+	m_UnitList.clear();
 
 	for ( auto& toBeDelete : m_FormationArray )
 	{
 		SafeDelete( toBeDelete );
 	}
+	m_FormationArray.fill( nullptr );
 }
 
 void Corps::Create( UINT num, UnitType unitType )

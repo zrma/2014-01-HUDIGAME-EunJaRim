@@ -5,8 +5,8 @@
 
 SoundManager::SoundManager()
 {
-	ZeroMemory( &m_TextList, sizeof( m_TextList ) );
-
+	m_TextList.fill( nullptr );
+	
 	FMOD_RESULT result;
 	FMOD::Studio::System::create( &m_System );
 	result = m_System->initialize( 32, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, NULL );

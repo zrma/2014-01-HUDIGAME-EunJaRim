@@ -4,6 +4,8 @@
 
 TextManager::TextManager()
 {
+	m_TextList.fill( nullptr );
+
 	for ( auto& it : m_TextList )
 	{
 		TextObject* textOBJ = new TextObject( L"", -9999.0f, -9999.0f, 255, 255, 255, 0, 0 );
@@ -19,6 +21,7 @@ TextManager::~TextManager()
 		TextObject* toBeDelete = it;
 		SafeDelete( toBeDelete );
 	}
+	m_TextList.fill( nullptr );
 }
 
 void TextManager::RegistText( TextType key, LPCWSTR text, float left, float top, int RGB_R, int RGB_G, int RGB_B, float right, float bottom )

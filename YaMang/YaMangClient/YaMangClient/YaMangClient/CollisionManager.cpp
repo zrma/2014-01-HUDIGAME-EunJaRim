@@ -9,6 +9,12 @@ CollisionManager::CollisionManager()
 
 CollisionManager::~CollisionManager()
 {
+	for ( auto iter : m_CollisionList )
+	{
+		auto toBeDelete = iter;
+		SafeDelete( toBeDelete );
+	}
+	m_CollisionList.clear();
 }
 
 void CollisionManager::AddCollision( Collision* collision )
