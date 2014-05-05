@@ -286,7 +286,7 @@ void ClientSession::DatabaseJobDone( DatabaseJobContext* result )
 		action->SetPlayerID( m_PlayerID );
 		action->SetClientSession( this );
 
-		m_ClientManager->AddActionToScheduler( action, 10 );
+		m_ClientManager->AddActionToScheduler( action, 0 );
 
 	}
 	else if ( typeInfo == typeid( UpdatePlayerDataContext ) )
@@ -358,7 +358,7 @@ void ClientSession::CalculateRegenTime()
 {
 	// 하드 코딩~~ 베이스 하나당 식량 증가량과 기본값
 	m_Food = (m_BaseNum * 100) + 100;
-	m_CorpsRegenTime = static_cast<float>(m_CorpsNum / m_Food) * 1000 + 30000; // 공식을 만들어 봅시다.
+	m_CorpsRegenTime = static_cast<ULONGLONG>(m_CorpsNum / m_Food) * 1000 + 30000; // 공식을 만들어 봅시다.
 
 	RefreshUIResult outPacket;
 	outPacket.m_Food = m_Food;

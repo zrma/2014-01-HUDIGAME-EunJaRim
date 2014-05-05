@@ -47,8 +47,8 @@ void MovePosition::OnBegin()
 	m_OwnerCrops->SetPositionInfo( position );
 
 	m_ClientManager->BroadcastPacket( &outPacket );
-	
-	printf_s( "MovePosition OnBegin [time:%f][%f][%f][%f][%f] \n", time, m_Destination.m_LookAtPoint.x, m_Destination.m_LookAtPoint.z, view.x, view.z );
+	printf_s( "[MOVE]m_TargetX:%f m_TargetZ:%f m_LookX:%f m_LookZ:%f \n", outPacket.m_TargetX, outPacket.m_TargetZ, outPacket.m_LookX, outPacket.m_LookZ );
+
 	m_ActionStatus = ACTION_TICK;
 	m_OwnerCrops->DoNextAction( this, static_cast<ULONGLONG>(time) );
 }
@@ -58,7 +58,7 @@ void MovePosition::OnTick()
 	// onTick의 역할은?
 	printf_s( "MovePosition OnTick \n" );
 	m_ActionStatus = ACTION_END;
-	m_OwnerCrops->DoNextAction( this, 10 );
+	m_OwnerCrops->DoNextAction( this, 0 );
 }
 
 void MovePosition::OnEnd()

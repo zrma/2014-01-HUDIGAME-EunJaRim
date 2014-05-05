@@ -78,24 +78,24 @@ public:
 	//////////////////////////////////////////////////////////////////////////
 	// 게임 컨텐츠 관련 메소드
 	//////////////////////////////////////////////////////////////////////////
-	bool	IsGameStarted() const { return m_GameStarted; }
+	bool		IsGameStarted() const { return m_GameStarted; }
 
-	void	GameStart();
+	void		GameStart();
 
-	int		GetFood() const { return m_Food; }
+	int			GetFood() const { return m_Food; }
 
-	int		GetCorpsNum( ) const { return m_CorpsNum; }
-	void	AddCorpsNum( );
-	void	SubCorpsNum( );
+	int			GetCorpsNum( ) const { return m_CorpsNum; }
+	void		AddCorpsNum( );
+	void		SubCorpsNum( );
 
-	int		GetBaseNum( ) const { return m_BaseNum; }
-	void	AddBaseNum( );
-	void	SubBaseNum( );
+	int			GetBaseNum( ) const { return m_BaseNum; }
+	void		AddBaseNum( );
+	void		SubBaseNum( );
 
-	float	GetCorpsRegenTime() { return m_CorpsRegenTime; }
+	ULONGLONG	GetCorpsRegenTime( ) { return m_CorpsRegenTime; }
 
 private:
-	void	CalculateRegenTime();
+	void		CalculateRegenTime();
 
 private:
 
@@ -134,7 +134,7 @@ private:
 	int				m_Food = 100;
 	int				m_CorpsNum = 0;
 	int				m_BaseNum = 0;
-	float			m_CorpsRegenTime = 10000.0f;
+	ULONGLONG		m_CorpsRegenTime = 10000;
 	bool			m_GameStarted = false;
 
 	friend class ClientManager;

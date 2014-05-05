@@ -19,7 +19,7 @@ void GenerateCorpAction::OnBegin( )
 {
 	printf_s( "[%d]GenerateCorps OnBegin \n", m_PlayerID);
 	m_ActionStatus = ACTION_TICK;
-	m_ClientManager->AddActionToScheduler( this, static_cast<ULONGLONG>( 10000 ) );
+	m_ClientManager->AddActionToScheduler( this, 0 );
 }
 
 void GenerateCorpAction::OnTick( )
@@ -27,7 +27,7 @@ void GenerateCorpAction::OnTick( )
 	if ( m_PlayerID == -1 )
 	{
 		m_ActionStatus = ACTION_END;
-		m_ClientManager->AddActionToScheduler( this, static_cast<ULONGLONG>( 10 ) );
+		m_ClientManager->AddActionToScheduler( this, 0 );
 	}
 
 	UnitType unitType = UnitType::UNIT_NONE;
@@ -86,7 +86,7 @@ void GenerateCorpAction::OnTick( )
 	m_ClientSession->AddCorpsNum();
 
 	m_ActionStatus = ACTION_TICK;
-	m_ClientManager->AddActionToScheduler( this, static_cast<ULONGLONG>( m_ClientSession->GetCorpsRegenTime() ) );
+	m_ClientManager->AddActionToScheduler( this, m_ClientSession->GetCorpsRegenTime() );
 }
 
 void GenerateCorpAction::OnEnd( )

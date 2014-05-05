@@ -293,7 +293,7 @@ void ClientSession::HandleMoveCorpsRequest( MoveCorpsRequest& inPacket )
 	action->SetOwnerCorps( corps );
 	action->SetDestination( destination );
 
-	m_ClientManager->AddActionToScheduler( action, 10 );
+	m_ClientManager->AddActionToScheduler( action, 0 );
 
 	printf_s( "CorpsMoved CorpID:%d PlayerID:%d DesX:%f DesZ:%f \n", corpsID, m_PlayerID, destination.m_EyePoint.x, destination.m_EyePoint.z );
 
@@ -400,7 +400,7 @@ void ClientSession::HandleAttackCorpsRequest( AttackCorpsRequest& inPacket )
 	action->SetOwnerCorps( myCorps );
 	action->SetTargetCorps( targetCorps );
 
-	m_ClientManager->AddActionToScheduler( action, 10 );
+	m_ClientManager->AddActionToScheduler( action, 0 );
 
 	printf_s( "[Packet GET]AttackCorps FromCorpID:%d ToCorpID:%d \n", myCorpsID, targetCorpsID );
 }
