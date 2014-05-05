@@ -161,7 +161,7 @@ void Corps::SetCorpsHP( int unitNum )
 		Unit* unit = m_UnitList.back( );
 		//unit->죽는모션?
 		m_UnitList.pop_back();
-
+		// SafeDelete( unit ); 하지만 콜루전매니저에서 죽지...
 		nowUnitNum = m_UnitList.size( );
 	}
 }

@@ -5,6 +5,7 @@
 #include "Renderer.h"
 #include "InputDispatcher.h"
 #include "MouseInput.h"
+#include "SoundManager.h"
 
 MainWindow::MainWindow()
 {
@@ -101,6 +102,11 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam ) con
 		case WM_KILLFOCUS:
 			InputDispatcher::GetInstance()->ClearList();
 			return 0;
+
+		case WM_LBUTTONUP:
+			SoundManager::GetInstance()->PlaySound( SOUND_SYSTEM_MOUSE_CLICK );
+			return 0;
+
 		default:
 			return DefWindowProc( m_HandleOfWindow, uMsg, wParam, lParam );
 	}
