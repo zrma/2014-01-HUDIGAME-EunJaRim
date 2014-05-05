@@ -13,9 +13,11 @@ public:
 
 struct ActDefault: public Act
 {
-	virtual void operator() ( Unit&, Corps& )
+	virtual void operator() ( Unit& unit, Corps& owner )
 	{
-		// Log( "디폴트입니다. \n" );
+		unit.FindDestination();
+		unit.RotateToDestination();
+		unit.MoveToDestination();
 	}
 };
 
@@ -42,9 +44,9 @@ struct ActMoveSeries: public Act
 		unit.FindDestination();
 		unit.RotateToDestination();
 		unit.MoveToDestination();
-		if ( unit.GetActionStatus() != ACTION_STATUS_GOFOWARD && unit.GetActionStatus() != ACTION_STATUS_ROTATE )
+		/*if ( unit.GetActionStatus() != ACTION_STATUS_GOFOWARD && unit.GetActionStatus() != ACTION_STATUS_ROTATE )
 		{
 			unit.LookForward();
-		}
+		}*/
 	}
 };

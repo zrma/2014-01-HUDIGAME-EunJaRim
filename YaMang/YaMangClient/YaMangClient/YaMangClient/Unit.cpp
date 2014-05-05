@@ -14,7 +14,6 @@ Unit::Unit( Corps* owner, UINT unitId )
 : m_Corps( owner ), m_UnitID( unitId )
 {
 	ClearAct();
-
 	m_Collision = new Collision( this, 0.5f );
 	CollisionManager::GetInstance()->AddCollision( m_Collision );
 }
@@ -75,14 +74,12 @@ void Unit::FindDestination()
 
 	formMatrix = formMatrix * parentMatrix;
 
-	D3DXVECTOR3	targetPoint = { 0.0f, 0.1f, 0.0f };
+	D3DXVECTOR3	targetPoint = { 0.01f, 0.0f, 0.1f };
 	D3DXVec3TransformCoord( &m_TargetPoint, &targetPoint, &formMatrix );
 
-// 	if ( m_UnitID == 3 )
-// 	{
-// 		Log( " %d번 유닛 목표 좌표 : %f %f ", m_UnitID, m_TargetPoint.x, m_TargetPoint.z );
-// 		Log( " 룩앳 : %f %f \n", m_LookAtPoint.x, m_LookAtPoint.z );
-// 	}
+	/*Log( "%f %f %f \n", m_TargetPoint.x, m_TargetPoint.y, m_TargetPoint.z );
+	Log( "%f %f %f \n", m_EyePoint.x, m_EyePoint.y, m_EyePoint.z );
+	Log( "%f %f %f \n\n", m_LookAtPoint.x, m_LookAtPoint.y, m_LookAtPoint.z );*/
 }
 
 void Unit::RotateToDestination()
