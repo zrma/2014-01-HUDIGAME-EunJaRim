@@ -20,6 +20,7 @@ Unit::Unit( Corps* owner, UINT unitId )
 
 Unit::~Unit()
 {
+	CollisionManager::GetInstance()->RemoveColiision( m_Collision );
 	SafeDelete( m_Collision );
 }
 

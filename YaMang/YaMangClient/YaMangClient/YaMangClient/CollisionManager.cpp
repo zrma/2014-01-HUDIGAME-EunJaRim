@@ -41,7 +41,7 @@ void CollisionManager::CheckCollision( Collision* collision ) const
 {
 	for ( auto iter : m_CollisionList )
 	{
-		if ( collision == iter )
+		if ( nullptr == iter || collision == iter )
 		{
 			continue;
 		}
