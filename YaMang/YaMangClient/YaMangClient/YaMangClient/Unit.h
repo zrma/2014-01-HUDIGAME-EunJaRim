@@ -15,6 +15,8 @@ public:
 
 	int			GetUnitId() const { return m_UnitID; }
 	void		SetStartPosition();
+
+	Corps*		GetOwner() { return m_Corps; }
 	
 	void		FindDestination();
 	void		RotateToDestination();

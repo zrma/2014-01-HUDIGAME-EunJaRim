@@ -74,7 +74,7 @@ void Unit::FindDestination()
 
 	formMatrix = formMatrix * parentMatrix;
 
-	D3DXVECTOR3	targetPoint = { 0.01f, 0.0f, 0.1f };
+	D3DXVECTOR3	targetPoint = { 0.0001f, 0.0f, 0.1f };
 	D3DXVec3TransformCoord( &m_TargetPoint, &targetPoint, &formMatrix );
 
 	/*Log( "%f %f %f \n", m_TargetPoint.x, m_TargetPoint.y, m_TargetPoint.z );
@@ -101,7 +101,7 @@ void Unit::RotateToDestination()
 void Unit::MoveToDestination()
 {
 	float time = static_cast<float>( Timer::GetInstance()->GetElapsedTime() );
-
+		
 	CollisionManager::GetInstance()->CheckCollision( m_Collision );
 	if ( m_Collision->IsCollide() )
 	{
@@ -110,14 +110,13 @@ void Unit::MoveToDestination()
 		D3DXVec3Normalize( &view, &view );
 		rev.y = view.y = 0;
 		rev = rev + view;
-		
-		m_Collision->GetCompetitor()->SetEyePoint( m_Collision->GetCompetitor()->GetEyePoint() - rev * time / 1000 );
-		m_Collision->GetCompetitor()->SetLookAtPoint( m_Collision->GetCompetitor()->GetLookAtPoint() - rev * time / 1000 );
+
+		m_Collision->GetCompetitor()->SetEyePoint( m_Collision->GetCompetitor()->GetEyePoint() - static_cast<float>( 10 - m_UnitID )* rev * time / 1000 );
 
 		// Log( "충돌 중!!!! %f %f %f \n", rev.x, rev.y, rev.z );
 
-		m_EyePoint += rev * time / 1000;
-		m_LookAtPoint += rev * time / 1000;
+		m_EyePoint += rev * static_cast<float>(10 - m_UnitID )* time / 1000;
+		m_LookAtPoint += rev * static_cast<float>(10 - m_UnitID )* time / 1000;
 
 		return;
 	}
