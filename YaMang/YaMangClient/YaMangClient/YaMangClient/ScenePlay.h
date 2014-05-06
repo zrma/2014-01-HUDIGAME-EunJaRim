@@ -12,16 +12,17 @@ public:
 	ScenePlay();
 	~ScenePlay();
 
-	void	Create();
-	void	Destroy();
-	void	Update();
-	void	Render() const;
+	void		Create();
+	void		Destroy();
+	void		Update();
+	void		Render() const;
 
-	void	AddCorps( int corpsID, Corps* corps );
-	void	ChangeCorpsFormation( int corpsID, FormationType formationType );
-	void	MoveCorpsStart( int corpsID, D3DXVECTOR3 targetPosition, D3DXVECTOR3 lookAtVector, float speed );
-	void	MoveCorpsStop( int corpsID );
-	void	SetCorpsHP( int corpsID, int unitNum );
+	void		AddCorps( int corpsID, Corps* corps );
+	void		ChangeCorpsFormation( int corpsID, FormationType formationType );
+	void		MoveCorpsStart( int corpsID, D3DXVECTOR3 targetPosition, D3DXVECTOR3 lookAtVector, float speed );
+	void		MoveCorpsStop( int corpsID );
+	void		SetCorpsHP( int corpsID, int unitNum );
+	UnitType	GetUnitTypeByID( int corpsID );
 
 private:
 	std::hash_map<int, Corps*>	m_CorpsList;
