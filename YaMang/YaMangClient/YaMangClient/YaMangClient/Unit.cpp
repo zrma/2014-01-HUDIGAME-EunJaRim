@@ -14,7 +14,7 @@ Unit::Unit( Corps* owner, UINT unitId )
 : m_Corps( owner ), m_UnitID( unitId )
 {
 	ClearAct();
-	m_Collision = new Collision( this, 0.5f );
+	m_Collision = new Collision( this, 0.7f );
 	CollisionManager::GetInstance()->AddCollision( m_Collision );
 }
 

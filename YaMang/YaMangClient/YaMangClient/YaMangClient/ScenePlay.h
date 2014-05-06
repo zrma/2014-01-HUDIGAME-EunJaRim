@@ -22,6 +22,7 @@ public:
 	void		MoveCorpsStart( int corpsID, D3DXVECTOR3 targetPosition, D3DXVECTOR3 lookAtVector, float speed );
 	void		MoveCorpsStop( int corpsID );
 	void		SetCorpsHP( int corpsID, int unitNum );
+
 	UnitType	GetUnitTypeByID( int corpsID );
 
 private:

@@ -8,9 +8,9 @@ Sword::Sword( int playerID, int corpsID, PositionInfo position, ActionScheduler*
 	m_HP = 100.0f;
 	m_MoveSpeed = 3.0f;
 	m_AttackRange = 3.0f;
-	m_AttackPower = 3.0f;
-	m_Defense = 3.0f;
-	m_AttackDelay = 3000;
+	m_AttackPower = 8.0f;
+	m_Defense = 5.0f;
+	m_AttackDelay = 1000;
 }
 
 Sword::~Sword()
