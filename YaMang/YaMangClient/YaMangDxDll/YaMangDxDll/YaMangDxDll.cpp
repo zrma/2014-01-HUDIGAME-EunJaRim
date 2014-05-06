@@ -922,8 +922,23 @@ YAMANGDXDLL_API void ZoomCamera(float zoom)
 	SetMatrix(&viewMatrix, true);
 }
 
-YAMANGDXDLL_API void GetMouseSate()
+YAMANGDXDLL_API HRESULT GetMouseSate()
 {
+	if (NULL == g_pMouse)
+		return S_OK;
+
+	HRESULT hr;
+	hr = g_pMouse->Poll();
+
+	if (FAILED(hr))
+	{
+		hr = g_pMouse->Acquire();
+		while (hr == DIERR_INPUTLOST)
+			hr = g_pMouse->Acquire();
+
+		return S_OK;
+	}
+
 	if (g_pMouse)
 	{
 		g_pMouse->GetDeviceState(sizeof(LPDIMOUSESTATE), (void*)&g_mouseState);
@@ -950,12 +965,31 @@ YAMANGDXDLL_API HRESULT InitDirectInputDevice()
 
 YAMANGDXDLL_API void CleanUpDirectInputDevice()
 {
+	if (g_pDI)
+	{
+		g_pDI->Release();
+		g_pDI = nullptr;
+	}
+
 	if (g_pMouse)
 	{
 		g_pMouse->Unacquire();
 		g_pMouse->Release();
 		g_pMouse = nullptr;
 	}
+}
+
+YAMANGDXDLL_API HRESULT SetDirectInputCooperateLevel(HWND hDlg)
+{
+	if (!g_pMouse)
+	{
+		return E_FAIL;
+	}
+	if (FAILED(g_pMouse->SetCooperativeLevel(hDlg, DISCL_NONEXCLUSIVE | DISCL_FOREGROUND)))
+	{
+		return E_FAIL;
+	}
+	return S_OK;
 }
 
 // 내보낸 변수의 예제입니다.
