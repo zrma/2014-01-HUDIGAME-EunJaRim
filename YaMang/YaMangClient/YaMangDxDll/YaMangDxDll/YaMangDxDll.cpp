@@ -922,5 +922,41 @@ YAMANGDXDLL_API void ZoomCamera(float zoom)
 	SetMatrix(&viewMatrix, true);
 }
 
+YAMANGDXDLL_API void GetMouseSate()
+{
+	if (g_pMouse)
+	{
+		g_pMouse->GetDeviceState(sizeof(LPDIMOUSESTATE), (void*)&g_mouseState);
+	}
+}
+
+YAMANGDXDLL_API HRESULT InitDirectInputDevice()
+{
+	if (FAILED(DirectInput8Create(GetModuleHandle(NULL), DIRECTINPUT_VERSION,
+		IID_IDirectInput8, (VOID**)&g_pDI, NULL)))
+	{
+		return E_FAIL;
+	}
+
+	if (FAILED(g_pDI->CreateDevice(GUID_SysMouse, &g_pMouse, NULL)))
+	{
+		return E_FAIL;
+	}
+
+	g_pMouse->Acquire();
+	
+	return S_OK;
+}
+
+YAMANGDXDLL_API void CleanUpDirectInputDevice()
+{
+	if (g_pMouse)
+	{
+		g_pMouse->Unacquire();
+		g_pMouse->Release();
+		g_pMouse = nullptr;
+	}
+}
+
 // 내보낸 변수의 예제입니다.
 // YAMANGDXDLL_API int nyaMangDxDll=0;
