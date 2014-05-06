@@ -21,6 +21,7 @@ public:
 	int		GetCorpsHP() const { return m_UnitList.size(); }
 	void	SetCorpsHP( int unitNum );
 
+	UnitType		GetUnitType() const { return m_UnitType; }
 	void			SetFormation( FormationType formation ) { m_TargetFormation = formation; }
 	D3DXVECTOR3		GetFormation( int unitId ) const;
 
@@ -45,6 +46,7 @@ private:
 	std::vector<Unit*>		m_UnitList;
 	int						m_CorpsID = -1;
 	int						m_OwnerPlayerID = -1;
+	UnitType				m_UnitType;
 
 	FormationType			m_NowFormation = FormationType::FORMATION_NONE;
 	FormationType			m_TargetFormation = FormationType::FORMATION_NONE;

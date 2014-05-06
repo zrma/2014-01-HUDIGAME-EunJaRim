@@ -45,6 +45,8 @@ Corps::~Corps()
 
 void Corps::Create( UINT num, UnitType unitType )
 {
+	m_UnitType = unitType;
+
 	m_UnitList.reserve( num );
 	Unit* unit = nullptr;
 
