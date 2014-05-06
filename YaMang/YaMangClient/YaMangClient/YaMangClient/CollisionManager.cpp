@@ -27,7 +27,7 @@ void CollisionManager::AddCollision( Collision* collision )
 
 void CollisionManager::RemoveColiision( Collision* collision )
 {
-	if ( collision )
+	if ( collision && !m_CollisionList.empty() )
 	{
 		for ( auto iter = m_CollisionList.begin(); iter != m_CollisionList.end(); )
 		{

@@ -161,9 +161,13 @@ void Corps::SetCorpsHP( int unitNum )
 			return;
 		}
 		Unit* unit = m_UnitList.back( );
-		//unit->죽는모션?
+
+		// unit->죽는모션?
+		// 좀비(?) 매니저 한테 넘겨야 됨
+		// 임시로 제거
+		SafeDelete( unit );
+		
 		m_UnitList.pop_back();
-		// SafeDelete( unit ); 하지만 콜루전매니저에서 죽지...
 		nowUnitNum = m_UnitList.size( );
 	}
 }

@@ -74,8 +74,6 @@ void Attack::OnTick()
 
 	if ( length < m_OwnerCrops->GetAttackRange() )
 	{
-		
-
 		// 공격 하세요
 		// attack result packet 보내기
 		m_TargerCrops->AddDamage( m_OwnerCrops->GetAttackPower( ) );
@@ -116,16 +114,15 @@ void Attack::OnTick()
 		// 마저 쫓아 가세요
 		MoveCorpsResult outPacket;
 		outPacket.m_CorpsID = m_OwnerCrops->GetCorpsID();
-
+		
 		D3DXVec2Normalize( &vector, &vector );
 
 		float speed = m_OwnerCrops->GetSpeed();
 		float time = ( length / speed ) * 1000;
 
-
 		outPacket.m_Speed = speed;
-		outPacket.m_TargetX = 0.0f;
-		outPacket.m_TargetZ = 0.0f;
+		outPacket.m_TargetX = m_TargerCrops->GetPositionInfo().m_EyePoint.x;
+		outPacket.m_TargetZ = m_TargerCrops->GetPositionInfo().m_EyePoint.z;
 		outPacket.m_LookX = vector.x;
 		outPacket.m_LookZ = vector.y;
 		

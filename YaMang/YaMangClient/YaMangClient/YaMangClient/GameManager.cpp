@@ -103,12 +103,13 @@ void GameManager::Destroy() const
 // 	MouseRender::GetInstance()->CleanupCursor();
 // 	MouseRender::Release();
 
-	CollisionManager::GetInstance()->ClearList();
-	CollisionManager::Release();
-
 	// 씬 해제
 	SceneManager::GetInstance()->Destroy();
 	SceneManager::Release();
+
+	// 충돌 체크 매니저는 씬매니저보다 나중에 제거
+	CollisionManager::GetInstance()->ClearList();
+	CollisionManager::Release();
 
 	// 리소스 해제
 	ResourceManager::GetInstance()->Destroy();
