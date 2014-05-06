@@ -811,21 +811,26 @@ YAMANGDXDLL_API void SetD3DCursor( LPCWSTR textureName )
 {
 	//테스트 중
 	//d3d 자체 커서 만드는 방법 1
-	// 	D3DXLoadSurfaceFromFile( g_surfcursor, NULL, NULL, textureName, NULL, D3DX_FILTER_NONE, 0, NULL );
-	// 	g_D3dDevice->SetCursorProperties( 0, 0, g_surfcursor );
-	// 	g_D3dDevice->SetCursorPosition( 220, 220, D3DCURSOR_IMMEDIATE_UPDATE );
-	// 	g_D3dDevice->ShowCursor( TRUE );
+// 	RECT rt;
+// 	SetRect(&rt, 0, 0, 0, 0);
+// 
+// 	D3DXLoadSurfaceFromFile( g_surfcursor, NULL, NULL, textureName, &rt, D3DX_FILTER_NONE, 0, NULL );
+// 	g_D3dDevice->SetCursorProperties( 0, 0, g_surfcursor );
+// 	
+// 	g_D3dDevice->ShowCursor( TRUE );
 
 	//d3d 자체 커서 만드는 방법 2
-	// 	g_D3dDevice->CreateTexture( 32, 32, 1, 0, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, &g_cursortex, nullptr );
-	// 	g_D3dDevice->CreateOffscreenPlainSurface( 32, 32, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, &g_surfcursor, nullptr );
-	// 	
-	// 	D3DXCreateTextureFromFile( g_D3dDevice, L"cursor1.bmp", &g_cursortex );
-	// 
-	// 	g_cursortex->GetSurfaceLevel( 0, &g_surfcursor );
-	// 	g_D3dDevice->SetCursorProperties( 0, 0, g_surfcursor );
-	// 
-	// 	g_D3dDevice->ShowCursor( TRUE );
+	//여전히 작동하지 않는다. 대체 문제가 뭐지;
+	//다이렉트 x 커서는 풀스크린 모드에서만 보인다고 한다.
+
+// 	D3DXCreateTextureFromFile( g_D3dDevice, L"cursor2.png", &g_cursortex );
+// 	g_D3dDevice->CreateTexture(32, 32, 0, 0, D3DFMT_A8R8G8B8, D3DPOOL_SCRATCH, &g_cursortex, nullptr);
+// 	g_D3dDevice->CreateOffscreenPlainSurface(32, 32, D3DFMT_A8R8G8B8, D3DPOOL_SCRATCH, &g_surfcursor, nullptr);
+// 	
+// 	g_cursortex->GetSurfaceLevel( 0, &g_surfcursor );
+// 	g_D3dDevice->SetCursorProperties( 0, 0, g_surfcursor );
+// 	g_D3dDevice->SetCursorPosition( 220, 220, D3DCURSOR_IMMEDIATE_UPDATE );
+// 	g_D3dDevice->ShowCursor( TRUE );
 	
 }
 
