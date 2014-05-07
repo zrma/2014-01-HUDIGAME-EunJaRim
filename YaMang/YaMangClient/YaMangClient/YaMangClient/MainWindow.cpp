@@ -98,6 +98,14 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam ) con
 		}
 			return 0;
 
+		case WM_SETFOCUS:
+		{
+			BringWindowToTop( m_HandleOfWindow );
+			MouseManager::GetInstance()->SetGameCursorMode( true );
+			ShowCursor( false );
+		}
+			return 0;
+
 		case WM_KILLFOCUS:
 		{
 			InputDispatcher::GetInstance()->ClearList();
@@ -111,13 +119,6 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam ) con
 			int MouseX = LOWORD( lParam );
 			int MouseY = HIWORD( lParam );
 			MouseManager::GetInstance()->MoveMousePosition( MouseX, MouseY );
-		}
-			return 0;
-
-		case WM_SETFOCUS:
-		{
-			MouseManager::GetInstance()->SetGameCursorMode( true );
-			ShowCursor( false );
 		}
 			return 0;
 
