@@ -69,3 +69,8 @@ void MouseManager::MoveHiddenCursorToCenter()
 	SetCursorPos( m_WndXPos, m_WndYPos );
 }
 
+void MouseManager::MoveHiddenCursorToMousePos()
+{
+	SetCursorPos( m_MousePosition.X, m_MousePosition.Y );
+}
+

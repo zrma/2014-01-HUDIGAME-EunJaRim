@@ -102,7 +102,6 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam ) con
 		{
 			BringWindowToTop( m_HandleOfWindow );
 			MouseManager::GetInstance()->SetGameCursorMode( true );
-			MouseManager::GetInstance()->MoveHiddenCursorToCenter();
 			ShowCursor( false );
 		}
 			return 0;
@@ -110,7 +109,7 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam ) con
 		case WM_KILLFOCUS:
 		{
 			InputDispatcher::GetInstance()->ClearList();
-			MouseManager::GetInstance()->MoveHiddenCursorToCenter();
+			MouseManager::GetInstance()->MoveHiddenCursorToMousePos();
 			MouseManager::GetInstance()->SetGameCursorMode( false );
 			ShowCursor( true );
 		}
@@ -122,6 +121,7 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam ) con
 			int MouseY = HIWORD( lParam );
 			MouseManager::GetInstance()->MoveMousePosition( MouseX, MouseY );
 			MouseManager::GetInstance()->MoveHiddenCursorToCenter();
+
 		}
 			return 0;
 
