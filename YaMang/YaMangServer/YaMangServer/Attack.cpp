@@ -112,19 +112,42 @@ void Attack::OnTick()
 		MoveCorpsResult outPacket;
 		outPacket.m_CorpsID = m_OwnerCrops->GetCorpsID();
 
+		float halfRange = m_OwnerCrops->GetAttackRange() / 2;
+		if ( vector.x > 0 )
+		{
+			targetX = targetX - halfRange;
+		}
+		else
+		{
+			targetX = targetX + halfRange;
+		}
+		if ( vector.y > 0 )
+		{
+			targetZ = targetZ - halfRange;
+		}
+		else
+		{
+			targetZ = targetZ + halfRange;
+		}
+
+		vector.x = targetX - nowX;
+		vector.y = targetZ - nowZ;
+		length = D3DXVec2Length( &vector );
 		D3DXVec2Normalize( &vector, &vector );
 
+
+
 		float speed = m_OwnerCrops->GetSpeed();
-		float time = ( ( length - m_OwnerCrops->GetAttackRange() ) / speed ) * 1000;
+		float time = ( ( length ) / speed ) * 1000;
 
 		outPacket.m_Speed = speed;
-		outPacket.m_TargetX = m_TargerCrops->GetPositionInfo().m_EyePoint.x;
-		outPacket.m_TargetZ = m_TargerCrops->GetPositionInfo().m_EyePoint.z;
+		outPacket.m_TargetX = targetX;
+		outPacket.m_TargetZ = targetZ;
 		outPacket.m_LookX = vector.x;
 		outPacket.m_LookZ = vector.y;
 
 		PositionInfo position;
-		position.m_EyePoint = { targetPositionInfo.m_EyePoint.x, 0.0f, targetPositionInfo.m_EyePoint.z };
+		position.m_EyePoint = { targetX, 0.0f, targetZ };
 		position.m_LookAtPoint = { vector.x, 0.0f, vector.y };
 
 		m_OwnerCrops->SetPositionInfo( position ); // 이거 저장을 onEnd에서 해야 하는데 어떻게 옮길까...

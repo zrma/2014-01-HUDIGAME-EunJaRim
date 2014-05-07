@@ -4,7 +4,7 @@
 		<HP>100.0f</HP>
 		<MoveSpeed>3.0f</MoveSpeed>
 		<MoveSpeedBonus>0.0f</MoveSpeedBonus>
-		<AttackRange>12.0f</AttackRange>
+		<AttackRange>24.0f</AttackRange>
 		<AttackRangeBonus>0.0f</AttackRangeBonus>
 		<AttackPower>15.0f</AttackPower>
 		<AttackPowerBonus>0.0f</AttackPowerBonus>
