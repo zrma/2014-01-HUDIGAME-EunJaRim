@@ -834,7 +834,7 @@ YAMANGDXDLL_API void SetD3DCursor( LPCWSTR textureName )
 	
 }
 
-YAMANGDXDLL_API HRESULT InitCursor( LPCWSTR cursorImagePath, float cursorPosX, float cursorPosY )
+YAMANGDXDLL_API HRESULT InitCursor( LPCWSTR cursorImagePath, int cursorPosX, int cursorPosY )
 {
 	if ( FAILED( D3DXCreateTextureFromFile( g_D3dDevice, cursorImagePath, &g_cursorTex ) ) )
 	{
@@ -882,10 +882,11 @@ YAMANGDXDLL_API void CursorCleanUp( )
 	}
 }
 
-YAMANGDXDLL_API void SetCursorPosition( float PosX, float PosY )
+YAMANGDXDLL_API void SetCursorPosition( int PosX, int PosY )
 {
-	g_cursorPos.x = PosX;
-	g_cursorPos.y = PosY;
+	//Log("Render Cursor Pos %d %d \n",PosX,PosY);
+	g_cursorPos.x = static_cast<float>(PosX);
+	g_cursorPos.y = static_cast<float>(PosY);
 	g_cursorPos.z = 0.0f;
 }
 

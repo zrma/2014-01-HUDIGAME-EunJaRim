@@ -1,6 +1,7 @@
 ﻿#include "stdafx.h"
 #include "MouseRender.h"
 #include "YaMangDxDll.h"
+#include "MouseInput.h"
 
 
 MouseRender::MouseRender()
@@ -16,10 +17,11 @@ MouseRender::~MouseRender()
 
 void MouseRender::Init()
 {
-	CreateCursor(L"cursor2.png",200,200);
+	CreateCursor(L"cursor2.png",500,500);
+	MouseInput::GetInstance()->SetGameCursorMode(true);
 }
 
-HRESULT MouseRender::CreateCursor( LPCWSTR cursorImagePath, float cursorPosX /*= 0*/, float cursorPosY /*= 0 */ )
+HRESULT MouseRender::CreateCursor( LPCWSTR cursorImagePath, int cursorPosX /*= 0*/, int cursorPosY /*= 0 */ )
 {
 	if ( FAILED( InitCursor( cursorImagePath, cursorPosX, cursorPosY ) ) )
 	{
@@ -59,15 +61,18 @@ void MouseRender::RemoveWndCursor()
 
 void MouseRender::Update()
 {
-	
+	SetGameCursorPos(MouseInput::GetInstance()->GetMousePositionX(), MouseInput::GetInstance()->GetMousePositionY());
 }
 
 void MouseRender::Render() const
 {
-	RenderCursor();
+	if (MouseInput::GetInstance()->IsGameCursorMode())
+	{
+		RenderCursor();
+	}
 }
 
-void MouseRender::SetCursorPos(float PosX, float PosY)
+void MouseRender::SetGameCursorPos(int PosX, int PosY)
 {
 	SetCursorPosition(PosX, PosY);
 }

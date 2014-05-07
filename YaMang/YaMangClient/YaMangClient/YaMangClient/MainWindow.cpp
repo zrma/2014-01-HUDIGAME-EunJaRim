@@ -60,13 +60,28 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam ) con
 		}
 			return 0;
 
-// 		case WM_SETCURSOR:
-// 		case WM_MOUSEMOVE:
-// 		{
-// 			int MouseX = LOWORD( lParam );
-// 			int MouseY = HIWORD( lParam );
-// 		}
-// 			return 0;
+		case WM_SETCURSOR:
+		{
+			ShowCursor(false);
+			break;
+		}
+
+ 		case WM_MOUSEMOVE:
+ 		{
+ 			int MouseX = LOWORD( lParam );
+ 			int MouseY = HIWORD( lParam );
+			MouseInput::GetInstance()->MoveMousePosition(MouseX, MouseY);
+ 		}
+ 			return 0;
+
+		//case WM_WINDOWPOSCHANGING:
+		case WM_MOVE:
+		{
+			int LocationX = LOWORD(lParam);
+			int LocationY = HIWORD(lParam);
+			MouseInput::GetInstance()->SetWndLocation(LocationX, LocationY);
+		}
+			return 0;
 
 		case WM_SYSKEYDOWN:
 		case WM_KEYDOWN:

@@ -15,11 +15,11 @@ public:
 	virtual void		Update();
 	virtual void		Render() const;
 
-	HRESULT				CreateCursor( LPCWSTR cursorImagePath, float cursorPosX = 0, float cursorPosY = 0 );
+	HRESULT				CreateCursor( LPCWSTR cursorImagePath, int cursorPosX = 500, int cursorPosY = 500 );
 	void				DestroyCursor();
 
 	HRESULT				RenderCursor() const;
-	void				SetCursorPos(float PosX, float PosY);
+	void				SetGameCursorPos(int PosX, int PosY);
 
 	void				RemoveWndCursor();
 	void				SetCursorType(CursorType cursorType) { m_NowCursorType = cursorType; }

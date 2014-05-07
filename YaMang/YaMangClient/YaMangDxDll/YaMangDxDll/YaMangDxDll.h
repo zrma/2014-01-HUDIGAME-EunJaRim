@@ -68,10 +68,10 @@ extern "C"{
 	//////////////////////////////////////////////////////////////////////////
 	YAMANGDXDLL_API void SetD3DCursor( LPCWSTR textureName = L"cursor1.bmp" ); //테스트 중
 
-	YAMANGDXDLL_API HRESULT InitCursor( LPCWSTR cursorImagePath = L"cursor2.png", float cursorPosX = 0, float cursorPosY = 0 );
+	YAMANGDXDLL_API HRESULT InitCursor( LPCWSTR cursorImagePath = L"cursor2.png", int cursorPosX = 0, int cursorPosY = 0 );
 	YAMANGDXDLL_API HRESULT CursorRender();
 	YAMANGDXDLL_API void CursorCleanUp();
-	YAMANGDXDLL_API void SetCursorPosition( float PosX = 0, float PosY = 0 );
+	YAMANGDXDLL_API void SetCursorPosition( int PosX = 0, int PosY = 0 );
 
 	//////////////////////////////////////////////////////////////////////////
 	// direct input 을 위한 함수
