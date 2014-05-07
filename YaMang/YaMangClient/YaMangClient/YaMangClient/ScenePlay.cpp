@@ -18,6 +18,7 @@ ScenePlay::~ScenePlay()
 {
 }
 
+//렌더 매니저 초기화가 우선되어야 함
 void ScenePlay::Create()
 {
 	SoundManager::GetInstance()->PlaySound( SOUND_SCENE_PLAY_BGM1 );
