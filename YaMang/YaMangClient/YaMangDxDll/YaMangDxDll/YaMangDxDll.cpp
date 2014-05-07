@@ -924,25 +924,31 @@ YAMANGDXDLL_API void ZoomCamera(float zoom)
 
 YAMANGDXDLL_API HRESULT GetMouseSate()
 {
-	if (NULL == g_pMouse)
-		return S_OK;
+	if ( NULL == g_pMouse )
+	{
+		return S_FALSE;
+	}
 
 	HRESULT hr;
 	hr = g_pMouse->Poll();
 
-	if (FAILED(hr))
+	if ( FAILED( hr ) )
 	{
-		hr = g_pMouse->Acquire();
-		while (hr == DIERR_INPUTLOST)
+		do
+		{
 			hr = g_pMouse->Acquire();
+		} while ( DIERR_INPUTLOST );
 
+		return S_FALSE;
+	}
+
+	if ( g_pMouse )
+	{
+		g_pMouse->GetDeviceState( sizeof( LPDIMOUSESTATE ), (void*)&g_mouseState );
 		return S_OK;
 	}
 
-	if (g_pMouse)
-	{
-		g_pMouse->GetDeviceState(sizeof(LPDIMOUSESTATE), (void*)&g_mouseState);
-	}
+	return S_FALSE;
 }
 
 YAMANGDXDLL_API HRESULT InitDirectInputDevice()

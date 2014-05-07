@@ -44,9 +44,5 @@ struct ActMoveSeries: public Act
 		unit.FindDestination();
 		unit.RotateToDestination();
 		unit.MoveToDestination();
-		/*if ( unit.GetActionStatus() != ACTION_STATUS_GOFOWARD && unit.GetActionStatus() != ACTION_STATUS_ROTATE )
-		{
-			unit.LookForward();
-		}*/
 	}
 };

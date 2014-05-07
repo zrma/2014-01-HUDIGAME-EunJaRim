@@ -290,7 +290,6 @@ void NetworkManager::HandleStopCorpsResult( StopCorpsResult& inPacket )
 }
 
 
-
 REGISTER_HANDLER( PKT_SC_CORPS_ATTACK )
 {
 	AttackCorpsResult recvData = static_cast<AttackCorpsResult&>( pktBase );

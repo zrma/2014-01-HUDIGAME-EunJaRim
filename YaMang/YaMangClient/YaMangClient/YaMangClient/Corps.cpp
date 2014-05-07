@@ -20,7 +20,9 @@ Corps::Corps( int corpsId, int playerId, PositionInfo pos )
 	m_FormationArray[static_cast<size_t>( FormationType::FORMATION_RUSH )] = new RushBread();
 
 	m_EyePoint = pos.m_EyePoint;
+	m_TargetPoint = pos.m_EyePoint;
 	m_LookAtPoint = pos.m_LookAtPoint;
+	
 	m_UpVector = { 0.0f, 1.0f, 0.0f };
 	m_Scale = { 1.0f, 1.0f, 1.0f };
 

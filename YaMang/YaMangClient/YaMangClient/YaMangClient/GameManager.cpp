@@ -31,6 +31,11 @@ bool GameManager::Init() const
 	// 하단의 코드들은 방어코드가 필요합니다.
 	//////////////////////////////////////////////////////////////////////////
 
+	// 씬 생성 및 초기화
+	SceneManager::GetInstance()->Init();
+	SceneManager::GetInstance()->ChangeScene( SCENE_PLAY );
+
+	// 네트워크 생성 및 초기화
 	NetworkManager::GetInstance()->Init();
 	NetworkManager::GetInstance()->Connect();
 
@@ -40,10 +45,6 @@ bool GameManager::Init() const
 	// 리소스 로딩 및 초기화
 	ResourceManager::GetInstance()->Init();
 	
-	// 씬 생성 및 초기화
-	SceneManager::GetInstance()->Init();
-	SceneManager::GetInstance()->ChangeScene( SCENE_PLAY );
-
 	// 카메라 초기화
 	CameraController::GetInstance()->Init();
 
@@ -103,6 +104,10 @@ void GameManager::Destroy() const
 // 	MouseRender::GetInstance()->CleanupCursor();
 // 	MouseRender::Release();
 
+	// 네트워크에서 씬을 참조하는 부분이 있으므로 씬을 먼저 해제하면 안 됨
+	NetworkManager::GetInstance()->Destroy();
+	NetworkManager::Release();
+
 	// 씬 해제
 	SceneManager::GetInstance()->Destroy();
 	SceneManager::Release();
@@ -118,9 +123,6 @@ void GameManager::Destroy() const
 	// 렌더러 해제
 	Renderer::GetInstance()->Destroy();
 	Renderer::Release();
-
-	NetworkManager::GetInstance()->Destroy();
-	NetworkManager::Release();
 
 	CameraController::Release();
 	InputDispatcher::Release();

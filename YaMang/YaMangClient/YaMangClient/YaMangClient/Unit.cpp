@@ -75,7 +75,7 @@ void Unit::FindDestination()
 
 	formMatrix = formMatrix * parentMatrix;
 
-	D3DXVECTOR3	targetPoint = { 0.0001f, 0.0f, 0.1f };
+	D3DXVECTOR3	targetPoint = { 0.0f, 0.0f, 0.1f };
 	D3DXVec3TransformCoord( &m_TargetPoint, &targetPoint, &formMatrix );
 
 	/*Log( "%f %f %f \n", m_TargetPoint.x, m_TargetPoint.y, m_TargetPoint.z );
@@ -108,18 +108,27 @@ void Unit::MoveToDestination()
 	{
 		D3DXVECTOR3 rev = m_Collision->GetReverseVector();
 		D3DXVECTOR3 view = m_LookAtPoint - m_EyePoint;
-		D3DXVec3Normalize( &view, &view );
 		rev.y = view.y = 0;
-		rev = rev + view;
-
-		m_Collision->GetCompetitor()->SetEyePoint( m_Collision->GetCompetitor()->GetEyePoint() - static_cast<float>( 10 - m_UnitID )* rev * time / 1000 );
+		D3DXVec3Normalize( &view, &view );
 
 		// Log( "충돌 중!!!! %f %f %f \n", rev.x, rev.y, rev.z );
 
-		m_EyePoint += rev * static_cast<float>(10 - m_UnitID )* time / 1000;
-		m_LookAtPoint += rev * static_cast<float>(10 - m_UnitID )* time / 1000;
+		if ( D3DXVec3Dot( &rev, &view ) > 0 )
+		{
+			D3DXVECTOR3 cross;
+			D3DXVec3Cross( &cross, &view, &m_UpVector );
 
-		return;
+			m_EyePoint += cross * static_cast<float>( 10 - m_UnitID )* time / 1000;
+			m_LookAtPoint += cross * static_cast<float>( 10 - m_UnitID )* time / 1000;
+
+			// rev = (rev + view) / 100;
+			// m_Collision->GetCompetitor()->SetEyePoint( m_Collision->GetCompetitor()->GetEyePoint() - static_cast<float>( 10 - m_UnitID )* rev * time / 1000 );
+		}
+		else
+		{
+			m_EyePoint += rev * static_cast<float>( 10 - m_UnitID )* time / 1000;
+			m_LookAtPoint += rev * static_cast<float>( 10 - m_UnitID )* time / 1000;
+		}
 	}
 
 	if ( m_TargetPoint.x - m_EyePoint.x > 0.5f || m_TargetPoint.x - m_EyePoint.x < -0.5f )

@@ -157,6 +157,8 @@ void ScenePlay::MoveCorpsStop( int corpsID )
 		{
 			assert( false );
 		}
+		m_CorpsList[corpsID]->SetLookAtPoint( m_CorpsList[corpsID]->GetTargetPosition() + m_CorpsList[corpsID]->GetLookAtVector() );
+		m_CorpsList[corpsID]->SetEyePoint( m_CorpsList[corpsID]->GetTargetPosition() );
 		m_CorpsList[corpsID]->SetSpeed( 0 );
 		m_CorpsList[corpsID]->ClearAction();
 	}

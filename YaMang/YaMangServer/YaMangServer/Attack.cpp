@@ -105,27 +105,24 @@ void Attack::OnTick()
 			m_ActionStatus = ACTION_TICK;
 			m_OwnerCrops->DoNextAction( this, m_OwnerCrops->GetAttackDelay() );
 		}
-		
-
-
 	}
 	else
 	{
 		// 마저 쫓아 가세요
 		MoveCorpsResult outPacket;
 		outPacket.m_CorpsID = m_OwnerCrops->GetCorpsID();
-		
+
 		D3DXVec2Normalize( &vector, &vector );
 
 		float speed = m_OwnerCrops->GetSpeed();
-		float time = ( length / speed ) * 1000;
+		float time = ( ( length - m_OwnerCrops->GetAttackRange() ) / speed ) * 1000;
 
 		outPacket.m_Speed = speed;
 		outPacket.m_TargetX = m_TargerCrops->GetPositionInfo().m_EyePoint.x;
 		outPacket.m_TargetZ = m_TargerCrops->GetPositionInfo().m_EyePoint.z;
 		outPacket.m_LookX = vector.x;
 		outPacket.m_LookZ = vector.y;
-		
+
 		PositionInfo position;
 		position.m_EyePoint = { targetPositionInfo.m_EyePoint.x, 0.0f, targetPositionInfo.m_EyePoint.z };
 		position.m_LookAtPoint = { vector.x, 0.0f, vector.y };
@@ -139,7 +136,6 @@ void Attack::OnTick()
 		m_ActionStatus = ACTION_TICK;
 		m_OwnerCrops->DoNextAction( this, static_cast<ULONGLONG>( time ) );
 	}
-
 }
 
 void Attack::OnEnd()
