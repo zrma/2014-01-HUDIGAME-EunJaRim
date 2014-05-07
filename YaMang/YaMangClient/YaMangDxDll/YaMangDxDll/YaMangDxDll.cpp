@@ -947,20 +947,20 @@ YAMANGDXDLL_API HRESULT GetMouseSate()
 
 YAMANGDXDLL_API HRESULT InitDirectInputDevice()
 {
-	if (FAILED(DirectInput8Create(GetModuleHandle(NULL), DIRECTINPUT_VERSION,
-		IID_IDirectInput8, (VOID**)&g_pDI, NULL)))
-	{
-		return E_FAIL;
-	}
-
-	if (FAILED(g_pDI->CreateDevice(GUID_SysMouse, &g_pMouse, NULL)))
-	{
-		return E_FAIL;
-	}
-
-	g_pMouse->Acquire();
-	
-	return S_OK;
+// 	if (FAILED(DirectInput8Create(GetModuleHandle(NULL), DIRECTINPUT_VERSION,
+// 		IID_IDirectInput8, (VOID**)&g_pDI, NULL)))
+// 	{
+// 		return E_FAIL;
+// 	}
+// 
+// 	if (FAILED(g_pDI->CreateDevice(GUID_SysMouse, &g_pMouse, NULL)))
+// 	{
+// 		return E_FAIL;
+// 	}
+// 
+// 	g_pMouse->Acquire();
+// 	
+ 	return S_OK;
 }
 
 YAMANGDXDLL_API void CleanUpDirectInputDevice()
