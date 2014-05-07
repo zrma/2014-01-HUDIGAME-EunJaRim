@@ -22,7 +22,7 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam ) con
 	{
 		case WM_CREATE:
 		{
-			SetTimer( MainWindow::GetInstance()->Window(), 337, 20, NULL );
+			// SetTimer( MainWindow::GetInstance()->Window(), 337, 20, NULL );
 		}
 			return 0;
 
@@ -102,6 +102,7 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam ) con
 		{
 			BringWindowToTop( m_HandleOfWindow );
 			MouseManager::GetInstance()->SetGameCursorMode( true );
+			MouseManager::GetInstance()->MoveHiddenCursorToCenter();
 			ShowCursor( false );
 		}
 			return 0;
@@ -109,6 +110,7 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam ) con
 		case WM_KILLFOCUS:
 		{
 			InputDispatcher::GetInstance()->ClearList();
+			MouseManager::GetInstance()->MoveHiddenCursorToCenter();
 			MouseManager::GetInstance()->SetGameCursorMode( false );
 			ShowCursor( true );
 		}
@@ -119,6 +121,7 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam ) con
 			int MouseX = LOWORD( lParam );
 			int MouseY = HIWORD( lParam );
 			MouseManager::GetInstance()->MoveMousePosition( MouseX, MouseY );
+			MouseManager::GetInstance()->MoveHiddenCursorToCenter();
 		}
 			return 0;
 
@@ -185,6 +188,14 @@ BOOL MainWindow::Create( PCWSTR lpWindowName, DWORD dwStyle, DWORD dwExStyle /*=
 	wc.hCursor = LoadCursor( NULL, IDC_ARROW );
 
 	RegisterClass( &wc );
+
+	//////////////////////////////////////////////////////////////////////////
+	// 화면 해상도를 불러와서 임시로 전체 화면 적용 중
+	//////////////////////////////////////////////////////////////////////////
+	x = -1;
+	y = -1;
+	nWidth = GetSystemMetrics( SM_CXSCREEN ) + 2;
+	nHeight = GetSystemMetrics( SM_CYSCREEN ) + 2;
 
 	m_HandleOfWindow = CreateWindowEx( dwExStyle, ClassName(), lpWindowName, dwStyle,
 									   x, y, nWidth, nHeight, hWndParent, hMenu, GetModuleHandle( NULL ), this );

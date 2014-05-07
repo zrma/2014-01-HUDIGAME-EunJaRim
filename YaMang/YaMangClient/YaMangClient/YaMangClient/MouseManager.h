@@ -24,6 +24,7 @@ public:
 	void			SetMouseStatus( MouseStatus mouseStatus ) { m_MouseStatus = mouseStatus; }
 
 	void			MoveMousePosition( int posX, int posY );
+	void			MoveHiddenCursorToCenter();
 
 	bool			IsGameCursorMode() { return m_GameCursorMod; }
 	void			SetGameCursorMode( bool gameCursorMode ) { m_GameCursorMod = gameCursorMode; }

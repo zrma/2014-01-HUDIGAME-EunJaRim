@@ -9,6 +9,9 @@ MouseManager::MouseManager()
 	m_Boundary.X = static_cast<SHORT>( rect.right - rect.left );
 	m_Boundary.Y = static_cast<SHORT>( rect.bottom - rect.top );
 
+	m_WndLocationX = static_cast<int>(rect.left);
+	m_WndLocationY = static_cast<int>(rect.top);
+
 	m_WndXPos = m_PressedMousePosition.X = m_MousePosition.X = m_Boundary.X / 2;
 	m_WndYPos = m_PressedMousePosition.Y = m_MousePosition.Y = m_Boundary.Y / 2;
 }
@@ -23,8 +26,6 @@ void MouseManager::MoveMousePosition( int x, int y )
 	{
 		return;
 	}
-
-	SetCursorPos( m_WndXPos, m_WndYPos );
 
 	if ( ( x + m_WndLocationX ) > m_WndXPos )
 	{
@@ -61,5 +62,10 @@ void MouseManager::MoveMousePosition( int x, int y )
 	{
 		m_MousePosition.Y = 5;
 	}
+}
+
+void MouseManager::MoveHiddenCursorToCenter()
+{
+	SetCursorPos( m_WndXPos, m_WndYPos );
 }
 
