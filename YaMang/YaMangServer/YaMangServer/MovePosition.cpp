@@ -55,7 +55,7 @@ void MovePosition::OnBegin()
 
 void MovePosition::OnTick()
 {
-	// onTick의 역할은?
+	// onTick의 역할은? ///# 보통 move에서 ontick이 하는 일은 길찾기가 들어갔을때 변침 하는 경우에 업데이트하고 방송.
 	printf_s( "MovePosition OnTick \n" );
 	m_ActionStatus = ACTION_END;
 	m_OwnerCrops->DoNextAction( this, 0 );
@@ -68,7 +68,7 @@ void MovePosition::OnEnd()
 	StopCorpsResult outPacket;
 	outPacket.m_CorpsID = m_OwnerCrops->GetCorpsID();
 
-	m_ClientManager->BroadcastPacket( NULL ,&outPacket );
+	m_ClientManager->BroadcastPacket( NULL, &outPacket ); ///# 응? 왜 from이 null?
 
 	Action::OnEnd();
 }

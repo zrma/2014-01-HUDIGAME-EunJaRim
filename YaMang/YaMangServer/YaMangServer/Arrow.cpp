@@ -1,7 +1,8 @@
 ﻿#include "stdafx.h"
 #include "Arrow.h"
 
-Arrow::Arrow( int playerID, int corpsID, PositionInfo position, ActionScheduler* actionScheduler ):Corps( playerID, corpsID, position, actionScheduler )
+Arrow::Arrow( int playerID, int corpsID, PositionInfo position, ActionScheduler* actionScheduler )
+	: Corps( playerID, corpsID, position, actionScheduler ) ///# 부모의 생성자 호출은 이렇게 잘 보이도록..
 {
 	// xml로 뺄것
 	m_HP = 100.0f;

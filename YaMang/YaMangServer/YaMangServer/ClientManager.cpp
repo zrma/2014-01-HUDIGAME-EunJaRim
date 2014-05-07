@@ -387,7 +387,7 @@ void ClientManager::PrintClientList()
 
 
 
-
+///# 사실 클라 매니저에 맵 파일 읽는 부분이 있는게 이상하거든... 보통 이런건 Room에 가야 될 것 같은데..
 bool ClientManager::ReadMapFile( const char* filename )
 {
 	FILE* f = NULL;

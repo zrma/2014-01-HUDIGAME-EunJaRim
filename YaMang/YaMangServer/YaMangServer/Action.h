@@ -22,7 +22,7 @@ public:
 	void		SetClientManager( ClientManager* clientManager ) { m_ClientManager = clientManager; }
 
 	// 액션이 꼭 콥스만의 고유 행동이 아니면 생성자에서는 corpsID는 따로 빼야할듯 
-	void		SetOwnerCorps( Corps* ownerCrops ) { m_OwnerCrops = ownerCrops; }
+	void		SetOwnerCorps( Corps* ownerCrops ) { m_OwnerCrops = ownerCrops; } ///# 지금은 액션이 콥스만 하는 것 같은데.. 다른 계획이라도 있나? (없으면  생성자 ㄱㄱ)
 	Corps*		GetOwnerCorps() const { return m_OwnerCrops; }
 
 	bool		Gozarani() const { return m_NoEgg; }

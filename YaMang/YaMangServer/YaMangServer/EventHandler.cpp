@@ -274,6 +274,8 @@ void ClientSession::HandleMoveCorpsRequest( MoveCorpsRequest& inPacket )
 	destination.m_EyePoint = { nowX, 0.0f, nowZ };
 	destination.m_LookAtPoint = { targetX, 0.0f, targetZ };
 
+	///# 서버에서는 클라가 보낸 정보를 검증해본 후에 사용해야 한다. 특히 corpsId나 playerId 같은거
+	///# 아래처럼 단순하게 -1인지 검사하면 안되고 실제로 해당 corps가 있는지 찾아봐야 함.
 	if ( corpsID == -1 )
 	{
 		Disconnect();
@@ -383,6 +385,7 @@ void ClientSession::HandleAttackCorpsRequest( AttackCorpsRequest& inPacket )
 
 	m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size );
 
+	///# 마찬가지로 클라에서 오는 정보를 검증해봐야 함. 
 
 	int myCorpsID = inPacket.m_MyCorpsID;
 	int targetCorpsID = inPacket.m_TargetCorpsID;

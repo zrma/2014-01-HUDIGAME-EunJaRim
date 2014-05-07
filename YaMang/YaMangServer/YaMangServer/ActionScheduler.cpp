@@ -74,7 +74,8 @@ void ActionScheduler::DoScheduledAction()
 		}
 		else
 		{
-			// 콥스 없이 움직이는 액션들 generateCorps등등...
+			// 콥스 없이 움직이는 액션들 generateCorps등등... ///# 보통 따로 만드는게 편함.. 아니면 상위 추상 클래스로 ActionInterface를 만들던가..
+			///# 하나의 클래스에서 다양한 경우를 모두 지원하려고 하지 말고, 찝찝하면 분리 ㄱㄱ
 			headAction->DoAction( );
 		}
 

@@ -18,6 +18,7 @@ void Attack::OnBegin()
 	printf_s( "Attack OnBegin \n" );
 	m_ActionStatus = ACTION_TICK;
 
+	///# 아래 정보를 읽기만 한다면 그냥 const PositionInfo&로 리턴 받으삼.
 
 	// length를 구하기 위한 중복이지만 한번정도는 괜찮겠지...
 	PositionInfo myCorpsPositionInfo = m_OwnerCrops->GetPositionInfo();
@@ -58,6 +59,7 @@ void Attack::OnTick()
 		return;
 	}
 
+	///# 아래 myCorpsPositionInfo targetPositionInfo 를 읽기만 한다면 그냥 const PositionInfo&로 리턴 받으삼.
 	PositionInfo myCorpsPositionInfo = m_OwnerCrops->GetPositionInfo();
 	PositionInfo targetPositionInfo = m_TargerCrops->GetPositionInfo();
 
@@ -82,13 +84,15 @@ void Attack::OnTick()
 		outPacket.m_AttackingCorpsID = m_OwnerCrops->GetCorpsID( );
 		outPacket.m_TargetCorpsID = m_TargerCrops->GetCorpsID();
 
-		float targetHP = m_TargerCrops->GetHP() + 9;
+		float targetHP = m_TargerCrops->GetHP() + 9; ///# 이 상수는 무엇인가? ㅋㅋ
+
 		int targetUnitNum = static_cast<int>( targetHP / 10 );
 		outPacket.m_TargetUnitNum = targetUnitNum;
 
 
 		m_ClientManager->BroadcastPacket( &outPacket );
 
+		///# 이런 디버그 정보는 toggle할 수 있게 logger 같은걸로 빼삼..
 		printf_s( "[Attack] length:%f  range:%f damage:%f \n", length, m_OwnerCrops->GetAttackRange( ), m_OwnerCrops->GetAttackPower( ) );
 		printf_s( "Attack OnTick Attack Success \n" );
 
@@ -130,7 +134,7 @@ void Attack::OnTick()
 		position.m_EyePoint = { targetPositionInfo.m_EyePoint.x, 0.0f, targetPositionInfo.m_EyePoint.z };
 		position.m_LookAtPoint = { vector.x, 0.0f, vector.y };
 
-		m_OwnerCrops->SetPositionInfo( position ); // 이거 저장을 onEnd에서 해야 하는데 어떻게 옮길까...
+		m_OwnerCrops->SetPositionInfo( position ); // 이거 저장을 onEnd에서 해야 하는데 어떻게 옮길까... ///# 방송해야되는 데이터면 여기서 멤버변수 업데이트 해놓는것이 맞음.
 		printf_s( "[ATTACK]m_TargetX:%f m_TargetZ:%f m_LookX:%f m_LookZ:%f \n", outPacket.m_TargetX, outPacket.m_TargetZ, outPacket.m_LookX, outPacket.m_LookZ );
 
 		m_ClientManager->BroadcastPacket( &outPacket );

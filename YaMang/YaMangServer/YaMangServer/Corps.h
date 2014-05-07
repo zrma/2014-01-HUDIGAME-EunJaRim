@@ -64,6 +64,7 @@ protected:
 	ULONGLONG				m_AttackDelayBonus = 0;
 
 private:
-	ActionScheduler*	m_ActionScheduler = nullptr;
+	ActionScheduler*	m_ActionScheduler = nullptr; ///# corps마다 스케줄러를 들고 있기 보다는...(이렇게 하면 corps 만들때마다 포인터 넘겨주고 관리해야 함 )
+	///# 예를들어... GetMyActionScheduler(owner_id)->DoNextAction(...) 이런식으로 불러서 쓸 수 있게 하는게 편하다.
 };
 

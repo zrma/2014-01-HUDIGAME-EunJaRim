@@ -2,6 +2,8 @@
 #include "Action.h"
 
 class ClientSession;
+
+///# 정확하게 이 객체가 하는 일이 무엇인가??? 리젠용??
 class GenerateCorpAction:
 	public Action
 {
