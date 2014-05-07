@@ -19,9 +19,9 @@
 		<MoveSpeedBonus>0.0f</MoveSpeedBonus>
 		<AttackRange>1.0f</AttackRange>
 		<AttackRangeBonus>0.0f</AttackRangeBonus>
-		<AttackPower>1.0f</AttackPower>
+		<AttackPower>10.0f</AttackPower>
 		<AttackPowerBonus>0.0f</AttackPowerBonus>
-		<Defense>10.0f</Defense>
+		<Defense>6.0f</Defense>
 		<DefenseBonus>0.0f</DefenseBonus>
 		<AttackDelay>5000</AttackDelay>
 		<AttackDelayBonus>0</AttackDelayBonus>

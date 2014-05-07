@@ -1,15 +1,26 @@
 ﻿#include "stdafx.h"
 #include "Guard.h"
+#include "UnitStatus.h"
 
 Guard::Guard( int playerID, int corpsID, PositionInfo position, ActionScheduler* actionScheduler ):Corps( playerID, corpsID, position, actionScheduler )
 {
-	// xml로 뺄것
-	m_HP = 100.0f;
-	m_MoveSpeed = 3.0f;
-	m_AttackRange = 1.0f;
-	m_AttackPower = 1.0f;
-	m_Defense = 10.0f;
-	m_AttackDelay = 5000;
+
+	m_HP = UnitStatus::g_GuardHP;
+	m_MoveSpeed = UnitStatus::g_GuardMoveSpeed;
+	m_MoveSpeedBonus = UnitStatus::g_GuardMoveSpeedBonus;
+
+	m_AttackRange = UnitStatus::g_GuardAttackRange;
+	m_AttackRangeBonus = UnitStatus::g_GuardAttackRangeBonus;
+
+	m_AttackPower = UnitStatus::g_GuardAttackPower;
+	m_AttackPowerBonus = UnitStatus::g_GuardAttackPowerBonus;
+
+	m_Defense = UnitStatus::g_GuardDefense;
+	m_DefenseBonus = UnitStatus::g_GuardDefenseBonus;
+
+	m_AttackDelay = UnitStatus::g_GuardAttackDelay;
+	m_AttackDelayBonus = UnitStatus::g_GuardAttackDelayBonus;
+
 }
 
 Guard::~Guard()

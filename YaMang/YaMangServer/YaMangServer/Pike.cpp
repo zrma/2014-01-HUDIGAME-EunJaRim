@@ -1,15 +1,24 @@
 ﻿#include "stdafx.h"
 #include "Pike.h"
+#include "UnitStatus.h"
 
 Pike::Pike( int playerID, int corpsID, PositionInfo position, ActionScheduler* actionScheduler ):Corps( playerID, corpsID, position, actionScheduler )
 {
-	// xml로 뺄것
-	m_HP = 100.0f;
-	m_MoveSpeed = 3.0f;
-	m_AttackRange = 3.0f;
-	m_AttackPower = 12.0f;
-	m_Defense = 5.0f;
-	m_AttackDelay = 2000;
+	m_HP = UnitStatus::g_PikeHP;
+	m_MoveSpeed = UnitStatus::g_PikeMoveSpeed;
+	m_MoveSpeedBonus = UnitStatus::g_PikeMoveSpeedBonus;
+
+	m_AttackRange = UnitStatus::g_PikeAttackRange;
+	m_AttackRangeBonus = UnitStatus::g_PikeAttackRangeBonus;
+
+	m_AttackPower = UnitStatus::g_PikeAttackPower;
+	m_AttackPowerBonus = UnitStatus::g_PikeAttackPowerBonus;
+
+	m_Defense = UnitStatus::g_PikeDefense;
+	m_DefenseBonus = UnitStatus::g_PikeDefenseBonus;
+
+	m_AttackDelay = UnitStatus::g_PikeAttackDelay;
+	m_AttackDelayBonus = UnitStatus::g_PikeAttackDelayBonus;
 }
 
 Pike::~Pike()
