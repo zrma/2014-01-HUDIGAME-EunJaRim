@@ -12,6 +12,7 @@
 #include "tinyxml.h"
 #include "xpath_static.h"
 #include "RoomManager.h"
+#include "UnitStatus.h"
 
 // 자 Alloc버그를 잡아보자... 지만 이미 default로 켜져있다는데...
 #ifdef _DEBUG
@@ -40,7 +41,7 @@ int _tmain( int argc, _TCHAR* argv[] )
 	// Exception.cpp 쪽에서 전역 함수로 선언 되어 있음
 	SetUnhandledExceptionFilter( ExceptionFilter );
 	
-	// xml 로드 테스트
+
 	TiXmlDocument document = TiXmlDocument( "../../SharedPreference/ServerConfig.xml" );
 	bool m_LoadSuccess = document.LoadFile();
 
@@ -56,6 +57,8 @@ int _tmain( int argc, _TCHAR* argv[] )
 		printf_s( "PORT Load Fail! \n" );
 	}
 
+	// 유닛 데이터 로드
+	UnitStatus::LoadUnitStatus();
 
 
 	LThreadType = THREAD_MAIN;

@@ -123,6 +123,7 @@
     <ClInclude Include="Sword.h" />
     <ClInclude Include="TakeArea.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="UnitStatus.h" />
     <ClInclude Include="YaMangServer.h" />
   </ItemGroup>
   <ItemGroup>
@@ -159,6 +160,7 @@
     </ClCompile>
     <ClCompile Include="Sword.cpp" />
     <ClCompile Include="TakeArea.cpp" />
+    <ClCompile Include="UnitStatus.cpp" />
     <ClCompile Include="YaMangServer.cpp" />
   </ItemGroup>
   <ItemGroup>

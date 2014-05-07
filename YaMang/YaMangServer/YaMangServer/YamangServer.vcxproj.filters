@@ -145,6 +145,9 @@
     <ClInclude Include="GenerateCorpAction.h">
       <Filter>Event</Filter>
     </ClInclude>
+    <ClInclude Include="UnitStatus.h">
+      <Filter>Unit</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DatabaseJobContext.cpp">
@@ -230,6 +233,9 @@
     </ClCompile>
     <ClCompile Include="GenerateCorpAction.cpp">
       <Filter>Event</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitStatus.cpp">
+      <Filter>Unit</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
