@@ -2,7 +2,8 @@
 #include "Sword.h"
 #include "UnitStatus.h"
 
-Sword::Sword( int playerID, int corpsID, PositionInfo position, ActionScheduler* actionScheduler ):Corps( playerID, corpsID, position, actionScheduler )
+Sword::Sword( int playerID, int corpsID, PositionInfo position, ActionScheduler* actionScheduler )
+:Corps( playerID, corpsID, position, actionScheduler )
 {
 	m_HP = UnitStatus::g_SwordHP;
 	m_MoveSpeed = UnitStatus::g_SwordMoveSpeed;

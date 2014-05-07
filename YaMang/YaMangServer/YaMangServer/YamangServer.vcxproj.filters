@@ -14,14 +14,14 @@
     <Filter Include="YaMang">
       <UniqueIdentifier>{816778cb-2cbf-4496-b41c-b67e80e0c8c5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Unit">
-      <UniqueIdentifier>{e6960497-b61b-49b7-b1ae-4b6e947bdfda}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Event">
-      <UniqueIdentifier>{6c02102e-cbb6-4bdf-a200-187a3965d68f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="SharedPreference">
       <UniqueIdentifier>{480bf115-e28e-4614-b6c4-3bbe6d7b7492}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Action">
+      <UniqueIdentifier>{6c02102e-cbb6-4bdf-a200-187a3965d68f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Corps">
+      <UniqueIdentifier>{e6960497-b61b-49b7-b1ae-4b6e947bdfda}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -86,43 +86,43 @@
       <Filter>YaMang</Filter>
     </ClInclude>
     <ClInclude Include="Corps.h">
-      <Filter>Unit</Filter>
+      <Filter>Corps</Filter>
     </ClInclude>
     <ClInclude Include="Guard.h">
-      <Filter>Unit</Filter>
+      <Filter>Corps</Filter>
     </ClInclude>
     <ClInclude Include="Pike.h">
-      <Filter>Unit</Filter>
+      <Filter>Corps</Filter>
     </ClInclude>
     <ClInclude Include="Sword.h">
-      <Filter>Unit</Filter>
+      <Filter>Corps</Filter>
     </ClInclude>
     <ClInclude Include="Arrow.h">
-      <Filter>Unit</Filter>
+      <Filter>Corps</Filter>
     </ClInclude>
     <ClInclude Include="Action.h">
-      <Filter>Event</Filter>
+      <Filter>Action</Filter>
     </ClInclude>
     <ClInclude Include="Attack.h">
-      <Filter>Event</Filter>
+      <Filter>Action</Filter>
     </ClInclude>
     <ClInclude Include="DefenseFormation.h">
-      <Filter>Event</Filter>
+      <Filter>Action</Filter>
     </ClInclude>
     <ClInclude Include="DestroyFormation.h">
-      <Filter>Event</Filter>
+      <Filter>Action</Filter>
     </ClInclude>
     <ClInclude Include="HoldPosition.h">
-      <Filter>Event</Filter>
+      <Filter>Action</Filter>
     </ClInclude>
     <ClInclude Include="MovePosition.h">
-      <Filter>Event</Filter>
+      <Filter>Action</Filter>
     </ClInclude>
     <ClInclude Include="RushFormation.h">
-      <Filter>Event</Filter>
+      <Filter>Action</Filter>
     </ClInclude>
     <ClInclude Include="TakeArea.h">
-      <Filter>Event</Filter>
+      <Filter>Action</Filter>
     </ClInclude>
     <ClInclude Include="..\..\SharedPreference\SharedDefine.h">
       <Filter>SharedPreference</Filter>
@@ -134,7 +134,7 @@
       <Filter>YaMang</Filter>
     </ClInclude>
     <ClInclude Include="Knight.h">
-      <Filter>Unit</Filter>
+      <Filter>Corps</Filter>
     </ClInclude>
     <ClInclude Include="ActionScheduler.h">
       <Filter>YaMang</Filter>
@@ -143,10 +143,10 @@
       <Filter>리소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="GenerateCorpAction.h">
-      <Filter>Event</Filter>
+      <Filter>Action</Filter>
     </ClInclude>
     <ClInclude Include="UnitStatus.h">
-      <Filter>Unit</Filter>
+      <Filter>Corps</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -187,55 +187,55 @@
       <Filter>YaMang</Filter>
     </ClCompile>
     <ClCompile Include="Corps.cpp">
-      <Filter>Unit</Filter>
+      <Filter>Corps</Filter>
     </ClCompile>
     <ClCompile Include="Guard.cpp">
-      <Filter>Unit</Filter>
+      <Filter>Corps</Filter>
     </ClCompile>
     <ClCompile Include="Pike.cpp">
-      <Filter>Unit</Filter>
+      <Filter>Corps</Filter>
     </ClCompile>
     <ClCompile Include="Sword.cpp">
-      <Filter>Unit</Filter>
+      <Filter>Corps</Filter>
     </ClCompile>
     <ClCompile Include="Arrow.cpp">
-      <Filter>Unit</Filter>
+      <Filter>Corps</Filter>
     </ClCompile>
     <ClCompile Include="Action.cpp">
-      <Filter>Event</Filter>
+      <Filter>Action</Filter>
     </ClCompile>
     <ClCompile Include="Attack.cpp">
-      <Filter>Event</Filter>
+      <Filter>Action</Filter>
     </ClCompile>
     <ClCompile Include="DefenseFormation.cpp">
-      <Filter>Event</Filter>
+      <Filter>Action</Filter>
     </ClCompile>
     <ClCompile Include="DestroyFormation.cpp">
-      <Filter>Event</Filter>
+      <Filter>Action</Filter>
     </ClCompile>
     <ClCompile Include="HoldPosition.cpp">
-      <Filter>Event</Filter>
+      <Filter>Action</Filter>
     </ClCompile>
     <ClCompile Include="MovePosition.cpp">
-      <Filter>Event</Filter>
+      <Filter>Action</Filter>
     </ClCompile>
     <ClCompile Include="RushFormation.cpp">
-      <Filter>Event</Filter>
+      <Filter>Action</Filter>
     </ClCompile>
     <ClCompile Include="TakeArea.cpp">
-      <Filter>Event</Filter>
+      <Filter>Action</Filter>
     </ClCompile>
     <ClCompile Include="Knight.cpp">
-      <Filter>Unit</Filter>
+      <Filter>Corps</Filter>
     </ClCompile>
     <ClCompile Include="ActionScheduler.cpp">
       <Filter>YaMang</Filter>
     </ClCompile>
     <ClCompile Include="GenerateCorpAction.cpp">
-      <Filter>Event</Filter>
+      <Filter>Action</Filter>
     </ClCompile>
     <ClCompile Include="UnitStatus.cpp">
-      <Filter>Unit</Filter>
+      <Filter>Corps</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
