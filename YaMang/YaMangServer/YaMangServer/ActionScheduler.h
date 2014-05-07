@@ -11,8 +11,6 @@ struct ActionComparator
 	}
 };
 
-typedef std::chrono::high_resolution_clock Clock;
-
 class ActionScheduler
 {
 public:

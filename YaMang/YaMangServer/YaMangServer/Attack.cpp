@@ -82,7 +82,7 @@ void Attack::OnTick()
 		outPacket.m_AttackingCorpsID = m_OwnerCrops->GetCorpsID( );
 		outPacket.m_TargetCorpsID = m_TargerCrops->GetCorpsID();
 
-		float targetHP = m_TargerCrops->GetHP() + 9;
+		float targetHP = m_TargerCrops->GetHP() + 9; // hp가 1이라도 1명이 생존해 있을수 있게 하기위해 9를 더한다.
 		int targetUnitNum = static_cast<int>( targetHP / 10 );
 		outPacket.m_TargetUnitNum = targetUnitNum;
 

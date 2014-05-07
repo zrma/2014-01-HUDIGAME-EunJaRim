@@ -68,7 +68,7 @@ void MovePosition::OnEnd()
 	StopCorpsResult outPacket;
 	outPacket.m_CorpsID = m_OwnerCrops->GetCorpsID();
 
-	m_ClientManager->BroadcastPacket( NULL ,&outPacket );
+	m_ClientManager->BroadcastPacket( &outPacket );
 
 	Action::OnEnd();
 }
