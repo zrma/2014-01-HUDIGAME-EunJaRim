@@ -79,6 +79,7 @@ void ScenePlay::Destroy()
 	m_CorpsList.clear();
 
 	delete(m_MouseCursor);
+	m_MouseCursor = nullptr;
 }
 
 void ScenePlay::Update()

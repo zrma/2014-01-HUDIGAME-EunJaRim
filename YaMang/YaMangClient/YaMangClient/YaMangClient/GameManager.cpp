@@ -31,6 +31,9 @@ bool GameManager::Init() const
 	// 하단의 코드들은 방어코드가 필요합니다.
 	//////////////////////////////////////////////////////////////////////////
 
+	// 렌더러 생성 및 초기화
+	Renderer::GetInstance()->Init();
+
 	// 씬 생성 및 초기화
 	SceneManager::GetInstance()->Init();
 	SceneManager::GetInstance()->ChangeScene( SCENE_PLAY );
@@ -38,9 +41,6 @@ bool GameManager::Init() const
 	// 네트워크 생성 및 초기화
 	NetworkManager::GetInstance()->Init();
 	NetworkManager::GetInstance()->Connect();
-
-	// 렌더러 생성 및 초기화
-	Renderer::GetInstance()->Init();
 	
 	// 리소스 로딩 및 초기화
 	ResourceManager::GetInstance()->Init();
