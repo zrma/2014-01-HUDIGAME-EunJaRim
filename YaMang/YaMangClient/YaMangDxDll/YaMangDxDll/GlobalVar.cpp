@@ -31,11 +31,6 @@ LPDIRECT3DTEXTURE9		g_cursorTex = 0;
 LPD3DXSPRITE			g_cursorSprite = 0;
 D3DXVECTOR3				g_cursorPos;
 
-///direct input에 필요한 자원
-LPDIRECTINPUT8			g_pDI = 0; // DirectInput interface       
-LPDIRECTINPUTDEVICE8	g_pMouse = 0;// Device interface
-LPDIMOUSESTATE			g_mouseState = 0;
-
 /// tool Camera 관련 벡터
 D3DXVECTOR3		g_EyePoint = { 0, 0, 0 };
 D3DXVECTOR3		g_LookAtPoint = { 0, 0, 1.0f };

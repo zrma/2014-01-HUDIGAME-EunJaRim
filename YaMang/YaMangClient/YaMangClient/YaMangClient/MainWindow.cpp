@@ -4,7 +4,7 @@
 #include "NetworkManager.h"
 #include "Renderer.h"
 #include "InputDispatcher.h"
-#include "MouseInput.h"
+#include "MouseManager.h"
 #include "SoundManager.h"
 
 MainWindow::MainWindow()
@@ -36,19 +36,18 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam ) con
 		{
 			RECT rect;
 			GetWindowRect( m_HandleOfWindow, &rect );
-			
+
 			LONG width = static_cast<LONG>( LOWORD( lParam ) );
 			LONG height = static_cast<LONG>( HIWORD( lParam ) );
-			
+
 			Renderer::GetInstance()->ResizeWindow( width, height );
 			InvalidateRect( m_HandleOfWindow, NULL, FALSE );
-
 			// Log( " 사이즈 : %d %d \n", width, height );
 		}
 			return 0;
 
 		case WM_DESTROY:
-		{	
+		{
 			if ( GameManager::GetInstance()->Process() )
 			{
 				// 창이 강제 제거 되었을 때(창 닫기 등)
@@ -57,29 +56,6 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam ) con
 				GameManager::GetInstance()->Stop();
 			}
 			PostQuitMessage( 0 );
-		}
-			return 0;
-
-		case WM_SETCURSOR:
-		{
-			ShowCursor(false);
-			break;
-		}
-
- 		case WM_MOUSEMOVE:
- 		{
- 			int MouseX = LOWORD( lParam );
- 			int MouseY = HIWORD( lParam );
-			MouseInput::GetInstance()->MoveMousePosition(MouseX, MouseY);
- 		}
- 			return 0;
-
-		//case WM_WINDOWPOSCHANGING:
-		case WM_MOVE:
-		{
-			int LocationX = LOWORD(lParam);
-			int LocationY = HIWORD(lParam);
-			MouseInput::GetInstance()->SetWndLocation(LocationX, LocationY);
 		}
 			return 0;
 
@@ -114,8 +90,40 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam ) con
 		case WM_ERASEBKGND:
 			return 1;
 
+		case WM_MOVE:
+		{
+			int LocationX = LOWORD( lParam );
+			int LocationY = HIWORD( lParam );
+			MouseManager::GetInstance()->SetWndLocation( LocationX, LocationY );
+		}
+			return 0;
+
 		case WM_KILLFOCUS:
+		{
 			InputDispatcher::GetInstance()->ClearList();
+			MouseManager::GetInstance()->SetGameCursorMode( false );
+			ShowCursor( true );
+		}
+			return 0;
+
+		case WM_MOUSEMOVE:
+		{
+			int MouseX = LOWORD( lParam );
+			int MouseY = HIWORD( lParam );
+			MouseManager::GetInstance()->MoveMousePosition( MouseX, MouseY );
+		}
+			return 0;
+
+		case WM_SETFOCUS:
+		{
+			MouseManager::GetInstance()->SetGameCursorMode( true );
+			ShowCursor( false );
+		}
+			return 0;
+
+		case WM_LBUTTONDOWN:
+		{
+		}
 			return 0;
 
 		case WM_LBUTTONUP:

@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 #include "MouseRender.h"
 #include "YaMangDxDll.h"
-#include "MouseInput.h"
+#include "MouseManager.h"
 
 
 MouseRender::MouseRender()
@@ -12,13 +12,14 @@ MouseRender::MouseRender()
 
 MouseRender::~MouseRender()
 {
-	DestroyCursor();
+	Destroy();
 }
 
 void MouseRender::Init()
 {
-	CreateCursor(L"cursor2.png",500,500);
-	MouseInput::GetInstance()->SetGameCursorMode(true);
+	CreateCursor( L"cursor2.png", 
+				  MouseManager::GetInstance()->GetMousePositionX(), MouseManager::GetInstance()->GetMousePositionY() );
+	MouseManager::GetInstance()->SetGameCursorMode(true);
 }
 
 HRESULT MouseRender::CreateCursor( LPCWSTR cursorImagePath, int cursorPosX /*= 0*/, int cursorPosY /*= 0 */ )
@@ -50,23 +51,14 @@ HRESULT MouseRender::RenderCursor() const
 	return S_OK;
 }
 
-void MouseRender::RemoveWndCursor()
-{
-	if (m_IsCursorReady)
-	{
-		SetCursor(NULL);
-		ShowCursor(false);
-	}
-}
-
 void MouseRender::Update()
 {
-	SetGameCursorPos(MouseInput::GetInstance()->GetMousePositionX(), MouseInput::GetInstance()->GetMousePositionY());
+	SetGameCursorPos( MouseManager::GetInstance()->GetMousePositionX(), MouseManager::GetInstance()->GetMousePositionY() );
 }
 
 void MouseRender::Render() const
 {
-	if (MouseInput::GetInstance()->IsGameCursorMode())
+	if ( m_IsCursorReady )
 	{
 		RenderCursor();
 	}
@@ -74,11 +66,12 @@ void MouseRender::Render() const
 
 void MouseRender::SetGameCursorPos(int PosX, int PosY)
 {
-	SetCursorPosition(PosX, PosY);
+	SetCursorPosition( PosX, PosY );
 }
 
 void MouseRender::Destroy()
 {
 	DestroyCursor();
+	MouseManager::Release();
 }
 

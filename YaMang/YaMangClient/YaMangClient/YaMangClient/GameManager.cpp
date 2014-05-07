@@ -48,9 +48,6 @@ bool GameManager::Init() const
 	// 카메라 초기화
 	CameraController::GetInstance()->Init();
 
-	// 커서 초기화
-//	MouseRender::GetInstance()->CreateCursor( L"cursor2.png", 200, 200);
-//	MouseRender::GetInstance()->RemoveWndCursor();
 	// 텍스트 매니저
 	// 타이머
 
@@ -86,8 +83,6 @@ bool GameManager::Process() const
 		wsprintf(ws, L"Elapsed : %d", deltaTime);
 		TextManager::GetInstance( )->RegistText( TEXT_FPS, ws, 20, 20 ); // 애 었다 치워야 될것같은데... 것보다 key값을 잘못잡았나. 역시 배열인가...
 		TextManager::GetInstance()->DrawTexts();
-
-//		MouseRender::GetInstance()->RenderCursor();
 	}
 	return true;
 }

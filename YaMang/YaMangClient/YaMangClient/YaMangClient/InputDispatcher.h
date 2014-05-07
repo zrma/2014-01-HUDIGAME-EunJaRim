@@ -2,8 +2,6 @@
 #include "MacroSet.h"
 #include "KeyInput.h"
 
-class MouseInput;
-
 class InputDispatcher : public Singleton<InputDispatcher>
 {
 public:

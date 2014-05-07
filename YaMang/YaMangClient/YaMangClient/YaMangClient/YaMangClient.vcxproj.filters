@@ -91,9 +91,6 @@
     <ClInclude Include="Timer.h">
       <Filter>MainLoop</Filter>
     </ClInclude>
-    <ClInclude Include="MouseInput.h">
-      <Filter>Event</Filter>
-    </ClInclude>
     <ClInclude Include="UIManager.h">
       <Filter>MainLoop</Filter>
     </ClInclude>
@@ -181,6 +178,9 @@
     <ClInclude Include="CollisionManager.h">
       <Filter>UnitObject\Collision</Filter>
     </ClInclude>
+    <ClInclude Include="MouseManager.h">
+      <Filter>Event</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -215,9 +215,6 @@
     </ClCompile>
     <ClCompile Include="Timer.cpp">
       <Filter>MainLoop</Filter>
-    </ClCompile>
-    <ClCompile Include="MouseInput.cpp">
-      <Filter>Event</Filter>
     </ClCompile>
     <ClCompile Include="UIManager.cpp">
       <Filter>MainLoop</Filter>
@@ -290,6 +287,9 @@
     </ClCompile>
     <ClCompile Include="CollisionManager.cpp">
       <Filter>UnitObject\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="MouseManager.cpp">
+      <Filter>Event</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

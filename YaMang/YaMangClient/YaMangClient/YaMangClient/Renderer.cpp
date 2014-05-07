@@ -21,7 +21,7 @@ bool Renderer::Init()
 		RECT rect;
 		GetWindowRect( MainWindow::GetInstance()->Window(), &rect );
 		LONG width = rect.right - rect.left;
-		LONG height = rect.bottom - rect.left;
+		LONG height = rect.bottom - rect.top;
 
 		m_PrevTime = timeGetTime();
 	}

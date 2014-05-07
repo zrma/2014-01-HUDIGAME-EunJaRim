@@ -21,7 +21,6 @@ public:
 	HRESULT				RenderCursor() const;
 	void				SetGameCursorPos(int PosX, int PosY);
 
-	void				RemoveWndCursor();
 	void				SetCursorType(CursorType cursorType) { m_NowCursorType = cursorType; }
 
 private:

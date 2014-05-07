@@ -1,5 +1,4 @@
 ﻿#include <d3dx9.h>
-#include <dinput.h>
 
 //vertex, index 정의
 struct CUSTOMVERTEX
@@ -72,13 +71,6 @@ extern ID3DXSprite*	g_Sprite;		// 폰트를 그릴 스프라이트 객체
 extern LPDIRECT3DTEXTURE9	g_cursorTex;
 extern LPD3DXSPRITE			g_cursorSprite;
 extern D3DXVECTOR3			g_cursorPos;
-
-//////////////////////////////////////////////////////////////////////////
-///Direct Input Interface
-//////////////////////////////////////////////////////////////////////////
-extern LPDIRECTINPUT8			g_pDI; // DirectInput interface       
-extern LPDIRECTINPUTDEVICE8		g_pMouse;// Device interface
-extern LPDIMOUSESTATE			g_mouseState;
 
 //////////////////////////////////////////////////////////////////////////
 /// tool Camera 관련 벡터
