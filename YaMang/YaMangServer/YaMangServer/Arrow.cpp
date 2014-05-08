@@ -2,8 +2,8 @@
 #include "Arrow.h"
 #include "UnitStatus.h"
 
-Arrow::Arrow( int playerID, int corpsID, PositionInfo position, ActionScheduler* actionScheduler )
-:Corps( playerID, corpsID, position, actionScheduler )
+Arrow::Arrow( int playerID, int corpsID, PositionInfo position, ClientManager* clientManager )
+:Corps( playerID, corpsID, position, clientManager )
 {
 
 	m_HP = UnitStatus::g_ArrowHP;

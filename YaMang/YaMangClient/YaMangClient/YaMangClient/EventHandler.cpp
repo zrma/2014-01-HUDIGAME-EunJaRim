@@ -269,12 +269,19 @@ void NetworkManager::HandleStopCorpsResult( StopCorpsResult& inPacket )
 	{
 
 		int corpsID = inPacket.m_CorpsID;
+		float nowX = inPacket.m_NowX;
+		float nowZ = inPacket.m_NowZ;
+		float lookX = inPacket.m_LookX;
+		float lookZ = inPacket.m_LookZ;
+
+		D3DXVECTOR3 targetPosition = { nowX, 0.0f, nowZ };
+		D3DXVECTOR3 lookAtVector = { lookX, 0.0f, lookZ };
 
 		Scene* scene = SceneManager::GetInstance()->GetNowScene();
 		if ( typeid( ScenePlay ) == typeid( *scene ) )
 		{
 			ScenePlay* scenePlay = static_cast<ScenePlay*>( SceneManager::GetInstance()->GetNowScene() );
-			scenePlay->MoveCorpsStop( corpsID );
+			scenePlay->MoveCorpsStop( corpsID, targetPosition, lookAtVector );
 			Log( "CorpsStop! CorpID:%d \n", corpsID );
 		}
 		else
@@ -301,19 +308,36 @@ void NetworkManager::HandleAttackCorpsResult( AttackCorpsResult& inPacket )
 	if ( m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size ) )
 	{
 
-		int attackingCorpsID = inPacket.m_AttackingCorpsID;
+		int attackerCorpsID = inPacket.m_AttackerCorpsID;
 		int targetCorpsID = inPacket.m_TargetCorpsID;
+
+		float attackerNowX = inPacket.m_AttackerNowX;
+		float attackerNowZ = inPacket.m_AttackerNowZ;
+		float attackerLookX = inPacket.m_AttackerLookX;
+		float attackerLookZ = inPacket.m_AttackerLookZ;
+
+		float targetNowX = inPacket.m_TargetNowX;
+		float targetNowZ = inPacket.m_TargetNowZ;
+		float targetLookX = inPacket.m_TargetLookX;
+		float targetLookZ = inPacket.m_TargetLookZ;
+
+
+		D3DXVECTOR3 attackerNow = { attackerNowX, 0.0f, attackerNowZ };
+		D3DXVECTOR3 attackerLook = { attackerLookX, 0.0f, attackerLookZ };
+		D3DXVECTOR3 targetNow = { targetNowX, 0.0f, targetNowZ };
+		D3DXVECTOR3 targetLook = { targetLookX, 0.0f, targetLookZ };
+
 		int unitNum = inPacket.m_TargetUnitNum;
 
 		Scene* scene = SceneManager::GetInstance()->GetNowScene();
 		if ( typeid( ScenePlay ) == typeid( *scene ) )
 		{
 			ScenePlay* scenePlay = static_cast<ScenePlay*>( SceneManager::GetInstance()->GetNowScene() );
-			scenePlay->MoveCorpsStop( attackingCorpsID );
-			scenePlay->MoveCorpsStop( targetCorpsID );
+			scenePlay->MoveCorpsStop( attackerCorpsID, attackerNow, attackerLook );
+			scenePlay->MoveCorpsStop( targetCorpsID, targetNow, targetLook );
 			scenePlay->SetCorpsHP( targetCorpsID, unitNum );
 
-			UnitType unitType = scenePlay->GetUnitTypeByID( attackingCorpsID );
+			UnitType unitType = scenePlay->GetUnitTypeByID( attackerCorpsID );
 			switch ( unitType )
 			{
 				case UnitType::UNIT_ARROW:
@@ -335,7 +359,7 @@ void NetworkManager::HandleAttackCorpsResult( AttackCorpsResult& inPacket )
 					break;
 			}
 
-			Log( "CorpsAttack! [%d]->[%d] \n", attackingCorpsID, targetCorpsID );
+			Log( "CorpsAttack! [%d]->[%d] \n", attackerCorpsID, targetCorpsID );
 		}
 		else
 		{

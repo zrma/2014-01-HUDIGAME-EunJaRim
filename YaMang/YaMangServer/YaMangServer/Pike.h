@@ -5,7 +5,7 @@ class Pike:
 	public Corps
 {
 public:
-	Pike( int playerID, int corpsID, PositionInfo position, ActionScheduler* actionScheduler );
+	Pike( int playerID, int corpsID, PositionInfo position, ClientManager* clientManager );
 	virtual ~Pike( );
 
 };

@@ -2,8 +2,8 @@
 #include "Pike.h"
 #include "UnitStatus.h"
 
-Pike::Pike( int playerID, int corpsID, PositionInfo position, ActionScheduler* actionScheduler )
-:Corps( playerID, corpsID, position, actionScheduler )
+Pike::Pike( int playerID, int corpsID, PositionInfo position, ClientManager* clientManager )
+:Corps( playerID, corpsID, position, clientManager )
 {
 	m_HP = UnitStatus::g_PikeHP;
 	m_MoveSpeed = UnitStatus::g_PikeMoveSpeed;

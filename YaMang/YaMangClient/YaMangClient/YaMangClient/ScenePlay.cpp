@@ -150,7 +150,7 @@ void ScenePlay::MoveCorpsStart( int corpsID, D3DXVECTOR3 targetPosition, D3DXVEC
 	}
 }
 
-void ScenePlay::MoveCorpsStop( int corpsID )
+void ScenePlay::MoveCorpsStop( int corpsID, D3DXVECTOR3 targetPosition, D3DXVECTOR3 lookAtVector )
 {
 	if ( m_CorpsList.find( corpsID ) != m_CorpsList.end() )
 	{
@@ -158,8 +158,8 @@ void ScenePlay::MoveCorpsStop( int corpsID )
 		{
 			assert( false );
 		}
-		m_CorpsList[corpsID]->SetLookAtPoint( m_CorpsList[corpsID]->GetTargetPosition() + m_CorpsList[corpsID]->GetLookAtVector() );
-		m_CorpsList[corpsID]->SetEyePoint( m_CorpsList[corpsID]->GetTargetPosition() );
+		m_CorpsList[corpsID]->SetTargetPosition( targetPosition );
+		m_CorpsList[corpsID]->SetLookAtVector( lookAtVector );
 		m_CorpsList[corpsID]->SetSpeed( 0 );
 		m_CorpsList[corpsID]->ClearAction();
 	}

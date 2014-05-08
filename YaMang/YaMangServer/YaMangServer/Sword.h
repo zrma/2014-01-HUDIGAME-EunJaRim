@@ -5,7 +5,7 @@ class Sword:
 	public Corps
 {
 public:
-	Sword( int playerID, int corpsID, PositionInfo position, ActionScheduler* actionScheduler );
+	Sword( int playerID, int corpsID, PositionInfo position, ClientManager* clientManager );
 	virtual ~Sword( );
 
 };

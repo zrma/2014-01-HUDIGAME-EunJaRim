@@ -21,8 +21,6 @@ private:
 
 
 	
-	ULONGLONG		m_StartedTime = 0;
-	ULONGLONG		m_MovingTime = 0;
-	PositionInfo	m_MovingRoute;
+
 };
 

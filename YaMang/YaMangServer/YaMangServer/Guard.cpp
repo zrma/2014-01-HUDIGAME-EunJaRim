@@ -2,8 +2,8 @@
 #include "Guard.h"
 #include "UnitStatus.h"
 
-Guard::Guard( int playerID, int corpsID, PositionInfo position, ActionScheduler* actionScheduler )
-:Corps( playerID, corpsID, position, actionScheduler )
+Guard::Guard( int playerID, int corpsID, PositionInfo position, ClientManager* clientManager )
+:Corps( playerID, corpsID, position, clientManager )
 {
 
 	m_HP = UnitStatus::g_GuardHP;

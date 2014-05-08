@@ -3,11 +3,11 @@
 #include "EnumSet.h"
 #include "Action.h"
 
-class ActionScheduler;
+class ClientManager;
 class Corps
 {
 public:
-	Corps( int playerID, int corpsID, PositionInfo position, ActionScheduler* actionScheduler );
+	Corps( int playerID, int corpsID, PositionInfo position, ClientManager* clientManager );
 	virtual ~Corps();
 
 	int						GetCorpsID( ) const { return m_CorpsID; }
@@ -30,6 +30,11 @@ public:
 	bool					IsDead() const { return m_IsDead; }
 
 	void					DoNextAction( Action* addedAction, ULONGLONG remainTime );
+
+	void					MoveStart( ULONGLONG movingDuringTime, D3DXVECTOR2 lookVector );
+	void					MoveStop();
+	void					ReCalculatePosition();
+
 
 private:
 	Corps();
@@ -63,7 +68,12 @@ protected:
 	ULONGLONG				m_AttackDelay = 0;
 	ULONGLONG				m_AttackDelayBonus = 0;
 
+	bool					m_IsMoving = false;
+	ULONGLONG				m_MovingStartedTime = 0;
+	ULONGLONG				m_MovingDuringTime = 0;
+	PositionInfo			m_MovingRoute;
+
 private:
-	ActionScheduler*	m_ActionScheduler = nullptr;
+	ClientManager*			m_ClientManager = nullptr;
 };
 

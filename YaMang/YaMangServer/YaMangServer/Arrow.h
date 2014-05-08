@@ -5,7 +5,7 @@ class Arrow:
 	public Corps
 {
 public:
-	Arrow( int playerID, int corpsID, PositionInfo position, ActionScheduler* actionScheduler );
+	Arrow( int playerID, int corpsID, PositionInfo position, ClientManager* clientManager );
 	virtual ~Arrow();
 
 };

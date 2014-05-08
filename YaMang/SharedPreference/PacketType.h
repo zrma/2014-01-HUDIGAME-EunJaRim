@@ -331,9 +331,17 @@ struct StopCorpsResult: public PacketHeader
 		m_Size = sizeof( StopCorpsResult );
 		m_Type = PKT_SC_STOP_CORPS;
 		m_CorpsID = -1;
+		m_NowX = NOT_A_NUMBER_FLOAT;
+		m_NowZ = NOT_A_NUMBER_FLOAT;
+		m_LookX = NOT_A_NUMBER_FLOAT;
+		m_LookZ = NOT_A_NUMBER_FLOAT;
 	}
 
-	int		 m_CorpsID;
+	int		m_CorpsID;
+	float	m_NowX;
+	float	m_NowZ;
+	float	m_LookX;
+	float	m_LookZ;
 };
 
 
@@ -386,14 +394,30 @@ struct AttackCorpsResult: public PacketHeader
 	{
 		m_Size = sizeof( AttackCorpsResult );
 		m_Type = PKT_SC_CORPS_ATTACK;
-		m_AttackingCorpsID = -1;
+		m_AttackerCorpsID = -1;
 		m_TargetCorpsID = -1;
 		m_TargetUnitNum = -1;
+		m_AttackerNowX = NOT_A_NUMBER_FLOAT;
+		m_AttackerNowZ = NOT_A_NUMBER_FLOAT;
+		m_AttackerLookX = NOT_A_NUMBER_FLOAT;
+		m_AttackerLookZ = NOT_A_NUMBER_FLOAT;
+		m_TargetNowX = NOT_A_NUMBER_FLOAT;
+		m_TargetNowZ = NOT_A_NUMBER_FLOAT;
+		m_TargetLookX = NOT_A_NUMBER_FLOAT;
+		m_TargetLookZ = NOT_A_NUMBER_FLOAT;
 	}
 
-	int		m_AttackingCorpsID;
+	int		m_AttackerCorpsID;
 	int		m_TargetCorpsID;
 	int		m_TargetUnitNum;
+	float	m_AttackerNowX;
+	float	m_AttackerNowZ;
+	float	m_AttackerLookX;
+	float	m_AttackerLookZ;
+	float	m_TargetNowX;
+	float	m_TargetNowZ;
+	float	m_TargetLookX;
+	float	m_TargetLookZ;
 };
 
 

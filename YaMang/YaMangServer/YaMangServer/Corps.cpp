@@ -6,10 +6,11 @@
 #include "Pike.h"
 #include "knight.h"
 #include "EnumSet.h"
-#include "ActionScheduler.h"
+#include "PacketType.h"
+#include "ClientManager.h"
 
-Corps::Corps( int playerID, int corpsID, PositionInfo position, ActionScheduler* actionScheduler )
-: m_PlayerID( playerID ), m_CorpsID( corpsID ), m_Position( position ), m_ActionScheduler(actionScheduler)
+Corps::Corps( int playerID, int corpsID, PositionInfo position, ClientManager* clientManager )
+: m_PlayerID( playerID ), m_CorpsID( corpsID ), m_Position( position ), m_ClientManager( clientManager )
 {
 }
 
@@ -37,5 +38,45 @@ void Corps::AddDamage( float damage )
 
 void Corps::DoNextAction( Action* addedAction, ULONGLONG remainTime )
 {
-	m_ActionScheduler->AddActionToScheduler( addedAction, remainTime );
+	m_ClientManager->AddActionToScheduler( addedAction, remainTime );
 }
+
+void Corps::MoveStart( ULONGLONG movingDuringTime, D3DXVECTOR2 lookVector )
+{
+	m_IsMoving = true;
+
+	m_MovingStartedTime = GetTickCount64();
+	m_MovingDuringTime = movingDuringTime;
+
+	m_MovingRoute.m_EyePoint = { m_Position.m_EyePoint.x, 0.0f, m_Position.m_EyePoint.z };
+	m_MovingRoute.m_LookAtPoint = { lookVector.x, 0.0f, lookVector.y };
+}
+
+void Corps::MoveStop()
+{
+	ReCalculatePosition();
+	m_IsMoving = false;
+
+	StopCorpsResult outPacket;
+	outPacket.m_CorpsID = m_CorpsID;
+	m_ClientManager->BroadcastPacket( &outPacket );
+
+}
+
+void Corps::ReCalculatePosition()
+{
+	if ( m_IsMoving )
+	{
+		ULONGLONG elapsedTime = GetTickCount64() - m_MovingStartedTime;
+		
+		PositionInfo nowPosition;
+		nowPosition.m_EyePoint = m_MovingRoute.m_EyePoint + ( m_MovingRoute.m_LookAtPoint * GetSpeed( ) * elapsedTime / 1000 );
+		nowPosition.m_LookAtPoint = m_MovingRoute.m_LookAtPoint;
+		SetPositionInfo( nowPosition );
+
+
+
+	}
+}
+
+
