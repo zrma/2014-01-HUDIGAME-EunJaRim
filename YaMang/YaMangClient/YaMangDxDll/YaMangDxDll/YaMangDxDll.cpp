@@ -706,11 +706,11 @@ YAMANGDXDLL_API void TransPickedTriangle( int modeSelector )
 		}
 		else
 		{
-			for ( UINT x = g_ZHeight - 1; ( x >= 0 ) && !( Hit1 | Hit2 ); --x )
+			for ( UINT x = g_ZHeight - 1; ( x > 0 ) && !( Hit1 | Hit2 ); --x )
 			{
 				trianglePointA = g_ZHeight*z + x; 
-				trianglePointB = g_ZHeight*( z + 1 ) + x;
-				trianglePointC = g_ZHeight*z + ( x - 1 );
+				trianglePointB = g_ZHeight*z + ( x - 1 ); 
+				trianglePointC = g_ZHeight*( z + 1 ) + x;
 				Hit1 = D3DXIntersectTri( &VerticesStartPoint[trianglePointA].vertexPoint, &VerticesStartPoint[trianglePointB].vertexPoint, &VerticesStartPoint[trianglePointC].vertexPoint, &g_RayOrigin, &g_RayDirection, &pickedX, &pickedY, &dist );
 
 				trianglePointD = g_ZHeight*( z + 1 ) + ( x - 1 ); 
