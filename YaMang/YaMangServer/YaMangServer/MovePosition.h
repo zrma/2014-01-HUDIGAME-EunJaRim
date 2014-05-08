@@ -17,8 +17,12 @@ private:
 	virtual void OnEnd( );
 
 private:
-	PositionInfo m_Destination;
-	ULONGLONG m_StartedTime;
+	PositionInfo	m_Destination;
 
+
+	
+	ULONGLONG		m_StartedTime = 0;
+	float			m_MovingTime = 0.0f;
+	PositionInfo	m_MovingRoute;
 };
 

@@ -138,7 +138,7 @@ void Attack::OnTick()
 
 
 		float speed = m_OwnerCrops->GetSpeed();
-		float time = ( ( length ) / speed ) * 1000;
+		float time = ( length / speed ) * 1000;
 
 		outPacket.m_Speed = speed;
 		outPacket.m_TargetX = targetX;

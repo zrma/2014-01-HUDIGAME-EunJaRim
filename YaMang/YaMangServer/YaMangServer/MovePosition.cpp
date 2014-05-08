@@ -16,47 +16,69 @@ MovePosition::~MovePosition()
 
 void MovePosition::OnBegin()
 {
-	// 이걸로 dTime을 구하자
-	m_StartedTime = GetTickCount64( );
+
 
 	MoveCorpsResult outPacket;
 	outPacket.m_CorpsID = m_OwnerCrops->GetCorpsID();
 
-	// 임시로 계산 해둔 식
-	D3DXVECTOR3	view = m_Destination.m_LookAtPoint - m_Destination.m_EyePoint;
-	float length = D3DXVec3Length( &view );
+
+
+	PositionInfo myCorpsPositionInfo = m_OwnerCrops->GetPositionInfo( );
+	float nowX = myCorpsPositionInfo.m_EyePoint.x;
+	float nowZ = myCorpsPositionInfo.m_EyePoint.z;
+	float targetX = m_Destination.m_EyePoint.x;
+	float targetZ = m_Destination.m_EyePoint.z;
+
+	D3DXVECTOR2 vector;
+	vector.x = targetX - nowX;
+	vector.y = targetZ - nowZ;
+
+	float length = D3DXVec2Length( &vector );
+
 	float speed = m_OwnerCrops->GetSpeed();
-	float time = ( length / speed ) * 1000;
-
-
+	m_MovingTime = ( length / speed ) * 1000;
 	outPacket.m_Speed = speed;
 
-	// 걸어갈 방향을 지정
-	D3DXVec3Normalize( &view, &view );
+
+	length = D3DXVec2Length( &vector );
+	D3DXVec2Normalize( &vector, &vector );
 
 	// target위치를 서버가 계산해줘야함
-	outPacket.m_TargetX = m_Destination.m_LookAtPoint.x;
-	outPacket.m_TargetZ = m_Destination.m_LookAtPoint.z;
-	outPacket.m_LookX = view.x;
-	outPacket.m_LookZ = view.z;
+	outPacket.m_TargetX = targetX;
+	outPacket.m_TargetZ = targetZ;
+	outPacket.m_LookX = vector.x;
+	outPacket.m_LookZ = vector.y;
+
+	printf_s( "[NOW:%f][Target%f:]\n", nowX, targetX );
+	m_MovingRoute.m_EyePoint = { targetX - nowX, 0.0f, targetZ - nowZ };
+	m_MovingRoute.m_LookAtPoint = { vector.x, 0.0f, vector.y };
 
 	PositionInfo position;
-	position.m_EyePoint = { m_Destination.m_LookAtPoint.x, 0.0f, m_Destination.m_LookAtPoint.z };
-	position.m_LookAtPoint = { view.x, 0.0f, view.z };
+	position.m_EyePoint = { targetX, 0.0f, targetZ };
+	position.m_LookAtPoint = { vector.x, 0.0f, vector.y };
 
 	m_OwnerCrops->SetPositionInfo( position );
+
+
+	// 이걸로 dTime을 구하자
+	m_StartedTime = GetTickCount64();
 
 	m_ClientManager->BroadcastPacket( &outPacket );
 	printf_s( "[MOVE]m_TargetX:%f m_TargetZ:%f m_LookX:%f m_LookZ:%f \n", outPacket.m_TargetX, outPacket.m_TargetZ, outPacket.m_LookX, outPacket.m_LookZ );
 
 	m_ActionStatus = ACTION_TICK;
-	m_OwnerCrops->DoNextAction( this, static_cast<ULONGLONG>(time) );
+	m_OwnerCrops->DoNextAction( this, static_cast<ULONGLONG>( m_MovingTime ) );
+
 }
 
 void MovePosition::OnTick()
 {
 	// onTick의 역할은?
 	printf_s( "MovePosition OnTick \n" );
+
+	ULONGLONG elapsedTime = GetTickCount64() - m_StartedTime;
+	printf_s( "오차1:%d \n", static_cast<int>( elapsedTime - m_MovingTime ) );
+
 	m_ActionStatus = ACTION_END;
 	m_OwnerCrops->DoNextAction( this, 0 );
 }
@@ -64,6 +86,11 @@ void MovePosition::OnTick()
 void MovePosition::OnEnd()
 {
 	printf_s( "MovePosition OnEnd \n" );
+	ULONGLONG elapsedTime = GetTickCount64() - m_StartedTime;
+	printf_s( "오차2:%d \n", static_cast<int>(elapsedTime-m_MovingTime) );
+	// 시간 오차가 0~100ms정도 발생하는데... 오차 조정을 어떻게 해야지...
+	m_MovingRoute.m_EyePoint = ( m_MovingRoute.m_EyePoint / elapsedTime ) * m_MovingTime;
+	m_OwnerCrops->SetPositionInfo( m_MovingRoute );
 
 	StopCorpsResult outPacket;
 	outPacket.m_CorpsID = m_OwnerCrops->GetCorpsID();

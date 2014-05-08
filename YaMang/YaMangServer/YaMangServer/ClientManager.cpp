@@ -186,11 +186,7 @@ void ClientManager::OnPeriodWork()
 		if ( m_IsGameStart )
 	#endif // DEBUG
 	{
-		// 0.01초마다 타이머 확인 
-		if ( currTick - m_LastClientWorkTick >= 10 )
-		{
-			m_ActionScheduler->DoScheduledAction();
-		}
+		m_ActionScheduler->DoScheduledAction( );
 	}
 
 
