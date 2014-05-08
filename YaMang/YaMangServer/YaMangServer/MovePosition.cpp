@@ -21,8 +21,6 @@ void MovePosition::OnBegin()
 	MoveCorpsResult outPacket;
 	outPacket.m_CorpsID = m_OwnerCrops->GetCorpsID();
 
-
-
 	PositionInfo myCorpsPositionInfo = m_OwnerCrops->GetPositionInfo( );
 	float nowX = myCorpsPositionInfo.m_EyePoint.x;
 	float nowZ = myCorpsPositionInfo.m_EyePoint.z;
@@ -36,7 +34,7 @@ void MovePosition::OnBegin()
 	float length = D3DXVec2Length( &vector );
 
 	float speed = m_OwnerCrops->GetSpeed();
-	m_MovingTime = ( length / speed ) * 1000;
+	m_MovingTime = static_cast<ULONGLONG>(( length * 1000 ) / speed);
 	outPacket.m_Speed = speed;
 
 
@@ -50,7 +48,7 @@ void MovePosition::OnBegin()
 	outPacket.m_LookZ = vector.y;
 
 	printf_s( "[NOW:%f][Target%f:]\n", nowX, targetX );
-	m_MovingRoute.m_EyePoint = { targetX - nowX, 0.0f, targetZ - nowZ };
+	m_MovingRoute.m_EyePoint = { nowX, 0.0f, nowZ };
 	m_MovingRoute.m_LookAtPoint = { vector.x, 0.0f, vector.y };
 
 	PositionInfo position;
@@ -67,7 +65,7 @@ void MovePosition::OnBegin()
 	printf_s( "[MOVE]m_TargetX:%f m_TargetZ:%f m_LookX:%f m_LookZ:%f \n", outPacket.m_TargetX, outPacket.m_TargetZ, outPacket.m_LookX, outPacket.m_LookZ );
 
 	m_ActionStatus = ACTION_TICK;
-	m_OwnerCrops->DoNextAction( this, static_cast<ULONGLONG>( m_MovingTime ) );
+	m_OwnerCrops->DoNextAction( this, m_MovingTime );
 
 }
 
@@ -87,9 +85,14 @@ void MovePosition::OnEnd()
 {
 	printf_s( "MovePosition OnEnd \n" );
 	ULONGLONG elapsedTime = GetTickCount64() - m_StartedTime;
-	printf_s( "오차2:%d \n", static_cast<int>(elapsedTime-m_MovingTime) );
-	// 시간 오차가 0~100ms정도 발생하는데... 오차 조정을 어떻게 해야지...
-	m_MovingRoute.m_EyePoint = ( m_MovingRoute.m_EyePoint / elapsedTime ) * m_MovingTime;
+
+	printf_s( "오차2:%d \n", static_cast<int>(elapsedTime - m_MovingTime) );
+	// 시간 오차가 0~50ms정도 발생하는데...
+
+
+	printf_s( "\n [S :%f,%f] [V: %f %f] t : %lu", m_MovingRoute.m_EyePoint.x, m_MovingRoute.m_EyePoint.z,
+			  m_MovingRoute.m_LookAtPoint.x, m_MovingRoute.m_LookAtPoint.z, elapsedTime );
+	m_MovingRoute.m_EyePoint = m_MovingRoute.m_EyePoint + (m_MovingRoute.m_LookAtPoint * m_OwnerCrops->GetSpeed( ) * elapsedTime / 1000);
 	m_OwnerCrops->SetPositionInfo( m_MovingRoute );
 
 	StopCorpsResult outPacket;

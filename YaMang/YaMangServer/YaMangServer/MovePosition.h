@@ -22,7 +22,7 @@ private:
 
 	
 	ULONGLONG		m_StartedTime = 0;
-	float			m_MovingTime = 0.0f;
+	ULONGLONG		m_MovingTime = 0;
 	PositionInfo	m_MovingRoute;
 };
 

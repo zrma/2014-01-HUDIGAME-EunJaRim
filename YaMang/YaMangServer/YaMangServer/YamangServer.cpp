@@ -191,7 +191,7 @@ unsigned int WINAPI ClientHandlingThread( LPVOID lpParam )
 	liDueTime.QuadPart = -10000000; ///< 1초 후부터 동작, SetWaitabletimer 시간 단위 = 100 나노초
 
 	// 0.1초 주기로 TimerProc 함수 실행 하도록 콜백 설정
-	if ( !SetWaitableTimer( hTimer, &liDueTime, 100, TimerProc, NULL, TRUE ) )
+	if ( !SetWaitableTimer( hTimer, &liDueTime, 10, TimerProc, NULL, TRUE ) )
 	{
 		return -1;
 	}

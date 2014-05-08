@@ -26,14 +26,14 @@ ULONGLONG ActionScheduler::GetCurrentTick( ) const
 
 void ActionScheduler::AddActionToScheduler( Action* addedAction, ULONGLONG remainTime )
 {
-	ULONGLONG workingTime = remainTime + m_CurrentTime;
+	ULONGLONG workingTime = remainTime + GetTickCount64();
 	addedAction->SetTime( workingTime );
 	m_ActionQueue.push( addedAction );
 }
 
 void ActionScheduler::DoScheduledAction()
 {
-	m_CurrentTime = GetCurrentTick();
+	m_CurrentTime = GetTickCount64();
 
 	while ( !m_ActionQueue.empty() )
 	{
