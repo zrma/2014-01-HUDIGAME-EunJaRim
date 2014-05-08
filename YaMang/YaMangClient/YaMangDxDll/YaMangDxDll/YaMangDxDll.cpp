@@ -682,39 +682,45 @@ YAMANGDXDLL_API void TransPickedTriangle( int modeSelector )
 	CUSTOMVERTEX* VerticesStartPoint;
 	presentVertexBuffer->Lock( 0, 0, (void**) &VerticesStartPoint, 0 );
 
-	BOOL bHit1 = false;
-	BOOL bHit2 = false;
+	BOOL Hit1 = false;
+	BOOL Hit2 = false;
 	float pickedX = 0.f, pickedY = 0.f;
 	float dist = 0.f;
 
 	int trianglePointA = NULL, trianglePointB = NULL, trianglePointC = NULL, trianglePointD = NULL;
 
-	for ( UINT z = 0; ( z < ( g_ZHeight - 1 ) ) && !( bHit1 | bHit2 ); ++z )
+	for ( UINT z = 0; ( z < ( g_ZHeight - 1 ) ) && !( Hit1 | Hit2 ); ++z )
 	{
-		for ( UINT x = 0; ( x < ( g_XHeight - 1 ) ) && !( bHit1 | bHit2 ); ++x )
+		if ( z % 2 == 0 )
 		{
-			trianglePointA = g_ZHeight*z + x;
-			trianglePointB = g_ZHeight*z + ( x + 1 );
-			trianglePointC = g_ZHeight*( z + 1 ) + x;
-			bHit1 = D3DXIntersectTri( &VerticesStartPoint[trianglePointA].vertexPoint, &VerticesStartPoint[trianglePointB].vertexPoint, &VerticesStartPoint[trianglePointC].vertexPoint, &g_RayOrigin, &g_RayDirection, &pickedX, &pickedY, &dist );
-			
-			trianglePointD = g_ZHeight*( z + 1 ) + ( x + 1 );
-			bHit2 = D3DXIntersectTri( &VerticesStartPoint[trianglePointB].vertexPoint, &VerticesStartPoint[trianglePointC].vertexPoint, &VerticesStartPoint[trianglePointD].vertexPoint, &g_RayOrigin, &g_RayDirection, &pickedX, &pickedY, &dist );
-			
-// 			if ( bHit1 || bHit2 )
-// 			{
-// 				break;
-// 			}
-		}
+			for ( UINT x = 0; ( x < ( g_XHeight - 1 ) ) && !( Hit1 | Hit2 ); ++x )
+			{
+				trianglePointA = g_ZHeight*z + x;
+				trianglePointB = g_ZHeight*z + ( x + 1 );
+				trianglePointC = g_ZHeight*( z + 1 ) + x;
+				Hit1 = D3DXIntersectTri( &VerticesStartPoint[trianglePointA].vertexPoint, &VerticesStartPoint[trianglePointB].vertexPoint, &VerticesStartPoint[trianglePointC].vertexPoint, &g_RayOrigin, &g_RayDirection, &pickedX, &pickedY, &dist );
 
-// 		if ( bHit1 || bHit2 )
-// 		{
-// 			break;
-// 		}
+				trianglePointD = g_ZHeight*( z + 1 ) + ( x + 1 );
+				Hit2 = D3DXIntersectTri( &VerticesStartPoint[trianglePointB].vertexPoint, &VerticesStartPoint[trianglePointC].vertexPoint, &VerticesStartPoint[trianglePointD].vertexPoint, &g_RayOrigin, &g_RayDirection, &pickedX, &pickedY, &dist );
+			}
+		}
+		else
+		{
+			for ( UINT x = g_ZHeight - 1; ( x >= 0 ) && !( Hit1 | Hit2 ); --x )
+			{
+				trianglePointA = g_ZHeight*z + x; 
+				trianglePointB = g_ZHeight*( z + 1 ) + x;
+				trianglePointC = g_ZHeight*z + ( x - 1 );
+				Hit1 = D3DXIntersectTri( &VerticesStartPoint[trianglePointA].vertexPoint, &VerticesStartPoint[trianglePointB].vertexPoint, &VerticesStartPoint[trianglePointC].vertexPoint, &g_RayOrigin, &g_RayDirection, &pickedX, &pickedY, &dist );
+
+				trianglePointD = g_ZHeight*( z + 1 ) + ( x - 1 ); 
+				Hit2 = D3DXIntersectTri( &VerticesStartPoint[trianglePointB].vertexPoint, &VerticesStartPoint[trianglePointC].vertexPoint, &VerticesStartPoint[trianglePointD].vertexPoint, &g_RayOrigin, &g_RayDirection, &pickedX, &pickedY, &dist );
+			}
+		}
 	}
 
 
-	if ( bHit1 || bHit2 )
+	if ( Hit1 || Hit2 )
 	{
 		CUSTOMVERTEX* intersectedVertexBufferStart;
 		g_Mesh->LockVertexBuffer( 0, (void**) &intersectedVertexBufferStart );
@@ -723,7 +729,7 @@ YAMANGDXDLL_API void TransPickedTriangle( int modeSelector )
 		CUSTOMVERTEX* pointB;
 		CUSTOMVERTEX* pointC;
 
-		if (bHit1)
+		if (Hit1)
 		{
 			pointA = &VerticesStartPoint[trianglePointA];
 			pointB = &VerticesStartPoint[trianglePointB];
