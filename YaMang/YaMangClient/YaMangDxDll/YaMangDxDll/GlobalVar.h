@@ -15,15 +15,6 @@ struct MYINDEX
 	UINT _0, _1, _2;
 };
 
-struct INTERSECTION
-{
-	DWORD dwFace;
-	//무게 중심점
-	FLOAT fBary1, fBary2; 
-	//origin부터의 거리
-	FLOAT fDist;
-	//FLOAT tu, tv;                 // texture coords of intersection
-};
 
 enum MODESELECTOR
 {
@@ -84,10 +75,6 @@ extern D3DXVECTOR3		g_UpVector;
 //////////////////////////////////////////////////////////////////////////
 extern D3DXVECTOR3		g_RayOrigin;
 extern D3DXVECTOR3		g_RayDirection;
-extern DWORD			g_NumIntersections;
-//한 번에 충돌체크 가능한 수(임의 설정)
-CONST DWORD maxIntersections = 10;
-extern INTERSECTION g_IntersectionArray[maxIntersections]; // Intersection info
 
 
 //////////////////////////////////////////////////////////////////////////

@@ -677,99 +677,89 @@ YAMANGDXDLL_API void CalcPickingRay( int mouseX, int mouseY )
 YAMANGDXDLL_API void TransPickedTriangle( int modeSelector )
 {
 	LPDIRECT3DVERTEXBUFFER9 presentVertexBuffer;
-	LPDIRECT3DINDEXBUFFER9 presentIndexBuffer;
-
 	g_Mesh->GetVertexBuffer( &presentVertexBuffer );
-	g_Mesh->GetIndexBuffer( &presentIndexBuffer );
 
-
-	DWORD* IndicesStartPoint;
 	CUSTOMVERTEX* VerticesStartPoint;
-
-	presentIndexBuffer->Lock( 0, 0, (void**) &IndicesStartPoint, 0 );
 	presentVertexBuffer->Lock( 0, 0, (void**) &VerticesStartPoint, 0 );
 
-	BOOL bHit;
-	DWORD dwFace;
-	FLOAT fBary1, fBary2, fDist;
+	BOOL bHit1 = false;
+	BOOL bHit2 = false;
+	float pickedX = 0.f, pickedY = 0.f;
+	float dist = 0.f;
 
-	D3DXVECTOR3 ray = g_RayDirection - g_RayOrigin;
-	D3DXVec3Normalize( &ray, &ray );
-	//Log( "changed %f, %f, %f\n", ray.x, ray.y, ray.z );
+	int trianglePointA = NULL, trianglePointB = NULL, trianglePointC = NULL, trianglePointD = NULL;
 
-	//test code 
-// 	D3DXVECTOR3 testOrg = D3DXVECTOR3( 0, 400, 0 );
-// 	D3DXVECTOR3 testRay = D3DXVECTOR3( 0, -1, 0 );
-	D3DXIntersect( g_Mesh, &g_RayOrigin, &g_RayDirection, &bHit, &dwFace, &fBary1, &fBary2, &fDist, NULL, NULL );
-	//Log( "개수 %d\n", dwFace );
-
-	if ( bHit )
+	for ( UINT z = 0; ( z < ( g_ZHeight - 1 ) ) && !( bHit1 | bHit2 ); ++z )
 	{
-		g_NumIntersections = 1;
-		g_IntersectionArray[0].dwFace = dwFace;
-		g_IntersectionArray[0].fBary1 = fBary1;
-		g_IntersectionArray[0].fBary2 = fBary2;
-		g_IntersectionArray[0].fDist = fDist;
-	}
-	else
-	{
-		g_NumIntersections = 0;
+		for ( UINT x = 0; ( x < ( g_XHeight - 1 ) ) && !( bHit1 | bHit2 ); ++x )
+		{
+			trianglePointA = g_ZHeight*z + x;
+			trianglePointB = g_ZHeight*z + ( x + 1 );
+			trianglePointC = g_ZHeight*( z + 1 ) + x;
+			bHit1 = D3DXIntersectTri( &VerticesStartPoint[trianglePointA].vertexPoint, &VerticesStartPoint[trianglePointB].vertexPoint, &VerticesStartPoint[trianglePointC].vertexPoint, &g_RayOrigin, &g_RayDirection, &pickedX, &pickedY, &dist );
+			
+			trianglePointD = g_ZHeight*( z + 1 ) + ( x + 1 );
+			bHit2 = D3DXIntersectTri( &VerticesStartPoint[trianglePointB].vertexPoint, &VerticesStartPoint[trianglePointC].vertexPoint, &VerticesStartPoint[trianglePointD].vertexPoint, &g_RayOrigin, &g_RayDirection, &pickedX, &pickedY, &dist );
+			
+// 			if ( bHit1 || bHit2 )
+// 			{
+// 				break;
+// 			}
+		}
+
+// 		if ( bHit1 || bHit2 )
+// 		{
+// 			break;
+// 		}
 	}
 
 
-	if ( g_NumIntersections > 0 )
+	if ( bHit1 || bHit2 )
 	{
 		CUSTOMVERTEX* intersectedVertexBufferStart;
-		DWORD* intersectedTriIndices;
-		INTERSECTION* intersection;
-
 		g_Mesh->LockVertexBuffer( 0, (void**) &intersectedVertexBufferStart );
 
-		for ( DWORD i = 0; i < g_NumIntersections; ++i )
+		CUSTOMVERTEX* pointA;
+		CUSTOMVERTEX* pointB;
+		CUSTOMVERTEX* pointC;
+
+		if (bHit1)
 		{
-			intersection = &g_IntersectionArray[i];
+			pointA = &VerticesStartPoint[trianglePointA];
+			pointB = &VerticesStartPoint[trianglePointB];
+			pointC = &VerticesStartPoint[trianglePointC];
+		}
+		else
+		{
+			pointA = &VerticesStartPoint[trianglePointB];
+			pointB = &VerticesStartPoint[trianglePointC];
+			pointC = &VerticesStartPoint[trianglePointD];
+		}
+		
+		pointA->Diffuse = D3DCOLOR_ARGB( 255, 30, 100, 100 );
+		pointB->Diffuse = D3DCOLOR_ARGB( 255, 30, 100, 100 );
+		pointC->Diffuse = D3DCOLOR_ARGB( 255, 30, 100, 100 );
 
-			//vertexBuffer 내에서 부딫힌 vertex 주소 값 찾는 부분
-			//intersectedTriVertices = &intersectedVertexBufferStart[i * 3];
-			//index 주소 값 찾는 것
-			intersectedTriIndices = &IndicesStartPoint[3*intersection->dwFace];
-// 			Log( "1번째: %d %d %d \n", intersectedTriIndices[0], intersectedTriIndices[1], intersectedTriIndices[2] );
-// 			Log( "2번째: %d %d %d \n", intersectedTriIndices[3], intersectedTriIndices[4], intersectedTriIndices[5] );
-// 			Log( "3번째: %d %d %d \n", intersectedTriIndices[6], intersectedTriIndices[7], intersectedTriIndices[8] );
-// 			Log( "4번째: %d %d %d \n", intersectedTriIndices[9], intersectedTriIndices[10], intersectedTriIndices[11] );
+		modeSelector = static_cast<MODESELECTOR>( modeSelector );
 
-			//vertex와 index 바인딩
-			VerticesStartPoint[intersectedTriIndices[0]].Diffuse = D3DCOLOR_ARGB( 255, 30, 100, 100 );
-			VerticesStartPoint[intersectedTriIndices[1]].Diffuse = D3DCOLOR_ARGB( 255, 30, 100, 100 );
-			VerticesStartPoint[intersectedTriIndices[2]].Diffuse = D3DCOLOR_ARGB( 255, 30, 100, 100 );
-
-			modeSelector = static_cast<MODESELECTOR>( modeSelector );
-
-			switch ( modeSelector )
-			{
-				case AREA_HIGHER:
-					VerticesStartPoint[intersectedTriIndices[0]].vertexPoint.y += 2;
-					VerticesStartPoint[intersectedTriIndices[1]].vertexPoint.y += 2;
-					VerticesStartPoint[intersectedTriIndices[2]].vertexPoint.y += 2;
-					break;
-				case AREA_LOWER:
-					VerticesStartPoint[intersectedTriIndices[0]].vertexPoint.y -= 2;
-					VerticesStartPoint[intersectedTriIndices[1]].vertexPoint.y -= 2;
-					VerticesStartPoint[intersectedTriIndices[2]].vertexPoint.y -= 2;
-					break;
-				default:
-					break;
-			}
+		switch ( modeSelector )
+		{
+			case AREA_HIGHER:
+				
+				break;
+			case AREA_LOWER:
+				
+				break;
+			default:
+				break;
 		}
 
 		g_Mesh->UnlockVertexBuffer();
 	}
 
 	presentVertexBuffer->Unlock();
-	presentIndexBuffer->Unlock();
 	
 	presentVertexBuffer->Release();
-	presentIndexBuffer->Release();
 }
 
 //////////////////////////////////////////////////////////////////////////
