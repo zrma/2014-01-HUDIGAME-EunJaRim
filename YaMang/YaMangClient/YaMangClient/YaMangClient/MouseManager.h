@@ -32,6 +32,12 @@ public:
 
 	void			SetWndLocation( int posX, int posY ) { m_WndLocationX = posX; m_WndLocationY = posY; }
 
+	bool			IsLeftClicked() { return m_IsLeftClicked; }
+	bool			IsRightClicked() { return m_IsRightClicked; }
+
+	void			SetLeftClick(bool isclicked){ m_IsLeftClicked = isclicked; }
+	void			SetRightClick(bool isclicked){ m_IsRightClicked = isclicked; }
+
 private:
 	//윈도우 커서 고정 좌표 저장
 	int				m_WndXPos = 0;
@@ -52,4 +58,9 @@ private:
 
 	bool			m_GameCursorMod = false;
 	MouseStatus		m_MouseStatus = MouseStatus::MOUSE_NONE;
+
+	//클릭 상태 저장
+	bool			m_IsLeftClicked = false;
+	bool			m_IsRightClicked = false;
+
 };

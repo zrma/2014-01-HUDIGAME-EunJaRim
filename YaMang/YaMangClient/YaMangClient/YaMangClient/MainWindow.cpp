@@ -90,6 +90,33 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam ) con
 		case WM_ERASEBKGND:
 			return 1;
 
+		//마우스 클릭 상태
+		case WM_LBUTTONDOWN:
+		{
+			MouseManager::GetInstance()->SetLeftClick(true);
+		}
+			return 0;
+
+		case WM_LBUTTONUP:
+		{
+			MouseManager::GetInstance()->SetLeftClick(false);
+			SoundManager::GetInstance()->PlaySound(SOUND_SYSTEM_MOUSE_CLICK);
+		}
+			return 0;
+
+		case WM_RBUTTONDOWN:
+		{
+			MouseManager::GetInstance()->SetRightClick(true);
+		}
+			return 0;
+
+		case WM_RBUTTONUP:
+		{
+			MouseManager::GetInstance()->SetRightClick(false);
+			SoundManager::GetInstance()->PlaySound(SOUND_SYSTEM_MOUSE_CLICK);
+		}
+			return 0;
+
 		case WM_MOVE:
 		{
 			int LocationX = LOWORD( lParam );
@@ -123,15 +150,6 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam ) con
 			MouseManager::GetInstance()->MoveHiddenCursorToCenter();
 
 		}
-			return 0;
-
-		case WM_LBUTTONDOWN:
-		{
-		}
-			return 0;
-
-		case WM_LBUTTONUP:
-			SoundManager::GetInstance()->PlaySound( SOUND_SYSTEM_MOUSE_CLICK );
 			return 0;
 
 		default:
