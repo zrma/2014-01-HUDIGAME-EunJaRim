@@ -65,4 +65,7 @@ private:
 	bool			m_IsLeftClicked = false;
 	bool			m_IsRightClicked = false;
 
+	//드래그 상태 저장
+	bool			m_IsLeftDragging = false;
+	bool			m_IsRightDragging = false;
 };

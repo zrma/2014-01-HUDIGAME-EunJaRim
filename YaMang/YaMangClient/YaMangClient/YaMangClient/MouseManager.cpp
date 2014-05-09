@@ -66,6 +66,23 @@ void MouseManager::MoveMousePosition( int x, int y )
 	{
 		m_MousePosition.Y = 5;
 	}
+
+	// 처음 클릭 시작된 점과 일정 거리 이상 떨어졌을 경우 드래그 상태로 전환
+	if (m_IsLeftClicked)
+	{
+		if (GetDistanceBetweenCOORD(m_MousePosition, m_PressedMousePosition) > 3.f)
+		{
+			m_IsLeftDragging = true;
+		}
+	}
+
+	if (m_IsRightClicked)
+	{
+		if (GetDistanceBetweenCOORD(m_MousePosition, m_PressedMousePosition) > 3.f)
+		{
+			m_IsRightDragging = true;
+		}
+	}
 }
 
 void MouseManager::MoveHiddenCursorToCenter()
@@ -106,12 +123,10 @@ void MouseManager::SetLeftClick( bool isclicked )
 	}
 	else //버튼 업시
 	{
-		//두 점 사이가 어느정도 떨어져 있을 경우 드래그 처리
-		if ( GetDistanceBetweenCOORD( m_MousePosition, m_PressedMousePosition ) <= 3.f )
+		if (m_IsLeftDragging)
 		{
-			return;
+			SetLeftDrag();
 		}
-		SetLeftDrag();
 	}
 }
 
@@ -126,25 +141,24 @@ void MouseManager::SetRightClick(bool isclicked)
 		//드래그 시작 포인트 저장 ; 첫 DOWN시 한번만 실행되므로
 		SetDragStartPoint(m_MousePosition.X, m_MousePosition.Y);
 	}
-	else // 버튼 업 시
+	else //버튼 업시
 	{
-		//두 점 사이가 어느정도 떨어져 있을 경우 드래그 처리
-		if ( GetDistanceBetweenCOORD( m_MousePosition, m_PressedMousePosition ) <= 3.f )
+		if (m_IsRightDragging)
 		{
-			return;
+			SetRightDrag();
 		}
-		SetRightDrag();
 	}
 }
 
 void MouseManager::SetLeftDrag()
 {
 	Log( "드래그 종료 결과 %d, %d \n", m_MousePosition.X, m_MousePosition.Y );
+	m_IsLeftDragging = false;
 }
 
 void MouseManager::SetRightDrag()
 {
-
+	m_IsRightDragging = false;
 }
 
 double MouseManager::GetDistanceBetweenCOORD( COORD C1, COORD C2 )
@@ -154,7 +168,7 @@ double MouseManager::GetDistanceBetweenCOORD( COORD C1, COORD C2 )
 
 	double ret = sqrt(distanceX*distanceX + distanceY*distanceY);
 
-	printf_s("%fl\n", ret);
+	//printf_s("%fl\n", ret);
 	return ret;
 }
 
