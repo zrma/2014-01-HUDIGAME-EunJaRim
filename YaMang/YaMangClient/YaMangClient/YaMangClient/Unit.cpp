@@ -35,6 +35,14 @@ void Unit::Render() const
 		return;
 
 	D3DXMATRIXA16 thisMatrix = GetMatrix( false );
+
+	if ( m_Corps->IsSelected() )
+	{
+		D3DXMATRIXA16 scaleMatrix;
+		D3DXMatrixScaling( &scaleMatrix, 1.2f, 1.2f, 1.2f );
+
+		thisMatrix = scaleMatrix * thisMatrix;
+	}
 	Renderer::GetInstance()->SetWorldMatrix( thisMatrix );
 
 	ResourceMesh* mesh = ResourceManager::GetInstance()->GetMeshByKey( m_MeshKey );
