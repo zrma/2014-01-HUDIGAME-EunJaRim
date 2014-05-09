@@ -3,6 +3,8 @@
 #include "MainWindow.h"
 
 #include "YaMangDxDll.h"
+#include "SceneManager.h"
+#include "ScenePlay.h"
 
 MouseManager::MouseManager()
 {
@@ -85,9 +87,17 @@ void MouseManager::SetLeftClick( bool isclicked )
 		float pickedX = 0;
 		float pickedZ = 0;
 
-		CalcPickingRay( m_MousePosition.X, m_MousePosition.Y );
-		TransPickedTriangle( 0, &pickedX, &pickedZ );
+		Scene* scene = SceneManager::GetInstance()->GetNowScene();
 
+		if ( typeid( ScenePlay ) != typeid( *scene ) )
+		{
+			return;
+		}
+
+		CalcPickingRay( m_MousePosition.X, m_MousePosition.Y );
+		TransPickedTriangle( 1, &pickedX, &pickedZ );
+
+		static_cast<ScenePlay*>(scene)->SearchCorpsIdByPosition( pickedX, pickedZ );
 		Log( "[ %f, %f ] 피킹 중 \n", pickedX, pickedZ );
 	}
 }

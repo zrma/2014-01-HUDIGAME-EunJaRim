@@ -23,6 +23,8 @@ public:
 	void		MoveCorpsStop( int corpsID, D3DXVECTOR3 targetPosition, D3DXVECTOR3 lookAtVector );
 	void		SetCorpsHP( int corpsID, int unitNum );
 
+	int			SearchCorpsIdByPosition( float x, float z );
+
 	UnitType	GetUnitTypeByID( int corpsID );
 
 private:

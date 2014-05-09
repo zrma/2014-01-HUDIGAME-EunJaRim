@@ -161,7 +161,7 @@ void NetworkManager::HandleGenerateCorpsResult( GenerateCorpsResult& inPacket )
 		Scene* scene =  SceneManager::GetInstance()->GetNowScene();
 		if ( typeid( ScenePlay ) == typeid( *scene ) )
 		{
-			ScenePlay* scenePlay = static_cast<ScenePlay*>( SceneManager::GetInstance()->GetNowScene() );
+			ScenePlay* scenePlay = static_cast<ScenePlay*>( scene );
 			scenePlay->AddCorps( corpsID, corps );
 			Log( "GenerateCorps! Type:%d CorpID:%d \n", unitType, corpsID );
 
@@ -197,7 +197,7 @@ void NetworkManager::HandleChangeCorpsFormationResult( ChangeCorpsFormationResul
 		Scene* scene = SceneManager::GetInstance()->GetNowScene();
 		if ( typeid( ScenePlay ) == typeid( *scene ) )
 		{
-			ScenePlay* scenePlay = static_cast<ScenePlay*>( SceneManager::GetInstance()->GetNowScene() );
+			ScenePlay* scenePlay = static_cast<ScenePlay*>( scene );
 			scenePlay->ChangeCorpsFormation( corpsID, formationType );
 			Log( "ChangeCorpsFormation! CorpID:%d Type:%d  \n", corpsID, formationType );
 		}
@@ -239,7 +239,7 @@ void NetworkManager::HandleMoveCorpsResult( MoveCorpsResult& inPacket )
 		Scene* scene = SceneManager::GetInstance()->GetNowScene();
 		if ( typeid( ScenePlay ) == typeid( *scene ) )
 		{
-			ScenePlay* scenePlay = static_cast<ScenePlay*>( SceneManager::GetInstance()->GetNowScene() );
+			ScenePlay* scenePlay = static_cast<ScenePlay*>( scene );
 			scenePlay->MoveCorpsStart( corpsID, targetPosition, lookAtVector, speed );
 			Log( "CorpsMoving! CorpID:%d - Move To X:%f Z:%f Speed:%f \n", corpsID, lookAtVector.x, lookAtVector.z, speed );
 			SoundManager::GetInstance()->PlaySound( SOUND_CORPS_MOVE );
@@ -280,7 +280,7 @@ void NetworkManager::HandleStopCorpsResult( StopCorpsResult& inPacket )
 		Scene* scene = SceneManager::GetInstance()->GetNowScene();
 		if ( typeid( ScenePlay ) == typeid( *scene ) )
 		{
-			ScenePlay* scenePlay = static_cast<ScenePlay*>( SceneManager::GetInstance()->GetNowScene() );
+			ScenePlay* scenePlay = static_cast<ScenePlay*>( scene );
 			scenePlay->MoveCorpsStop( corpsID, targetPosition, lookAtVector );
 			Log( "CorpsStop! CorpID:%d \n", corpsID );
 		}
@@ -332,7 +332,7 @@ void NetworkManager::HandleAttackCorpsResult( AttackCorpsResult& inPacket )
 		Scene* scene = SceneManager::GetInstance()->GetNowScene();
 		if ( typeid( ScenePlay ) == typeid( *scene ) )
 		{
-			ScenePlay* scenePlay = static_cast<ScenePlay*>( SceneManager::GetInstance()->GetNowScene() );
+			ScenePlay* scenePlay = static_cast<ScenePlay*>( scene );
 			scenePlay->MoveCorpsStop( attackerCorpsID, attackerNow, attackerLook );
 			scenePlay->MoveCorpsStop( targetCorpsID, targetNow, targetLook );
 			scenePlay->SetCorpsHP( targetCorpsID, unitNum );

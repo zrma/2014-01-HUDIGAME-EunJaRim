@@ -44,6 +44,9 @@
     <Filter Include="UnitObject\Collision">
       <UniqueIdentifier>{004e144e-b1f2-48a5-9563-fd3f16cc3089}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Player">
+      <UniqueIdentifier>{78444145-5232-461d-9f90-03b763774cf0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -181,6 +184,7 @@
     <ClInclude Include="MouseManager.h">
       <Filter>Event</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -291,6 +295,7 @@
     <ClCompile Include="MouseManager.cpp">
       <Filter>Event</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="YaMangClient.rc">

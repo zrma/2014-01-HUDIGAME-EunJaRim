@@ -109,6 +109,7 @@
     <ClInclude Include="MouseRender.h" />
     <ClInclude Include="NetworkManager.h" />
     <ClInclude Include="Pike.h" />
+    <ClInclude Include="PlayerManager.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Interface3D.h" />
     <ClInclude Include="Resource.h" />
@@ -149,6 +150,7 @@
     <ClCompile Include="MouseRender.cpp" />
     <ClCompile Include="NetworkManager.cpp" />
     <ClCompile Include="Pike.cpp" />
+    <ClCompile Include="PlayerManager.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Interface3D.cpp" />
     <ClCompile Include="ResourceManager.cpp" />

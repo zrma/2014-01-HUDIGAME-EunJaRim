@@ -4,8 +4,8 @@
 
 static const WCHAR WINDOW_NAME[] = L"YaMang";
 const int WM_SOCKET = 104;
-const int WINDOW_WIDTH = 1282; // 1280;
-const int WINDOW_HEIGHT = 802; // 720;
+const int WINDOW_WIDTH = 640; // 1280;
+const int WINDOW_HEIGHT = 480; // 720;
 
 class GameManager;
 

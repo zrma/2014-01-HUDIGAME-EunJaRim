@@ -14,6 +14,8 @@ public:
 	void	ProcessPacket();
 	bool	Connect();
 	bool	HandleMessage( WPARAM wParam, LPARAM lParam );
+
+	int		GetMyPlayerID() { return m_MyPlayerId; }
 	
 	//////////////////////////////////////////////////////////////////////////
 	// 패킷 핸들러

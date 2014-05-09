@@ -21,6 +21,8 @@ public:
 	int		GetCorpsHP() const { return m_UnitList.size(); }
 	void	SetCorpsHP( int unitNum );
 
+	int		GetOwnPlayerID() const { return m_OwnerPlayerID; }
+	
 	UnitType		GetUnitType() const { return m_UnitType; }
 	void			SetFormation( FormationType formation ) { m_TargetFormation = formation; }
 	D3DXVECTOR3		GetFormation( int unitId ) const;
@@ -43,6 +45,7 @@ private:
 	Corps();
 	Corps( const Corps& );
 	Corps& operator=( const Corps& );
+
 	std::vector<Unit*>		m_UnitList;
 	int						m_CorpsID = -1;
 	int						m_OwnerPlayerID = -1;

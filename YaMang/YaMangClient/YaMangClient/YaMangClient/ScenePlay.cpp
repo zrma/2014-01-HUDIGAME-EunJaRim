@@ -9,6 +9,8 @@
 #include "SoundManager.h"
 #include "MouseRender.h"
 
+#include "NetworkManager.h"
+
 ScenePlay::ScenePlay()
 {
 }
@@ -190,3 +192,24 @@ UnitType ScenePlay::GetUnitTypeByID( int corpsID )
 	return UnitType::UNIT_NONE;
 }
 
+int ScenePlay::SearchCorpsIdByPosition( float x, float z )
+{
+	for ( auto& iter : m_CorpsList )
+	{
+		auto& thisCorps = iter.second;
+
+		if ( thisCorps->GetOwnPlayerID() != NetworkManager::GetInstance()->GetMyPlayerID() )
+		{
+			// continue;
+		}
+
+		D3DXVECTOR3& thisPosition = thisCorps->GetEyePoint();
+
+		if ( ( thisPosition.x - x < 3.0 && thisPosition.x - x > -3.0 ) && ( thisPosition.x - x < 3.0 && thisPosition.x - x > -3.0 ) )
+		{
+			Log( "%d번 부대 피킹!!! \n", thisCorps->GetCorpsID() );
+		}
+	}
+
+	return 0;
+}

@@ -212,6 +212,10 @@ YAMANGDXDLL_API void Rendering( MESHOBJECT* inputVal )
 
 YAMANGDXDLL_API void PostRendering()
 {
+	D3DXMATRIXA16 identityMatrix;
+	D3DXMatrixIdentity( &identityMatrix );
+	SetMatrix( &identityMatrix );
+
 	g_D3dDevice->EndScene();
 
 	//Log( "Render End \n" );
@@ -723,17 +727,16 @@ YAMANGDXDLL_API void TransPickedTriangle( int modeSelector, float* pickedX, floa
 		}
 	}
 
-
-	if ( Hit1 || Hit2 )
+	if ( ( Hit1 || Hit2 ) && dist > 0 )
 	{
 		CUSTOMVERTEX* intersectedVertexBufferStart;
-		g_Mesh->LockVertexBuffer( 0, (void**) &intersectedVertexBufferStart );
+		g_Mesh->LockVertexBuffer( 0, (void**)&intersectedVertexBufferStart );
 
 		CUSTOMVERTEX* pointA;
 		CUSTOMVERTEX* pointB;
 		CUSTOMVERTEX* pointC;
 
-		if (Hit1)
+		if ( Hit1 )
 		{
 			pointA = &VerticesStartPoint[trianglePointA];
 			pointB = &VerticesStartPoint[trianglePointB];
@@ -745,7 +748,7 @@ YAMANGDXDLL_API void TransPickedTriangle( int modeSelector, float* pickedX, floa
 			pointB = &VerticesStartPoint[trianglePointC];
 			pointC = &VerticesStartPoint[trianglePointD];
 		}
-		
+
 		modeSelector = static_cast<MODESELECTOR>( modeSelector );
 
 		switch ( modeSelector )
@@ -758,10 +761,10 @@ YAMANGDXDLL_API void TransPickedTriangle( int modeSelector, float* pickedX, floa
 			}
 				break;
 			case AREA_HIGHER:
-				
+
 				break;
 			case AREA_LOWER:
-				
+
 				break;
 			default:
 				break;
