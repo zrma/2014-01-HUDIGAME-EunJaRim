@@ -254,9 +254,9 @@ void ClientSession::HandleGenerateCorpsRequest( GenerateCorpsRequest& inPacket )
 	position.m_EyePoint = { nowX, 0.0f, nowZ };
 	position.m_LookAtPoint = { lookX, 0.0f, lookZ };
 
-	int generatedCorpsID = m_ClientManager->GenerateCorps( m_PlayerID, unitType, position );
+	const Corps* corps = m_ClientManager->GenerateCorps( m_PlayerID, unitType, position );
 
-	if ( generatedCorpsID == -1 )
+	if ( nullptr == corps )
 	{
 		assert( false );
 	}
@@ -267,15 +267,10 @@ void ClientSession::HandleGenerateCorpsRequest( GenerateCorpsRequest& inPacket )
 	outPacket.m_NowZ = nowZ;
 	outPacket.m_LookX = lookX;
 	outPacket.m_LookZ = lookZ;
-	outPacket.m_CorpsID = generatedCorpsID;
+	outPacket.m_CorpsID = corps->GetCorpsID();
 	outPacket.m_PlayerId = m_PlayerID;
-	outPacket.m_FormationType = FormationType::FORMATION_NONE;
-	outPacket.m_UnitNum = 10;
-
-	if ( unitType == UnitType::UNIT_GUARD )
-	{
-		outPacket.m_UnitNum = 5;
-	}
+	outPacket.m_FormationType = corps->GetFormationType();
+	outPacket.m_UnitNum = corps->GetUnitNum();
 
 	if ( !Broadcast( &outPacket ) )
 	{
@@ -283,7 +278,7 @@ void ClientSession::HandleGenerateCorpsRequest( GenerateCorpsRequest& inPacket )
 	}
 
 	printf_s( "GenerateCorps! Type:%d CorpID:%d PlayerID:%d \n",
-			  unitType, generatedCorpsID, m_PlayerID );
+			  unitType, corps->GetCorpsID( ), m_PlayerID );
 }
 
 

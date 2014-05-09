@@ -157,10 +157,6 @@ void NetworkManager::HandleGenerateCorpsResult( GenerateCorpsResult& inPacket )
 		FormationType formationType = inPacket.m_FormationType;
 		int unitNum = inPacket.m_UnitNum;
 
-		// !!!!!!!! 서버가 초기화를 안해서 보내고 있음!!! 급 수정 요망!!!
-		formationType = FormationType::FORMATION_RUSH;
-		unitNum = 10;
-
 
 		Scene* scene =  SceneManager::GetInstance()->GetNowScene();
 		if ( typeid( ScenePlay ) == typeid( *scene ) )

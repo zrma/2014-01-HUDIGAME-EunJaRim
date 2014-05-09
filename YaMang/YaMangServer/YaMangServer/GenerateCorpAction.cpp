@@ -5,6 +5,7 @@
 #include "ClientManager.h"
 #include "PacketType.h"
 #include "ClientSession.h"
+#include "Corps.h"
 
 GenerateCorpAction::GenerateCorpAction( )
 {
@@ -66,7 +67,7 @@ void GenerateCorpAction::OnTick( )
 	position.m_EyePoint = { nowX, 0.0f, nowZ };
 	position.m_LookAtPoint = { lookX, 0.0f, lookZ };
 
-	int generatedCorpsID = m_ClientManager->GenerateCorps( m_PlayerID, unitType, position );
+	const Corps* corps = m_ClientManager->GenerateCorps( m_PlayerID, unitType, position );
 
 
 	GenerateCorpsResult outPacket;
@@ -75,21 +76,17 @@ void GenerateCorpAction::OnTick( )
 	outPacket.m_NowZ = nowZ;
 	outPacket.m_LookX = lookX;
 	outPacket.m_LookZ = lookZ;
-	outPacket.m_CorpsID = generatedCorpsID;
+	outPacket.m_CorpsID = corps->GetCorpsID();
 	outPacket.m_PlayerId = m_PlayerID;
 
-	outPacket.m_FormationType = FormationType::FORMATION_NONE;
-	outPacket.m_UnitNum = 10;
+	outPacket.m_FormationType = corps->GetFormationType();
+	outPacket.m_UnitNum = corps->GetUnitNum();
 
-	if ( unitType == UnitType::UNIT_GUARD )
-	{
-		outPacket.m_UnitNum = 5;
-	}
 
 	m_ClientManager->BroadcastPacket( &outPacket );
 
 	printf_s( "GenerateCorps! Type:%d CorpID:%d PlayerID:%d \n",
-			  unitType, generatedCorpsID, m_PlayerID );
+			  unitType, corps->GetCorpsID( ), m_PlayerID );
 
 	m_ClientSession->AddCorpsNum();
 

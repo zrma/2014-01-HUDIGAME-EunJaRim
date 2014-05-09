@@ -2,6 +2,7 @@
 <Unit>
 	<Arrow>
 		<HP>100.0f</HP>
+		<HP>100.0f</HP>
 		<MoveSpeed>3.0f</MoveSpeed>
 		<MoveSpeedBonus>0.0f</MoveSpeedBonus>
 		<AttackRange>24.0f</AttackRange>
@@ -14,7 +15,7 @@
 		<AttackDelayBonus>0</AttackDelayBonus>
 	</Arrow>
 	<Guard>
-		<HP>100.0f</HP>
+		<HP>50.0f</HP>
 		<MoveSpeed>3.0f</MoveSpeed>
 		<MoveSpeedBonus>0.0f</MoveSpeedBonus>
 		<AttackRange>1.0f</AttackRange>

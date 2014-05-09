@@ -435,7 +435,7 @@ bool ClientManager::ReadMapFile( const char* filename )
 	return true;
 }
 
-int ClientManager::GenerateCorps( int playerID, UnitType type, PositionInfo position )
+const Corps* ClientManager::GenerateCorps( int playerID, UnitType type, PositionInfo position )
 {
 	Corps* corps = nullptr;
 	switch ( type )
@@ -456,11 +456,11 @@ int ClientManager::GenerateCorps( int playerID, UnitType type, PositionInfo posi
 			corps = new Sword( playerID, ++m_CorpsIDCount, type, position, this );
 			break;
 		default:
-			return -1;
+			return nullptr;
 	}
 
 	m_CorpsList.insert( CorpsList::value_type( m_CorpsIDCount, corps ) );
-	return corps->GetCorpsID();
+	return corps;
 }
 
 Corps* ClientManager::GetCorpsByCorpsID( int corpsID )

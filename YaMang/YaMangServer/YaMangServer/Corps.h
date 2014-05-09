@@ -39,6 +39,9 @@ public:
 	void					MoveStop();
 	void					ReCalculatePosition();
 
+protected:
+	void					CalculateHP();
+
 
 private:
 	Corps();
@@ -58,7 +61,7 @@ protected:
 
 	Action*					m_HoldAction = nullptr;
 
-	float					m_HP = 100.0f;
+	float					m_HP = 0.0f;
 	float					m_MoveSpeed = 0.0f;
 	float					m_MoveSpeedBonus = 0.0f;
 

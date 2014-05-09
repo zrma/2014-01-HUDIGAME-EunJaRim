@@ -6,7 +6,6 @@ Sword::Sword( int playerID, int corpsID, UnitType unitType, PositionInfo positio
 :Corps( playerID, corpsID, unitType, position, clientManager )
 {
 	m_HP = UnitStatus::g_SwordHP;
-	m_UnitNum = 10;
 	m_MoveSpeed = UnitStatus::g_SwordMoveSpeed;
 	m_MoveSpeedBonus = UnitStatus::g_SwordMoveSpeedBonus;
 
@@ -21,6 +20,8 @@ Sword::Sword( int playerID, int corpsID, UnitType unitType, PositionInfo positio
 
 	m_AttackDelay = UnitStatus::g_SwordAttackDelay;
 	m_AttackDelayBonus = UnitStatus::g_SwordAttackDelayBonus;
+
+	CalculateHP();
 }
 
 Sword::~Sword()

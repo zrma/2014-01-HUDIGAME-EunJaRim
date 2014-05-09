@@ -35,9 +35,15 @@ void Corps::AddDamage( float damage )
 		
 	}
 
-	float targetHP = m_HP + 9; // hp가 1이라도 1명이 생존해 있을수 있게 하기위해 9를 더한다.
-	m_UnitNum = static_cast<int>( targetHP / 10 );
+	CalculateHP();
 }
+
+
+void Corps::CalculateHP()
+{
+	m_UnitNum = static_cast<int>( ( m_HP + 9 ) / 10 ); // hp가 1이라도 1명이 생존해 있을수 있게 하기위해 9를 더한다.
+}
+
 
 void Corps::DoNextAction( Action* addedAction, ULONGLONG remainTime )
 {

@@ -6,7 +6,6 @@ Knight::Knight( int playerID, int corpsID, UnitType unitType, PositionInfo posit
 :Corps( playerID, corpsID, unitType, position, clientManager )
 {
 	m_HP = UnitStatus::g_KnightHP;
-	m_UnitNum = 10;
 	m_MoveSpeed = UnitStatus::g_KnightMoveSpeed;
 	m_MoveSpeedBonus = UnitStatus::g_KnightMoveSpeedBonus;
 
@@ -21,6 +20,8 @@ Knight::Knight( int playerID, int corpsID, UnitType unitType, PositionInfo posit
 
 	m_AttackDelay = UnitStatus::g_KnightAttackDelay;
 	m_AttackDelayBonus = UnitStatus::g_KnightAttackDelayBonus;
+
+	CalculateHP();
 }
 
 Knight::~Knight()

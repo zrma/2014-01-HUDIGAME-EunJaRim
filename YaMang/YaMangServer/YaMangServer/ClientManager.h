@@ -47,7 +47,7 @@ public:
 
 
 
-	int					GenerateCorps( int playerID, UnitType type, PositionInfo position );
+	const Corps*		GenerateCorps( int playerID, UnitType type, PositionInfo position );
 
 	typedef std::hash_map<int, Corps*> CorpsList;
 	const CorpsList&	GetCorpsList() { return m_CorpsList; }

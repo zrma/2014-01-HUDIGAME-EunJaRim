@@ -5,9 +5,7 @@
 Arrow::Arrow( int playerID, int corpsID, UnitType unitType, PositionInfo position, ClientManager* clientManager )
 :Corps( playerID, corpsID, unitType, position, clientManager )
 {
-
 	m_HP = UnitStatus::g_ArrowHP;
-	m_UnitNum = 10;
 	m_MoveSpeed = UnitStatus::g_ArrowMoveSpeed;
 	m_MoveSpeedBonus = UnitStatus::g_ArrowMoveSpeedBonus;
 
@@ -23,6 +21,7 @@ Arrow::Arrow( int playerID, int corpsID, UnitType unitType, PositionInfo positio
 	m_AttackDelay = UnitStatus::g_ArrowAttackDelay;
 	m_AttackDelayBonus = UnitStatus::g_ArrowAttackDelayBonus;
 
+	CalculateHP();
 }
 
 Arrow::~Arrow()
