@@ -116,7 +116,7 @@ void MouseManager::SetLeftClick( bool isclicked )
 		}
 
 		CalcPickingRay( m_MousePosition.X, m_MousePosition.Y );
-		TransPickedTriangle( 1, &pickedX, &pickedZ );
+		TransPickedTriangle( 0, &pickedX, &pickedZ );
 
 		static_cast<ScenePlay*>(scene)->SearchCorpsIdByPosition( pickedX, pickedZ );
 		Log( "[%d %d] -> [%f, %f] 으로 피킹 중 \n", m_MousePosition.X, m_MousePosition.Y, pickedX, pickedZ );

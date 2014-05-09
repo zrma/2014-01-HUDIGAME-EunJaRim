@@ -21,6 +21,8 @@ public:
 	void			SetEyePoint( D3DXVECTOR3 eyePoint ) { m_EyePoint = eyePoint; }
 	D3DXVECTOR3		GetLookAtPoint() const { return m_LookAtPoint; }
 	void			SetLookAtPoint( D3DXVECTOR3 lookAtPoint ) { m_LookAtPoint = lookAtPoint; }
+	D3DXVECTOR3		GetScale() const { return m_Scale; }
+	void			SetScale( D3DXVECTOR3 scale ) { m_Scale = scale; }
 	
 	D3DXVECTOR3		GetTargetPosition() const { return m_TargetPoint; }
 	void			SetTargetPosition( D3DXVECTOR3 targetPosition ) { m_TargetPoint = targetPosition; }

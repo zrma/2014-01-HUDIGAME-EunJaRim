@@ -208,6 +208,11 @@ int ScenePlay::SearchCorpsIdByPosition( float x, float z )
 		if ( ( thisPosition.x - x < 3.0 && thisPosition.x - x > -3.0 ) && ( thisPosition.x - x < 3.0 && thisPosition.x - x > -3.0 ) )
 		{
 			Log( "%d번 부대 피킹!!! \n", thisCorps->GetCorpsID() );
+			thisCorps->SetSelected( true );
+		}
+		else
+		{
+			thisCorps->SetSelected( false );
 		}
 	}
 

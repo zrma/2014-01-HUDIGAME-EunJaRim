@@ -29,18 +29,20 @@ public:
 
 	typedef std::function<void( Corps& )>	ActionFunc;
 
-	void			ChangeAction( ActionFunc action ) { m_Action = action; }
-	void			DoAction() { m_Action( *this ); }
-	void			ClearAction();
+	void	ChangeAction( ActionFunc action ) { m_Action = action; }
+	void	DoAction() { m_Action( *this ); }
+	void	ClearAction();
 
 	typedef std::function<void( Unit&, Corps& )> ActFunc;
 
-	void			SetAct( ActFunc act );
-	void			SetActStatus( ActionStatusType actionStatus );
-
-	void			GoFoward();
-	void			LookForward();
+	void	SetAct( ActFunc act );
+	void	SetActStatus( ActionStatusType actionStatus );
+	void	GoFoward();
+	void	LookForward();
 	
+	bool	IsSelected() const { return m_IsSelected; }
+	void	SetSelected( bool selected ) { m_IsSelected = selected; }
+
 private:
 	Corps();
 	Corps( const Corps& );
@@ -49,11 +51,13 @@ private:
 	std::vector<Unit*>		m_UnitList;
 	int						m_CorpsID = -1;
 	int						m_OwnerPlayerID = -1;
-	UnitType				m_UnitType;
+	UnitType				m_UnitType = UnitType::UNIT_NONE;
 
 	FormationType			m_NowFormation = FormationType::FORMATION_NONE;
 	FormationType			m_TargetFormation = FormationType::FORMATION_NONE;
 	std::array<BreadBoard*, static_cast<size_t>(FormationType::FORMATION_MAX)> m_FormationArray;
+
+	bool	m_IsSelected = false;
 
 	ActionFunc	m_Action;
 };
