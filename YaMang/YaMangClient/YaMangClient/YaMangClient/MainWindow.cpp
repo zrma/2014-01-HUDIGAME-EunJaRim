@@ -215,6 +215,7 @@ BOOL MainWindow::Create( PCWSTR lpWindowName, DWORD dwStyle, DWORD dwExStyle /*=
 	nWidth = GetSystemMetrics( SM_CXSCREEN ) + 2;
 	nHeight = GetSystemMetrics( SM_CYSCREEN ) + 2;
 
+	// 디버깅의 편의성을 위하여 창 사이즈를 줄여둠
 	nWidth = 640;
 	nHeight = 400;
 
