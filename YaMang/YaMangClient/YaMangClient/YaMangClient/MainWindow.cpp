@@ -121,15 +121,15 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam ) con
 		{
 			int LocationX = LOWORD( lParam );
 			int LocationY = HIWORD( lParam );
-			//MouseManager::GetInstance()->SetWndLocation( LocationX, LocationY );
+			MouseManager::GetInstance()->SetWndLocation( LocationX, LocationY );
 		}
 			return 0;
 
 		case WM_SETFOCUS:
 		{
-// 			BringWindowToTop( m_HandleOfWindow );
-// 			MouseManager::GetInstance()->SetGameCursorMode( true );
-// 			ShowCursor( false );
+			BringWindowToTop( m_HandleOfWindow );
+			MouseManager::GetInstance()->SetGameCursorMode( true );
+			ShowCursor( false );
 		}
 			return 0;
 

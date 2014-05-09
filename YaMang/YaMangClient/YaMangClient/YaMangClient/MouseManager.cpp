@@ -107,9 +107,10 @@ void MouseManager::SetLeftClick( bool isclicked )
 	else //버튼 업시
 	{
 		//두 점 사이가 어느정도 떨어져 있을 경우 드래그 처리
-		if ( GetDistanceBetweenCOORD(m_MousePosition, m_PressedMousePosition) <= 3.f )
+		if ( GetDistanceBetweenCOORD( m_MousePosition, m_PressedMousePosition ) <= 3.f )
+		{
 			return;
-
+		}
 		SetLeftDrag();
 	}
 }
@@ -128,16 +129,17 @@ void MouseManager::SetRightClick(bool isclicked)
 	else // 버튼 업 시
 	{
 		//두 점 사이가 어느정도 떨어져 있을 경우 드래그 처리
-		if ( GetDistanceBetweenCOORD(m_MousePosition, m_PressedMousePosition) <= 3.f )
+		if ( GetDistanceBetweenCOORD( m_MousePosition, m_PressedMousePosition ) <= 3.f )
+		{
 			return;
-
+		}
 		SetRightDrag();
 	}
 }
 
 void MouseManager::SetLeftDrag()
 {
-
+	Log( "드래그 종료 결과 %d, %d \n", m_MousePosition.X, m_MousePosition.Y );
 }
 
 void MouseManager::SetRightDrag()
