@@ -76,7 +76,23 @@ void Attack::OnTick()
 
 	if ( length < m_OwnerCrops->GetAttackRange() )
 	{
-		m_TargerCrops->MoveStop( );
+		m_TargerCrops->MoveStop();
+		Action* targetAction = m_TargerCrops->GetHoldingAction( );
+
+		// targetCorps의 액션이 없으면(idle)이면 반격
+		// 아니면 그냥 무시하고 계속 진행
+		if ( nullptr == targetAction )
+		{
+			printf_s( "target CounterAttack! \n" );
+			m_TargerCrops->ChangeFormation( FormationType::FORMATION_DEFENSE );// 망진으로 변경해야함
+			Attack* action = new Attack();
+			action->SetClientManager( m_ClientManager );
+			action->SetOwnerCorps( m_TargerCrops );
+			action->SetTargetCorps( m_OwnerCrops );
+
+			m_ClientManager->AddActionToScheduler( action, m_TargerCrops->GetAttackDelay() / 3 ); // 반격하려고 정신차리는 딜레이
+		}
+		
 
 		// 공격 하세요
 		// attack result packet 보내기

@@ -92,6 +92,10 @@ private:
 	DWORD				m_LastClientWorkTick;
 
 
+
+	typedef std::hash_map<int, PositionInfo> BaseGuardList;
+	BaseGuardList		m_BaseGuardList;
+
 	std::vector<std::vector<Tile>>	m_BattleMap;
 
 	bool				m_IsGameStart = false;

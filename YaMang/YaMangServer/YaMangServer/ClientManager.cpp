@@ -15,7 +15,6 @@
 #include "xpath_static.h"
 #include "ActionScheduler.h"
 
-
 ClientManager::ClientManager( int roomNumber ): m_RoomNumber( roomNumber ), m_LastGCTick( 0 ), m_LastClientWorkTick( 0 )
 {
 
@@ -36,7 +35,7 @@ ClientManager::~ClientManager()
 		Corps* toBeDelete = it.second;
 		delete toBeDelete;
 	}
-
+	
 	for( int i = 0; i < m_BattleMap.size( ); ++i )
 	{
 		m_BattleMap.at( i ).clear();
@@ -58,6 +57,15 @@ void ClientManager::GameStart()
 		printf_s( "Map Path Loaded! :%s \n", mapFilePath.c_str( ) );
 		if ( ReadMapFile( mapFilePath.c_str( ) ) )
 		{
+
+			// 거점병사 만들기
+
+			PositionInfo position;
+			position.m_EyePoint = { 10, 0.0f, 10 };
+			position.m_LookAtPoint = { 10, 0.0f, 10-1 };
+			const Corps* corps = GenerateCorps( 0, UnitType::UNIT_GUARD, position ); // 0번은 봇 playerID
+			m_BaseGuardList.insert( BaseGuardList::value_type( corps->GetCorpsID(), position ) );
+
 			m_IsGameStart = true;
 			for ( auto& it : m_ClientList )
 			{

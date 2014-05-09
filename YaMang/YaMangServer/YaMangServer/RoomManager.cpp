@@ -14,6 +14,8 @@ RoomManager::RoomManager()
 	g_PidSessionTable.clear( );
 
 	m_Lobby = new ClientManager( LOBBY_NUMBER );
+	// Test room start;
+	m_Lobby->GameStart( );
 
 	m_RoomList.clear();
 	m_RoomList.insert( RoomList::value_type( LOBBY_NUMBER, m_Lobby ) );
