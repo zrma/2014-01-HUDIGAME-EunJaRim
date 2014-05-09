@@ -650,12 +650,12 @@ YAMANGDXDLL_API void CalcPickingRay( int mouseX, int mouseY )
 
 	rayX = ( ( ( ( ( mouseX - viewPort.X ) * 2.0f / (float) viewPort.Width ) - 1.0f ) ) - projectionMatrix( 2, 0 ) ) / projectionMatrix( 0, 0 );
 	rayY = ( ( -( ( ( mouseY - viewPort.Y ) * 2.0f / (float) viewPort.Height ) - 1.0f ) ) - projectionMatrix( 2, 1 ) ) / projectionMatrix( 1, 1 );
-	Log( "%f\n%f\n", rayX, rayY );
+	// Log( "Ray x : %f, y : %f\n", rayX, rayY );
 
 	//viewport트랜스, 프로젝션 트랜스 역행
 	g_RayOrigin = { 0.f, 0.f, 0.f };
 	g_RayDirection = { rayX, rayY, 1.f };
-	Log( "뷰포트, 프로젝션 역행\n" );
+	// Log( "뷰포트, 프로젝션 역행\n" );
 
 	//뷰잉 트랜스 역행
 	D3DXMATRIXA16 viewingMatrix;
@@ -664,7 +664,7 @@ YAMANGDXDLL_API void CalcPickingRay( int mouseX, int mouseY )
 
 	D3DXVec3TransformCoord( &g_RayOrigin, &g_RayOrigin, &viewingMatrix );
 	D3DXVec3TransformNormal( &g_RayDirection, &g_RayDirection, &viewingMatrix );
-	Log( "뷰잉 좌표 역행\n" );
+	// Log( "뷰잉 좌표 역행\n" );
 
 	//월드 좌표로 역행
 	D3DXMATRIXA16 worldMatrix;
@@ -673,8 +673,8 @@ YAMANGDXDLL_API void CalcPickingRay( int mouseX, int mouseY )
 
 	D3DXVec3TransformCoord( &g_RayOrigin, &g_RayOrigin, &worldMatrix );
 	D3DXVec3TransformNormal( &g_RayDirection, &g_RayDirection, &worldMatrix );
-	Log( "월드 좌표 역행\n" );
-	Log( "origin: %f,%f,%f\n direction: %f, %f, %f\n", g_RayOrigin.x, g_RayOrigin.y, g_RayOrigin.z, g_RayDirection.x, g_RayDirection.y, g_RayDirection.z );
+	// Log( "월드 좌표 역행\n" );
+	// Log( "origin: %f,%f,%f\n direction: %f, %f, %f\n", g_RayOrigin.x, g_RayOrigin.y, g_RayOrigin.z, g_RayDirection.x, g_RayDirection.y, g_RayDirection.z );
 
 }
 
@@ -749,21 +749,27 @@ YAMANGDXDLL_API void TransPickedTriangle( int modeSelector, float* pickedX, floa
 			pointC = &VerticesStartPoint[trianglePointD];
 		}
 
-		modeSelector = static_cast<MODESELECTOR>( modeSelector );
+		*pickedX += pointA->vertexPoint.x;
+		*pickedZ += pointA->vertexPoint.z;
+
+		modeSelector = static_cast<AreaModeType>( modeSelector );
 
 		switch ( modeSelector )
 		{
-			case AREA_COLOR:
+			case AREA_MODE_NONE:
+			
+				break;
+			case AREA_MODE_COLOR:
 			{
 				pointA->Diffuse = D3DCOLOR_ARGB( 255, 30, 100, 100 );
 				pointB->Diffuse = D3DCOLOR_ARGB( 255, 30, 100, 100 );
 				pointC->Diffuse = D3DCOLOR_ARGB( 255, 30, 100, 100 );
 			}
 				break;
-			case AREA_HIGHER:
+			case AREA_MODE_HIGHER:
 
 				break;
-			case AREA_LOWER:
+			case AREA_MODE_LOWER:
 
 				break;
 			default:

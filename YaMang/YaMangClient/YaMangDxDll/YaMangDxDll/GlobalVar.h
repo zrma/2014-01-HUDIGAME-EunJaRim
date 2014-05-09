@@ -16,15 +16,15 @@ struct MYINDEX
 };
 
 
-enum MODESELECTOR
+enum AreaModeType
 {
-	MODE_NONE,
+	AREA_MODE_NONE,
 
-	AREA_COLOR,
-	AREA_HIGHER,
-	AREA_LOWER,
+	AREA_MODE_COLOR,
+	AREA_MODE_HIGHER,
+	AREA_MODE_LOWER,
 
-	MODE_MAX
+	AREA_MODE_MAX
 };
 
 //////////////////////////////////////////////////////////////////////////

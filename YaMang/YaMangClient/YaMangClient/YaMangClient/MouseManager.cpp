@@ -87,6 +87,10 @@ void MouseManager::MoveMousePosition( int x, int y )
 
 void MouseManager::MoveHiddenCursorToCenter()
 {
+	if ( !m_GameCursorMod )
+	{
+		return;
+	}
 	SetCursorPos( m_WndXPos, m_WndYPos );
 }
 
@@ -115,9 +119,8 @@ void MouseManager::SetLeftClick( bool isclicked )
 		TransPickedTriangle( 1, &pickedX, &pickedZ );
 
 		static_cast<ScenePlay*>(scene)->SearchCorpsIdByPosition( pickedX, pickedZ );
-		Log( "[ %f, %f ] 피킹 중 \n", pickedX, pickedZ );
+		Log( "[%d %d] -> [%f, %f] 으로 피킹 중 \n", m_MousePosition.X, m_MousePosition.Y, pickedX, pickedZ );
 		
-
 		//드래그 시작 포인트 저장 ; 첫 DOWN시 한번만 실행되므로
 		SetDragStartPoint(m_MousePosition.X, m_MousePosition.Y);
 	}

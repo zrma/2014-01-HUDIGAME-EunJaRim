@@ -109,3 +109,21 @@ void Renderer::WriteText( LPCWSTR text, float left, float top, int RGB_R /*= 255
 	}
 }
 
+D3DXVECTOR3 Renderer::GetPickedPointOfCenter() const
+{
+	RECT rect;
+	GetWindowRect( MainWindow::GetInstance()->Window(), &rect );
+	SHORT centerOfScreenX = static_cast<SHORT>( ( rect.right - rect.left ) / 2 );
+	SHORT centerOfScreenY = static_cast<SHORT>( ( rect.bottom - rect.top ) / 2 );
+
+	CalcPickingRay( centerOfScreenX, centerOfScreenY );
+
+	float pickedX = 0;
+	float pickedZ = 0;
+	TransPickedTriangle( 0, &pickedX, &pickedZ );
+	// Log( "[%d %d] -> [%f, %f] 으로 피킹 중 \n", centerOfScreenX, centerOfScreenY, pickedX, pickedZ );
+
+	D3DXVECTOR3 returnPoint = { pickedX, 0, pickedZ };
+	return returnPoint;
+}
+

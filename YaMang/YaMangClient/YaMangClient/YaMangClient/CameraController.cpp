@@ -105,15 +105,24 @@ void CameraController::RotateUp( float angle )
 
 void CameraController::RotateSide( float angle )
 {
-	D3DXVECTOR3 view = m_LookAtPoint - m_EyePoint;
-	
 	// 회전축
 	D3DXVECTOR3 axis = { 0, 1, 0 };
-	
+	D3DXVECTOR3 pickedPointOfCenter = Renderer::GetInstance()->GetPickedPointOfCenter();
+	D3DXVECTOR3 view = m_LookAtPoint - m_EyePoint;
+
+	D3DXMATRIXA16 transMatrix;
 	D3DXMATRIXA16 rotateMatrix;
+
+	D3DXMatrixTranslation( &transMatrix, -pickedPointOfCenter.x, 0, -pickedPointOfCenter.z );
 	D3DXMatrixRotationAxis( &rotateMatrix, &axis, angle );
-	D3DXVec3TransformCoord( &view, &view, &rotateMatrix );
-	m_LookAtPoint = m_EyePoint + view;
+	D3DXMATRIXA16 resultMatrix = transMatrix * rotateMatrix;
+
+	D3DXMatrixTranslation( &transMatrix, pickedPointOfCenter.x, 0, pickedPointOfCenter.z );
+	resultMatrix = resultMatrix * transMatrix;
+
+	D3DXVec3TransformCoord( &m_LookAtPoint, &m_LookAtPoint, &resultMatrix );
+	D3DXVec3TransformCoord( &m_EyePoint, &m_EyePoint, &resultMatrix );
+	// m_LookAtPoint = m_EyePoint + view;
 
 	D3DXMATRIXA16 viewMatrix;
 	D3DXMatrixLookAtLH( &viewMatrix, &m_EyePoint, &m_LookAtPoint, &m_UpVector );
