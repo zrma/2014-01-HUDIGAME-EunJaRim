@@ -150,8 +150,8 @@ void Attack::OnTick()
 		vector.y = targetZ - nowZ;
 
 		// 실제 거리의 한 1/2정도씩 끊어서 움직이자
-		vector.x = vector.x / 2;
-		vector.y = vector.y / 2;
+		// vector.x = vector.x / 2;
+		// vector.y = vector.y / 2;
 
 		length = D3DXVec2Length( &vector );
 		D3DXVec2Normalize( &vector, &vector );

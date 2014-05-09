@@ -59,6 +59,10 @@ void Corps::MoveStop()
 
 	StopCorpsResult outPacket;
 	outPacket.m_CorpsID = m_CorpsID;
+	outPacket.m_NowX = m_Position.m_EyePoint.x;
+	outPacket.m_NowZ = m_Position.m_EyePoint.z;
+	outPacket.m_LookX = m_Position.m_LookAtPoint.x;
+	outPacket.m_LookZ = m_Position.m_LookAtPoint.z;
 	m_ClientManager->BroadcastPacket( &outPacket );
 
 }
@@ -71,7 +75,7 @@ void Corps::ReCalculatePosition()
 		
 		PositionInfo nowPosition;
 		nowPosition.m_EyePoint = m_MovingRoute.m_EyePoint + ( m_MovingRoute.m_LookAtPoint * GetSpeed( ) * elapsedTime / 1000 );
-		nowPosition.m_LookAtPoint = m_MovingRoute.m_LookAtPoint;
+		nowPosition.m_LookAtPoint = nowPosition.m_EyePoint + m_MovingRoute.m_LookAtPoint;
 		SetPositionInfo( nowPosition );
 
 

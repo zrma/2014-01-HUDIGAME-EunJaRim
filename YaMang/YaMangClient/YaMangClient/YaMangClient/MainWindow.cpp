@@ -121,15 +121,15 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam ) con
 		{
 			int LocationX = LOWORD( lParam );
 			int LocationY = HIWORD( lParam );
-			MouseManager::GetInstance()->SetWndLocation( LocationX, LocationY );
+			//MouseManager::GetInstance()->SetWndLocation( LocationX, LocationY );
 		}
 			return 0;
 
 		case WM_SETFOCUS:
 		{
-			BringWindowToTop( m_HandleOfWindow );
-			MouseManager::GetInstance()->SetGameCursorMode( true );
-			ShowCursor( false );
+// 			BringWindowToTop( m_HandleOfWindow );
+// 			MouseManager::GetInstance()->SetGameCursorMode( true );
+// 			ShowCursor( false );
 		}
 			return 0;
 
@@ -214,6 +214,9 @@ BOOL MainWindow::Create( PCWSTR lpWindowName, DWORD dwStyle, DWORD dwExStyle /*=
 	y = -1;
 	nWidth = GetSystemMetrics( SM_CXSCREEN ) + 2;
 	nHeight = GetSystemMetrics( SM_CYSCREEN ) + 2;
+
+	nWidth = 640;
+	nHeight = 400;
 
 	m_HandleOfWindow = CreateWindowEx( dwExStyle, ClassName(), lpWindowName, dwStyle,
 									   x, y, nWidth, nHeight, hWndParent, hMenu, GetModuleHandle( NULL ), this );
