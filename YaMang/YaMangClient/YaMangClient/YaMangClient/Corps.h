@@ -43,6 +43,8 @@ public:
 	bool	IsSelected() const { return m_IsSelected; }
 	void	SetSelected( bool selected ) { m_IsSelected = selected; }
 
+	bool	IsContain( float x, float z ) const;
+
 private:
 	Corps();
 	Corps( const Corps& );

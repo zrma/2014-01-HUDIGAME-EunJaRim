@@ -215,15 +215,21 @@ int ScenePlay::SearchCorpsIdByPosition( float x, float z )
 
 		D3DXVECTOR3& thisPosition = thisCorps->GetEyePoint();
 
-		if ( ( thisPosition.x - x < 3.0 && thisPosition.x - x > -3.0 ) && ( thisPosition.x - x < 3.0 && thisPosition.x - x > -3.0 ) )
+		// AABB
+		if ( ( thisPosition.x - x < 5.0 && thisPosition.x - x > -5.0 ) && ( thisPosition.x - x < 5.0 && thisPosition.x - x > -5.0 ) )
 		{
-			Log( "%d번 부대 피킹!!! \n", thisCorps->GetCorpsID() );
-			thisCorps->SetSelected( true );
+			Log( "%d번 부대 1차 피킹!!! \n", thisCorps->GetCorpsID() );
+		
+			if ( thisCorps->IsContain( x, z ) )
+			{
+				Log( "%d번 부대 2차 피킹!!! \n", thisCorps->GetCorpsID() );
+
+				thisCorps->SetSelected( true );
+				continue;
+			}
 		}
-		else
-		{
-			thisCorps->SetSelected( false );
-		}
+		
+		thisCorps->SetSelected( false );
 	}
 
 	return 0;

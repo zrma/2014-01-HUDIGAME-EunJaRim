@@ -12,6 +12,9 @@ struct BreadBoard
 	
 	D3DXVECTOR3		m_Position[MAX_UNIT_IN_CORPS];
 	D3DXVECTOR3		m_Scale = { 1.0f, 1.0f, 1.0f };
+	
+	D3DXVECTOR3		m_Min = { 0.0f, 0.0f, 0.0f };
+	D3DXVECTOR3		m_Max = { 0.0f, 0.0f, 0.0f };
 };
 
 struct DestroyBread: public BreadBoard
@@ -28,6 +31,9 @@ struct DestroyBread: public BreadBoard
 		m_Position[7] = { -1.0f, 0.0f, -3.0f };
 		m_Position[8] = { 0.0f, 0.0f, -4.0f };
 		m_Position[9] = { -1.0f, 0.0f, -4.0f };
+
+		m_Min = { -2.0f, 0.0f, 1.0f };
+		m_Max = { 1.0f, 0.0f, -5.0f };
 	}
 
 	//////////////////////////////////////////////////////////////////////////
@@ -55,6 +61,9 @@ struct DefenseBread: public BreadBoard
 		m_Position[7] = { 0.0f, 0.0f, -2.0f };
 		m_Position[8] = { 1.0f, 0.0f, -2.0f };
 		m_Position[9] = { 0.0f, 0.0f, -3.0f };
+
+		m_Min = { -2.0f, 0.0f, 1.0f };
+		m_Max = { 2.0f, 0.0f, -4.0f };
 	}
 
 	//////////////////////////////////////////////////////////////////////////
@@ -81,6 +90,9 @@ struct RushBread: public BreadBoard
 		m_Position[7] = { -2.0f, 0.0f, 0.0f };
 		m_Position[8] = { 2.0f, 0.0f, -1.0f };
 		m_Position[9] = { -2.0f, 0.0f, -1.0f };
+
+		m_Min = { -3.0f, 0.0f, 1.0f };
+		m_Max = { 3.0f, 0.0f, -2.0f };
 	}
 
 	//////////////////////////////////////////////////////////////////////////

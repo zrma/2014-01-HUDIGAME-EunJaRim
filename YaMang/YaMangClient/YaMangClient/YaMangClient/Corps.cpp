@@ -175,3 +175,35 @@ void Corps::SetCorpsHP( int unitNum )
 		nowUnitNum = m_UnitList.size( );
 	}
 }
+
+bool Corps::IsContain( float x, float z ) const
+{
+	D3DXMATRIXA16 thisMatrix = GetMatrix();
+
+	D3DXVECTOR3 minBoundary = m_FormationArray[static_cast<size_t>( m_TargetFormation )]->m_Min;
+	D3DXVECTOR3 maxBoundary = m_FormationArray[static_cast<size_t>( m_TargetFormation )]->m_Max;
+
+	D3DXVECTOR3 leftTop = { minBoundary.x, 0, minBoundary.z };
+	D3DXVECTOR3 rightTop = { maxBoundary.z, 0, minBoundary.z };
+	D3DXVECTOR3 leftBottom = { minBoundary.x, 0, maxBoundary.z };
+	D3DXVECTOR3 rightBottom = { maxBoundary.x, 0, maxBoundary.z };
+	
+	D3DXVec3TransformCoord( &leftTop, &leftTop, &thisMatrix );
+	D3DXVec3TransformCoord( &rightTop, &rightTop, &thisMatrix );
+	D3DXVec3TransformCoord( &leftBottom, &leftBottom, &thisMatrix );
+	D3DXVec3TransformCoord( &rightBottom, &rightBottom, &thisMatrix );
+	
+	/*Log( "%f %f, %f %f, %f %f, %f %f 사각박스!",
+		 leftTop.x, leftTop.z, rightTop.x, rightTop.z,
+		 leftBottom.x, leftBottom.z, rightBottom.x, rightBottom.z );*/
+
+	if ( ( ( leftTop.x - x > 0 ) && ( rightTop.x - x > 0 ) && ( leftBottom.x - x > 0 ) && ( rightBottom.x - x > 0 ) ) ||
+		 ( ( leftTop.x - x < 0 ) && ( rightTop.x - x < 0 ) && ( leftBottom.x - x < 0 ) && ( rightBottom.x - x < 0 ) ) ||
+		 ( ( leftTop.z - z > 0 ) && ( rightTop.z - z > 0 ) && ( leftBottom.z - z > 0 ) && ( rightBottom.z - z > 0 ) ) ||
+		 ( ( leftTop.z - z < 0 ) && ( rightTop.z - z < 0 ) && ( leftBottom.z - z < 0 ) && ( rightBottom.z - z < 0 ) ) )
+	{
+		return false;
+	}
+
+	return true;
+}
