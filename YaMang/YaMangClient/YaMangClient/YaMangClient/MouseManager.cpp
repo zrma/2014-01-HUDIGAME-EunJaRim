@@ -82,7 +82,7 @@ void MouseManager::SetLeftClick( bool isclicked )
 {
 	m_IsLeftClicked = isclicked;
 
-	if ( isclicked )
+	if ( isclicked ) //버튼 다운 시
 	{
 		float pickedX = 0;
 		float pickedZ = 0;
@@ -99,6 +99,60 @@ void MouseManager::SetLeftClick( bool isclicked )
 
 		static_cast<ScenePlay*>(scene)->SearchCorpsIdByPosition( pickedX, pickedZ );
 		Log( "[ %f, %f ] 피킹 중 \n", pickedX, pickedZ );
+		
+
+		//드래그 시작 포인트 저장 ; 첫 DOWN시 한번만 실행되므로
+		SetDragStartPoint(m_MousePosition.X, m_MousePosition.Y);
 	}
+	else //버튼 업시
+	{
+		//두 점 사이가 어느정도 떨어져 있을 경우 드래그 처리
+		if ( GetDistanceBetweenCOORD(m_MousePosition, m_PressedMousePosition) <= 3.f )
+			return;
+
+		SetLeftDrag();
+	}
+}
+
+void MouseManager::SetRightClick(bool isclicked)
+{
+	m_IsRightClicked = isclicked; 
+
+	if (isclicked) //버튼 다운 시
+	{
+		//오른쪽 마우스 클릭
+
+		//드래그 시작 포인트 저장 ; 첫 DOWN시 한번만 실행되므로
+		SetDragStartPoint(m_MousePosition.X, m_MousePosition.Y);
+	}
+	else // 버튼 업 시
+	{
+		//두 점 사이가 어느정도 떨어져 있을 경우 드래그 처리
+		if ( GetDistanceBetweenCOORD(m_MousePosition, m_PressedMousePosition) <= 3.f )
+			return;
+
+		SetRightDrag();
+	}
+}
+
+void MouseManager::SetLeftDrag()
+{
+
+}
+
+void MouseManager::SetRightDrag()
+{
+
+}
+
+double MouseManager::GetDistanceBetweenCOORD( COORD C1, COORD C2 )
+{
+	int distanceX = C1.X - C2.X;
+	int distanceY = C1.Y - C2.Y;
+
+	double ret = sqrt(distanceX*distanceX + distanceY*distanceY);
+
+	printf_s("%fl\n", ret);
+	return ret;
 }
 

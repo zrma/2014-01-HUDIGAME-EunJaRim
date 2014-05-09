@@ -20,9 +20,6 @@ public:
 	int				GetMousePositionY() const { return m_MousePosition.Y; }
 	void			SetMousePosition( int posX, int posY ) { m_MousePosition.X = posX; m_MousePosition.Y = posY; }
 
-	MouseStatus		GetMouseStatus() const { return m_MouseStatus; }
-	void			SetMouseStatus( MouseStatus mouseStatus ) { m_MouseStatus = mouseStatus; }
-
 	void			MoveMousePosition( int posX, int posY );
 	void			MoveHiddenCursorToCenter();
 	void			MoveHiddenCursorToMousePos();
@@ -36,7 +33,13 @@ public:
 	bool			IsRightClicked() { return m_IsRightClicked; }
 
 	void			SetLeftClick( bool isclicked );
-	void			SetRightClick(bool isclicked){ m_IsRightClicked = isclicked; }
+	void			SetRightClick( bool isclicked );
+
+	void			SetDragStartPoint(int PosX, int PosY) { m_PressedMousePosition.X = PosX; m_PressedMousePosition.Y = PosY; };
+	void			SetLeftDrag();
+	void			SetRightDrag();
+
+	double			GetDistanceBetweenCOORD( COORD C1, COORD C2 );
 
 private:
 	//윈도우 커서 고정 좌표 저장
@@ -57,7 +60,6 @@ private:
 	COORD			m_PressedMousePosition;
 
 	bool			m_GameCursorMod = false;
-	MouseStatus		m_MouseStatus = MouseStatus::MOUSE_NONE;
 
 	//클릭 상태 저장
 	bool			m_IsLeftClicked = false;
