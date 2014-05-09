@@ -2,6 +2,8 @@
 #include "MouseManager.h"
 #include "MainWindow.h"
 
+#include "YaMangDxDll.h"
+
 MouseManager::MouseManager()
 {
 	RECT rect;
@@ -72,5 +74,21 @@ void MouseManager::MoveHiddenCursorToCenter()
 void MouseManager::MoveHiddenCursorToMousePos()
 {
 	SetCursorPos( m_MousePosition.X, m_MousePosition.Y );
+}
+
+void MouseManager::SetLeftClick( bool isclicked )
+{
+	m_IsLeftClicked = isclicked;
+
+	if ( isclicked )
+	{
+		float pickedX = 0;
+		float pickedZ = 0;
+
+		CalcPickingRay( m_MousePosition.X, m_MousePosition.Y );
+		TransPickedTriangle( 0, &pickedX, &pickedZ );
+
+		Log( "[ %f, %f ] 피킹 중 \n", pickedX, pickedZ );
+	}
 }
 

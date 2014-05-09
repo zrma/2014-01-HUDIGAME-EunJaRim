@@ -35,7 +35,7 @@ public:
 	bool			IsLeftClicked() { return m_IsLeftClicked; }
 	bool			IsRightClicked() { return m_IsRightClicked; }
 
-	void			SetLeftClick(bool isclicked){ m_IsLeftClicked = isclicked; }
+	void			SetLeftClick( bool isclicked );
 	void			SetRightClick(bool isclicked){ m_IsRightClicked = isclicked; }
 
 private:

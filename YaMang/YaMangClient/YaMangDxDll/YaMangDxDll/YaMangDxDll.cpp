@@ -676,6 +676,11 @@ YAMANGDXDLL_API void CalcPickingRay( int mouseX, int mouseY )
 
 YAMANGDXDLL_API void TransPickedTriangle( int modeSelector, float* pickedX, float* pickedZ )
 {
+	if ( !( pickedX || pickedZ ) )
+	{
+		return;
+	}
+
 	LPDIRECT3DVERTEXBUFFER9 presentVertexBuffer;
 	g_Mesh->GetVertexBuffer( &presentVertexBuffer );
 
@@ -741,14 +746,17 @@ YAMANGDXDLL_API void TransPickedTriangle( int modeSelector, float* pickedX, floa
 			pointC = &VerticesStartPoint[trianglePointD];
 		}
 		
-		pointA->Diffuse = D3DCOLOR_ARGB( 255, 30, 100, 100 );
-		pointB->Diffuse = D3DCOLOR_ARGB( 255, 30, 100, 100 );
-		pointC->Diffuse = D3DCOLOR_ARGB( 255, 30, 100, 100 );
-
 		modeSelector = static_cast<MODESELECTOR>( modeSelector );
 
 		switch ( modeSelector )
 		{
+			case AREA_COLOR:
+			{
+				pointA->Diffuse = D3DCOLOR_ARGB( 255, 30, 100, 100 );
+				pointB->Diffuse = D3DCOLOR_ARGB( 255, 30, 100, 100 );
+				pointC->Diffuse = D3DCOLOR_ARGB( 255, 30, 100, 100 );
+			}
+				break;
 			case AREA_HIGHER:
 				
 				break;
