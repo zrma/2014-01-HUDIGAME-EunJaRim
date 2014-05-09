@@ -674,7 +674,7 @@ YAMANGDXDLL_API void CalcPickingRay( int mouseX, int mouseY )
 
 }
 
-YAMANGDXDLL_API void TransPickedTriangle( int modeSelector )
+YAMANGDXDLL_API void TransPickedTriangle( int modeSelector, float* pickedX, float* pickedZ )
 {
 	LPDIRECT3DVERTEXBUFFER9 presentVertexBuffer;
 	g_Mesh->GetVertexBuffer( &presentVertexBuffer );
@@ -684,7 +684,6 @@ YAMANGDXDLL_API void TransPickedTriangle( int modeSelector )
 
 	BOOL Hit1 = false;
 	BOOL Hit2 = false;
-	float pickedX = 0.f, pickedY = 0.f;
 	float dist = 0.f;
 
 	int trianglePointA = NULL, trianglePointB = NULL, trianglePointC = NULL, trianglePointD = NULL;
@@ -698,10 +697,10 @@ YAMANGDXDLL_API void TransPickedTriangle( int modeSelector )
 				trianglePointA = g_ZHeight*z + x;
 				trianglePointB = g_ZHeight*z + ( x + 1 );
 				trianglePointC = g_ZHeight*( z + 1 ) + x;
-				Hit1 = D3DXIntersectTri( &VerticesStartPoint[trianglePointA].vertexPoint, &VerticesStartPoint[trianglePointB].vertexPoint, &VerticesStartPoint[trianglePointC].vertexPoint, &g_RayOrigin, &g_RayDirection, &pickedX, &pickedY, &dist );
+				Hit1 = D3DXIntersectTri( &VerticesStartPoint[trianglePointA].vertexPoint, &VerticesStartPoint[trianglePointB].vertexPoint, &VerticesStartPoint[trianglePointC].vertexPoint, &g_RayOrigin, &g_RayDirection, pickedX, pickedZ, &dist );
 
 				trianglePointD = g_ZHeight*( z + 1 ) + ( x + 1 );
-				Hit2 = D3DXIntersectTri( &VerticesStartPoint[trianglePointB].vertexPoint, &VerticesStartPoint[trianglePointC].vertexPoint, &VerticesStartPoint[trianglePointD].vertexPoint, &g_RayOrigin, &g_RayDirection, &pickedX, &pickedY, &dist );
+				Hit2 = D3DXIntersectTri( &VerticesStartPoint[trianglePointB].vertexPoint, &VerticesStartPoint[trianglePointC].vertexPoint, &VerticesStartPoint[trianglePointD].vertexPoint, &g_RayOrigin, &g_RayDirection, pickedX, pickedZ, &dist );
 			}
 		}
 		else
@@ -711,10 +710,10 @@ YAMANGDXDLL_API void TransPickedTriangle( int modeSelector )
 				trianglePointA = g_ZHeight*z + x; 
 				trianglePointB = g_ZHeight*z + ( x - 1 ); 
 				trianglePointC = g_ZHeight*( z + 1 ) + x;
-				Hit1 = D3DXIntersectTri( &VerticesStartPoint[trianglePointA].vertexPoint, &VerticesStartPoint[trianglePointB].vertexPoint, &VerticesStartPoint[trianglePointC].vertexPoint, &g_RayOrigin, &g_RayDirection, &pickedX, &pickedY, &dist );
+				Hit1 = D3DXIntersectTri( &VerticesStartPoint[trianglePointA].vertexPoint, &VerticesStartPoint[trianglePointB].vertexPoint, &VerticesStartPoint[trianglePointC].vertexPoint, &g_RayOrigin, &g_RayDirection, pickedX, pickedZ, &dist );
 
 				trianglePointD = g_ZHeight*( z + 1 ) + ( x - 1 ); 
-				Hit2 = D3DXIntersectTri( &VerticesStartPoint[trianglePointB].vertexPoint, &VerticesStartPoint[trianglePointC].vertexPoint, &VerticesStartPoint[trianglePointD].vertexPoint, &g_RayOrigin, &g_RayDirection, &pickedX, &pickedY, &dist );
+				Hit2 = D3DXIntersectTri( &VerticesStartPoint[trianglePointB].vertexPoint, &VerticesStartPoint[trianglePointC].vertexPoint, &VerticesStartPoint[trianglePointD].vertexPoint, &g_RayOrigin, &g_RayDirection, pickedX, pickedZ, &dist );
 			}
 		}
 	}
