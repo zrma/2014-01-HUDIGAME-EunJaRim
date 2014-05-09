@@ -48,6 +48,10 @@ public:
 
 
 	int					GenerateCorps( int playerID, UnitType type, PositionInfo position );
+
+	typedef std::hash_map<int, Corps*> CorpsList;
+	const CorpsList&	GetCorpsList() { return m_CorpsList; }
+
 	void				AddActionToScheduler( Action* addedAction, ULONGLONG remainTime );
 
 
@@ -80,7 +84,7 @@ private:
 	typedef std::map<SOCKET, ClientSession*> ClientList;
 	ClientList			m_ClientList;
 
-	typedef std::hash_map<int, Corps*> CorpsList;
+	
 	CorpsList			m_CorpsList;
 	int					m_CorpsIDCount = 0;
 

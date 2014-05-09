@@ -9,8 +9,8 @@
 #include "PacketType.h"
 #include "ClientManager.h"
 
-Corps::Corps( int playerID, int corpsID, PositionInfo position, ClientManager* clientManager )
-: m_PlayerID( playerID ), m_CorpsID( corpsID ), m_Position( position ), m_ClientManager( clientManager )
+Corps::Corps( int playerID, int corpsID, UnitType unitType, PositionInfo position, ClientManager* clientManager )
+: m_PlayerID( playerID ), m_CorpsID( corpsID ), m_UnitType(unitType), m_Position( position ), m_ClientManager( clientManager )
 {
 }
 
@@ -34,6 +34,9 @@ void Corps::AddDamage( float damage )
 		}
 		
 	}
+
+	float targetHP = m_HP + 9; // hp가 1이라도 1명이 생존해 있을수 있게 하기위해 9를 더한다.
+	m_UnitNum = static_cast<int>( targetHP / 10 );
 }
 
 void Corps::DoNextAction( Action* addedAction, ULONGLONG remainTime )
@@ -74,11 +77,9 @@ void Corps::ReCalculatePosition()
 		ULONGLONG elapsedTime = GetTickCount64() - m_MovingStartedTime;
 		
 		PositionInfo nowPosition;
-		nowPosition.m_EyePoint = m_MovingRoute.m_EyePoint + ( m_MovingRoute.m_LookAtPoint * GetSpeed( ) * elapsedTime / 1000 );
+		nowPosition.m_EyePoint = m_MovingRoute.m_EyePoint + ( m_MovingRoute.m_LookAtPoint *   GetSpeed()  * static_cast<float>( elapsedTime ) / 1000 );
 		nowPosition.m_LookAtPoint = nowPosition.m_EyePoint + m_MovingRoute.m_LookAtPoint;
 		SetPositionInfo( nowPosition );
-
-
 
 	}
 }

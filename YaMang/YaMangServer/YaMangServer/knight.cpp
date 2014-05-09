@@ -2,10 +2,11 @@
 #include "Knight.h"
 #include "UnitStatus.h"
 
-Knight::Knight( int playerID, int corpsID, PositionInfo position, ClientManager* clientManager )
-:Corps( playerID, corpsID, position, clientManager )
+Knight::Knight( int playerID, int corpsID, UnitType unitType, PositionInfo position, ClientManager* clientManager )
+:Corps( playerID, corpsID, unitType, position, clientManager )
 {
 	m_HP = UnitStatus::g_KnightHP;
+	m_UnitNum = 10;
 	m_MoveSpeed = UnitStatus::g_KnightMoveSpeed;
 	m_MoveSpeedBonus = UnitStatus::g_KnightMoveSpeedBonus;
 

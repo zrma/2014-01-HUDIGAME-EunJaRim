@@ -114,11 +114,21 @@ void ScenePlay::AddCorps( int corpsID, Corps* corps )
 	}
 	else
 	{
+		// CheckCorps로 이미 체크하므로 필요없을듯... 지울까요? 혹시 모르니...
 		SafeDelete( corps );
 
 		// 중복 ID로 다시 보냈음
 		assert( false );
 	}
+}
+
+bool ScenePlay::CheckCorps( int corpsID )
+{
+	if ( m_CorpsList.find( corpsID ) == m_CorpsList.end() )
+	{
+		return true;
+	}
+	return false;
 }
 
 void ScenePlay::ChangeCorpsFormation( int corpsID, FormationType formationType )

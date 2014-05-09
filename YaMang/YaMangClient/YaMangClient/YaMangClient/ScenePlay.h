@@ -18,6 +18,7 @@ public:
 	void		Render() const;
 
 	void		AddCorps( int corpsID, Corps* corps );
+	bool		CheckCorps( int corpsID );
 	void		ChangeCorpsFormation( int corpsID, FormationType formationType );
 	void		MoveCorpsStart( int corpsID, D3DXVECTOR3 targetPosition, D3DXVECTOR3 lookAtVector, float speed );
 	void		MoveCorpsStop( int corpsID, D3DXVECTOR3 targetPosition, D3DXVECTOR3 lookAtVector );

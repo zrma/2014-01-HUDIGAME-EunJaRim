@@ -152,14 +152,12 @@ bool NetworkManager::HandleMessage( WPARAM wParam, LPARAM lParam )
 
 			srand( static_cast<unsigned int> ( time( NULL ) ) );
 			/// 대략 1000~1100 의 ID로 로그인 해보자
+
+			int playerID = 1000 + rand() % 101;
 			LoginRequest sendData;
-			sendData.m_PlayerId = 1000 + rand() % 101;
+			sendData.m_PlayerId = playerID;
 
-			if ( m_SendBuffer.Write( (const char*)&sendData, sendData.m_Size ) )
-			{
-				PostMessage( MainWindow::GetInstance()->Window(), WM_SOCKET, wParam, FD_WRITE );
-			}
-
+			SendPacket( &sendData );
 
 			int nResult = WSAAsyncSelect( m_Socket, MainWindow::GetInstance()->Window(), WM_SOCKET, ( FD_CLOSE | FD_READ | FD_WRITE ) );
 			if ( nResult )
@@ -233,4 +231,15 @@ bool NetworkManager::HandleMessage( WPARAM wParam, LPARAM lParam )
 	}
 
 	return true;
+}
+
+
+void NetworkManager::SendPacket( PacketHeader* pkt )
+{
+	if ( m_SendBuffer.Write( (const char*)pkt, pkt->m_Size ) )
+	{
+		// @see http://blog.naver.com/gkqxhq324456/110177315036 참조
+		// 채팅을 날리려고 버퍼에 데이터도 넣어 두었으니, WM_SOCKET 이벤트를 발생시키자
+		PostMessage( MainWindow::GetInstance()->Window(), WM_SOCKET, NULL, FD_WRITE );
+	}
 }

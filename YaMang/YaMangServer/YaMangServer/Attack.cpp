@@ -95,10 +95,7 @@ void Attack::OnTick()
 		outPacket.m_TargetLookX = targetPositionInfo.m_LookAtPoint.x;
 		outPacket.m_TargetLookZ = targetPositionInfo.m_LookAtPoint.z;
 
-
-		float targetHP = m_TargerCrops->GetHP() + 9; // hp가 1이라도 1명이 생존해 있을수 있게 하기위해 9를 더한다.
-		int targetUnitNum = static_cast<int>( targetHP / 10 );
-		outPacket.m_TargetUnitNum = targetUnitNum;
+		outPacket.m_TargetUnitNum = m_TargerCrops->GetUnitNum();
 
 
 		m_ClientManager->BroadcastPacket( &outPacket );

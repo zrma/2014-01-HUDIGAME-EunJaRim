@@ -59,7 +59,7 @@ void NetworkManager::HandleLoginResult( LoginResult& inPacket )
 		}
 
 		printf_s( "My playerID[%d] \n", inPacket.m_PlayerId );
-		NetworkManager::GetInstance()->m_MyPlayerId = inPacket.m_PlayerId;
+		m_MyPlayerId = inPacket.m_PlayerId;
 	}
 	else
 	{
@@ -154,18 +154,32 @@ void NetworkManager::HandleGenerateCorpsResult( GenerateCorpsResult& inPacket )
 		int corpsID = inPacket.m_CorpsID;
 		int playerID = inPacket.m_PlayerId;
 
-		Corps* corps = new Corps( corpsID, playerID, position );
-		corps->Create( 10, unitType );
-		corps->SetVisible( true );
+		FormationType formationType = inPacket.m_FormationType;
+		int unitNum = inPacket.m_UnitNum;
+
+		// !!!!!!!! 서버가 초기화를 안해서 보내고 있음!!! 급 수정 요망!!!
+		formationType = FormationType::FORMATION_RUSH;
+		unitNum = 10;
+
 
 		Scene* scene =  SceneManager::GetInstance()->GetNowScene();
 		if ( typeid( ScenePlay ) == typeid( *scene ) )
 		{
 			ScenePlay* scenePlay = static_cast<ScenePlay*>( scene );
-			scenePlay->AddCorps( corpsID, corps );
-			Log( "GenerateCorps! Type:%d CorpID:%d \n", unitType, corpsID );
 
-			SoundManager::GetInstance( )->PlaySound( SOUND_CORPS_GENERATE );
+			if ( scenePlay->CheckCorps( corpsID ) )
+			{
+				Corps* corps = new Corps( corpsID, playerID, position );
+				corps->Create( unitNum, unitType );
+				corps->SetVisible( true );
+				corps->SetFormation( formationType );
+
+				scenePlay->AddCorps( corpsID, corps );
+				Log( "GenerateCorps! Type:%d CorpID:%d \n", unitType, corpsID );
+
+				SoundManager::GetInstance()->PlaySound( SOUND_CORPS_GENERATE );
+			}
+
 		}
 		else
 		{

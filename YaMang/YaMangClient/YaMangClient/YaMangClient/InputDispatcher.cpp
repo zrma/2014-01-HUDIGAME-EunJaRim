@@ -112,29 +112,22 @@ void InputDispatcher::ClearList()
 	m_KeyInputList.clear();
 }
 
-void NetworkManager::RequestChat( ChatBroadcastRequest& outPacket )
-{
-	outPacket.m_PlayerId = m_MyPlayerId;
-
-	if ( m_SendBuffer.Write( (const char*)&outPacket, outPacket.m_Size ) )
-	{
-		// @see http://blog.naver.com/gkqxhq324456/110177315036 참조
-		// 채팅을 날리려고 버퍼에 데이터도 넣어 두었으니, WM_SOCKET 이벤트를 발생시키자
-		PostMessage( MainWindow::GetInstance()->Window(), WM_SOCKET, NULL, FD_WRITE );
-	}
-}
-
 REGISTER_KEY_HANDLER( VK_SPACE )
 {
 	switch ( inputKey.GetKeyStatus() )
 	{
 		case KeyStatus::KEY_DOWN:
 		{
-			ChatBroadcastRequest reqPacket;
-			strcpy_s( reqPacket.m_Chat, "Key Down!" );
-			NetworkManager::GetInstance()->RequestChat( reqPacket );
-
 			CameraController::GetInstance()->Init();
+			// test code 
+			// 서버 상황 동기화를 위한 테스트 코드
+			// 원래는 방만들고 방시작하고 게임진행하면 필요없음 
+
+			SyncAllRequest syncRequestData;
+			syncRequestData.m_PlayerId = NetworkManager::GetInstance( )->GetMyPlayerID();
+			syncRequestData.m_RoomNumber = 0; // 로비 번호... 테스트용
+
+			NetworkManager::GetInstance()->SendPacket( &syncRequestData );
 		}
 			break;
 		case KeyStatus::KEY_PRESSED:
@@ -142,9 +135,6 @@ REGISTER_KEY_HANDLER( VK_SPACE )
 			break;
 		case KeyStatus::KEY_UP:
 		{
-			ChatBroadcastRequest reqPacket;
-			strcpy_s( reqPacket.m_Chat, "Key Up!" );
-			NetworkManager::GetInstance()->RequestChat( reqPacket );
 		}
 			break;
 		default:

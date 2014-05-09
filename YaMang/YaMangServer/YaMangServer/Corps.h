@@ -7,12 +7,13 @@ class ClientManager;
 class Corps
 {
 public:
-	Corps( int playerID, int corpsID, PositionInfo position, ClientManager* clientManager );
+	Corps( int playerID, int corpsID, UnitType unitType, PositionInfo position, ClientManager* clientManager );
 	virtual ~Corps();
 
 	int						GetCorpsID( ) const { return m_CorpsID; }
 	int						GetPlayerID() const { return m_PlayerID; }
-	short					GetCorpsSize( ) const { return m_UnitNum; }
+	UnitType				GetUnitType() const { return m_UnitType; }
+	int						GetUnitNum() const { return m_UnitNum; }
 	PositionInfo			GetPositionInfo( ) const { return m_Position; }
 	void					SetPositionInfo( PositionInfo position ) { m_Position = position; };
 
@@ -20,6 +21,8 @@ public:
 	Action*					GetHoldingAction( ) const { return m_HoldAction; }
 
 	void					ChangeFormation( FormationType formation ) { m_Formation = formation; }
+	FormationType			GetFormationType() const { return m_Formation; }
+
 	void					AddDamage( float damage );
 
 	float					GetHP() const { return m_HP; }
@@ -43,13 +46,15 @@ private:
 	Corps& operator=( const Corps& );
 
 protected:
+
 	int						m_PlayerID = -1;
 	int						m_CorpsID = -1;
+	UnitType				m_UnitType = UnitType::UNIT_NONE;
 	bool					m_IsDead = false;
-	short					m_UnitNum = -1;
+	int						m_UnitNum = -1;
 
 	PositionInfo			m_Position;
-	FormationType			m_Formation = FormationType::FORMATION_NONE;
+	FormationType			m_Formation = FormationType::FORMATION_RUSH;
 
 	Action*					m_HoldAction = nullptr;
 

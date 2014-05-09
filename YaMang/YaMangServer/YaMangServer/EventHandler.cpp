@@ -269,6 +269,13 @@ void ClientSession::HandleGenerateCorpsRequest( GenerateCorpsRequest& inPacket )
 	outPacket.m_LookZ = lookZ;
 	outPacket.m_CorpsID = generatedCorpsID;
 	outPacket.m_PlayerId = m_PlayerID;
+	outPacket.m_FormationType = FormationType::FORMATION_NONE;
+	outPacket.m_UnitNum = 10;
+
+	if ( unitType == UnitType::UNIT_GUARD )
+	{
+		outPacket.m_UnitNum = 5;
+	}
 
 	if ( !Broadcast( &outPacket ) )
 	{
@@ -461,5 +468,48 @@ void ClientSession::HandleAttackCorpsRequest( AttackCorpsRequest& inPacket )
 
 
 
+
+REGISTER_HANDLER( PKT_CS_SYNC_ALL )
+{
+	SyncAllRequest inPacket = static_cast<SyncAllRequest&>( pktBase );
+	session->HandleSyncAllRequest( inPacket );
+}
+
+void ClientSession::HandleSyncAllRequest( SyncAllRequest& inPacket )
+{
+
+	m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size );
+
+	int roomNumber = inPacket.m_RoomNumber;
+	int playerID = inPacket.m_PlayerId;
+
+	const std::hash_map<int, Corps*> corpsList = m_ClientManager->GetCorpsList( );
+
+	for ( auto& it : corpsList )
+	{
+		PositionInfo positionInfo = it.second->GetPositionInfo();
+
+		GenerateCorpsResult outPacket;
+		outPacket.m_UnitType = it.second->GetUnitType();
+		outPacket.m_NowX = positionInfo.m_EyePoint.x;
+		outPacket.m_NowZ = positionInfo.m_EyePoint.z;
+		outPacket.m_LookX = positionInfo.m_LookAtPoint.x;
+		outPacket.m_LookZ = positionInfo.m_LookAtPoint.z;
+		outPacket.m_CorpsID = it.second->GetCorpsID();
+		outPacket.m_PlayerId = m_PlayerID;
+		outPacket.m_FormationType = it.second->GetFormationType();
+		outPacket.m_UnitNum = it.second->GetUnitNum();
+
+
+		if ( !DirectSend( &outPacket ) )
+		{
+			Disconnect();
+		}
+	}
+
+
+
+
+}
 
 //////////////////////////////////////////////////////////////////////////

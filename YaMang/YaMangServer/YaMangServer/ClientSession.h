@@ -73,7 +73,7 @@ public:
 	void	HandleChangeCorpsFormationRequest( ChangeCorpsFormationRequest& inPacket );
 	void	HandleStopCorpsRequest( StopCorpsRequest& inPacket );
 	void	HandleAttackCorpsRequest( AttackCorpsRequest& inPacket );
-
+	void	HandleSyncAllRequest( SyncAllRequest& inPacket );
 
 	//////////////////////////////////////////////////////////////////////////
 	// 게임 컨텐츠 관련 메소드

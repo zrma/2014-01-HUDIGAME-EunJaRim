@@ -78,6 +78,14 @@ void GenerateCorpAction::OnTick( )
 	outPacket.m_CorpsID = generatedCorpsID;
 	outPacket.m_PlayerId = m_PlayerID;
 
+	outPacket.m_FormationType = FormationType::FORMATION_NONE;
+	outPacket.m_UnitNum = 10;
+
+	if ( unitType == UnitType::UNIT_GUARD )
+	{
+		outPacket.m_UnitNum = 5;
+	}
+
 	m_ClientManager->BroadcastPacket( &outPacket );
 
 	printf_s( "GenerateCorps! Type:%d CorpID:%d PlayerID:%d \n",

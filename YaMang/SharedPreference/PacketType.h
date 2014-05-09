@@ -46,6 +46,8 @@ enum PacketTypes: short
 
 	PKT_SC_REFRESH_UI = 500,
 
+	PKT_CS_SYNC_ALL = 600,
+
 	PKT_MAX = 1024
 };
 
@@ -259,6 +261,8 @@ struct GenerateCorpsResult: public PacketHeader
 		m_LookZ = NOT_A_NUMBER_FLOAT;
 		m_CorpsID = -1;
 		m_PlayerId = -1;
+		m_UnitNum = -1;
+		m_FormationType = FormationType::FORMATION_NONE;
 	}
 
 	UnitType m_UnitType;
@@ -268,6 +272,9 @@ struct GenerateCorpsResult: public PacketHeader
 	float	m_LookZ;
 	int		m_CorpsID;
 	int		m_PlayerId;
+
+	int		m_UnitNum;
+	FormationType	m_FormationType;
 };
 
 
@@ -441,5 +448,20 @@ struct RefreshUIResult: public PacketHeader
 
 };
 
+// 클라 접속전의 게임 룸 상태를 전송
+// 게임에 재접등의 이유나 관람에 사용 가능할듯 (지금은 클라가 게임 시작 동기화가 없이 막 들어가서...)
+struct SyncAllRequest: public PacketHeader
+{
+	SyncAllRequest( )
+	{
+		m_Size = sizeof( SyncAllRequest );
+		m_Type = PKT_CS_SYNC_ALL;
+		m_RoomNumber = -1;
+		m_PlayerId = -1;
+	}
 
+	
+	int		m_RoomNumber;
+	int		m_PlayerId;
+};
 #pragma pack(pop)
