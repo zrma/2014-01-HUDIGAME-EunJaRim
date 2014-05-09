@@ -235,6 +235,7 @@ struct GenerateCorpsRequest: public PacketHeader
 		m_NowZ = NOT_A_NUMBER_FLOAT;
 		m_LookX = NOT_A_NUMBER_FLOAT;
 		m_LookZ = NOT_A_NUMBER_FLOAT;
+		m_PlayerId = -1;
 	}
 
 	UnitType m_UnitType;
@@ -242,6 +243,7 @@ struct GenerateCorpsRequest: public PacketHeader
 	float	m_NowZ;
 	float	m_LookX;
 	float	m_LookZ;
+	int		m_PlayerId;
 };
 
 struct GenerateCorpsResult: public PacketHeader

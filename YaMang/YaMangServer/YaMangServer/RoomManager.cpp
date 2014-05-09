@@ -109,6 +109,17 @@ bool RoomManager::DeleteRoom( int roomNumber )
 	}
 }
 
+
+bool RoomManager::CheckRoom( int roomNumber )
+{
+	if ( m_RoomList.find( roomNumber ) == m_RoomList.end() )
+	{
+		return false;
+	}
+	return true;
+}
+
+
 ClientSession* RoomManager::CreateClient( SOCKET sock )
 {
 	return m_Lobby->CreateClient( sock );

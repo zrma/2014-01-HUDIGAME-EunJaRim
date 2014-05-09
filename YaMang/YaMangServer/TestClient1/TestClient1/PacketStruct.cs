@@ -127,6 +127,7 @@ namespace TestClient1
             public float m_EyeZ;
             public float m_LookX;
             public float m_LookZ;
+            public int m_PlayerId;
         }
 
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]

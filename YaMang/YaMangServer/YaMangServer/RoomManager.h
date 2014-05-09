@@ -17,6 +17,8 @@ public:
 
 	bool	DeleteRoom( int roomNumber ); // 방 삭제
 
+	bool	CheckRoom( int roomNumber);
+
 	ClientSession*	CreateClient( SOCKET sock );
 	void			FlushClientSend( );
 	void			OnPeriodWork( );

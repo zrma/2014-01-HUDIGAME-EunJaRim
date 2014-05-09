@@ -131,12 +131,14 @@ private:
 	//////////////////////////////////////////////////////////////////////////
 	// 게임 컨텐츠 관련 데이터
 	//////////////////////////////////////////////////////////////////////////
-	int				m_Food = 100;
-	int				m_CorpsNum = 0;
-	int				m_BaseNum = 0;
-	ULONGLONG		m_CorpsRegenTime = 10000;
-	bool			m_GameStarted = false;
+	int						m_Food = 100;
+	int						m_CorpsNum = 0;
+	int						m_BaseNum = 0;
+	ULONGLONG				m_CorpsRegenTime = 10000;
+	bool					m_GameStarted = false;
 
+	unsigned char			m_ErrorNumber = 0;
+	const unsigned char		m_ErrorNumberMax = 5;
 	friend class ClientManager;
 };
 

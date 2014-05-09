@@ -11,6 +11,7 @@ public:
 	virtual ~Corps();
 
 	int						GetCorpsID( ) const { return m_CorpsID; }
+	int						GetPlayerID() const { return m_PlayerID; }
 	short					GetCorpsSize( ) const { return m_UnitNum; }
 	PositionInfo			GetPositionInfo( ) const { return m_Position; }
 	void					SetPositionInfo( PositionInfo position ) { m_Position = position; };

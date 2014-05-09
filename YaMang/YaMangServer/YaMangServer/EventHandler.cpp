@@ -99,6 +99,14 @@ void ClientSession::HandleGameOverRequest( GameOverRequest& inPacket )
 	bool isWon = inPacket.m_IsWon;
 	int playerID = inPacket.m_PlayerId;
 
+	// GM이 아니면 아웃
+	if ( playerID < 101 && playerID > 199 )
+	{
+		Disconnect( );
+		return;
+	}
+
+
 	GameOverResult outPacket;
 	outPacket.m_PlayerId = playerID;
 
@@ -155,6 +163,12 @@ void ClientSession::HandleEnterRoomRequest( EnterRoomRequest& inPacket )
 
 	int roomNumber = inPacket.m_RoomNumber;
 
+	if ( !g_RoomManager->CheckRoom( roomNumber ) )
+	{
+		++m_ErrorNumber;
+		return;
+	}
+
 	if ( !g_RoomManager->EnterRoom( roomNumber, m_PlayerID ) )
 	{
 		Disconnect();
@@ -186,6 +200,12 @@ void ClientSession::HandleLeaveRoomRequest( LeaveRoomRequest& inPacket )
 	m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size );
 
 	int roomNumber = inPacket.m_RoomNumber;
+
+	if ( !g_RoomManager->CheckRoom( roomNumber ) )
+	{
+		++m_ErrorNumber;
+		return;
+	}
 
 	if ( !g_RoomManager->LeaveRoom( roomNumber, m_PlayerID ) )
 	{
@@ -222,7 +242,14 @@ void ClientSession::HandleGenerateCorpsRequest( GenerateCorpsRequest& inPacket )
 	float nowZ = inPacket.m_NowZ;
 	float lookX = inPacket.m_LookX;
 	float lookZ = inPacket.m_LookZ;
-	
+	int playerID = inPacket.m_PlayerId;
+
+	if ( playerID < 101 && playerID > 199 )
+	{
+		Disconnect();
+		return;
+	}
+
 	PositionInfo position;
 	position.m_EyePoint = { nowX, 0.0f, nowZ };
 	position.m_LookAtPoint = { lookX, 0.0f, lookZ };
@@ -231,7 +258,7 @@ void ClientSession::HandleGenerateCorpsRequest( GenerateCorpsRequest& inPacket )
 
 	if ( generatedCorpsID == -1 )
 	{
-		Disconnect();
+		assert( false );
 	}
 
 	GenerateCorpsResult outPacket;
@@ -274,11 +301,16 @@ void ClientSession::HandleMoveCorpsRequest( MoveCorpsRequest& inPacket )
 	destination.m_EyePoint = { nowX, 0.0f, nowZ };
 	destination.m_LookAtPoint = { targetX, 0.0f, targetZ };
 
-	if ( corpsID == -1 )
+	if ( nullptr == m_ClientManager->GetCorpsByCorpsID( corpsID ) )
+	{
+		++m_ErrorNumber;
+		return;
+	}
+	if ( m_ErrorNumber > m_ErrorNumberMax )
 	{
 		Disconnect();
 	}
-	
+
 	// Corps를 탐색 한 후 Corps의 정체를 파악
 	// -- 적합한 이동인지 판정 후 스케쥴러에 등록
 	//
@@ -312,7 +344,13 @@ void ClientSession::HandleStopCorpsRequest( StopCorpsRequest& inPacket )
 
 	int corpsID = inPacket.m_CorpsID;
 
-	if ( corpsID == -1 )
+	if ( nullptr == m_ClientManager->GetCorpsByCorpsID( corpsID ) )
+	{
+		++m_ErrorNumber;
+		return;
+	}
+
+	if ( m_ErrorNumber > m_ErrorNumberMax )
 	{
 		Disconnect();
 	}
@@ -348,7 +386,13 @@ void ClientSession::HandleChangeCorpsFormationRequest( ChangeCorpsFormationReque
 	int corpsID = inPacket.m_CorpsID;
 	FormationType formation = inPacket.m_FormationType;
 
-	if ( corpsID == -1 )
+	if ( nullptr == m_ClientManager->GetCorpsByCorpsID( corpsID ) )
+	{
+		++m_ErrorNumber;
+		return;
+	}
+
+	if ( m_ErrorNumber > m_ErrorNumberMax )
 	{
 		Disconnect();
 	}
@@ -387,7 +431,17 @@ void ClientSession::HandleAttackCorpsRequest( AttackCorpsRequest& inPacket )
 	int myCorpsID = inPacket.m_MyCorpsID;
 	int targetCorpsID = inPacket.m_TargetCorpsID;
 
-	if ( myCorpsID == -1 || targetCorpsID == -1 )
+	if ( nullptr == m_ClientManager->GetCorpsByCorpsID( myCorpsID ) )
+	{
+		++m_ErrorNumber;
+		return;
+	}
+	if ( nullptr == m_ClientManager->GetCorpsByCorpsID( targetCorpsID ) )
+	{
+		++m_ErrorNumber;
+		return;
+	}
+	if ( m_ErrorNumber > m_ErrorNumberMax )
 	{
 		Disconnect();
 	}

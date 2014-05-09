@@ -19,7 +19,7 @@ namespace TestClient1
         {
             InitializeComponent();
             var rnd = new Random(DateTime.Now.Millisecond);
-            playerID = rnd.Next(1000, 1080);
+            playerID = rnd.Next(101, 199);
             lb_playerID.Text = "PlayerID:" + playerID;
         }
 
@@ -103,7 +103,7 @@ namespace TestClient1
                 float lookX = float.Parse(tb_corps_look_x.Text);
                 float lookZ = float.Parse(tb_corps_look_z.Text);
 
-                Network.SendGenerateCorpsRequest(unitType, eyeX, eyeZ, lookX,lookZ);
+                Network.SendGenerateCorpsRequest(unitType, eyeX, eyeZ, lookX,lookZ, playerID);
             }
         }
 

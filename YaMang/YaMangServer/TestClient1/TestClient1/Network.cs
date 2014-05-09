@@ -104,7 +104,8 @@ namespace TestClient1
             , float eyeX
             , float eyeZ
             , float lookX
-            , float lookZ)
+            , float lookZ
+            , int playerID)
         {
             
 
@@ -116,6 +117,7 @@ namespace TestClient1
             request.m_EyeZ = eyeZ;
             request.m_LookX = lookX;
             request.m_LookZ = lookZ;
+            request.m_PlayerId = playerID;
 
             byte[] sendData = RawSerializer<PacketStruct.GenerateCorpsRequest>.RawSerialize(request);
 
