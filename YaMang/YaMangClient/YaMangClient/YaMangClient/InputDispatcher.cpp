@@ -18,7 +18,7 @@
 #include "Timer.h"
 #include "PlayerManager.h"
 
-
+//함수 객체 만드는 곳
 typedef void( *KeyEventHandler )( KeyInput inputKey );
 static KeyEventHandler KeyHandlerTable[MAX_KEY];
 
@@ -26,6 +26,8 @@ static void DefaultKeyHandler( KeyInput inputKey )
 {
 }
 
+//이 구조체는 생성과 동시에 초기화 된다
+//_init_key_handlers_가 생성되면서 스스로를 초기화 함
 struct InitializeKeyHandlers
 {
 	InitializeKeyHandlers()
@@ -45,6 +47,10 @@ struct RegisterKeyHandler
 	}
 };
 
+//역슬래시는 줄 바꿈을 의미
+//첫 번째 줄 함수 선언 부
+//두 번재 줄 registerKeyHandler 구조체 생성
+//세 번째 줄 Handler 함수 본체 작성
 #define REGISTER_KEY_HANDLER( KEY_TYPE ) \
 	static void Handler_##KEY_TYPE( KeyInput inputKey ); \
 	static RegisterKeyHandler _register_##KEY_TYPE(KEY_TYPE, Handler_##KEY_TYPE); \
