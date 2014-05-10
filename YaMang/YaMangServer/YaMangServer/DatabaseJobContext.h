@@ -1,6 +1,5 @@
 ﻿#pragma once
 
-#include <WinSock2.h>
 #include "Config.h"
 #include "PacketType.h"
 #include "ObjectPool.h"

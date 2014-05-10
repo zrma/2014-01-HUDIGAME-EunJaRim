@@ -1,7 +1,5 @@
 ﻿#pragma once
 
-#include <atomic>
-
 template<typename TElem, int QSize>
 class SPSCQueue
 {

@@ -1,6 +1,7 @@
 ﻿#pragma once
 
-class Action;
+#include "Action.h"
+
 class ClientManager;
 
 struct ActionComparator

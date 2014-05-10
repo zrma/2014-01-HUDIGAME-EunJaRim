@@ -8,6 +8,7 @@
 #include "EnumSet.h"
 #include "PacketType.h"
 #include "ClientManager.h"
+#include "Action.h"
 
 Corps::Corps( int playerID, int corpsID, UnitType unitType, PositionInfo position, ClientManager* clientManager )
 : m_PlayerID( playerID ), m_CorpsID( corpsID ), m_UnitType(unitType), m_Position( position ), m_ClientManager( clientManager )
