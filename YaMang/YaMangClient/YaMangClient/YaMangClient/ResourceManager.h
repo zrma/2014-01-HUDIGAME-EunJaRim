@@ -4,6 +4,17 @@
 
 struct MESHOBJECT;
 
+enum SkyBoxType
+{
+	// 순서 중요!
+	SKY_BOX_BACK = 0,
+	SKY_BOX_FRONT = 1,
+	SKY_BOX_LEFT = 2,
+	SKY_BOX_RIGHT = 3,
+	SKY_BOX_TOP = 4,
+	SKY_BOX_BOTTOM = 5
+};
+
 struct Resource
 {
 	Resource(): m_Type( RESOURCE_NONE ) {}

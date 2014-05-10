@@ -265,7 +265,7 @@ YAMANGDXDLL_API void RenderingTool( MESHOBJECT* inputVal )
 	// 보여주기 위한 땅을 만듬
 	//InitGroundMesh(100, 100);
 	CreateRawGround(100, 100, 10);
-	HeightMapRender();
+	RenderHeightMap();
 
 	//와이어 프레임 해제
 	g_D3dDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
@@ -435,7 +435,7 @@ YAMANGDXDLL_API void PreSettingForTool()
 	SetAspectRatio( 729, 588 );	
 }
 
-YAMANGDXDLL_API void HeightMapRender()
+YAMANGDXDLL_API void RenderHeightMap()
 {
 	D3DXMATRIXA16 worldMatrix;
 	g_D3dDevice->GetTransform(D3DTS_WORLD, &worldMatrix);
@@ -504,17 +504,17 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 	int startIdx = 0;
 	CUSTOMVERTEX vPos0;
 
-	vPos0.vertexPoint.x = -1.f * col * pixelSize * 0.5f;
-	vPos0.vertexPoint.y = 0.0f;
-	vPos0.vertexPoint.z = -1.f * row * pixelSize * 0.5f;
+	vPos0.m_VertexPoint.x = -1.f * col * pixelSize * 0.5f;
+	vPos0.m_VertexPoint.y = 0.0f;
+	vPos0.m_VertexPoint.z = -1.f * row * pixelSize * 0.5f;
 	for ( int z = 0; z <= row; ++z )
 	{
 		for ( int x = 0; x <= col; ++x )
 		{
-			baseVertex[startIdx].vertexPoint.x = vPos0.vertexPoint.x + ( pixelSize * x );
-			baseVertex[startIdx].vertexPoint.y = 0.f;
-			baseVertex[startIdx].vertexPoint.z = vPos0.vertexPoint.z + ( pixelSize * z );
-			baseVertex[startIdx].Diffuse = D3DCOLOR_ARGB( 255, 150, 30, 30 );
+			baseVertex[startIdx].m_VertexPoint.x = vPos0.m_VertexPoint.x + ( pixelSize * x );
+			baseVertex[startIdx].m_VertexPoint.y = 0.f;
+			baseVertex[startIdx].m_VertexPoint.z = vPos0.m_VertexPoint.z + ( pixelSize * z );
+			baseVertex[startIdx].m_Diffuse = D3DCOLOR_ARGB( 255, 150, 30, 30 );
 			++startIdx;
 		}
 	}
@@ -707,10 +707,10 @@ YAMANGDXDLL_API HRESULT TransPickedTriangle( int modeSelector, float* pickedX, f
 				trianglePointA = g_ZHeight*z + x;
 				trianglePointB = g_ZHeight*z + ( x + 1 );
 				trianglePointC = g_ZHeight*( z + 1 ) + x;
-				Hit1 = D3DXIntersectTri( &VerticesStartPoint[trianglePointA].vertexPoint, &VerticesStartPoint[trianglePointB].vertexPoint, &VerticesStartPoint[trianglePointC].vertexPoint, &g_RayOrigin, &g_RayDirection, pickedX, pickedZ, &dist1 );
+				Hit1 = D3DXIntersectTri( &VerticesStartPoint[trianglePointA].m_VertexPoint, &VerticesStartPoint[trianglePointB].m_VertexPoint, &VerticesStartPoint[trianglePointC].m_VertexPoint, &g_RayOrigin, &g_RayDirection, pickedX, pickedZ, &dist1 );
 
 				trianglePointD = g_ZHeight*( z + 1 ) + ( x + 1 );
-				Hit2 = D3DXIntersectTri( &VerticesStartPoint[trianglePointB].vertexPoint, &VerticesStartPoint[trianglePointC].vertexPoint, &VerticesStartPoint[trianglePointD].vertexPoint, &g_RayOrigin, &g_RayDirection, pickedX, pickedZ, &dist2 );
+				Hit2 = D3DXIntersectTri( &VerticesStartPoint[trianglePointB].m_VertexPoint, &VerticesStartPoint[trianglePointC].m_VertexPoint, &VerticesStartPoint[trianglePointD].m_VertexPoint, &g_RayOrigin, &g_RayDirection, pickedX, pickedZ, &dist2 );
 			}
 		}
 		else
@@ -720,10 +720,10 @@ YAMANGDXDLL_API HRESULT TransPickedTriangle( int modeSelector, float* pickedX, f
 				trianglePointA = g_ZHeight*z + x;
 				trianglePointB = g_ZHeight*z + ( x - 1 );
 				trianglePointC = g_ZHeight*( z + 1 ) + x;
-				Hit1 = D3DXIntersectTri( &VerticesStartPoint[trianglePointA].vertexPoint, &VerticesStartPoint[trianglePointB].vertexPoint, &VerticesStartPoint[trianglePointC].vertexPoint, &g_RayOrigin, &g_RayDirection, pickedX, pickedZ, &dist1 );
+				Hit1 = D3DXIntersectTri( &VerticesStartPoint[trianglePointA].m_VertexPoint, &VerticesStartPoint[trianglePointB].m_VertexPoint, &VerticesStartPoint[trianglePointC].m_VertexPoint, &g_RayOrigin, &g_RayDirection, pickedX, pickedZ, &dist1 );
 
 				trianglePointD = g_ZHeight*( z + 1 ) + ( x - 1 );
-				Hit2 = D3DXIntersectTri( &VerticesStartPoint[trianglePointB].vertexPoint, &VerticesStartPoint[trianglePointC].vertexPoint, &VerticesStartPoint[trianglePointD].vertexPoint, &g_RayOrigin, &g_RayDirection, pickedX, pickedZ, &dist2 );
+				Hit2 = D3DXIntersectTri( &VerticesStartPoint[trianglePointB].m_VertexPoint, &VerticesStartPoint[trianglePointC].m_VertexPoint, &VerticesStartPoint[trianglePointD].m_VertexPoint, &g_RayOrigin, &g_RayDirection, pickedX, pickedZ, &dist2 );
 			}
 		}
 	}
@@ -752,8 +752,8 @@ YAMANGDXDLL_API HRESULT TransPickedTriangle( int modeSelector, float* pickedX, f
 			pointC = &VerticesStartPoint[trianglePointD];
 		}
 
-		*pickedX += pointA->vertexPoint.x;
-		*pickedZ += pointA->vertexPoint.z;
+		*pickedX += pointA->m_VertexPoint.x;
+		*pickedZ += pointA->m_VertexPoint.z;
 
 		modeSelector = static_cast<AreaModeType>( modeSelector );
 
@@ -764,9 +764,9 @@ YAMANGDXDLL_API HRESULT TransPickedTriangle( int modeSelector, float* pickedX, f
 				break;
 			case AREA_MODE_COLOR:
 			{
-				pointA->Diffuse = D3DCOLOR_ARGB( 255, 30, 100, 100 );
-				pointB->Diffuse = D3DCOLOR_ARGB( 255, 30, 100, 100 );
-				pointC->Diffuse = D3DCOLOR_ARGB( 255, 30, 100, 100 );
+				pointA->m_Diffuse = D3DCOLOR_ARGB( 255, 30, 100, 100 );
+				pointB->m_Diffuse = D3DCOLOR_ARGB( 255, 30, 100, 100 );
+				pointC->m_Diffuse = D3DCOLOR_ARGB( 255, 30, 100, 100 );
 			}
 				break;
 			case AREA_MODE_HIGHER:
@@ -825,11 +825,11 @@ YAMANGDXDLL_API void RenderText( LPCWSTR text, float left, float top, int RGB_R,
 
 YAMANGDXDLL_API HRESULT InitCursor( LPCWSTR cursorImagePath, int cursorPosX, int cursorPosY )
 {
-	if ( FAILED( D3DXCreateTextureFromFile( g_D3dDevice, cursorImagePath, &g_cursorTex ) ) )
+	if ( FAILED( D3DXCreateTextureFromFile( g_D3dDevice, cursorImagePath, &g_CursorTex ) ) )
 	{
 		return E_FAIL;
 	}
-	if ( FAILED( D3DXCreateSprite( g_D3dDevice, &g_cursorSprite ) ) ) //first parameter is our device, second is a empty sprite variable
+	if ( FAILED( D3DXCreateSprite( g_D3dDevice, &g_CursorSprite ) ) ) //first parameter is our device, second is a empty sprite variable
 	{
 		return E_FAIL;
 	}
@@ -839,19 +839,19 @@ YAMANGDXDLL_API HRESULT InitCursor( LPCWSTR cursorImagePath, int cursorPosX, int
 	return S_OK;
 }
 
-YAMANGDXDLL_API HRESULT CursorRender( )
+YAMANGDXDLL_API HRESULT RenderCursor( )
 {
-	if ( g_cursorSprite ) 
+	if ( g_CursorSprite ) 
 	{
 		D3DXMATRIXA16 ratioMat;
 		
 		float ratio = (720.0f / g_Width) * g_Ratio;
 		D3DXMatrixIdentity(&ratioMat);
 		D3DXMatrixScaling(&ratioMat, 1280 / g_Width, ratio, 1);
-		g_cursorSprite->SetTransform(&ratioMat);
-		g_cursorSprite->Begin( D3DXSPRITE_ALPHABLEND ); 
-		g_cursorSprite->Draw( g_cursorTex, NULL, NULL, &g_cursorPos, 0xFFFFFFFF ); 
-		g_cursorSprite->End(); 
+		g_CursorSprite->SetTransform(&ratioMat);
+		g_CursorSprite->Begin( D3DXSPRITE_ALPHABLEND ); 
+		g_CursorSprite->Draw( g_CursorTex, NULL, NULL, &g_CursorPos, 0xFFFFFFFF ); 
+		g_CursorSprite->End(); 
 		g_D3dDevice->EndScene();
 		return S_OK;
 	}
@@ -860,23 +860,23 @@ YAMANGDXDLL_API HRESULT CursorRender( )
 
 YAMANGDXDLL_API void CursorCleanUp( )
 {
-	if ( g_cursorSprite )
+	if ( g_CursorSprite )
 	{
-		g_cursorSprite->Release();
+		g_CursorSprite->Release();
 	}
 
-	if ( g_cursorTex )
+	if ( g_CursorTex )
 	{
-		g_cursorTex->Release();
+		g_CursorTex->Release();
 	}
 }
 
 YAMANGDXDLL_API void SetCursorPosition( int PosX, int PosY )
 {
 	//Log("Render Cursor Pos %d %d \n",PosX,PosY);
-	g_cursorPos.x = static_cast<float>(PosX);
-	g_cursorPos.y = static_cast<float>(PosY);
-	g_cursorPos.z = 0.0f;
+	g_CursorPos.x = static_cast<float>(PosX);
+	g_CursorPos.y = static_cast<float>(PosY);
+	g_CursorPos.z = 0.0f;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -911,6 +911,192 @@ YAMANGDXDLL_API void ZoomCamera(float zoom)
 	D3DXMatrixLookAtLH(&viewMatrix, &g_EyePoint, &g_LookAtPoint, &g_UpVector);
 	SetMatrix(&viewMatrix, true);
 }
-	
+
+//////////////////////////////////////////////////////////////////////////
+// SKYBOX
+//////////////////////////////////////////////////////////////////////////
+YAMANGDXDLL_API bool SetSkyBoxTexture( LPCTSTR skyBoxTexture, int id )
+{
+	if ( FAILED( D3DXCreateTextureFromFile( g_D3dDevice, skyBoxTexture, &g_SkyBoxTextures[id] ) ) )
+	{
+		return false;
+	}
+	return true;
+}
+
+YAMANGDXDLL_API HRESULT InitSkyBoxMesh( int size )
+{
+	for ( int indexBuffer = 0; indexBuffer < 6; ++indexBuffer )
+	{
+		if ( g_SkyBoxTextures[indexBuffer] != NULL )
+		{
+			g_SkyBoxTextures[indexBuffer]->Release();
+			g_SkyBoxTextures[indexBuffer] = NULL;
+		}
+	}
+
+	HRESULT hr = S_OK;
+
+	if ( FAILED( hr = D3DXCreateMeshFVF( 12, 24, D3DXMESH_MANAGED, D3DFVF_SKYBOXVERTEX, g_D3dDevice, &g_SkyBoxMesh ) ) )
+	{
+		MessageBox( NULL, L"Could not Create Sky Box Mesh", L"YaMang.DLL", MB_OK );
+		return hr;
+	}
+
+	SKYBOXVERTEX* vertexBuffer = nullptr;
+	if ( FAILED( hr = g_SkyBoxMesh->LockVertexBuffer( 0, (void**)&vertexBuffer ) ) )
+	{
+		MessageBox( NULL, L"Could not Lock Sky Box Mesh Vertex Buffer", L"YaMang.DLL", MB_OK );
+		g_SkyBoxMesh->Release();
+		return hr;
+	}
+
+	// 전면   
+	vertexBuffer[0] = SKYBOXVERTEX( -1.0f, -1.0f, -1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f );
+	vertexBuffer[1] = SKYBOXVERTEX( -1.0f, 1.0f, -1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f );
+	vertexBuffer[2] = SKYBOXVERTEX( 1.0f, 1.0f, -1.0f, 0.0f, 0.0f, -1.0f, 1.0f, 0.0f );
+	vertexBuffer[3] = SKYBOXVERTEX( 1.0f, -1.0f, -1.0f, 0.0f, 0.0f, -1.0f, 1.0f, 1.0f );
+	// 후면
+	vertexBuffer[4] = SKYBOXVERTEX( -1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f );
+	vertexBuffer[5] = SKYBOXVERTEX( -1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f );
+	vertexBuffer[6] = SKYBOXVERTEX( 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f );
+	vertexBuffer[7] = SKYBOXVERTEX( 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f );
+	// 좌측
+	vertexBuffer[8] = SKYBOXVERTEX( -1.0f, -1.0f, 1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f );
+	vertexBuffer[9] = SKYBOXVERTEX( -1.0f, 1.0f, 1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f );
+	vertexBuffer[10] = SKYBOXVERTEX( -1.0f, 1.0f, -1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f );
+	vertexBuffer[11] = SKYBOXVERTEX( -1.0f, -1.0f, -1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 1.0f );
+	// 우측
+	vertexBuffer[12] = SKYBOXVERTEX( 1.0f, -1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f );
+	vertexBuffer[13] = SKYBOXVERTEX( 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f );
+	vertexBuffer[14] = SKYBOXVERTEX( 1.0f, 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f );
+	vertexBuffer[15] = SKYBOXVERTEX( 1.0f, -1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f );
+	// 상단
+	vertexBuffer[16] = SKYBOXVERTEX( -1.0f, 1.0f, -1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f );
+	vertexBuffer[17] = SKYBOXVERTEX( -1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f );
+	vertexBuffer[18] = SKYBOXVERTEX( 1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f );
+	vertexBuffer[19] = SKYBOXVERTEX( 1.0f, 1.0f, -1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f );
+	// 하단
+	vertexBuffer[20] = SKYBOXVERTEX( -1.0f, -1.0f, -1.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f );
+	vertexBuffer[21] = SKYBOXVERTEX( -1.0f, -1.0f, 1.0f, 0.0f, -1.0f, 0.0f, 1.0f, 1.0f );
+	vertexBuffer[22] = SKYBOXVERTEX( 1.0f, -1.0f, 1.0f, 0.0f, -1.0f, 0.0f, 0.0f, 1.0f );
+	vertexBuffer[23] = SKYBOXVERTEX( 1.0f, -1.0f, -1.0f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f );
+
+	for ( UINT i = 0; i < 24; ++i )
+	{
+		vertexBuffer[i].m_X *= size;
+		vertexBuffer[i].m_Y *= size;
+		vertexBuffer[i].m_Z *= size;
+	}
+
+	g_SkyBoxMesh->UnlockVertexBuffer();
+
+	WORD* indexBuffer = 0;
+	if ( FAILED( hr = g_SkyBoxMesh->LockIndexBuffer( 0, (void**)&indexBuffer ) ) )
+	{
+		MessageBox( NULL, L"Could not Lock Sky Box Mesh Index Buffer", L"YaMang.DLL", MB_OK );
+		g_SkyBoxMesh->Release();
+		return hr;
+	}
+	indexBuffer[0] = 0;		indexBuffer[1] = 1;		indexBuffer[2] = 2;
+	indexBuffer[3] = 0;		indexBuffer[4] = 2;		indexBuffer[5] = 3;
+
+	indexBuffer[6] = 4;		indexBuffer[7] = 5;		indexBuffer[8] = 6;
+	indexBuffer[9] = 4;		indexBuffer[10] = 6;	indexBuffer[11] = 7;
+
+	indexBuffer[12] = 8;	indexBuffer[13] = 9;	indexBuffer[14] = 10;
+	indexBuffer[15] = 8;	indexBuffer[16] = 10;	indexBuffer[17] = 11;
+
+	indexBuffer[18] = 12;	indexBuffer[19] = 13;	indexBuffer[20] = 14;
+	indexBuffer[21] = 12;	indexBuffer[22] = 14;	indexBuffer[23] = 15;
+
+	indexBuffer[24] = 16;	indexBuffer[25] = 17;	indexBuffer[26] = 18;
+	indexBuffer[27] = 16;	indexBuffer[28] = 18;	indexBuffer[29] = 19;
+
+	indexBuffer[30] = 20;	indexBuffer[31] = 21;	indexBuffer[32] = 22;
+	indexBuffer[33] = 20;	indexBuffer[34] = 22;	indexBuffer[35] = 23;
+
+	g_SkyBoxMesh->UnlockIndexBuffer();
+
+	DWORD* attributeBuffer = 0;
+	if ( FAILED( hr = g_SkyBoxMesh->LockAttributeBuffer( 0, &attributeBuffer ) ) )
+	{
+		MessageBox( NULL, L"Could not Lock Sky Box Mesh Attribute Buffer", L"YaMang.DLL", MB_OK );
+		g_SkyBoxMesh->Release();
+		return hr;
+	}
+
+	// triangles 1 - 4
+	for ( int a = 0; a < 2; a++ )
+	{
+		// subset 0
+		attributeBuffer[a] = 0;
+	}
+	// triangles 5-8
+	for ( int b = 2; b < 4; b++ )
+	{
+		// subset 1   
+		attributeBuffer[b] = 1;
+	}
+	// triangles 9-12   
+	for ( int c = 4; c < 6; c++ )
+	{
+		// subset 2   
+		attributeBuffer[c] = 2;
+	}
+	// triangles 1-4   
+	for ( int d = 6; d < 8; d++ )
+	{
+		// subset 0  
+		attributeBuffer[d] = 3;
+	}
+	// triangles 5-8   
+	for ( int e = 8; e < 10; e++ )
+	{
+		// subset 1
+		attributeBuffer[e] = 4;
+	}
+	// triangles 9-12   
+	for ( int f = 10; f < 12; f++ )
+	{
+		// subset 2   
+		attributeBuffer[f] = 5;
+	}
+	g_SkyBoxMesh->UnlockAttributeBuffer();
+
+	return S_OK;
+}
+
+YAMANGDXDLL_API void RenderSkyBox()
+{
+	if ( g_SkyBoxMesh )
+	{
+		g_D3dDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_SOLID );
+
+		for ( int i = 0; i < 6; i++ )
+		{
+			g_D3dDevice->SetTexture( 0, g_SkyBoxTextures[i] );
+			g_SkyBoxMesh->DrawSubset( i );
+		}
+	}
+}
+
+YAMANGDXDLL_API void SkyBoxCleanUp()
+{
+	if ( g_SkyBoxMesh != NULL )
+	{
+		g_SkyBoxMesh->Release();
+	}
+
+	for ( int i = 0; i < 6; ++i )
+	{
+		if ( g_SkyBoxTextures[i] != NULL )
+		{
+			g_SkyBoxTextures[i]->Release();
+		}
+	}
+}
+
+
 // 내보낸 변수의 예제입니다.
 // YAMANGDXDLL_API int nyaMangDxDll=0;

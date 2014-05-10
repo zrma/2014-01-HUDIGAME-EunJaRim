@@ -33,11 +33,27 @@ void ResourceManager::Init()
 
 	InitGroundMesh( 100, 100 );
 	CreateRawGround( 100, 100, 1.0f );
+
+	InitSkyBoxMesh();
+
+	fileName = L"SkyBox_Back.png";
+	SetSkyBoxTexture( fileName, SKY_BOX_BACK );
+	fileName = L"SkyBox_Front.png";
+	SetSkyBoxTexture( fileName, SKY_BOX_FRONT );
+	fileName = L"SkyBox_Left.png";
+	SetSkyBoxTexture( fileName, SKY_BOX_LEFT );
+	fileName = L"SkyBox_Right.png";
+	SetSkyBoxTexture( fileName, SKY_BOX_RIGHT );
+	fileName = L"SkyBox_Top.png";
+	SetSkyBoxTexture( fileName, SKY_BOX_TOP );
+	fileName = L"SkyBox_Bottom.png";
+	SetSkyBoxTexture( fileName, SKY_BOX_BOTTOM );
 	m_IsMapReady = true;
 }
 
 void ResourceManager::Destroy()
 {
+	SkyBoxCleanUp();
 	DeleteMap();
 
 	for ( auto& toBeDelete : m_MeshArray )

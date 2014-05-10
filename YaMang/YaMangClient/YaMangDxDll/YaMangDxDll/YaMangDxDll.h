@@ -34,11 +34,8 @@ extern "C"{
 	YAMANGDXDLL_API void MeshObjectCleanUp( MESHOBJECT* inputVal );
 
 	YAMANGDXDLL_API void SetMatrix( D3DXMATRIXA16* matrix, bool cameraSet = false );
-
 	YAMANGDXDLL_API void SetCameraView(float x = 0.f, float y = 0.f, float z = 0.f);
-
 	YAMANGDXDLL_API void SetAspectRatio( long width, long height );
-
 
 	//////////////////////////////////////////////////////////////////////////
 	// height map 출력을 위한 함수입니다.
@@ -48,7 +45,7 @@ extern "C"{
 	YAMANGDXDLL_API HRESULT HeightMapTextureImport( HWND hWnd, LPCTSTR heightMap, LPCTSTR mapTexture );
 	YAMANGDXDLL_API void HeightMapCleanup();
 	YAMANGDXDLL_API void PreSettingForTool();
-	YAMANGDXDLL_API void HeightMapRender();
+	YAMANGDXDLL_API void RenderHeightMap();
 	YAMANGDXDLL_API void InitGroundMesh( int row, int col );
 	YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize );
 	
@@ -68,7 +65,7 @@ extern "C"{
 	//////////////////////////////////////////////////////////////////////////
 
 	YAMANGDXDLL_API HRESULT InitCursor( LPCWSTR cursorImagePath = L"cursor2.png", int cursorPosX = 0, int cursorPosY = 0 );
-	YAMANGDXDLL_API HRESULT CursorRender();
+	YAMANGDXDLL_API HRESULT RenderCursor();
 	YAMANGDXDLL_API void CursorCleanUp();
 	YAMANGDXDLL_API void SetCursorPosition( int PosX = 0, int PosY = 0 );
 	
@@ -84,6 +81,13 @@ extern "C"{
 	YAMANGDXDLL_API void MoveCamera( float x = 0, float y = 0, float z = 0);
 	YAMANGDXDLL_API void ZoomCamera( float zoom );
 
+	//////////////////////////////////////////////////////////////////////////
+	// SKYBOX
+	//////////////////////////////////////////////////////////////////////////
+	YAMANGDXDLL_API HRESULT InitSkyBoxMesh( int size = 500 );
+	YAMANGDXDLL_API bool SetSkyBoxTexture( LPCTSTR skyBoxTexture, int id );
+	YAMANGDXDLL_API void RenderSkyBox();
+	YAMANGDXDLL_API void SkyBoxCleanUp();
 }
 //단일 변수 out sample
 //extern YAMANGDXDLL_API int nyaMangDxDll;

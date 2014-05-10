@@ -18,9 +18,7 @@ public:
 	HRESULT				CreateCursor( LPCWSTR cursorImagePath, int cursorPosX = 500, int cursorPosY = 500 );
 	void				DestroyCursor();
 
-	HRESULT				RenderCursor() const;
 	void				SetGameCursorPos(int PosX, int PosY);
-
 	void				SetCursorType(CursorType cursorType) { m_NowCursorType = cursorType; }
 
 private:

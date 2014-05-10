@@ -79,7 +79,8 @@ void Renderer::RenderMap() const
 {
 	if ( ResourceManager::GetInstance()->IsMapReady() )
 	{
-		HeightMapRender( );
+		RenderHeightMap();
+		RenderSkyBox();
 	}
 }
 

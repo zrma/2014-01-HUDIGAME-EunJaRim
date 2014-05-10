@@ -41,16 +41,6 @@ void MouseRender::DestroyCursor()
 		m_IsCursorReady = false;
 	}
 }
-
-HRESULT MouseRender::RenderCursor() const
-{
-	if ( FAILED( CursorRender() ) )
-	{
-		return E_FAIL;
-	}
-	return S_OK;
-}
-
 void MouseRender::Update()
 {
 	SetGameCursorPos( MouseManager::GetInstance()->GetMousePositionX(), MouseManager::GetInstance()->GetMousePositionY() );
