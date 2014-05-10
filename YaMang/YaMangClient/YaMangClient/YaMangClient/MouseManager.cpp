@@ -129,8 +129,18 @@ void MouseManager::SetLeftClick( bool isclicked )
 
 			if ( pickedCorps )
 			{
-				Log( "결과 - 부대 번호 : %d, 부대 타입 : %d \n", pickedCorps->GetCorpsID(), static_cast<int>( pickedCorps->GetUnitType() ) );
-				PlayerManager::GetInstance()->AddToSelectedCorps( pickedCorps->GetCorpsID() );
+				// 여기에 플레이어의 유닛이 아닌가 확인하는 코드 넣어야 됨
+
+				if ( UnitType::UNIT_GUARD == pickedCorps->GetUnitType() )
+				{
+					Log( "깃발병은 클릭 선택 할 수 없음! \n" );
+					pickedCorps->SetSelected( false );
+				}
+				else
+				{
+					Log( "결과 - 부대 번호 : %d, 부대 타입 : %d \n", pickedCorps->GetCorpsID(), static_cast<int>( pickedCorps->GetUnitType() ) );
+					PlayerManager::GetInstance()->AddToSelectedCorps( pickedCorps->GetCorpsID() );
+				}
 			}
 			else
 			{
