@@ -235,7 +235,10 @@ BOOL MainWindow::Create( PCWSTR lpWindowName, DWORD dwStyle, DWORD dwExStyle /*=
 LRESULT CALLBACK MainWindow::WindowProc( HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam )
 {
 	MainWindow * pThis = NULL;
-
+	
+	//처음 실행할때 해당 창에서 만들어진 메시지임을 확인하는 tagging을 함
+	//그리고 그 이후 메시지를 확인해 해당 tag가 있는 경우에만 처리
+	//이외에는 버림
 	if ( uMsg == WM_NCCREATE )
 	{
 		CREATESTRUCT* pCreate = (CREATESTRUCT*)lParam;
