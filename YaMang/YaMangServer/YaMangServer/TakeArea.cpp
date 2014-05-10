@@ -3,6 +3,7 @@
 #include "Corps.h"
 #include "ClientManager.h"
 #include "PacketType.h"
+#include "GuardArea.h"
 
 TakeArea::TakeArea()
 {
@@ -72,6 +73,19 @@ void TakeArea::OnTick()
 
 	float length = D3DXVec2Length( &vector );
 
+	Action* targetAction = m_TargerCrops->GetHoldingAction( );
+	if ( nullptr == targetAction )
+	{
+		printf_s( "Guard Start! \n" );
+		m_TargerCrops->ChangeFormation( FormationType::FORMATION_DEFENSE );
+		GuardArea* action = new GuardArea( );
+		action->SetClientManager( m_ClientManager );
+		action->SetOwnerCorps( m_TargerCrops );
+		action->SetTargetCorps( m_OwnerCrops );
+
+		m_ClientManager->AddActionToScheduler( action, m_TargerCrops->GetAttackDelay() / 2 ); // 반격하려고 정신차리는 딜레이
+	}
+
 	if ( length < m_OwnerCrops->GetAttackRange() )
 	{
 		m_TargerCrops->MoveStop();
@@ -106,11 +120,13 @@ void TakeArea::OnTick()
 		printf_s( "TakeArea OnTick Attack Success \n" );
 
 
-		if ( m_OwnerCrops->IsDead() || m_TargerCrops->IsDead() )
+		if ( m_TargerCrops->IsDead() )
 		{
 			printf_s( "Dead! \n" );
 			m_ActionStatus = ACTION_END;
 			m_OwnerCrops->DoNextAction( this, 0 );
+			m_ClientManager->TakeBase( m_OwnerCrops->GetPlayerID( ), m_TargerCrops->GetPlayerID( ), m_TargerCrops->GetCorpsID( ) );
+
 		}
 		else
 		{

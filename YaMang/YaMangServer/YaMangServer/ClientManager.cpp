@@ -481,6 +481,59 @@ Corps* ClientManager::GetCorpsByCorpsID( int corpsID )
 	return nullptr;
 }
 
+
+void ClientManager::TakeBase( int ownerPlayerID, int targetPlayerID, int targetGuardID )
+{
+	
+	Corps* targetGuard = GetCorpsByCorpsID( targetGuardID );
+	if ( nullptr == targetGuard )
+	{
+		return;
+	}
+	auto targetGuardPosition = m_BaseGuardList.find( targetGuardID );
+	if ( targetGuardPosition == m_BaseGuardList.end() )
+	{
+		return;
+	}
+
+
+	auto findOwner = g_PidSessionTable.find( ownerPlayerID );
+	if ( findOwner == g_PidSessionTable.end( ) )
+	{
+		return;
+	}
+	auto findTarget = g_PidSessionTable.find( targetPlayerID );
+	if ( findTarget == g_PidSessionTable.end( ) )
+	{
+		// 봇을 상대로 기지 점령을 할떄
+		if ( 0 == targetPlayerID )
+		{
+			ClientSession* ownerClient = findOwner->second;
+			ownerClient->AddBaseNum( );
+			PositionInfo guardPosition = targetGuardPosition->second;
+			const Corps* corps = GenerateCorps( ownerPlayerID, UnitType::UNIT_GUARD, guardPosition );
+
+			m_BaseGuardList.insert( BaseGuardList::value_type( corps->GetCorpsID(), guardPosition ) );
+			m_BaseGuardList.erase( targetGuardPosition );
+		}
+		return;
+	}
+	
+	
+	ClientSession* ownerClient = findOwner->second; 
+	ClientSession* targetClient = findTarget->second;
+
+	ownerClient->AddBaseNum();
+	targetClient->SubBaseNum();
+	
+	PositionInfo guardPosition = targetGuardPosition->second;
+	const Corps* corps = GenerateCorps( ownerPlayerID, UnitType::UNIT_GUARD, guardPosition );
+	
+	m_BaseGuardList.insert( BaseGuardList::value_type( corps->GetCorpsID( ), guardPosition ) );
+	m_BaseGuardList.erase( targetGuardPosition );
+
+}
+
 void ClientManager::AddActionToScheduler( Action* addedAction, ULONGLONG remainTime )
 {
 	m_ActionScheduler->AddActionToScheduler( addedAction, remainTime );

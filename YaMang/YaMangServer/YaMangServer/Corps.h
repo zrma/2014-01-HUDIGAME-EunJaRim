@@ -14,14 +14,14 @@ public:
 	int						GetPlayerID() const { return m_PlayerID; }
 	UnitType				GetUnitType() const { return m_UnitType; }
 	int						GetUnitNum() const { return m_UnitNum; }
-	PositionInfo			GetPositionInfo( ) const { return m_Position; }
+	const PositionInfo&		GetPositionInfo( ) const { return m_Position; }
 	void					SetPositionInfo( PositionInfo position ) { m_Position = position; };
 
 	void					SetHoldingAction( Action* holdAction ) { m_HoldAction = holdAction; }
 	Action*					GetHoldingAction( ) const { return m_HoldAction; }
 
 	void					ChangeFormation( FormationType formation ) { m_Formation = formation; }
-	FormationType			GetFormationType() const { return m_Formation; }
+	const FormationType&	GetFormationType() const { return m_Formation; }
 
 	void					AddDamage( float damage );
 

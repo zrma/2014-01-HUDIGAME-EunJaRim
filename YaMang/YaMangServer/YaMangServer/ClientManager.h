@@ -68,6 +68,9 @@ public:
 
 	Corps*				GetCorpsByCorpsID( int corpsID );
 
+
+	void				TakeBase( int ownerPlayerID, int targetPlayerID, int targetGuardID );
+
 private:
 	void				CreatePlayerDone( DatabaseJobContext* dbJob );
 	void				DeletePlayerDone( DatabaseJobContext* dbJob );
@@ -93,7 +96,7 @@ private:
 
 
 
-	typedef std::hash_map<int, PositionInfo> BaseGuardList;
+	typedef std::hash_map<int, PositionInfo> BaseGuardList; // corpsID
 	BaseGuardList		m_BaseGuardList;
 
 	std::vector<std::vector<Tile>>	m_BattleMap;

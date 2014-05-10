@@ -11,6 +11,7 @@
 #include "MovePosition.h"
 #include "SharedDefine.h"
 #include "Attack.h"
+#include "TakeArea.h"
 
 // 테스트용 헤더
 extern RoomManager* g_RoomManager;
@@ -451,14 +452,30 @@ void ClientSession::HandleAttackCorpsRequest( AttackCorpsRequest& inPacket )
 	Corps* myCorps = m_ClientManager->GetCorpsByCorpsID( myCorpsID );
 	Corps* targetCorps = m_ClientManager->GetCorpsByCorpsID( targetCorpsID );
 
-	Attack* action = new Attack( );
-	action->SetClientManager( m_ClientManager );
-	action->SetOwnerCorps( myCorps );
-	action->SetTargetCorps( targetCorps );
 
-	m_ClientManager->AddActionToScheduler( action, 0 );
+	if ( UnitType::UNIT_GUARD == targetCorps->GetUnitType())
+	{
+		TakeArea* action = new TakeArea( );
+		action->SetClientManager( m_ClientManager );
+		action->SetOwnerCorps( myCorps );
+		action->SetTargetCorps( targetCorps );
 
-	printf_s( "[Packet GET]AttackCorps FromCorpID:%d ToCorpID:%d \n", myCorpsID, targetCorpsID );
+		m_ClientManager->AddActionToScheduler( action, 0 );
+		printf_s( "[Packet GET]TakeBase FromCorpID:%d ToCorpID:%d \n", myCorpsID, targetCorpsID );
+	}
+	else
+	{
+		Attack* action = new Attack();
+		action->SetClientManager( m_ClientManager );
+		action->SetOwnerCorps( myCorps );
+		action->SetTargetCorps( targetCorps );
+
+		m_ClientManager->AddActionToScheduler( action, 0 );
+		printf_s( "[Packet GET]AttackCorps FromCorpID:%d ToCorpID:%d \n", myCorpsID, targetCorpsID );
+	}
+
+
+	
 }
 
 

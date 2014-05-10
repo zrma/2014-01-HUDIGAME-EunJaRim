@@ -105,8 +105,10 @@
     <ClInclude Include="Exception.h" />
     <ClInclude Include="GenerateCorpAction.h" />
     <ClInclude Include="Guard.h" />
+    <ClInclude Include="GuardArea.h" />
     <ClInclude Include="HoldPosition.h" />
     <ClInclude Include="Knight.h" />
+    <ClInclude Include="KnightAttack.h" />
     <ClInclude Include="MacroSet.h" />
     <ClInclude Include="MovePosition.h" />
     <ClInclude Include="ObjectPool.h" />
@@ -144,8 +146,10 @@
     <ClCompile Include="Exception.cpp" />
     <ClCompile Include="GenerateCorpAction.cpp" />
     <ClCompile Include="Guard.cpp" />
+    <ClCompile Include="GuardArea.cpp" />
     <ClCompile Include="HoldPosition.cpp" />
     <ClCompile Include="Knight.cpp" />
+    <ClCompile Include="KnightAttack.cpp" />
     <ClCompile Include="MovePosition.cpp" />
     <ClCompile Include="Pike.cpp" />
     <ClCompile Include="RoomManager.cpp" />

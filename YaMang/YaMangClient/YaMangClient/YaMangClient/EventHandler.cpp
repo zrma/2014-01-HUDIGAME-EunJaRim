@@ -406,9 +406,9 @@ void NetworkManager::HandleRefreshUIResult( RefreshUIResult& inPacket )
 			wchar_t wsBaseNum[100] = { 0, };
 			wsprintf( wsBaseNum, L"BaseNum : %d", inPacket.m_BaseNum );
 
-			TextManager::GetInstance( )->RegistText( TEXT_FOOD, wsFood, 20, 300 );
-			TextManager::GetInstance( )->RegistText( TEXT_CORPS_NUM, wsCorpsNum, 20, 350 );
-			TextManager::GetInstance( )->RegistText( TEXT_BASE_NUM, wsBaseNum, 20, 400 );
+			TextManager::GetInstance( )->RegistText( TEXT_FOOD, wsFood, 20, 250 );
+			TextManager::GetInstance( )->RegistText( TEXT_CORPS_NUM, wsCorpsNum, 20, 300 );
+			TextManager::GetInstance( )->RegistText( TEXT_BASE_NUM, wsBaseNum, 20, 350 );
 			Log( "Refresh UI! \n" );
 		}
 		else

@@ -15,8 +15,8 @@
 		<AttackDelayBonus>0</AttackDelayBonus>
 	</Arrow>
 	<Guard>
-		<HP>50.0f</HP>
-		<MoveSpeed>3.0f</MoveSpeed>
+		<HP>49.0f</HP>
+		<MoveSpeed>0.01f</MoveSpeed>
 		<MoveSpeedBonus>0.0f</MoveSpeedBonus>
 		<AttackRange>1.0f</AttackRange>
 		<AttackRangeBonus>0.0f</AttackRangeBonus>

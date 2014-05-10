@@ -148,6 +148,8 @@
     <ClInclude Include="UnitStatus.h">
       <Filter>Corps</Filter>
     </ClInclude>
+    <ClInclude Include="GuardArea.h" />
+    <ClInclude Include="KnightAttack.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DatabaseJobContext.cpp">
@@ -237,6 +239,8 @@
     <ClCompile Include="UnitStatus.cpp">
       <Filter>Corps</Filter>
     </ClCompile>
+    <ClCompile Include="GuardArea.cpp" />
+    <ClCompile Include="KnightAttack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="YaMangServer.rc">
