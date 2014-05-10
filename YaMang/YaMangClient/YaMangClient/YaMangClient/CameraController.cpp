@@ -128,3 +128,31 @@ void CameraController::RotateSide( float angle )
 	D3DXMatrixLookAtLH( &viewMatrix, &m_EyePoint, &m_LookAtPoint, &m_UpVector );
 	Renderer::GetInstance()->SetViewMatrix( viewMatrix );
 }
+
+void CameraController::ChangeMouseZoomStatus(int zoom)
+{
+	if (m_MouseZoomStatus == MouseZoomStatus::ZOOM_STATUS_NONE)
+	{
+		return;
+	}
+
+	if (zoom < 0)
+	{
+		if (m_MouseZoomStatus == MouseZoomStatus::ZOOM_STATUS_NEAR)
+		{
+			return;
+		}
+		m_MouseZoomStatus = static_cast<MouseZoomStatus>(static_cast<int>(m_MouseZoomStatus)-1);
+	}
+
+	if (zoom > 0)
+	{
+		if (m_MouseZoomStatus == MouseZoomStatus::ZOOM_STATUS_FAR)
+		{
+			return;
+		}
+		m_MouseZoomStatus = static_cast<MouseZoomStatus>(static_cast<int>(m_MouseZoomStatus)+1);
+	}
+
+	printf_s("zoom enum : %d\n", m_MouseZoomStatus);
+}

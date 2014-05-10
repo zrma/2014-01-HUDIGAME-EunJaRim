@@ -3,6 +3,15 @@
 #include "MacroSet.h"
 #include <d3dx9math.h>
 
+enum MouseZoomStatus
+{
+	ZOOM_STATUS_NONE,
+	ZOOM_STATUS_NEAR,
+	ZOOM_STATUS_MID,
+	ZOOM_STATUS_FAR,
+	ZOOM_STATUS_MAX
+};
+
 class CameraController : public Singleton<CameraController>
 {
 public:
@@ -17,6 +26,8 @@ public:
 	void	RotateUp( float angle );
 	void	RotateSide( float angle );
 
+	void	ChangeMouseZoomStatus(int zoom);
+
 private:
 	FLOAT			m_Axis = 0;
 	FLOAT			m_Height = 0;
@@ -26,4 +37,6 @@ private:
 	D3DXVECTOR3		m_UpVector = { 0, 1, 0 };
 
 	static CameraController*		m_Instance;
+
+	MouseZoomStatus	m_MouseZoomStatus = MouseZoomStatus::ZOOM_STATUS_NEAR;
 };

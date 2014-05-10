@@ -6,6 +6,7 @@
 #include "InputDispatcher.h"
 #include "MouseManager.h"
 #include "SoundManager.h"
+#include "CameraController.h"
 
 MainWindow::MainWindow()
 {
@@ -149,6 +150,12 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam ) con
 			MouseManager::GetInstance()->MoveMousePosition( MouseX, MouseY );
 			MouseManager::GetInstance()->MoveHiddenCursorToCenter();
 
+		}
+			return 0;
+
+		case WM_MOUSEWHEEL:
+		{
+			CameraController::GetInstance()->ChangeMouseZoomStatus(HIWORD(wParam));
 		}
 			return 0;
 
