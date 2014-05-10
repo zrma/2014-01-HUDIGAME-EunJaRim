@@ -6,6 +6,7 @@
 #include "tinyxml.h"
 #include "xpath_static.h"
 #include "PacketType.h"
+#include "Timer.h"
 
 #pragma comment(lib,"ws2_32.lib")
 
@@ -13,7 +14,7 @@
 const int BUFSIZE = 1024 * 10;
 
 NetworkManager::NetworkManager()
-: m_RecvBuffer( BUFSIZE ), m_SendBuffer( BUFSIZE )
+: m_RecvBuffer( BUFSIZE ), m_SendBuffer( BUFSIZE ), m_PrevTime( Timer::GetInstance()->GetNowTime() )
 {
 }
 
@@ -236,10 +237,19 @@ bool NetworkManager::HandleMessage( WPARAM wParam, LPARAM lParam )
 
 void NetworkManager::SendPacket( PacketHeader* pkt )
 {
+	UINT nowTime = Timer::GetInstance()->GetNowTime();
+	if ( nowTime - m_PrevTime < 1 )
+	{
+		// 비정상적으로 과도한 요청이다 (0.001초 이내에 반복 요청 되고 있음)
+		// return;
+	}
+
 	if ( m_SendBuffer.Write( (const char*)pkt, pkt->m_Size ) )
 	{
 		// @see http://blog.naver.com/gkqxhq324456/110177315036 참조
 		// 채팅을 날리려고 버퍼에 데이터도 넣어 두었으니, WM_SOCKET 이벤트를 발생시키자
 		PostMessage( MainWindow::GetInstance()->Window(), WM_SOCKET, NULL, FD_WRITE );
+
+		m_PrevTime = nowTime;
 	}
 }

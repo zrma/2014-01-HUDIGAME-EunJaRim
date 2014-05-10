@@ -40,6 +40,8 @@ private:
 	CircularBuffer	m_RecvBuffer;
 	CircularBuffer	m_SendBuffer;
 	int				m_MyPlayerId;
+
+	UINT			m_PrevTime = 0;
 };
 
 typedef void( *HandlerFunc )( PacketHeader& pktBase );

@@ -8,9 +8,7 @@
 #include "Action.h"
 #include "SoundManager.h"
 #include "MouseRender.h"
-
 #include "NetworkManager.h"
-#include "PlayerManager.h"
 
 ScenePlay::ScenePlay()
 {
@@ -161,7 +159,7 @@ UnitType ScenePlay::GetUnitTypeByID( int corpsID )
 	return UnitType::UNIT_NONE;
 }
 
-Corps* ScenePlay::SearchCorpsByPosition( float x, float z )
+Corps* ScenePlay::SearchCorpsByPosition( float x, float z, bool selectOption )
 {
 	Corps* resultCorps = nullptr;
 	for ( auto& iter : m_CorpsList )
@@ -171,7 +169,10 @@ Corps* ScenePlay::SearchCorpsByPosition( float x, float z )
 		// 하나만 피킹 하기 위해서
 		if ( resultCorps )
 		{
-			thisCorps->SetSelected( false );
+			if ( selectOption )
+			{
+				thisCorps->SetSelected( false );
+			}
 			continue;
 		}
 
@@ -191,17 +192,18 @@ Corps* ScenePlay::SearchCorpsByPosition( float x, float z )
 			if ( thisCorps->IsContain( x, z ) )
 			{
 				Log( "%d번 부대 2차 피킹!!! 성공! \n", thisCorps->GetCorpsID() );
-				PlayerManager::GetInstance()->AddToSelectedCorps( thisCorps->GetCorpsID() );
-
-				thisCorps->SetSelected( true );
+				if ( selectOption )
+				{
+					thisCorps->SetSelected( true );
+				}
 				resultCorps = thisCorps;
 			}
-			else
+			else if ( selectOption )
 			{
 				thisCorps->SetSelected( false );
 			}
 		}
-		else
+		else if ( selectOption )
 		{
 			thisCorps->SetSelected( false );
 		}

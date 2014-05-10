@@ -128,6 +128,7 @@ void MouseManager::SetLeftClick( bool isclicked )
 		if ( pickedCorps )
 		{
 			Log( "결과 - 부대 번호 : %d, 부대 타입 : %d \n", pickedCorps->GetCorpsID(), static_cast<int>( pickedCorps->GetUnitType() ) );
+			PlayerManager::GetInstance()->AddToSelectedCorps( pickedCorps->GetCorpsID() );
 		}
 		else
 		{
@@ -150,9 +151,48 @@ void MouseManager::SetRightClick(bool isclicked)
 {
 	m_IsRightClicked = isclicked; 
 
+	//오른쪽 마우스 클릭
 	if (isclicked) //버튼 다운 시
 	{
-		//오른쪽 마우스 클릭
+		if ( PlayerManager::GetInstance()->IsSelectedCorps() )
+		{
+			float pickedX = 0;
+			float pickedZ = 0;
+
+			Scene* scene = SceneManager::GetInstance()->GetNowScene();
+
+			if ( typeid( ScenePlay ) != typeid( *scene ) )
+			{
+				return;
+			}
+
+			CalcPickingRay( m_MousePosition.X, m_MousePosition.Y );
+			TransPickedTriangle( 0, &pickedX, &pickedZ );
+
+			Corps* pickedCorps = static_cast<ScenePlay*>( scene )->SearchCorpsByPosition( pickedX, pickedZ, false );
+
+			Log( "[%d %d] -> [%f, %f] 으로 우클릭 피킹! \n", m_MousePosition.X, m_MousePosition.Y, pickedX, pickedZ );
+
+			if ( pickedCorps )
+			{
+				if ( PlayerManager::GetInstance()->IsCorpsInIdList( pickedCorps->GetCorpsID() ) )
+				{
+					Log( "자기 자신 클릭! \n" );
+				}
+				else // 여기에 플레이어의 유닛이 아닌가 확인하는 코드 넣어야 됨
+				{
+					Log( "결과 - 부대 번호 : %d, 부대 타입 : %d - 공격! \n", pickedCorps->GetCorpsID(), static_cast<int>( pickedCorps->GetUnitType() ) );
+
+					PlayerManager::GetInstance()->AttackCorpsById( pickedCorps->GetCorpsID() );
+				}
+			}
+			else if ( !m_IsRightDragging )
+			{
+				Log( "결과 - 부대 없음! 해당 좌표로 이동!\n" );
+
+				PlayerManager::GetInstance()->MoveCorpsToPosition( pickedX, pickedZ );
+			}
+		}
 
 		//드래그 시작 포인트 저장 ; 첫 DOWN시 한번만 실행되므로
 		SetDragStartPoint(m_MousePosition.X, m_MousePosition.Y);
