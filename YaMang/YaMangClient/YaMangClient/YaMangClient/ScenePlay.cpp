@@ -26,48 +26,6 @@ void ScenePlay::Create()
 	SoundManager::GetInstance()->PlaySound( SOUND_SCENE_PLAY_BGM1 );
 
 	m_MouseCursor = new MouseRender();
-	//////////////////////////////////////////////////////////////////////////
-	// 임시로 이렇게 해 두었지만
-	// 나중에 내부적으로 Corps를 추가하거나 제거하는 코드 작성해야 함
-	
-	/*PositionInfo pos;
-	pos.m_EyePoint = { 0.0f, 0.0f, 10.0f };
-	pos.m_LookAtPoint = { 0.0f, 0.0f, 9.0f };
-	Corps* corps = new Corps( 1, 1, pos );
-	corps->Create( 6, UnitType::UNIT_ARROW );
-	corps->SetVisible( true );
-	m_CorpsList[100] = corps;
-
-	pos.m_EyePoint = { -15.0f, 0.0f, 10.0f };
-	pos.m_LookAtPoint = { -14.0f, 0.0f, 9.0f };
-	corps = new Corps( 2, 1, pos );
-	corps->SetFormation( FormationType::FORMATION_DESTROY );
-	corps->Create( 10, UnitType::UNIT_GUARD );
-	corps->SetVisible( true );
-	m_CorpsList[200] = corps;
-
-	pos.m_EyePoint = { 15.0f, 0.0f, 10.0f };
-	pos.m_LookAtPoint = { 14.0f, 0.0f, 9.0f };
-	corps = new Corps( 3, 1, pos );
-	corps->Create( 8, UnitType::UNIT_PIKE );
-	corps->SetVisible( true );
-	m_CorpsList[300] = corps;
-
-	pos.m_EyePoint = { 8.0f, 0.0f, 10.0f };
-	pos.m_LookAtPoint = { 7.0f, 0.0f, 9.0f };
-	corps = new Corps( 4, 1, pos );
-	corps->SetFormation( FormationType::FORMATION_RUSH );
-	corps->Create( 6, UnitType::UNIT_KNIGHT );
-	corps->SetVisible( true );
-	m_CorpsList[400] = corps;
-
-	pos.m_EyePoint = { -8.0f, 0.0f, 10.0f };
-	pos.m_LookAtPoint = { -7.0f, 0.0f, 9.0f };
-	corps = new Corps( 5, 1, pos );
-	corps->SetFormation( FormationType::FORMATION_DEFENSE );
-	corps->Create( 8, UnitType::UNIT_SWORD );
-	corps->SetVisible( true );
-	m_CorpsList[500] = corps;*/
 }
 
 void ScenePlay::Destroy()
@@ -114,7 +72,7 @@ void ScenePlay::AddCorps( int corpsID, Corps* corps )
 	}
 	else
 	{
-		// CheckCorps로 이미 체크하므로 필요없을듯... 지울까요? 혹시 모르니...
+		// CheckCorps로 이미 체크하므로 필요 없을 듯... 지울까요? 혹시 모르니...
 		SafeDelete( corps );
 
 		// 중복 ID로 다시 보냈음

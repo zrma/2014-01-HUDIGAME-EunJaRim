@@ -10,6 +10,8 @@
 #include "MacroSet.h"
 #include "Action.h"
 #include "Timer.h"
+#include "Collision.h"
+#include "CollisionManager.h"
 
 Corps::Corps( int corpsId, int playerId, PositionInfo pos )
 : m_CorpsID( corpsId ), m_OwnerPlayerID( playerId ), m_TargetFormation( FormationType::FORMATION_RUSH )
@@ -176,34 +178,25 @@ void Corps::SetCorpsHP( int unitNum )
 	}
 }
 
-bool Corps::IsContain( float x, float z ) const
+bool Corps::IsContain( float x, float z )
 {
-	D3DXMATRIXA16 thisMatrix = GetMatrix();
-
-	D3DXVECTOR3 minBoundary = m_FormationArray[static_cast<size_t>( m_TargetFormation )]->m_Min;
-	D3DXVECTOR3 maxBoundary = m_FormationArray[static_cast<size_t>( m_TargetFormation )]->m_Max;
-
-	D3DXVECTOR3 leftTop = { minBoundary.x, 0, minBoundary.z };
-	D3DXVECTOR3 rightTop = { maxBoundary.z, 0, minBoundary.z };
-	D3DXVECTOR3 leftBottom = { minBoundary.x, 0, maxBoundary.z };
-	D3DXVECTOR3 rightBottom = { maxBoundary.x, 0, maxBoundary.z };
+	std::shared_ptr<Collision> clickCollision(new Collision( this, 1.0f ));
 	
-	D3DXVec3TransformCoord( &leftTop, &leftTop, &thisMatrix );
-	D3DXVec3TransformCoord( &rightTop, &rightTop, &thisMatrix );
-	D3DXVec3TransformCoord( &leftBottom, &leftBottom, &thisMatrix );
-	D3DXVec3TransformCoord( &rightBottom, &rightBottom, &thisMatrix );
-	
-	/*Log( "%f %f, %f %f, %f %f, %f %f 사각박스!",
-		 leftTop.x, leftTop.z, rightTop.x, rightTop.z,
-		 leftBottom.x, leftBottom.z, rightBottom.x, rightBottom.z );*/
+	D3DXVECTOR3 backupPosition = m_EyePoint;
+	m_EyePoint.x = x;
+	m_EyePoint.z = z;
 
-	if ( ( ( leftTop.x - x > 0 ) && ( rightTop.x - x > 0 ) && ( leftBottom.x - x > 0 ) && ( rightBottom.x - x > 0 ) ) ||
-		 ( ( leftTop.x - x < 0 ) && ( rightTop.x - x < 0 ) && ( leftBottom.x - x < 0 ) && ( rightBottom.x - x < 0 ) ) ||
-		 ( ( leftTop.z - z > 0 ) && ( rightTop.z - z > 0 ) && ( leftBottom.z - z > 0 ) && ( rightBottom.z - z > 0 ) ) ||
-		 ( ( leftTop.z - z < 0 ) && ( rightTop.z - z < 0 ) && ( leftBottom.z - z < 0 ) && ( rightBottom.z - z < 0 ) ) )
+	CollisionManager::GetInstance()->CheckCollision( &(*clickCollision) );
+	m_EyePoint = backupPosition;
+
+	if ( clickCollision->IsCollide() )
 	{
-		return false;
+		Unit* unit = dynamic_cast<Unit*>( clickCollision->GetCompetitor() );
+		if ( unit && unit->GetOwner()->GetCorpsID() == m_CorpsID )
+		{
+			return true;
+		}
 	}
 
-	return true;
+	return false;
 }

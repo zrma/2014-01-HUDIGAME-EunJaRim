@@ -32,3 +32,4 @@
 #include <hash_map>
 #include <map>
 #include <functional>
+#include <memory>
