@@ -10,6 +10,7 @@
 #include "MouseRender.h"
 
 #include "NetworkManager.h"
+#include "PlayerManager.h"
 
 ScenePlay::ScenePlay()
 {
@@ -160,11 +161,19 @@ UnitType ScenePlay::GetUnitTypeByID( int corpsID )
 	return UnitType::UNIT_NONE;
 }
 
-int ScenePlay::SearchCorpsIdByPosition( float x, float z )
+Corps* ScenePlay::SearchCorpsByPosition( float x, float z )
 {
+	Corps* resultCorps = nullptr;
 	for ( auto& iter : m_CorpsList )
 	{
 		auto& thisCorps = iter.second;
+
+		// 하나만 피킹 하기 위해서
+		if ( resultCorps )
+		{
+			thisCorps->SetSelected( false );
+			continue;
+		}
 
 		if ( thisCorps->GetOwnPlayerID() != NetworkManager::GetInstance()->GetMyPlayerID() )
 		{
@@ -178,17 +187,25 @@ int ScenePlay::SearchCorpsIdByPosition( float x, float z )
 		{
 			Log( "%d번 부대 1차 피킹!!! \n", thisCorps->GetCorpsID() );
 		
+			// BoundingCircle
 			if ( thisCorps->IsContain( x, z ) )
 			{
-				Log( "%d번 부대 2차 피킹!!! \n", thisCorps->GetCorpsID() );
+				Log( "%d번 부대 2차 피킹!!! 성공! \n", thisCorps->GetCorpsID() );
+				PlayerManager::GetInstance()->AddToSelectedCorps( thisCorps->GetCorpsID() );
 
 				thisCorps->SetSelected( true );
-				continue;
+				resultCorps = thisCorps;
+			}
+			else
+			{
+				thisCorps->SetSelected( false );
 			}
 		}
-		
-		thisCorps->SetSelected( false );
+		else
+		{
+			thisCorps->SetSelected( false );
+		}
 	}
 
-	return 0;
+	return resultCorps;
 }

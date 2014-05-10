@@ -180,7 +180,7 @@ void Corps::SetCorpsHP( int unitNum )
 
 bool Corps::IsContain( float x, float z )
 {
-	std::shared_ptr<Collision> clickCollision(new Collision( this, 1.0f ));
+	std::shared_ptr<Collision> clickCollision(new Collision( this, 1.5f ));
 	
 	D3DXVECTOR3 backupPosition = m_EyePoint;
 	m_EyePoint.x = x;

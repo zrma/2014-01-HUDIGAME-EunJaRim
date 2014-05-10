@@ -13,6 +13,7 @@
 #include "TextManager.h"
 
 #include "CollisionManager.h"
+#include "PlayerManager.h"
 
 GameManager::GameManager()
 {
@@ -50,6 +51,7 @@ bool GameManager::Init() const
 
 	// 텍스트 매니저
 	// 타이머
+	// 플레이어
 
 	return true;
 }
@@ -123,4 +125,5 @@ void GameManager::Destroy() const
 	InputDispatcher::Release();
 
 	Timer::Release();
+	PlayerManager::Release();
 }

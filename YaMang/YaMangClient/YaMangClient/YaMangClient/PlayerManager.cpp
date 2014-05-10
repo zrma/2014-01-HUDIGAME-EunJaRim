@@ -9,4 +9,5 @@ PlayerManager::PlayerManager()
 
 PlayerManager::~PlayerManager()
 {
+	ClearSelectedCorps();
 }

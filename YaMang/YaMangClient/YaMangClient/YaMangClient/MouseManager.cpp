@@ -5,6 +5,8 @@
 #include "YaMangDxDll.h"
 #include "SceneManager.h"
 #include "ScenePlay.h"
+#include "PlayerManager.h"
+#include "Corps.h"
 
 MouseManager::MouseManager()
 {
@@ -118,8 +120,19 @@ void MouseManager::SetLeftClick( bool isclicked )
 		CalcPickingRay( m_MousePosition.X, m_MousePosition.Y );
 		TransPickedTriangle( 0, &pickedX, &pickedZ );
 
-		static_cast<ScenePlay*>(scene)->SearchCorpsIdByPosition( pickedX, pickedZ );
-		Log( "[%d %d] -> [%f, %f] 으로 피킹 중 \n", m_MousePosition.X, m_MousePosition.Y, pickedX, pickedZ );
+		PlayerManager::GetInstance()->ClearSelectedCorps();
+		Corps* pickedCorps = static_cast<ScenePlay*>(scene)->SearchCorpsByPosition( pickedX, pickedZ );
+		
+		Log( "[%d %d] -> [%f, %f] 으로 피킹! \n", m_MousePosition.X, m_MousePosition.Y, pickedX, pickedZ );
+
+		if ( pickedCorps )
+		{
+			Log( "결과 - 부대 번호 : %d, 부대 타입 : %d \n", pickedCorps->GetCorpsID(), static_cast<int>( pickedCorps->GetUnitType() ) );
+		}
+		else
+		{
+			Log( "결과 - 부대 없음! \n" );
+		}
 		
 		//드래그 시작 포인트 저장 ; 첫 DOWN시 한번만 실행되므로
 		SetDragStartPoint(m_MousePosition.X, m_MousePosition.Y);
