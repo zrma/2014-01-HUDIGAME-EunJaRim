@@ -145,7 +145,7 @@ YAMANGDXDLL_API void SetAspectRatio( long width, long height )
 	float aspectRatio = static_cast<float>( width ) / static_cast<float>( height );
 	g_Ratio = aspectRatio;
 	g_Width = static_cast<float>(width);
-	D3DXMatrixPerspectiveFovLH( &matProj, D3DX_PI / 5, aspectRatio, 1.0f, 2000.0f );
+	D3DXMatrixPerspectiveFovLH( &matProj, D3DX_PI / 5, aspectRatio, 1.0f, 3000.0f );
 	g_D3dDevice->SetTransform( D3DTS_PROJECTION, &matProj );
 }
 
