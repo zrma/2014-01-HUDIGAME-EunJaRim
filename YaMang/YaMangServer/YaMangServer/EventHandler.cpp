@@ -245,11 +245,12 @@ void ClientSession::HandleGenerateCorpsRequest( GenerateCorpsRequest& inPacket )
 	float lookZ = inPacket.m_LookZ;
 	int playerID = inPacket.m_PlayerId;
 
-	if ( playerID < 101 && playerID > 199 )
-	{
-		Disconnect();
-		return;
-	}
+	// gm만 리퀘스트를 할수있게... 치트 테스트를 위해 잠시 꺼둠
+// 	if ( playerID < 101 && playerID > 199 )
+// 	{
+// 		Disconnect();
+// 		return;
+// 	}
 
 	PositionInfo position;
 	position.m_EyePoint = { nowX, 0.0f, nowZ };

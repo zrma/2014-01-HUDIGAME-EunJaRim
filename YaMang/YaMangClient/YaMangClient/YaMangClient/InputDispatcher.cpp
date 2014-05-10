@@ -218,3 +218,87 @@ REGISTER_KEY_HANDLER( VK_V )
 	float delta = time * -5.0f;
 	CameraController::GetInstance()->MoveElevate( delta );
 }
+
+// Cheat Key
+REGISTER_KEY_HANDLER( VK_U )
+{
+	// generate arrow
+	if ( KeyStatus::KEY_UP == inputKey.GetKeyStatus( ) )
+	{
+		GenerateCorpsRequest generateCorps;
+		generateCorps.m_NowX = 40.0f;
+		generateCorps.m_NowZ = 40.0f;
+		generateCorps.m_LookX = 0.0f;
+		generateCorps.m_LookZ = 0.0f;
+		generateCorps.m_PlayerId = NetworkManager::GetInstance()->GetMyPlayerID();
+		generateCorps.m_UnitType = UnitType::UNIT_ARROW;
+
+		NetworkManager::GetInstance()->SendPacket( &generateCorps );
+	}
+
+}
+REGISTER_KEY_HANDLER( VK_I )
+{
+	// generate knight
+	if ( KeyStatus::KEY_UP == inputKey.GetKeyStatus() )
+	{
+		GenerateCorpsRequest generateCorps;
+		generateCorps.m_NowX = 40.0f;
+		generateCorps.m_NowZ = 40.0f;
+		generateCorps.m_LookX = 0.0f;
+		generateCorps.m_LookZ = 0.0f;
+		generateCorps.m_PlayerId = NetworkManager::GetInstance()->GetMyPlayerID();
+		generateCorps.m_UnitType = UnitType::UNIT_KNIGHT;
+
+		NetworkManager::GetInstance()->SendPacket( &generateCorps );
+	}
+}
+REGISTER_KEY_HANDLER( VK_O )
+{
+	// generate pike
+	if ( KeyStatus::KEY_UP == inputKey.GetKeyStatus() )
+	{
+		GenerateCorpsRequest generateCorps;
+		generateCorps.m_NowX = 40.0f;
+		generateCorps.m_NowZ = 40.0f;
+		generateCorps.m_LookX = 0.0f;
+		generateCorps.m_LookZ = 0.0f;
+		generateCorps.m_PlayerId = NetworkManager::GetInstance()->GetMyPlayerID();
+		generateCorps.m_UnitType = UnitType::UNIT_PIKE;
+
+		NetworkManager::GetInstance()->SendPacket( &generateCorps );
+	}
+}
+REGISTER_KEY_HANDLER( VK_P )
+{
+	// generate sword
+	if ( KeyStatus::KEY_UP == inputKey.GetKeyStatus() )
+	{
+		GenerateCorpsRequest generateCorps;
+		generateCorps.m_NowX = 40.0f;
+		generateCorps.m_NowZ = 40.0f;
+		generateCorps.m_LookX = 0.0f;
+		generateCorps.m_LookZ = 0.0f;
+		generateCorps.m_PlayerId = NetworkManager::GetInstance()->GetMyPlayerID();
+		generateCorps.m_UnitType = UnitType::UNIT_SWORD;
+
+		NetworkManager::GetInstance()->SendPacket( &generateCorps );
+	}
+}
+
+REGISTER_KEY_HANDLER( VK_L )
+{
+	// generate Bot sword
+	if ( KeyStatus::KEY_UP == inputKey.GetKeyStatus() )
+	{
+		GenerateCorpsRequest generateCorps;
+		generateCorps.m_NowX = -20.0f;
+		generateCorps.m_NowZ = -20.0f;
+		generateCorps.m_LookX = 0.0f;
+		generateCorps.m_LookZ = 0.0f;
+		generateCorps.m_PlayerId = 0; // BOT ID
+		generateCorps.m_UnitType = UnitType::UNIT_SWORD;
+
+		NetworkManager::GetInstance()->SendPacket( &generateCorps );
+	}
+}
