@@ -104,6 +104,7 @@
     <ClInclude Include="DestroyFormation.h" />
     <ClInclude Include="Exception.h" />
     <ClInclude Include="GenerateCorpAction.h" />
+    <ClInclude Include="GenerateCorpOnce.h" />
     <ClInclude Include="Guard.h" />
     <ClInclude Include="GuardArea.h" />
     <ClInclude Include="HoldPosition.h" />
@@ -145,6 +146,7 @@
     <ClCompile Include="EventHandler.cpp" />
     <ClCompile Include="Exception.cpp" />
     <ClCompile Include="GenerateCorpAction.cpp" />
+    <ClCompile Include="GenerateCorpOnce.cpp" />
     <ClCompile Include="Guard.cpp" />
     <ClCompile Include="GuardArea.cpp" />
     <ClCompile Include="HoldPosition.cpp" />

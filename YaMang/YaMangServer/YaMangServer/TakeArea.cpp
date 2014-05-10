@@ -126,7 +126,7 @@ void TakeArea::OnTick()
 			m_ActionStatus = ACTION_END;
 			m_OwnerCrops->DoNextAction( this, 0 );
 			m_ClientManager->TakeBase( m_OwnerCrops->GetPlayerID( ), m_TargerCrops->GetPlayerID( ), m_TargerCrops->GetCorpsID( ) );
-
+			
 		}
 		else
 		{

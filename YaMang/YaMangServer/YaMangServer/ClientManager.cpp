@@ -14,6 +14,7 @@
 #include "tinyxml.h"
 #include "xpath_static.h"
 #include "ActionScheduler.h"
+#include "GenerateCorpOnce.h"
 
 ClientManager::ClientManager( int roomNumber ): m_RoomNumber( roomNumber ), m_LastGCTick( 0 ), m_LastClientWorkTick( 0 )
 {
@@ -515,6 +516,13 @@ void ClientManager::TakeBase( int ownerPlayerID, int targetPlayerID, int targetG
 
 			m_BaseGuardList.insert( BaseGuardList::value_type( corps->GetCorpsID(), guardPosition ) );
 			m_BaseGuardList.erase( targetGuardPosition );
+
+			GenerateCorpOnce* action = new GenerateCorpOnce();
+			action->SetClientManager( this );
+			action->SetPlayerID( ownerPlayerID );
+			action->SetClientSession( ownerClient );
+			action->SetCorpData( corps );
+			AddActionToScheduler( action, 10000 ); // 다시 가드병이 생성되는 시간 하드코딩
 		}
 		return;
 	}
@@ -532,6 +540,12 @@ void ClientManager::TakeBase( int ownerPlayerID, int targetPlayerID, int targetG
 	m_BaseGuardList.insert( BaseGuardList::value_type( corps->GetCorpsID( ), guardPosition ) );
 	m_BaseGuardList.erase( targetGuardPosition );
 
+	GenerateCorpOnce* action = new GenerateCorpOnce();
+	action->SetClientManager( this );
+	action->SetPlayerID( ownerPlayerID );
+	action->SetClientSession( ownerClient );
+	action->SetCorpData( corps );
+	AddActionToScheduler( action, 10000 ); // 다시 가드병이 생성되는 시간 하드코딩
 }
 
 void ClientManager::AddActionToScheduler( Action* addedAction, ULONGLONG remainTime )

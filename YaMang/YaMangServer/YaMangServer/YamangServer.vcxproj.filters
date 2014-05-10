@@ -148,8 +148,15 @@
     <ClInclude Include="UnitStatus.h">
       <Filter>Corps</Filter>
     </ClInclude>
-    <ClInclude Include="GuardArea.h" />
-    <ClInclude Include="KnightAttack.h" />
+    <ClInclude Include="GenerateCorpOnce.h">
+      <Filter>Action</Filter>
+    </ClInclude>
+    <ClInclude Include="GuardArea.h">
+      <Filter>Action</Filter>
+    </ClInclude>
+    <ClInclude Include="KnightAttack.h">
+      <Filter>Action</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DatabaseJobContext.cpp">
@@ -239,8 +246,15 @@
     <ClCompile Include="UnitStatus.cpp">
       <Filter>Corps</Filter>
     </ClCompile>
-    <ClCompile Include="GuardArea.cpp" />
-    <ClCompile Include="KnightAttack.cpp" />
+    <ClCompile Include="GenerateCorpOnce.cpp">
+      <Filter>Action</Filter>
+    </ClCompile>
+    <ClCompile Include="GuardArea.cpp">
+      <Filter>Action</Filter>
+    </ClCompile>
+    <ClCompile Include="KnightAttack.cpp">
+      <Filter>Action</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="YaMangServer.rc">
