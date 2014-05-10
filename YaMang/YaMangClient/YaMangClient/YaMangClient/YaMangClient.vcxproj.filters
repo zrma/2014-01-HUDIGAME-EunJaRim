@@ -26,9 +26,6 @@
     <Filter Include="Resource">
       <UniqueIdentifier>{90d90dd2-378d-4724-a957-884336741d01}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Event">
-      <UniqueIdentifier>{781a1a04-c0ee-4c90-8b4d-8ad63d625aa6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="UnitObject">
       <UniqueIdentifier>{9da43219-7480-410a-a9de-e069ccbc01b7}</UniqueIdentifier>
     </Filter>
@@ -46,6 +43,9 @@
     </Filter>
     <Filter Include="Player">
       <UniqueIdentifier>{78444145-5232-461d-9f90-03b763774cf0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InputDispatch">
+      <UniqueIdentifier>{781a1a04-c0ee-4c90-8b4d-8ad63d625aa6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -83,10 +83,10 @@
       <Filter>SharedPreference</Filter>
     </ClInclude>
     <ClInclude Include="InputDispatcher.h">
-      <Filter>Event</Filter>
+      <Filter>InputDispatch</Filter>
     </ClInclude>
     <ClInclude Include="KeyInput.h">
-      <Filter>Event</Filter>
+      <Filter>InputDispatch</Filter>
     </ClInclude>
     <ClInclude Include="NetworkManager.h">
       <Filter>Network</Filter>
@@ -182,9 +182,11 @@
       <Filter>UnitObject\Collision</Filter>
     </ClInclude>
     <ClInclude Include="MouseManager.h">
-      <Filter>Event</Filter>
+      <Filter>InputDispatch</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerManager.h" />
+    <ClInclude Include="PlayerManager.h">
+      <Filter>Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -206,10 +208,10 @@
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="InputDispatcher.cpp">
-      <Filter>Event</Filter>
+      <Filter>InputDispatch</Filter>
     </ClCompile>
     <ClCompile Include="KeyInput.cpp">
-      <Filter>Event</Filter>
+      <Filter>InputDispatch</Filter>
     </ClCompile>
     <ClCompile Include="EventHandler.cpp">
       <Filter>Network</Filter>
@@ -293,9 +295,11 @@
       <Filter>UnitObject\Collision</Filter>
     </ClCompile>
     <ClCompile Include="MouseManager.cpp">
-      <Filter>Event</Filter>
+      <Filter>InputDispatch</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerManager.cpp" />
+    <ClCompile Include="PlayerManager.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="YaMangClient.rc">
