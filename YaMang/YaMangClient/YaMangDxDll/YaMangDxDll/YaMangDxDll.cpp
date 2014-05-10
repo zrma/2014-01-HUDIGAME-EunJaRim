@@ -689,11 +689,12 @@ YAMANGDXDLL_API void TransPickedTriangle( int modeSelector, float* pickedX, floa
 	g_Mesh->GetVertexBuffer( &presentVertexBuffer );
 
 	CUSTOMVERTEX* VerticesStartPoint;
-	presentVertexBuffer->Lock( 0, 0, (void**) &VerticesStartPoint, 0 );
+	presentVertexBuffer->Lock( 0, 0, (void**)&VerticesStartPoint, 0 );
 
 	BOOL Hit1 = false;
 	BOOL Hit2 = false;
-	float dist = 0.f;
+	float dist1 = 0;
+	float dist2 = 0;
 
 	int trianglePointA = NULL, trianglePointB = NULL, trianglePointC = NULL, trianglePointD = NULL;
 
@@ -706,28 +707,28 @@ YAMANGDXDLL_API void TransPickedTriangle( int modeSelector, float* pickedX, floa
 				trianglePointA = g_ZHeight*z + x;
 				trianglePointB = g_ZHeight*z + ( x + 1 );
 				trianglePointC = g_ZHeight*( z + 1 ) + x;
-				Hit1 = D3DXIntersectTri( &VerticesStartPoint[trianglePointA].vertexPoint, &VerticesStartPoint[trianglePointB].vertexPoint, &VerticesStartPoint[trianglePointC].vertexPoint, &g_RayOrigin, &g_RayDirection, pickedX, pickedZ, &dist );
+				Hit1 = D3DXIntersectTri( &VerticesStartPoint[trianglePointA].vertexPoint, &VerticesStartPoint[trianglePointB].vertexPoint, &VerticesStartPoint[trianglePointC].vertexPoint, &g_RayOrigin, &g_RayDirection, pickedX, pickedZ, &dist1 );
 
 				trianglePointD = g_ZHeight*( z + 1 ) + ( x + 1 );
-				Hit2 = D3DXIntersectTri( &VerticesStartPoint[trianglePointB].vertexPoint, &VerticesStartPoint[trianglePointC].vertexPoint, &VerticesStartPoint[trianglePointD].vertexPoint, &g_RayOrigin, &g_RayDirection, pickedX, pickedZ, &dist );
+				Hit2 = D3DXIntersectTri( &VerticesStartPoint[trianglePointB].vertexPoint, &VerticesStartPoint[trianglePointC].vertexPoint, &VerticesStartPoint[trianglePointD].vertexPoint, &g_RayOrigin, &g_RayDirection, pickedX, pickedZ, &dist2 );
 			}
 		}
 		else
 		{
 			for ( UINT x = g_ZHeight - 1; ( x > 0 ) && !( Hit1 | Hit2 ); --x )
 			{
-				trianglePointA = g_ZHeight*z + x; 
-				trianglePointB = g_ZHeight*z + ( x - 1 ); 
+				trianglePointA = g_ZHeight*z + x;
+				trianglePointB = g_ZHeight*z + ( x - 1 );
 				trianglePointC = g_ZHeight*( z + 1 ) + x;
-				Hit1 = D3DXIntersectTri( &VerticesStartPoint[trianglePointA].vertexPoint, &VerticesStartPoint[trianglePointB].vertexPoint, &VerticesStartPoint[trianglePointC].vertexPoint, &g_RayOrigin, &g_RayDirection, pickedX, pickedZ, &dist );
+				Hit1 = D3DXIntersectTri( &VerticesStartPoint[trianglePointA].vertexPoint, &VerticesStartPoint[trianglePointB].vertexPoint, &VerticesStartPoint[trianglePointC].vertexPoint, &g_RayOrigin, &g_RayDirection, pickedX, pickedZ, &dist1 );
 
-				trianglePointD = g_ZHeight*( z + 1 ) + ( x - 1 ); 
-				Hit2 = D3DXIntersectTri( &VerticesStartPoint[trianglePointB].vertexPoint, &VerticesStartPoint[trianglePointC].vertexPoint, &VerticesStartPoint[trianglePointD].vertexPoint, &g_RayOrigin, &g_RayDirection, pickedX, pickedZ, &dist );
+				trianglePointD = g_ZHeight*( z + 1 ) + ( x - 1 );
+				Hit2 = D3DXIntersectTri( &VerticesStartPoint[trianglePointB].vertexPoint, &VerticesStartPoint[trianglePointC].vertexPoint, &VerticesStartPoint[trianglePointD].vertexPoint, &g_RayOrigin, &g_RayDirection, pickedX, pickedZ, &dist2 );
 			}
 		}
 	}
 
-	if ( ( Hit1 || Hit2 ) && dist > 0 )
+	if ( ( Hit1 || Hit2 ) && ( dist1 > 0 || dist2 > 0 ) )
 	{
 		CUSTOMVERTEX* intersectedVertexBufferStart;
 		g_Mesh->LockVertexBuffer( 0, (void**)&intersectedVertexBufferStart );
@@ -757,7 +758,7 @@ YAMANGDXDLL_API void TransPickedTriangle( int modeSelector, float* pickedX, floa
 		switch ( modeSelector )
 		{
 			case AREA_MODE_NONE:
-			
+
 				break;
 			case AREA_MODE_COLOR:
 			{
@@ -780,7 +781,6 @@ YAMANGDXDLL_API void TransPickedTriangle( int modeSelector, float* pickedX, floa
 	}
 
 	presentVertexBuffer->Unlock();
-	
 	presentVertexBuffer->Release();
 }
 
@@ -799,8 +799,8 @@ YAMANGDXDLL_API void RenderText( LPCWSTR text, float left, float top, int RGB_R,
 		static_cast<LONG>( right ),
 		static_cast<LONG>( bottom )
 	}; // 그릴 위치
-	//비율 고정
-
+	
+	// 비율 고정
 	D3DXMATRIXA16 ratioMat;
 	float ratio = (720.0f / g_Width) * g_Ratio;
 	D3DXMatrixIdentity(&ratioMat);
@@ -816,35 +816,6 @@ YAMANGDXDLL_API void RenderText( LPCWSTR text, float left, float top, int RGB_R,
 	g_Sprite->End();											// 스프라이트 그리기 끝 
 }
 
-//////////////////////////////////////////////////////////////////////////
-/// D3D cursor Set을 위한 부분
-//////////////////////////////////////////////////////////////////////////
-YAMANGDXDLL_API void SetD3DCursor( LPCWSTR textureName )
-{
-	//테스트 중
-	//d3d 자체 커서 만드는 방법 1
-// 	RECT rt;
-// 	SetRect(&rt, 0, 0, 0, 0);
-// 
-// 	D3DXLoadSurfaceFromFile( g_surfcursor, NULL, NULL, textureName, &rt, D3DX_FILTER_NONE, 0, NULL );
-// 	g_D3dDevice->SetCursorProperties( 0, 0, g_surfcursor );
-// 	
-// 	g_D3dDevice->ShowCursor( TRUE );
-
-	//d3d 자체 커서 만드는 방법 2
-	//여전히 작동하지 않는다. 대체 문제가 뭐지;
-	//다이렉트 x 커서는 풀스크린 모드에서만 보인다고 한다.
-
-// 	D3DXCreateTextureFromFile( g_D3dDevice, L"cursor2.png", &g_cursortex );
-// 	g_D3dDevice->CreateTexture(32, 32, 0, 0, D3DFMT_A8R8G8B8, D3DPOOL_SCRATCH, &g_cursortex, nullptr);
-// 	g_D3dDevice->CreateOffscreenPlainSurface(32, 32, D3DFMT_A8R8G8B8, D3DPOOL_SCRATCH, &g_surfcursor, nullptr);
-// 	
-// 	g_cursortex->GetSurfaceLevel( 0, &g_surfcursor );
-// 	g_D3dDevice->SetCursorProperties( 0, 0, g_surfcursor );
-// 	g_D3dDevice->SetCursorPosition( 220, 220, D3DCURSOR_IMMEDIATE_UPDATE );
-// 	g_D3dDevice->ShowCursor( TRUE );
-	
-}
 
 YAMANGDXDLL_API HRESULT InitCursor( LPCWSTR cursorImagePath, int cursorPosX, int cursorPosY )
 {
@@ -852,12 +823,12 @@ YAMANGDXDLL_API HRESULT InitCursor( LPCWSTR cursorImagePath, int cursorPosX, int
 	{
 		return E_FAIL;
 	}
-	if ( FAILED( D3DXCreateSprite( g_D3dDevice, &g_cursorSprite ) ) )//first parameter is our device, second is a empty sprite variable
+	if ( FAILED( D3DXCreateSprite( g_D3dDevice, &g_cursorSprite ) ) ) //first parameter is our device, second is a empty sprite variable
 	{
 		return E_FAIL;
 	}
 
-	SetCursorPosition( cursorPosX, cursorPosY );// 0,0,0으로 초기화
+	SetCursorPosition( cursorPosX, cursorPosY ); // 0,0,0으로 초기화
 
 	return S_OK;
 }
@@ -934,6 +905,6 @@ YAMANGDXDLL_API void ZoomCamera(float zoom)
 	D3DXMatrixLookAtLH(&viewMatrix, &g_EyePoint, &g_LookAtPoint, &g_UpVector);
 	SetMatrix(&viewMatrix, true);
 }
-
+	
 // 내보낸 변수의 예제입니다.
 // YAMANGDXDLL_API int nyaMangDxDll=0;

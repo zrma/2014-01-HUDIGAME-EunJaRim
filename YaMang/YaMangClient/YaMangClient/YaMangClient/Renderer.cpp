@@ -126,4 +126,3 @@ D3DXVECTOR3 Renderer::GetPickedPointOfCenter() const
 	D3DXVECTOR3 returnPoint = { pickedX, 0, pickedZ };
 	return returnPoint;
 }
-

@@ -24,7 +24,7 @@ public:
 	void	SetWorldMatrix( D3DXMATRIXA16& matrix ) const;
 	
 	D3DXVECTOR3	GetPickedPointOfCenter() const;
-
+	
 	void	WriteText( LPCWSTR text, float left, float top, int RGB_R = 255, int RGB_G = 255, int RGB_B = 255, float right = 0, float bottom = 0 ) const;
 
 private:
