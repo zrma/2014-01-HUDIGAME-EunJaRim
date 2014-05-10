@@ -1,5 +1,6 @@
 #pragma once
 #include "MacroSet.h"
+#include "EnumSet.h"
 
 class PlayerManager : public Singleton<PlayerManager>
 {
@@ -15,6 +16,7 @@ public:
 
 	void	AttackCorpsById( int corpsID ) const;
 	void	MoveCorpsToPosition( float x, float z ) const;
+	void	ChangeCorpsFormation( FormationType formation ) const;
 
 private:
 	std::list<int>	m_SelectedCorpsList;

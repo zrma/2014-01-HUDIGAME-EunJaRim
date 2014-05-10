@@ -8,6 +8,17 @@ enum class KeyStatus
 	KEY_UP,
 };
 
+const unsigned char VK_0 = 0x30;
+const unsigned char VK_1 = 0x31;
+const unsigned char VK_2 = 0x32;
+const unsigned char VK_3 = 0x33;
+const unsigned char VK_4 = 0x34;
+const unsigned char VK_5 = 0x35;
+const unsigned char VK_6 = 0x36;
+const unsigned char VK_7 = 0x37;
+const unsigned char VK_8 = 0x38;
+const unsigned char VK_9 = 0x39;
+
 const unsigned char VK_A = 0x41;
 const unsigned char VK_B = 0x42;
 const unsigned char VK_C = 0x43;

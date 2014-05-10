@@ -61,3 +61,19 @@ void PlayerManager::MoveCorpsToPosition( float x, float z ) const
 		}
 	}
 }
+
+void PlayerManager::ChangeCorpsFormation( FormationType formation ) const
+{
+	if ( !m_SelectedCorpsList.empty() )
+	{
+		for ( auto& iter : m_SelectedCorpsList )
+		{
+			ChangeCorpsFormationRequest changeCorpsFormationData;
+			changeCorpsFormationData.m_CorpsID = iter;
+			changeCorpsFormationData.m_FormationType = formation;
+
+			NetworkManager::GetInstance()->SendPacket( &changeCorpsFormationData );
+		}
+	}
+}
+

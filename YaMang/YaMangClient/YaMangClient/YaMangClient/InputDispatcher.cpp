@@ -16,6 +16,7 @@
 #include "PacketType.h"
 #include "MainWindow.h"
 #include "Timer.h"
+#include "PlayerManager.h"
 
 
 typedef void( *KeyEventHandler )( KeyInput inputKey );
@@ -150,7 +151,7 @@ REGISTER_KEY_HANDLER( VK_ESCAPE )
 REGISTER_KEY_HANDLER( VK_W )
 {
 	float time = static_cast<float>( Timer::GetInstance()->GetElapsedTime() ) / 1000;
-	float delta = time * 5.0f;
+	float delta = time * 20.0f;
 	CameraController::GetInstance()->MoveForward( delta );
 
 //	Log( "Time : %f \n", delta );
@@ -159,21 +160,21 @@ REGISTER_KEY_HANDLER( VK_W )
 REGISTER_KEY_HANDLER( VK_S )
 {
 	float time = static_cast<float>( Timer::GetInstance()->GetElapsedTime() ) / 1000;
-	float delta = time * -5.0f;
+	float delta = time * -20.0f;
 	CameraController::GetInstance()->MoveForward( delta );
 }
 
 REGISTER_KEY_HANDLER( VK_A )
 {
 	float time = static_cast<float>( Timer::GetInstance()->GetElapsedTime() ) / 1000;
-	float delta = time * -5.0f;
+	float delta = time * -20.0f;
 	CameraController::GetInstance()->MoveSide( delta );
 }
 
 REGISTER_KEY_HANDLER( VK_D )
 {
 	float time = static_cast<float>( Timer::GetInstance()->GetElapsedTime() ) / 1000;
-	float delta = time * 5.0f;
+	float delta = time * 20.0f;
 	CameraController::GetInstance()->MoveSide( delta );
 }
 
@@ -208,15 +209,39 @@ REGISTER_KEY_HANDLER( VK_F )
 REGISTER_KEY_HANDLER( VK_C )
 {
 	float time = static_cast<float>( Timer::GetInstance()->GetElapsedTime() ) / 1000;
-	float delta = time * 5.0f;
+	float delta = time * 10.0f;
 	CameraController::GetInstance()->MoveElevate( delta );
 }
 
 REGISTER_KEY_HANDLER( VK_V )
 {
 	float time = static_cast<float>( Timer::GetInstance()->GetElapsedTime() ) / 1000;
-	float delta = time * -5.0f;
+	float delta = time * -10.0f;
 	CameraController::GetInstance()->MoveElevate( delta );
+}
+
+REGISTER_KEY_HANDLER( VK_1 )
+{
+	if ( KeyStatus::KEY_UP == inputKey.GetKeyStatus() )
+	{
+		PlayerManager::GetInstance()->ChangeCorpsFormation( FormationType::FORMATION_RUSH );
+	}
+}
+
+REGISTER_KEY_HANDLER( VK_2 )
+{
+	if ( KeyStatus::KEY_UP == inputKey.GetKeyStatus() )
+	{
+		PlayerManager::GetInstance()->ChangeCorpsFormation( FormationType::FORMATION_DESTROY );
+	}
+}
+
+REGISTER_KEY_HANDLER( VK_3 )
+{
+	if ( KeyStatus::KEY_UP == inputKey.GetKeyStatus() )
+	{
+		PlayerManager::GetInstance()->ChangeCorpsFormation( FormationType::FORMATION_DEFENSE );
+	}
 }
 
 // Cheat Key
@@ -237,6 +262,7 @@ REGISTER_KEY_HANDLER( VK_U )
 	}
 
 }
+
 REGISTER_KEY_HANDLER( VK_I )
 {
 	// generate knight
@@ -253,6 +279,7 @@ REGISTER_KEY_HANDLER( VK_I )
 		NetworkManager::GetInstance()->SendPacket( &generateCorps );
 	}
 }
+
 REGISTER_KEY_HANDLER( VK_O )
 {
 	// generate pike
@@ -269,6 +296,7 @@ REGISTER_KEY_HANDLER( VK_O )
 		NetworkManager::GetInstance()->SendPacket( &generateCorps );
 	}
 }
+
 REGISTER_KEY_HANDLER( VK_P )
 {
 	// generate sword
