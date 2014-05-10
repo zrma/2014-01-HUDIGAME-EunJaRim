@@ -1,8 +1,8 @@
 ﻿#pragma once
 #include "SharedDefine.h"
 #include "EnumSet.h"
-#include "Action.h"
 
+class Action;
 class ClientManager;
 class Corps
 {
