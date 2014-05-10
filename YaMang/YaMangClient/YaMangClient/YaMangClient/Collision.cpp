@@ -27,10 +27,13 @@ bool Collision::IsCollideWith( Collision& collision )
 		D3DXVec3Normalize( &m_ReverseVector, &m_ReverseVector );
 
 		m_Competitor = collision.GetOwner();
-		return m_IsCollide = true;
+		m_IsCollide = true;
+
+		return m_IsCollide;
 	}
 
-	return m_IsCollide = false;
+	m_IsCollide = false;
+	return m_IsCollide;
 }
 
 D3DXVECTOR3 Collision::GetPosition() const
