@@ -678,11 +678,11 @@ YAMANGDXDLL_API void CalcPickingRay( int mouseX, int mouseY )
 
 }
 
-YAMANGDXDLL_API void TransPickedTriangle( int modeSelector, float* pickedX, float* pickedZ )
+YAMANGDXDLL_API HRESULT TransPickedTriangle( int modeSelector, float* pickedX, float* pickedZ )
 {
 	if ( !( pickedX || pickedZ ) )
 	{
-		return;
+		return S_FALSE;
 	}
 
 	LPDIRECT3DVERTEXBUFFER9 presentVertexBuffer;
@@ -728,7 +728,9 @@ YAMANGDXDLL_API void TransPickedTriangle( int modeSelector, float* pickedX, floa
 		}
 	}
 
-	if ( ( Hit1 || Hit2 ) && ( dist1 > 0 || dist2 > 0 ) )
+	HRESULT result = S_FALSE;
+
+	if ( ( Hit1 && ( dist1 > 0 ) ) || ( Hit2 && ( dist2 > 0 ) ) )
 	{
 		CUSTOMVERTEX* intersectedVertexBufferStart;
 		g_Mesh->LockVertexBuffer( 0, (void**)&intersectedVertexBufferStart );
@@ -778,10 +780,14 @@ YAMANGDXDLL_API void TransPickedTriangle( int modeSelector, float* pickedX, floa
 		}
 
 		g_Mesh->UnlockVertexBuffer();
+
+		result = S_OK;
 	}
 
 	presentVertexBuffer->Unlock();
 	presentVertexBuffer->Release();
+
+	return result;
 }
 
 //////////////////////////////////////////////////////////////////////////

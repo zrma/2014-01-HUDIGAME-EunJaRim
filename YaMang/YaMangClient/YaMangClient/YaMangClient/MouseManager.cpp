@@ -117,24 +117,26 @@ void MouseManager::SetLeftClick( bool isclicked )
 			return;
 		}
 
-		CalcPickingRay( m_MousePosition.X, m_MousePosition.Y );
-		TransPickedTriangle( 0, &pickedX, &pickedZ );
-
 		PlayerManager::GetInstance()->ClearSelectedCorps();
-		Corps* pickedCorps = static_cast<ScenePlay*>(scene)->SearchCorpsByPosition( pickedX, pickedZ );
+		CalcPickingRay( m_MousePosition.X, m_MousePosition.Y );
 		
-		Log( "[%d %d] -> [%f, %f] 으로 피킹! \n", m_MousePosition.X, m_MousePosition.Y, pickedX, pickedZ );
+		HRESULT hr = S_OK;
+		if ( S_FALSE != (hr = TransPickedTriangle( 0, &pickedX, &pickedZ ) ) )
+		{
+			Corps* pickedCorps = static_cast<ScenePlay*>( scene )->SearchCorpsByPosition( pickedX, pickedZ );
 
-		if ( pickedCorps )
-		{
-			Log( "결과 - 부대 번호 : %d, 부대 타입 : %d \n", pickedCorps->GetCorpsID(), static_cast<int>( pickedCorps->GetUnitType() ) );
-			PlayerManager::GetInstance()->AddToSelectedCorps( pickedCorps->GetCorpsID() );
+			Log( "[%d %d] -> [%f, %f] 으로 피킹! \n", m_MousePosition.X, m_MousePosition.Y, pickedX, pickedZ );
+
+			if ( pickedCorps )
+			{
+				Log( "결과 - 부대 번호 : %d, 부대 타입 : %d \n", pickedCorps->GetCorpsID(), static_cast<int>( pickedCorps->GetUnitType() ) );
+				PlayerManager::GetInstance()->AddToSelectedCorps( pickedCorps->GetCorpsID() );
+			}
+			else
+			{
+				Log( "결과 - 부대 없음! \n" );
+			}
 		}
-		else
-		{
-			Log( "결과 - 부대 없음! \n" );
-		}
-		
 		//드래그 시작 포인트 저장 ; 첫 DOWN시 한번만 실행되므로
 		SetDragStartPoint(m_MousePosition.X, m_MousePosition.Y);
 	}
@@ -167,30 +169,33 @@ void MouseManager::SetRightClick(bool isclicked)
 			}
 
 			CalcPickingRay( m_MousePosition.X, m_MousePosition.Y );
-			TransPickedTriangle( 0, &pickedX, &pickedZ );
-
-			Corps* pickedCorps = static_cast<ScenePlay*>( scene )->SearchCorpsByPosition( pickedX, pickedZ, false );
-
-			Log( "[%d %d] -> [%f, %f] 으로 우클릭 피킹! \n", m_MousePosition.X, m_MousePosition.Y, pickedX, pickedZ );
-
-			if ( pickedCorps )
+			
+			HRESULT hr = S_OK;
+			if ( S_FALSE != ( hr = TransPickedTriangle( 0, &pickedX, &pickedZ ) ) )
 			{
-				if ( PlayerManager::GetInstance()->IsCorpsInIdList( pickedCorps->GetCorpsID() ) )
-				{
-					Log( "자기 자신 클릭! \n" );
-				}
-				else // 여기에 플레이어의 유닛이 아닌가 확인하는 코드 넣어야 됨
-				{
-					Log( "결과 - 부대 번호 : %d, 부대 타입 : %d - 공격! \n", pickedCorps->GetCorpsID(), static_cast<int>( pickedCorps->GetUnitType() ) );
+				Corps* pickedCorps = static_cast<ScenePlay*>( scene )->SearchCorpsByPosition( pickedX, pickedZ, false );
 
-					PlayerManager::GetInstance()->AttackCorpsById( pickedCorps->GetCorpsID() );
-				}
-			}
-			else if ( !m_IsRightDragging )
-			{
-				Log( "결과 - 부대 없음! 해당 좌표로 이동!\n" );
+				Log( "[%d %d] -> [%f, %f] 으로 우클릭 피킹! \n", m_MousePosition.X, m_MousePosition.Y, pickedX, pickedZ );
 
-				PlayerManager::GetInstance()->MoveCorpsToPosition( pickedX, pickedZ );
+				if ( pickedCorps )
+				{
+					if ( PlayerManager::GetInstance()->IsCorpsInIdList( pickedCorps->GetCorpsID() ) )
+					{
+						Log( "자기 자신 클릭! \n" );
+					}
+					else // 여기에 플레이어의 유닛이 아닌가 확인하는 코드 넣어야 됨
+					{
+						Log( "결과 - 부대 번호 : %d, 부대 타입 : %d - 공격! \n", pickedCorps->GetCorpsID(), static_cast<int>( pickedCorps->GetUnitType() ) );
+
+						PlayerManager::GetInstance()->AttackCorpsById( pickedCorps->GetCorpsID() );
+					}
+				}
+				else if ( !m_IsRightDragging )
+				{
+					Log( "결과 - 부대 없음! 해당 좌표로 이동!\n" );
+
+					PlayerManager::GetInstance()->MoveCorpsToPosition( pickedX, pickedZ );
+				}
 			}
 		}
 
