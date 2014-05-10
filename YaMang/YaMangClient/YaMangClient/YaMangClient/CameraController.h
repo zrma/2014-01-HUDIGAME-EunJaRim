@@ -6,9 +6,13 @@
 enum MouseZoomStatus
 {
 	ZOOM_STATUS_NONE,
-	ZOOM_STATUS_NEAR,
-	ZOOM_STATUS_MID,
-	ZOOM_STATUS_FAR,
+	ZOOM_STATUS_NEAREST,
+	
+	ZOOM_STATUS_DEGREE_1,
+	ZOOM_STATUS_DEGREE_2,
+	ZOOM_STATUS_DEGREE_3,
+	
+	ZOOM_STATUS_FARTHEST,
 	ZOOM_STATUS_MAX
 };
 
@@ -26,7 +30,7 @@ public:
 	void	RotateUp( float angle );
 	void	RotateSide( float angle );
 
-	void	ChangeMouseZoomStatus(int zoom);
+	void	ChangeMouseZoomStatus( short zoom );
 
 private:
 	FLOAT			m_Axis = 0;
@@ -38,5 +42,6 @@ private:
 
 	static CameraController*		m_Instance;
 
-	MouseZoomStatus	m_MouseZoomStatus = MouseZoomStatus::ZOOM_STATUS_NEAR;
+	MouseZoomStatus	m_MouseZoomStatus = MouseZoomStatus::ZOOM_STATUS_NEAREST;
+	int				m_MouseZoomDegree = 0;
 };

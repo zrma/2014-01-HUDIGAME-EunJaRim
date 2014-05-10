@@ -152,7 +152,7 @@ void MouseManager::SetLeftClick( bool isclicked )
 	}
 	else //버튼 업시
 	{
-		if (m_IsLeftDragging)
+		if ( m_IsLeftDragging )
 		{
 			SetLeftDrag();
 		}

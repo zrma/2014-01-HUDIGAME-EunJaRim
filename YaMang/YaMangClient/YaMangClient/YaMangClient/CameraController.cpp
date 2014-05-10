@@ -129,30 +129,42 @@ void CameraController::RotateSide( float angle )
 	Renderer::GetInstance()->SetViewMatrix( viewMatrix );
 }
 
-void CameraController::ChangeMouseZoomStatus(int zoom)
+void CameraController::ChangeMouseZoomStatus( short zoom )
 {
-	if (m_MouseZoomStatus == MouseZoomStatus::ZOOM_STATUS_NONE)
+	if ( m_MouseZoomStatus == MouseZoomStatus::ZOOM_STATUS_NONE )
 	{
 		return;
 	}
 
-	if (zoom < 0)
+	if ( zoom < 0 )
 	{
-		if (m_MouseZoomStatus == MouseZoomStatus::ZOOM_STATUS_NEAR)
+		if ( m_MouseZoomStatus == MouseZoomStatus::ZOOM_STATUS_FARTHEST )
 		{
 			return;
 		}
-		m_MouseZoomStatus = static_cast<MouseZoomStatus>(static_cast<int>(m_MouseZoomStatus)-1);
+		else if ( m_MouseZoomDegree > 3 )
+		{
+			m_MouseZoomStatus = static_cast<MouseZoomStatus>( static_cast<int>(m_MouseZoomStatus)+1 );
+			m_MouseZoomDegree = 0;
+		}
+
+		++m_MouseZoomDegree;
 	}
 
-	if (zoom > 0)
+	if ( zoom > 0 )
 	{
-		if (m_MouseZoomStatus == MouseZoomStatus::ZOOM_STATUS_FAR)
+		if ( m_MouseZoomStatus == MouseZoomStatus::ZOOM_STATUS_NEAREST )
 		{
 			return;
 		}
-		m_MouseZoomStatus = static_cast<MouseZoomStatus>(static_cast<int>(m_MouseZoomStatus)+1);
+		else if ( m_MouseZoomDegree > 3 )
+		{
+			m_MouseZoomStatus = static_cast<MouseZoomStatus>( static_cast<int>(m_MouseZoomStatus)-1 );
+			m_MouseZoomDegree = 0;
+		}
+
+		++m_MouseZoomDegree;
 	}
 
-	printf_s("zoom enum : %d\n", m_MouseZoomStatus);
+	printf_s( "zoom enum : %d\n", m_MouseZoomStatus );
 }

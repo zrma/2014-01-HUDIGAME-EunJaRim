@@ -155,7 +155,7 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam ) con
 
 		case WM_MOUSEWHEEL:
 		{
-			CameraController::GetInstance()->ChangeMouseZoomStatus(HIWORD(wParam));
+			CameraController::GetInstance()->ChangeMouseZoomStatus( static_cast<short>( HIWORD( wParam ) ) );
 		}
 			return 0;
 
