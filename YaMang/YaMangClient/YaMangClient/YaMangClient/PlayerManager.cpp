@@ -1,6 +1,7 @@
 ﻿#include "stdafx.h"
 #include "PlayerManager.h"
 #include "NetworkManager.h"
+#include "PacketType.h"
 #include "SceneManager.h"
 #include "ScenePlay.h"
 #include "Corps.h"

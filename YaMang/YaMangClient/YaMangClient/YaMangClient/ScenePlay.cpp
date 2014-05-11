@@ -213,12 +213,13 @@ Corps* ScenePlay::SearchCorpsByPosition( float x, float z, bool selectOption )
 		if ( ( thisPosition.x - x < margin && thisPosition.x - x > -margin )
 			 && ( thisPosition.x - x < margin && thisPosition.x - x > -margin ) )
 		{
-			Log( "%d번 부대 1차 피킹!!! \n", thisCorps->GetCorpsID() );
+			// Log( "%d번 부대 1차 피킹!!! \n", thisCorps->GetCorpsID() );
 		
 			// BoundingCircle
 			if ( thisCorps->IsContain( x, z ) )
 			{
-				Log( "%d번 부대 2차 피킹!!! 성공! \n", thisCorps->GetCorpsID() );
+				// Log( "%d번 부대 2차 피킹!!! 성공! \n", thisCorps->GetCorpsID() );
+
 				if ( selectOption )
 				{
 					thisCorps->SetSelected( true );

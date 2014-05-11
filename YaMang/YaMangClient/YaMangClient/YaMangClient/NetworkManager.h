@@ -1,7 +1,19 @@
 ﻿#pragma once
 #include "MacroSet.h"
 #include "CircularBuffer.h"
-#include "PacketType.h"
+
+struct PacketHeader;
+
+struct LoginResult;
+struct GameOverResult;
+struct ChatBroadcastResult;
+struct GenerateCorpsResult;
+struct ChangeCorpsFormationResult;
+struct MoveCorpsResult;
+struct StopCorpsResult;
+struct RefreshUIResult;
+struct AttackCorpsResult;
+struct SyncOneCorpResult;
 
 class NetworkManager:public Singleton<NetworkManager>
 {

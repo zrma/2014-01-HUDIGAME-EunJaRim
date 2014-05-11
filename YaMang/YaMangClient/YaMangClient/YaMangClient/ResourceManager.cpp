@@ -3,7 +3,6 @@
 #include "MainWindow.h"
 #include "yaMangDxDll.h"
 #include "MouseManager.h"
-#include "MouseRender.h"
 
 ResourceManager::ResourceManager()
 {
@@ -48,19 +47,19 @@ void ResourceManager::Init()
 	SetSkyBoxTexture( fileName, SKY_BOX_BOTTOM );
 	m_IsMapReady = true;
 
-	InitCursor( CURSOR_TEXTURE_MAX, MouseManager::GetInstance()->GetMousePositionX(), MouseManager::GetInstance()->GetMousePositionY() );
+	InitCursor( CURSOR_MAX, MouseManager::GetInstance()->GetMousePositionX(), MouseManager::GetInstance()->GetMousePositionY() );
 	fileName = L"cursor_default.png";
-	CreateCursorImage( fileName, CURSOR_TEXTURE_BASIC );
+	CreateCursorImage( fileName, CURSOR_DEFAULT );
 	fileName = L"cursor_attack.png";
-	CreateCursorImage( fileName, CURSOR_TEXTURE_ATTACK );
+	CreateCursorImage( fileName, CURSOR_ATTACK );
 	fileName = L"cursor_clicked.png";
-	CreateCursorImage( fileName, CURSOR_TEXTURE_CLICK );
+	CreateCursorImage( fileName, CURSOR_CLICK );
 	fileName = L"cursor_corps_clickable.png";
-	CreateCursorImage( fileName, CURSOR_TEXTURE_OVER_CORPS );
+	CreateCursorImage( fileName, CURSOR_OVER_CORPS );
 	fileName = L"cursor_corps_clicked.png";
-	CreateCursorImage( fileName, CURSOR_TEXTURE_CLICK_CORPS );
+	CreateCursorImage( fileName, CURSOR_CLICK_CORPS );
 	fileName = L"cursor_unreachable.png";
-	CreateCursorImage( fileName, CURSOR_TEXTURE_UNRECHEABLE );
+	CreateCursorImage( fileName, CURSOR_UNRECHEABLE );
 	m_ISCursorReady = true;
 }
 

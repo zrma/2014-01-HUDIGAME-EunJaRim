@@ -65,10 +65,10 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam ) con
 		{
 			KeyInput key;
 			key.SetKeyValue( static_cast<unsigned char>( wParam ) );
-			key.SetKeyStatus( KeyStatus::KEY_DOWN );
+			key.SetKeyStatus( KeyStatusType::KEY_DOWN );
 			if ( InputDispatcher::GetInstance()->IsPressed( key ) )
 			{
-				key.SetKeyStatus( KeyStatus::KEY_PRESSED );
+				key.SetKeyStatus( KeyStatusType::KEY_PRESSED );
 			}
 
 			InputDispatcher::GetInstance()->EventKeyInput( key );
@@ -81,7 +81,7 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam ) con
 		{
 			KeyInput key;
 			key.SetKeyValue( static_cast<unsigned char>( wParam ) );
-			key.SetKeyStatus( KeyStatus::KEY_UP );
+			key.SetKeyStatus( KeyStatusType::KEY_UP );
 
 			InputDispatcher::GetInstance()->EventKeyInput( key );
 			InputDispatcher::GetInstance()->DispatchKeyInput();

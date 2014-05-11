@@ -19,7 +19,7 @@ void MouseRender::Init()
 {
 	if ( ResourceManager::GetInstance()->IsCursorReady() )
 	{
-		SetCursorRenderType( CURSOR_TEXTURE_BASIC );
+		ChangeCursorImage( CURSOR_DEFAULT );
 		MouseManager::GetInstance()->SetGameCursorMode( true );
 
 		m_IsCursorReady = true;
@@ -29,7 +29,7 @@ void MouseRender::Init()
 void MouseRender::Update()
 {
 	SetGameCursorPos( MouseManager::GetInstance()->GetMousePositionX(), MouseManager::GetInstance()->GetMousePositionY() );
-	ChangeCursorRenderType();
+	ChangeCursorImage( MouseManager::GetInstance()->GetCursorRenderType() );
 }
 
 void MouseRender::Render() const
@@ -44,25 +44,3 @@ void MouseRender::SetGameCursorPos(int PosX, int PosY)
 {
 	SetCursorPosition( PosX, PosY );
 }
-
-void MouseRender::ChangeCursorRenderType()
-{
-	//왼쪽 클릭 상태만 우선 테스트
-	if ( MouseManager::GetInstance()->IsLeftClicked() )
-	{
-		if ( m_CursorRenderType != CURSOR_TEXTURE_CLICK )
-		{
-			m_CursorRenderType = CURSOR_TEXTURE_CLICK;
-			ChangeCursorImage( CURSOR_TEXTURE_CLICK );
-		}
-	}
-	else
-	{
-		if ( m_CursorRenderType != CURSOR_TEXTURE_BASIC )
-		{
-			m_CursorRenderType = CURSOR_TEXTURE_BASIC;
-			ChangeCursorImage( CURSOR_TEXTURE_BASIC );
-		}
-	}
-}
-

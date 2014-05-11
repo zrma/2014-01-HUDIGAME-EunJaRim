@@ -1,12 +1,30 @@
 ﻿#pragma once
 #include "MacroSet.h"
 
-enum class MouseStatus
+enum class MouseStatusType
 {
 	MOUSE_NONE,
+
 	MOUSE_DOWN,
 	MOUSE_PRESSED,
-	MOUSE_UP
+	MOUSE_UP,
+
+	MOUSE_MAX
+};
+
+
+enum CursorStatusType
+{
+	CURSOR_NONE,
+
+	CURSOR_DEFAULT,
+	CURSOR_CLICK,
+	CURSOR_OVER_CORPS,
+	CURSOR_CLICK_CORPS,
+	CURSOR_ATTACK,
+	CURSOR_UNRECHEABLE,
+
+	CURSOR_MAX
 };
 
 class MouseManager: public Singleton<MouseManager>
@@ -41,6 +59,10 @@ public:
 
 	double			GetDistanceBetweenCOORD( COORD C1, COORD C2 );
 
+	void				SetCursorRenderType( CursorStatusType renderType ) { m_CursorType = renderType; }
+	CursorStatusType	GetCursorRenderType() { return m_CursorType; }
+
+
 private:
 	//윈도우 커서 고정 좌표 저장
 	int				m_WndXPos = 0;
@@ -68,4 +90,6 @@ private:
 	//드래그 상태 저장
 	bool			m_IsLeftDragging = false;
 	bool			m_IsRightDragging = false;
+
+	CursorStatusType	m_CursorType = CURSOR_NONE;
 };

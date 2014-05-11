@@ -1,11 +1,14 @@
 ﻿#pragma once
 
-enum class KeyStatus
+enum class KeyStatusType
 {
 	KEY_NONE,
+
 	KEY_DOWN,
 	KEY_PRESSED,
 	KEY_UP,
+
+	KEY_STATUS_MAX
 };
 
 const unsigned char VK_0 = 0x30;
@@ -56,10 +59,10 @@ public:
 
 	unsigned char	GetKeyValue() const { return m_KeyValue; }
 	void			SetKeyValue( unsigned char key ) { m_KeyValue = key; }
-	KeyStatus		GetKeyStatus() const { return m_KeyStatus; }
-	void			SetKeyStatus( KeyStatus keyStatus ) { m_KeyStatus = keyStatus; }
+	KeyStatusType		GetKeyStatus() const { return m_KeyStatus; }
+	void			SetKeyStatus( KeyStatusType keyStatus ) { m_KeyStatus = keyStatus; }
 
 private:
 	unsigned char	m_KeyValue = 0;
-	KeyStatus		m_KeyStatus = KeyStatus::KEY_NONE;
+	KeyStatusType		m_KeyStatus = KeyStatusType::KEY_NONE;
 };

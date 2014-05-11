@@ -64,15 +64,15 @@ void InputDispatcher::EventKeyInput( KeyInput key )
 {
 	switch ( key.GetKeyStatus() )
 	{
-		case KeyStatus::KEY_DOWN:
+		case KeyStatusType::KEY_DOWN:
 		{
 			m_KeyInputList.push_back( key );
 			m_IsKeyPressed[key.GetKeyValue()] = true;
 		}
 			break;
-		case KeyStatus::KEY_PRESSED:
+		case KeyStatusType::KEY_PRESSED:
 			break;
-		case KeyStatus::KEY_UP:
+		case KeyStatusType::KEY_UP:
 		{
 			m_IsKeyPressed[key.GetKeyValue()] = false;
 		}
@@ -94,11 +94,11 @@ void InputDispatcher::DispatchKeyInput()
 		if ( IsPressed(*(iter)) )
 		{
 			KeyHandlerTable[iter->GetKeyValue()]( *(iter) );
-			( iter++ )->SetKeyStatus( KeyStatus::KEY_PRESSED );
+			( iter++ )->SetKeyStatus( KeyStatusType::KEY_PRESSED );
 		}
 		else
 		{
-			( iter )->SetKeyStatus( KeyStatus::KEY_UP );
+			( iter )->SetKeyStatus( KeyStatusType::KEY_UP );
 			KeyHandlerTable[iter->GetKeyValue()]( *(iter) );
 
 			m_KeyInputList.erase(iter);
@@ -117,7 +117,7 @@ REGISTER_KEY_HANDLER( VK_SPACE )
 {
 	switch ( inputKey.GetKeyStatus() )
 	{
-		case KeyStatus::KEY_DOWN:
+		case KeyStatusType::KEY_DOWN:
 		{
 			CameraController::GetInstance()->Init();
 			// test code 
@@ -125,10 +125,10 @@ REGISTER_KEY_HANDLER( VK_SPACE )
 			// 원래는 방만들고 방시작하고 게임진행하면 필요없음 
 		}
 			break;
-		case KeyStatus::KEY_PRESSED:
+		case KeyStatusType::KEY_PRESSED:
 			// Log( "** 키 누르고 있다! ** \n" );
 			break;
-		case KeyStatus::KEY_UP:
+		case KeyStatusType::KEY_UP:
 		{
 		}
 			break;
@@ -188,7 +188,7 @@ REGISTER_KEY_HANDLER( VK_E )
 
 REGISTER_KEY_HANDLER( VK_1 )
 {
-	if ( KeyStatus::KEY_UP == inputKey.GetKeyStatus() )
+	if ( KeyStatusType::KEY_UP == inputKey.GetKeyStatus() )
 	{
 		PlayerManager::GetInstance()->ChangeCorpsFormation( FormationType::FORMATION_RUSH );
 	}
@@ -196,7 +196,7 @@ REGISTER_KEY_HANDLER( VK_1 )
 
 REGISTER_KEY_HANDLER( VK_2 )
 {
-	if ( KeyStatus::KEY_UP == inputKey.GetKeyStatus() )
+	if ( KeyStatusType::KEY_UP == inputKey.GetKeyStatus() )
 	{
 		PlayerManager::GetInstance()->ChangeCorpsFormation( FormationType::FORMATION_DESTROY );
 	}
@@ -204,7 +204,7 @@ REGISTER_KEY_HANDLER( VK_2 )
 
 REGISTER_KEY_HANDLER( VK_3 )
 {
-	if ( KeyStatus::KEY_UP == inputKey.GetKeyStatus() )
+	if ( KeyStatusType::KEY_UP == inputKey.GetKeyStatus() )
 	{
 		PlayerManager::GetInstance()->ChangeCorpsFormation( FormationType::FORMATION_DEFENSE );
 	}
@@ -214,7 +214,7 @@ REGISTER_KEY_HANDLER( VK_3 )
 REGISTER_KEY_HANDLER( VK_U )
 {
 	// generate arrow
-	if ( KeyStatus::KEY_UP == inputKey.GetKeyStatus( ) )
+	if ( KeyStatusType::KEY_UP == inputKey.GetKeyStatus( ) )
 	{
 		GenerateCorpsRequest generateCorps;
 		generateCorps.m_NowX = 40.0f;
@@ -232,7 +232,7 @@ REGISTER_KEY_HANDLER( VK_U )
 REGISTER_KEY_HANDLER( VK_I )
 {
 	// generate knight
-	if ( KeyStatus::KEY_UP == inputKey.GetKeyStatus() )
+	if ( KeyStatusType::KEY_UP == inputKey.GetKeyStatus() )
 	{
 		GenerateCorpsRequest generateCorps;
 		generateCorps.m_NowX = 40.0f;
@@ -249,7 +249,7 @@ REGISTER_KEY_HANDLER( VK_I )
 REGISTER_KEY_HANDLER( VK_O )
 {
 	// generate pike
-	if ( KeyStatus::KEY_UP == inputKey.GetKeyStatus() )
+	if ( KeyStatusType::KEY_UP == inputKey.GetKeyStatus() )
 	{
 		GenerateCorpsRequest generateCorps;
 		generateCorps.m_NowX = 40.0f;
@@ -266,7 +266,7 @@ REGISTER_KEY_HANDLER( VK_O )
 REGISTER_KEY_HANDLER( VK_P )
 {
 	// generate sword
-	if ( KeyStatus::KEY_UP == inputKey.GetKeyStatus() )
+	if ( KeyStatusType::KEY_UP == inputKey.GetKeyStatus() )
 	{
 		GenerateCorpsRequest generateCorps;
 		generateCorps.m_NowX = 40.0f;
@@ -283,7 +283,7 @@ REGISTER_KEY_HANDLER( VK_P )
 REGISTER_KEY_HANDLER( VK_L )
 {
 	// generate Bot sword
-	if ( KeyStatus::KEY_UP == inputKey.GetKeyStatus() )
+	if ( KeyStatusType::KEY_UP == inputKey.GetKeyStatus() )
 	{
 		GenerateCorpsRequest generateCorps;
 		generateCorps.m_NowX = -20.0f;
