@@ -52,6 +52,8 @@ public:
 	void	RotateUp( float angle );
 	void	RotateSide( float angle );
 
+	float	GetHeight() const { return m_EyePoint.y; }
+	int		GetHeightGrade() const { return m_ZoomStatus; }
 	void	Update();
 
 	void	ChangeMouseZoomStatus( short zoom );

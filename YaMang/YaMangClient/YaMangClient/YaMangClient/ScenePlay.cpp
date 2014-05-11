@@ -9,6 +9,7 @@
 #include "SoundManager.h"
 #include "MouseRender.h"
 #include "NetworkManager.h"
+#include "CameraController.h"
 
 ScenePlay::ScenePlay()
 {
@@ -192,8 +193,10 @@ Corps* ScenePlay::SearchCorpsByPosition( float x, float z, bool selectOption )
 
 		D3DXVECTOR3& thisPosition = thisCorps->GetEyePoint();
 
+		double	margin = CameraController::GetInstance()->GetHeightGrade() + 7.0;
 		// AABB
-		if ( ( thisPosition.x - x < 7.0 && thisPosition.x - x > -7.0 ) && ( thisPosition.x - x < 7.0 && thisPosition.x - x > -7.0 ) )
+		if ( ( thisPosition.x - x < margin && thisPosition.x - x > -margin )
+			 && ( thisPosition.x - x < margin && thisPosition.x - x > -margin ) )
 		{
 			Log( "%d번 부대 1차 피킹!!! \n", thisCorps->GetCorpsID() );
 		

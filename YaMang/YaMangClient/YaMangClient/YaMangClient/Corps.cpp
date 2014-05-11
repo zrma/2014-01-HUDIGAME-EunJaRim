@@ -12,6 +12,7 @@
 #include "Timer.h"
 #include "Collision.h"
 #include "CollisionManager.h"
+#include "CameraController.h"
 
 Corps::Corps( int corpsId, int playerId, PositionInfo pos )
 : m_CorpsID( corpsId ), m_OwnerPlayerID( playerId ), m_TargetFormation( FormationType::FORMATION_RUSH )
@@ -180,7 +181,7 @@ void Corps::SetCorpsHP( int unitNum )
 
 bool Corps::IsContain( float x, float z )
 {
-	std::shared_ptr<Collision> clickCollision(new Collision( this, 3.0f ));
+	std::shared_ptr<Collision> clickCollision(new Collision( this, 3.0f + CameraController::GetInstance()->GetHeightGrade() ));
 	
 	D3DXVECTOR3 backupPosition = m_EyePoint;
 	m_EyePoint.x = x;

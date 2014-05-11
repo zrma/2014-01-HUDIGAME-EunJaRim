@@ -145,9 +145,10 @@ void CameraController::ChangeMouseZoomStatus( short zoom )
 	{
 		if ( m_ZoomStatus == ZOOM_STATUS_FARTHEST )
 		{
+			m_ZoomDegree = 2;
 			return;
 		}
-		else if ( m_ZoomDegree > 3 )
+		else if ( m_ZoomDegree > 2 )
 		{
 			m_ZoomStatus = static_cast<ZoomStatusType>( static_cast<int>(m_ZoomStatus)+1 );
 			m_ZoomDegree = 0;
@@ -161,9 +162,10 @@ void CameraController::ChangeMouseZoomStatus( short zoom )
 	{
 		if ( m_ZoomStatus == ZOOM_STATUS_NEAREST )
 		{
+			m_ZoomDegree = 2;
 			return;
 		}
-		else if ( m_ZoomDegree > 3 )
+		else if ( m_ZoomDegree > 2 )
 		{
 			m_ZoomStatus = static_cast<ZoomStatusType>( static_cast<int>(m_ZoomStatus)-1 );
 			m_ZoomDegree = 0;
