@@ -123,12 +123,6 @@ REGISTER_KEY_HANDLER( VK_SPACE )
 			// test code 
 			// 서버 상황 동기화를 위한 테스트 코드
 			// 원래는 방만들고 방시작하고 게임진행하면 필요없음 
-
-			SyncAllRequest syncRequestData;
-			syncRequestData.m_PlayerId = NetworkManager::GetInstance( )->GetMyPlayerID();
-			syncRequestData.m_RoomNumber = 0; // 로비 번호... 테스트용
-
-			NetworkManager::GetInstance()->SendPacket( &syncRequestData );
 		}
 			break;
 		case KeyStatus::KEY_PRESSED:

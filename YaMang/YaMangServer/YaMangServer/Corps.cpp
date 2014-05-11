@@ -9,6 +9,8 @@
 #include "PacketType.h"
 #include "ClientManager.h"
 #include "Action.h"
+#include "RoomManager.h"
+#include "ClientSession.h"
 
 Corps::Corps( int playerID, int corpsID, UnitType unitType, PositionInfo position, ClientManager* clientManager )
 : m_PlayerID( playerID ), m_CorpsID( corpsID ), m_UnitType(unitType), m_Position( position ), m_ClientManager( clientManager )
@@ -31,6 +33,12 @@ void Corps::AddDamage( float damage )
 			if ( m_HP < 1 )
 			{
 				m_IsDead = true;
+				auto it = g_PidSessionTable.find( m_PlayerID );
+				if ( it != g_PidSessionTable.end() )
+				{
+					ClientSession* client = it->second;
+					client->SubCorpsNum();
+				}
 			}
 		}
 		

@@ -87,8 +87,6 @@ void GenerateCorpAction::OnTick( )
 	Log( "GenerateCorps! Type:%d CorpID:%d PlayerID:%d \n",
 			  unitType, corps->GetCorpsID( ), m_PlayerID );
 
-	m_ClientSession->AddCorpsNum();
-
 	m_ActionStatus = ACTION_TICK;
 	m_ClientManager->AddActionToScheduler( this, m_ClientSession->GetCorpsRegenTime() );
 }

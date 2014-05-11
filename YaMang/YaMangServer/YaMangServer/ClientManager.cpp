@@ -60,7 +60,7 @@ void ClientManager::GameStart()
 		if ( ReadMapFile( mapFilePath.c_str( ) ) )
 		{
 
-			// 거점병사 만들기
+			// 거점병사 만들기 임시 하드코딩
 
 			PositionInfo position;
 			position.m_EyePoint = { 10, 0.0f, 10 };
@@ -152,7 +152,6 @@ void ClientManager::BroadcastPacket( PacketHeader* pkt )
 
 bool ClientManager::DirectPacket( int pid, PacketHeader* pkt )
 {
-	// 뭔가 이상하지만 어떻게 바꿔볼려고 해도 안됨...
 	auto it = g_PidSessionTable.find( pid );
 	if ( it != g_PidSessionTable.end( ) )
 	{
@@ -469,6 +468,13 @@ const Corps* ClientManager::GenerateCorps( int playerID, UnitType type, Position
 			return nullptr;
 	}
 
+	auto it = g_PidSessionTable.find( playerID );
+	if ( it != g_PidSessionTable.end() )
+	{
+		ClientSession* client = it->second;
+		client->AddCorpsNum();
+	}
+
 	m_CorpsList.insert( CorpsList::value_type( m_CorpsIDCount, corps ) );
 	return corps;
 }
@@ -524,6 +530,7 @@ void ClientManager::TakeBase( int ownerPlayerID, int targetPlayerID, int targetG
 			action->SetClientSession( ownerClient );
 			action->SetCorpData( corps );
 			AddActionToScheduler( action, 10000 ); // 다시 가드병이 생성되는 시간 하드코딩
+			ownerClient->SubCorpsNum();
 		}
 		return;
 	}

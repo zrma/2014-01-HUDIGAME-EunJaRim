@@ -58,8 +58,18 @@ void NetworkManager::HandleLoginResult( LoginResult& inPacket )
 			GameManager::GetInstance()->Stop();
 		}
 
-		printf_s( "My playerID[%d] \n", inPacket.m_PlayerId );
+		Log( "My playerID[%d] \n", inPacket.m_PlayerId );
 		m_MyPlayerId = inPacket.m_PlayerId;
+
+
+
+		SyncAllRequest syncRequestData;
+		syncRequestData.m_PlayerId = NetworkManager::GetInstance()->GetMyPlayerID();
+		syncRequestData.m_RoomNumber = 0; // 로비 번호... 테스트용
+
+		NetworkManager::GetInstance()->SendPacket( &syncRequestData );
+
+
 	}
 	else
 	{
