@@ -65,12 +65,12 @@ bool NetworkManager::Connect()
 	int port;
 
 	// xml 로드 테스트
-	TiXmlDocument document = TiXmlDocument( "../../../SharedPreference/Config.xml" );
+	TiXmlDocument document = TiXmlDocument( "../../../SharedPreference/ClientConfig.xml" );
 
 	if ( document.LoadFile() )
 	{
-		std::string ipLoad = TinyXPath::S_xpath_string( document.RootElement(), "/host/ip/text()" ).c_str();
-		std::string portLoad = TinyXPath::S_xpath_string( document.RootElement( ), "/host/port/text()" ).c_str( );
+		std::string ipLoad = TinyXPath::S_xpath_string( document.RootElement(), "/client/ip/text()" ).c_str();
+		std::string portLoad = TinyXPath::S_xpath_string( document.RootElement( ), "/client/port/text()" ).c_str( );
 		
 		serverAddr = ipLoad.c_str();
 		port = std::stoi( portLoad );
