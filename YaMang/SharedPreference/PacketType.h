@@ -48,6 +48,8 @@ enum PacketTypes: short
 
 	PKT_CS_SYNC_ALL = 600,
 
+	PKT_SC_SYNC_ONE_CORP = 601,
+
 	PKT_MAX = 1024
 };
 
@@ -464,4 +466,31 @@ struct SyncAllRequest: public PacketHeader
 	int		m_RoomNumber;
 	int		m_PlayerId;
 };
+
+
+// 콥스에 변경사항이 발생하면 간단히 갱신, 가끔 서버의 손이남으면 갱신들 시켜줘도 좋을듯
+struct SyncOneCorpResult: public PacketHeader
+{
+	SyncOneCorpResult( )
+	{
+		m_Size = sizeof( SyncOneCorpResult );
+		m_Type = PKT_SC_SYNC_ONE_CORP;
+		m_CorpsID = -1;
+		m_NowX = NOT_A_NUMBER_FLOAT;
+		m_NowZ = NOT_A_NUMBER_FLOAT;
+		m_LookX = NOT_A_NUMBER_FLOAT;
+		m_LookZ = NOT_A_NUMBER_FLOAT;
+		m_UnitNum = -1;
+		m_FormationType = FormationType::FORMATION_NONE;
+	}
+
+	int		m_CorpsID;
+	float	m_NowX;
+	float	m_NowZ;
+	float	m_LookX;
+	float	m_LookZ;
+	int		m_UnitNum;
+	FormationType	m_FormationType;
+};
+
 #pragma pack(pop)

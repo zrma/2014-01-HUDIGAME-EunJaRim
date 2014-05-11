@@ -69,7 +69,8 @@ public:
 	Corps*				GetCorpsByCorpsID( int corpsID );
 
 
-	void				TakeBase( int ownerPlayerID, int targetPlayerID, int targetGuardID );
+	void				TakeBase( int ownerPlayerID, int targetPlayerID, int ownerCorpsID, int targetGuardID );
+	void				SyncOneCorp( int corpsID );
 
 private:
 	void				CreatePlayerDone( DatabaseJobContext* dbJob );

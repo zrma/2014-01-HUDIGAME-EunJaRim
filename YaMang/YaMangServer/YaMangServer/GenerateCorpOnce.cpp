@@ -81,6 +81,11 @@ void GenerateCorpOnce::OnTick()
 	outPacket.m_PlayerId = m_PlayerID;
 
 	outPacket.m_FormationType = m_Corps->GetFormationType( );
+
+	if ( m_CorpsHP > 0)
+	{
+		//m_Corps->SetHP( m_CorpsHP );
+	}
 	outPacket.m_UnitNum = m_Corps->GetUnitNum( );
 
 

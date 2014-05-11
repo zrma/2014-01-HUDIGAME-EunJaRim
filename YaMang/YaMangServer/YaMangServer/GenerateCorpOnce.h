@@ -13,6 +13,7 @@ public:
 	void			SetClientSession( ClientSession* clientSession ) { m_ClientSession = clientSession; }
 
 	void			SetCorpData( const Corps* corps ) { m_Corps = corps; }
+	void			SetCorpHP( float HP ) { m_CorpsHP = HP; }
 
 private:
 	virtual void OnBegin();
@@ -23,6 +24,7 @@ private:
 	int				m_PlayerID = -1;
 	ClientSession*	m_ClientSession = nullptr;
 
+	float			m_CorpsHP = -1.0f;
 	const Corps*	m_Corps = nullptr;
 };
 

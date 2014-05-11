@@ -147,6 +147,21 @@ void ScenePlay::SetCorpsHP( int corpsID, int unitNum )
 	}
 }
 
+void ScenePlay::SyncOneCorp( int corpsID, D3DXVECTOR3 corpsNow, D3DXVECTOR3 corpsLook, int unitNum, FormationType formationType )
+{
+	if ( m_CorpsList.find( corpsID ) != m_CorpsList.end() )
+	{
+		if ( m_CorpsList[corpsID] == nullptr )
+		{
+			assert( false );
+		}
+		m_CorpsList[corpsID]->SetTargetPosition( corpsNow );
+		m_CorpsList[corpsID]->SetLookAtVector( corpsLook );
+		m_CorpsList[corpsID]->SetCorpsHP( unitNum );
+		m_CorpsList[corpsID]->SetFormation( formationType );
+	}
+}
+
 const Corps* ScenePlay::GetCorpsByID( int corpsID )
 {
 	if ( m_CorpsList.find( corpsID ) != m_CorpsList.end() )

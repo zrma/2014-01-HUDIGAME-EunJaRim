@@ -26,6 +26,7 @@ public:
 	void					AddDamage( float damage );
 
 	float					GetHP() const { return m_HP; }
+	void					SetHP( float HP );
 	float					GetSpeed( ) const { return m_MoveSpeed + m_MoveSpeedBonus; }
 	float					GetAttackRange( ) const { return m_AttackRange + m_AttackRangeBonus; }
 	float					GetAttackPower( ) const { return m_AttackPower + m_AttackPowerBonus; }

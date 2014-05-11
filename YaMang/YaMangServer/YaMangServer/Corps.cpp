@@ -22,6 +22,14 @@ Corps::~Corps()
 {
 }
 
+
+void Corps::SetHP( float HP )
+{
+	m_HP = HP;
+	CalculateHP();
+}
+
+
 void Corps::AddDamage( float damage )
 {
 	if ( !m_IsDead )

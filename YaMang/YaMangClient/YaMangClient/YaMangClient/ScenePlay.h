@@ -23,6 +23,7 @@ public:
 	void		MoveCorpsStart( int corpsID, D3DXVECTOR3 targetPosition, D3DXVECTOR3 lookAtVector, float speed );
 	void		MoveCorpsStop( int corpsID, D3DXVECTOR3 targetPosition, D3DXVECTOR3 lookAtVector );
 	void		SetCorpsHP( int corpsID, int unitNum );
+	void		SyncOneCorp( int corpsID, D3DXVECTOR3 corpsNow, D3DXVECTOR3 corpsLook, int unitNum, FormationType formationType );
 
 	Corps*		SearchCorpsByPosition( float x, float z, bool selectOption = true );
 	

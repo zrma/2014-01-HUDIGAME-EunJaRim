@@ -432,3 +432,47 @@ void NetworkManager::HandleRefreshUIResult( RefreshUIResult& inPacket )
 		assert( false );
 	}
 }
+
+
+
+REGISTER_HANDLER( PKT_SC_SYNC_ONE_CORP )
+{
+	SyncOneCorpResult recvData = static_cast<SyncOneCorpResult&>( pktBase );
+	NetworkManager::GetInstance( )->HandleSyncOneCorpResult( recvData );
+}
+
+void NetworkManager::HandleSyncOneCorpResult( SyncOneCorpResult& inPacket )
+{
+	if ( m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size ) )
+	{
+		int corpsID = inPacket.m_CorpsID;
+
+		float corpsNowX = inPacket.m_NowX;
+		float corpsNowZ = inPacket.m_NowZ;
+		float corpsLookX = inPacket.m_LookX;
+		float corpsLookZ = inPacket.m_LookZ;
+
+		D3DXVECTOR3 corpsNow = { corpsNowX, 0.0f, corpsNowZ };
+		D3DXVECTOR3 corpsLook = { corpsLookX, 0.0f, corpsLookZ };
+
+		int unitNum = inPacket.m_UnitNum;
+		FormationType formationType = inPacket.m_FormationType;
+
+		Scene* scene = SceneManager::GetInstance()->GetNowScene();
+		if ( typeid( ScenePlay ) == typeid( *scene ) )
+		{
+			ScenePlay* scenePlay = static_cast<ScenePlay*>( scene );
+			scenePlay->SyncOneCorp( corpsID, corpsNow, corpsLook, unitNum, formationType );
+			Log( "Synced One Corp! : %d \n", corpsID );
+		}
+		else
+		{
+			// 플레이중이 아닌데 플레이용 패킷을 받음 
+			assert( false );
+		}
+	}
+	else
+	{
+		assert( false );
+	}
+}

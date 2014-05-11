@@ -16,6 +16,7 @@
 #include "ActionScheduler.h"
 #include "GenerateCorpOnce.h"
 #include "MacroSet.h"
+#include "Corps.h"
 
 GameRoom::GameRoom( int roomNumber ): m_RoomNumber( roomNumber ), m_LastGCTick( 0 ), m_LastClientWorkTick( 0 )
 {
@@ -490,14 +491,16 @@ Corps* GameRoom::GetCorpsByCorpsID( int corpsID )
 }
 
 
-void GameRoom::TakeBase( int ownerPlayerID, int targetPlayerID, int targetGuardID )
+void GameRoom::TakeBase( int ownerPlayerID, int targetPlayerID, int ownerCorpsID, int targetGuardID )
 {
-	
+	Corps* ownerCorps = GetCorpsByCorpsID( ownerCorpsID );
 	Corps* targetGuard = GetCorpsByCorpsID( targetGuardID );
-	if ( nullptr == targetGuard )
+
+	if ( nullptr == ownerCorps || nullptr == targetGuard )
 	{
 		return;
 	}
+
 	auto targetGuardPosition = m_BaseGuardList.find( targetGuardID );
 	if ( targetGuardPosition == m_BaseGuardList.end() )
 	{
@@ -531,6 +534,8 @@ void GameRoom::TakeBase( int ownerPlayerID, int targetPlayerID, int targetGuardI
 			action->SetCorpData( corps );
 			AddActionToScheduler( action, 10000 ); // 다시 가드병이 생성되는 시간 하드코딩
 			ownerClient->SubCorpsNum();
+			ownerCorps->AddDamage( 50.0f ); // 기존의 유닛은 5명이 빠진다.
+			SyncOneCorp( ownerCorpsID );
 		}
 		return;
 	}
@@ -554,10 +559,35 @@ void GameRoom::TakeBase( int ownerPlayerID, int targetPlayerID, int targetGuardI
 	action->SetClientSession( ownerClient );
 	action->SetCorpData( corps );
 	AddActionToScheduler( action, 10000 ); // 다시 가드병이 생성되는 시간 하드코딩
+	ownerClient->SubCorpsNum();
+	ownerCorps->AddDamage( 50.0f ); // 기존의 유닛은 5명이 빠진다.
+	SyncOneCorp( ownerCorpsID );
 }
 
 void GameRoom::AddActionToScheduler( Action* addedAction, ULONGLONG remainTime )
 {
 	m_ActionScheduler->AddActionToScheduler( addedAction, remainTime );
+}
+
+void GameRoom::SyncOneCorp( int corpsID )
+{
+	Corps* corps = GetCorpsByCorpsID( corpsID );
+	if ( nullptr == corps )
+	{
+		return;
+	}
+
+	const PositionInfo& position = corps->GetPositionInfo();
+	SyncOneCorpResult outPacket;
+
+	outPacket.m_CorpsID = corps->GetCorpsID( );
+	outPacket.m_NowX = position.m_EyePoint.x;
+	outPacket.m_NowZ = position.m_EyePoint.z;
+	outPacket.m_LookX = position.m_LookAtPoint.x;
+	outPacket.m_LookZ = position.m_LookAtPoint.z;
+	outPacket.m_UnitNum = corps->GetUnitNum();
+	outPacket.m_FormationType = corps->GetFormationType();
+
+	BroadcastPacket( &outPacket );
 }
 

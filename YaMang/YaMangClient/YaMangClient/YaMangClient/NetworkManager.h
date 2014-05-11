@@ -29,6 +29,7 @@ public:
 	void	HandleStopCorpsResult( StopCorpsResult& inPacket );
 	void	HandleRefreshUIResult( RefreshUIResult& inPacket );
 	void	HandleAttackCorpsResult( AttackCorpsResult& inPacket );
+	void	HandleSyncOneCorpResult( SyncOneCorpResult& inPacket );
 
 	//////////////////////////////////////////////////////////////////////////
 	// 리퀘스트 패킷 보내기
