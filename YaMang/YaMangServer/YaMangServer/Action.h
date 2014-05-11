@@ -31,6 +31,8 @@ public:
 	ULONGLONG	GetTime() const { return m_Time; }
 	void		SetTime( ULONGLONG inputTime ) { m_Time = inputTime; }
 
+	ActionStatus GetActionStatus() const { return m_ActionStatus; }
+
 protected:
 	virtual void OnBegin() = 0;
 	virtual void OnTick() = 0;

@@ -82,7 +82,7 @@ void Attack::OnTick()
 
 		// targetCorps의 액션이 없으면(idle)이면 반격
 		// 아니면 그냥 무시하고 계속 진행
-		if ( nullptr == targetAction )
+		if ( nullptr == targetAction || ACTION_END == targetAction->GetActionStatus( ) )
 		{
 			Log( "target CounterAttack! \n" );
 			m_TargerCrops->ChangeFormation( FormationType::FORMATION_DEFENSE );// 망진으로 변경해야함
