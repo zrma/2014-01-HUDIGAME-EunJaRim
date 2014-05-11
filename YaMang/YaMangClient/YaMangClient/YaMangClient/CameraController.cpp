@@ -226,7 +226,7 @@ void CameraController::Update()
 	{
  		if ( dotView < targetViewY )
  		{
- 			RotateUp( delta / 30 );
+ 			RotateUp( delta * dotView / 30 );
  		}
 
 		MoveElevate( delta );
@@ -243,7 +243,7 @@ void CameraController::Update()
 	{
  		if ( dotView > targetViewY )
  		{
- 			RotateUp( -delta / 30 );
+			RotateUp( -delta * dotView / 30 );
  		}
 		
 		MoveElevate( - delta );

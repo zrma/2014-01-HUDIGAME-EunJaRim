@@ -193,7 +193,7 @@ Corps* ScenePlay::SearchCorpsByPosition( float x, float z, bool selectOption )
 		D3DXVECTOR3& thisPosition = thisCorps->GetEyePoint();
 
 		// AABB
-		if ( ( thisPosition.x - x < 5.0 && thisPosition.x - x > -5.0 ) && ( thisPosition.x - x < 5.0 && thisPosition.x - x > -5.0 ) )
+		if ( ( thisPosition.x - x < 7.0 && thisPosition.x - x > -7.0 ) && ( thisPosition.x - x < 7.0 && thisPosition.x - x > -7.0 ) )
 		{
 			Log( "%d번 부대 1차 피킹!!! \n", thisCorps->GetCorpsID() );
 		

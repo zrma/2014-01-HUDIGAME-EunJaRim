@@ -3,14 +3,14 @@
 #include "MacroSet.h"
 #include <d3dx9math.h>
 
-const FLOAT NEAREST_Y = 30.0f;
-const FLOAT DEGREE_1_Y = 50.0f;
+const FLOAT NEAREST_Y = 10.0f;
+const FLOAT DEGREE_1_Y = 40.0f;
 const FLOAT DEGREE_2_Y = 100.0f;
-const FLOAT DEGREE_3_Y = 150.0f;
+const FLOAT DEGREE_3_Y = 170.0f;
 const FLOAT FARTHEST_Y = 250.0f;
 
-const FLOAT NEAREST_VIEW_Y = 0.03f;
-const FLOAT DEGREE_1_VIEW_Y = 0.15f;
+const FLOAT NEAREST_VIEW_Y = 0.01f;
+const FLOAT DEGREE_1_VIEW_Y = 0.20f;
 const FLOAT DEGREE_2_VIEW_Y = 0.45f;
 const FLOAT DEGREE_3_VIEW_Y = 0.60f;
 const FLOAT FARTHEST_VIEW_Y = 0.9999f;
