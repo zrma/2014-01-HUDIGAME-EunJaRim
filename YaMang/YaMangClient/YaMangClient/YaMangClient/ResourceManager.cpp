@@ -34,7 +34,7 @@ void ResourceManager::Init()
 	InitGroundMesh( 100, 100 );
 	CreateRawGround( 100, 100, 1.0f );
 
-	InitSkyBoxMesh( 1500 );
+	InitSkyBoxMesh( 1000 );
 
 	fileName = L"SkyBox_Back.png";
 	SetSkyBoxTexture( fileName, SKY_BOX_BACK );

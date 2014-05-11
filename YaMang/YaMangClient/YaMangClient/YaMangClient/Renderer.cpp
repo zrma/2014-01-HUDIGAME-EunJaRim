@@ -121,7 +121,12 @@ D3DXVECTOR3 Renderer::GetPickedPointOfCenter() const
 
 	float pickedX = 0;
 	float pickedZ = 0;
-	TransPickedTriangle( 0, &pickedX, &pickedZ );
+	if ( S_OK != TransPickedTriangle( 0, &pickedX, &pickedZ ) )
+	{
+		// Log( "피킹 실패하였으므로 다시 피킹합니다. %d \n", rect.bottom - rect.top );
+		CalcPickingRay( centerOfScreenX, rect.bottom - rect.top );
+		TransPickedTriangle( 0, &pickedX, &pickedZ );
+	}
 	// Log( "[%d %d] -> [%f, %f] 으로 피킹 중 \n", centerOfScreenX, centerOfScreenY, pickedX, pickedZ );
 
 	D3DXVECTOR3 returnPoint = { pickedX, 0, pickedZ };

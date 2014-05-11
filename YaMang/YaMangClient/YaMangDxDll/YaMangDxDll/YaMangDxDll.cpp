@@ -986,6 +986,7 @@ YAMANGDXDLL_API HRESULT InitSkyBoxMesh( int size )
 	{
 		vertexBuffer[i].m_X *= size;
 		vertexBuffer[i].m_Y *= size;
+		vertexBuffer[i].m_Y += size / 5;
 		vertexBuffer[i].m_Z *= size;
 	}
 
