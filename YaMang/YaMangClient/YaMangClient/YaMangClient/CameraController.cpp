@@ -2,8 +2,7 @@
 #include "CameraController.h"
 #include "InputDispatcher.h"
 #include "Renderer.h"
-
-CameraController* CameraController::m_Instance = nullptr;
+#include "Timer.h"
 
 CameraController::CameraController()
 {
@@ -15,12 +14,14 @@ CameraController::~CameraController()
 
 void CameraController::Init()
 {
-	m_EyePoint = { 0, 0, 0 };
-	m_LookAtPoint = { 0, 0, 1.0f };
+	m_EyePoint = { 0, 1.0f, 0 };
+	m_LookAtPoint = { 0, 0.5f, 1.0f };
 	
 	D3DXMATRIXA16 viewMatrix;
 	D3DXMatrixLookAtLH( &viewMatrix, &m_EyePoint, &m_LookAtPoint, &m_UpVector );
 	Renderer::GetInstance()->SetViewMatrix( viewMatrix );
+
+	m_ZoomDirection = ZOOM_DIRECTION_BACK;
 }
 
 void CameraController::MoveForward( float speed, bool zoom )
@@ -29,6 +30,8 @@ void CameraController::MoveForward( float speed, bool zoom )
 	
 	if ( !zoom )
 	{
+		speed *= m_EyePoint.y / 10;
+
 		// 크레인에 매달린 카메라 같은 효과를 주기 위해 y값 0으로 고정
 		view.y = 0;
 	}
@@ -43,6 +46,8 @@ void CameraController::MoveForward( float speed, bool zoom )
 
 void CameraController::MoveSide( float speed )
 {
+	speed *= m_EyePoint.y / 10;
+
 	D3DXVECTOR3 view = m_LookAtPoint - m_EyePoint;
 	D3DXVECTOR3 cross;
 	D3DXVec3Cross( &cross, &m_UpVector, &view );
@@ -131,40 +136,123 @@ void CameraController::RotateSide( float angle )
 
 void CameraController::ChangeMouseZoomStatus( short zoom )
 {
-	if ( m_MouseZoomStatus == MouseZoomStatus::ZOOM_STATUS_NONE )
+	if ( m_ZoomStatus == ZOOM_STATUS_NONE )
 	{
 		return;
 	}
 
 	if ( zoom < 0 )
 	{
-		if ( m_MouseZoomStatus == MouseZoomStatus::ZOOM_STATUS_FARTHEST )
+		if ( m_ZoomStatus == ZOOM_STATUS_FARTHEST )
 		{
 			return;
 		}
-		else if ( m_MouseZoomDegree > 3 )
+		else if ( m_ZoomDegree > 3 )
 		{
-			m_MouseZoomStatus = static_cast<MouseZoomStatus>( static_cast<int>(m_MouseZoomStatus)+1 );
-			m_MouseZoomDegree = 0;
+			m_ZoomStatus = static_cast<ZoomStatusType>( static_cast<int>(m_ZoomStatus)+1 );
+			m_ZoomDegree = 0;
+			m_ZoomDirection = ZOOM_DIRECTION_BACK;
 		}
 
-		++m_MouseZoomDegree;
+		++m_ZoomDegree;
 	}
 
 	if ( zoom > 0 )
 	{
-		if ( m_MouseZoomStatus == MouseZoomStatus::ZOOM_STATUS_NEAREST )
+		if ( m_ZoomStatus == ZOOM_STATUS_NEAREST )
 		{
 			return;
 		}
-		else if ( m_MouseZoomDegree > 3 )
+		else if ( m_ZoomDegree > 3 )
 		{
-			m_MouseZoomStatus = static_cast<MouseZoomStatus>( static_cast<int>(m_MouseZoomStatus)-1 );
-			m_MouseZoomDegree = 0;
+			m_ZoomStatus = static_cast<ZoomStatusType>( static_cast<int>(m_ZoomStatus)-1 );
+			m_ZoomDegree = 0;
+			m_ZoomDirection = ZOOM_DIRECTION_FOWARD;
 		}
 
-		++m_MouseZoomDegree;
+		++m_ZoomDegree;
 	}
 
-	printf_s( "zoom enum : %d\n", m_MouseZoomStatus );
+	// Log( "zoom enum : %d\n", m_ZoomStatus );
+}
+
+void CameraController::Update()
+{
+	if ( m_ZoomDirection == ZOOM_DIRECTION_NONE )
+	{
+		return;
+	}
+
+	float targetY = 0;
+	float targetViewY = 0;
+
+	switch ( m_ZoomStatus )
+	{
+		case ZOOM_STATUS_NEAREST:
+			targetY = NEAREST_Y;
+			targetViewY = NEAREST_VIEW_Y;
+			break;
+		case ZOOM_STATUS_DEGREE_1:
+			targetY = DEGREE_1_Y;
+			targetViewY = DEGREE_1_VIEW_Y;
+			break;
+		case ZOOM_STATUS_DEGREE_2:
+			targetY = DEGREE_2_Y;
+			targetViewY = DEGREE_2_VIEW_Y;
+			break;
+		case ZOOM_STATUS_DEGREE_3:
+			targetY = DEGREE_3_Y;
+			targetViewY = DEGREE_3_VIEW_Y;
+			break;
+		case ZOOM_STATUS_FARTHEST:
+		default:
+			targetY = FARTHEST_Y;
+			targetViewY = FARTHEST_VIEW_Y;
+			break;
+	}
+	
+	float time = static_cast<float>( Timer::GetInstance()->GetElapsedTime() ) / 1000;
+	float delta = time * 5.0f;
+
+	D3DXVECTOR3 view = m_LookAtPoint - m_EyePoint;
+	D3DXVec3Normalize( &view, &view );
+	float	dotView = D3DXVec3Dot( &view, &(-m_UpVector) );
+
+	// Log( "%-8f도!!! %-8f \n", dotView, targetViewY );
+	// Log( "목표 = %f, 현위치 = %f \n", targetY, m_EyePoint.y );
+
+	// 카메라 업
+	if ( m_ZoomDirection == ZOOM_DIRECTION_BACK )
+	{
+ 		if ( dotView < targetViewY )
+ 		{
+ 			RotateUp( delta / 30 );
+ 		}
+
+		MoveElevate( delta );
+		MoveForward( -delta * 20, true );
+
+		if ( targetY < m_EyePoint.y )
+		{
+			m_ZoomDirection = ZOOM_DIRECTION_NONE;
+			return;
+		}
+	}
+	// 카메라 다운
+	else if ( m_ZoomDirection == ZOOM_DIRECTION_FOWARD )
+	{
+ 		if ( dotView > targetViewY )
+ 		{
+ 			RotateUp( -delta / 30 );
+ 		}
+		
+		MoveElevate( - delta );
+		MoveForward( delta * 20, true );
+
+		if ( targetY > m_EyePoint.y )
+		{
+			m_ZoomDirection = ZOOM_DIRECTION_NONE;
+			return;
+		}
+	}
 }

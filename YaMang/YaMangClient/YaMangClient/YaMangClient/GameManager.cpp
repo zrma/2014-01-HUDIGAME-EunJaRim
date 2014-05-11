@@ -70,7 +70,8 @@ bool GameManager::Process() const
 	Timer::GetInstance()->Tick();
 	InputDispatcher::GetInstance()->DispatchKeyInput();
 	NetworkManager::GetInstance()->ProcessPacket();
-	
+
+	CameraController::GetInstance()->Update();
 	SceneManager::GetInstance()->Update();
 
 	// 더미 렌더
