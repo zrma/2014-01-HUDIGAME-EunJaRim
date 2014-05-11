@@ -13,6 +13,7 @@
 #include "xpath_static.h"
 #include "RoomManager.h"
 #include "UnitStatus.h"
+#include "MacroSet.h"
 
 // 자 Alloc버그를 잡아보자... 지만 이미 default로 켜져있다는데...
 #ifdef _DEBUG
@@ -50,11 +51,11 @@ int _tmain( int argc, _TCHAR* argv[] )
 		std::string port;
 		port = TinyXPath::S_xpath_string( document.RootElement( ), "/server/port/text()" ).c_str( );
 		LISTEN_PORT = std::stoi( port );
-		printf_s( "Loaded Port Number :%s \n", port.c_str( ) );
+		Log( "Loaded Port Number :%s \n", port.c_str( ) );
 	}
 	else
 	{
-		printf_s( "PORT Load Fail! \n" );
+		Log( "PORT Load Fail! \n" );
 	}
 
 	// 유닛 데이터 로드

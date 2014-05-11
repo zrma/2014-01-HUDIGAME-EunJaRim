@@ -6,6 +6,7 @@
 #include "DatabaseJobManager.h"
 #include "RoomManager.h"
 #include "GenerateCorpAction.h"
+#include "MacroSet.h"
 
 // EasyServer.cpp 에서 클라이언트 매니저에서 CreateClient 한 후에
 // 소켓 객체로부터 getpeername()를 이용해 주소 값을 뽑아 와서 OnConnect() 호출
@@ -94,7 +95,7 @@ void ClientSession::Disconnect()
 	/// no TCP TIME_WAIT
 	if ( SOCKET_ERROR == setsockopt( m_Socket, SOL_SOCKET, SO_LINGER, (char*)&lingerOption, sizeof( LINGER ) ) )
 	{
-		printf_s( "[DEBUG] setsockopt linger option error: %d\n", GetLastError() );
+		Log( "[DEBUG] setsockopt linger option error: %d\n", GetLastError() );
 		return;
 	}
 
@@ -275,7 +276,7 @@ void ClientSession::DatabaseJobDone( DatabaseJobContext* result )
 	{
 		LoadPlayerDataContext* login = dynamic_cast<LoadPlayerDataContext*>( result );
 
-		printf_s( "[DEBUG][%d] Login DONE! \n", login->m_PlayerId );
+		Log( "[DEBUG][%d] Login DONE! \n", login->m_PlayerId );
 		LoginDone( login->m_PlayerId, login->m_PlayerName );
 
 		// DEBUG!!!!

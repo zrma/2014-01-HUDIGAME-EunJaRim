@@ -2,6 +2,7 @@
 #include "RoomManager.h"
 #include "ClientSession.h"
 #include "ClientManager.h"
+#include "MacroSet.h"
 
 
 
@@ -40,7 +41,7 @@ int RoomManager::AddRoom()
 	room->GameStart( );
 	m_RoomList.insert( RoomList::value_type( m_RoomCount, room ) );
 
-	printf_s( "ROOM [%d] CREATED! \n", room->GetRoomNumber() );
+	Log( "ROOM [%d] CREATED! \n", room->GetRoomNumber() );
 
 	return room->GetRoomNumber( );
 }
@@ -150,7 +151,7 @@ void RoomManager::PrintClientList()
 	for ( auto it = m_RoomList.begin(); it != m_RoomList.end(); ++it )
 	{
 		ClientManager* room = it->second;
-		printf_s( "-ROOM %d ClientList- \n", room->GetRoomNumber() );
+		Log( "-ROOM %d ClientList- \n", room->GetRoomNumber() );
 		room->PrintClientList();
 	}
 }

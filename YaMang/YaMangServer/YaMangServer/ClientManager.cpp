@@ -15,6 +15,7 @@
 #include "xpath_static.h"
 #include "ActionScheduler.h"
 #include "GenerateCorpOnce.h"
+#include "MacroSet.h"
 
 ClientManager::ClientManager( int roomNumber ): m_RoomNumber( roomNumber ), m_LastGCTick( 0 ), m_LastClientWorkTick( 0 )
 {
@@ -55,7 +56,7 @@ void ClientManager::GameStart()
 	{
 		std::string mapFilePath;
 		mapFilePath = TinyXPath::S_xpath_string( document.RootElement( ), "/server/mapFilePath/text()" ).c_str( );
-		printf_s( "Map Path Loaded! :%s \n", mapFilePath.c_str( ) );
+		Log( "Map Path Loaded! :%s \n", mapFilePath.c_str( ) );
 		if ( ReadMapFile( mapFilePath.c_str( ) ) )
 		{
 
@@ -82,7 +83,7 @@ void ClientManager::GameStart()
 	}
 	else
 	{
-		printf_s( "Map Path Load Fail! \n" );
+		Log( "Map Path Load Fail! \n" );
 		m_IsGameStart = false;
 	}
 
@@ -386,7 +387,7 @@ void ClientManager::PrintClientList()
 	for ( auto& it : m_ClientList )
 	{
 		ClientSession* client = it.second;
-		printf_s( "[%d][%s] \n", client->m_PlayerID, client->m_PlayerName );
+		Log( "[%d][%s] \n", client->m_PlayerID, client->m_PlayerName );
 	}
 }
 
@@ -437,7 +438,7 @@ bool ClientManager::ReadMapFile( const char* filename )
 		}
 		m_BattleMap.push_back( row );
 	}
-	printf_s( "[%d][%d] Map Loaded! \n", m_BattleMap.size(), m_BattleMap.at( 0 ).size() );
+	Log( "[%d][%d] Map Loaded! \n", m_BattleMap.size(), m_BattleMap.at( 0 ).size() );
 
 	fclose( f );
 

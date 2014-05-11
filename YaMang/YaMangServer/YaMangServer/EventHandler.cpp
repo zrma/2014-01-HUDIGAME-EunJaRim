@@ -12,6 +12,7 @@
 #include "SharedDefine.h"
 #include "Attack.h"
 #include "TakeArea.h"
+#include "MacroSet.h"
 
 // 테스트용 헤더
 extern RoomManager* g_RoomManager;
@@ -113,7 +114,7 @@ void ClientSession::HandleGameOverRequest( GameOverRequest& inPacket )
 
 	outPacket.m_IsWon = isWon;
 
-	printf_s( "[GameOverMessage][%d]%d \n", inPacket.m_PlayerId, isWon );
+	Log( "[GameOverMessage][%d]%d \n", inPacket.m_PlayerId, isWon );
 
 	/// 채팅은 바로 방송 하면 끝
 	if ( !Broadcast( &outPacket ) )
@@ -183,7 +184,7 @@ void ClientSession::HandleEnterRoomRequest( EnterRoomRequest& inPacket )
 		Disconnect();
 	}
 
-	printf_s( "Enter Room! ID:%d ROOM:%d \n", m_PlayerID, roomNumber );
+	Log( "Enter Room! ID:%d ROOM:%d \n", m_PlayerID, roomNumber );
 	g_RoomManager->PrintClientList(); // 테스트 프린트
 
 }
@@ -221,7 +222,7 @@ void ClientSession::HandleLeaveRoomRequest( LeaveRoomRequest& inPacket )
 		Disconnect();
 	}
 
-	printf_s( "Leave Room! ID:%d ROOM:%d \n", m_PlayerID, roomNumber );
+	Log( "Leave Room! ID:%d ROOM:%d \n", m_PlayerID, roomNumber );
 	g_RoomManager->PrintClientList(); // 테스트 프린트
 
 }
@@ -279,7 +280,7 @@ void ClientSession::HandleGenerateCorpsRequest( GenerateCorpsRequest& inPacket )
 		Disconnect();
 	}
 
-	printf_s( "GenerateCorps! Type:%d CorpID:%d PlayerID:%d \n",
+	Log( "GenerateCorps! Type:%d CorpID:%d PlayerID:%d \n",
 			  unitType, corps->GetCorpsID( ), m_PlayerID );
 }
 
@@ -332,7 +333,7 @@ void ClientSession::HandleMoveCorpsRequest( MoveCorpsRequest& inPacket )
 
 	m_ClientManager->AddActionToScheduler( action, 0 );
 
-	printf_s( "CorpsMoved CorpID:%d PlayerID:%d DesX:%f DesZ:%f \n", corpsID, m_PlayerID, destination.m_EyePoint.x, destination.m_EyePoint.z );
+	Log( "CorpsMoved CorpID:%d PlayerID:%d DesX:%f DesZ:%f \n", corpsID, m_PlayerID, destination.m_EyePoint.x, destination.m_EyePoint.z );
 
 }
 
@@ -371,7 +372,7 @@ void ClientSession::HandleStopCorpsRequest( StopCorpsRequest& inPacket )
 		Disconnect();
 	}
 
-	printf_s( "CorpsStopped! CorpID:%d PlayerID:%d \n", corpsID, m_PlayerID );
+	Log( "CorpsStopped! CorpID:%d PlayerID:%d \n", corpsID, m_PlayerID );
 
 }
 
@@ -413,7 +414,7 @@ void ClientSession::HandleChangeCorpsFormationRequest( ChangeCorpsFormationReque
 		Disconnect();
 	}
 
-	printf_s( "Corps Change Formation CorpID:%d Formation:%d \n", corpsID, formation );
+	Log( "Corps Change Formation CorpID:%d Formation:%d \n", corpsID, formation );
 
 }
 
@@ -447,7 +448,7 @@ void ClientSession::HandleAttackCorpsRequest( AttackCorpsRequest& inPacket )
 
 	if ( myCorps->GetPlayerID() == targetCorps->GetPlayerID() )
 	{
-		printf_s( "[BUG]Attack Own Corps! \n" );
+		Log( "[BUG]Attack Own Corps! \n" );
 		++m_ErrorNumber;
 		return;
 	}
@@ -465,7 +466,7 @@ void ClientSession::HandleAttackCorpsRequest( AttackCorpsRequest& inPacket )
 		action->SetTargetCorps( targetCorps );
 
 		m_ClientManager->AddActionToScheduler( action, 0 );
-		printf_s( "[Packet GET]TakeBase FromCorpID:%d ToCorpID:%d \n", myCorpsID, targetCorpsID );
+		Log( "[Packet GET]TakeBase FromCorpID:%d ToCorpID:%d \n", myCorpsID, targetCorpsID );
 	}
 	else
 	{
@@ -475,7 +476,7 @@ void ClientSession::HandleAttackCorpsRequest( AttackCorpsRequest& inPacket )
 		action->SetTargetCorps( targetCorps );
 
 		m_ClientManager->AddActionToScheduler( action, 0 );
-		printf_s( "[Packet GET]AttackCorps FromCorpID:%d ToCorpID:%d \n", myCorpsID, targetCorpsID );
+		Log( "[Packet GET]AttackCorps FromCorpID:%d ToCorpID:%d \n", myCorpsID, targetCorpsID );
 	}
 
 

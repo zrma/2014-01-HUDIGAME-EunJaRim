@@ -2,6 +2,7 @@
 #include "UnitStatus.h"
 #include "tinyxml.h"
 #include "xpath_static.h"
+#include "MacroSet.h"
 
 float UnitStatus::g_ArrowHP = 50.0f;
 float UnitStatus::g_ArrowMoveSpeed = 3.0f;
@@ -192,13 +193,13 @@ bool UnitStatus::LoadUnitStatus()
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Sword/AttackDelayBonus/text()" ).c_str();
 		g_SwordAttackDelayBonus = std::stoull( data );
 
-		printf_s( "UnitStatus Load OK! \n" );
+		Log( "UnitStatus Load OK! \n" );
 
 		return true;
 	}
 	else
 	{
-		printf_s( "UnitStatus Load Fail! \n" );
+		Log( "UnitStatus Load Fail! \n" );
 	}
 
 	return false;

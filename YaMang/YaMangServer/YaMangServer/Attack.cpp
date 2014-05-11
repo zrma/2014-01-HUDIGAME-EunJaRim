@@ -3,6 +3,7 @@
 #include "PacketType.h"
 #include "Corps.h"
 #include "ClientManager.h"
+#include "MacroSet.h"
 Attack::Attack()
 {
 }
@@ -14,7 +15,7 @@ Attack::~Attack()
 
 void Attack::OnBegin()
 {
-	printf_s( "Attack OnBegin \n" );
+	Log( "Attack OnBegin \n" );
 	m_OwnerCrops->ReCalculatePosition();
 	m_TargerCrops->ReCalculatePosition();
 
@@ -52,7 +53,7 @@ void Attack::OnTick()
 	// 둘중 하나라도 죽으면 어텍 취소
 	if ( m_OwnerCrops->IsDead( ) || m_TargerCrops->IsDead( ) )
 	{
-		printf_s( "Attack Failed \n" );
+		Log( "Attack Failed \n" );
 		m_ActionStatus = ACTION_END;
 		m_OwnerCrops->DoNextAction( this, 0 );
 		return;
@@ -83,7 +84,7 @@ void Attack::OnTick()
 		// 아니면 그냥 무시하고 계속 진행
 		if ( nullptr == targetAction )
 		{
-			printf_s( "target CounterAttack! \n" );
+			Log( "target CounterAttack! \n" );
 			m_TargerCrops->ChangeFormation( FormationType::FORMATION_DEFENSE );// 망진으로 변경해야함
 			Attack* action = new Attack();
 			action->SetClientManager( m_ClientManager );
@@ -116,20 +117,20 @@ void Attack::OnTick()
 
 		m_ClientManager->BroadcastPacket( &outPacket );
 
-		printf_s( "[Attack] length:%f  range:%f damage:%f \n", length, m_OwnerCrops->GetAttackRange( ), m_OwnerCrops->GetAttackPower( ) );
-		printf_s( "[Attack] Attacker:[%f][%f] Defencer:[%f][%f] \n", m_OwnerCrops->GetPositionInfo( ).m_EyePoint.x, m_OwnerCrops->GetPositionInfo( ).m_EyePoint.z, m_TargerCrops->GetPositionInfo( ).m_EyePoint.x, m_TargerCrops->GetPositionInfo( ).m_EyePoint.z );
-		printf_s( "Attack OnTick Attack Success \n" );
+		Log( "[Attack] length:%f  range:%f damage:%f \n", length, m_OwnerCrops->GetAttackRange( ), m_OwnerCrops->GetAttackPower( ) );
+		Log( "[Attack] Attacker:[%f][%f] Defencer:[%f][%f] \n", m_OwnerCrops->GetPositionInfo( ).m_EyePoint.x, m_OwnerCrops->GetPositionInfo( ).m_EyePoint.z, m_TargerCrops->GetPositionInfo( ).m_EyePoint.x, m_TargerCrops->GetPositionInfo( ).m_EyePoint.z );
+		Log( "Attack OnTick Attack Success \n" );
 
 
 		if ( m_OwnerCrops->IsDead() || m_TargerCrops->IsDead() )
 		{
-			printf_s( "Dead! \n" );
+			Log( "Dead! \n" );
 			m_ActionStatus = ACTION_END;
 			m_OwnerCrops->DoNextAction( this, 0 );
 		}
 		else
 		{
-			printf_s( "Ready Re Attack!! \n" );
+			Log( "Ready Re Attack!! \n" );
 			m_ActionStatus = ACTION_TICK;
 			m_OwnerCrops->DoNextAction( this, m_OwnerCrops->GetAttackDelay() );
 		}
@@ -183,11 +184,11 @@ void Attack::OnTick()
 		outPacket.m_LookZ = vector.y;
 
 
-		printf_s( "[ATTACK]m_TargetX:%f m_TargetZ:%f m_LookX:%f m_LookZ:%f \n", outPacket.m_TargetX, outPacket.m_TargetZ, outPacket.m_LookX, outPacket.m_LookZ );
+		Log( "[ATTACK]m_TargetX:%f m_TargetZ:%f m_LookX:%f m_LookZ:%f \n", outPacket.m_TargetX, outPacket.m_TargetZ, outPacket.m_LookX, outPacket.m_LookZ );
 
 		m_ClientManager->BroadcastPacket( &outPacket );
 
-		printf_s( "Attack OnTick Chase \n" );
+		Log( "Attack OnTick Chase \n" );
 		m_ActionStatus = ACTION_TICK;
 		m_OwnerCrops->DoNextAction( this, movingTime );
 	}
@@ -195,7 +196,7 @@ void Attack::OnTick()
 
 void Attack::OnEnd()
 {
-	printf_s( "Attack OnEnd \n" );
+	Log( "Attack OnEnd \n" );
 	m_OwnerCrops->MoveStop( );
 	Action::OnEnd();
 }

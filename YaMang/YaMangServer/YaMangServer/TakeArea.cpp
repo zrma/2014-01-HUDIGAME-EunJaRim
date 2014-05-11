@@ -4,6 +4,7 @@
 #include "ClientManager.h"
 #include "PacketType.h"
 #include "GuardArea.h"
+#include "MacroSet.h"
 
 TakeArea::TakeArea()
 {
@@ -51,7 +52,7 @@ void TakeArea::OnTick()
 	// 둘중 하나라도 죽으면 어텍 취소
 	if ( m_OwnerCrops->IsDead() || m_TargerCrops->IsDead() )
 	{
-		printf_s( "TakeArea Failed \n" );
+		Log( "TakeArea Failed \n" );
 		m_ActionStatus = ACTION_END;
 		m_OwnerCrops->DoNextAction( this, 0 );
 		return;
@@ -76,7 +77,7 @@ void TakeArea::OnTick()
 	Action* targetAction = m_TargerCrops->GetHoldingAction( );
 	if ( nullptr == targetAction )
 	{
-		printf_s( "Guard Start! \n" );
+		Log( "Guard Start! \n" );
 		m_TargerCrops->ChangeFormation( FormationType::FORMATION_DEFENSE );
 		GuardArea* action = new GuardArea( );
 		action->SetClientManager( m_ClientManager );
@@ -115,14 +116,14 @@ void TakeArea::OnTick()
 
 		m_ClientManager->BroadcastPacket( &outPacket );
 
-		printf_s( "[TakeArea] length:%f  range:%f damage:%f \n", length, m_OwnerCrops->GetAttackRange(), m_OwnerCrops->GetAttackPower() );
-		printf_s( "[TakeArea] Attacker:[%f][%f] Defencer:[%f][%f] \n", m_OwnerCrops->GetPositionInfo().m_EyePoint.x, m_OwnerCrops->GetPositionInfo().m_EyePoint.z, m_TargerCrops->GetPositionInfo().m_EyePoint.x, m_TargerCrops->GetPositionInfo().m_EyePoint.z );
-		printf_s( "TakeArea OnTick Attack Success \n" );
+		Log( "[TakeArea] length:%f  range:%f damage:%f \n", length, m_OwnerCrops->GetAttackRange(), m_OwnerCrops->GetAttackPower() );
+		Log( "[TakeArea] Attacker:[%f][%f] Defencer:[%f][%f] \n", m_OwnerCrops->GetPositionInfo().m_EyePoint.x, m_OwnerCrops->GetPositionInfo().m_EyePoint.z, m_TargerCrops->GetPositionInfo().m_EyePoint.x, m_TargerCrops->GetPositionInfo().m_EyePoint.z );
+		Log( "TakeArea OnTick Attack Success \n" );
 
 
 		if ( m_TargerCrops->IsDead() )
 		{
-			printf_s( "Dead! \n" );
+			Log( "Dead! \n" );
 			m_ActionStatus = ACTION_END;
 			m_OwnerCrops->DoNextAction( this, 0 );
 			m_ClientManager->TakeBase( m_OwnerCrops->GetPlayerID( ), m_TargerCrops->GetPlayerID( ), m_TargerCrops->GetCorpsID( ) );
@@ -130,7 +131,7 @@ void TakeArea::OnTick()
 		}
 		else
 		{
-			printf_s( "Ready Re Attack!! \n" );
+			Log( "Ready Re Attack!! \n" );
 			m_ActionStatus = ACTION_TICK;
 			m_OwnerCrops->DoNextAction( this, m_OwnerCrops->GetAttackDelay() );
 		}
@@ -181,11 +182,11 @@ void TakeArea::OnTick()
 		outPacket.m_LookZ = vector.y;
 
 
-		printf_s( "[TakeArea]m_TargetX:%f m_TargetZ:%f m_LookX:%f m_LookZ:%f \n", outPacket.m_TargetX, outPacket.m_TargetZ, outPacket.m_LookX, outPacket.m_LookZ );
+		Log( "[TakeArea]m_TargetX:%f m_TargetZ:%f m_LookX:%f m_LookZ:%f \n", outPacket.m_TargetX, outPacket.m_TargetZ, outPacket.m_LookX, outPacket.m_LookZ );
 
 		m_ClientManager->BroadcastPacket( &outPacket );
 
-		printf_s( "TakeArea OnTick Chase \n" );
+		Log( "TakeArea OnTick Chase \n" );
 		m_ActionStatus = ACTION_TICK;
 		m_OwnerCrops->DoNextAction( this, movingTime );
 	}
@@ -193,7 +194,7 @@ void TakeArea::OnTick()
 
 void TakeArea::OnEnd()
 {
-	printf_s( "TakeArea OnEnd \n" );
+	Log( "TakeArea OnEnd \n" );
 	m_OwnerCrops->MoveStop();
 	Action::OnEnd();
 }

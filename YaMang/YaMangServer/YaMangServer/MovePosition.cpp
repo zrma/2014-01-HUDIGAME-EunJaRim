@@ -4,6 +4,7 @@
 #include "PacketType.h"
 #include "ClientManager.h"
 #include "Corps.h"
+#include "MacroSet.h"
 
 
 MovePosition::MovePosition()
@@ -54,7 +55,7 @@ void MovePosition::OnBegin()
 
 
 	m_ClientManager->BroadcastPacket( &outPacket );
-	printf_s( "[MOVE]m_TargetX:%f m_TargetZ:%f m_LookX:%f m_LookZ:%f \n", outPacket.m_TargetX, outPacket.m_TargetZ, outPacket.m_LookX, outPacket.m_LookZ );
+	Log( "[MOVE]m_TargetX:%f m_TargetZ:%f m_LookX:%f m_LookZ:%f \n", outPacket.m_TargetX, outPacket.m_TargetZ, outPacket.m_LookX, outPacket.m_LookZ );
 
 	m_ActionStatus = ACTION_TICK;
 	m_OwnerCrops->DoNextAction( this, movingTime );
@@ -64,7 +65,7 @@ void MovePosition::OnBegin()
 void MovePosition::OnTick()
 {
 	// onTick의 역할은?
-	printf_s( "MovePosition OnTick \n" );
+	Log( "MovePosition OnTick \n" );
 
 	m_ActionStatus = ACTION_END;
 	m_OwnerCrops->DoNextAction( this, 0 );
@@ -72,7 +73,7 @@ void MovePosition::OnTick()
 
 void MovePosition::OnEnd()
 {
-	printf_s( "MovePosition OnEnd \n" );
+	Log( "MovePosition OnEnd \n" );
 	m_OwnerCrops->MoveStop();
 	Action::OnEnd();
 }

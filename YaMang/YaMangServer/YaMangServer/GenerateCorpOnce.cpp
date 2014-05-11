@@ -5,6 +5,7 @@
 #include "PacketType.h"
 #include "Corps.h"
 #include "ClientSession.h"
+#include "MacroSet.h"
 
 GenerateCorpOnce::GenerateCorpOnce()
 {
@@ -17,7 +18,7 @@ GenerateCorpOnce::~GenerateCorpOnce()
 
 void GenerateCorpOnce::OnBegin()
 {
-	printf_s( "[%d]GenerateCorpOnce OnBegin \n", m_PlayerID );
+	Log( "[%d]GenerateCorpOnce OnBegin \n", m_PlayerID );
 
 	m_ActionStatus = ACTION_TICK;
 	m_ClientManager->AddActionToScheduler( this, 0 );
@@ -85,7 +86,7 @@ void GenerateCorpOnce::OnTick()
 
 	m_ClientManager->BroadcastPacket( &outPacket );
 
-	printf_s( "GenerateCorpOnce! Type:%d CorpID:%d PlayerID:%d \n",
+	Log( "GenerateCorpOnce! Type:%d CorpID:%d PlayerID:%d \n",
 			  unitType, m_Corps->GetCorpsID( ), m_PlayerID );
 
 
@@ -97,7 +98,7 @@ void GenerateCorpOnce::OnTick()
 
 void GenerateCorpOnce::OnEnd()
 {
-	printf_s( "GenerateCorpOnce OnEnd \n" );
+	Log( "GenerateCorpOnce OnEnd \n" );
 
 	Action::OnEnd();
 }
