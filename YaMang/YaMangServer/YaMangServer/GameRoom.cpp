@@ -532,6 +532,13 @@ void GameRoom::TakeBase( int ownerPlayerID, int targetPlayerID, int ownerCorpsID
 			action->SetPlayerID( ownerPlayerID );
 			action->SetClientSession( ownerClient );
 			action->SetCorpData( corps );
+			
+			// 남은 인원이 5명이하면 가드 병사도 인원수가 줄어듬
+			if ( ownerCorps->GetUnitNum() < 6 )
+			{
+				action->SetCorpHP( ownerCorps->GetHP() );
+			}
+
 			AddActionToScheduler( action, 10000 ); // 다시 가드병이 생성되는 시간 하드코딩
 			ownerClient->SubCorpsNum();
 			ownerCorps->AddDamage( 50.0f ); // 기존의 유닛은 5명이 빠진다.
@@ -558,6 +565,12 @@ void GameRoom::TakeBase( int ownerPlayerID, int targetPlayerID, int ownerCorpsID
 	action->SetPlayerID( ownerPlayerID );
 	action->SetClientSession( ownerClient );
 	action->SetCorpData( corps );
+
+	if ( ownerCorps->GetUnitNum() < 6 )
+	{
+		action->SetCorpHP( ownerCorps->GetHP() );
+	}
+
 	AddActionToScheduler( action, 10000 ); // 다시 가드병이 생성되는 시간 하드코딩
 	ownerClient->SubCorpsNum();
 	ownerCorps->AddDamage( 50.0f ); // 기존의 유닛은 5명이 빠진다.

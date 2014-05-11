@@ -84,7 +84,7 @@ void GenerateCorpOnce::OnTick()
 
 	if ( m_CorpsHP > 0)
 	{
-		//m_Corps->SetHP( m_CorpsHP );
+		const_cast<Corps*>( m_Corps )->SetHP( m_CorpsHP ); // 우와 const_cast... 설계가 정말 꼬여간다!!!!!
 	}
 	outPacket.m_UnitNum = m_Corps->GetUnitNum( );
 
