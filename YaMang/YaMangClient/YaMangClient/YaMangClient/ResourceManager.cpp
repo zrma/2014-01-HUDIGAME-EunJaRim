@@ -32,7 +32,7 @@ void ResourceManager::Init()
 // 	AddMap( heightMapFileName, textureFileName, MAP_KEY_KOREA );
 
 	InitGroundMesh( 100, 100 );
-	CreateRawGround( 100, 100, 1.0f );
+	CreateRawGround( 100, 100, 5.0f );
 
 	InitSkyBoxMesh( 1000 );
 

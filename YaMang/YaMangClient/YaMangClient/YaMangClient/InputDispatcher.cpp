@@ -151,7 +151,7 @@ REGISTER_KEY_HANDLER( VK_ESCAPE )
 REGISTER_KEY_HANDLER( VK_W )
 {
 	float time = static_cast<float>( Timer::GetInstance()->GetElapsedTime() ) / 1000;
-	float delta = time * 20.0f;
+	float delta = time * 30.0f;
 	CameraController::GetInstance()->MoveForward( delta );
 
 //	Log( "Time : %f \n", delta );
@@ -160,64 +160,36 @@ REGISTER_KEY_HANDLER( VK_W )
 REGISTER_KEY_HANDLER( VK_S )
 {
 	float time = static_cast<float>( Timer::GetInstance()->GetElapsedTime() ) / 1000;
-	float delta = time * -20.0f;
+	float delta = time * -30.0f;
 	CameraController::GetInstance()->MoveForward( delta );
 }
 
 REGISTER_KEY_HANDLER( VK_A )
 {
 	float time = static_cast<float>( Timer::GetInstance()->GetElapsedTime() ) / 1000;
-	float delta = time * -20.0f;
+	float delta = time * -30.0f;
 	CameraController::GetInstance()->MoveSide( delta );
 }
 
 REGISTER_KEY_HANDLER( VK_D )
 {
 	float time = static_cast<float>( Timer::GetInstance()->GetElapsedTime() ) / 1000;
-	float delta = time * 20.0f;
+	float delta = time * 30.0f;
 	CameraController::GetInstance()->MoveSide( delta );
 }
 
 REGISTER_KEY_HANDLER( VK_Q )
 {
 	float time = static_cast<float>( Timer::GetInstance()->GetElapsedTime() ) / 1000;
-	float delta = time * -0.5f;
+	float delta = time * -1.0f;
 	CameraController::GetInstance()->RotateSide( delta );
 }
 
 REGISTER_KEY_HANDLER( VK_E )
 {
 	float time = static_cast<float>( Timer::GetInstance()->GetElapsedTime() ) / 1000;
-	float delta = time * 0.5f;
+	float delta = time * 1.0f;
 	CameraController::GetInstance()->RotateSide( delta );
-}
-
-REGISTER_KEY_HANDLER( VK_R )
-{
-	float time = static_cast<float>( Timer::GetInstance()->GetElapsedTime() ) / 1000;
-	float delta = time * -0.5f;
-	CameraController::GetInstance()->RotateUp( delta );
-}
-
-REGISTER_KEY_HANDLER( VK_F )
-{
-	float time = static_cast<float>( Timer::GetInstance()->GetElapsedTime() ) / 1000;
-	float delta = time * 0.5f;
-	CameraController::GetInstance()->RotateUp( delta );
-}
-
-REGISTER_KEY_HANDLER( VK_C )
-{
-	float time = static_cast<float>( Timer::GetInstance()->GetElapsedTime() ) / 1000;
-	float delta = time * 10.0f;
-	CameraController::GetInstance()->MoveElevate( delta );
-}
-
-REGISTER_KEY_HANDLER( VK_V )
-{
-	float time = static_cast<float>( Timer::GetInstance()->GetElapsedTime() ) / 1000;
-	float delta = time * -10.0f;
-	CameraController::GetInstance()->MoveElevate( delta );
 }
 
 REGISTER_KEY_HANDLER( VK_1 )
