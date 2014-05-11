@@ -2,7 +2,7 @@
 #include "Knight.h"
 #include "UnitStatus.h"
 
-Knight::Knight( int playerID, int corpsID, UnitType unitType, PositionInfo position, ClientManager* clientManager )
+Knight::Knight( int playerID, int corpsID, UnitType unitType, PositionInfo position, GameRoom* clientManager )
 :Corps( playerID, corpsID, unitType, position, clientManager )
 {
 	m_HP = UnitStatus::g_KnightHP;

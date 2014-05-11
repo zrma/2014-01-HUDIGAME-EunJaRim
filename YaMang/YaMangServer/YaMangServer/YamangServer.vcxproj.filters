@@ -70,9 +70,6 @@
     <ClInclude Include="stdafx.h">
       <Filter>MainArea</Filter>
     </ClInclude>
-    <ClInclude Include="ClientManager.h">
-      <Filter>YaMang</Filter>
-    </ClInclude>
     <ClInclude Include="ClientSession.h">
       <Filter>YaMang</Filter>
     </ClInclude>
@@ -157,6 +154,9 @@
     <ClInclude Include="KnightAttack.h">
       <Filter>Action</Filter>
     </ClInclude>
+    <ClInclude Include="GameRoom.h">
+      <Filter>YaMang</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DatabaseJobContext.cpp">
@@ -179,9 +179,6 @@
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <Filter>MainArea</Filter>
-    </ClCompile>
-    <ClCompile Include="ClientManager.cpp">
-      <Filter>YaMang</Filter>
     </ClCompile>
     <ClCompile Include="ClientSession.cpp">
       <Filter>YaMang</Filter>
@@ -254,6 +251,9 @@
     </ClCompile>
     <ClCompile Include="KnightAttack.cpp">
       <Filter>Action</Filter>
+    </ClCompile>
+    <ClCompile Include="GameRoom.cpp">
+      <Filter>YaMang</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

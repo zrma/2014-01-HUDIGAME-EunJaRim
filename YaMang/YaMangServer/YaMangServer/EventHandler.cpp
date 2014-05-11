@@ -6,7 +6,7 @@
 
 //////////////////////////////////////////////////////////////////////////
 #include "RoomManager.h"
-#include "ClientManager.h"
+#include "GameRoom.h"
 #include "Corps.h"
 #include "MovePosition.h"
 #include "SharedDefine.h"
@@ -504,7 +504,7 @@ void ClientSession::HandleSyncAllRequest( SyncAllRequest& inPacket )
 
 	for ( auto& it : corpsList )
 	{
-		PositionInfo positionInfo = it.second->GetPositionInfo();
+		const PositionInfo& positionInfo = it.second->GetPositionInfo( );
 
 		GenerateCorpsResult outPacket;
 		outPacket.m_UnitType = it.second->GetUnitType();

@@ -2,7 +2,7 @@
 #include "YamangServer.h"
 #include "PacketType.h"
 #include "ClientSession.h"
-#include "ClientManager.h"
+#include "GameRoom.h"
 #include "DatabaseJobContext.h"
 #include "DatabaseJobManager.h"
 #include "RoomManager.h"
@@ -17,7 +17,7 @@
 #include "GenerateCorpOnce.h"
 #include "MacroSet.h"
 
-ClientManager::ClientManager( int roomNumber ): m_RoomNumber( roomNumber ), m_LastGCTick( 0 ), m_LastClientWorkTick( 0 )
+GameRoom::GameRoom( int roomNumber ): m_RoomNumber( roomNumber ), m_LastGCTick( 0 ), m_LastClientWorkTick( 0 )
 {
 
 	// 액션 스케쥴러 실행
@@ -25,7 +25,7 @@ ClientManager::ClientManager( int roomNumber ): m_RoomNumber( roomNumber ), m_La
 }
 
 
-ClientManager::~ClientManager()
+GameRoom::~GameRoom()
 {
 	for ( auto& it : m_ClientList )
 	{
@@ -47,7 +47,7 @@ ClientManager::~ClientManager()
 	delete m_ActionScheduler;
 }
 
-void ClientManager::GameStart()
+void GameRoom::GameStart()
 {
 	TiXmlDocument document = TiXmlDocument( "../../SharedPreference/ServerConfig.xml" );
 	bool xmlLoadSuccess = document.LoadFile();
@@ -96,7 +96,7 @@ void ClientManager::GameStart()
 // _tmain() 쪽의 클라이언트 핸들링 스레드에서 WaitForSingleObjectEx(hEvent, INFINITE, TRUE) 가
 // 이벤트를 발생하기를 기다려서 이벤트 발생 신호가 오면(클라이언트 쪽에서 접속 요청하면)
 // 전역 변수 g_AcceptedSocket에 담겨 있던 소켓 데이터를 인자로 넘김
-ClientSession* ClientManager::CreateClient( SOCKET sock )
+ClientSession* GameRoom::CreateClient( SOCKET sock )
 {
 	// 이 함수는 클라이언트 핸들링 스레드에서 불려야 한다.
 	assert( LThreadType == THREAD_CLIENT );
@@ -115,14 +115,14 @@ ClientSession* ClientManager::CreateClient( SOCKET sock )
 }
 
 
-void ClientManager::InputClient( ClientSession* client )
+void GameRoom::InputClient( ClientSession* client )
 {
 	m_ClientList.insert( ClientList::value_type( client->m_Socket, client ) );
 	client->SetClientManager( this );
 }
 
 
-void ClientManager::BroadcastPacket( ClientSession* from, PacketHeader* pkt )
+void GameRoom::BroadcastPacket( ClientSession* from, PacketHeader* pkt )
 {
 	///FYI: C++ STL iterator 스타일의 루프
 	// 연산자 오버로딩 된 ++ 연산자를 이용해서 차례대로 순회
@@ -141,7 +141,7 @@ void ClientManager::BroadcastPacket( ClientSession* from, PacketHeader* pkt )
 		client->SendRequest( pkt );
 	}
 }
-void ClientManager::BroadcastPacket( PacketHeader* pkt )
+void GameRoom::BroadcastPacket( PacketHeader* pkt )
 {
 	for ( ClientList::const_iterator it = m_ClientList.begin(); it != m_ClientList.end(); ++it )
 	{
@@ -150,7 +150,7 @@ void ClientManager::BroadcastPacket( PacketHeader* pkt )
 	}
 }
 
-bool ClientManager::DirectPacket( int pid, PacketHeader* pkt )
+bool GameRoom::DirectPacket( int pid, PacketHeader* pkt )
 {
 	auto it = g_PidSessionTable.find( pid );
 	if ( it != g_PidSessionTable.end( ) )
@@ -172,7 +172,7 @@ bool ClientManager::DirectPacket( int pid, PacketHeader* pkt )
 // 1. 가비지 컬렉팅
 // 2. 클라이언트 세션 별 할 일 처리
 // 3. DB 작업 처리 된 것 각각 클라이언트에 맞게 적용
-void ClientManager::OnPeriodWork()
+void GameRoom::OnPeriodWork()
 {
 	/// 접속이 끊긴 세션들 주기적으로 정리 (1초 정도 마다 해주자)
 	DWORD currTick = GetTickCount();
@@ -205,7 +205,7 @@ void ClientManager::OnPeriodWork()
 
 }
 
-void ClientManager::CollectGarbageSessions()
+void GameRoom::CollectGarbageSessions()
 {
 	std::vector<ClientSession*> disconnectedSessions;
 
@@ -239,7 +239,7 @@ void ClientManager::CollectGarbageSessions()
 }
 
 // 클라이언트 세션 별로 주기적으로 할 일
-void ClientManager::ClientPeriodWork()
+void GameRoom::ClientPeriodWork()
 {
 
 	// 실행이 안된 룸막기... 근데 Tick이 없어질텐데...
@@ -257,7 +257,7 @@ void ClientManager::ClientPeriodWork()
 	}
 }
 
-void ClientManager::DispatchDatabaseJobResults()
+void GameRoom::DispatchDatabaseJobResults()
 {
 	/// 쌓여 있는 DB 작업 처리 결과들을 각각의 클라에게 넘긴다
 	// 추상 클래스 포인터 선언 및 초기화
@@ -311,7 +311,7 @@ void ClientManager::DispatchDatabaseJobResults()
 	}
 }
 
-void ClientManager::FlushClientSend()
+void GameRoom::FlushClientSend()
 {
 	for ( auto& it : m_ClientList )
 	{
@@ -329,7 +329,7 @@ void ClientManager::FlushClientSend()
 // Push Request / Pop Result 로 구성 되어 있음
 // DatabaseJobManager.cpp 참조
 //////////////////////////////////////////////////////////////////////////
-void ClientManager::DBCreatePlayer( int pid, double x, double y, double z, const char* name, const char* comment )
+void GameRoom::DBCreatePlayer( int pid, double x, double y, double z, const char* name, const char* comment )
 {
 	CreatePlayerDataContext* newPlayerJob = new CreatePlayerDataContext();
 	newPlayerJob->m_PlayerId = pid;
@@ -346,13 +346,13 @@ void ClientManager::DBCreatePlayer( int pid, double x, double y, double z, const
 //////////////////////////////////////////////////////////////////////////
 // 삭제 컨텍스트를 만들어서 해당 객체를 Push Request 함수를 이용해서 처리 요청
 //////////////////////////////////////////////////////////////////////////
-void ClientManager::DBDeletePlayer( int pid )
+void GameRoom::DBDeletePlayer( int pid )
 {
 	DeletePlayerDataContext* delPlayerJob = new DeletePlayerDataContext( pid );
 	g_DatabaseJobManager->PushDatabaseJobRequest( delPlayerJob );
 }
 
-void ClientManager::CreatePlayerDone( DatabaseJobContext* dbJob )
+void GameRoom::CreatePlayerDone( DatabaseJobContext* dbJob )
 {
 	// 부모의 추상화 클래스의 포인터를 인자로 받았으므로 dynamic_cast로 클래스 형 변환 해서
 	// 자식 클래스인 CreatePlayerDataContext로 캐스팅
@@ -361,7 +361,7 @@ void ClientManager::CreatePlayerDone( DatabaseJobContext* dbJob )
 	printf( "PLAYER[%d] CREATED: %s \n", createJob->m_PlayerId, createJob->m_PlayerName );
 }
 
-void ClientManager::DeletePlayerDone( DatabaseJobContext* dbJob )
+void GameRoom::DeletePlayerDone( DatabaseJobContext* dbJob )
 {
 	// CreatePlayerDone과 같음
 	DeletePlayerDataContext* deleteJob = dynamic_cast<DeletePlayerDataContext*>( dbJob );
@@ -370,7 +370,7 @@ void ClientManager::DeletePlayerDone( DatabaseJobContext* dbJob )
 
 }
 
-bool ClientManager::DeleteClient( ClientSession* client )
+bool GameRoom::DeleteClient( ClientSession* client )
 {
 	if ( client->m_Socket != NULL )
 	{
@@ -381,7 +381,7 @@ bool ClientManager::DeleteClient( ClientSession* client )
 	return false;
 }
 
-void ClientManager::PrintClientList()
+void GameRoom::PrintClientList()
 {
 	for ( auto& it : m_ClientList )
 	{
@@ -393,7 +393,7 @@ void ClientManager::PrintClientList()
 
 
 
-bool ClientManager::ReadMapFile( const char* filename )
+bool GameRoom::ReadMapFile( const char* filename )
 {
 	FILE* f = NULL;
 	fopen_s( &f, filename, "rb" );
@@ -444,7 +444,7 @@ bool ClientManager::ReadMapFile( const char* filename )
 	return true;
 }
 
-const Corps* ClientManager::GenerateCorps( int playerID, UnitType type, PositionInfo position )
+const Corps* GameRoom::GenerateCorps( int playerID, UnitType type, PositionInfo position )
 {
 	Corps* corps = nullptr;
 	switch ( type )
@@ -479,7 +479,7 @@ const Corps* ClientManager::GenerateCorps( int playerID, UnitType type, Position
 	return corps;
 }
 
-Corps* ClientManager::GetCorpsByCorpsID( int corpsID )
+Corps* GameRoom::GetCorpsByCorpsID( int corpsID )
 {
 	if ( m_CorpsList.find( corpsID ) != m_CorpsList.end( ) )
 	{
@@ -490,7 +490,7 @@ Corps* ClientManager::GetCorpsByCorpsID( int corpsID )
 }
 
 
-void ClientManager::TakeBase( int ownerPlayerID, int targetPlayerID, int targetGuardID )
+void GameRoom::TakeBase( int ownerPlayerID, int targetPlayerID, int targetGuardID )
 {
 	
 	Corps* targetGuard = GetCorpsByCorpsID( targetGuardID );
@@ -556,7 +556,7 @@ void ClientManager::TakeBase( int ownerPlayerID, int targetPlayerID, int targetG
 	AddActionToScheduler( action, 10000 ); // 다시 가드병이 생성되는 시간 하드코딩
 }
 
-void ClientManager::AddActionToScheduler( Action* addedAction, ULONGLONG remainTime )
+void GameRoom::AddActionToScheduler( Action* addedAction, ULONGLONG remainTime )
 {
 	m_ActionScheduler->AddActionToScheduler( addedAction, remainTime );
 }

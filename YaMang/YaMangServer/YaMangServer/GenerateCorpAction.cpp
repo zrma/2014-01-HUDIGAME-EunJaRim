@@ -2,7 +2,7 @@
 #include "GenerateCorpAction.h"
 #include "EnumSet.h"
 #include "SharedDefine.h"
-#include "ClientManager.h"
+#include "GameRoom.h"
 #include "PacketType.h"
 #include "ClientSession.h"
 #include "Corps.h"

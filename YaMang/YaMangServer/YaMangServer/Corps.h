@@ -3,11 +3,11 @@
 #include "EnumSet.h"
 
 class Action;
-class ClientManager;
+class GameRoom;
 class Corps
 {
 public:
-	Corps( int playerID, int corpsID, UnitType unitType, PositionInfo position, ClientManager* clientManager );
+	Corps( int playerID, int corpsID, UnitType unitType, PositionInfo position, GameRoom* clientManager );
 	virtual ~Corps();
 
 	int						GetCorpsID( ) const { return m_CorpsID; }
@@ -21,7 +21,7 @@ public:
 	Action*					GetHoldingAction( ) const { return m_HoldAction; }
 
 	void					ChangeFormation( FormationType formation ) { m_Formation = formation; }
-	const FormationType&	GetFormationType() const { return m_Formation; }
+	FormationType			GetFormationType() const { return m_Formation; }
 
 	void					AddDamage( float damage );
 
@@ -83,6 +83,6 @@ protected:
 	PositionInfo			m_MovingRoute;
 
 private:
-	ClientManager*			m_ClientManager = nullptr;
+	GameRoom*			m_ClientManager = nullptr;
 };
 

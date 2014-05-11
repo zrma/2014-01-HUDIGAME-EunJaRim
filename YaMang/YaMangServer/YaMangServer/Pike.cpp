@@ -2,7 +2,7 @@
 #include "Pike.h"
 #include "UnitStatus.h"
 
-Pike::Pike( int playerID, int corpsID, UnitType unitType, PositionInfo position, ClientManager* clientManager )
+Pike::Pike( int playerID, int corpsID, UnitType unitType, PositionInfo position, GameRoom* clientManager )
 :Corps( playerID, corpsID, unitType, position, clientManager )
 {
 	m_HP = UnitStatus::g_PikeHP;

@@ -2,7 +2,7 @@
 #include "MovePosition.h"
 #include "ActionScheduler.h"
 #include "PacketType.h"
-#include "ClientManager.h"
+#include "GameRoom.h"
 #include "Corps.h"
 #include "MacroSet.h"
 
@@ -23,7 +23,7 @@ void MovePosition::OnBegin()
 	MoveCorpsResult outPacket;
 	outPacket.m_CorpsID = m_OwnerCrops->GetCorpsID();
 
-	PositionInfo myCorpsPositionInfo = m_OwnerCrops->GetPositionInfo( );
+	const PositionInfo& myCorpsPositionInfo = m_OwnerCrops->GetPositionInfo( );
 	float nowX = myCorpsPositionInfo.m_EyePoint.x;
 	float nowZ = myCorpsPositionInfo.m_EyePoint.z;
 	float targetX = m_Destination.m_EyePoint.x;

@@ -1,12 +1,12 @@
 ﻿#include "stdafx.h"
 #include "Action.h"
 #include "ActionScheduler.h"
-#include "ClientManager.h"
+#include "GameRoom.h"
 #include "Corps.h"
 #include "MacroSet.h"
 
 
-ActionScheduler::ActionScheduler( ClientManager* clientManager ):
+ActionScheduler::ActionScheduler( GameRoom* clientManager ):
 m_ClientManager( clientManager )
 {
 	m_BeginTime = GetTickCount64( );

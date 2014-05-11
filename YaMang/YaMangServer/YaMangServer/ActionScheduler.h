@@ -2,7 +2,7 @@
 
 #include "Action.h"
 
-class ClientManager;
+class GameRoom;
 
 struct ActionComparator
 {
@@ -15,7 +15,7 @@ struct ActionComparator
 class ActionScheduler
 {
 public:
-	ActionScheduler( ClientManager* clientManager );
+	ActionScheduler( GameRoom* clientManager );
 	~ActionScheduler();
 
 	void	AddActionToScheduler( Action* addedAction, ULONGLONG remainTime );
@@ -30,6 +30,6 @@ private:
 
 	std::priority_queue<Action*, std::vector<Action*>, ActionComparator>	m_ActionQueue;
 
-	ClientManager*	m_ClientManager = nullptr;
+	GameRoom*	m_ClientManager = nullptr;
 };
 

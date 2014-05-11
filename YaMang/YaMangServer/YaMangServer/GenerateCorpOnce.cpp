@@ -1,6 +1,6 @@
 ﻿#include "stdafx.h"
 #include "GenerateCorpOnce.h"
-#include "ClientManager.h"
+#include "GameRoom.h"
 #include "SharedDefine.h"
 #include "PacketType.h"
 #include "Corps.h"

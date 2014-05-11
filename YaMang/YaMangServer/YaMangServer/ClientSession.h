@@ -9,7 +9,7 @@
 #define BUFSIZE	(1024*10)
 
 class ClientSession;
-class ClientManager;
+class GameRoom;
 struct DatabaseJobContext;
 class Corps;
 
@@ -57,7 +57,7 @@ public:
 	void	DecOverlappedRequest() { --m_OverlappedRequested; }
 	bool	DoingOverlappedOperation() const { return m_OverlappedRequested > 0; }
 
-	void	SetClientManager( ClientManager* clientManager ) { m_ClientManager = clientManager; }
+	void	SetClientManager( GameRoom* clientManager ) { m_ClientManager = clientManager; }
 
 	//////////////////////////////////////////////////////////////////////////
 	// 패킷 핸들러
@@ -124,7 +124,7 @@ private:
 	OverlappedIO	m_OverlappedRecv;
 	int				m_OverlappedRequested;
 
-	ClientManager*	m_ClientManager = nullptr;
+	GameRoom*	m_ClientManager = nullptr;
 
 
 
@@ -139,7 +139,7 @@ private:
 
 	unsigned char			m_ErrorNumber = 0;
 	const unsigned char		m_ErrorNumberMax = 5;
-	friend class ClientManager;
+	friend class GameRoom;
 };
 
 typedef void( *HandlerFunc )( ClientSession* session, PacketHeader& pktBase );

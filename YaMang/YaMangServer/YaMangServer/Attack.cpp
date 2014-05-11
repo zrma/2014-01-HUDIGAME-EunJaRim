@@ -2,7 +2,7 @@
 #include "Attack.h"
 #include "PacketType.h"
 #include "Corps.h"
-#include "ClientManager.h"
+#include "GameRoom.h"
 #include "MacroSet.h"
 Attack::Attack()
 {
@@ -20,8 +20,8 @@ void Attack::OnBegin()
 	m_TargerCrops->ReCalculatePosition();
 
 	// length를 구하기 위한 중복이지만 한번정도는 괜찮겠지...
-	PositionInfo myCorpsPositionInfo = m_OwnerCrops->GetPositionInfo();
-	PositionInfo targetPositionInfo = m_TargerCrops->GetPositionInfo();
+	const PositionInfo& myCorpsPositionInfo = m_OwnerCrops->GetPositionInfo();
+	const PositionInfo& targetPositionInfo = m_TargerCrops->GetPositionInfo();
 
 	float nowX = myCorpsPositionInfo.m_EyePoint.x;
 	float nowZ = myCorpsPositionInfo.m_EyePoint.z;
@@ -61,8 +61,8 @@ void Attack::OnTick()
 
 	m_OwnerCrops->MoveStop();
 	m_TargerCrops->ReCalculatePosition();
-	PositionInfo myCorpsPositionInfo = m_OwnerCrops->GetPositionInfo();
-	PositionInfo targetPositionInfo = m_TargerCrops->GetPositionInfo();
+	const PositionInfo& myCorpsPositionInfo = m_OwnerCrops->GetPositionInfo( );
+	const PositionInfo& targetPositionInfo = m_TargerCrops->GetPositionInfo( );
 
 	float nowX = myCorpsPositionInfo.m_EyePoint.x;
 	float nowZ = myCorpsPositionInfo.m_EyePoint.z;

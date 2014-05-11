@@ -2,7 +2,7 @@
 #include "Arrow.h"
 #include "UnitStatus.h"
 
-Arrow::Arrow( int playerID, int corpsID, UnitType unitType, PositionInfo position, ClientManager* clientManager )
+Arrow::Arrow( int playerID, int corpsID, UnitType unitType, PositionInfo position, GameRoom* clientManager )
 :Corps( playerID, corpsID, unitType, position, clientManager )
 {
 	m_HP = UnitStatus::g_ArrowHP;

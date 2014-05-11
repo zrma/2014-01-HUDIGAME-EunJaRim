@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 #include "ClientSession.h"
 #include "PacketType.h"
-#include "ClientManager.h"
+#include "GameRoom.h"
 #include "DatabaseJobContext.h"
 #include "DatabaseJobManager.h"
 #include "RoomManager.h"

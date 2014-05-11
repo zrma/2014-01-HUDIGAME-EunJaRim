@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 #include "TakeArea.h"
 #include "Corps.h"
-#include "ClientManager.h"
+#include "GameRoom.h"
 #include "PacketType.h"
 #include "GuardArea.h"
 #include "MacroSet.h"
@@ -20,8 +20,8 @@ void TakeArea::OnBegin()
 	m_OwnerCrops->ReCalculatePosition();
 	m_TargerCrops->ReCalculatePosition();
 
-	PositionInfo myCorpsPositionInfo = m_OwnerCrops->GetPositionInfo();
-	PositionInfo targetPositionInfo = m_TargerCrops->GetPositionInfo();
+	const PositionInfo& myCorpsPositionInfo = m_OwnerCrops->GetPositionInfo( );
+	const PositionInfo& targetPositionInfo = m_TargerCrops->GetPositionInfo( );
 
 	float nowX = myCorpsPositionInfo.m_EyePoint.x;
 	float nowZ = myCorpsPositionInfo.m_EyePoint.z;
@@ -60,8 +60,8 @@ void TakeArea::OnTick()
 
 	m_OwnerCrops->MoveStop();
 	m_TargerCrops->ReCalculatePosition();
-	PositionInfo myCorpsPositionInfo = m_OwnerCrops->GetPositionInfo();
-	PositionInfo targetPositionInfo = m_TargerCrops->GetPositionInfo();
+	const PositionInfo& myCorpsPositionInfo = m_OwnerCrops->GetPositionInfo( );
+	const PositionInfo& targetPositionInfo = m_TargerCrops->GetPositionInfo( );
 
 	float nowX = myCorpsPositionInfo.m_EyePoint.x;
 	float nowZ = myCorpsPositionInfo.m_EyePoint.z;

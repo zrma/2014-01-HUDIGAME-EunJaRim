@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 #include "RoomManager.h"
 #include "ClientSession.h"
-#include "ClientManager.h"
+#include "GameRoom.h"
 #include "MacroSet.h"
 
 
@@ -14,7 +14,7 @@ RoomManager::RoomManager()
 {
 	g_PidSessionTable.clear( );
 
-	m_Lobby = new ClientManager( LOBBY_NUMBER );
+	m_Lobby = new GameRoom( LOBBY_NUMBER );
 	// Test room start;
 	m_Lobby->GameStart( );
 
@@ -27,7 +27,7 @@ RoomManager::~RoomManager()
 {
 	for ( auto it = m_RoomList.begin( ); it != m_RoomList.end( ); ++it )
 	{
-		ClientManager* room = it->second;
+		GameRoom* room = it->second;
 		delete room;
 	}
 	m_RoomList.clear();
@@ -35,7 +35,7 @@ RoomManager::~RoomManager()
 
 int RoomManager::AddRoom()
 {
-	ClientManager* room = new ClientManager( ++m_RoomCount );
+	GameRoom* room = new GameRoom( ++m_RoomCount );
 
 	// Test room start;
 	room->GameStart( );
@@ -100,7 +100,7 @@ bool RoomManager::DeleteRoom( int roomNumber )
 	}
 	else
 	{
-		ClientManager* toBeDelete = m_RoomList.find( roomNumber )->second;
+		GameRoom* toBeDelete = m_RoomList.find( roomNumber )->second;
 		if ( 0 == toBeDelete->GetClientSize() )
 		{
 			delete toBeDelete;
@@ -132,7 +132,7 @@ void RoomManager::FlushClientSend()
 {
 	for ( auto it = m_RoomList.begin(); it != m_RoomList.end(); ++it )
 	{
-		ClientManager* room = it->second;
+		GameRoom* room = it->second;
 		room->FlushClientSend( );
 	}
 }
@@ -141,7 +141,7 @@ void RoomManager::OnPeriodWork()
 {
 	for ( auto it = m_RoomList.begin(); it != m_RoomList.end(); ++it )
 	{
-		ClientManager* room = it->second;
+		GameRoom* room = it->second;
 		room->OnPeriodWork( );
 	}
 }
@@ -150,7 +150,7 @@ void RoomManager::PrintClientList()
 {
 	for ( auto it = m_RoomList.begin(); it != m_RoomList.end(); ++it )
 	{
-		ClientManager* room = it->second;
+		GameRoom* room = it->second;
 		Log( "-ROOM %d ClientList- \n", room->GetRoomNumber() );
 		room->PrintClientList();
 	}

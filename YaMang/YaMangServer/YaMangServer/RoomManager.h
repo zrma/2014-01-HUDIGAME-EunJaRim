@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 class ClientSession;
-class ClientManager;
+class GameRoom;
 
 
 class RoomManager
@@ -29,10 +29,10 @@ public:
 
 
 public:
-	ClientManager*					m_Lobby;
+	GameRoom*					m_Lobby;
 
 private:
-	typedef std::hash_map<int, ClientManager*> RoomList;
+	typedef std::hash_map<int, GameRoom*> RoomList;
 	RoomList						m_RoomList;
 	int								m_RoomCount = 0;
 

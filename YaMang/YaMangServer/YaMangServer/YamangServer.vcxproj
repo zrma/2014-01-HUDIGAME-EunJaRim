@@ -93,7 +93,7 @@
     <ClInclude Include="Arrow.h" />
     <ClInclude Include="Attack.h" />
     <ClInclude Include="CircularBuffer.h" />
-    <ClInclude Include="ClientManager.h" />
+    <ClInclude Include="GameRoom.h" />
     <ClInclude Include="ClientSession.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="Corps.h" />
@@ -135,7 +135,7 @@
     <ClCompile Include="Arrow.cpp" />
     <ClCompile Include="Attack.cpp" />
     <ClCompile Include="CircularBuffer.cpp" />
-    <ClCompile Include="ClientManager.cpp" />
+    <ClCompile Include="GameRoom.cpp" />
     <ClCompile Include="ClientSession.cpp" />
     <ClCompile Include="Corps.cpp" />
     <ClCompile Include="DatabaseJobContext.cpp" />

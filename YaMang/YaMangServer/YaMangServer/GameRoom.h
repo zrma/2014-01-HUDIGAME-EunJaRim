@@ -17,11 +17,11 @@ struct Tile
 	unsigned char B; // 아마도 height값이 올 예정
 };
 
-class ClientManager
+class GameRoom
 {
 public:
-	ClientManager( int roomNumber );
-	~ClientManager();
+	GameRoom( int roomNumber );
+	~GameRoom();
 
 	void				GameStart();
 

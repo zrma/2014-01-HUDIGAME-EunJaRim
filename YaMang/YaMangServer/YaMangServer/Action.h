@@ -10,7 +10,7 @@ enum ActionStatus
 };
 
 class Corps;
-class ClientManager;
+class GameRoom;
 class Action
 {
 public:
@@ -19,7 +19,7 @@ public:
 
 	void		DoAction();
 
-	void		SetClientManager( ClientManager* clientManager ) { m_ClientManager = clientManager; }
+	void		SetClientManager( GameRoom* clientManager ) { m_ClientManager = clientManager; }
 
 	// 액션이 꼭 콥스만의 고유 행동이 아니면 생성자에서는 corpsID는 따로 빼야할듯 
 	void		SetOwnerCorps( Corps* ownerCrops ) { m_OwnerCrops = ownerCrops; }
@@ -44,6 +44,6 @@ protected:
 	ActionStatus		m_ActionStatus = ACTION_BEGIN;
 
 
-	ClientManager*		m_ClientManager = nullptr;
+	GameRoom*		m_ClientManager = nullptr;
 };
 
