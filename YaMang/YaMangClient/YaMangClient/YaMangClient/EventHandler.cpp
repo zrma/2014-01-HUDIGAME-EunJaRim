@@ -347,7 +347,7 @@ void NetworkManager::HandleAttackCorpsResult( AttackCorpsResult& inPacket )
 			scenePlay->MoveCorpsStop( targetCorpsID, targetNow, targetLook );
 			scenePlay->SetCorpsHP( targetCorpsID, unitNum );
 
-			UnitType unitType = scenePlay->GetUnitTypeByID( attackerCorpsID );
+			UnitType unitType = scenePlay->GetCorpsByID( attackerCorpsID )->GetUnitType();
 			switch ( unitType )
 			{
 				case UnitType::UNIT_ARROW:

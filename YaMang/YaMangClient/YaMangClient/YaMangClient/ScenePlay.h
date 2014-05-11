@@ -25,8 +25,9 @@ public:
 	void		SetCorpsHP( int corpsID, int unitNum );
 
 	Corps*		SearchCorpsByPosition( float x, float z, bool selectOption = true );
-
-	UnitType	GetUnitTypeByID( int corpsID );
+	
+	const Corps* GetCorpsByID( int corpsID );
+	UnitType	GetUnitTypeByID( int corpsID ); // 필요 안하게 할 수 있는데...
 
 private:
 	std::hash_map<int, Corps*>	m_CorpsList;

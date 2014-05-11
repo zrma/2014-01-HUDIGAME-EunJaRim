@@ -1,7 +1,9 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "PlayerManager.h"
 #include "NetworkManager.h"
-
+#include "SceneManager.h"
+#include "ScenePlay.h"
+#include "Corps.h"
 
 PlayerManager::PlayerManager()
 {
@@ -33,8 +35,29 @@ void PlayerManager::AttackCorpsById( int corpsID ) const
 {
 	if ( !m_SelectedCorpsList.empty() )
 	{
+		Scene* scene = SceneManager::GetInstance()->GetNowScene();
+		if ( typeid( ScenePlay ) != typeid( *scene ) )
+		{
+			return;
+		}
+
+		ScenePlay* scenePlay = static_cast<ScenePlay*>( scene );
 		for ( auto& iter : m_SelectedCorpsList )
 		{
+			
+			const Corps* myCorps = scenePlay->GetCorpsByID( iter );
+			const Corps* targetCorps = scenePlay->GetCorpsByID( corpsID );
+
+			if ( nullptr == myCorps || nullptr == targetCorps )
+			{
+				return;
+			}
+
+			if ( myCorps->GetOwnPlayerID( ) == targetCorps->GetOwnPlayerID( ) )
+			{
+				// 타겟이 내꺼면 공격 중단
+				break;
+			}
 			AttackCorpsRequest attackCorpsData;
 			attackCorpsData.m_MyCorpsID = iter;
 			attackCorpsData.m_TargetCorpsID = corpsID;

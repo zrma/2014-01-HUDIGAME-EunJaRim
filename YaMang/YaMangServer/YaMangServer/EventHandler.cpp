@@ -256,7 +256,7 @@ void ClientSession::HandleGenerateCorpsRequest( GenerateCorpsRequest& inPacket )
 	position.m_EyePoint = { nowX, 0.0f, nowZ };
 	position.m_LookAtPoint = { lookX, 0.0f, lookZ };
 
-	const Corps* corps = m_ClientManager->GenerateCorps( m_PlayerID, unitType, position );
+	const Corps* corps = m_ClientManager->GenerateCorps( playerID, unitType, position );
 
 	if ( nullptr == corps )
 	{
@@ -270,7 +270,7 @@ void ClientSession::HandleGenerateCorpsRequest( GenerateCorpsRequest& inPacket )
 	outPacket.m_LookX = lookX;
 	outPacket.m_LookZ = lookZ;
 	outPacket.m_CorpsID = corps->GetCorpsID();
-	outPacket.m_PlayerId = m_PlayerID;
+	outPacket.m_PlayerId = corps->GetPlayerID( );
 	outPacket.m_FormationType = corps->GetFormationType();
 	outPacket.m_UnitNum = corps->GetUnitNum();
 
@@ -305,7 +305,9 @@ void ClientSession::HandleMoveCorpsRequest( MoveCorpsRequest& inPacket )
 	destination.m_EyePoint = { nowX, 0.0f, nowZ };
 	destination.m_LookAtPoint = { targetX, 0.0f, targetZ };
 
-	if ( nullptr == m_ClientManager->GetCorpsByCorpsID( corpsID ) )
+	Corps* corps = m_ClientManager->GetCorpsByCorpsID( corpsID );
+
+	if ( nullptr == corps )
 	{
 		++m_ErrorNumber;
 		return;
@@ -322,7 +324,6 @@ void ClientSession::HandleMoveCorpsRequest( MoveCorpsRequest& inPacket )
 	// 이동 액션은 내부적으로 Corps의 상황을 파악하여
 	// 방향과 속도 등의 정보를 담아서 타이머 발생 때 마다 Result Packet을 보낸다.
 
-	Corps* corps = m_ClientManager->GetCorpsByCorpsID( corpsID );
 
 	MovePosition* action = new MovePosition( );
 	action->SetClientManager( m_ClientManager );
@@ -435,24 +436,26 @@ void ClientSession::HandleAttackCorpsRequest( AttackCorpsRequest& inPacket )
 	int myCorpsID = inPacket.m_MyCorpsID;
 	int targetCorpsID = inPacket.m_TargetCorpsID;
 
-	if ( nullptr == m_ClientManager->GetCorpsByCorpsID( myCorpsID ) )
+	Corps* myCorps = m_ClientManager->GetCorpsByCorpsID( myCorpsID );
+	Corps* targetCorps = m_ClientManager->GetCorpsByCorpsID( targetCorpsID );
+
+	if ( nullptr == myCorps || nullptr == targetCorps )
 	{
 		++m_ErrorNumber;
 		return;
 	}
-	if ( nullptr == m_ClientManager->GetCorpsByCorpsID( targetCorpsID ) )
+
+	if ( myCorps->GetPlayerID() == targetCorps->GetPlayerID() )
 	{
+		printf_s( "[BUG]Attack Own Corps! \n" );
 		++m_ErrorNumber;
 		return;
 	}
+
 	if ( m_ErrorNumber > m_ErrorNumberMax )
 	{
 		Disconnect();
 	}
-
-	Corps* myCorps = m_ClientManager->GetCorpsByCorpsID( myCorpsID );
-	Corps* targetCorps = m_ClientManager->GetCorpsByCorpsID( targetCorpsID );
-
 
 	if ( UnitType::UNIT_GUARD == targetCorps->GetUnitType())
 	{
@@ -509,7 +512,7 @@ void ClientSession::HandleSyncAllRequest( SyncAllRequest& inPacket )
 		outPacket.m_LookX = positionInfo.m_LookAtPoint.x;
 		outPacket.m_LookZ = positionInfo.m_LookAtPoint.z;
 		outPacket.m_CorpsID = it.second->GetCorpsID();
-		outPacket.m_PlayerId = m_PlayerID;
+		outPacket.m_PlayerId = it.second->GetPlayerID();
 		outPacket.m_FormationType = it.second->GetFormationType();
 		outPacket.m_UnitNum = it.second->GetUnitNum();
 
