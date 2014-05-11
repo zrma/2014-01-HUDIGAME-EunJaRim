@@ -31,7 +31,6 @@ public:
 	void				DestroyCursor();
 
 	void				SetGameCursorPos( int PosX, int PosY );
-	void				SetCursorType(CursorType cursorType) { m_NowCursorType = cursorType; }
 
 	void				SetCursorRenderType(CursorRenderType renderType) { m_CursorRenderType = renderType; }
 	CursorRenderType	GetCursorRenderType() { return m_CursorRenderType; }
@@ -39,7 +38,6 @@ public:
 
 private:
 	bool				m_IsCursorReady = false;
-	CursorType			m_NowCursorType = CURSOR_NONE;
 	CursorRenderType	m_CursorRenderType = CursorRenderType::CURSOR_RENDER_NONE;
 };
 

@@ -98,10 +98,6 @@ void GameManager::Destroy() const
 	// 텍스트 매니저 해제
 	TextManager::Release();
 
-	//마우스 렌더 객체 씬이 상속하도록 바꿈
-// 	MouseRender::GetInstance()->CleanupCursor();
-// 	MouseRender::Release();
-
 	// 네트워크에서 씬을 참조하는 부분이 있으므로 씬을 먼저 해제하면 안 됨
 	NetworkManager::GetInstance()->Destroy();
 	NetworkManager::Release();
