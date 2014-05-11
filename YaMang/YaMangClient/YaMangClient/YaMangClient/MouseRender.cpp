@@ -17,9 +17,12 @@ MouseRender::~MouseRender()
 
 void MouseRender::Init()
 {
+	SetCursorRenderType(CursorRenderType::CURSOR_RENDER_BASIC);
+	
 	CreateCursor( L"cursor2.png", 
 				  MouseManager::GetInstance()->GetMousePositionX(), MouseManager::GetInstance()->GetMousePositionY() );
 	MouseManager::GetInstance()->SetGameCursorMode(true);
+	
 }
 
 HRESULT MouseRender::CreateCursor( LPCWSTR cursorImagePath, int cursorPosX /*= 0*/, int cursorPosY /*= 0 */ )
@@ -44,6 +47,7 @@ void MouseRender::DestroyCursor()
 void MouseRender::Update()
 {
 	SetGameCursorPos( MouseManager::GetInstance()->GetMousePositionX(), MouseManager::GetInstance()->GetMousePositionY() );
+	ChangeCursorRenderType();
 }
 
 void MouseRender::Render() const
@@ -63,5 +67,27 @@ void MouseRender::Destroy()
 {
 	DestroyCursor();
 	MouseManager::Release();
+}
+
+void MouseRender::ChangeCursorRenderType()
+{
+	//왼쪽 클릭 상태만 우선 테스트
+	if (MouseManager::GetInstance()->IsLeftClicked())
+	{
+		if (m_CursorRenderType != CursorRenderType::CURSOR_RENDER_CLICK)
+		{
+			m_CursorRenderType = CursorRenderType::CURSOR_RENDER_CLICK;
+			ChangeCursorImage(L"cursor_clicked.png");
+		}
+	}
+	else
+	{
+		if (m_CursorRenderType != CursorRenderType::CURSOR_RENDER_BASIC)
+		{
+			m_CursorRenderType = CursorRenderType::CURSOR_RENDER_BASIC;
+			ChangeCursorImage(L"cursor2.png");
+		}
+	}
+
 }
 

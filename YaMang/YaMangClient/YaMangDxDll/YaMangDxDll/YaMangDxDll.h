@@ -68,6 +68,7 @@ extern "C"{
 	YAMANGDXDLL_API HRESULT RenderCursor();
 	YAMANGDXDLL_API void CursorCleanUp();
 	YAMANGDXDLL_API void SetCursorPosition( int PosX = 0, int PosY = 0 );
+	YAMANGDXDLL_API HRESULT ChangeCursorImage(LPCWSTR cursorImagePath = L"cursor2.png");
 	
 	//////////////////////////////////////////////////////////////////////////
 	// Tool 용 함수

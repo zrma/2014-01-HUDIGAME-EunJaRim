@@ -3,6 +3,18 @@
 #include "Interface3D.h"
 #include "EnumSet.h"
 
+enum class CursorRenderType
+{
+	CURSOR_RENDER_NONE,
+	CURSOR_RENDER_BASIC,
+	CURSOR_RENDER_CLICK,
+	CURSOR_RENDER_ON_CORPS,
+	CURSOR_RENDER_CLICK_CORPS,
+	CURSOR_RENDER_ATTACK,
+	CURSOR_RENDER_UNMOVABLE_AREA,
+	CURSOR_RENDER_MAX
+};
+
 class MouseRender : public Interface3D
 {
 public:
@@ -18,11 +30,16 @@ public:
 	HRESULT				CreateCursor( LPCWSTR cursorImagePath, int cursorPosX = 500, int cursorPosY = 500 );
 	void				DestroyCursor();
 
-	void				SetGameCursorPos(int PosX, int PosY);
+	void				SetGameCursorPos( int PosX, int PosY );
 	void				SetCursorType(CursorType cursorType) { m_NowCursorType = cursorType; }
+
+	void				SetCursorRenderType(CursorRenderType renderType) { m_CursorRenderType = renderType; }
+	CursorRenderType	GetCursorRenderType() { return m_CursorRenderType; }
+	void				ChangeCursorRenderType();
 
 private:
 	bool				m_IsCursorReady = false;
 	CursorType			m_NowCursorType = CURSOR_NONE;
+	CursorRenderType	m_CursorRenderType = CursorRenderType::CURSOR_RENDER_NONE;
 };
 

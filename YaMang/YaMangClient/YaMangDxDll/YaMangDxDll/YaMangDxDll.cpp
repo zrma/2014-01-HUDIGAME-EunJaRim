@@ -857,6 +857,16 @@ YAMANGDXDLL_API HRESULT RenderCursor( )
 	}
 	return E_FAIL;
 }
+ 
+
+YAMANGDXDLL_API HRESULT ChangeCursorImage(LPCWSTR cursorImagePath /*= L"cursor2.png"*/)
+{
+	if (FAILED(D3DXCreateTextureFromFile(g_D3dDevice, cursorImagePath, &g_CursorTex)))
+	{
+		return E_FAIL;
+	}
+	return S_OK;
+}
 
 YAMANGDXDLL_API void CursorCleanUp( )
 {
