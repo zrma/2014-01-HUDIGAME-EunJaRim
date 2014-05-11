@@ -2,6 +2,7 @@
 #include "MouseRender.h"
 #include "YaMangDxDll.h"
 #include "MouseManager.h"
+#include "ResourceManager.h"
 
 
 MouseRender::MouseRender()
@@ -12,38 +13,19 @@ MouseRender::MouseRender()
 
 MouseRender::~MouseRender()
 {
-	Destroy();
 }
 
 void MouseRender::Init()
 {
-	SetCursorRenderType(CursorRenderType::CURSOR_RENDER_BASIC);
-	
-	CreateCursor( L"cursor2.png", 
-				  MouseManager::GetInstance()->GetMousePositionX(), MouseManager::GetInstance()->GetMousePositionY() );
-	MouseManager::GetInstance()->SetGameCursorMode(true);
-	
-}
-
-HRESULT MouseRender::CreateCursor( LPCWSTR cursorImagePath, int cursorPosX /*= 0*/, int cursorPosY /*= 0 */ )
-{
-	if ( FAILED( InitCursor( cursorImagePath, cursorPosX, cursorPosY ) ) )
+	if ( ResourceManager::GetInstance()->IsCursorReady() )
 	{
-		m_IsCursorReady = false;
-		return E_FAIL;
-	}
-	m_IsCursorReady = true;
-	return S_OK;
-}
+		SetCursorRenderType( CURSOR_TEXTURE_BASIC );
+		MouseManager::GetInstance()->SetGameCursorMode( true );
 
-void MouseRender::DestroyCursor()
-{
-	if ( m_IsCursorReady )
-	{
-		CursorCleanUp();
-		m_IsCursorReady = false;
+		m_IsCursorReady = true;
 	}
 }
+
 void MouseRender::Update()
 {
 	SetGameCursorPos( MouseManager::GetInstance()->GetMousePositionX(), MouseManager::GetInstance()->GetMousePositionY() );
@@ -63,31 +45,24 @@ void MouseRender::SetGameCursorPos(int PosX, int PosY)
 	SetCursorPosition( PosX, PosY );
 }
 
-void MouseRender::Destroy()
-{
-	DestroyCursor();
-	MouseManager::Release();
-}
-
 void MouseRender::ChangeCursorRenderType()
 {
 	//왼쪽 클릭 상태만 우선 테스트
-	if (MouseManager::GetInstance()->IsLeftClicked())
+	if ( MouseManager::GetInstance()->IsLeftClicked() )
 	{
-		if (m_CursorRenderType != CursorRenderType::CURSOR_RENDER_CLICK)
+		if ( m_CursorRenderType != CURSOR_TEXTURE_CLICK )
 		{
-			m_CursorRenderType = CursorRenderType::CURSOR_RENDER_CLICK;
-			ChangeCursorImage(L"cursor_clicked.png");
+			m_CursorRenderType = CURSOR_TEXTURE_CLICK;
+			ChangeCursorImage( CURSOR_TEXTURE_CLICK );
 		}
 	}
 	else
 	{
-		if (m_CursorRenderType != CursorRenderType::CURSOR_RENDER_BASIC)
+		if ( m_CursorRenderType != CURSOR_TEXTURE_BASIC )
 		{
-			m_CursorRenderType = CursorRenderType::CURSOR_RENDER_BASIC;
-			ChangeCursorImage(L"cursor2.png");
+			m_CursorRenderType = CURSOR_TEXTURE_BASIC;
+			ChangeCursorImage( CURSOR_TEXTURE_BASIC );
 		}
 	}
-
 }
 

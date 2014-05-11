@@ -3,16 +3,18 @@
 #include "Interface3D.h"
 #include "EnumSet.h"
 
-enum class CursorRenderType
+enum CursorTextureType
 {
-	CURSOR_RENDER_NONE,
-	CURSOR_RENDER_BASIC,
-	CURSOR_RENDER_CLICK,
-	CURSOR_RENDER_ON_CORPS,
-	CURSOR_RENDER_CLICK_CORPS,
-	CURSOR_RENDER_ATTACK,
-	CURSOR_RENDER_UNMOVABLE_AREA,
-	CURSOR_RENDER_MAX
+	CURSOR_TEXTURE_NONE,
+	
+	CURSOR_TEXTURE_BASIC,
+	CURSOR_TEXTURE_CLICK,
+	CURSOR_TEXTURE_OVER_CORPS,
+	CURSOR_TEXTURE_CLICK_CORPS,
+	CURSOR_TEXTURE_ATTACK,
+	CURSOR_TEXTURE_UNRECHEABLE,
+	
+	CURSOR_TEXTURE_MAX
 };
 
 class MouseRender : public Interface3D
@@ -23,21 +25,17 @@ public:
 
 public:
 	void				Init();
-	void				Destroy();
 	virtual void		Update();
 	virtual void		Render() const;
-
-	HRESULT				CreateCursor( LPCWSTR cursorImagePath, int cursorPosX = 500, int cursorPosY = 500 );
-	void				DestroyCursor();
-
+	
 	void				SetGameCursorPos( int PosX, int PosY );
 
-	void				SetCursorRenderType(CursorRenderType renderType) { m_CursorRenderType = renderType; }
-	CursorRenderType	GetCursorRenderType() { return m_CursorRenderType; }
+	void				SetCursorRenderType(CursorTextureType renderType) { m_CursorRenderType = renderType; }
+	CursorTextureType	GetCursorRenderType() { return m_CursorRenderType; }
 	void				ChangeCursorRenderType();
 
 private:
 	bool				m_IsCursorReady = false;
-	CursorRenderType	m_CursorRenderType = CursorRenderType::CURSOR_RENDER_NONE;
+	CursorTextureType	m_CursorRenderType = CURSOR_TEXTURE_NONE;
 };
 

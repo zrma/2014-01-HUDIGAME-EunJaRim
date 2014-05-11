@@ -823,35 +823,53 @@ YAMANGDXDLL_API void RenderText( LPCWSTR text, float left, float top, int RGB_R,
 }
 
 
-YAMANGDXDLL_API HRESULT InitCursor( LPCWSTR cursorImagePath, int cursorPosX, int cursorPosY )
+YAMANGDXDLL_API HRESULT InitCursor( int textureSize, int cursorPosX, int cursorPosY )
 {
-	if ( FAILED( D3DXCreateTextureFromFile( g_D3dDevice, cursorImagePath, &g_CursorTex ) ) )
-	{
-		return E_FAIL;
-	}
 	if ( FAILED( D3DXCreateSprite( g_D3dDevice, &g_CursorSprite ) ) ) //first parameter is our device, second is a empty sprite variable
 	{
 		return E_FAIL;
 	}
+	if ( g_CursorTex )
+	{
+		for ( int i = 0; i < g_CursorMaxSize; ++i )
+		{
+			if ( g_CursorTex[i] )
+			{
+				g_CursorTex[i]->Release();
+			}
+		}
+		delete[] g_CursorTex;
+		g_CursorTex = nullptr;
+	}
+
+	g_CursorTex = new LPDIRECT3DTEXTURE9[textureSize];
+	g_CursorMaxSize = textureSize;
+	
+	for ( int i = 0; i < g_CursorMaxSize; ++i )
+	{
+		g_CursorTex[i] = nullptr;
+	}
 
 	SetCursorPosition( cursorPosX, cursorPosY ); // 0,0,0으로 초기화
+
+	Log( "스프라이트 %d개 생성 ", g_CursorMaxSize );
 
 	return S_OK;
 }
 
-YAMANGDXDLL_API HRESULT RenderCursor( )
+YAMANGDXDLL_API HRESULT RenderCursor()
 {
-	if ( g_CursorSprite ) 
+	if ( g_CursorSprite && g_CursorTex && g_CursorTex[g_CursorType] )
 	{
 		D3DXMATRIXA16 ratioMat;
-		
-		float ratio = (720.0f / g_Width) * g_Ratio;
-		D3DXMatrixIdentity(&ratioMat);
-		D3DXMatrixScaling(&ratioMat, 1280 / g_Width, ratio, 1);
-		g_CursorSprite->SetTransform(&ratioMat);
-		g_CursorSprite->Begin( D3DXSPRITE_ALPHABLEND ); 
-		g_CursorSprite->Draw( g_CursorTex, NULL, NULL, &g_CursorPos, 0xFFFFFFFF ); 
-		g_CursorSprite->End(); 
+
+		float ratio = ( 720.0f / g_Width ) * g_Ratio;
+		D3DXMatrixIdentity( &ratioMat );
+		D3DXMatrixScaling( &ratioMat, 1280 / g_Width, ratio, 1 );
+		g_CursorSprite->SetTransform( &ratioMat );
+		g_CursorSprite->Begin( D3DXSPRITE_ALPHABLEND );
+		g_CursorSprite->Draw( g_CursorTex[g_CursorType], NULL, NULL, &g_CursorPos, 0xFFFFFFFF );
+		g_CursorSprite->End();
 		g_D3dDevice->EndScene();
 		return S_OK;
 	}
@@ -859,16 +877,39 @@ YAMANGDXDLL_API HRESULT RenderCursor( )
 }
  
 
-YAMANGDXDLL_API HRESULT ChangeCursorImage(LPCWSTR cursorImagePath /*= L"cursor2.png"*/)
+YAMANGDXDLL_API HRESULT CreateCursorImage( LPCWSTR cursorImagePath /*= L"cursor_default.png"*/, int cursorType /*= 0 */ )
 {
-	if (FAILED(D3DXCreateTextureFromFile(g_D3dDevice, cursorImagePath, &g_CursorTex)))
+	if ( g_D3dDevice )
 	{
-		return E_FAIL;
+		if ( g_CursorTex[cursorType] )
+		{
+			g_CursorTex[cursorType]->Release();
+			g_CursorTex[cursorType] = nullptr;
+		}
+		if ( FAILED( D3DXCreateTextureFromFile( g_D3dDevice, cursorImagePath, &g_CursorTex[cursorType] ) ) )
+		{
+			return E_FAIL;
+		}
+
+		return S_OK;
 	}
-	return S_OK;
+
+	return E_FAIL;
 }
 
-YAMANGDXDLL_API void CursorCleanUp( )
+YAMANGDXDLL_API HRESULT ChangeCursorImage( int cursorType )
+{
+	if ( g_CursorTex && (cursorType < g_CursorMaxSize) && g_CursorTex[cursorType] )
+	{
+		g_CursorType = cursorType;
+
+		return S_OK;
+	}
+
+	return E_FAIL;
+}
+
+YAMANGDXDLL_API void CursorCleanUp()
 {
 	if ( g_CursorSprite )
 	{
@@ -877,7 +918,15 @@ YAMANGDXDLL_API void CursorCleanUp( )
 
 	if ( g_CursorTex )
 	{
-		g_CursorTex->Release();
+		for ( int i = 0; i < g_CursorMaxSize; ++i )
+		{
+			if ( g_CursorTex[i] )
+			{
+				g_CursorTex[i]->Release();
+			}
+		}
+		delete[] g_CursorTex;
+		g_CursorTex = nullptr;
 	}
 }
 

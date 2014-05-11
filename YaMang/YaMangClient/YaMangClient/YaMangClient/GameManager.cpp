@@ -14,6 +14,7 @@
 
 #include "CollisionManager.h"
 #include "PlayerManager.h"
+#include "MouseManager.h"
 
 GameManager::GameManager()
 {
@@ -35,6 +36,10 @@ bool GameManager::Init() const
 	// 렌더러 생성 및 초기화
 	Renderer::GetInstance()->Init();
 
+	// 리소스 로딩 및 초기화
+	// 리소스는 씬보다 먼저 생성해야 함
+	ResourceManager::GetInstance()->Init();
+	
 	// 씬 생성 및 초기화
 	SceneManager::GetInstance()->Init();
 	SceneManager::GetInstance()->ChangeScene( SCENE_PLAY );
@@ -42,9 +47,6 @@ bool GameManager::Init() const
 	// 네트워크 생성 및 초기화
 	NetworkManager::GetInstance()->Init();
 	NetworkManager::GetInstance()->Connect();
-	
-	// 리소스 로딩 및 초기화
-	ResourceManager::GetInstance()->Init();
 	
 	// 카메라 초기화
 	CameraController::GetInstance()->Init();
@@ -123,4 +125,5 @@ void GameManager::Destroy() const
 
 	Timer::Release();
 	PlayerManager::Release();
+	MouseManager::Release();
 }

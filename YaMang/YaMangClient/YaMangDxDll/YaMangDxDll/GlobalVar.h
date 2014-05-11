@@ -86,8 +86,10 @@ extern ID3DXSprite*	g_Sprite;		// 폰트를 그릴 스프라이트 객체
 // extern IDirect3DSurface9* g_surfcursor; //테스트 중
 // extern IDirect3DTexture9* g_cursortex; //테스트 중
 
-extern LPDIRECT3DTEXTURE9	g_CursorTex;
+extern LPDIRECT3DTEXTURE9*	g_CursorTex;
 extern LPD3DXSPRITE			g_CursorSprite;
+extern INT					g_CursorType;
+extern INT					g_CursorMaxSize;
 extern D3DXVECTOR3			g_CursorPos;
 
 //////////////////////////////////////////////////////////////////////////

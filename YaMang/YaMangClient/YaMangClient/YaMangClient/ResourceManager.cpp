@@ -2,6 +2,8 @@
 #include "ResourceManager.h"
 #include "MainWindow.h"
 #include "yaMangDxDll.h"
+#include "MouseManager.h"
+#include "MouseRender.h"
 
 ResourceManager::ResourceManager()
 {
@@ -27,10 +29,6 @@ void ResourceManager::Init()
 	fileName = L"UnitGuard.x";
 	AddMesh( fileName, MESH_KEY_UNIT_GUARD );
 
-// 	LPCTSTR heightMapFileName = L"heightmap_1024_1024_korea.bmp";
-// 	LPCTSTR textureFileName = L"heightmap_texture_1024_1024_korea.bmp";
-// 	AddMap( heightMapFileName, textureFileName, MAP_KEY_KOREA );
-
 	InitGroundMesh( 100, 100 );
 	CreateRawGround( 100, 100, 5.0f );
 
@@ -49,10 +47,27 @@ void ResourceManager::Init()
 	fileName = L"SkyBox_Bottom.png";
 	SetSkyBoxTexture( fileName, SKY_BOX_BOTTOM );
 	m_IsMapReady = true;
+
+	InitCursor( CURSOR_TEXTURE_MAX, MouseManager::GetInstance()->GetMousePositionX(), MouseManager::GetInstance()->GetMousePositionY() );
+	fileName = L"cursor_default.png";
+	CreateCursorImage( fileName, CURSOR_TEXTURE_BASIC );
+	fileName = L"cursor_attack.png";
+	CreateCursorImage( fileName, CURSOR_TEXTURE_ATTACK );
+	fileName = L"cursor_clicked.png";
+	CreateCursorImage( fileName, CURSOR_TEXTURE_CLICK );
+	fileName = L"cursor_corps_clickable.png";
+	CreateCursorImage( fileName, CURSOR_TEXTURE_OVER_CORPS );
+	fileName = L"cursor_corps_clicked.png";
+	CreateCursorImage( fileName, CURSOR_TEXTURE_CLICK_CORPS );
+	fileName = L"cursor_unreachable.png";
+	CreateCursorImage( fileName, CURSOR_TEXTURE_UNRECHEABLE );
+	m_ISCursorReady = true;
 }
 
 void ResourceManager::Destroy()
 {
+	CursorCleanUp();
+
 	SkyBoxCleanUp();
 	DeleteMap();
 

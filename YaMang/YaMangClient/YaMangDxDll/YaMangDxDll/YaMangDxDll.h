@@ -64,12 +64,13 @@ extern "C"{
 	// D3D Cursor Set을 위한 부분
 	//////////////////////////////////////////////////////////////////////////
 
-	YAMANGDXDLL_API HRESULT InitCursor( LPCWSTR cursorImagePath = L"cursor2.png", int cursorPosX = 0, int cursorPosY = 0 );
+	YAMANGDXDLL_API HRESULT InitCursor( int textureSize, int cursorPosX = 0, int cursorPosY = 0 );
+	YAMANGDXDLL_API HRESULT CreateCursorImage( LPCWSTR cursorImagePath = L"cursor_default.png", int cursorType = 0 );
+	YAMANGDXDLL_API HRESULT ChangeCursorImage( int cursorType = 0 );
 	YAMANGDXDLL_API HRESULT RenderCursor();
 	YAMANGDXDLL_API void CursorCleanUp();
 	YAMANGDXDLL_API void SetCursorPosition( int PosX = 0, int PosY = 0 );
-	YAMANGDXDLL_API HRESULT ChangeCursorImage(LPCWSTR cursorImagePath = L"cursor2.png");
-	
+			
 	//////////////////////////////////////////////////////////////////////////
 	// Tool 용 함수
 	//////////////////////////////////////////////////////////////////////////
