@@ -120,11 +120,15 @@ void MouseManager::MoveMousePosition( int x, int y )
 					// Log( "결과 - 부대 번호 : %d, 부대 타입 : %d - 공격! \n", pickedCorps->GetCorpsID(), static_cast<int>( pickedCorps->GetUnitType() ) );
 					m_CursorType = CURSOR_ATTACK;
 				}
+				else
+				{
+					m_CursorType = CURSOR_OVER_CORPS;
+				}
 			}
 			else if ( !m_IsRightDragging )
 			{
 				// Log( "결과 - 부대 없음! 해당 좌표로 이동!\n" );
-				m_CursorType = CURSOR_CLICK;
+				m_CursorType = CURSOR_CORPS_MOVABLE;
 			}
 		}
 	}
@@ -149,7 +153,12 @@ void MouseManager::MoveMousePosition( int x, int y )
 
 			if ( pickedCorps )
 			{
-				if ( UnitType::UNIT_GUARD == pickedCorps->GetUnitType() || 
+				if ( pickedCorps->GetOwnPlayerID() == NetworkManager::GetInstance()->GetMyPlayerID() )
+				{
+					// Log( "자기 자신 클릭! \n" );
+					m_CursorType = CURSOR_OVER_CORPS;
+				}
+				else if ( UnitType::UNIT_GUARD == pickedCorps->GetUnitType() || 
 					 pickedCorps->GetOwnPlayerID() != NetworkManager::GetInstance()->GetMyPlayerID() )
 				{
 					// Log( "깃발병은 클릭 선택 할 수 없음! \n" );
@@ -172,7 +181,7 @@ void MouseManager::MoveMousePosition( int x, int y )
 	if ( m_IsLeftClicked )
 	{
 		m_CursorType = CURSOR_CLICK;
-
+		
 		if ( GetDistanceBetweenCOORD( m_MousePosition, m_PressedMousePosition ) > 3.f )
 		{
 			m_IsLeftDragging = true;
@@ -234,9 +243,9 @@ void MouseManager::SetLeftClick( bool isclicked )
 				if ( UnitType::UNIT_GUARD == pickedCorps->GetUnitType() || 
 					 pickedCorps->GetOwnPlayerID() != NetworkManager::GetInstance()->GetMyPlayerID() )
 				{
-					Log( "피킹한 놈 %d, 내 아이디 %d \n",
-						 pickedCorps->GetOwnPlayerID(), NetworkManager::GetInstance()->GetMyPlayerID() );
-					Log( "깃발병은 클릭 선택 할 수 없음! \n" );
+					// Log( "피킹한 놈 %d, 내 아이디 %d \n",
+					//	 pickedCorps->GetOwnPlayerID(), NetworkManager::GetInstance()->GetMyPlayerID() );
+					Log( "클릭 선택 할 수 없음! \n" );
 					pickedCorps->SetSelected( false );
 				}
 				else
@@ -308,6 +317,7 @@ void MouseManager::SetRightClick(bool isclicked)
 					Log( "결과 - 부대 없음! 해당 좌표로 이동!\n" );
 
 					PlayerManager::GetInstance()->MoveCorpsToPosition( pickedX, pickedZ );
+					m_CursorType = CURSOR_CORPS_MOVABLE_CLICK;
 				}
 			}
 		}
