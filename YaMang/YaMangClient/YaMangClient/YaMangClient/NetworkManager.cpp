@@ -61,7 +61,7 @@ void NetworkManager::Destroy()
 bool NetworkManager::Connect()
 {
 
-	const char * serverAddr = "127.0.0.1";
+	std::string serverAddr = "127.0.0.1";
 	int port;
 
 	// xml 로드 테스트
@@ -72,9 +72,9 @@ bool NetworkManager::Connect()
 		std::string ipLoad = TinyXPath::S_xpath_string( document.RootElement(), "/client/ip/text()" ).c_str();
 		std::string portLoad = TinyXPath::S_xpath_string( document.RootElement( ), "/client/port/text()" ).c_str( );
 		
-		serverAddr = ipLoad.c_str();
+		serverAddr = ipLoad;
 		port = std::stoi( portLoad );
-		Log( "Loaded ip :%s Port Number :%s \n", serverAddr, portLoad.c_str() );
+		Log( "Loaded ip :%s Port Number :%s \n", serverAddr.c_str(), portLoad.c_str() );
 	}
 	else
 	{
@@ -84,7 +84,7 @@ bool NetworkManager::Connect()
 
 	struct hostent* host;
 
-	if ( NULL == ( host = gethostbyname( serverAddr ) ) )
+	if ( NULL == ( host = gethostbyname( serverAddr.c_str() ) ) )
 	{
 		return false;
 	}
