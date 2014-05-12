@@ -13,9 +13,6 @@
 #include <sys/stat.h>
 #include <direct.h>
 
-//임시 추가
-#define MAP_TEXTURE L"heightmap_128_128.bmp"
-
 
 //////////////////////////////////////////////////////////////////////////
 //input args: 윈도우 핸들
@@ -205,7 +202,7 @@ YAMANGDXDLL_API HRESULT HeightMapTextureImport ( HWND hWnd, LPCTSTR heightMap, L
 	}
 	
 
-	if ( FAILED( D3DXCreateTextureFromFile( g_D3dDevice, MAP_TEXTURE/*mapTexture*/, &g_Tex0 ) ) )
+	if ( FAILED( D3DXCreateTextureFromFile( g_D3dDevice, mapTexture, &g_Tex0 ) ) )
 	{
 		MessageBox( NULL, L"Could not find heightMapTexture file", L"YaMang.DLL", MB_OK );
 		return E_FAIL;
@@ -633,25 +630,6 @@ YAMANGDXDLL_API HRESULT InitCursor( int textureSize, int cursorPosX, int cursorP
 	Log( "스프라이트 %d개 생성 ", g_CursorMaxSize );
 
 	return S_OK;
-}
-
-YAMANGDXDLL_API HRESULT RenderCursor()
-{
-	if ( g_CursorSprite && g_CursorTex && g_CursorTex[g_CursorType] )
-	{
-		D3DXMATRIXA16 ratioMat;
-
-		float ratio = ( 720.0f / g_Width ) * g_Ratio;
-		D3DXMatrixIdentity( &ratioMat );
-		D3DXMatrixScaling( &ratioMat, 1280 / g_Width, ratio, 1 );
-		g_CursorSprite->SetTransform( &ratioMat );
-		g_CursorSprite->Begin( D3DXSPRITE_ALPHABLEND );
-		g_CursorSprite->Draw( g_CursorTex[g_CursorType], NULL, NULL, &g_CursorPos, 0xFFFFFFFF );
-		g_CursorSprite->End();
-		g_D3dDevice->EndScene();
-		return S_OK;
-	}
-	return E_FAIL;
 }
  
 

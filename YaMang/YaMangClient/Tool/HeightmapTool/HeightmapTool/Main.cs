@@ -25,6 +25,9 @@ namespace YamangTools
         int mouseXPosition = 0;
         int mouseYPosition = 0;
 
+        string heightMap = ".\\heightmap_128_128.bmp";
+        string mapTexture = ".\\heightmap_128_128.bmp";
+
         ~Main()
         {
         }
@@ -33,6 +36,7 @@ namespace YamangTools
         {
             InitializeComponent();
             YamangDll.InitD3D(this.RenderTarget.Handle);
+            YamangDll.HeightMapTextureImport(this.RenderTarget.Handle, heightMap, mapTexture);
             Render();
         }
         

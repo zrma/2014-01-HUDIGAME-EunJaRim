@@ -38,11 +38,10 @@ extern "C"{
 	YAMANGDXDLL_API void SetAspectRatio( long width, long height );
 
 	//////////////////////////////////////////////////////////////////////////
-	// height map 출력을 위한 함수입니다.
-	//height map은 일반 object와 g_D3D g_D3DDevice를 공유합니다.
+	// height map 출력을 위한 함수
 	//////////////////////////////////////////////////////////////////////////
 
-	YAMANGDXDLL_API HRESULT HeightMapTextureImport( HWND hWnd, LPCTSTR heightMap, LPCTSTR mapTexture );
+	YAMANGDXDLL_API HRESULT HeightMapTextureImport( HWND hWnd, LPCTSTR heightMap, LPCTSTR mapTexture ); //임시로 추가
 	YAMANGDXDLL_API void HeightMapCleanup();
 	YAMANGDXDLL_API void PreSettingForTool();
 	YAMANGDXDLL_API void RenderHeightMap();
@@ -50,7 +49,7 @@ extern "C"{
 	YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize );
 	
 	//////////////////////////////////////////////////////////////////////////
-	// Picking Ray를 위한 부분
+	// Picking Ray를 위한 함수
 	//////////////////////////////////////////////////////////////////////////
 	YAMANGDXDLL_API void CalcPickingRay( int mouseX, int mouseY );
 	YAMANGDXDLL_API HRESULT TransPickedTriangle( int modeSelector = 0, float* pickedX = nullptr, float* pickedZ = nullptr );
@@ -61,9 +60,8 @@ extern "C"{
 	YAMANGDXDLL_API void RenderText( LPCWSTR text, float left, float top, int RGB_R = 255, int RGB_G = 255, int RGB_B = 255, float right = 0, float bottom = 0 );
 
 	//////////////////////////////////////////////////////////////////////////
-	// D3D Cursor Set을 위한 부분
+	// D3D Cursor Set을 위한 함수
 	//////////////////////////////////////////////////////////////////////////
-
 	YAMANGDXDLL_API HRESULT InitCursor( int textureSize, int cursorPosX = 0, int cursorPosY = 0 );
 	YAMANGDXDLL_API HRESULT CreateCursorImage( LPCWSTR cursorImagePath = L"cursor_default.png", int cursorType = 0 );
 	YAMANGDXDLL_API HRESULT ChangeCursorImage( int cursorType = 0 );
@@ -91,6 +89,9 @@ extern "C"{
 	YAMANGDXDLL_API void RenderSkyBox();
 	YAMANGDXDLL_API void SkyBoxCleanUp();
 
+	//////////////////////////////////////////////////////////////////////////
+	// ScreenShot
+	//////////////////////////////////////////////////////////////////////////
 	YAMANGDXDLL_API void TakeScreenShot();
 }
 //단일 변수 out sample

@@ -84,7 +84,7 @@ YAMANGDXDLL_API void RenderHeightMap()
 {
 	//현재 조명이 적용되지 않았음
 	g_D3dDevice->SetRenderState( D3DRS_LIGHTING, FALSE );
-	g_D3dDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_WIREFRAME );
+	g_D3dDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_SOLID );
 
 	IDirect3DVertexBuffer9* RenderVertexBuffer = nullptr;
 	g_Mesh->GetVertexBuffer( &RenderVertexBuffer );
@@ -102,7 +102,28 @@ YAMANGDXDLL_API void RenderHeightMap()
 	g_D3dDevice->DrawIndexedPrimitive( D3DPT_TRIANGLESTRIP, 0, 0, g_XHeight * g_ZHeight, 0, ( g_XHeight - 1 ) * ( g_ZHeight - 1 ) * 2 + ( g_ZHeight - 2 ) * 3 );
 }
 
+//////////////////////////////////////////////////////////////////////////
+//Cursor를 위한 렌더 함수
+//render를 pre - main - post renderring 구조에서 main을 담당
+//////////////////////////////////////////////////////////////////////////
+YAMANGDXDLL_API HRESULT RenderCursor()
+{
+	if ( g_CursorSprite && g_CursorTex && g_CursorTex[g_CursorType] )
+	{
+		D3DXMATRIXA16 ratioMat;
 
+		float ratio = ( 720.0f / g_Width ) * g_Ratio;
+		D3DXMatrixIdentity( &ratioMat );
+		D3DXMatrixScaling( &ratioMat, 1280 / g_Width, ratio, 1 );
+		g_CursorSprite->SetTransform( &ratioMat );
+		g_CursorSprite->Begin( D3DXSPRITE_ALPHABLEND );
+		g_CursorSprite->Draw( g_CursorTex[g_CursorType], NULL, NULL, &g_CursorPos, 0xFFFFFFFF );
+		g_CursorSprite->End();
+		g_D3dDevice->EndScene();
+		return S_OK;
+	}
+	return E_FAIL;
+}
 
 
 //////////////////////////////////////////////////////////////////////////

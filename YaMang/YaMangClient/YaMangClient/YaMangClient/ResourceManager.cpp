@@ -30,6 +30,10 @@ void ResourceManager::Init()
 
 	InitGroundMesh( 100, 100 );
 	CreateRawGround( 100, 100, 5.0f );
+	fileName = L"heightmap_128_128.bmp";
+	AddMap( fileName, fileName, MAP_KEY_TEST );
+	CreateMap( MAP_KEY_TEST );
+
 
 	InitSkyBoxMesh( 1000 );
 
@@ -54,7 +58,7 @@ void ResourceManager::Init()
 	CreateCursorImage( fileName, CURSOR_ATTACK );
 	fileName = L"cursor_clicked.png";
 	CreateCursorImage( fileName, CURSOR_CLICK );
-	fileName = L"cursor_corps_clickable.png";
+	fileName = L"cursor_corps_clickable_original.png";
 	CreateCursorImage( fileName, CURSOR_OVER_CORPS );
 	fileName = L"cursor_corps_clicked.png";
 	CreateCursorImage( fileName, CURSOR_CLICK_CORPS );
