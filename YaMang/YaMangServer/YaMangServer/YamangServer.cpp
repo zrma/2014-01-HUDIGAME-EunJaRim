@@ -215,6 +215,7 @@ unsigned int WINAPI ClientHandlingThread( LPVOID lpParam )
 			// 클라 접속 처리
 			if ( false == client->OnConnect( &clientaddr ) )
 			{
+				Log( "[Disconnected from:]YaMangServer ClientHandlingThread \n" );
 				client->Disconnect();
 			}
 

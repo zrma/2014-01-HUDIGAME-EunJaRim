@@ -319,6 +319,7 @@ void GameRoom::FlushClientSend()
 		ClientSession* client = it.second;
 		if ( false == client->SendFlush() )
 		{
+			Log( "[Disconnected from:]GameRoom::FlushClientSend \n" );
 			client->Disconnect();
 		}
 	}

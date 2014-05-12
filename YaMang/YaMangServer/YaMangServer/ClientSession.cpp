@@ -131,6 +131,7 @@ void ClientSession::OnRead( size_t len )
 		// 패킷 사이즈 = 패킷 헤더 + 페이로드(payload = 실제 데이터)
 		if ( header.m_Type >= PKT_MAX || header.m_Type <= PKT_NONE )
 		{
+			Log( "[Disconnected from:]ClientSession::OnRead( size_t len ) \n" );
 			Disconnect();
 			return;
 		}
@@ -154,6 +155,7 @@ bool ClientSession::SendRequest( PacketHeader* pkt )
 	if ( false == m_SendBuffer.Write( (char*)pkt, pkt->m_Size ) )
 	{
 		/// 버퍼 용량 부족인 경우는 끊어버림
+		Log( "[Disconnected from:]ClientSession::SendRequest \n" );
 		Disconnect();
 		return false;
 	}
@@ -394,6 +396,7 @@ void CALLBACK RecvCompletion( DWORD dwError, DWORD cbTransferred, LPWSAOVERLAPPE
 	/// 에러 발생시 해당 세션 종료
 	if ( dwError || cbTransferred == 0 )
 	{
+		Log( "[Disconnected from:]ClientSession::RecvCompletion dwError \n" );
 		fromClient->Disconnect();
 		return;
 	}
@@ -404,6 +407,7 @@ void CALLBACK RecvCompletion( DWORD dwError, DWORD cbTransferred, LPWSAOVERLAPPE
 	/// 다시 받기
 	if ( false == fromClient->PostRecv() )
 	{
+		Log( "[Disconnected from:]ClientSession::RecvCompletion PostRecv \n" );
 		fromClient->Disconnect();
 		return;
 	}
@@ -425,6 +429,7 @@ void CALLBACK SendCompletion( DWORD dwError, DWORD cbTransferred, LPWSAOVERLAPPE
 	/// 에러 발생시 해당 세션 종료
 	if ( dwError || cbTransferred == 0 )
 	{
+		Log( "[Disconnected from:]ClientSession::SendCompletion dwError \n" );
 		fromClient->Disconnect();
 		return;
 	}

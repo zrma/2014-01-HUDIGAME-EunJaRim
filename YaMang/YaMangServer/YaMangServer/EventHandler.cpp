@@ -84,6 +84,7 @@ void ClientSession::HandleChatRequest( ChatBroadcastRequest& inPacket )
 	/// 채팅은 바로 방송 하면 끝
 	if ( !Broadcast( &outPacket ) )
 	{
+		Log( "[Disconnected from:]ClientSession::HandleChatRequest \n" );
 		Disconnect();
 	}
 }
@@ -104,6 +105,7 @@ void ClientSession::HandleGameOverRequest( GameOverRequest& inPacket )
 	// GM이 아니면 아웃
 	if ( playerID < 101 && playerID > 199 )
 	{
+		Log( "[Disconnected from:]ClientSession::HandleGameOverRequest GM out \n" );
 		Disconnect( );
 		return;
 	}
@@ -119,6 +121,7 @@ void ClientSession::HandleGameOverRequest( GameOverRequest& inPacket )
 	/// 채팅은 바로 방송 하면 끝
 	if ( !Broadcast( &outPacket ) )
 	{
+		Log( "[Disconnected from:]ClientSession::HandleGameOverRequest Broadcast Fail \n" );
 		Disconnect();
 	}
 }
@@ -145,6 +148,7 @@ void ClientSession::HandleRoomCreateRequest( RoomCreateRequest& inPacket )
 
 	if ( !DirectSend( &outPacket ) )
 	{
+		Log( "[Disconnected from:]ClientSession::HandleRoomCreateRequest \n" );
 		Disconnect();
 	}
 
@@ -173,6 +177,7 @@ void ClientSession::HandleEnterRoomRequest( EnterRoomRequest& inPacket )
 
 	if ( !g_RoomManager->EnterRoom( roomNumber, m_PlayerID ) )
 	{
+		Log( "[Disconnected from:]ClientSession::HandleEnterRoomRequest Enter Room \n" );
 		Disconnect();
 	}
 
@@ -181,6 +186,7 @@ void ClientSession::HandleEnterRoomRequest( EnterRoomRequest& inPacket )
 
 	if ( !Broadcast( &outPacket ) )
 	{
+		Log( "[Disconnected from:]ClientSession::HandleEnterRoomRequest Broadcast Fail \n" );
 		Disconnect();
 	}
 
@@ -211,6 +217,7 @@ void ClientSession::HandleLeaveRoomRequest( LeaveRoomRequest& inPacket )
 
 	if ( !g_RoomManager->LeaveRoom( roomNumber, m_PlayerID ) )
 	{
+		Log( "[Disconnected from:]ClientSession::HandleLeaveRoomRequest LeaveRoom Error \n" );
 		Disconnect();
 	}
 
@@ -219,6 +226,7 @@ void ClientSession::HandleLeaveRoomRequest( LeaveRoomRequest& inPacket )
 
 	if ( !Broadcast( &outPacket ) )
 	{
+		Log( "[Disconnected from:]ClientSession::HandleLeaveRoomRequest Broadcast Fail \n" );
 		Disconnect();
 	}
 
@@ -277,6 +285,7 @@ void ClientSession::HandleGenerateCorpsRequest( GenerateCorpsRequest& inPacket )
 
 	if ( !Broadcast( &outPacket ) )
 	{
+		Log( "[Disconnected from:]ClientSession::HandleGenerateCorpsRequest Broadcast Fail \n" );
 		Disconnect();
 	}
 
@@ -315,6 +324,7 @@ void ClientSession::HandleMoveCorpsRequest( MoveCorpsRequest& inPacket )
 	}
 	if ( m_ErrorNumber > m_ErrorNumberMax )
 	{
+		Log( "[Disconnected from:]ClientSession::HandleMoveCorpsRequest Error MAX \n" );
 		Disconnect();
 	}
 
@@ -358,6 +368,7 @@ void ClientSession::HandleStopCorpsRequest( StopCorpsRequest& inPacket )
 
 	if ( m_ErrorNumber > m_ErrorNumberMax )
 	{
+		Log( "[Disconnected from:]ClientSession::HandleStopCorpsRequest Error MAX \n" );
 		Disconnect();
 	}
 
@@ -369,6 +380,7 @@ void ClientSession::HandleStopCorpsRequest( StopCorpsRequest& inPacket )
 
 	if ( !Broadcast( &outPacket ) )
 	{
+		Log( "[Disconnected from:]ClientSession::HandleStopCorpsRequest BroadCast fail \n" );
 		Disconnect();
 	}
 
@@ -400,6 +412,7 @@ void ClientSession::HandleChangeCorpsFormationRequest( ChangeCorpsFormationReque
 
 	if ( m_ErrorNumber > m_ErrorNumberMax )
 	{
+		Log( "[Disconnected from:]ClientSession::HandleChangeCorpsFormationRequest Error Max \n" );
 		Disconnect();
 	}
 
@@ -411,6 +424,7 @@ void ClientSession::HandleChangeCorpsFormationRequest( ChangeCorpsFormationReque
 
 	if ( !Broadcast( &outPacket ) )
 	{
+		Log( "[Disconnected from:]ClientSession::HandleChangeCorpsFormationRequest BoradCast Fail \n" );
 		Disconnect();
 	}
 
@@ -455,6 +469,7 @@ void ClientSession::HandleAttackCorpsRequest( AttackCorpsRequest& inPacket )
 
 	if ( m_ErrorNumber > m_ErrorNumberMax )
 	{
+		Log( "[Disconnected from:]ClientSession::HandleAttackCorpsRequest Error Max \n" );
 		Disconnect();
 	}
 
@@ -520,6 +535,7 @@ void ClientSession::HandleSyncAllRequest( SyncAllRequest& inPacket )
 
 		if ( !DirectSend( &outPacket ) )
 		{
+			Log( "[Disconnected from:]ClientSession::HandleSyncAllRequest DirectSend Fail \n" );
 			Disconnect();
 		}
 	}
