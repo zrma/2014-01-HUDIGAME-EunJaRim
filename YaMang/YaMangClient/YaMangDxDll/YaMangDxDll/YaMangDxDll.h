@@ -90,6 +90,8 @@ extern "C"{
 	YAMANGDXDLL_API bool SetSkyBoxTexture( LPCTSTR skyBoxTexture, int id );
 	YAMANGDXDLL_API void RenderSkyBox();
 	YAMANGDXDLL_API void SkyBoxCleanUp();
+
+	YAMANGDXDLL_API void TakeScreenShot();
 }
 //단일 변수 out sample
 //extern YAMANGDXDLL_API int nyaMangDxDll;

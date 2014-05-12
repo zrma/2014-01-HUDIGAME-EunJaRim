@@ -17,7 +17,7 @@
 #include "MainWindow.h"
 #include "Timer.h"
 #include "PlayerManager.h"
-
+#include "yaMangDxDll.h"
 
 typedef void( *KeyEventHandler )( KeyInput inputKey );
 static KeyEventHandler KeyHandlerTable[MAX_KEY];
@@ -207,6 +207,14 @@ REGISTER_KEY_HANDLER( VK_3 )
 	if ( KeyStatusType::KEY_UP == inputKey.GetKeyStatus() )
 	{
 		PlayerManager::GetInstance()->ChangeCorpsFormation( FormationType::FORMATION_DEFENSE );
+	}
+}
+
+REGISTER_KEY_HANDLER( VK_4 )
+{
+	if ( KeyStatusType::KEY_UP == inputKey.GetKeyStatus() )
+	{
+		TakeScreenShot();
 	}
 }
 

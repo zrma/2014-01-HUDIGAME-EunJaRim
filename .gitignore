@@ -44,5 +44,7 @@ Release/
 bin/
 obj/
 
+ScreenShot/
+
 *.TMP
 *.bak
