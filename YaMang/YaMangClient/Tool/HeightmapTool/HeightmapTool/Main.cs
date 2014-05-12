@@ -81,6 +81,10 @@ namespace YamangTools
             {
                 actionFlag = 2;
             }
+            else if(TextureTest.Checked)
+            {
+                actionFlag = 3;
+            }
             else 
             {
                 actionFlag = 0;

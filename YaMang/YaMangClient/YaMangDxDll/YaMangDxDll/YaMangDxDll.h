@@ -41,13 +41,14 @@ extern "C"{
 	// height map 출력을 위한 함수
 	//////////////////////////////////////////////////////////////////////////
 
-	YAMANGDXDLL_API HRESULT HeightMapTextureImport( HWND hWnd, LPCTSTR heightMap, LPCTSTR mapTexture ); //임시로 추가
+	YAMANGDXDLL_API HRESULT HeightMapTextureImport( HWND hWnd, LPCTSTR heightMap, LPCTSTR mapTexture );
+	YAMANGDXDLL_API HRESULT MapToolTextureImport( HWND hWnd, LPCTSTR toolTexture );
 	YAMANGDXDLL_API void HeightMapCleanup();
 	YAMANGDXDLL_API void PreSettingForTool();
 	YAMANGDXDLL_API void RenderHeightMap();
 	YAMANGDXDLL_API void InitGroundMesh( int row, int col );
 	YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize );
-	YAMANGDXDLL_API HRESULT MapToolTextureImport( HWND hWnd, LPCTSTR toolTexture );
+
 	
 	//////////////////////////////////////////////////////////////////////////
 	// Picking Ray를 위한 함수

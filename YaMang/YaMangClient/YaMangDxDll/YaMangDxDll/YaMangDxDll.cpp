@@ -212,7 +212,7 @@ YAMANGDXDLL_API HRESULT HeightMapTextureImport ( HWND hWnd, LPCTSTR heightMap, L
 	return S_OK;
 }
 
-//////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////// triz
 //클라이언트 읽기 전용 함수 제작할 것
 //1. 제공 받은 높이 파일로 지형 그리기(vertexBuffer)
 //   높이값 array return
@@ -416,6 +416,7 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 	}
 }
 
+//카메라 행렬을 인자값 받아서 정렬되도록 수정 필요 triz
 YAMANGDXDLL_API void PreSettingForTool()
 {
 	// 월드 행렬
@@ -424,8 +425,8 @@ YAMANGDXDLL_API void PreSettingForTool()
 	g_D3dDevice->SetTransform( D3DTS_WORLD, &world );
 
 
-	D3DXVECTOR3 vEyePt( 0.f, 40.f, -100.f );
-	D3DXVECTOR3 vLookatPt( 0.f, 39.5f, -99.0f );
+	D3DXVECTOR3 vEyePt( 0.f, 70.f, -350.f );
+	D3DXVECTOR3 vLookatPt( 0.f, 69.8f, -349.f );
 	D3DXVECTOR3 vUpVec( 0.f, 1.f, 0.f );
 
 	D3DXMATRIXA16 matView;
@@ -571,18 +572,31 @@ YAMANGDXDLL_API HRESULT TransPickedTriangle( int modeSelector, float* pickedX, f
 			case AREA_MODE_NONE:
 
 				break;
-			case AREA_MODE_COLOR:
-			{
-				pointA->m_Diffuse = D3DCOLOR_ARGB( 255, 30, 100, 100 );
-				pointB->m_Diffuse = D3DCOLOR_ARGB( 255, 30, 100, 100 );
-				pointC->m_Diffuse = D3DCOLOR_ARGB( 255, 30, 100, 100 );
-			}
+// 			case AREA_MODE_COLOR:
+// 			{
+// 				pointA->m_Diffuse = D3DCOLOR_ARGB( 255, 30, 100, 100 );
+// 				pointB->m_Diffuse = D3DCOLOR_ARGB( 255, 30, 100, 100 );
+// 				pointC->m_Diffuse = D3DCOLOR_ARGB( 255, 30, 100, 100 );
+// 			}
 				break;
 			case AREA_MODE_HIGHER:
-
+				pointA->m_VertexPoint.y += 3;
+				pointB->m_VertexPoint.y += 3;
+				pointC->m_VertexPoint.y += 3;
 				break;
 			case AREA_MODE_LOWER:
-
+				pointA->m_VertexPoint.y -= 3;
+				pointB->m_VertexPoint.y -= 3;
+				pointC->m_VertexPoint.y -= 3;
+				break;
+			case AREA_MODE_PAINT_TEXTURE:
+				//텍스쳐 입히기 실험
+				pointA->m_VertexTexturePoint1.x = 0.f;
+				pointA->m_VertexTexturePoint1.y = 0.f;
+				pointB->m_VertexTexturePoint1.x = 1.f;
+				pointB->m_VertexTexturePoint1.y = 1.f;
+				pointC->m_VertexTexturePoint1.x = 1.f;
+				pointC->m_VertexTexturePoint1.y = 1.f;
 				break;
 			default:
 				break;
