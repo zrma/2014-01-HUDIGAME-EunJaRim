@@ -157,204 +157,6 @@ YAMANGDXDLL_API void SetAspectRatio( long width, long height )
 }
 
 
-//////////////////////////////////////////////////////////////////////////
-//render를 pre - main - post renderring으로 변경
-//pre에서는 matrix, view, light에 대한 setting 진행
-//main에서는 mesh object에 대한 직접 rendering 진행
-//post에서는 pre에서 설정한 setting 초기화
-//////////////////////////////////////////////////////////////////////////
-YAMANGDXDLL_API bool PreRendering()
-{
-	if ( NULL == g_D3dDevice )
-	{
-		return false;
-	}
-
-	g_D3dDevice->Clear( 0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB( 10, 10, 10 ), 1.0f, 0 );
-
-	bool flag = false;
-
-	// 렌더 방어코드
-	// pre rendering 단계에서 진행되지 않으면 향후 render 모두 실패
-	if ( SUCCEEDED( g_D3dDevice->BeginScene() ) )
-	{
-		SetupTranslateMatrices();
-		// ViewSetting();
-
-		// lightsetting
-		// 일단 1로 진행, 향후 라이트 개수 등 확정되면 인자 받아 설정
-		int lightNum = 1;
-		Lighting( lightNum );
-		// Log( "라이팅 세팅!\n" );
-
-		g_D3dDevice->SetTextureStageState( 0, D3DTSS_COLOROP, D3DTOP_MODULATE );
-		g_D3dDevice->SetTextureStageState( 0, D3DTSS_COLORARG1, D3DTA_TEXTURE );
-		g_D3dDevice->SetTextureStageState( 0, D3DTSS_COLORARG2, D3DTA_DIFFUSE );
-		g_D3dDevice->SetTextureStageState( 0, D3DTSS_ALPHAOP, D3DTOP_DISABLE );
-
-		// Log( "Render Begin \n" );
-		// Log( "pre render 완료!\n" );
-
-		flag = true;
-	}
-
-	return flag;
-}
-
-
-YAMANGDXDLL_API void Rendering( MESHOBJECT* inputVal )
-{
-	g_D3dDevice->SetRenderState( D3DRS_LIGHTING, TRUE );
-	g_D3dDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_SOLID );
-	// Log( "Now Render : %p \n", inputVal );
-	for ( DWORD i = 0; i < inputVal->NumMaterials; ++i )
-	{
-		g_D3dDevice->SetMaterial( &inputVal->MeshMarterials[i] );
-		g_D3dDevice->SetTexture( 0, inputVal->MeshTexture[i] );
-
-		( inputVal->importedMesh )->DrawSubset( i );
-	}
-}
-
-
-YAMANGDXDLL_API void PostRendering()
-{
-	D3DXMATRIXA16 identityMatrix;
-	D3DXMatrixIdentity( &identityMatrix );
-	SetMatrix( &identityMatrix );
-
-	g_D3dDevice->EndScene();
-
-	//Log( "Render End \n" );
-	g_D3dDevice->Present( NULL, NULL, NULL, NULL );
-}
-
-
-//캐릭터 툴을 위한 렌더 함수
-//각 렌더링 구분 필요있음
-//현재 렌더링만 3개가 돌고 각각 세팅 겹치는게 엄청 많음
-YAMANGDXDLL_API void RenderingTool( MESHOBJECT* inputVal )
-{
-	if ( NULL == g_D3dDevice )
-	{
-		return;
-	}
-
-	if (g_Mesh == nullptr)
-	{
-		InitGroundMesh(100, 100);
-	}
-	g_D3dDevice->Clear( 0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB( 30, 10, 10 ), 1.0f, 0 );
-
-	// 렌더 방어코드
-	if ( SUCCEEDED( g_D3dDevice->BeginScene() ) )
-	{
-		SetupTranslateMatricesTool();
-		// ViewSetting();
-
-		// lightsetting
-		// 일단 1로 진행, 향후 라이트 개수 등 확정되면 인자 받아 설정
-		int lightNum = 1;
-		Lighting( lightNum );
-		// Log( "라이팅 세팅!\n" );
-
-		g_D3dDevice->SetTextureStageState( 0, D3DTSS_COLOROP, D3DTOP_MODULATE );
-		g_D3dDevice->SetTextureStageState( 0, D3DTSS_COLORARG1, D3DTA_TEXTURE );
-		g_D3dDevice->SetTextureStageState( 0, D3DTSS_COLORARG2, D3DTA_DIFFUSE );
-		g_D3dDevice->SetTextureStageState( 0, D3DTSS_ALPHAOP, D3DTOP_DISABLE );
-
-		// Log( "Render Begin \n" );
-		// Log( "pre render 완료!\n" );
-	}
-
-	// 카메라 셋팅
-	D3DXMATRIXA16 viewMatrix;
-	D3DXMatrixLookAtLH( &viewMatrix, &g_EyePoint, &g_LookAtPoint, &g_UpVector );
-	SetMatrix( &viewMatrix , true);
-
-	// 보여주기 위한 땅을 만듬
-	//InitGroundMesh(100, 100);
-	CreateRawGround(100, 100, 10);
-	RenderHeightMap();
-
-	//와이어 프레임 해제
-	g_D3dDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-
-	// Log( "Now Render : %p \n", inputVal );
-	for ( DWORD i = 0; i < inputVal->NumMaterials; ++i )
-	{
-		g_D3dDevice->SetMaterial( &inputVal->MeshMarterials[i] );
-		g_D3dDevice->SetTexture( 0, inputVal->MeshTexture[i] );
-
-		( inputVal->importedMesh )->DrawSubset( i );
-	}
-	g_D3dDevice->EndScene();
-
-	// Log( "Render End \n" );
-	g_D3dDevice->Present( NULL, NULL, NULL, NULL );
-}
-
-YAMANGDXDLL_API void SetCameraTool( float x, float y, float z )
-{
-
-}
-
-YAMANGDXDLL_API void MeshObjectCleanUp( MESHOBJECT* inputVal )
-{
-	if ( NULL != inputVal->MeshMarterials )
-	{
-		delete[] inputVal->MeshMarterials;
-	}
-	if ( inputVal->MeshTexture )
-	{
-		for ( DWORD i = 0; i < inputVal->NumMaterials; ++i )
-		{
-			if ( inputVal->MeshTexture[i] )
-			{
-				inputVal->MeshTexture[i]->Release();
-			}
-		}
-		delete[] inputVal->MeshTexture;
-	}
-	if ( NULL != inputVal->importedMesh )
-	{
-		(inputVal->importedMesh)->Release();
-	}
-}
-
-
-YAMANGDXDLL_API void D3DCleanUp()
-{
-	// 텍스트 소멸자 합침
-	if ( g_Font != NULL )
-	{
-		g_Font->Release();
-	}
-
-	if ( g_Sprite != NULL )
-	{
-		g_Sprite->Release();
-	}
-	
-	if ( g_Mesh != NULL )
-	{
-		g_Mesh->Release();
-	}
-
-	if ( NULL != g_D3dDevice )
-	{
-		g_D3dDevice->Release();
-	}
-
-	if ( NULL != g_D3D )
-	{
-		g_D3D->Release();
-	}
-
-#ifdef _PRINT_CONSOLE
-	Logger::Release();
-#endif
-}
 
 YAMANGDXDLL_API void SetMatrix( D3DXMATRIXA16* matrix, bool cameraSet /*= false */ )
 {
@@ -386,12 +188,14 @@ YAMANGDXDLL_API void SetCameraView(float x /* = 0 */, float y /* = 0 */, float z
 	SetMatrix(&mat, true);
 }
 
-//////////////////////////////////////////////////////////////////////////
-//height map 세계에 오신 것을 환영합니다.
-// :)
-//////////////////////////////////////////////////////////////////////////
 
-
+//////////////////////////////////////////////////////////////////////////
+//이하 heightMap 관련 함수
+//////////////////////////////////////////////////////////////////////////
+/**
+*@breif 
+*
+*/
 YAMANGDXDLL_API HRESULT HeightMapTextureImport ( HWND hWnd, LPCTSTR heightMap, LPCTSTR mapTexture )
 {
 	if ( FAILED( D3DXCreateTextureFromFileEx( g_D3dDevice, heightMap, D3DX_DEFAULT, D3DX_DEFAULT, D3DX_DEFAULT, 0, D3DFMT_X8B8G8R8, D3DPOOL_MANAGED, D3DX_DEFAULT, D3DX_DEFAULT, 0, NULL, NULL, &g_TexHeight ) ) )
@@ -411,93 +215,16 @@ YAMANGDXDLL_API HRESULT HeightMapTextureImport ( HWND hWnd, LPCTSTR heightMap, L
 	return S_OK;
 }
 
-
-YAMANGDXDLL_API void HeightMapCleanup()
-{
-	if ( g_TexHeight != NULL )
-	{
-		g_TexHeight->Release();
-	}
-
-	if ( g_Tex0 != NULL )
-	{
-		g_Tex0->Release();
-	}
-}
-
-YAMANGDXDLL_API void PreSettingForTool()
-{
-	// 월드 행렬
-	D3DXMATRIXA16 world;
-	D3DXMatrixIdentity( &world );
-	g_D3dDevice->SetTransform( D3DTS_WORLD, &world );
-
-
-	D3DXVECTOR3 vEyePt(0.f, 40.f, -100.f);
-	D3DXVECTOR3 vLookatPt(0.f, 39.5f, -99.0f);
-	D3DXVECTOR3 vUpVec(0.f, 1.f, 0.f);
-
-	D3DXMATRIXA16 matView;
-	D3DXMatrixLookAtLH( &matView, &vEyePt, &vLookatPt, &vUpVec );
-	g_D3dDevice->SetTransform( D3DTS_VIEW, &matView );
-
-	// 프로젝션 행렬
-	// 창크기 변경에 따라 크고 작아지게 할 것
-	SetAspectRatio( 729, 588 );	
-
-	/*
-	//와이어 프레임 or 토글로 변경 필요
-	//g_D3dDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_WIREFRAME );
-	g_D3dDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_SOLID );
-	*/
-}
-
-YAMANGDXDLL_API void RenderHeightMap()
-{
-	D3DXMATRIXA16 worldMatrix;
-	g_D3dDevice->GetTransform(D3DTS_WORLD, &worldMatrix);
-
-
-// 	Log("%f, %f, %f, %f \n", worldMatrix._11, worldMatrix._12, worldMatrix._13, worldMatrix._14);
-// 	Log("%f, %f, %f, %f \n", worldMatrix._21, worldMatrix._22, worldMatrix._23, worldMatrix._24);
-// 	Log("%f, %f, %f, %f \n", worldMatrix._31, worldMatrix._32, worldMatrix._33, worldMatrix._34);
-// 	Log("%f, %f, %f, %f \n", worldMatrix._41, worldMatrix._42, worldMatrix._43, worldMatrix._44);
-// 	Log("==============================");
-
-	IDirect3DVertexBuffer9* RenderVertexBuffer = nullptr;
-	g_Mesh->GetVertexBuffer( &RenderVertexBuffer );
-
-	IDirect3DIndexBuffer9* RenderIndexBuffer = nullptr;
-	g_Mesh->GetIndexBuffer( &RenderIndexBuffer );
-
-	//현재 조명이 적용되지 않았음
-	//pre 부분이 분산 되는 바람에
-	g_D3dDevice->SetRenderState( D3DRS_LIGHTING, FALSE );
-	g_D3dDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_WIREFRAME );
-	
-
-	g_D3dDevice->SetStreamSource( 0, RenderVertexBuffer, 0, sizeof( CUSTOMVERTEX ) );
-	g_D3dDevice->SetFVF( D3DFVF_CUSTOMVERTEX );
-
-	g_D3dDevice->SetTexture( 0, g_Tex0 );
-	g_D3dDevice->SetTextureStageState( 0, D3DTSS_TEXCOORDINDEX, 0 );
-	g_D3dDevice->SetSamplerState( 0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR );
-	
-	g_D3dDevice->SetIndices( RenderIndexBuffer );
-
-	g_D3dDevice->DrawIndexedPrimitive( D3DPT_TRIANGLESTRIP, 0, 0, g_XHeight * g_ZHeight, 0, ( g_XHeight - 1 ) * ( g_ZHeight - 1 ) * 2 + ( g_ZHeight - 2 ) * 3 );
-}
-
 YAMANGDXDLL_API void InitGroundMesh( int row, int col )
 {
-	if (g_Mesh != nullptr)
+	if ( g_Mesh != nullptr )
 	{
-		g_Mesh->Release();
+		g_Mesh->Release( );
 	}
 	g_XHeight = col + 1;
 	g_ZHeight = row + 1;
 
-	int verticesCount = (g_XHeight) * ( g_ZHeight );
+	int verticesCount = (g_XHeight)* ( g_ZHeight );
 	int faceCount = ( g_XHeight - 1 ) * ( g_ZHeight - 1 ) * 2;
 
 	//mesh를 직접 만들어 보자
@@ -515,8 +242,8 @@ YAMANGDXDLL_API void InitGroundMesh( int row, int col )
 
 YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 {
-	int verticesCount = (g_XHeight) * ( g_ZHeight );
-	
+	int verticesCount = (g_XHeight)* ( g_ZHeight );
+
 	CUSTOMVERTEX* baseVertex = new CUSTOMVERTEX[verticesCount];
 	if ( nullptr == baseVertex )
 	{
@@ -536,11 +263,11 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 			baseVertex[startIdx].m_VertexPoint.x = vPos0.m_VertexPoint.x + ( pixelSize * x );
 			baseVertex[startIdx].m_VertexPoint.y = 0.f;
 			baseVertex[startIdx].m_VertexPoint.z = vPos0.m_VertexPoint.z + ( pixelSize * z );
-			
+
 			baseVertex[startIdx].m_Diffuse = D3DCOLOR_ARGB( 255, 255, 255, 255 );
 
-			baseVertex[startIdx].m_VertexTexturePoint.x = static_cast<float>(x) * 1 / col;
-			baseVertex[startIdx].m_VertexTexturePoint.y = static_cast<float>(z) * 1 / row;
+			baseVertex[startIdx].m_VertexTexturePoint.x = static_cast<float>(x)* 1 / col;
+			baseVertex[startIdx].m_VertexTexturePoint.y = static_cast<float>(z)* 1 / row;
 
 			++startIdx;
 		}
@@ -549,7 +276,7 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 	//vertex 내용 확인
 	for ( int i = 0; i < startIdx; ++i )
 	{
-		printf_s( "vertex %d: (%f, %f)\n", i, baseVertex[i].vertexPoint.x, baseVertex[i].vertexPoint.z );
+	printf_s( "vertex %d: (%f, %f)\n", i, baseVertex[i].vertexPoint.x, baseVertex[i].vertexPoint.z );
 	}
 	*/
 
@@ -565,7 +292,7 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 		return;
 	}
 	memcpy( pVertices, baseVertex, verticesCount * sizeof( CUSTOMVERTEX ) );
-	g_Mesh->UnlockVertexBuffer();
+	g_Mesh->UnlockVertexBuffer( );
 
 
 
@@ -583,7 +310,7 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 		if ( z % 2 == 0 )
 		{
 			int x;
-			for (  x = 0; x < col+1; ++x )
+			for ( x = 0; x < col + 1; ++x )
 			{
 				UINT a = static_cast<UINT>( x + ( z*g_XHeight ) );
 				baseIndex[startIdx++] = a;
@@ -591,7 +318,7 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 				baseIndex[startIdx++] = b;
 				//Log( "a: %d | b: %d\n", a, b );
 			}
-			if ( z != g_ZHeight-2 )
+			if ( z != g_ZHeight - 2 )
 			{
 				UINT c = static_cast<UINT>( ( x - 1 ) + ( z*g_XHeight ) + g_XHeight );
 				baseIndex[startIdx++] = c;
@@ -601,7 +328,7 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 		else
 		{
 			int x;
-			for ( x = col; x >=0; --x )
+			for ( x = col; x >= 0; --x )
 			{
 				UINT a = static_cast<UINT>( x + ( z*g_XHeight ) );
 				baseIndex[startIdx++] = a;
@@ -617,12 +344,12 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 			}
 		}
 	}
-	
+
 	/*
 	//index buffer에 뭐있나?
 	for ( int i = 0; i < startIdx; ++i )
 	{
-		printf_s( "index %d: %d\n", i, baseIndex[i] );
+	printf_s( "index %d: %d\n", i, baseIndex[i] );
 	}
 	*/
 
@@ -642,9 +369,9 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 		MessageBox( NULL, L"Fail in lock IndexBuffer", L"YaMang.DLL", MB_OK );
 		return;
 	}
-	memcpy( pIndices, baseIndex, sizeof(UINT) *indicesCount );
+	memcpy( pIndices, baseIndex, sizeof(UINT)*indicesCount );
 
-	g_Mesh->UnlockIndexBuffer();
+	g_Mesh->UnlockIndexBuffer( );
 
 	if ( baseVertex )
 	{
@@ -657,6 +384,30 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 		baseIndex = nullptr;
 	}
 }
+
+YAMANGDXDLL_API void PreSettingForTool()
+{
+	// 월드 행렬
+	D3DXMATRIXA16 world;
+	D3DXMatrixIdentity( &world );
+	g_D3dDevice->SetTransform( D3DTS_WORLD, &world );
+
+
+	D3DXVECTOR3 vEyePt( 0.f, 40.f, -100.f );
+	D3DXVECTOR3 vLookatPt( 0.f, 39.5f, -99.0f );
+	D3DXVECTOR3 vUpVec( 0.f, 1.f, 0.f );
+
+	D3DXMATRIXA16 matView;
+	D3DXMatrixLookAtLH( &matView, &vEyePt, &vLookatPt, &vUpVec );
+	g_D3dDevice->SetTransform( D3DTS_VIEW, &matView );
+
+	// 프로젝션 행렬
+	// 창크기 변경에 따라 크고 작아지게 할 것
+	SetAspectRatio( 729, 588 );
+}
+
+
+
 
 
 
@@ -936,26 +687,7 @@ YAMANGDXDLL_API HRESULT ChangeCursorImage( int cursorType )
 	return E_FAIL;
 }
 
-YAMANGDXDLL_API void CursorCleanUp()
-{
-	if ( g_CursorSprite )
-	{
-		g_CursorSprite->Release();
-	}
 
-	if ( g_CursorTex )
-	{
-		for ( int i = 0; i < g_CursorMaxSize; ++i )
-		{
-			if ( g_CursorTex[i] )
-			{
-				g_CursorTex[i]->Release();
-			}
-		}
-		delete[] g_CursorTex;
-		g_CursorTex = nullptr;
-	}
-}
 
 YAMANGDXDLL_API void SetCursorPosition( int PosX, int PosY )
 {
@@ -1154,36 +886,13 @@ YAMANGDXDLL_API HRESULT InitSkyBoxMesh( int size )
 	return S_OK;
 }
 
-YAMANGDXDLL_API void RenderSkyBox()
-{
-	if ( g_SkyBoxMesh )
-	{
-		g_D3dDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_SOLID );
 
-		for ( int i = 0; i < 6; i++ )
-		{
-			g_D3dDevice->SetTexture( 0, g_SkyBoxTextures[i] );
-			g_SkyBoxMesh->DrawSubset( i );
-		}
-	}
-}
 
-YAMANGDXDLL_API void SkyBoxCleanUp()
-{
-	if ( g_SkyBoxMesh != NULL )
-	{
-		g_SkyBoxMesh->Release();
-	}
 
-	for ( int i = 0; i < 6; ++i )
-	{
-		if ( g_SkyBoxTextures[i] != NULL )
-		{
-			g_SkyBoxTextures[i]->Release();
-		}
-	}
-}
 
+//////////////////////////////////////////////////////////////////////////
+// screenShot
+//////////////////////////////////////////////////////////////////////////
 YAMANGDXDLL_API void TakeScreenShot()
 {
 

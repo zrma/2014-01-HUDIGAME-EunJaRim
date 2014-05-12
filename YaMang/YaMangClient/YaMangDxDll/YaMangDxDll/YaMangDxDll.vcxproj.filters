@@ -61,5 +61,11 @@
     <ClCompile Include="GlobalVar.cpp">
       <Filter>YaMangDxDll</Filter>
     </ClCompile>
+    <ClCompile Include="YaMangDxRender.cpp">
+      <Filter>YaMangDxDll</Filter>
+    </ClCompile>
+    <ClCompile Include="YaMangDxClear.cpp">
+      <Filter>YaMangDxDll</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
