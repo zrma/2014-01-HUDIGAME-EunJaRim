@@ -88,6 +88,25 @@ void MouseManager::MoveMousePosition( int x, int y )
 		m_MousePosition.Y = 5;
 	}
 
+	// 처음 클릭 시작된 점과 일정 거리 이상 떨어졌을 경우 드래그 상태로 전환
+	if (m_IsLeftClicked)
+	{
+		m_CursorType = CURSOR_CLICK;
+
+		if (GetDistanceBetweenCOORD(m_MousePosition, m_PressedMousePosition) > 3.f)
+		{
+			m_IsLeftDragging = true;
+		}
+	}
+
+	if (m_IsRightClicked)
+	{
+		if (GetDistanceBetweenCOORD(m_MousePosition, m_PressedMousePosition) > 3.f)
+		{
+			m_IsRightDragging = true;
+		}
+	}
+
 	if ( PlayerManager::GetInstance()->IsSelectedCorps() )
 	{
 		float pickedX = 0;
@@ -112,7 +131,7 @@ void MouseManager::MoveMousePosition( int x, int y )
 				if ( PlayerManager::GetInstance()->IsCorpsInIdList( pickedCorps->GetCorpsID() ) )
 				{
 					// Log( "자기 자신 클릭! \n" );
-					m_CursorType = CURSOR_CLICK_CORPS;
+					m_CursorType = CURSOR_OVER_PICKED_CORPS;
 				}
 				// 여기에 플레이어의 유닛이 아닌가 확인하는 코드 넣어야 됨
 				else if ( pickedCorps->GetOwnPlayerID() != NetworkManager::GetInstance()->GetMyPlayerID() )
@@ -179,25 +198,6 @@ void MouseManager::MoveMousePosition( int x, int y )
 				// Log( "결과 - 부대 없음! \n" );
 				m_CursorType = CURSOR_DEFAULT;
 			}
-		}
-	}
-
-	// 처음 클릭 시작된 점과 일정 거리 이상 떨어졌을 경우 드래그 상태로 전환
-	if ( m_IsLeftClicked )
-	{
-		m_CursorType = CURSOR_CLICK;
-		
-		if ( GetDistanceBetweenCOORD( m_MousePosition, m_PressedMousePosition ) > 3.f )
-		{
-			m_IsLeftDragging = true;
-		}
-	}
-
-	if ( m_IsRightClicked )
-	{
-		if ( GetDistanceBetweenCOORD( m_MousePosition, m_PressedMousePosition ) > 3.f )
-		{
-			m_IsRightDragging = true;
 		}
 	}
 }
