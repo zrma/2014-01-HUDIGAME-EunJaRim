@@ -34,14 +34,25 @@ YAMANGDXDLL_API void MeshObjectCleanUp( MESHOBJECT* inputVal )
 
 YAMANGDXDLL_API void HeightMapCleanup()
 {
-	if ( g_TexHeight != NULL )
+	if ( NULL != g_MapHeightTexture )
 	{
-		g_TexHeight->Release();
+		g_MapHeightTexture->Release();
 	}
 
-	if ( g_Tex0 != NULL )
+	if ( NULL != g_MapTexture )
 	{
-		g_Tex0->Release();
+		g_MapTexture->Release();
+	}
+
+	if ( g_MapTextureArray )
+	{
+		for ( DWORD i = 0; i < MAP_TEXTURE_COUNT; ++i )
+		{
+			if (g_MapTextureArray[i])
+			{
+				g_MapTextureArray[i]->Release();
+			}
+		}
 	}
 }
 

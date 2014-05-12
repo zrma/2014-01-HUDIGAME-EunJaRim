@@ -27,6 +27,11 @@ namespace YamangTools
 
         string heightMap = ".\\heightmap_128_128.bmp";
         string mapTexture = ".\\heightmap_128_128.bmp";
+        string mapTexture0 = ".\\greengrass.bmp";
+        string mapTexture1 = ".\\leaf.bmp";
+        string mapTexture2 = ".\\sky.bmp";
+        string mapTexture3 = ".\\stone.bmp";
+        string mapTexture4 = ".\\tile.bmp";
 
         ~Main()
         {
@@ -37,6 +42,11 @@ namespace YamangTools
             InitializeComponent();
             YamangDll.InitD3D(this.RenderTarget.Handle);
             YamangDll.HeightMapTextureImport(this.RenderTarget.Handle, heightMap, mapTexture);
+            YamangDll.MapToolTextureImport(this.RenderTarget.Handle, mapTexture0);
+            YamangDll.MapToolTextureImport(this.RenderTarget.Handle, mapTexture1);
+            YamangDll.MapToolTextureImport(this.RenderTarget.Handle, mapTexture2);
+            YamangDll.MapToolTextureImport(this.RenderTarget.Handle, mapTexture3);
+            YamangDll.MapToolTextureImport(this.RenderTarget.Handle, mapTexture4);
             Render();
         }
         
@@ -77,14 +87,9 @@ namespace YamangTools
             }
         }
 
-//         private void ImportTexture()
-//         {
-//             YamangDll.HeightMapTextureImport(this.RenderTarget.Handle);
-//         }
 
         async private void Render()
         {
-            //ImportTexture();
             
             while (!renderStop)
             {

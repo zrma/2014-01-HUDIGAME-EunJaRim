@@ -1,6 +1,5 @@
 ﻿#include <d3dx9.h>
 
-//vertex, index 정의
 struct CUSTOMVERTEX
 {
 	D3DXVECTOR3	m_VertexPoint = { 0, 0, 0 };
@@ -8,9 +7,10 @@ struct CUSTOMVERTEX
 	D3DXVECTOR2	m_VertexTexturePoint0 = { 0, 0 };
 	D3DXVECTOR2	m_VertexTexturePoint1 = { 0, 0 };
 	D3DXVECTOR2	m_VertexTexturePoint2 = { 0, 0 };
-	D3DXVECTOR2	m_VertexTexturePoint3 = { 0, 0 };
 };
-#define D3DFVF_CUSTOMVERTEX ( D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX4| D3DFVF_TEXCOORDSIZE2(0) | D3DFVF_TEXCOORDSIZE2(1) | D3DFVF_TEXCOORDSIZE2(2) | D3DFVF_TEXCOORDSIZE2(3) )
+
+//마지막에는 각 texturepoint의 차원과 index를 의미
+#define D3DFVF_CUSTOMVERTEX ( D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX3| D3DFVF_TEXCOORDSIZE2(0) | D3DFVF_TEXCOORDSIZE2(1) | D3DFVF_TEXCOORDSIZE2(2) )
 
 struct SKYBOXVERTEX
 {
@@ -57,6 +57,8 @@ enum AreaModeType
 	AREA_MODE_MAX
 };
 
+#define MAP_TEXTURE_COUNT 5
+
 //////////////////////////////////////////////////////////////////////////
 // Global val 선언
 //////////////////////////////////////////////////////////////////////////
@@ -67,12 +69,14 @@ extern LPDIRECT3DDEVICE9 g_D3dDevice;
 //////////////////////////////////////////////////////////////////////////
 // Height Map 생성용 공용 자원
 //////////////////////////////////////////////////////////////////////////
-// extern LPDIRECT3DVERTEXBUFFER9 g_VertexBuffer;
-// extern LPDIRECT3DINDEXBUFFER9 g_IdxBuffer;
 extern LPD3DXMESH g_Mesh;
 
-extern LPDIRECT3DTEXTURE9 g_TexHeight;
-extern LPDIRECT3DTEXTURE9 g_Tex0;
+//클라이언트용 textureload함수
+extern LPDIRECT3DTEXTURE9 g_MapHeightTexture;
+extern LPDIRECT3DTEXTURE9 g_MapTexture;
+
+//맵툴용 Texture array
+extern LPDIRECT3DTEXTURE9 g_MapTextureArray[MAP_TEXTURE_COUNT];
 
 extern DWORD g_XHeight;
 extern DWORD g_ZHeight;

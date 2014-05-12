@@ -95,7 +95,7 @@ YAMANGDXDLL_API void RenderHeightMap()
 	g_D3dDevice->SetStreamSource( 0, RenderVertexBuffer, 0, sizeof( CUSTOMVERTEX ) );
 	g_D3dDevice->SetFVF( D3DFVF_CUSTOMVERTEX );
 
-	g_D3dDevice->SetTexture( 0, g_Tex0 );
+	g_D3dDevice->SetTexture( 0, g_MapTexture );
 	g_D3dDevice->SetSamplerState( 0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR );
 
 	g_D3dDevice->SetIndices( RenderIndexBuffer );

@@ -9,12 +9,11 @@ LPDIRECT3D9 g_D3D = nullptr;
 LPDIRECT3DDEVICE9 g_D3dDevice = nullptr;
 
 //Height Map 생성용 공용 자원
-//LPDIRECT3DVERTEXBUFFER9 g_VertexBuffer = nullptr;
-//LPDIRECT3DINDEXBUFFER9 g_IdxBuffer = nullptr;
 LPD3DXMESH g_Mesh = nullptr;
 
-LPDIRECT3DTEXTURE9 g_TexHeight = nullptr;
-LPDIRECT3DTEXTURE9 g_Tex0 = nullptr;
+LPDIRECT3DTEXTURE9 g_MapHeightTexture = nullptr;
+LPDIRECT3DTEXTURE9 g_MapTexture = nullptr;
+LPDIRECT3DTEXTURE9 g_MapTextureArray[MAP_TEXTURE_COUNT] = { 0, };
 
 DWORD g_XHeight = 0;
 DWORD g_ZHeight = 0;
@@ -44,5 +43,5 @@ float	g_Ratio = 1280 / 720;
 float	g_Width = 1280;
 
 // 스카이 박스
-LPDIRECT3DTEXTURE9	g_SkyBoxTextures[6];
+LPDIRECT3DTEXTURE9	g_SkyBoxTextures[6] = { 0, };
 LPD3DXMESH          g_SkyBoxMesh = nullptr;

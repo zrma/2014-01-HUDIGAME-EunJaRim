@@ -195,14 +195,14 @@ YAMANGDXDLL_API void SetCameraView(float x /* = 0 */, float y /* = 0 */, float z
 */
 YAMANGDXDLL_API HRESULT HeightMapTextureImport ( HWND hWnd, LPCTSTR heightMap, LPCTSTR mapTexture )
 {
-	if ( FAILED( D3DXCreateTextureFromFileEx( g_D3dDevice, heightMap, D3DX_DEFAULT, D3DX_DEFAULT, D3DX_DEFAULT, 0, D3DFMT_X8B8G8R8, D3DPOOL_MANAGED, D3DX_DEFAULT, D3DX_DEFAULT, 0, NULL, NULL, &g_TexHeight ) ) )
+	if ( FAILED( D3DXCreateTextureFromFileEx( g_D3dDevice, heightMap, D3DX_DEFAULT, D3DX_DEFAULT, D3DX_DEFAULT, 0, D3DFMT_X8B8G8R8, D3DPOOL_MANAGED, D3DX_DEFAULT, D3DX_DEFAULT, 0, NULL, NULL, &g_MapHeightTexture ) ) )
 	{
 		MessageBox( NULL, L"Could not find heightMap file", L"YaMang.DLL", MB_OK );
 		return E_FAIL;
 	}
 	
 
-	if ( FAILED( D3DXCreateTextureFromFile( g_D3dDevice, mapTexture, &g_Tex0 ) ) )
+	if ( FAILED( D3DXCreateTextureFromFile( g_D3dDevice, mapTexture, &g_MapTexture ) ) )
 	{
 		MessageBox( NULL, L"Could not find heightMapTexture file", L"YaMang.DLL", MB_OK );
 		return E_FAIL;
@@ -211,6 +211,40 @@ YAMANGDXDLL_API HRESULT HeightMapTextureImport ( HWND hWnd, LPCTSTR heightMap, L
 	
 	return S_OK;
 }
+
+//////////////////////////////////////////////////////////////////////////
+//클라이언트 읽기 전용 함수 제작할 것
+//1. 제공 받은 높이 파일로 지형 그리기(vertexBuffer)
+//   높이값 array return
+//2. 제공 받은 텍스쳐 입히기
+//3. 인덱스 계산해서 넣기(툴용 함수에서 해당 영역 떼어 함수화)
+//////////////////////////////////////////////////////////////////////////
+
+
+//////////////////////////////////////////////////////////////////////////
+//툴용 지형 함수
+//이하 툴용 함수
+//쓰기를 위한 함수
+//////////////////////////////////////////////////////////////////////////
+YAMANGDXDLL_API HRESULT MapToolTextureImport( HWND hWnd, LPCTSTR toolTexture ) 
+{
+	for ( int i = 0; i < MAP_TEXTURE_COUNT; ++i )
+	{
+		if ( nullptr == g_MapTextureArray[i])
+		{
+			if ( FAILED( D3DXCreateTextureFromFile( g_D3dDevice, toolTexture, &g_MapTextureArray[i] ) ) )
+			{
+				MessageBox( NULL, L"Could not find heightMapTexture file", L"YaMang.DLL", MB_OK );
+				return E_FAIL;
+			}
+			break;
+		}
+		
+	}
+	return S_OK;
+	
+}
+
 
 YAMANGDXDLL_API void InitGroundMesh( int row, int col )
 {
