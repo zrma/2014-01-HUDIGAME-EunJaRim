@@ -52,7 +52,7 @@ enum MapKeyType
 {
 	MAP_KEY_NONE,
 
-	MAP_KEY_KOREA,
+	MAP_KEY_TEST,
 
 	MAP_KEY_MAX
 };
