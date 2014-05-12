@@ -27,6 +27,7 @@ SoundManager::SoundManager()
 
 	m_TextList[SOUND_SYSTEM_MOUSE_CLICK] = GetEventInstance( "event:/sfx/system/mouse_click" );
 	m_TextList[SOUND_SCENE_PLAY_BGM1] = GetEventInstance( "event:/loop/scene_play_01" );
+	m_TextList[SOUND_SCENE_PLAY_BGM2] = GetEventInstance( "event:/loop/scene_play_02" );
 	m_TextList[SOUND_CORPS_GENERATE] = GetEventInstance( "event:/sfx/play/corps/generate_corps" );
 	m_TextList[SOUND_CORPS_MOVE] = GetEventInstance( "event:/sfx/play/corps/generate_corps" );
 	m_TextList[SOUND_CORPS_ATTACK_ARROW] = GetEventInstance( "event:/sfx/play/corps/attack/attack_arrow" );

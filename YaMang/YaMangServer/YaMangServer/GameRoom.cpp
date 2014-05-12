@@ -542,7 +542,7 @@ void GameRoom::TakeBase( int ownerPlayerID, int targetPlayerID, int ownerCorpsID
 
 			AddActionToScheduler( action, 10000 ); // 다시 가드병이 생성되는 시간 하드코딩
 			ownerClient->SubCorpsNum();
-			ownerCorps->AddDamage( 50.0f ); // 기존의 유닛은 5명이 빠진다.
+			ownerCorps->AddDamage( 51.0f ); // 기존의 유닛은 5명이 빠진다.
 			SyncOneCorp( ownerCorpsID );
 		}
 		return;
@@ -574,7 +574,7 @@ void GameRoom::TakeBase( int ownerPlayerID, int targetPlayerID, int ownerCorpsID
 
 	AddActionToScheduler( action, 10000 ); // 다시 가드병이 생성되는 시간 하드코딩
 	ownerClient->SubCorpsNum();
-	ownerCorps->AddDamage( 50.0f ); // 기존의 유닛은 5명이 빠진다.
+	ownerCorps->AddDamage( 51.0f ); // 기존의 유닛은 5명이 빠진다.
 	SyncOneCorp( ownerCorpsID );
 }
 
