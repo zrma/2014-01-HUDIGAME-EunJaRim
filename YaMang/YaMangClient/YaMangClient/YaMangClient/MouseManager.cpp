@@ -124,7 +124,11 @@ void MouseManager::MoveMousePosition( int x, int y )
 			else if ( !m_IsRightDragging )
 			{
 				// Log( "결과 - 부대 없음! 해당 좌표로 이동!\n" );
-				m_CursorType = CURSOR_CLICK;
+				m_CursorType = CURSOR_CORPS_MOVABLE;
+				if (m_IsRightClicked)
+				{
+					m_CursorType = CURSOR_CORPS_MOVABLE_CLICK;
+				}
 			}
 		}
 	}
