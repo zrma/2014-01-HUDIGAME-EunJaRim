@@ -60,6 +60,13 @@ void ResourceManager::Init()
 	CreateCursorImage( fileName, CURSOR_CLICK_CORPS );
 	fileName = L"cursor_unreachable.png";
 	CreateCursorImage( fileName, CURSOR_UNRECHEABLE );
+	fileName = L"cursor_camera_rotating.png";
+	CreateCursorImage(fileName, CURSOR_CAMERA_ROTATING);
+	fileName = L"cursor_movable.png";
+	CreateCursorImage(fileName, CURSOR_CORPS_MOVABLE);
+	fileName = L"cursor_movable_clicked.png";
+	CreateCursorImage(fileName, CURSOR_CORPS_MOVABLE_CLICK);
+
 	m_ISCursorReady = true;
 }
 

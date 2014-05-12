@@ -7,6 +7,7 @@
 #include "Corps.h"
 #include "MouseManager.h"
 #include "NetworkManager.h"
+#include "CameraController.h"
 
 MouseManager::MouseManager()
 {
@@ -34,6 +35,22 @@ void MouseManager::MoveMousePosition( int x, int y )
 	}
 
 	m_CursorType = CURSOR_DEFAULT;
+
+	//마우스 오른쪽 드래그 시 마우스 고정하고 카메라 회전
+	if (m_IsRightDragging)
+	{
+		m_CursorType = CURSOR_CAMERA_ROTATING;
+		if ((x + m_WndLocationX) > m_WndXPos)
+		{
+			CameraController::GetInstance()->RotateSide(((x + m_WndLocationX) - m_WndXPos)/120.f);
+		}
+		if ((x + m_WndLocationX) < m_WndXPos)
+		{
+			CameraController::GetInstance()->RotateSide(-(m_WndXPos - (x + m_WndLocationX))/120.f);
+		}
+		
+		return;
+	}
 
 	if ( ( x + m_WndLocationX ) > m_WndXPos )
 	{
