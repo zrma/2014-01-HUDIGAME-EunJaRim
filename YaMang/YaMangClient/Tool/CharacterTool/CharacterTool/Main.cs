@@ -20,8 +20,6 @@ namespace YamangTools
 
         ~Main()
         {
-            isRunning = false;
-            YamangDll.D3DCleanUp();
         }
 
         public Main()
@@ -62,9 +60,28 @@ namespace YamangTools
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             isRunning = false;
+            YamangDll.HeightMapCleanup();
             YamangDll.D3DCleanUp();
             //YamangDll.MeshObjectCleanUp(ref infoPtr);
             Application.Exit();
+        }
+
+        private void Main_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                if (isRunning == true)
+                {
+                    isRunning = false;
+                    YamangDll.HeightMapCleanup();
+//                     if (infoPtr != IntPtr.Zero)
+//                     {
+//                         YamangDll.MeshObjectCleanUp(ref infoPtr);
+//                     }
+                    YamangDll.D3DCleanUp();
+                    MessageBox.Show(this, "맵툴을 종료합니다", "Closing...", MessageBoxButtons.OK, MessageBoxIcon.Question);
+                }
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)

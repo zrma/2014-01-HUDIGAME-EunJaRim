@@ -52,6 +52,7 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.ObjectTab = new System.Windows.Forms.TabPage();
             this.CameraTab = new System.Windows.Forms.TabPage();
+            this.button3 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -60,7 +61,6 @@
             this.CameraXVal = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
             this.AnimationTab = new System.Windows.Forms.TabPage();
-            this.button3 = new System.Windows.Forms.Button();
             this.Menu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Window)).BeginInit();
             this.tabControl1.SuspendLayout();
@@ -263,6 +263,16 @@
             this.CameraTab.Text = "Camera";
             this.CameraTab.UseVisualStyleBackColor = true;
             // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(144, 57);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(65, 37);
+            this.button3.TabIndex = 7;
+            this.button3.Text = "Set";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.SetCamera_Click);
+            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -331,16 +341,6 @@
             this.AnimationTab.Text = "Animation";
             this.AnimationTab.UseVisualStyleBackColor = true;
             // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(144, 57);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(65, 37);
-            this.button3.TabIndex = 7;
-            this.button3.Text = "Set";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.SetCamera_Click);
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -352,6 +352,7 @@
             this.MainMenuStrip = this.Menu;
             this.Name = "Main";
             this.Text = "Character Tool _ EunJaRim";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
             this.Menu.ResumeLayout(false);
             this.Menu.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Window)).EndInit();
