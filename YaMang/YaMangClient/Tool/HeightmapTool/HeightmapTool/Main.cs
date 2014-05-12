@@ -73,14 +73,14 @@ namespace YamangTools
             }
         }
 
-        private void ImportTexture()
-        {
-            YamangDll.HeightMapTextureImport(this.RenderTarget.Handle);
-        }
+//         private void ImportTexture()
+//         {
+//             YamangDll.HeightMapTextureImport(this.RenderTarget.Handle);
+//         }
 
         async private void Render()
         {
-            ImportTexture();
+            //ImportTexture();
             
             while (!renderStop)
             {

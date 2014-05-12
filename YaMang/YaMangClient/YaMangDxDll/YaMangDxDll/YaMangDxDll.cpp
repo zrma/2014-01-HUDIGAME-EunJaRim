@@ -392,16 +392,14 @@ YAMANGDXDLL_API void SetCameraView(float x /* = 0 */, float y /* = 0 */, float z
 //////////////////////////////////////////////////////////////////////////
 
 
-YAMANGDXDLL_API HRESULT HeightMapTextureImport ( HWND hWnd/*, LPCTSTR heightMap, LPCTSTR mapTexture*/ )
+YAMANGDXDLL_API HRESULT HeightMapTextureImport ( HWND hWnd, LPCTSTR heightMap, LPCTSTR mapTexture )
 {
-	//일단 텍스처 확인을 위해 임시 삭제
-	/*
 	if ( FAILED( D3DXCreateTextureFromFileEx( g_D3dDevice, heightMap, D3DX_DEFAULT, D3DX_DEFAULT, D3DX_DEFAULT, 0, D3DFMT_X8B8G8R8, D3DPOOL_MANAGED, D3DX_DEFAULT, D3DX_DEFAULT, 0, NULL, NULL, &g_TexHeight ) ) )
 	{
 		MessageBox( NULL, L"Could not find heightMap file", L"YaMang.DLL", MB_OK );
 		return E_FAIL;
 	}
-	*/
+	
 
 	if ( FAILED( D3DXCreateTextureFromFile( g_D3dDevice, MAP_TEXTURE/*mapTexture*/, &g_Tex0 ) ) )
 	{
@@ -416,18 +414,15 @@ YAMANGDXDLL_API HRESULT HeightMapTextureImport ( HWND hWnd/*, LPCTSTR heightMap,
 
 YAMANGDXDLL_API void HeightMapCleanup()
 {
-	/*
 	if ( g_TexHeight != NULL )
 	{
 		g_TexHeight->Release();
 	}
-	*/
 
 	if ( g_Tex0 != NULL )
 	{
 		g_Tex0->Release();
 	}
-
 }
 
 YAMANGDXDLL_API void PreSettingForTool()
@@ -450,9 +445,11 @@ YAMANGDXDLL_API void PreSettingForTool()
 	// 창크기 변경에 따라 크고 작아지게 할 것
 	SetAspectRatio( 729, 588 );	
 
+	/*
 	//와이어 프레임 or 토글로 변경 필요
 	//g_D3dDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_WIREFRAME );
 	g_D3dDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_SOLID );
+	*/
 }
 
 YAMANGDXDLL_API void RenderHeightMap()
@@ -473,8 +470,10 @@ YAMANGDXDLL_API void RenderHeightMap()
 	IDirect3DIndexBuffer9* RenderIndexBuffer = nullptr;
 	g_Mesh->GetIndexBuffer( &RenderIndexBuffer );
 
-	// 조명이 들어가면 버텍스 쪽 와이어가 색을 제대로 못 뿌림
+	//현재 조명이 적용되지 않았음
+	//pre 부분이 분산 되는 바람에
 	g_D3dDevice->SetRenderState( D3DRS_LIGHTING, FALSE );
+	g_D3dDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_WIREFRAME );
 	
 
 	g_D3dDevice->SetStreamSource( 0, RenderVertexBuffer, 0, sizeof( CUSTOMVERTEX ) );
