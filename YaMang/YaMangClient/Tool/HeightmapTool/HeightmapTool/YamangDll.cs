@@ -48,7 +48,7 @@ namespace YamangTools
         //////////////////////////////////////////////////////////////////////////
 
         [DllImport("YaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern Int32 HeightMapTextureImport(IntPtr hWnd, [MarshalAs(UnmanagedType.LPWStr)] String heightMap, [MarshalAs(UnmanagedType.LPWStr)] String mapTexture);
+        public static extern Int32 HeightMapTextureImport(IntPtr hWnd/*, [MarshalAs(UnmanagedType.LPWStr)] String heightMap, [MarshalAs(UnmanagedType.LPWStr)] String mapTexture*/);
 
         [DllImport("YaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void HeightMapCleanup();
@@ -57,7 +57,7 @@ namespace YamangTools
         public static extern void PreSettingForTool();
 
         [DllImport("YaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void HeightMapRender();
+        public static extern void RenderHeightMap();
 
         [DllImport("YaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void InitGroundMesh( int row, int col );

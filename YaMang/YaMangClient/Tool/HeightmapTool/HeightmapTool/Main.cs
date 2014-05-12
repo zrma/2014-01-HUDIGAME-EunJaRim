@@ -73,8 +73,15 @@ namespace YamangTools
             }
         }
 
+        private void ImportTexture()
+        {
+            YamangDll.HeightMapTextureImport(this.RenderTarget.Handle);
+        }
+
         async private void Render()
         {
+            ImportTexture();
+            
             while (!renderStop)
             {
                 YamangDll.PreRendering();
@@ -95,7 +102,6 @@ namespace YamangTools
                     YamangDll.CreateRawGround(curWidth, curHeight, curMapSpace);
                 }
 
-                
                 YamangDll.PreSettingForTool();
 
                 if(mouseEventFlag)
@@ -106,9 +112,9 @@ namespace YamangTools
                     YamangDll.TransPickedTriangle(actionFlag);
                     mouseEventFlag = false;
                 }
-                
 
-                YamangDll.HeightMapRender();
+
+                YamangDll.RenderHeightMap();
 
                 YamangDll.PostRendering();
 
@@ -119,6 +125,7 @@ namespace YamangTools
                 await Task.Delay(10);
             }
         }
+       
 
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {

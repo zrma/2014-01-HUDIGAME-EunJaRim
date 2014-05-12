@@ -69,7 +69,7 @@ extern LPDIRECT3DDEVICE9 g_D3dDevice;
 extern LPD3DXMESH g_Mesh;
 
 extern LPDIRECT3DTEXTURE9 g_TexHeight;
-extern LPDIRECT3DTEXTURE9 g_TexDiffuse;
+extern LPDIRECT3DTEXTURE9 g_Tex0;
 
 extern DWORD g_XHeight;
 extern DWORD g_ZHeight;

@@ -42,7 +42,7 @@ extern "C"{
 	//height map은 일반 object와 g_D3D g_D3DDevice를 공유합니다.
 	//////////////////////////////////////////////////////////////////////////
 
-	YAMANGDXDLL_API HRESULT HeightMapTextureImport( HWND hWnd, LPCTSTR heightMap, LPCTSTR mapTexture );
+	YAMANGDXDLL_API HRESULT HeightMapTextureImport( HWND hWnd/*, LPCTSTR heightMap, LPCTSTR mapTexture*/ );
 	YAMANGDXDLL_API void HeightMapCleanup();
 	YAMANGDXDLL_API void PreSettingForTool();
 	YAMANGDXDLL_API void RenderHeightMap();

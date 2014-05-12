@@ -14,7 +14,7 @@ LPDIRECT3DDEVICE9 g_D3dDevice = nullptr;
 LPD3DXMESH g_Mesh = nullptr;
 
 LPDIRECT3DTEXTURE9 g_TexHeight = nullptr;
-LPDIRECT3DTEXTURE9 g_TexDiffuse = nullptr;
+LPDIRECT3DTEXTURE9 g_Tex0 = nullptr;
 
 DWORD g_XHeight = 0;
 DWORD g_ZHeight = 0;

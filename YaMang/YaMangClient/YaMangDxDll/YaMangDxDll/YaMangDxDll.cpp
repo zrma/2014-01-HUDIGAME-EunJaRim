@@ -13,6 +13,10 @@
 #include <sys/stat.h>
 #include <direct.h>
 
+//임시 추가
+#define MAP_TEXTURE L"heightmap_128_128.bmp"
+
+
 //////////////////////////////////////////////////////////////////////////
 //input args: 윈도우 핸들
 //향후 공용으로 사용할 D3D, D3DDevice에 대해 초기화 진행
@@ -226,6 +230,9 @@ YAMANGDXDLL_API void PostRendering()
 }
 
 
+//캐릭터 툴을 위한 렌더 함수
+//각 렌더링 구분 필요있음
+//현재 렌더링만 3개가 돌고 각각 세팅 겹치는게 엄청 많음
 YAMANGDXDLL_API void RenderingTool( MESHOBJECT* inputVal )
 {
 	if ( NULL == g_D3dDevice )
@@ -385,15 +392,18 @@ YAMANGDXDLL_API void SetCameraView(float x /* = 0 */, float y /* = 0 */, float z
 //////////////////////////////////////////////////////////////////////////
 
 
-YAMANGDXDLL_API HRESULT HeightMapTextureImport ( HWND hWnd, LPCTSTR heightMap, LPCTSTR mapTexture )
+YAMANGDXDLL_API HRESULT HeightMapTextureImport ( HWND hWnd/*, LPCTSTR heightMap, LPCTSTR mapTexture*/ )
 {
+	//일단 텍스처 확인을 위해 임시 삭제
+	/*
 	if ( FAILED( D3DXCreateTextureFromFileEx( g_D3dDevice, heightMap, D3DX_DEFAULT, D3DX_DEFAULT, D3DX_DEFAULT, 0, D3DFMT_X8B8G8R8, D3DPOOL_MANAGED, D3DX_DEFAULT, D3DX_DEFAULT, 0, NULL, NULL, &g_TexHeight ) ) )
 	{
 		MessageBox( NULL, L"Could not find heightMap file", L"YaMang.DLL", MB_OK );
 		return E_FAIL;
 	}
+	*/
 
-	if ( FAILED( D3DXCreateTextureFromFile( g_D3dDevice, mapTexture, &g_TexDiffuse ) ) )
+	if ( FAILED( D3DXCreateTextureFromFile( g_D3dDevice, MAP_TEXTURE/*mapTexture*/, &g_Tex0 ) ) )
 	{
 		MessageBox( NULL, L"Could not find heightMapTexture file", L"YaMang.DLL", MB_OK );
 		return E_FAIL;
@@ -406,14 +416,16 @@ YAMANGDXDLL_API HRESULT HeightMapTextureImport ( HWND hWnd, LPCTSTR heightMap, L
 
 YAMANGDXDLL_API void HeightMapCleanup()
 {
+	/*
 	if ( g_TexHeight != NULL )
 	{
 		g_TexHeight->Release();
 	}
+	*/
 
-	if ( g_TexDiffuse != NULL )
+	if ( g_Tex0 != NULL )
 	{
-		g_TexDiffuse->Release();
+		g_Tex0->Release();
 	}
 
 }
@@ -435,7 +447,12 @@ YAMANGDXDLL_API void PreSettingForTool()
 	g_D3dDevice->SetTransform( D3DTS_VIEW, &matView );
 
 	// 프로젝션 행렬
+	// 창크기 변경에 따라 크고 작아지게 할 것
 	SetAspectRatio( 729, 588 );	
+
+	//와이어 프레임 or 토글로 변경 필요
+	//g_D3dDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_WIREFRAME );
+	g_D3dDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_SOLID );
 }
 
 YAMANGDXDLL_API void RenderHeightMap()
@@ -458,12 +475,15 @@ YAMANGDXDLL_API void RenderHeightMap()
 
 	// 조명이 들어가면 버텍스 쪽 와이어가 색을 제대로 못 뿌림
 	g_D3dDevice->SetRenderState( D3DRS_LIGHTING, FALSE );
-	g_D3dDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_WIREFRAME );
+	
 
 	g_D3dDevice->SetStreamSource( 0, RenderVertexBuffer, 0, sizeof( CUSTOMVERTEX ) );
 	g_D3dDevice->SetFVF( D3DFVF_CUSTOMVERTEX );
 
-	g_D3dDevice->SetTexture( 0, g_TexDiffuse );
+	g_D3dDevice->SetTexture( 0, g_Tex0 );
+	g_D3dDevice->SetTextureStageState( 0, D3DTSS_TEXCOORDINDEX, 0 );
+	g_D3dDevice->SetSamplerState( 0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR );
+	
 	g_D3dDevice->SetIndices( RenderIndexBuffer );
 
 	g_D3dDevice->DrawIndexedPrimitive( D3DPT_TRIANGLESTRIP, 0, 0, g_XHeight * g_ZHeight, 0, ( g_XHeight - 1 ) * ( g_ZHeight - 1 ) * 2 + ( g_ZHeight - 2 ) * 3 );
@@ -517,7 +537,12 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 			baseVertex[startIdx].m_VertexPoint.x = vPos0.m_VertexPoint.x + ( pixelSize * x );
 			baseVertex[startIdx].m_VertexPoint.y = 0.f;
 			baseVertex[startIdx].m_VertexPoint.z = vPos0.m_VertexPoint.z + ( pixelSize * z );
-			baseVertex[startIdx].m_Diffuse = D3DCOLOR_ARGB( 255, 150, 30, 30 );
+			
+			baseVertex[startIdx].m_Diffuse = D3DCOLOR_ARGB( 255, 255, 255, 255 );
+
+			baseVertex[startIdx].m_VertexTexturePoint.x = static_cast<float>(x) * 1 / col;
+			baseVertex[startIdx].m_VertexTexturePoint.y = static_cast<float>(z) * 1 / row;
+
 			++startIdx;
 		}
 	}
