@@ -519,18 +519,24 @@ void ClientSession::HandleSyncAllRequest( SyncAllRequest& inPacket )
 
 	for ( auto& it : corpsList )
 	{
-		const PositionInfo& positionInfo = it.second->GetPositionInfo( );
+		Corps* corps = it.second;
+
+		if ( corps->IsDead() )
+		{
+			continue;
+		}
+		const PositionInfo& positionInfo = corps->GetPositionInfo( );
 
 		GenerateCorpsResult outPacket;
-		outPacket.m_UnitType = it.second->GetUnitType();
+		outPacket.m_UnitType = corps->GetUnitType( );
 		outPacket.m_NowX = positionInfo.m_EyePoint.x;
 		outPacket.m_NowZ = positionInfo.m_EyePoint.z;
 		outPacket.m_LookX = positionInfo.m_LookAtPoint.x;
 		outPacket.m_LookZ = positionInfo.m_LookAtPoint.z;
-		outPacket.m_CorpsID = it.second->GetCorpsID();
-		outPacket.m_PlayerId = it.second->GetPlayerID();
-		outPacket.m_FormationType = it.second->GetFormationType();
-		outPacket.m_UnitNum = it.second->GetUnitNum();
+		outPacket.m_CorpsID = corps->GetCorpsID( );
+		outPacket.m_PlayerId = corps->GetPlayerID( );
+		outPacket.m_FormationType = corps->GetFormationType( );
+		outPacket.m_UnitNum = corps->GetUnitNum( );
 
 
 		if ( !DirectSend( &outPacket ) )
