@@ -97,6 +97,7 @@ void MouseManager::MoveMousePosition( int x, int y )
 		{
 			m_IsLeftDragging = true;
 		}
+		return;
 	}
 
 	if (m_IsRightClicked)
