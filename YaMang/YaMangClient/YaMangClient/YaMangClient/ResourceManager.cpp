@@ -58,7 +58,7 @@ void ResourceManager::Init()
 	CreateCursorImage( fileName, CURSOR_ATTACK );
 	fileName = L"cursor_clicked.png";
 	CreateCursorImage( fileName, CURSOR_CLICK );
-	fileName = L"cursor_corps_clickable_original.png";
+	fileName = L"cursor_corps_clickable.png";
 	CreateCursorImage( fileName, CURSOR_OVER_CORPS );
 // 	fileName = L"cursor_corps_clicked.png";
 // 	CreateCursorImage( fileName, CURSOR_CLICK_CORPS );
