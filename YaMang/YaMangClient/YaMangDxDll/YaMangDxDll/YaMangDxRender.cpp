@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "yaMangDxDll.h"
 #include "Logger.h"
 #include "GlobalVar.h"
@@ -6,10 +6,10 @@
 
 
 //////////////////////////////////////////////////////////////////////////
-//render¸¦ pre - main - post renderringÀ¸·Î º¯°æ
-//pre¿¡¼­´Â matrix, view, light¿¡ ´ëÇÑ setting ÁøÇà
-//main¿¡¼­´Â mesh object¿¡ ´ëÇÑ Á÷Á¢ rendering ÁøÇà
-//post¿¡¼­´Â pre¿¡¼­ ¼³Á¤ÇÑ setting ÃÊ±âÈ­
+//renderë¥¼ pre - main - post renderringìœ¼ë¡œ ë³€ê²½
+//preì—ì„œëŠ” matrix, view, lightì— ëŒ€í•œ setting ì§„í–‰
+//mainì—ì„œëŠ” mesh objectì— ëŒ€í•œ ì§ì ‘ rendering ì§„í–‰
+//postì—ì„œëŠ” preì—ì„œ ì„¤ì •í•œ setting ì´ˆê¸°í™”
 //////////////////////////////////////////////////////////////////////////
 YAMANGDXDLL_API bool PreRendering()
 {
@@ -22,17 +22,17 @@ YAMANGDXDLL_API bool PreRendering()
 
 	bool flag = false;
 
-	// ·»´õ ¹æ¾îÄÚµå
-	// pre rendering ´Ü°è¿¡¼­ ÁøÇàµÇÁö ¾ÊÀ¸¸é ÇâÈÄ render ¸ğµÎ ½ÇÆĞ
+	// ë Œë” ë°©ì–´ì½”ë“œ
+	// pre rendering ë‹¨ê³„ì—ì„œ ì§„í–‰ë˜ì§€ ì•Šìœ¼ë©´ í–¥í›„ render ëª¨ë‘ ì‹¤íŒ¨
 	if ( SUCCEEDED( g_D3dDevice->BeginScene() ) )
 	{
 		SetupTranslateMatrices();
 
 		// lightsetting
-		// ÀÏ´Ü 1·Î ÁøÇà, ÇâÈÄ ¶óÀÌÆ® °³¼ö µî È®Á¤µÇ¸é ÀÎÀÚ ¹Ş¾Æ ¼³Á¤
+		// ì¼ë‹¨ 1ë¡œ ì§„í–‰, í–¥í›„ ë¼ì´íŠ¸ ê°œìˆ˜ ë“± í™•ì •ë˜ë©´ ì¸ì ë°›ì•„ ì„¤ì •
 		int lightNum = 1;
 		Lighting( lightNum );
-		// Log( "¶óÀÌÆÃ ¼¼ÆÃ!\n" );
+		// Log( "ë¼ì´íŒ… ì„¸íŒ…!\n" );
 
 		g_D3dDevice->SetTextureStageState( 0, D3DTSS_COLOROP, D3DTOP_MODULATE );
 		g_D3dDevice->SetTextureStageState( 0, D3DTSS_COLORARG1, D3DTA_TEXTURE );
@@ -40,7 +40,7 @@ YAMANGDXDLL_API bool PreRendering()
 		g_D3dDevice->SetTextureStageState( 0, D3DTSS_ALPHAOP, D3DTOP_DISABLE );
 
 		// Log( "Render Begin \n" );
-		// Log( "pre render ¿Ï·á!\n" );
+		// Log( "pre render ì™„ë£Œ!\n" );
 
 		flag = true;
 	}
@@ -77,14 +77,14 @@ YAMANGDXDLL_API void PostRendering()
 }
 
 //////////////////////////////////////////////////////////////////////////
-//heightMapÀ» À§ÇÑ ·»´õ ÇÔ¼ö
-//render¸¦ pre - main - post renderring ±¸Á¶¿¡¼­ mainÀ» ´ã´ç
+//heightMapì„ ìœ„í•œ ë Œë” í•¨ìˆ˜
+//renderë¥¼ pre - main - post renderring êµ¬ì¡°ì—ì„œ mainì„ ë‹´ë‹¹
 //////////////////////////////////////////////////////////////////////////
 YAMANGDXDLL_API void RenderHeightMap()
 {
-	//ÇöÀç Á¶¸íÀÌ Àû¿ëµÇÁö ¾Ê¾ÒÀ½
+	//í˜„ì¬ ì¡°ëª…ì´ ì ìš©ë˜ì§€ ì•Šì•˜ìŒ
 	g_D3dDevice->SetRenderState( D3DRS_LIGHTING, FALSE );
-	g_D3dDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_SOLID );
+	g_D3dDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_SOLID );	// agebreak: FillModeëŠ” ì–¸ì œë“  ë³€í˜• ê°€ëŠ¥í•˜ê²Œ ì„¸íŒ…
 
 	IDirect3DVertexBuffer9* RenderVertexBuffer = nullptr;
 	g_Mesh->GetVertexBuffer( &RenderVertexBuffer );
@@ -101,6 +101,7 @@ YAMANGDXDLL_API void RenderHeightMap()
 	g_D3dDevice->SetTextureStageState( 0, D3DTSS_TEXCOORDINDEX, 0 );
 	g_D3dDevice->SetTextureStageState( 1, D3DTSS_TEXCOORDINDEX, 1 );
 
+	// agebreak : ì´ê±´ ì™œ MAGFILTERë§Œ ì„¤ì •í–ˆë‚¨? ã…‹ MINFILTERëŠ” ì–´ë””ê°”ë‚¨??
 	g_D3dDevice->SetSamplerState( 0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR );
 	g_D3dDevice->SetSamplerState( 1, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR );
 
@@ -114,8 +115,8 @@ YAMANGDXDLL_API void RenderHeightMap()
 }
 
 //////////////////////////////////////////////////////////////////////////
-//Cursor¸¦ À§ÇÑ ·»´õ ÇÔ¼ö
-//render¸¦ pre - main - post renderring ±¸Á¶¿¡¼­ mainÀ» ´ã´ç
+//Cursorë¥¼ ìœ„í•œ ë Œë” í•¨ìˆ˜
+//renderë¥¼ pre - main - post renderring êµ¬ì¡°ì—ì„œ mainì„ ë‹´ë‹¹
 //////////////////////////////////////////////////////////////////////////
 YAMANGDXDLL_API HRESULT RenderCursor()
 {
@@ -123,6 +124,7 @@ YAMANGDXDLL_API HRESULT RenderCursor()
 	{
 		D3DXMATRIXA16 ratioMat;
 
+		// agebreak : ì•„ë˜ ìƒìˆ˜ ì œê±°í• ê²ƒ
 		float ratio = ( 720.0f / g_Width ) * g_Ratio;
 		D3DXMatrixIdentity( &ratioMat );
 		D3DXMatrixScaling( &ratioMat, 1280 / g_Width, ratio, 1 );
@@ -138,8 +140,8 @@ YAMANGDXDLL_API HRESULT RenderCursor()
 
 
 //////////////////////////////////////////////////////////////////////////
-//SkyBox¸¦ À§ÇÑ ·»´õ ÇÔ¼ö
-//render¸¦ pre - main - post renderring ±¸Á¶¿¡¼­ mainÀ» ´ã´ç
+//SkyBoxë¥¼ ìœ„í•œ ë Œë” í•¨ìˆ˜
+//renderë¥¼ pre - main - post renderring êµ¬ì¡°ì—ì„œ mainì„ ë‹´ë‹¹
 //////////////////////////////////////////////////////////////////////////
 YAMANGDXDLL_API void RenderSkyBox()
 {
@@ -157,8 +159,8 @@ YAMANGDXDLL_API void RenderSkyBox()
 
 
 //////////////////////////////////////////////////////////////////////////
-//Ä³¸¯ÅÍ ÅøÀ» À§ÇÑ ·»´õ ÇÔ¼ö
-//render¸¦ pre - main - post renderring ±¸Á¶¿¡¼­ mainÀ» ´ã´ç
+//ìºë¦­í„° íˆ´ì„ ìœ„í•œ ë Œë” í•¨ìˆ˜
+//renderë¥¼ pre - main - post renderring êµ¬ì¡°ì—ì„œ mainì„ ë‹´ë‹¹
 //////////////////////////////////////////////////////////////////////////
 YAMANGDXDLL_API void RenderingTool( MESHOBJECT* inputVal )
 {
@@ -173,17 +175,17 @@ YAMANGDXDLL_API void RenderingTool( MESHOBJECT* inputVal )
 	}
 	g_D3dDevice->Clear( 0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB( 30, 10, 10 ), 1.0f, 0 );
 
-	// ·»´õ ¹æ¾îÄÚµå
+	// ë Œë” ë°©ì–´ì½”ë“œ
 	if ( SUCCEEDED( g_D3dDevice->BeginScene() ) )
 	{
 		SetupTranslateMatricesTool();
 		// ViewSetting();
 
 		// lightsetting
-		// ÀÏ´Ü 1·Î ÁøÇà, ÇâÈÄ ¶óÀÌÆ® °³¼ö µî È®Á¤µÇ¸é ÀÎÀÚ ¹Ş¾Æ ¼³Á¤
+		// ì¼ë‹¨ 1ë¡œ ì§„í–‰, í–¥í›„ ë¼ì´íŠ¸ ê°œìˆ˜ ë“± í™•ì •ë˜ë©´ ì¸ì ë°›ì•„ ì„¤ì •
 		int lightNum = 1;
 		Lighting( lightNum );
-		// Log( "¶óÀÌÆÃ ¼¼ÆÃ!\n" );
+		// Log( "ë¼ì´íŒ… ì„¸íŒ…!\n" );
 
 		g_D3dDevice->SetTextureStageState( 0, D3DTSS_COLOROP, D3DTOP_MODULATE );
 		g_D3dDevice->SetTextureStageState( 0, D3DTSS_COLORARG1, D3DTA_TEXTURE );
@@ -191,15 +193,15 @@ YAMANGDXDLL_API void RenderingTool( MESHOBJECT* inputVal )
 		g_D3dDevice->SetTextureStageState( 0, D3DTSS_ALPHAOP, D3DTOP_DISABLE );
 
 		// Log( "Render Begin \n" );
-		// Log( "pre render ¿Ï·á!\n" );
+		// Log( "pre render ì™„ë£Œ!\n" );
 	}
 
-	// Ä«¸Ş¶ó ¼ÂÆÃ
+	// ì¹´ë©”ë¼ ì…‹íŒ…
 	D3DXMATRIXA16 viewMatrix;
 	D3DXMatrixLookAtLH( &viewMatrix, &g_EyePoint, &g_LookAtPoint, &g_UpVector );
 	SetMatrix( &viewMatrix, true );
 
-	// º¸¿©ÁÖ±â À§ÇÑ ¶¥À» ¸¸µë
+	// ë³´ì—¬ì£¼ê¸° ìœ„í•œ ë•…ì„ ë§Œë“¬
 	//InitGroundMesh(100, 100);
 	CreateRawGround( 100, 100, 10 );
 	RenderHeightMap();
