@@ -18,5 +18,7 @@ public:
 
 private:
 	bool				m_IsCursorReady = false;
+	int					m_CursorHotspotX = 4;
+	int					m_CursorHotspotY = 3;
 };
 

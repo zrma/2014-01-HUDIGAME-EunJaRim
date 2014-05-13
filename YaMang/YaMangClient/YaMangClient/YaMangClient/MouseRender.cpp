@@ -42,5 +42,5 @@ void MouseRender::Render() const
 
 void MouseRender::SetGameCursorPos(int PosX, int PosY)
 {
-	SetCursorPosition( PosX, PosY );
+	SetCursorPosition( PosX - m_CursorHotspotX, PosY - m_CursorHotspotY );
 }
