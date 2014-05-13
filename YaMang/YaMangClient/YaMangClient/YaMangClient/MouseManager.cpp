@@ -44,12 +44,12 @@ void MouseManager::MoveMousePosition( int x, int y )
 		if ( ( x + m_WndLocationX ) > m_WndXPos )
 		{
 			float time = static_cast<float>( Timer::GetInstance()->GetElapsedTime() ) / 1000;
-			CameraController::GetInstance()->RotateSide( time *( ( x + m_WndLocationX ) - m_WndXPos ) / 12.f );
+			CameraController::GetInstance()->RotateSide( time *( ( x + m_WndLocationX ) - m_WndXPos ) );
 		}
 		if ( ( x + m_WndLocationX ) < m_WndXPos )
 		{
 			float time = static_cast<float>( Timer::GetInstance()->GetElapsedTime() ) / 1000;
-			CameraController::GetInstance()->RotateSide( -time *( m_WndXPos - ( x + m_WndLocationX ) ) / 12.f );
+			CameraController::GetInstance()->RotateSide( -time *( m_WndXPos - ( x + m_WndLocationX ) ) );
 		}
 
 		return;

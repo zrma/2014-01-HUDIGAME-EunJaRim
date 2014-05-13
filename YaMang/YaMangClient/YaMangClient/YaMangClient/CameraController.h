@@ -71,7 +71,8 @@ private:
 
 	ZoomStatusType	m_ZoomStatus = ZoomStatusType::ZOOM_STATUS_FARTHEST;
 	INT				m_ZoomDegree = 0;
-	INT				m_ZoomPointX = 0;
+	FLOAT			m_ZoomPointX = 0;
+	FLOAT			m_ZoomPointY = 0;
 	
 	ZoomDirectionType	m_ZoomDirection = ZoomDirectionType::ZOOM_DIRECTION_NONE;
 };

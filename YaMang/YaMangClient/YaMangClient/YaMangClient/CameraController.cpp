@@ -155,10 +155,12 @@ void CameraController::ChangeMouseZoomStatus( short zoom )
 			m_ZoomDegree = 0;
 			m_ZoomDirection = ZOOM_DIRECTION_BACK;
 
-			m_ZoomPointX = MouseManager::GetInstance()->GetMousePositionX();
+			m_ZoomPointX = static_cast<float>( MouseManager::GetInstance()->GetMousePositionX() );
+			m_ZoomPointY = static_cast<float>( MouseManager::GetInstance()->GetMousePositionY() );
 			COORD zoomPoint = MouseManager::GetInstance()->GetBoundary();
 
 			m_ZoomPointX -= zoomPoint.X / 2;
+			m_ZoomPointY -= zoomPoint.Y / 2;
 		}
 
 		++m_ZoomDegree;
@@ -177,10 +179,12 @@ void CameraController::ChangeMouseZoomStatus( short zoom )
 			m_ZoomDegree = 0;
 			m_ZoomDirection = ZOOM_DIRECTION_FOWARD;
 
-			m_ZoomPointX = MouseManager::GetInstance()->GetMousePositionX();
+			m_ZoomPointX = static_cast<float>( MouseManager::GetInstance()->GetMousePositionX() );
+			m_ZoomPointY = static_cast<float>( MouseManager::GetInstance()->GetMousePositionY() );
 			COORD zoomPoint = MouseManager::GetInstance()->GetBoundary();
 
 			m_ZoomPointX -= zoomPoint.X / 2;
+			m_ZoomPointY -= zoomPoint.Y / 2;
 		}
 
 		++m_ZoomDegree;
@@ -223,13 +227,13 @@ void CameraController::Update()
 			targetViewY = FARTHEST_VIEW_Y;
 			break;
 	}
-	
+
 	float time = static_cast<float>( Timer::GetInstance()->GetElapsedTime() ) / 1000;
-	float delta = time * 5.0f;
+	float delta = time * 10.0f;
 
 	D3DXVECTOR3 view = m_LookAtPoint - m_EyePoint;
 	D3DXVec3Normalize( &view, &view );
-	float	dotView = D3DXVec3Dot( &view, &(-m_UpVector) );
+	float	dotView = D3DXVec3Dot( &view, &( -m_UpVector ) );
 
 	// Log( "%-8f도!!! %-8f \n", dotView, targetViewY );
 	// Log( "목표 = %f, 현위치 = %f \n", targetY, m_EyePoint.y );
@@ -237,10 +241,10 @@ void CameraController::Update()
 	// 카메라 업
 	if ( m_ZoomDirection == ZOOM_DIRECTION_BACK )
 	{
- 		if ( dotView < targetViewY )
- 		{
+		if ( dotView < targetViewY )
+		{
 			RotateUp( delta * dotView / ( m_EyePoint.y / 10 ) );
- 		}
+		}
 
 		MoveElevate( delta * 10 );
 		MoveForward( -delta * 10, true );
@@ -254,12 +258,12 @@ void CameraController::Update()
 	// 카메라 다운
 	else if ( m_ZoomDirection == ZOOM_DIRECTION_FOWARD )
 	{
- 		if ( dotView > targetViewY )
- 		{
+		if ( dotView > targetViewY )
+		{
 			RotateUp( -delta * dotView / ( m_EyePoint.y / 10 ) );
 		}
-		
-		MoveElevate( - delta * 10 );
+
+		MoveElevate( -delta * 10 );
 		MoveForward( delta * 10, true );
 
 		if ( targetY > m_EyePoint.y )
@@ -271,14 +275,27 @@ void CameraController::Update()
 
 	if ( m_ZoomPointX > 0 )
 	{
-		m_ZoomPointX = __min( m_ZoomPointX, 100 );
-		--m_ZoomPointX;
-		MoveSide( delta * m_ZoomPointX / 30 );
+		m_ZoomPointX = __min( m_ZoomPointX, 50 );
+		m_ZoomPointX -= delta;
+		MoveSide( delta );
 	}
 	else if ( m_ZoomPointX < 0 )
 	{
-		m_ZoomPointX = __max( m_ZoomPointX, -100 );
-		++m_ZoomPointX;
-		MoveSide( delta * m_ZoomPointX / 30 );
+		m_ZoomPointX = __max( m_ZoomPointX, -50 );
+		m_ZoomPointX += delta;
+		MoveSide( -delta );
+	}
+
+	if ( m_ZoomPointY > 0 )
+	{
+		m_ZoomPointY = __min( m_ZoomPointY, 50 );
+		m_ZoomPointY -= delta;
+		MoveForward( -delta );
+	}
+	else if ( m_ZoomPointY < 0 )
+	{
+		m_ZoomPointY = __max( m_ZoomPointY, -50 );
+		m_ZoomPointY += delta;
+		MoveForward( delta );
 	}
 }
