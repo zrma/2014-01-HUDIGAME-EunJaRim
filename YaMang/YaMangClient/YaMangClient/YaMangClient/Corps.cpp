@@ -13,9 +13,11 @@
 #include "Collision.h"
 #include "CollisionManager.h"
 #include "CameraController.h"
+#include "Renderer.h"
+#include "ResourceManager.h"
 
 Corps::Corps( int corpsId, int playerId, PositionInfo pos )
-: m_CorpsID( corpsId ), m_OwnerPlayerID( playerId ), m_TargetFormation( FormationType::FORMATION_RUSH )
+: m_CorpsID( corpsId ), m_OwnerPlayerID( playerId )
 {
 	m_FormationArray.fill( nullptr );
 	m_FormationArray[static_cast<size_t>( FormationType::FORMATION_DEFENSE )] = new DefenseBread();
@@ -88,6 +90,12 @@ void Corps::Create( UINT num, UnitType unitType )
 
 void Corps::Update()
 {
+	if ( m_UnitList.empty() )
+	{
+		SetVisible( false );
+		return;
+	}
+
 	DoAction();
 	for ( auto& iter : m_UnitList )
 	{
@@ -101,10 +109,43 @@ void Corps::Render() const
 	{
 		iter->Render();
 	}
+
+	if ( !m_Visible || !m_MeshKey || CameraController::GetInstance()->GetHeightGrade() <= 3 )
+	{
+		return;
+	}
+
+	D3DXMATRIXA16 thisMatrix = GetMatrix();
+
+	if ( IsSelected() )
+	{
+		D3DXMATRIXA16 scaleMatrix;
+		D3DXMatrixScaling( &scaleMatrix, 0.7f, 0.7f, 0.7f );
+
+		thisMatrix = scaleMatrix * thisMatrix;
+	}
+	else
+	{
+		D3DXMATRIXA16 scaleMatrix;
+		D3DXMatrixScaling( &scaleMatrix, 0.5f, 0.5f, 0.5f );
+
+		thisMatrix = scaleMatrix * thisMatrix;
+	}
+
+	Renderer::GetInstance()->SetWorldMatrix( thisMatrix );
+
+	ResourceMesh* mesh = ResourceManager::GetInstance()->GetMeshByKey( m_MeshKey );
+
+	if ( mesh )
+	{
+		Renderer::GetInstance()->RenderMesh( mesh->m_MeshObject );
+	}
 }
 
 void Corps::SetVisible( bool visible )
 {
+	m_Visible = visible;
+
 	for ( auto& iter : m_UnitList )
 	{
 		iter->SetVisible( visible );
@@ -200,4 +241,31 @@ bool Corps::IsContain( float x, float z )
 	}
 
 	return false;
+}
+
+void Corps::SetFormation( FormationType formation )
+{
+	m_TargetFormation = formation;
+
+	switch ( formation )
+	{
+		case FormationType::FORMATION_DEFENSE:
+		{
+			m_MeshKey = MESH_KEY_CORPS_DEFENSE;
+		}
+			break;
+		case FormationType::FORMATION_DESTROY:
+		{
+			m_MeshKey = MESH_KEY_CORPS_DESTROY;
+		}
+			break;
+		case FormationType::FORMATION_RUSH:
+		case FormationType::FORMATION_NONE:
+		case FormationType::FORMATION_MAX:
+		default:
+		{
+			m_MeshKey = MESH_KEY_CORPS_RUSH;
+		}
+			break;
+	}
 }

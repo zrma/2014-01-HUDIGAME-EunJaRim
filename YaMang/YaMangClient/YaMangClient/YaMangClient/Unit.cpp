@@ -6,9 +6,9 @@
 #include "ResourceManager.h"
 #include "Timer.h"
 #include "Act.h"
-
 #include "Collision.h"
 #include "CollisionManager.h"
+#include "CameraController.h"
 
 Unit::Unit( Corps* owner, UINT unitId )
 : m_Corps( owner ), m_UnitID( unitId )
@@ -31,8 +31,10 @@ void Unit::Update()
 
 void Unit::Render() const
 {
-	if ( !m_Visible || !m_MeshKey )
+	if ( !m_Visible || !m_MeshKey || CameraController::GetInstance()->GetHeightGrade() > 3 )
+	{
 		return;
+	}
 
 	D3DXMATRIXA16 thisMatrix = GetMatrix( false );
 

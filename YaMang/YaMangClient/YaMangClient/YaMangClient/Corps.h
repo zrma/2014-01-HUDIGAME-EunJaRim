@@ -24,7 +24,7 @@ public:
 	int		GetOwnPlayerID() const { return m_OwnerPlayerID; }
 	
 	UnitType		GetUnitType() const { return m_UnitType; }
-	void			SetFormation( FormationType formation ) { m_TargetFormation = formation; }
+	void			SetFormation( FormationType formation );
 	D3DXVECTOR3		GetFormation( int unitId ) const;
 
 	typedef std::function<void( Corps& )>	ActionFunc;
@@ -50,13 +50,15 @@ private:
 	Corps( const Corps& );
 	Corps& operator=( const Corps& );
 
+	MeshKeyType				m_MeshKey = MESH_KEY_CORPS_RUSH;
+
 	std::vector<Unit*>		m_UnitList;
 	int						m_CorpsID = -1;
 	int						m_OwnerPlayerID = -1;
 	UnitType				m_UnitType = UnitType::UNIT_NONE;
 
-	FormationType			m_NowFormation = FormationType::FORMATION_NONE;
-	FormationType			m_TargetFormation = FormationType::FORMATION_NONE;
+	FormationType			m_NowFormation = FormationType::FORMATION_RUSH;
+	FormationType			m_TargetFormation = FormationType::FORMATION_RUSH;
 	std::array<BreadBoard*, static_cast<size_t>(FormationType::FORMATION_MAX)> m_FormationArray;
 
 	bool	m_IsSelected = false;

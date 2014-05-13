@@ -28,6 +28,13 @@ void ResourceManager::Init()
 	fileName = L"UnitGuard.x";
 	AddMesh( fileName, MESH_KEY_UNIT_GUARD );
 
+	fileName = L"Corps_Destroy.x";
+	AddMesh( fileName, MESH_KEY_CORPS_DESTROY );
+	fileName = L"Corps_Defense.x";
+	AddMesh( fileName, MESH_KEY_CORPS_DEFENSE );
+	fileName = L"Corps_Rush.x";
+	AddMesh( fileName, MESH_KEY_CORPS_RUSH );
+
 	InitGroundMesh( 100, 100 );
 	CreateRawGround( 100, 100, 5.0f );
 	m_MapSize = 500;
