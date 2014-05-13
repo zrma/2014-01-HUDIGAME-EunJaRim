@@ -8,7 +8,9 @@
 
 const int LOBBY_NUMBER = 0;
 
-std::hash_map<int, ClientSession*>	g_PidSessionTable;
+std::hash_map<int, ClientSession*>	g_PidSessionTable; ///# STL 객체는 전역으로 놓지 말 것. 다른 클래스 안에 넣거나 전용 클래스를 새로 만들거나.. 
+///# 꼭 전역으로 놓아겠으면, 반드시 포인터의 형태로.
+
 RoomManager* g_RoomManager = nullptr;
 RoomManager::RoomManager()
 {
@@ -31,6 +33,8 @@ RoomManager::~RoomManager()
 		delete room;
 	}
 	m_RoomList.clear();
+
+	///# 로비도 delete 해야 되는거 아닌가? 물론, 프로그램 종료시까지 살아 있으니까 안해도 되긴하지만, 표시는 해줄것.
 }
 
 int RoomManager::AddRoom()
@@ -38,7 +42,7 @@ int RoomManager::AddRoom()
 	GameRoom* room = new GameRoom( ++m_RoomCount );
 
 	// Test room start;
-	room->GameStart( );
+	room->GameStart( ); ///# 이 코드가 아래 룸리스트 다음에 와야 되는거 아닌가?
 	m_RoomList.insert( RoomList::value_type( m_RoomCount, room ) );
 
 	Log( "ROOM [%d] CREATED! \n", room->GetRoomNumber() );
@@ -57,10 +61,10 @@ bool RoomManager::EnterRoom( int roomNumber, int pid )
 	{
 		if ( g_PidSessionTable.find( pid ) != g_PidSessionTable.end() )
 		{
-			ClientSession* mover = g_PidSessionTable.find( pid )->second;
+			ClientSession* mover = g_PidSessionTable.find( pid )->second;  ///# 헐.. 왜 find를 두번? 
 			if ( m_Lobby->DeleteClient( mover ) )
 			{
-				m_RoomList.find( roomNumber )->second->InputClient( mover );
+				m_RoomList.find( roomNumber )->second->InputClient( mover ); ///# roomNumber에 해당하는 이터래이터가 없으면?
 				return true;
 			}
 		}
@@ -79,7 +83,7 @@ bool RoomManager::LeaveRoom( int roomNumber, int pid )
 	{
 		if ( g_PidSessionTable.find( pid ) != g_PidSessionTable.end() )
 		{
-			ClientSession* mover = g_PidSessionTable.find( pid )->second;
+			ClientSession* mover = g_PidSessionTable.find( pid )->second; ///# find 한번만 해도 되자너.
 			if ( m_RoomList.find( roomNumber )->second->DeleteClient( mover ) )
 			{
 				m_Lobby->InputClient( mover );

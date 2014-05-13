@@ -176,7 +176,7 @@ bool GameRoom::DirectPacket( int pid, PacketHeader* pkt )
 void GameRoom::OnPeriodWork()
 {
 	/// 접속이 끊긴 세션들 주기적으로 정리 (1초 정도 마다 해주자)
-	DWORD currTick = GetTickCount();
+	DWORD currTick = GetTickCount(); ///# 64로 통일.
 	if ( currTick - m_LastGCTick >= 1000 )
 	{
 		CollectGarbageSessions();
@@ -243,7 +243,7 @@ void GameRoom::CollectGarbageSessions()
 void GameRoom::ClientPeriodWork()
 {
 
-	// 실행이 안된 룸막기... 근데 Tick이 없어질텐데...
+	// 실행이 안된 룸막기... 근데 Tick이 없어질텐데... ///# 보통은 한 단계 더 추상화 한다. 게임 콘텐츠에 관계된 작업만 따로 모아서 게임 시작된 이후에만 호출되도록...
 	if ( !m_IsGameStart )
 	{
 		return;
@@ -405,6 +405,7 @@ bool GameRoom::ReadMapFile( const char* filename )
 		return false;
 	}
 
+	///# 파일 자체가 깨졌거나 잘못 구성 되었을 때, 아래 파일 읽는 부분에서 문제가 없겠는가? 파일 읽어 오는 부분에서 올바른 데이터인지 에러 핸들링 잘 해야 한다.
 	unsigned char info[54];
 	fread( info, sizeof( unsigned char ), 54, f ); // read the 54-byte header
 
@@ -485,7 +486,7 @@ Corps* GameRoom::GetCorpsByCorpsID( int corpsID )
 {
 	if ( m_CorpsList.find( corpsID ) != m_CorpsList.end( ) )
 	{
-		return m_CorpsList.find( corpsID )->second;
+		return m_CorpsList.find( corpsID )->second; ///# find 2번 하지 말것.
 	}
 
 	return nullptr;
@@ -561,7 +562,7 @@ void GameRoom::TakeBase( int ownerPlayerID, int targetPlayerID, int ownerCorpsID
 	m_BaseGuardList.insert( BaseGuardList::value_type( corps->GetCorpsID( ), guardPosition ) );
 	m_BaseGuardList.erase( targetGuardPosition );
 
-	GenerateCorpOnce* action = new GenerateCorpOnce();
+	GenerateCorpOnce* action = new GenerateCorpOnce(); ///# 이거 delete 제대로 안해주는 것 같은데? 액션 스케줄러에서 동작 끝나면 반드시 delete 되는지 확인할 것.
 	action->SetClientManager( this );
 	action->SetPlayerID( ownerPlayerID );
 	action->SetClientSession( ownerClient );

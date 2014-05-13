@@ -283,7 +283,7 @@ void ClientSession::DatabaseJobDone( DatabaseJobContext* result )
 
 		// DEBUG!!!!
 		// 로비에서도 게임이 실행되도록 함 나중에 지워야함
-		GameStart();
+		GameStart(); ///# 콘텐츠 관련 코드가 여기 있으면 안되는거 알지?
 		/*GenerateCorpAction * action = new GenerateCorpAction();
 		action->SetClientManager( m_ClientManager );
 		action->SetPlayerID( m_PlayerID );
@@ -335,6 +335,7 @@ void ClientSession::GameStart()
 
 void ClientSession::AddCorpsNum()
 {
+	///# 이런 값들은 음수가 되지 않는지 항상 assert 감시할 것.
 	++m_CorpsNum;
 	CalculateRegenTime( );
 }

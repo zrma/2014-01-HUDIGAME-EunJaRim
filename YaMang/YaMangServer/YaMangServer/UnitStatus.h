@@ -1,6 +1,8 @@
 ﻿#pragma once
 #include "EnumSet.h"
 
+///# 이 객체는 변하지 않는 상수값만 들고 있고 언제나 참조할 수 있는 그런것인지?
+///# 그렇다면, 이렇게 일일이 static으로 만들지 않고, UnitConstData 구조체 하나 만들고 그 구조체는 전역으로 두고 참조. GUnitConstData->mArrowHp 이런식으로...
 class UnitStatus
 {
 public:

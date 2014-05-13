@@ -28,8 +28,8 @@ public:
 
 	ClientSession*		CreateClient( SOCKET sock );
 
-	bool				DeleteClient( ClientSession* client );
-	void				InputClient( ClientSession* client );
+	bool				DeleteClient( ClientSession* client ); ///# LeaveRoom
+	void				InputClient( ClientSession* client ); ///# 보통 EnterRoom 이라는 용어를 쓴다.
 
 	int					GetClientSize() const { return static_cast<int>( m_ClientList.size() ); }
 	int					GetRoomNumber() const { return m_RoomNumber; }
@@ -49,7 +49,7 @@ public:
 
 	const Corps*		GenerateCorps( int playerID, UnitType type, PositionInfo position );
 
-	typedef std::hash_map<int, Corps*> CorpsList;
+	typedef std::hash_map<int, Corps*> CorpsList; ///# 꼽리스트는 순회를 많이 한다. 그러면 해시맵 쓰면 안된다.
 	const CorpsList&	GetCorpsList() { return m_CorpsList; }
 
 	void				AddActionToScheduler( Action* addedAction, ULONGLONG remainTime );
@@ -73,7 +73,7 @@ public:
 	void				SyncOneCorp( int corpsID );
 
 private:
-	void				CreatePlayerDone( DatabaseJobContext* dbJob );
+	void				CreatePlayerDone( DatabaseJobContext* dbJob ); 
 	void				DeletePlayerDone( DatabaseJobContext* dbJob );
 
 private:

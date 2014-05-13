@@ -171,7 +171,7 @@ void ClientSession::HandleEnterRoomRequest( EnterRoomRequest& inPacket )
 
 	if ( !g_RoomManager->CheckRoom( roomNumber ) )
 	{
-		++m_ErrorNumber;
+		++m_ErrorNumber; ///# 이런건 정확하게 처리해야 하는데, 로그로 남기고 나중에 처리해도 되는건지.. 바로 세션을 끊어버려야 되는건지.. 확실하게 해야함..
 		return;
 	}
 
@@ -265,11 +265,14 @@ void ClientSession::HandleGenerateCorpsRequest( GenerateCorpsRequest& inPacket )
 	position.m_EyePoint = { nowX, 0.0f, nowZ };
 	position.m_LookAtPoint = { lookX, 0.0f, lookZ };
 
+
 	const Corps* corps = m_ClientManager->GenerateCorps( playerID, unitType, position );
 
+	///# 아래 코드가 잘못된 것이.. unitType은 클라로부터 온 정보다. 근데 이게 잘못된 경우에는 corps가 null 이고 이게 아래 assert걸리게 됨.
+	/// 즉 클라가 정보를 잘못 보내면 서버를 죽이게 됨.
 	if ( nullptr == corps )
 	{
-		assert( false );
+		assert( false );  ///# 그냥 assert( corps); 하면 되는데 굳이 if 쓸 이유가 없다.
 	}
 
 	GenerateCorpsResult outPacket;
@@ -515,6 +518,7 @@ void ClientSession::HandleSyncAllRequest( SyncAllRequest& inPacket )
 	int roomNumber = inPacket.m_RoomNumber;
 	int playerID = inPacket.m_PlayerId;
 
+	///# 꼽들을 전부 긁어 모아서 일일이 패킷을 보내는데.. 보통 이렇게 안하고, 클라 매니저에 this나 대상 pid를 보내고, 꼽리스트를 가지고 있는 객체에서 순회하면서 패킷을 만든다음에 한방에 보낸다.
 	const std::hash_map<int, Corps*> corpsList = m_ClientManager->GetCorpsList( );
 
 	for ( auto& it : corpsList )

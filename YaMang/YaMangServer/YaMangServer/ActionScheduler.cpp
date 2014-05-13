@@ -50,9 +50,11 @@ void ActionScheduler::DoScheduledAction()
 		// @author 신동찬
 		// Action을 뜯어서 상태를 확인
 		// 상태가 영 좋지 않은 곳에 맞았다면 제거
+
+		///# 액션을 지우는 곳이 여기밖에 없으면 안지워 지는 경우 생기지 않는가?
 		if ( headAction->Gozarani() )
 		{
-			SafeDelete( headAction );
+			SafeDelete( headAction ); ///# safedelete가 아니라 당연히 null이 아닌 포인터가 여기 들어와야 한다.  assert처리.
 			continue;
 		}
 		// 상태가 좋으면 owner corps id 탐색 후 action 지정
