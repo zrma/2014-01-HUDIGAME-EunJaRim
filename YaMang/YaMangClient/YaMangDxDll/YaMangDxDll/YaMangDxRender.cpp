@@ -102,7 +102,9 @@ YAMANGDXDLL_API void RenderHeightMap()
 	g_D3dDevice->SetTextureStageState( 1, D3DTSS_TEXCOORDINDEX, 1 );
 
 	g_D3dDevice->SetSamplerState( 0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR );
+	g_D3dDevice->SetSamplerState( 0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR );
 	g_D3dDevice->SetSamplerState( 1, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR );
+	g_D3dDevice->SetSamplerState( 1, D3DSAMP_MINFILTER, D3DTEXF_LINEAR );
 
 	g_D3dDevice->SetTextureStageState( 1, D3DTSS_COLOROP, D3DTOP_MODULATE );
 	g_D3dDevice->SetTextureStageState( 1, D3DTSS_COLORARG1, D3DTA_TEXTURE );
@@ -146,6 +148,9 @@ YAMANGDXDLL_API void RenderSkyBox()
 	if ( g_SkyBoxMesh )
 	{
 		g_D3dDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_SOLID );
+
+		g_D3dDevice->SetSamplerState( 0, D3DSAMP_ADDRESSU, D3DTADDRESS_CLAMP );
+		g_D3dDevice->SetSamplerState( 0, D3DSAMP_ADDRESSV, D3DTADDRESS_CLAMP );
 
 		for ( int i = 0; i < 6; i++ )
 		{

@@ -15,16 +15,11 @@ struct CUSTOMVERTEX
 struct SKYBOXVERTEX
 {
 	SKYBOXVERTEX() {}
-	SKYBOXVERTEX( float x, float y, float z,
-					float nx, float ny, float nz,
-					float u, float v )
+	SKYBOXVERTEX( float x, float y, float z, float u, float v )
 	{
 		m_X = x;
 		m_Y = y;
 		m_Z = z;
-		m_NormalX = nx;
-		m_NormalY = ny;
-		m_NormalZ = nz;
 		m_U = u;
 		m_V = v;
 	}
@@ -32,13 +27,10 @@ struct SKYBOXVERTEX
 	float	m_X = 0;
 	float	m_Y = 0;
 	float	m_Z = 0;
-	float	m_NormalX = 0;
-	float	m_NormalY = 0;
-	float	m_NormalZ = 0;
 	float	m_U = 0;
 	float	m_V = 0;
 };
-#define D3DFVF_SKYBOXVERTEX (D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_TEX1)
+#define D3DFVF_SKYBOXVERTEX (D3DFVF_XYZ | D3DFVF_TEX1)
 
 struct MYINDEX
 {
