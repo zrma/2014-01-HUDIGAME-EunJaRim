@@ -3,17 +3,17 @@
 #include "MacroSet.h"
 #include <d3dx9math.h>
 
-const FLOAT NEAREST_Y = 10.0f;
+const FLOAT NEAREST_Y = 15.0f;
 const FLOAT DEGREE_1_Y = 40.0f;
 const FLOAT DEGREE_2_Y = 100.0f;
 const FLOAT DEGREE_3_Y = 170.0f;
 const FLOAT FARTHEST_Y = 250.0f;
 
 const FLOAT NEAREST_VIEW_Y = 0.01f;
-const FLOAT DEGREE_1_VIEW_Y = 0.20f;
-const FLOAT DEGREE_2_VIEW_Y = 0.45f;
-const FLOAT DEGREE_3_VIEW_Y = 0.60f;
-const FLOAT FARTHEST_VIEW_Y = 0.9999f;
+const FLOAT DEGREE_1_VIEW_Y = 0.10f;
+const FLOAT DEGREE_2_VIEW_Y = 0.30f;
+const FLOAT DEGREE_3_VIEW_Y = 0.50f;
+const FLOAT FARTHEST_VIEW_Y = 0.80f;
 
 enum ZoomStatusType
 {
@@ -70,7 +70,8 @@ private:
 	D3DXVECTOR3		m_PrevZoomPoint = { 0, 0, 0 };
 
 	ZoomStatusType	m_ZoomStatus = ZoomStatusType::ZOOM_STATUS_FARTHEST;
-	int				m_ZoomDegree = 0;
+	INT				m_ZoomDegree = 0;
+	INT				m_ZoomPointX = 0;
 	
 	ZoomDirectionType	m_ZoomDirection = ZoomDirectionType::ZOOM_DIRECTION_NONE;
 };

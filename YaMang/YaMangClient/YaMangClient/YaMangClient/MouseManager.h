@@ -41,6 +41,8 @@ public:
 	int				GetMousePositionX() const { return m_MousePosition.X; }
 	int				GetMousePositionY() const { return m_MousePosition.Y; }
 	void			SetMousePosition( int posX, int posY ) { m_MousePosition.X = posX; m_MousePosition.Y = posY; }
+	
+	COORD			GetBoundary() const { return m_Boundary; }
 
 	void			MoveMousePosition( int posX, int posY );
 	void			MoveHiddenCursorToCenter();

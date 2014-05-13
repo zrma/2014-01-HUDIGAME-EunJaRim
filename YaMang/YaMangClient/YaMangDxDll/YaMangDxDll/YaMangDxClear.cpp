@@ -1,11 +1,11 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "yaMangDxDll.h"
 #include "Logger.h"
 #include "GlobalVar.h"
 
 
 /**
- *@breif MeshObject(À¯´Ö µî)¿¡ ´ëÇÑ ¸Þ¸ð¸® ¼Ò°Å ÇÔ¼ö
+ *@breif MeshObject(ìœ ë‹› ë“±)ì— ëŒ€í•œ ë©”ëª¨ë¦¬ ì†Œê±° í•¨ìˆ˜
  *
  */
 YAMANGDXDLL_API void MeshObjectCleanUp( MESHOBJECT* inputVal )
@@ -98,7 +98,7 @@ YAMANGDXDLL_API void SkyBoxCleanUp()
 
 YAMANGDXDLL_API void D3DCleanUp()
 {
-	// ÅØ½ºÆ® ¼Ò¸êÀÚ ÇÕÄ§
+	// í…ìŠ¤íŠ¸ ì†Œë©¸ìž í•©ì¹¨
 	if ( g_Font != NULL )
 	{
 		g_Font->Release();
