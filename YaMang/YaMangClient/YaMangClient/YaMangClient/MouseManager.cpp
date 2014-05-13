@@ -57,20 +57,24 @@ void MouseManager::MoveMousePosition( int x, int y )
 
 	if ( ( x + m_WndLocationX ) > m_WndXPos )
 	{
-		m_MousePosition.X += ( ( x + m_WndLocationX ) - m_WndXPos );
+		short time = static_cast<short>(Timer::GetInstance()->GetElapsedTime() / 2.f);
+		m_MousePosition.X += (time * ( ( x + m_WndLocationX ) - m_WndXPos ));
 	}
 	if ( ( x + m_WndLocationX ) < m_WndXPos )
 	{
-		m_MousePosition.X -= ( m_WndXPos - ( x + m_WndLocationX ) );
+		short time = static_cast<short>(Timer::GetInstance()->GetElapsedTime() / 2.f);
+		m_MousePosition.X -= (time *(m_WndXPos - (x + m_WndLocationX)));
 	}
 	if ( ( y + m_WndLocationY ) > m_WndYPos )
 	{
-		m_MousePosition.Y += ( ( y + m_WndLocationY ) - m_WndYPos );
+		short time = static_cast<short>(Timer::GetInstance()->GetElapsedTime() / 2.f);
+		m_MousePosition.Y += (time *( ( y + m_WndLocationY ) - m_WndYPos ));
 	}
 
 	if ( ( y + m_WndLocationY ) < m_WndYPos )
 	{
-		m_MousePosition.Y -= ( m_WndYPos - ( y + m_WndLocationY ) );
+		short time = static_cast<short>(Timer::GetInstance()->GetElapsedTime() / 2.f);
+		m_MousePosition.Y -= (time *( m_WndYPos - ( y + m_WndLocationY ) ));
 	}
 
 	//일단 창밖으로 나가는거 값 때려박음
