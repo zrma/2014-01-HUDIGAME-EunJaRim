@@ -6,14 +6,9 @@
 #include "stdafx.h"
 #include "yaMangDxDll.h"
 #include "Logger.h"
-#include <stdio.h>
 #include "GlobalVar.h"
-#include "InnerResource.h"
-#include <WinUser.h>
-#include <time.h>
-#include <string>
-#include <sys/stat.h>
-#include <direct.h>
+#include "InnerResource.h"	
+// agebreak : 윈도우즈 헤더들은 프리컴파일드 헤더로. 
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -113,6 +108,13 @@ YAMANGDXDLL_API HRESULT InitGeometry( HWND hWnd, LPCTSTR fileName, MESHOBJECT* i
 		return E_OUTOFMEMORY;
 	}
 
+	// 텍스쳐 로딩
+	// 모델 파일의 경로를 가져온다. 
+	USES_CONVERSION;
+	WCHAR szPath[MAX_PATH] = { 0, };
+	swprintf_s(szPath, L"%s", fileName);
+	PathRemoveFileSpec(szPath);
+	
 	for ( DWORD i = 0; i < inputVal->NumMaterials; ++i )
 	{
 		inputVal->MeshMarterials[i] = d3dxMarteials[i].MatD3D;
@@ -120,19 +122,14 @@ YAMANGDXDLL_API HRESULT InitGeometry( HWND hWnd, LPCTSTR fileName, MESHOBJECT* i
 		inputVal->MeshMarterials[i].Ambient = inputVal->MeshMarterials[i].Diffuse;
 
 		inputVal->MeshTexture[i] = NULL;
-		if ( ( NULL != d3dxMarteials[i].pTextureFilename ) && lstrlenA( d3dxMarteials[i].pTextureFilename )>0 )
+		if (d3dxMarteials[i].pTextureFilename && lstrlenA( d3dxMarteials[i].pTextureFilename )>0 )
 		{
-			if ( FAILED( D3DXCreateTextureFromFileA( g_D3dDevice, d3dxMarteials[i].pTextureFilename, &( inputVal->MeshTexture[i] ) ) ) )
+			std::wstring texName = szPath;
+			texName += L"\\";
+			texName += A2W(d3dxMarteials[i].pTextureFilename);
+			if (FAILED(D3DXCreateTextureFromFile(g_D3dDevice, texName.c_str(), &(inputVal->MeshTexture[i]))))
 			{
-				const CHAR* strPrefix = "..\\";
-				CHAR strTexture[MAX_PATH];
-				strcpy_s( strTexture, MAX_PATH, strPrefix );
-				strcat_s( strTexture, MAX_PATH, d3dxMarteials[i].pTextureFilename );
-
-				if ( FAILED( D3DXCreateTextureFromFileA( g_D3dDevice, strTexture, &( inputVal->MeshTexture[i] ) ) ) )
-				{
-					MessageBox( NULL, L"Could not find texture map", L"YaMang.DLL", MB_OK );
-				}
+				MessageBox(NULL, L"Could not find texture map", L"YaMang.DLL", MB_OK);				
 			}
 		}
 	}

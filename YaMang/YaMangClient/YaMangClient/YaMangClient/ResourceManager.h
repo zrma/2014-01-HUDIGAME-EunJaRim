@@ -52,11 +52,13 @@ public:
 	ResourceMesh*	GetMeshByKey( MeshKeyType key ) const { return m_MeshArray[key]; }
 
 private:
-	void	AddMap( LPCTSTR& heightMapFileName, LPCTSTR& textureFileName, MapKeyType key );
+	// agebreak : 포인터(LPCTSTR)의 참조는 대체 뭔가..ㅡ.ㅡ;
+	//void	AddMap( LPCTSTR& heightMapFileName, LPCTSTR& textureFileName, MapKeyType key );	
+	void	AddMap( LPCTSTR heightMapFileName, LPCTSTR textureFileName, MapKeyType key );	
 	bool	CreateMap( MapKeyType key );
 	void	DeleteMap();
 
-	bool	AddMesh( LPCTSTR& fileName, MeshKeyType key );
+	bool	AddMesh( LPCTSTR fileName, MeshKeyType key );
 	void	CreateMesh( LPCTSTR& fileName, MESHOBJECT* mesh );
 	void	DeleteMesh( MESHOBJECT* mesh );
 

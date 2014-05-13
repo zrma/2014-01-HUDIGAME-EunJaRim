@@ -7,6 +7,8 @@
 #include "xpath_static.h"
 #include "PacketType.h"
 #include "Timer.h"
+#include "YMClientDef.h"
+
 
 #pragma comment(lib,"ws2_32.lib")
 
@@ -65,7 +67,7 @@ bool NetworkManager::Connect()
 	int port;
 
 	// xml 로드 테스트
-	TiXmlDocument document = TiXmlDocument( "../../../SharedPreference/ClientConfig.xml" );
+	TiXmlDocument document = TiXmlDocument( CLIENT_CONFIG);
 
 	if ( document.LoadFile() )
 	{

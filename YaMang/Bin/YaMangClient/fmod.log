@@ -1,0 +1,108 @@
+FMOD: System::create                 : Header version = 1.3.6.  Current version = 1.3.6.
+FMOD: SystemI::init                  : FMOD Studio Version: 00010306 (52927)
+FMOD: SystemI::init                  : maxchannels = 32, flags = 00000000, extradriverdata = 00000000
+FMOD: SystemI::close                 : 
+FMOD: SystemI::close                 : Stop all sounds
+FMOD: SystemI::close                 : Remove miscllaneous DSP stuff.
+FMOD: SystemI::close                 : done.
+
+FMOD: SystemI::init                  : Set up software engine
+FMOD: OutputWASAPI::enumerate        : Enumerating...
+FMOD: OutputWASAPI::enumerate        : Initialise COM library.
+FMOD: OutputWASAPI::enumerate        : Found Driver: "Realtek Digital Output (Realtek High Definition Audio)".
+FMOD: OutputWASAPI::enumerate        : Found Driver: "À8 œ% (USB PnP Sound Device)".
+FMOD: OutputWASAPI::enumerate        : Found Driver: "¤<ä (USB PnP Sound Device)".
+FMOD: OutputWASAPI::enumerate        : Found Driver: "Ètl (USB PnP Sound Device)".
+FMOD: OutputWASAPI::enumerate        : Done.
+FMOD: OutputWASAPI::init             : Initialising...
+FMOD: OutputWASAPI::init             : Forcing output channels to match Windows mix format: 8 channel(s)
+FMOD: OutputWASAPI::init             : Done.
+FMOD: Thread::initThread             : Initializing FMOD (WASAPI) feeder thread.  priority 0
+FMOD: Thread::initThread             : - Stacksize 0.  Stack pointer 00000000 : usesemaphore = 0 : sleeptime = 0
+FMOD: Thread::callback               : * FMOD (WASAPI) feeder thread started
+FMOD: Thread::initThread             : done.
+FMOD: OutputWASAPI::feederUpdate     : WASAPI feeder thread set to 'Audio' characteristic
+FMOD: Thread::initThread             : Initializing FMOD mixer thread.  priority 2
+FMOD: Thread::initThread             : - Stacksize 49152.  Stack pointer 00000000 : usesemaphore = 1 : sleeptime = 0
+FMOD: Thread::callback               : * FMOD mixer thread started
+FMOD: Thread::initThread             : done.
+FMOD: SystemI::init                  : Set up emulated output
+FMOD: SystemI::init                  : create the channel pool
+FMOD: SystemI::init                  : Set up streamer
+FMOD: Thread::initThread             : Initializing FMOD stream thread.  priority 2
+FMOD: Thread::initThread             : - Stacksize 65536.  Stack pointer 00000000 : usesemaphore = 0 : sleeptime = 10
+FMOD: Thread::callback               : * FMOD stream thread started
+FMOD: Thread::initThread             : done.
+FMOD: SystemI::init                  : done
+
+FMOD: Thread::initThread             : Initializing FMOD studio thread.  priority 0
+FMOD: Thread::initThread             : - Stacksize 49152.  Stack pointer 00000000 : usesemaphore = 0 : sleeptime = 0
+FMOD: Thread::callback               : * FMOD studio thread started
+FMOD: Thread::initThread             : done.
+FMOD: load                           : fileversion = 44, compatVersion = 44 (oldest = 44, newest = 44)
+FMOD: load                           : fileversion = 44, compatVersion = 44 (oldest = 44, newest = 44)
+FMOD: load                           : fileversion = 44, compatVersion = 44 (oldest = 44, newest = 44)
+FMOD: load                           : fileversion = 44, compatVersion = 44 (oldest = 44, newest = 44)
+FMOD: SystemI::createSound           : filename = SoundFiles/sfx.bank : mode 08010222
+FMOD: SystemI::createSound           : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+FMOD: OutputSoftware::createSample   : lengthpcm 0, lengthbytes 0, channels 0, format 0, freq 0, mode 00000000
+FMOD: SystemI::createSound           : allocated async data mem
+FMOD: SystemI::createSound           : getasyncthread
+FMOD: Thread::initThread             : Initializing FMOD nonblocking thread (0).  priority 1
+FMOD: Thread::initThread             : - Stacksize 81920.  Stack pointer 00000000 : usesemaphore = 1 : sleeptime = 0
+FMOD: Thread::callback               : * FMOD nonblocking thread (0) started
+FMOD: Thread::initThread             : done.
+FMOD: SystemI::createSound           : setdata soundi = 05286D40 : node = 0A474460
+FMOD: SystemI::createSound           : add node to async list : head = 05286FAC.  list count = 0
+FMOD: AsyncThread::threadFunc        : Starting Asynchronous operation on sound 05286D40
+FMOD: SystemI::createSound           : filename = SoundFiles/loop.bank : mode 08010222
+FMOD: SystemI::createSoundInternal   :     filename = SoundFiles/sfx.bank : mode 08010222
+FMOD: SystemI::createSound           :     FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+FMOD: SystemI::createSoundInternal   :     exinfo->cbsize             = 140
+FMOD: OutputSoftware::createSample   :     lengthpcm 0, lengthbytes 0, channels 0, format 0, freq 0, mode 00000000
+FMOD: SystemI::createSoundInternal   :     exinfo->length             = 237664
+FMOD: SystemI::createSound           :     allocated async data mem
+FMOD: SystemI::createSoundInternal   :     exinfo->fileoffset         = 16992
+FMOD: SystemI::createSound           :     getasyncthread
+FMOD: SystemI::createSoundInternal   :     exinfo->numsubsounds       = 1
+FMOD: SystemI::createSound           :     setdata soundi = 0528E080 : node = 0528E1C0
+FMOD: SystemI::createSoundInternal   :     exinfo->inclusionlist      = 0A47450C
+FMOD: SystemI::createSound           :     add node to async list : head = 05286FAC.  list count = 0
+FMOD: SystemI::createSoundInternal   :     exinfo->inclusionlistnum   = 1
+FMOD: SystemI::createSound           :     done
+FMOD: SystemI::createSoundInternal   :     exinfo->suggestedsoundtype = 6
+FMOD: SystemI::createSound           :     filename = SoundFiles/loop.bank : mode 08010222
+FMOD: SystemI::createSoundInternal   :     exinfo->initialseekpostype = 1
+FMOD: SystemI::createSound           :     FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+FMOD: SystemI::createSoundInternal   :     18 codecs found.  Scan all until one succeeds
+FMOD: OutputSoftware::createSample   :     lengthpcm 0, lengthbytes 0, channels 0, format 0, freq 0, mode 00000000
+FMOD: SystemI::createSoundInternal   :     Scan for tags.
+FMOD: SystemI::createSound           :     allocated async data mem
+FMOD: CodecTag::openInternal         :     attempting to open ID3 or ASF tags..
+FMOD: SystemI::createSound           :     getasyncthread
+FMOD: Codec::release                 :     
+FMOD: SystemI::createSound           :     setdata soundi = 0528A028 : node = 0528A168
+FMOD: Codec::release                 :     done
+FMOD: SystemI::createSound           :     add node to async list : head = 05286FAC.  list count = 1
+FMOD: CodecFSB5::openInternal        :     attempting to open as FSB5..
+FMOD: SystemI::createSound           :     done
+FMOD: CodecFSB5::openInternal        :     FSB contains 8 sounds
+FMOD: SystemI::createSound           :     filename = SoundFiles/sfx.bank : mode 08010222
+FMOD: CodecFSB5::openInternal        :     done.
+FMOD: SystemI::createSound           :     FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+FMOD: SystemI::createSoundInternal   :     Format has 1 subsounds.
+FMOD: OutputSoftware::createSample   :     lengthpcm 0, lengthbytes 0, channels 0, format 0, freq 0, mode 00000000
+FMOD: SystemI::createSoundInternal   :     Create as FMOD_CREATESAMPLE
+FMOD: SystemI::createSound           :     allocated async data mem
+FMOD: SystemI::createSoundInternal   :     Multi-sample sound (1 subsounds), create a sample container.
+FMOD: SystemI::createSound           :     getasyncthread
+FMOD: SystemI::createSoundInternal   :     creating subsound 0/1
+FMOD: SystemI::createSound           :     setdata soundi = 0A47B028 : node = 0A47B168
+FMOD: SystemI::createSample          :     mode 08010242 length 29948 samples, lengthbytes 9664
+FMOD: SystemI::createSound           :     add node to async list : head = 05286FAC.  list count = 2
+FMOD: SystemI::createSample          :     subsamples = 1, channels = 1
+FMOD: SystemI::createSound           :     done
+FMOD: SystemI::createSample          :     subsample 0.  output = 0A3899B0
+FMOD: SystemI::createSound           :     filename = SoundFiles/sfx.bank : mode 08010222
+FMOD: SystemI::createSample          :     mSoftware = 0A3899B0
+FMOD: SystemI::createSound           :     FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!

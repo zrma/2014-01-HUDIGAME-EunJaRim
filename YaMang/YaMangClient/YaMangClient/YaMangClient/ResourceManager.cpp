@@ -3,6 +3,7 @@
 #include "MainWindow.h"
 #include "yaMangDxDll.h"
 #include "MouseManager.h"
+#include "YMClientDef.h"
 
 ResourceManager::ResourceManager()
 {
@@ -18,60 +19,38 @@ ResourceManager::~ResourceManager()
 void ResourceManager::Init()
 {
 	LPCTSTR fileName = L"UnitSword.x";
-	AddMesh( fileName, MESH_KEY_UNIT_SWORD );
-	fileName = L"UnitPike.x";
-	AddMesh( fileName, MESH_KEY_UNIT_PIKE );
-	fileName = L"UnitArrow.x";
-	AddMesh( fileName, MESH_KEY_UNIT_ARROW );
-	fileName = L"UnitKnight.x";
-	AddMesh( fileName, MESH_KEY_UNIT_KNIGHT );
-	fileName = L"UnitGuard.x";
-	AddMesh( fileName, MESH_KEY_UNIT_GUARD );
+	AddMesh( MESH_UNIT_SWORD, MESH_KEY_UNIT_SWORD );
+	AddMesh( MESH_UNIT_PIKE, MESH_KEY_UNIT_PIKE );
+	AddMesh( MESH_UNIT_ARROW, MESH_KEY_UNIT_ARROW );
+	AddMesh( MESH_UNIT_KNIGHT, MESH_KEY_UNIT_KNIGHT );	
+	AddMesh( MESH_UNIT_GUARD, MESH_KEY_UNIT_GUARD );
 
 	InitGroundMesh( 100, 100 );
-	CreateRawGround( 100, 100, 5.0f );
-	fileName = L"heightmap_128_128.bmp";
-	AddMap( fileName, fileName, MAP_KEY_TEST );
+	CreateRawGround( 100, 100, 5.0f );	
+	AddMap(MAP_128, MAP_128, MAP_KEY_TEST);
 	CreateMap( MAP_KEY_TEST );
 
-
 	InitSkyBoxMesh( 1000 );
-
-	fileName = L"SkyBox_Back.png";
-	SetSkyBoxTexture( fileName, SKY_BOX_BACK );
-	fileName = L"SkyBox_Front.png";
-	SetSkyBoxTexture( fileName, SKY_BOX_FRONT );
-	fileName = L"SkyBox_Left.png";
-	SetSkyBoxTexture( fileName, SKY_BOX_LEFT );
-	fileName = L"SkyBox_Right.png";
-	SetSkyBoxTexture( fileName, SKY_BOX_RIGHT );
-	fileName = L"SkyBox_Top.png";
-	SetSkyBoxTexture( fileName, SKY_BOX_TOP );
-	fileName = L"SkyBox_Bottom.png";
-	SetSkyBoxTexture( fileName, SKY_BOX_BOTTOM );
+	SetSkyBoxTexture(TEX_SKYBOX_BACK, SKY_BOX_BACK);
+	SetSkyBoxTexture(TEX_SKYBOX_FRONT, SKY_BOX_FRONT);
+	SetSkyBoxTexture(TEX_SKYBOX_LEFT, SKY_BOX_LEFT);
+	SetSkyBoxTexture(TEX_SKYBOX_RIGHT, SKY_BOX_RIGHT);
+	SetSkyBoxTexture(TEX_SKYBOX_TOP, SKY_BOX_TOP);
+	SetSkyBoxTexture(TEX_SKYBOX_BOTTOM, SKY_BOX_BOTTOM);
 	m_IsMapReady = true;
 
 	InitCursor( CURSOR_MAX, MouseManager::GetInstance()->GetMousePositionX(), MouseManager::GetInstance()->GetMousePositionY() );
-	fileName = L"cursor_default.png";
-	CreateCursorImage( fileName, CURSOR_DEFAULT );
-	fileName = L"cursor_attack.png";
-	CreateCursorImage( fileName, CURSOR_ATTACK );
-	fileName = L"cursor_clicked.png";
-	CreateCursorImage( fileName, CURSOR_CLICK );
-	fileName = L"cursor_corps_clickable.png";
-	CreateCursorImage( fileName, CURSOR_OVER_CORPS );
+	CreateCursorImage(TEX_CURSOR_DEFAULT, CURSOR_DEFAULT);
+	CreateCursorImage(TEX_CURSOR_ATTACK, CURSOR_ATTACK);
+	CreateCursorImage(TEX_CURSOR_CLICK, CURSOR_CLICK);
+	CreateCursorImage(TEX_CURSOR_OVER_CORPS, CURSOR_OVER_CORPS);
 // 	fileName = L"cursor_corps_clicked.png";
 // 	CreateCursorImage( fileName, CURSOR_CLICK_CORPS );
-	fileName = L"cursor_unreachable.png";
-	CreateCursorImage( fileName, CURSOR_UNRECHEABLE );
-	fileName = L"cursor_camera_rotating.png";
-	CreateCursorImage(fileName, CURSOR_CAMERA_ROTATING);
-	fileName = L"cursor_movable.png";
-	CreateCursorImage(fileName, CURSOR_CORPS_MOVABLE);
-	fileName = L"cursor_movable_clicked.png";
-	CreateCursorImage(fileName, CURSOR_CORPS_MOVABLE_CLICK);
-	fileName = L"cursor_over_clicked_corps.png";
-	CreateCursorImage(fileName, CURSOR_OVER_PICKED_CORPS);
+	CreateCursorImage(TEX_CURSOR_UNRECHEABLE, CURSOR_UNRECHEABLE);
+	CreateCursorImage(TEX_CURSOR_ROTATION, CURSOR_CAMERA_ROTATING);
+	CreateCursorImage(TEX_CURSOR_MOVABLE, CURSOR_CORPS_MOVABLE);
+	CreateCursorImage(TEX_CURSOR_CLICKED, CURSOR_CORPS_MOVABLE_CLICK);
+	CreateCursorImage(TEX_CURSOR_CLICKED_CORPS, CURSOR_OVER_PICKED_CORPS);
 
 	m_ISCursorReady = true;
 }
@@ -98,7 +77,7 @@ void ResourceManager::Destroy()
 	}
 }
 
-void ResourceManager::AddMap( LPCTSTR& heightMapFileName, LPCTSTR& textureFileName, MapKeyType key )
+void ResourceManager::AddMap( LPCTSTR heightMapFileName, LPCTSTR textureFileName, MapKeyType key )
 {
 	SafeDelete( m_HeightMapArray[key] );
 		
@@ -135,7 +114,7 @@ void ResourceManager::DeleteMap()
 	m_IsMapReady = false;
 }
 
-bool ResourceManager::AddMesh( LPCTSTR& fileName, MeshKeyType key )
+bool ResourceManager::AddMesh( LPCTSTR fileName, MeshKeyType key )
 {
 	ResourceMesh* mesh = new ResourceMesh();
 	mesh->m_MeshObject = new MESHOBJECT();

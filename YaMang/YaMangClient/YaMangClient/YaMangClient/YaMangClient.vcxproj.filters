@@ -187,6 +187,7 @@
     <ClInclude Include="PlayerManager.h">
       <Filter>Player</Filter>
     </ClInclude>
+    <ClInclude Include="YMClientDef.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
