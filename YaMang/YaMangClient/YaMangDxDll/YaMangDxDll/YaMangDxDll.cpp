@@ -1,6 +1,8 @@
 ﻿// yaMangDxDll.cpp : DLL 응용 프로그램을 위해 내보낸 함수를 정의합니다.
 //
 
+// agebreak : CPP 파일 하나가 너무 크다.. 기능별로 쪼개서 함수를 담을것. 헤더파일은 하나더라도, 함수는 여러 CPP 파일에 나눠서 구현 가능하다. 
+
 #include "stdafx.h"
 #include "yaMangDxDll.h"
 #include "Logger.h"
@@ -435,6 +437,7 @@ YAMANGDXDLL_API void PreSettingForTool()
 
 	// 프로젝션 행렬
 	// 창크기 변경에 따라 크고 작아지게 할 것
+	// agebreak : 알면 수정 하셈. 상수는 사용하면 안됨. 윈도우 크기 가져오는 API 사용
 	SetAspectRatio( 729, 588 );
 }
 
@@ -488,6 +491,8 @@ YAMANGDXDLL_API void CalcPickingRay( int mouseX, int mouseY )
 
 }
 
+// agebreak : 하나의 함수안에 기능이 2가지가 들어있다. 1. Pick 포인트를 찾고, 2 포인트의 높이를 변경. 나중에 Pick 포인트만 필요하면 어떻게 할것인가?
+// 함수를 기능단위로 분리해야 한다. 하나의 함수에는 하나의 기능만 구현한다.
 YAMANGDXDLL_API HRESULT TransPickedTriangle( int modeSelector, float* pickedX, float* pickedZ )
 {
 	if ( !( pickedX || pickedZ ) )
@@ -501,13 +506,14 @@ YAMANGDXDLL_API HRESULT TransPickedTriangle( int modeSelector, float* pickedX, f
 	CUSTOMVERTEX* VerticesStartPoint;
 	presentVertexBuffer->Lock( 0, 0, (void**)&VerticesStartPoint, 0 );
 
-	BOOL Hit1 = false;
+	BOOL Hit1 = false;	// agebreak : 누가 변수명을 대문자로 쓰남!
 	BOOL Hit2 = false;
 	float dist1 = 0;
 	float dist2 = 0;
 
 	int trianglePointA = NULL, trianglePointB = NULL, trianglePointC = NULL, trianglePointD = NULL;
 
+	// agebreak : 이런 한눈에 알 수 없는 로직 같은 경우에는 주석을 꼭 달것. 
 	for ( UINT z = 0; ( z < ( g_ZHeight - 1 ) ) && !( Hit1 | Hit2 ); ++z )
 	{
 		if ( z % 2 == 0 )
@@ -741,11 +747,12 @@ YAMANGDXDLL_API void MoveCamera(float x, float y, float z)
 
 	D3DXMATRIXA16 viewMatrix;
 	D3DXMatrixLookAtLH(&viewMatrix, &g_EyePoint, &g_LookAtPoint, &g_UpVector);
-	SetMatrix(&viewMatrix, true);
+	SetMatrix(&viewMatrix, true);	// agebrek : 차라리 SetCameraMatrix라고 하는 방식이 명확 하다. 뒤에 인자로 구별하지 말고, 명확하게 함수로 구별
 }
 
 YAMANGDXDLL_API void ZoomCamera(float zoom)
 {
+	// agebreak : 카메라 줌은 간단히 FOV 수정으로도 구현 가능하다. 한번 찾아볼것
 	D3DXVECTOR3 view = g_LookAtPoint - g_EyePoint;
 	D3DXVec3Normalize(&view, &view);
 	g_EyePoint += view * zoom;
@@ -781,6 +788,7 @@ YAMANGDXDLL_API HRESULT InitSkyBoxMesh( int size )
 
 	HRESULT hr = S_OK;
 
+	// agebreak : 스카이박스에 노말값이 필요한가?? 라이팅을 받는것도 아닌데.. 
 	if ( FAILED( hr = D3DXCreateMeshFVF( 12, 24, D3DXMESH_MANAGED, D3DFVF_SKYBOXVERTEX, g_D3dDevice, &g_SkyBoxMesh ) ) )
 	{
 		MessageBox( NULL, L"Could not Create Sky Box Mesh", L"YaMang.DLL", MB_OK );
@@ -915,7 +923,7 @@ YAMANGDXDLL_API HRESULT InitSkyBoxMesh( int size )
 
 
 
-
+// agebreak : ㅋㅋㅋ 딴 기능은 구현된게 없으면서, 스샷 기능부터 넣었냠! ㅋㅋ
 //////////////////////////////////////////////////////////////////////////
 // screenShot
 //////////////////////////////////////////////////////////////////////////
