@@ -27,6 +27,7 @@ public:
 	bool							PlaySound( SoundType soundType );
 	bool							StopSound( SoundType soundType );
 	
+	bool							SetVolume( SoundType soundType, float volume ); // 1.0f max
 private:
 	void							LoadBank( const char* fileName );
 	FMOD::Studio::EventInstance*	GetEventInstance( const char* path );

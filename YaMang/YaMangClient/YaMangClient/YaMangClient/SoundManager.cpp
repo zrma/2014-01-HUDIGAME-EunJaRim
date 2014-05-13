@@ -112,3 +112,15 @@ bool SoundManager::StopSound( SoundType soundType )
 
 	return false;
 }
+
+bool SoundManager::SetVolume( SoundType soundType, float volume )
+{
+	if ( m_TextList[soundType] != nullptr )
+	{
+		m_TextList[soundType]->setVolume( volume );
+		m_System->update( );
+		return true;
+	}
+
+	return false;
+}

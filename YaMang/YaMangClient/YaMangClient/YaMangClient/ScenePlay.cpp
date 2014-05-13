@@ -24,7 +24,7 @@ ScenePlay::~ScenePlay()
 void ScenePlay::Create()
 {
 	SoundManager::GetInstance()->PlaySound( SOUND_SCENE_PLAY_BGM2 );
-
+	SoundManager::GetInstance()->SetVolume( SOUND_SCENE_PLAY_BGM2, 0.3f );
 	m_MouseCursor = new MouseRender();
 }
 
