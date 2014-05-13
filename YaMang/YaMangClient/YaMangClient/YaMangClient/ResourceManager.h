@@ -47,6 +47,7 @@ public:
 	void	Init();
 	void	Destroy();
 	bool	IsMapReady() const { return m_IsMapReady; }
+	int		GetMapSize() const { return m_MapSize; }
 	bool	IsCursorReady() const { return m_ISCursorReady; }
 	
 	ResourceMesh*	GetMeshByKey( MeshKeyType key ) const { return m_MeshArray[key]; }
@@ -64,5 +65,7 @@ private:
 	std::array<ResourceMap*, MAP_KEY_MAX> m_HeightMapArray;
 	
 	bool	m_IsMapReady = false;
+	int		m_MapSize = 0;
+
 	bool	m_ISCursorReady = false;
 };

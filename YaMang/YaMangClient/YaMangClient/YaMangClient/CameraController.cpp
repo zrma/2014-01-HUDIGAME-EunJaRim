@@ -4,6 +4,7 @@
 #include "Renderer.h"
 #include "Timer.h"
 #include "MouseManager.h"
+#include "ResourceManager.h"
 
 CameraController::CameraController()
 {
@@ -23,6 +24,8 @@ void CameraController::Init()
 	Renderer::GetInstance()->SetViewMatrix( viewMatrix );
 
 	m_ZoomDirection = ZOOM_DIRECTION_BACK;
+
+	m_Radius = static_cast<float>( ResourceManager::GetInstance()->GetMapSize() ) / 1.2f;
 }
 
 void CameraController::MoveForward( float speed, bool zoom )
@@ -40,6 +43,8 @@ void CameraController::MoveForward( float speed, bool zoom )
 	m_EyePoint += view * speed;
 	m_LookAtPoint += view * speed;
 
+	InterpolationCameraRadius();
+
 	D3DXMATRIXA16 viewMatrix;
 	D3DXMatrixLookAtLH( &viewMatrix, &m_EyePoint, &m_LookAtPoint, &m_UpVector );
 	Renderer::GetInstance()->SetViewMatrix( viewMatrix );
@@ -55,6 +60,8 @@ void CameraController::MoveSide( float speed )
 	m_EyePoint += cross * speed;
 	m_LookAtPoint += cross * speed;
 
+	InterpolationCameraRadius();
+
 	D3DXMATRIXA16 viewMatrix;
 	D3DXMatrixLookAtLH( &viewMatrix, &m_EyePoint, &m_LookAtPoint, &m_UpVector );
 	Renderer::GetInstance()->SetViewMatrix( viewMatrix );
@@ -64,6 +71,8 @@ void CameraController::MoveElevate( float speed )
 {
 	m_LookAtPoint.y += speed;
 	m_EyePoint.y += speed;
+
+	InterpolationCameraRadius();
 
 	D3DXMATRIXA16 viewMatrix;
 	D3DXMatrixLookAtLH( &viewMatrix, &m_EyePoint, &m_LookAtPoint, &m_UpVector );
@@ -298,4 +307,18 @@ void CameraController::Update()
 		m_ZoomPointY += delta;
 		MoveForward( delta );
 	}
+}
+
+void CameraController::InterpolationCameraRadius()
+{
+	if ( D3DXVec3Length( &m_EyePoint ) < m_Radius )
+	{
+		return;
+	}
+
+	D3DXVECTOR3 eyeVector;
+	D3DXVec3Normalize( &eyeVector, &m_EyePoint );
+
+	m_EyePoint -= eyeVector;
+	m_LookAtPoint -= eyeVector;
 }

@@ -30,6 +30,8 @@ void ResourceManager::Init()
 
 	InitGroundMesh( 100, 100 );
 	CreateRawGround( 100, 100, 5.0f );
+	m_MapSize = 500;
+
 	fileName = L"heightmap_128_128.bmp";
 	AddMap( fileName, fileName, MAP_KEY_TEST );
 	CreateMap( MAP_KEY_TEST );

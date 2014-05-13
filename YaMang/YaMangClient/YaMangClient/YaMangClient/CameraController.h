@@ -59,6 +59,8 @@ public:
 	void	ChangeMouseZoomStatus( short zoom );
 
 private:
+	void	InterpolationCameraRadius();
+
 	FLOAT			m_Axis = 0;
 	FLOAT			m_Height = 0;
 
@@ -75,4 +77,6 @@ private:
 	FLOAT			m_ZoomPointY = 0;
 	
 	ZoomDirectionType	m_ZoomDirection = ZoomDirectionType::ZOOM_DIRECTION_NONE;
+	
+	FLOAT			m_Radius = 0;
 };

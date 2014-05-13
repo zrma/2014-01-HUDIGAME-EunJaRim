@@ -37,18 +37,18 @@ void MouseManager::MoveMousePosition( int x, int y )
 
 	m_CursorType = CURSOR_DEFAULT;
 
+	float time = static_cast<float>( Timer::GetInstance()->GetElapsedTime() ) / 1000;
+
 	//마우스 오른쪽 드래그 시 마우스 고정하고 카메라 회전
 	if ( m_IsRightDragging )
 	{
 		m_CursorType = CURSOR_CAMERA_ROTATING;
 		if ( ( x + m_WndLocationX ) > m_WndXPos )
 		{
-			float time = static_cast<float>( Timer::GetInstance()->GetElapsedTime() ) / 1000;
 			CameraController::GetInstance()->RotateSide( time *( ( x + m_WndLocationX ) - m_WndXPos ) );
 		}
 		if ( ( x + m_WndLocationX ) < m_WndXPos )
 		{
-			float time = static_cast<float>( Timer::GetInstance()->GetElapsedTime() ) / 1000;
 			CameraController::GetInstance()->RotateSide( -time *( m_WndXPos - ( x + m_WndLocationX ) ) );
 		}
 
@@ -57,24 +57,20 @@ void MouseManager::MoveMousePosition( int x, int y )
 
 	if ( ( x + m_WndLocationX ) > m_WndXPos )
 	{
-		short time = static_cast<short>(Timer::GetInstance()->GetElapsedTime() / 2.f);
-		m_MousePosition.X += (time * ( ( x + m_WndLocationX ) - m_WndXPos ));
+		m_MousePosition.X += static_cast<SHORT>( time * 750 * ( ( x + m_WndLocationX ) - m_WndXPos ) );
 	}
 	if ( ( x + m_WndLocationX ) < m_WndXPos )
 	{
-		short time = static_cast<short>(Timer::GetInstance()->GetElapsedTime() / 2.f);
-		m_MousePosition.X -= (time *(m_WndXPos - (x + m_WndLocationX)));
+		m_MousePosition.X -= static_cast<SHORT>( time * 750 * ( m_WndXPos - ( x + m_WndLocationX ) ) );
 	}
 	if ( ( y + m_WndLocationY ) > m_WndYPos )
 	{
-		short time = static_cast<short>(Timer::GetInstance()->GetElapsedTime() / 2.f);
-		m_MousePosition.Y += (time *( ( y + m_WndLocationY ) - m_WndYPos ));
+		m_MousePosition.Y += static_cast<SHORT>( time * 750 * ( ( y + m_WndLocationY ) - m_WndYPos ) );
 	}
 
 	if ( ( y + m_WndLocationY ) < m_WndYPos )
 	{
-		short time = static_cast<short>(Timer::GetInstance()->GetElapsedTime() / 2.f);
-		m_MousePosition.Y -= (time *( m_WndYPos - ( y + m_WndLocationY ) ));
+		m_MousePosition.Y -= static_cast<SHORT>(time * 750 *( m_WndYPos - ( y + m_WndLocationY ) ));
 	}
 
 	//일단 창밖으로 나가는거 값 때려박음
