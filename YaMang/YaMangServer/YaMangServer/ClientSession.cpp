@@ -335,13 +335,13 @@ void ClientSession::GameStart()
 
 void ClientSession::AddCorpsNum()
 {
-	++m_CorpsNum;
+	++m_CorpsNow;
 	CalculateRegenTime( );
 }
 
 void ClientSession::SubCorpsNum()
 {
-	--m_CorpsNum;
+	--m_CorpsNow;
 	CalculateRegenTime( );
 }
 
@@ -359,13 +359,23 @@ void ClientSession::SubBaseNum()
 
 void ClientSession::CalculateRegenTime()
 {
-	// 하드 코딩~~ 베이스 하나당 식량 증가량과 기본값
-	m_Food = (m_BaseNum * 100) + 100;
-	m_CorpsRegenTime = static_cast<ULONGLONG>(m_CorpsNum / m_Food) * 1000 + 30000; // 공식을 만들어 봅시다.
+	// 하드 코딩~~ 베이스 하나당 최대 동원수 증가량과 기본값
+	m_CorpsMax = (m_BaseNum * 10) + 10;
 
+	if ( m_CorpsMax <= m_CorpsNow )
+	{
+		m_CorpsRegenTime = INT_MAX;
+	}
+	else
+	{
+		// m_CorpsRegenTime = static_cast<ULONGLONG>( sqrt( ( 100 * ( m_CorpsMax + m_CorpsNow ) ) / ( m_CorpsMax - m_CorpsNow ) ) + 30000 );
+		m_CorpsRegenTime = static_cast<ULONGLONG>( ( 100 * ( m_CorpsMax + m_CorpsNow ) ) / ( m_CorpsMax - m_CorpsNow + 0 ) + 30000 ); // + 0에 보정치를 넣으면 부대수가 많을때 증가하는 타임차를 줄일수 있다.
+	}
+
+	
 	RefreshUIResult outPacket;
-	outPacket.m_Food = m_Food;
-	outPacket.m_CorpsNum = m_CorpsNum;
+	outPacket.m_Food = m_CorpsMax;
+	outPacket.m_CorpsNum = m_CorpsNow;
 	outPacket.m_BaseNum = m_BaseNum;
 
 	if ( !DirectSend( &outPacket ) )

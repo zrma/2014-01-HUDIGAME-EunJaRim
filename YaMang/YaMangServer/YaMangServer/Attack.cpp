@@ -77,7 +77,8 @@ void Attack::OnTick()
 
 	if ( length < m_OwnerCrops->GetAttackRange() )
 	{
-		m_TargerCrops->MoveStop();
+		m_TargerCrops->MoveStop( );
+		
 		Action* targetAction = m_TargerCrops->GetHoldingAction( );
 
 		// targetCorps의 액션이 없으면(idle)이면 반격

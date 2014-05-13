@@ -82,9 +82,9 @@ public:
 
 	void		GameStart();
 
-	int			GetFood() const { return m_Food; }
+	int			GetFood() const { return m_CorpsMax; }
 
-	int			GetCorpsNum( ) const { return m_CorpsNum; }
+	int			GetCorpsNum( ) const { return m_CorpsNow; }
 	void		AddCorpsNum( );
 	void		SubCorpsNum( );
 
@@ -131,8 +131,8 @@ private:
 	//////////////////////////////////////////////////////////////////////////
 	// 게임 컨텐츠 관련 데이터
 	//////////////////////////////////////////////////////////////////////////
-	int						m_Food = 100;
-	int						m_CorpsNum = 0;
+	int						m_CorpsMax = 10;
+	int						m_CorpsNow = 0;
 	int						m_BaseNum = 0;
 	ULONGLONG				m_CorpsRegenTime = 10000;
 	bool					m_GameStarted = false;

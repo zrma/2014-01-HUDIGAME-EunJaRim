@@ -13,6 +13,7 @@
 #include "Attack.h"
 #include "TakeArea.h"
 #include "MacroSet.h"
+#include "KnightAttack.h"
 
 // 테스트용 헤더
 extern RoomManager* g_RoomManager;
@@ -473,9 +474,9 @@ void ClientSession::HandleAttackCorpsRequest( AttackCorpsRequest& inPacket )
 		Disconnect();
 	}
 
-	if ( UnitType::UNIT_GUARD == targetCorps->GetUnitType())
+	if ( UnitType::UNIT_GUARD == targetCorps->GetUnitType() )
 	{
-		TakeArea* action = new TakeArea( );
+		TakeArea* action = new TakeArea();
 		action->SetClientManager( m_ClientManager );
 		action->SetOwnerCorps( myCorps );
 		action->SetTargetCorps( targetCorps );
@@ -485,13 +486,27 @@ void ClientSession::HandleAttackCorpsRequest( AttackCorpsRequest& inPacket )
 	}
 	else
 	{
-		Attack* action = new Attack();
-		action->SetClientManager( m_ClientManager );
-		action->SetOwnerCorps( myCorps );
-		action->SetTargetCorps( targetCorps );
+		if ( UnitType::UNIT_KNIGHT == myCorps->GetUnitType( ) )
+		{
+			KnightAttack* action = new KnightAttack( );
+			action->SetClientManager( m_ClientManager );
+			action->SetOwnerCorps( myCorps );
+			action->SetTargetCorps( targetCorps );
 
-		m_ClientManager->AddActionToScheduler( action, 0 );
-		Log( "[Packet GET]AttackCorps FromCorpID:%d ToCorpID:%d \n", myCorpsID, targetCorpsID );
+			m_ClientManager->AddActionToScheduler( action, 0 );
+			Log( "[Packet GET]KnightAttackCorps FromCorpID:%d ToCorpID:%d \n", myCorpsID, targetCorpsID );
+		}
+		else
+		{
+			Attack* action = new Attack();
+			action->SetClientManager( m_ClientManager );
+			action->SetOwnerCorps( myCorps );
+			action->SetTargetCorps( targetCorps );
+
+			m_ClientManager->AddActionToScheduler( action, 0 );
+			Log( "[Packet GET]AttackCorps FromCorpID:%d ToCorpID:%d \n", myCorpsID, targetCorpsID );
+		}
+
 	}
 
 

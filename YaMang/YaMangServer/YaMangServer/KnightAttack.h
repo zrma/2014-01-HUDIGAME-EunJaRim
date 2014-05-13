@@ -17,5 +17,7 @@ private:
 
 private:
 	Corps*		m_TargerCrops = nullptr;
+	bool		m_CanAttack = true;
+	ULONGLONG	m_AttackedTime = 0;
 };
 
