@@ -43,7 +43,7 @@ void CameraController::MoveForward( float speed, bool zoom )
 	m_EyePoint += view * speed;
 	m_LookAtPoint += view * speed;
 
-	InterpolationCameraRadius();
+	InterpolateCameraRadius();
 
 	D3DXMATRIXA16 viewMatrix;
 	D3DXMatrixLookAtLH( &viewMatrix, &m_EyePoint, &m_LookAtPoint, &m_UpVector );
@@ -60,7 +60,7 @@ void CameraController::MoveSide( float speed )
 	m_EyePoint += cross * speed;
 	m_LookAtPoint += cross * speed;
 
-	InterpolationCameraRadius();
+	InterpolateCameraRadius();
 
 	D3DXMATRIXA16 viewMatrix;
 	D3DXMatrixLookAtLH( &viewMatrix, &m_EyePoint, &m_LookAtPoint, &m_UpVector );
@@ -72,7 +72,7 @@ void CameraController::MoveElevate( float speed )
 	m_LookAtPoint.y += speed;
 	m_EyePoint.y += speed;
 
-	InterpolationCameraRadius();
+	InterpolateCameraRadius();
 
 	D3DXMATRIXA16 viewMatrix;
 	D3DXMatrixLookAtLH( &viewMatrix, &m_EyePoint, &m_LookAtPoint, &m_UpVector );
@@ -309,7 +309,7 @@ void CameraController::Update()
 	}
 }
 
-void CameraController::InterpolationCameraRadius()
+void CameraController::InterpolateCameraRadius()
 {
 	if ( D3DXVec3Length( &m_EyePoint ) < m_Radius )
 	{

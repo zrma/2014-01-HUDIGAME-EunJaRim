@@ -39,11 +39,16 @@ public:
 	void	SetActStatus( ActionStatusType actionStatus );
 	void	GoFoward();
 	void	LookForward();
+
+	void	InterpolatePosition();
 	
 	bool	IsSelected() const { return m_IsSelected; }
 	void	SetSelected( bool selected ) { m_IsSelected = selected; }
 
 	bool	IsContain( float x, float z );
+
+	bool	GetMoved() const { return m_IsMoved; }
+	void	SetMoved( bool isMoved ) { m_IsMoved = isMoved; }
 
 private:
 	Corps();
@@ -62,6 +67,7 @@ private:
 	std::array<BreadBoard*, static_cast<size_t>(FormationType::FORMATION_MAX)> m_FormationArray;
 
 	bool	m_IsSelected = false;
+	bool	m_IsMoved = false;
 
 	ActionFunc	m_Action;
 };

@@ -59,7 +59,7 @@ public:
 	void	ChangeMouseZoomStatus( short zoom );
 
 private:
-	void	InterpolationCameraRadius();
+	void	InterpolateCameraRadius();
 
 	FLOAT			m_Axis = 0;
 	FLOAT			m_Height = 0;

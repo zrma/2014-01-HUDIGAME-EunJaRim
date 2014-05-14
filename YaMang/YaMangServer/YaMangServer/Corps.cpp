@@ -15,6 +15,9 @@
 Corps::Corps( int playerID, int corpsID, UnitType unitType, PositionInfo position, GameRoom* clientManager )
 : m_PlayerID( playerID ), m_CorpsID( corpsID ), m_UnitType(unitType), m_Position( position ), m_ClientManager( clientManager )
 {
+	D3DXVECTOR3 view = m_Position.m_LookAtPoint - m_Position.m_EyePoint;
+	m_MovingRoute.m_EyePoint = { m_Position.m_EyePoint.x, 0.0f, m_Position.m_EyePoint.z };
+	m_MovingRoute.m_LookAtPoint = { view.x, 0.0f, view.y };
 }
 
 

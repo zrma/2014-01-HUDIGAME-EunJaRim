@@ -72,9 +72,16 @@ void PlayerManager::MoveCorpsToPosition( float x, float z ) const
 {
 	if ( !m_SelectedCorpsList.empty() )
 	{
+		Scene* scene = SceneManager::GetInstance()->GetNowScene();
+		if ( typeid( ScenePlay ) != typeid( *scene ) )
+		{
+			return;
+		}
+
 		for ( auto& iter : m_SelectedCorpsList )
 		{
 			MoveCorpsRequest moveCorpsData;
+
 			moveCorpsData.m_CorpsID = iter;
 			moveCorpsData.m_NowX = x;
 			moveCorpsData.m_NowZ = z;

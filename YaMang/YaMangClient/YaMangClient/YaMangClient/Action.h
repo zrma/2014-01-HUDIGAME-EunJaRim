@@ -31,6 +31,15 @@ struct ActionDefault: public Action
 	}
 };
 
+struct ActionStoppingPosition: public Action
+{
+	virtual void operator() ( Corps& corps )
+	{
+		// 멈춰 있지만 서버에서 받은 위치와 클라 위치를 위치 보정함
+		corps.InterpolatePosition();
+	}
+};
+
 struct ActionHoldPosition: public Action
 {
 	virtual void operator() ( Corps& corps )

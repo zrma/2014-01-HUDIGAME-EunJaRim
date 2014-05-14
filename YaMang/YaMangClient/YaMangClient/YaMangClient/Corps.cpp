@@ -120,7 +120,7 @@ void Corps::Render() const
 	if ( IsSelected() )
 	{
 		D3DXMATRIXA16 scaleMatrix;
-		D3DXMatrixScaling( &scaleMatrix, 0.7f, 0.7f, 0.7f );
+		D3DXMatrixScaling( &scaleMatrix, 0.6f, 0.6f, 0.6f );
 
 		thisMatrix = scaleMatrix * thisMatrix;
 	}
@@ -162,10 +162,12 @@ void Corps::GoFoward()
 	D3DXVECTOR3 view = m_LookAtPoint - m_EyePoint;
 
 	float time = static_cast<float>( Timer::GetInstance()->GetElapsedTime() ) / 1000;
-	float delta = time * m_Speed;
+	float delta = time * m_Speed / ( m_IsMoved ? 2 : 1);
 
 	m_EyePoint += view * delta;
 	m_LookAtPoint += view * delta;
+
+	InterpolatePosition();
 }
 
 void Corps::ClearAction()
@@ -267,5 +269,22 @@ void Corps::SetFormation( FormationType formation )
 			m_MeshKey = MESH_KEY_CORPS_RUSH;
 		}
 			break;
+	}
+}
+
+void Corps::InterpolatePosition()
+{
+	D3DXVECTOR3 distance = m_TargetPoint - m_EyePoint;
+	if ( D3DXVec3Length( &distance ) > 3.0f )
+	{
+		float time = static_cast<float>( Timer::GetInstance()->GetElapsedTime() ) / 1000;
+		float delta = time * m_Speed / ( m_IsMoved ? 2 : 1 );
+
+		// Log( "목표치까지 거리 %4f ( %4f %4f ) -> (%4f %4f ) \n", D3DXVec3Length( &distance ),
+		// 	 m_EyePoint.x, m_EyePoint.z, m_TargetPoint.x, m_TargetPoint.z);
+
+		D3DXVec3Normalize( &distance, &distance );
+		m_EyePoint += delta * distance;
+		m_LookAtPoint += delta * distance;
 	}
 }

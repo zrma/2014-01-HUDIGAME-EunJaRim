@@ -57,19 +57,19 @@ void MouseManager::MoveMousePosition( int x, int y )
 
 	if ( ( x + m_WndLocationX ) > m_WndXPos )
 	{
-		m_MousePosition.X += static_cast<SHORT>( time * 750.0f * ( ( x + m_WndLocationX ) - m_WndXPos ) );
+		m_MousePosition.X += static_cast<SHORT>( time * 1000.0f * ( ( x + m_WndLocationX ) - m_WndXPos ) );
 	}
 	if ( ( x + m_WndLocationX ) < m_WndXPos )
 	{
-		m_MousePosition.X -= static_cast<SHORT>( time * 750.0f * ( m_WndXPos - ( x + m_WndLocationX ) ) );
+		m_MousePosition.X -= static_cast<SHORT>( time * 1000.0f * ( m_WndXPos - ( x + m_WndLocationX ) ) );
 	}
 	if ( ( y + m_WndLocationY ) > m_WndYPos )
 	{
-		m_MousePosition.Y += static_cast<SHORT>( time * 750.0f * ( ( y + m_WndLocationY ) - m_WndYPos ) );
+		m_MousePosition.Y += static_cast<SHORT>( time * 1000.0f * ( ( y + m_WndLocationY ) - m_WndYPos ) );
 	}
 	if ( ( y + m_WndLocationY ) < m_WndYPos )
 	{
-		m_MousePosition.Y -= static_cast<SHORT>( time * 750.0f *( m_WndYPos - ( y + m_WndLocationY ) ) );
+		m_MousePosition.Y -= static_cast<SHORT>( time * 1000.0f *( m_WndYPos - ( y + m_WndLocationY ) ) );
 	}
 
 	//일단 창밖으로 나가는거 값 때려박음

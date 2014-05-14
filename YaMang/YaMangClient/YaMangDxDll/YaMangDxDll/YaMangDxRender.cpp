@@ -157,6 +157,9 @@ YAMANGDXDLL_API void RenderSkyBox()
 			g_D3dDevice->SetTexture( 0, g_SkyBoxTextures[i] );
 			g_SkyBoxMesh->DrawSubset( i );
 		}
+
+		g_D3dDevice->SetSamplerState( 0, D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP );
+		g_D3dDevice->SetSamplerState( 0, D3DSAMP_ADDRESSV, D3DTADDRESS_WRAP );
 	}
 }
 

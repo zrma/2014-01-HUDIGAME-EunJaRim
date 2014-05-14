@@ -114,13 +114,14 @@ void ScenePlay::MoveCorpsStart( int corpsID, D3DXVECTOR3 targetPosition, D3DXVEC
 		m_CorpsList[corpsID]->SetTargetPosition( targetPosition );
 		m_CorpsList[corpsID]->SetLookAtVector( lookAtVector );
 		m_CorpsList[corpsID]->SetSpeed( speed );
+		m_CorpsList[corpsID]->SetMoved( true );
 
 		ActionMovePosition action;
 		m_CorpsList[corpsID]->ChangeAction( action );
 	}
 }
 
-void ScenePlay::MoveCorpsStop( int corpsID, D3DXVECTOR3 targetPosition, D3DXVECTOR3 lookAtVector )
+void ScenePlay::MoveCorpsStop( int corpsID, D3DXVECTOR3 targetPosition, D3DXVECTOR3 lookAtPoint )
 {
 	if ( m_CorpsList.find( corpsID ) != m_CorpsList.end() )
 	{
@@ -128,10 +129,13 @@ void ScenePlay::MoveCorpsStop( int corpsID, D3DXVECTOR3 targetPosition, D3DXVECT
 		{
 			assert( false );
 		}
+		// D3DXVECTOR3 view = lookAtPoint - targetPosition;
 		m_CorpsList[corpsID]->SetTargetPosition( targetPosition );
-		m_CorpsList[corpsID]->SetLookAtVector( lookAtVector );
-		m_CorpsList[corpsID]->SetSpeed( 0 );
-		m_CorpsList[corpsID]->ClearAction();
+		m_CorpsList[corpsID]->SetLookAtPoint( lookAtPoint );
+		m_CorpsList[corpsID]->SetMoved( false );
+		
+		ActionStoppingPosition action;
+		m_CorpsList[corpsID]->ChangeAction( action );
 	}
 }
 
@@ -156,7 +160,7 @@ void ScenePlay::SyncOneCorp( int corpsID, D3DXVECTOR3 corpsNow, D3DXVECTOR3 corp
 			assert( false );
 		}
 		m_CorpsList[corpsID]->SetTargetPosition( corpsNow );
-		m_CorpsList[corpsID]->SetLookAtVector( corpsLook );
+		m_CorpsList[corpsID]->SetLookAtPoint( corpsLook );
 		m_CorpsList[corpsID]->SetCorpsHP( unitNum );
 		m_CorpsList[corpsID]->SetFormation( formationType );
 	}

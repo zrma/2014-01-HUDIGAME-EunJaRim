@@ -261,7 +261,7 @@ void NetworkManager::HandleMoveCorpsResult( MoveCorpsResult& inPacket )
 		{
 			ScenePlay* scenePlay = static_cast<ScenePlay*>( scene );
 			scenePlay->MoveCorpsStart( corpsID, targetPosition, lookAtVector, speed );
-			Log( "CorpsMoving! CorpID:%d - Move To X:%f Z:%f Speed:%f \n", corpsID, lookAtVector.x, lookAtVector.z, speed );
+			Log( "CorpsMoving! CorpID:%d - Move Toward X:%f Z:%f Speed:%f \n", corpsID, lookAtVector.x, lookAtVector.z, speed );
 			SoundManager::GetInstance()->PlaySound( SOUND_CORPS_MOVE );
 		}
 		else
@@ -295,13 +295,13 @@ void NetworkManager::HandleStopCorpsResult( StopCorpsResult& inPacket )
 		float lookZ = inPacket.m_LookZ;
 
 		D3DXVECTOR3 targetPosition = { nowX, 0.0f, nowZ };
-		D3DXVECTOR3 lookAtVector = { lookX, 0.0f, lookZ };
+		D3DXVECTOR3 lookAtPoint = { lookX, 0.0f, lookZ };
 
 		Scene* scene = SceneManager::GetInstance()->GetNowScene();
 		if ( typeid( ScenePlay ) == typeid( *scene ) )
 		{
 			ScenePlay* scenePlay = static_cast<ScenePlay*>( scene );
-			scenePlay->MoveCorpsStop( corpsID, targetPosition, lookAtVector );
+			scenePlay->MoveCorpsStop( corpsID, targetPosition, lookAtPoint );
 			Log( "CorpsStop! CorpID:%d \n", corpsID );
 		}
 		else
@@ -380,6 +380,7 @@ void NetworkManager::HandleAttackCorpsResult( AttackCorpsResult& inPacket )
 			}
 
 			Log( "CorpsAttack! [%d]->[%d] \n", attackerCorpsID, targetCorpsID );
+			// Log( "Eye [%f %f]  LookAt [%f %f] \n", attackerNowX, attackerNowZ, targetNowX, targetNowZ );
 		}
 		else
 		{
