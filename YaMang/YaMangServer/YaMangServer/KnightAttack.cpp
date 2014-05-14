@@ -50,7 +50,10 @@ void KnightAttack::OnTick()
 
 	float length = D3DXVec2Length( &vector );
 
-	if ( length > m_OwnerCrops->GetAttackRange( ) * 10 )
+
+	float moveMoreDistance = 25;
+
+	if ( length > 5 )
 	{
 		m_CanAttack = true;
 
@@ -135,22 +138,22 @@ void KnightAttack::OnTick()
 		if ( !m_CanAttack )
 		{
 			Log( "move more \n" );
-			float halfRange = m_OwnerCrops->GetAttackRange() * 30;
+			
 			if ( vector.x > 0 )
 			{
-				targetX = targetX + halfRange;
+				targetX = targetX + moveMoreDistance;
 			}
 			else
 			{
-				targetX = targetX - halfRange;
+				targetX = targetX - moveMoreDistance;
 			}
 			if ( vector.y > 0 )
 			{
-				targetZ = targetZ + halfRange;
+				targetZ = targetZ + moveMoreDistance;
 			}
 			else
 			{
-				targetZ = targetZ - halfRange;
+				targetZ = targetZ - moveMoreDistance;
 			}
 		}
 
