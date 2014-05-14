@@ -77,8 +77,7 @@ void Attack::OnTick()
 
 	if ( length < m_OwnerCrops->GetAttackRange() )
 	{
-		m_TargerCrops->MoveStop( );
-		
+		m_TargerCrops->MoveStop();
 		Action* targetAction = m_TargerCrops->GetHoldingAction( );
 
 		// targetCorps의 액션이 없으면(idle)이면 반격
@@ -105,13 +104,19 @@ void Attack::OnTick()
 		outPacket.m_TargetCorpsID = m_TargerCrops->GetCorpsID();
 		outPacket.m_AttackerNowX = myCorpsPositionInfo.m_EyePoint.x;
 		outPacket.m_AttackerNowZ = myCorpsPositionInfo.m_EyePoint.z;
-		outPacket.m_AttackerLookX = myCorpsPositionInfo.m_LookAtPoint.x;
-		outPacket.m_AttackerLookZ = myCorpsPositionInfo.m_LookAtPoint.z;
+
+		outPacket.m_AttackerLookX = targetPositionInfo.m_EyePoint.x;
+		outPacket.m_AttackerLookZ = targetPositionInfo.m_EyePoint.z;
+		// outPacket.m_AttackerLookX = myCorpsPositionInfo.m_LookAtPoint.x;
+		// outPacket.m_AttackerLookZ = myCorpsPositionInfo.m_LookAtPoint.z;
 
 		outPacket.m_TargetNowX = targetPositionInfo.m_EyePoint.x;
 		outPacket.m_TargetNowZ = targetPositionInfo.m_EyePoint.z;
-		outPacket.m_TargetLookX = targetPositionInfo.m_LookAtPoint.x;
-		outPacket.m_TargetLookZ = targetPositionInfo.m_LookAtPoint.z;
+		
+		outPacket.m_TargetLookX = myCorpsPositionInfo.m_LookAtPoint.x;
+		outPacket.m_TargetLookZ = myCorpsPositionInfo.m_LookAtPoint.z;
+		// outPacket.m_TargetLookX = targetPositionInfo.m_LookAtPoint.x;
+		// outPacket.m_TargetLookZ = targetPositionInfo.m_LookAtPoint.z;
 
 		outPacket.m_TargetUnitNum = m_TargerCrops->GetUnitNum();
 

@@ -68,6 +68,7 @@ private:
 
 	bool	m_IsSelected = false;
 	bool	m_IsMoved = false;
+	bool	m_IsInterpolated = false;
 
 	ActionFunc	m_Action;
 };

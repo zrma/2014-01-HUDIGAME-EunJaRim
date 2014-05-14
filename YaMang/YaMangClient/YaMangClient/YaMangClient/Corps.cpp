@@ -116,18 +116,20 @@ void Corps::Render() const
 	}
 
 	D3DXMATRIXA16 thisMatrix = GetMatrix();
+	
+	float hp = static_cast<float>(m_UnitList.size() * 0.008);
 
 	if ( IsSelected() )
 	{
 		D3DXMATRIXA16 scaleMatrix;
-		D3DXMatrixScaling( &scaleMatrix, 0.6f, 0.6f, 0.6f );
+		D3DXMatrixScaling( &scaleMatrix, 0.6f + hp, 0.6f + hp, 0.6f + hp );
 
 		thisMatrix = scaleMatrix * thisMatrix;
 	}
 	else
 	{
 		D3DXMATRIXA16 scaleMatrix;
-		D3DXMatrixScaling( &scaleMatrix, 0.5f, 0.5f, 0.5f );
+		D3DXMatrixScaling( &scaleMatrix, 0.5f + hp, 0.5f + hp, 0.5f + hp );
 
 		thisMatrix = scaleMatrix * thisMatrix;
 	}
@@ -159,15 +161,15 @@ D3DXVECTOR3 Corps::GetFormation( int unitId ) const
 
 void Corps::GoFoward()
 {
+	InterpolatePosition();
+
 	D3DXVECTOR3 view = m_LookAtPoint - m_EyePoint;
 
 	float time = static_cast<float>( Timer::GetInstance()->GetElapsedTime() ) / 1000;
-	float delta = time * m_Speed / ( m_IsMoved ? 2 : 1);
+	float delta = time * m_Speed / ( m_IsInterpolated ? 2 : 1 );
 
 	m_EyePoint += view * delta;
 	m_LookAtPoint += view * delta;
-
-	InterpolatePosition();
 }
 
 void Corps::ClearAction()
@@ -286,5 +288,11 @@ void Corps::InterpolatePosition()
 		D3DXVec3Normalize( &distance, &distance );
 		m_EyePoint += delta * distance;
 		m_LookAtPoint += delta * distance;
+
+		m_IsInterpolated = true;
+	}
+	else
+	{
+		m_IsInterpolated = false;
 	}
 }
