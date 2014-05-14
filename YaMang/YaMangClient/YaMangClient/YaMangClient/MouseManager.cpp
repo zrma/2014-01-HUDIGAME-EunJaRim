@@ -45,11 +45,13 @@ void MouseManager::MoveMousePosition( int x, int y )
 		m_CursorType = CURSOR_CAMERA_ROTATING;
 		if ( ( x + m_WndLocationX ) > m_WndXPos )
 		{
-			CameraController::GetInstance()->RotateSide( time *( ( x + m_WndLocationX ) - m_WndXPos ) );
+			// CameraController::GetInstance()->RotateSide( time *( ( x + m_WndLocationX ) - m_WndXPos ) );
+			CameraController::GetInstance()->RotateSide( ( ( x + m_WndLocationX ) - m_WndXPos ) / 120.f );
 		}
 		if ( ( x + m_WndLocationX ) < m_WndXPos )
 		{
-			CameraController::GetInstance()->RotateSide( -time *( m_WndXPos - ( x + m_WndLocationX ) ) );
+			// CameraController::GetInstance()->RotateSide( -time *( m_WndXPos - ( x + m_WndLocationX ) ) );
+			CameraController::GetInstance()->RotateSide( -( m_WndXPos - ( x + m_WndLocationX ) ) / 120.f );
 		}
 
 		return;
@@ -57,19 +59,23 @@ void MouseManager::MoveMousePosition( int x, int y )
 
 	if ( ( x + m_WndLocationX ) > m_WndXPos )
 	{
-		m_MousePosition.X += static_cast<SHORT>( time * 1000.0f * ( ( x + m_WndLocationX ) - m_WndXPos ) );
+		m_MousePosition.X += ( ( x + m_WndLocationX ) - m_WndXPos );
+		// m_MousePosition.X += static_cast<SHORT>( time * 1000.0f * ( ( x + m_WndLocationX ) - m_WndXPos ) );
 	}
 	if ( ( x + m_WndLocationX ) < m_WndXPos )
 	{
-		m_MousePosition.X -= static_cast<SHORT>( time * 1000.0f * ( m_WndXPos - ( x + m_WndLocationX ) ) );
+		m_MousePosition.X -= ( m_WndXPos - ( x + m_WndLocationX ) );
+		// m_MousePosition.X -= static_cast<SHORT>( time * 1000.0f * ( m_WndXPos - ( x + m_WndLocationX ) ) );
 	}
 	if ( ( y + m_WndLocationY ) > m_WndYPos )
 	{
-		m_MousePosition.Y += static_cast<SHORT>( time * 1000.0f * ( ( y + m_WndLocationY ) - m_WndYPos ) );
+		m_MousePosition.Y += ( ( y + m_WndLocationY ) - m_WndYPos );
+		// m_MousePosition.Y += static_cast<SHORT>( time * 1000.0f * ( ( y + m_WndLocationY ) - m_WndYPos ) );
 	}
 	if ( ( y + m_WndLocationY ) < m_WndYPos )
 	{
-		m_MousePosition.Y -= static_cast<SHORT>( time * 1000.0f *( m_WndYPos - ( y + m_WndLocationY ) ) );
+		m_MousePosition.Y -= ( m_WndYPos - ( y + m_WndLocationY ) );
+		// m_MousePosition.Y -= static_cast<SHORT>( time * 1000.0f *( m_WndYPos - ( y + m_WndLocationY ) ) );
 	}
 
 	//일단 창밖으로 나가는거 값 때려박음
