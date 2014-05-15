@@ -108,6 +108,7 @@
     <ClInclude Include="Guard.h" />
     <ClInclude Include="GuardArea.h" />
     <ClInclude Include="HoldPosition.h" />
+    <ClInclude Include="King.h" />
     <ClInclude Include="Knight.h" />
     <ClInclude Include="KnightAttack.h" />
     <ClInclude Include="MacroSet.h" />
@@ -150,6 +151,7 @@
     <ClCompile Include="Guard.cpp" />
     <ClCompile Include="GuardArea.cpp" />
     <ClCompile Include="HoldPosition.cpp" />
+    <ClCompile Include="King.cpp" />
     <ClCompile Include="Knight.cpp" />
     <ClCompile Include="KnightAttack.cpp" />
     <ClCompile Include="MovePosition.cpp" />

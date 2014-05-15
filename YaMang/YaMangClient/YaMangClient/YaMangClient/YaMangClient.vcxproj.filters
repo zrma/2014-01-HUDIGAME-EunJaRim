@@ -187,6 +187,9 @@
     <ClInclude Include="PlayerManager.h">
       <Filter>Player</Filter>
     </ClInclude>
+    <ClInclude Include="King.h">
+      <Filter>UnitObject\Unit</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -299,6 +302,9 @@
     </ClCompile>
     <ClCompile Include="PlayerManager.cpp">
       <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="King.cpp">
+      <Filter>UnitObject\Unit</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

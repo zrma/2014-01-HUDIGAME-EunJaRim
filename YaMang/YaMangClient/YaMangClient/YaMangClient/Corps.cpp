@@ -15,6 +15,7 @@
 #include "CameraController.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
+#include "King.h"
 
 Corps::Corps( int corpsId, int playerId, PositionInfo pos )
 : m_CorpsID( corpsId ), m_OwnerPlayerID( playerId )
@@ -75,6 +76,9 @@ void Corps::Create( UINT num, UnitType unitType )
 				break;
 			case  UnitType::UNIT_SWORD:
 				unit = new Sword( this, i );
+				break;
+			case  UnitType::UNIT_KING:
+				unit = new King( this, i );
 				break;
 			default:
 				return;

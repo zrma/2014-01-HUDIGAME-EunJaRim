@@ -375,6 +375,9 @@ void NetworkManager::HandleAttackCorpsResult( AttackCorpsResult& inPacket )
 				case UnitType::UNIT_SWORD:
 					SoundManager::GetInstance()->PlaySound( SOUND_CORPS_ATTACK_SWORD );
 					break;
+				case UnitType::UNIT_KING:
+					SoundManager::GetInstance()->PlaySound( SOUND_CORPS_ATTACK_SWORD );
+					break;
 				default:
 					break;
 			}

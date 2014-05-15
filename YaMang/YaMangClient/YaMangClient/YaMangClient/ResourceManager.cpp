@@ -27,6 +27,8 @@ void ResourceManager::Init()
 	AddMesh( fileName, MESH_KEY_UNIT_KNIGHT );
 	fileName = L"UnitGuard.x";
 	AddMesh( fileName, MESH_KEY_UNIT_GUARD );
+	fileName = L"UnitKing.x";
+	AddMesh( fileName, MESH_KEY_UNIT_KING );
 
 	fileName = L"Corps_Destroy.x";
 	AddMesh( fileName, MESH_KEY_CORPS_DESTROY );

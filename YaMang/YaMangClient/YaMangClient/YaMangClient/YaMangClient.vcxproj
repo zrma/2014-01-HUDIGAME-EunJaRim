@@ -101,6 +101,7 @@
     <ClInclude Include="Guard.h" />
     <ClInclude Include="InputDispatcher.h" />
     <ClInclude Include="KeyInput.h" />
+    <ClInclude Include="King.h" />
     <ClInclude Include="Knight.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="MacroSet.h" />
@@ -143,6 +144,7 @@
     <ClCompile Include="Guard.cpp" />
     <ClCompile Include="InputDispatcher.cpp" />
     <ClCompile Include="KeyInput.cpp" />
+    <ClCompile Include="King.cpp" />
     <ClCompile Include="Knight.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="MainWindow.cpp" />

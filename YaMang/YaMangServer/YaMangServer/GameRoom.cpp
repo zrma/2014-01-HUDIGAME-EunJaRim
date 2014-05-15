@@ -17,6 +17,7 @@
 #include "GenerateCorpOnce.h"
 #include "MacroSet.h"
 #include "Corps.h"
+#include "King.h"
 
 GameRoom::GameRoom( int roomNumber ): m_RoomNumber( roomNumber ), m_LastGCTick( 0 ), m_LastClientWorkTick( 0 )
 {
@@ -64,10 +65,16 @@ void GameRoom::GameStart()
 			// 거점병사 만들기 임시 하드코딩
 
 			PositionInfo position;
-			position.m_EyePoint = { 10, 0.0f, 10 };
-			position.m_LookAtPoint = { 10, 0.0f, 10-1 };
+			position.m_EyePoint = { 10.0f, 0.0f, 10.0f };
+			position.m_LookAtPoint = { 10.0f, 0.0f, 10.0f - 1.0f };
 			const Corps* corps = GenerateCorps( 0, UnitType::UNIT_GUARD, position ); // 0번은 봇 playerID
 			m_BaseGuardList.insert( BaseGuardList::value_type( corps->GetCorpsID(), position ) );
+
+
+			position.m_EyePoint = { -50.0f, 0.0f, -50.0f };
+			position.m_LookAtPoint = { 0.0f, 0.0f, 0.0f };
+			corps = GenerateCorps( 0, UnitType::UNIT_KING, position ); // playerID 변경해야함
+
 
 			m_IsGameStart = true;
 			for ( auto& it : m_ClientList )
@@ -465,6 +472,9 @@ const Corps* GameRoom::GenerateCorps( int playerID, UnitType type, PositionInfo 
 			break;
 		case  UnitType::UNIT_SWORD:
 			corps = new Sword( playerID, ++m_CorpsIDCount, type, position, this );
+			break;
+		case  UnitType::UNIT_KING:
+			corps = new King( playerID, ++m_CorpsIDCount, type, position, this );
 			break;
 		default:
 			return nullptr;

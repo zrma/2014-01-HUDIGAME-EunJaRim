@@ -157,6 +157,9 @@
     <ClInclude Include="GameRoom.h">
       <Filter>YaMang</Filter>
     </ClInclude>
+    <ClInclude Include="King.h">
+      <Filter>Corps</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DatabaseJobContext.cpp">
@@ -254,6 +257,9 @@
     </ClCompile>
     <ClCompile Include="GameRoom.cpp">
       <Filter>YaMang</Filter>
+    </ClCompile>
+    <ClCompile Include="King.cpp">
+      <Filter>Corps</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
