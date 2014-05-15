@@ -408,21 +408,30 @@ void NetworkManager::HandleRefreshUIResult( RefreshUIResult& inPacket )
 {
 	if ( m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size ) )
 	{
+		int nowCorpsNum = inPacket.m_NowCorpsNum;
+		int maxCorpsNum = inPacket.m_MaxCorpsNum;
+		int baseNum = inPacket.m_BaseNum;
 
-		
+		ULONGLONG regenTime = inPacket.m_RegenTime;
+
+		if ( -1 == nowCorpsNum || -1 == maxCorpsNum || -1 == baseNum )
+		{
+			// 잘못된 패킷 날라옴
+			assert( false );
+		}
+
 		Scene* scene = SceneManager::GetInstance()->GetNowScene();
 		if ( typeid( ScenePlay ) == typeid( *scene ) )
 		{
-			wchar_t wsFood[100] = { 0, };
-			wsprintf( wsFood, L"FOOD : %d", inPacket.m_Food );
 			wchar_t wsCorpsNum[100] = { 0, };
-			wsprintf( wsCorpsNum, L"CorpsNum : %d", inPacket.m_CorpsNum );
+			wsprintf( wsCorpsNum, L"CorpsNum : %d/%d", nowCorpsNum, maxCorpsNum );
 			wchar_t wsBaseNum[100] = { 0, };
-			wsprintf( wsBaseNum, L"BaseNum : %d", inPacket.m_BaseNum );
-
-			TextManager::GetInstance( )->RegistText( TEXT_FOOD, wsFood, 20, 250 );
-			TextManager::GetInstance( )->RegistText( TEXT_CORPS_NUM, wsCorpsNum, 20, 300 );
-			TextManager::GetInstance( )->RegistText( TEXT_BASE_NUM, wsBaseNum, 20, 350 );
+			wsprintf( wsBaseNum, L"BaseNum : %d", baseNum );
+			wchar_t wsRegenTime[100] = { 0, };
+			wsprintf( wsRegenTime, L"Regen : %u", regenTime );
+			TextManager::GetInstance( )->RegistText( TEXT_CORPS_NUM, wsCorpsNum, 20, 250 );
+			TextManager::GetInstance( )->RegistText( TEXT_BASE_NUM, wsBaseNum, 20, 300 );
+			TextManager::GetInstance( )->RegistText( TEXT_REGEN_TIME, wsRegenTime, 20, 350 ); // 텍스트로 보이는건 임시
 			Log( "Refresh UI! \n" );
 		}
 		else

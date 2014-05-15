@@ -87,7 +87,7 @@ private:
 
 	
 	CorpsList			m_CorpsList;
-	int					m_CorpsIDCount = 10;
+	int					m_CorpsIDCount = 0;
 
 	DWORD				m_LastGCTick;
 	DWORD				m_LastClientWorkTick;

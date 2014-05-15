@@ -3,6 +3,7 @@
 #include "Renderer.h"
 #include "MainWindow.h"
 #include "ResourceManager.h"
+#include "TextManager.h"
 
 Renderer::Renderer()
 {
@@ -59,7 +60,9 @@ void Renderer::RenderEnd()
 
 		wchar_t ws[100] = { 0, };
 		wsprintf( ws, L"FPS : %d", m_FPS );
-		RenderText( ws, 20, 40 );
+		//RenderText( ws, 20, 40 );
+		TextManager::GetInstance( )->RegistText( TEXT_FPS, ws, 20, 40 );
+		TextManager::GetInstance()->DrawTexts();
 		m_Frame++;
 
 		PostRendering( );

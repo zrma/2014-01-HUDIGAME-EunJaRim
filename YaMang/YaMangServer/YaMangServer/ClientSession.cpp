@@ -374,9 +374,10 @@ void ClientSession::CalculateRegenTime()
 
 	
 	RefreshUIResult outPacket;
-	outPacket.m_Food = m_CorpsMax;
-	outPacket.m_CorpsNum = m_CorpsNow;
+	outPacket.m_NowCorpsNum = m_CorpsNow;
+	outPacket.m_MaxCorpsNum = m_CorpsMax;
 	outPacket.m_BaseNum = m_BaseNum;
+	outPacket.m_RegenTime = m_CorpsRegenTime;
 
 	if ( !DirectSend( &outPacket ) )
 	{

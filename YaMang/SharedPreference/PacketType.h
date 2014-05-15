@@ -45,6 +45,7 @@ enum PacketTypes: short
 	PKT_SC_CORPS_ATTACK = 400,
 
 	PKT_SC_REFRESH_UI = 500,
+	PKT_SC_REFRESH_BASE = 501,
 
 	PKT_CS_SYNC_ALL = 600,
 
@@ -439,15 +440,30 @@ struct RefreshUIResult: public PacketHeader
 	{
 		m_Size = sizeof( RefreshUIResult );
 		m_Type = PKT_SC_REFRESH_UI;
-		m_Food = -1;
-		m_CorpsNum = -1;
+		m_NowCorpsNum = -1;
+		m_MaxCorpsNum = -1;
 		m_BaseNum = -1;
+		m_RegenTime = INT_MAX;
 	}
 
-	int		 m_Food;
-	int		 m_CorpsNum;
-	int		 m_BaseNum;
+	int			m_NowCorpsNum;
+	int			m_MaxCorpsNum;
+	int			m_BaseNum;
+	ULONGLONG	m_RegenTime;
+};
 
+struct RefreshBaseResult: public PacketHeader
+{
+	RefreshBaseResult( )
+	{
+		m_Size = sizeof( RefreshBaseResult );
+		m_Type = PKT_SC_REFRESH_BASE;
+		m_BaseID = -1;
+		m_PlayerID = -1;
+	}
+
+	int	m_BaseID;
+	int	m_PlayerID;
 };
 
 // 클라 접속전의 게임 룸 상태를 전송

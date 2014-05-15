@@ -439,7 +439,7 @@ void GameRoom::TakeBase( int ownerPlayerID, int targetPlayerID, int ownerCorpsID
 		return;
 	}
 
-	int targetGuardListID = std::find( m_GuardIDList.begin( ), m_GuardIDList.end( ), targetGuardID ) - m_GuardIDList.begin( );
+	int targetGuardListID = static_cast<int> ( std::find( m_GuardIDList.begin(), m_GuardIDList.end(), targetGuardID ) - m_GuardIDList.begin() );
 	if ( -1 == targetGuardListID )
 	{
 		return;
