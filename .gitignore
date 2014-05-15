@@ -41,7 +41,7 @@ Version.cpp
 ipch/
 Debug/
 Release/
-bin/
+#bin/
 obj/
 
 ScreenShot/
