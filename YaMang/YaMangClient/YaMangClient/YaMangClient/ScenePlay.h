@@ -30,9 +30,12 @@ public:
 	const Corps* GetCorpsByID( int corpsID );
 	UnitType	GetUnitTypeByID( int corpsID ); // 필요 안하게 할 수 있는데...
 
+	void		UpdateBase( int BaseIndex, int playerID );
+
 private:
 	std::hash_map<int, Corps*>	m_CorpsList;
+	std::vector<int>			m_BasePlayerIDList;
 
-	MouseRender*	m_MouseCursor;
+	MouseRender*				m_MouseCursor;
 };
 

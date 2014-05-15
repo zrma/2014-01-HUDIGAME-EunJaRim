@@ -10,6 +10,7 @@
 #include "MouseRender.h"
 #include "NetworkManager.h"
 #include "CameraController.h"
+#include "TextManager.h"
 
 ScenePlay::ScenePlay()
 {
@@ -23,6 +24,16 @@ ScenePlay::~ScenePlay()
 //렌더 매니저 초기화가 우선되어야 함
 void ScenePlay::Create()
 {
+	// 하드코딩으로 임시 추가 원래는 게임 시작패킷으로 받아야함
+	int guardNum = 3;
+	m_BasePlayerIDList.clear();
+	m_BasePlayerIDList.reserve( guardNum ); // 임의로 3개 지정
+
+	for ( int i = 0; i < guardNum; ++i )
+	{
+		m_BasePlayerIDList.push_back( 0 ); // 0은 봇의 id
+	}
+
 	SoundManager::GetInstance()->PlaySound( SOUND_SCENE_PLAY_BGM2 );
 	SoundManager::GetInstance()->SetVolume( SOUND_SCENE_PLAY_BGM2, 0.3f );
 	m_MouseCursor = new MouseRender();
@@ -242,4 +253,22 @@ Corps* ScenePlay::SearchCorpsByPosition( float x, float z, bool selectOption )
 	}
 
 	return resultCorps;
+}
+
+void ScenePlay::UpdateBase( int BaseIndex, int playerID )
+{
+	// 안전장치를 여기에 달자...
+	m_BasePlayerIDList.at( BaseIndex ) = playerID;
+
+	// 테스트용 프린트
+	std::wstring test = L"";
+	for ( int i = 0; i < m_BasePlayerIDList.size(); ++i )
+	{
+		test = test + L"[";
+		test = test + std::to_wstring( i );
+		test = test + L"][";
+		test = test + std::to_wstring( m_BasePlayerIDList.at( i ) );
+		test = test + L"] ";
+	}
+	TextManager::GetInstance( )->RegistText( TEXT_TEST_BASE, test.c_str( ), 250, 350 );
 }

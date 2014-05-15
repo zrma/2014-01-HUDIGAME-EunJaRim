@@ -439,8 +439,8 @@ void GameRoom::TakeBase( int ownerPlayerID, int targetPlayerID, int ownerCorpsID
 		return;
 	}
 
-	int targetGuardListID = static_cast<int> ( std::find( m_GuardIDList.begin(), m_GuardIDList.end(), targetGuardID ) - m_GuardIDList.begin() );
-	if ( -1 == targetGuardListID )
+	int targetGuardListIndex = static_cast<int> ( std::find( m_GuardIDList.begin(), m_GuardIDList.end(), targetGuardID ) - m_GuardIDList.begin() );
+	if ( -1 == targetGuardListIndex )
 	{
 		return;
 	}
@@ -460,10 +460,10 @@ void GameRoom::TakeBase( int ownerPlayerID, int targetPlayerID, int ownerCorpsID
 			ClientSession* ownerClient = findOwner->second;
 			ownerClient->AddBaseNum();
 
-			PositionInfo guardPosition = m_GameMapManager->GetGuardPositionInfo( targetGuardListID );
+			PositionInfo guardPosition = m_GameMapManager->GetGuardPositionInfo( targetGuardListIndex );
 			const Corps* corps = GenerateCorps( ownerPlayerID, UnitType::UNIT_GUARD, guardPosition );
 
-			m_GuardIDList.at( targetGuardListID ) = corps->GetCorpsID( );
+			m_GuardIDList.at( targetGuardListIndex ) = corps->GetCorpsID( );
 
 			GenerateCorpOnce* action = new GenerateCorpOnce();
 			action->SetClientManager( this );
@@ -481,6 +481,11 @@ void GameRoom::TakeBase( int ownerPlayerID, int targetPlayerID, int ownerCorpsID
 			ownerClient->SubCorpsNum();
 			ownerCorps->AddDamage( 51.0f ); // 기존의 유닛은 5명이 빠진다.
 			SyncOneCorp( ownerCorpsID );
+
+			RefreshBaseResult refreshBasePacket;
+			refreshBasePacket.m_BaseID = targetGuardListIndex;
+			refreshBasePacket.m_PlayerID = ownerPlayerID;
+			BroadcastPacket( &refreshBasePacket );
 		}
 		return;
 	}
@@ -492,10 +497,10 @@ void GameRoom::TakeBase( int ownerPlayerID, int targetPlayerID, int ownerCorpsID
 	ownerClient->AddBaseNum();
 	targetClient->SubBaseNum();
 	
-	PositionInfo guardPosition = m_GameMapManager->GetGuardPositionInfo( targetGuardListID );
+	PositionInfo guardPosition = m_GameMapManager->GetGuardPositionInfo( targetGuardListIndex );
 	const Corps* corps = GenerateCorps( ownerPlayerID, UnitType::UNIT_GUARD, guardPosition );
 
-	m_GuardIDList.at( targetGuardListID ) = corps->GetCorpsID( );
+	m_GuardIDList.at( targetGuardListIndex ) = corps->GetCorpsID( );
 
 	GenerateCorpOnce* action = new GenerateCorpOnce();
 	action->SetClientManager( this );
@@ -512,6 +517,12 @@ void GameRoom::TakeBase( int ownerPlayerID, int targetPlayerID, int ownerCorpsID
 	ownerClient->SubCorpsNum();
 	ownerCorps->AddDamage( 51.0f ); // 기존의 유닛은 5명이 빠진다.
 	SyncOneCorp( ownerCorpsID );
+
+	RefreshBaseResult refreshBasePacket;
+	refreshBasePacket.m_BaseID = targetGuardListIndex;
+	refreshBasePacket.m_PlayerID = ownerPlayerID;
+	BroadcastPacket( &refreshBasePacket );
+
 }
 
 void GameRoom::AddActionToScheduler( Action* addedAction, ULONGLONG remainTime )
@@ -528,16 +539,19 @@ void GameRoom::SyncOneCorp( int corpsID )
 	}
 
 	const PositionInfo& position = corps->GetPositionInfo();
-	SyncOneCorpResult outPacket;
+	SyncOneCorpResult syncOneCorpPacket;
 
-	outPacket.m_CorpsID = corps->GetCorpsID( );
-	outPacket.m_NowX = position.m_EyePoint.x;
-	outPacket.m_NowZ = position.m_EyePoint.z;
-	outPacket.m_LookX = position.m_LookAtPoint.x;
-	outPacket.m_LookZ = position.m_LookAtPoint.z;
-	outPacket.m_UnitNum = corps->GetUnitNum();
-	outPacket.m_FormationType = corps->GetFormationType();
+	syncOneCorpPacket.m_CorpsID = corps->GetCorpsID( );
+	syncOneCorpPacket.m_NowX = position.m_EyePoint.x;
+	syncOneCorpPacket.m_NowZ = position.m_EyePoint.z;
+	syncOneCorpPacket.m_LookX = position.m_LookAtPoint.x;
+	syncOneCorpPacket.m_LookZ = position.m_LookAtPoint.z;
+	syncOneCorpPacket.m_UnitNum = corps->GetUnitNum();
+	syncOneCorpPacket.m_FormationType = corps->GetFormationType();
 
-	BroadcastPacket( &outPacket );
+	BroadcastPacket( &syncOneCorpPacket );
+
+	
+
 }
 

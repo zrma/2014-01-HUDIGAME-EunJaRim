@@ -14,6 +14,7 @@ struct StopCorpsResult;
 struct RefreshUIResult;
 struct AttackCorpsResult;
 struct SyncOneCorpResult;
+struct RefreshBaseResult;
 
 class NetworkManager:public Singleton<NetworkManager>
 {
@@ -42,6 +43,7 @@ public:
 	void	HandleRefreshUIResult( RefreshUIResult& inPacket );
 	void	HandleAttackCorpsResult( AttackCorpsResult& inPacket );
 	void	HandleSyncOneCorpResult( SyncOneCorpResult& inPacket );
+	void	HandleBaseResult( RefreshBaseResult& inPacket );
 
 	//////////////////////////////////////////////////////////////////////////
 	// 리퀘스트 패킷 보내기
