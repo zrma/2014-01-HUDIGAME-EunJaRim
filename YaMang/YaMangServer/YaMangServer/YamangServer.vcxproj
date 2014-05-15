@@ -68,8 +68,7 @@
     <PostBuildEvent>
       <Command>xcopy ".\Config\*" "..\..\Bin\Server\Config\" /s /d /y
 xcopy ".\Database\*" "..\..\Bin\Server\Database\" /s /d /y
-xcopy ".\GameMap\*" "..\..\Bin\Server\GameMap\" /s /d /y
-echo "format c:"</Command>
+xcopy ".\GameMap\*" "..\..\Bin\Server\GameMap\" /s /d /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
