@@ -11,6 +11,13 @@
 // Windows 헤더 파일:
 #include <windows.h>
 
-
-
 // TODO: 프로그램에 필요한 추가 헤더는 여기에서 참조합니다.
+
+#include <stdio.h>
+#include <WinUser.h>
+#include <time.h>
+#include <string>
+#include <sys/stat.h>
+#include <direct.h>
+#include <atlconv.h>
+#include <shlwapi.h>

@@ -190,6 +190,9 @@
     <ClInclude Include="King.h">
       <Filter>UnitObject\Unit</Filter>
     </ClInclude>
+    <ClInclude Include="ResourceDef.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

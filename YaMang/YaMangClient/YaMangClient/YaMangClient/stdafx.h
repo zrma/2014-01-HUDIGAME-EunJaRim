@@ -33,3 +33,4 @@
 #include <map>
 #include <functional>
 #include <memory>
+#include <atlconv.h>

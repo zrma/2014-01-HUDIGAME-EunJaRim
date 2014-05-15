@@ -3,6 +3,7 @@
 #include "MainWindow.h"
 #include "yaMangDxDll.h"
 #include "MouseManager.h"
+#include "ResourceDef.h"
 
 ResourceManager::ResourceManager()
 {
@@ -17,72 +18,44 @@ ResourceManager::~ResourceManager()
 
 void ResourceManager::Init()
 {
-	LPCTSTR fileName = L"UnitSword.x";
-	AddMesh( fileName, MESH_KEY_UNIT_SWORD );
-	fileName = L"UnitPike.x";
-	AddMesh( fileName, MESH_KEY_UNIT_PIKE );
-	fileName = L"UnitArrow.x";
-	AddMesh( fileName, MESH_KEY_UNIT_ARROW );
-	fileName = L"UnitKnight.x";
-	AddMesh( fileName, MESH_KEY_UNIT_KNIGHT );
-	fileName = L"UnitGuard.x";
-	AddMesh( fileName, MESH_KEY_UNIT_GUARD );
-	fileName = L"UnitKing.x";
-	AddMesh( fileName, MESH_KEY_UNIT_KING );
+	AddMesh( MODEL_UNIT_SWORD, MESH_KEY_UNIT_SWORD );
+	AddMesh( MODEL_UNIT_PIKE, MESH_KEY_UNIT_PIKE );
+	AddMesh( MODEL_UNIT_ARROW, MESH_KEY_UNIT_ARROW );
+	AddMesh( MODEL_UNIT_KNIGHT, MESH_KEY_UNIT_KNIGHT );
+	AddMesh( MODEL_UNIT_GUARD, MESH_KEY_UNIT_GUARD );
+	AddMesh( MODEL_UNIT_KING, MESH_KEY_UNIT_KING );
 
-	fileName = L"Corps_Destroy.x";
-	AddMesh( fileName, MESH_KEY_CORPS_DESTROY );
-	fileName = L"Corps_Defense.x";
-	AddMesh( fileName, MESH_KEY_CORPS_DEFENSE );
-	fileName = L"Corps_Rush.x";
-	AddMesh( fileName, MESH_KEY_CORPS_RUSH );
+	AddMesh( MODEL_CORPS_DESTROY, MESH_KEY_CORPS_DESTROY );
+	AddMesh( MODEL_CORPS_DEFENSE, MESH_KEY_CORPS_DEFENSE );
+	AddMesh( MODEL_CORPS_RUSH, MESH_KEY_CORPS_RUSH );
 
 	InitGroundMesh( 100, 100 );
 	CreateRawGround( 100, 100, 5.0f );
 	m_MapSize = 500;
 
-	fileName = L"heightmap_128_128.bmp";
-	AddMap( fileName, fileName, MAP_KEY_TEST );
+	AddMap( HEIGHT_MAP, HEIGHT_MAP, MAP_KEY_TEST );
 	CreateMap( MAP_KEY_TEST );
-
 
 	InitSkyBoxMesh( 1000 );
 
-	fileName = L"SkyBox_Back.png";
-	SetSkyBoxTexture( fileName, SKY_BOX_BACK );
-	fileName = L"SkyBox_Front.png";
-	SetSkyBoxTexture( fileName, SKY_BOX_FRONT );
-	fileName = L"SkyBox_Left.png";
-	SetSkyBoxTexture( fileName, SKY_BOX_LEFT );
-	fileName = L"SkyBox_Right.png";
-	SetSkyBoxTexture( fileName, SKY_BOX_RIGHT );
-	fileName = L"SkyBox_Top.png";
-	SetSkyBoxTexture( fileName, SKY_BOX_TOP );
-	fileName = L"SkyBox_Bottom.png";
-	SetSkyBoxTexture( fileName, SKY_BOX_BOTTOM );
+	SetSkyBoxTexture( SPRITE_SKYBOX_BACK, SKY_BOX_BACK );
+	SetSkyBoxTexture( SPRITE_SKYBOX_FRONT, SKY_BOX_FRONT );
+	SetSkyBoxTexture( SPRITE_SKYBOX_LEFT, SKY_BOX_LEFT );
+	SetSkyBoxTexture( SPRITE_SKYBOX_RIGHT, SKY_BOX_RIGHT );
+	SetSkyBoxTexture( SPRITE_SKYBOX_TOP, SKY_BOX_TOP );
+	SetSkyBoxTexture( SPRITE_SKYBOX_BOTTOM, SKY_BOX_BOTTOM );
 	m_IsMapReady = true;
 
 	InitCursor( CURSOR_MAX, MouseManager::GetInstance()->GetMousePositionX(), MouseManager::GetInstance()->GetMousePositionY() );
-	fileName = L"cursor_default.png";
-	CreateCursorImage( fileName, CURSOR_DEFAULT );
-	fileName = L"cursor_attack.png";
-	CreateCursorImage( fileName, CURSOR_ATTACK );
-	fileName = L"cursor_clicked.png";
-	CreateCursorImage( fileName, CURSOR_CLICK );
-	fileName = L"cursor_corps_clickable.png";
-	CreateCursorImage( fileName, CURSOR_OVER_CORPS );
-// 	fileName = L"cursor_corps_clicked.png";
-// 	CreateCursorImage( fileName, CURSOR_CLICK_CORPS );
-	fileName = L"cursor_unreachable.png";
-	CreateCursorImage( fileName, CURSOR_UNRECHEABLE );
-	fileName = L"cursor_camera_rotating.png";
-	CreateCursorImage(fileName, CURSOR_CAMERA_ROTATING);
-	fileName = L"cursor_movable.png";
-	CreateCursorImage(fileName, CURSOR_CORPS_MOVABLE);
-	fileName = L"cursor_movable_clicked.png";
-	CreateCursorImage(fileName, CURSOR_CORPS_MOVABLE_CLICK);
-	fileName = L"cursor_over_clicked_corps.png";
-	CreateCursorImage(fileName, CURSOR_OVER_PICKED_CORPS);
+	CreateCursorImage( SPRITE_CURSOR_DEFAULT, CURSOR_DEFAULT );
+	CreateCursorImage( SPRITE_CURSOR_ATTACK, CURSOR_ATTACK );
+	CreateCursorImage( SPRITE_CURSOR_CLICK, CURSOR_CLICK );
+	CreateCursorImage( SPRITE_CURSOR_OVER_CORPS, CURSOR_OVER_CORPS );
+	CreateCursorImage( SPRITE_CURSOR_UNRECHEABLE, CURSOR_UNRECHEABLE );
+	CreateCursorImage( SPRITE_CURSOR_CAMERA_ROTATING, CURSOR_CAMERA_ROTATING );
+	CreateCursorImage( SPRITE_CURSOR_CORPS_MOVABLE, CURSOR_CORPS_MOVABLE );
+	CreateCursorImage( SPRITE_CURSOR_CORPS_MOVABLE_CLICK, CURSOR_CORPS_MOVABLE_CLICK );
+	CreateCursorImage( SPRITE_CURSOR_OVER_PICKED_CORPS, CURSOR_OVER_PICKED_CORPS );
 
 	m_ISCursorReady = true;
 }

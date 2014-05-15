@@ -2,6 +2,7 @@
 #include "SoundManager.h"
 #include "fmod_studio.hpp"
 #include "MainWindow.h"
+#include "ResourceDef.h"
 
 SoundManager::SoundManager()
 {
@@ -16,11 +17,12 @@ SoundManager::SoundManager()
 		MessageBox( MainWindow::GetInstance()->Window(), L"System Initialize Fail", L"Sound Error", MB_ICONERROR );
 	}
 
-	LoadBank( "SoundFiles/Master Bank.bank" );
-	LoadBank( "SoundFiles/Master Bank.strings.bank" );
+	USES_CONVERSION;
+	LoadBank( W2A(SOUND_FILE_MASTER_BANK) );
+	LoadBank( W2A(SOUND_FILE_MASTER_BANK_STRINGS) );
 
-	LoadBank( "SoundFiles/loop.bank" );
-	LoadBank( "SoundFiles/sfx.bank" );
+	LoadBank( W2A(SOUND_FILE_LOOP) );
+	LoadBank( W2A( SOUND_FILE_SFX_BANK ) );
 
 	//////////////////////////////////////////////////////////////////////////
 
