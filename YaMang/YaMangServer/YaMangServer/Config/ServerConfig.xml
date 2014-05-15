@@ -1,0 +1,5 @@
+<?xml version="1.0" ?>
+<server>
+    <port>9001</port>
+    <mapFilePath>../../SharedPreference/ServerMap1.bmp</mapFilePath>
+</server>

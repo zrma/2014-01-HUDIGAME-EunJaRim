@@ -44,6 +44,8 @@
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x64;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)..\Bin\Server\</OutDir>
+    <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -61,8 +63,13 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;DbgHelp.lib;TinyXmlLib.lib;d3d9.lib;d3dx9d.lib;dxerr.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)x64/Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Server\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy ".\Config\*" "..\..\Bin\Server\Config\" /s /d /y
+xcopy ".\Database\*" "..\..\Bin\Server\Database\" /s /d /y
+echo "format c:"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -93,6 +100,7 @@
     <ClInclude Include="Arrow.h" />
     <ClInclude Include="Attack.h" />
     <ClInclude Include="CircularBuffer.h" />
+    <ClInclude Include="GameMapManager.h" />
     <ClInclude Include="GameRoom.h" />
     <ClInclude Include="ClientSession.h" />
     <ClInclude Include="Config.h" />
@@ -136,6 +144,7 @@
     <ClCompile Include="Arrow.cpp" />
     <ClCompile Include="Attack.cpp" />
     <ClCompile Include="CircularBuffer.cpp" />
+    <ClCompile Include="GameMapManager.cpp" />
     <ClCompile Include="GameRoom.cpp" />
     <ClCompile Include="ClientSession.cpp" />
     <ClCompile Include="Corps.cpp" />

@@ -10,12 +10,6 @@ class Action;
 struct PositionInfo;
 struct PacketHeader;
 struct DatabaseJobContext;
-struct Tile
-{
-	unsigned char R; // 맵 데이터의 R값 아직 어떤 속성값을 넣을지 정해지지 않음 맵툴쪽과 합의 필요
-	unsigned char G; 
-	unsigned char B; // 아마도 height값이 올 예정
-};
 
 class GameRoom
 {
@@ -42,7 +36,7 @@ public:
 	void				OnPeriodWork();
 
 
-	bool				ReadMapFile( const char* filename );
+	
 
 
 
@@ -100,7 +94,9 @@ private:
 	typedef std::hash_map<int, PositionInfo> BaseGuardList; // corpsID
 	BaseGuardList		m_BaseGuardList;
 
-	std::vector<std::vector<Tile>>	m_BattleMap;
+	std::vector<int> m_KingIDList;
+	std::vector<int> m_GuardIDList;
+
 
 	bool				m_IsGameStart = false;
 	ActionScheduler*	m_ActionScheduler = nullptr;

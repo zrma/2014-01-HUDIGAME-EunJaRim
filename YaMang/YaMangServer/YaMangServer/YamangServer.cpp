@@ -43,7 +43,7 @@ int _tmain( int argc, _TCHAR* argv[] )
 	SetUnhandledExceptionFilter( ExceptionFilter );
 	
 
-	TiXmlDocument document = TiXmlDocument( "../../SharedPreference/ServerConfig.xml" );
+	TiXmlDocument document = TiXmlDocument( "./Config/ServerConfig.xml" );
 	bool m_LoadSuccess = document.LoadFile();
 
 	if ( m_LoadSuccess )

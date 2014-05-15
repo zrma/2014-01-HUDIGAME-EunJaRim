@@ -11,8 +11,6 @@
 #include "knight.h"
 #include "Pike.h"
 #include "Sword.h"
-#include "tinyxml.h"
-#include "xpath_static.h"
 #include "ActionScheduler.h"
 #include "GenerateCorpOnce.h"
 #include "MacroSet.h"
@@ -39,64 +37,32 @@ GameRoom::~GameRoom()
 		Corps* toBeDelete = it.second;
 		delete toBeDelete;
 	}
-	
-	for( int i = 0; i < m_BattleMap.size( ); ++i )
-	{
-		m_BattleMap.at( i ).clear();
-	}
-	m_BattleMap.clear();
 
 	delete m_ActionScheduler;
 }
 
 void GameRoom::GameStart()
 {
-	TiXmlDocument document = TiXmlDocument( "../../SharedPreference/ServerConfig.xml" );
-	bool xmlLoadSuccess = document.LoadFile();
+	// 거점병사 만들기 임시 하드코딩
 
-	if ( xmlLoadSuccess )
+	PositionInfo position;
+	position.m_EyePoint = { 10.0f, 0.0f, 10.0f };
+	position.m_LookAtPoint = { 10.0f, 0.0f, 10.0f - 1.0f };
+	const Corps* corps = GenerateCorps( 0, UnitType::UNIT_GUARD, position ); // 0번은 봇 playerID
+	m_BaseGuardList.insert( BaseGuardList::value_type( corps->GetCorpsID(), position ) );
+
+
+	position.m_EyePoint = { -50.0f, 0.0f, -50.0f };
+	position.m_LookAtPoint = { 0.0f, 0.0f, 0.0f };
+	corps = GenerateCorps( 0, UnitType::UNIT_KING, position ); // playerID 변경해야함
+
+	m_IsGameStart = true;
+	for ( auto& it : m_ClientList )
 	{
-		std::string mapFilePath;
-		mapFilePath = TinyXPath::S_xpath_string( document.RootElement( ), "/server/mapFilePath/text()" ).c_str( );
-		Log( "Map Path Loaded! :%s \n", mapFilePath.c_str( ) );
-		if ( ReadMapFile( mapFilePath.c_str( ) ) )
-		{
-
-			// 거점병사 만들기 임시 하드코딩
-
-			PositionInfo position;
-			position.m_EyePoint = { 10.0f, 0.0f, 10.0f };
-			position.m_LookAtPoint = { 10.0f, 0.0f, 10.0f - 1.0f };
-			const Corps* corps = GenerateCorps( 0, UnitType::UNIT_GUARD, position ); // 0번은 봇 playerID
-			m_BaseGuardList.insert( BaseGuardList::value_type( corps->GetCorpsID(), position ) );
-
-
-			position.m_EyePoint = { -50.0f, 0.0f, -50.0f };
-			position.m_LookAtPoint = { 0.0f, 0.0f, 0.0f };
-			corps = GenerateCorps( 0, UnitType::UNIT_KING, position ); // playerID 변경해야함
-
-
-			m_IsGameStart = true;
-			for ( auto& it : m_ClientList )
-			{
-				ClientSession* client = it.second;
-				client->GameStart();
-			}
-		}
-		else
-		{
-			m_IsGameStart = false;
-		}
-
-	}
-	else
-	{
-		Log( "Map Path Load Fail! \n" );
-		m_IsGameStart = false;
+		ClientSession* client = it.second;
+		client->GameStart();
 	}
 
-	
-	
 }
 
 
@@ -401,57 +367,6 @@ void GameRoom::PrintClientList()
 
 
 
-
-bool GameRoom::ReadMapFile( const char* filename )
-{
-	FILE* f = NULL;
-	fopen_s( &f, filename, "rb" );
-
-	if ( f == NULL )
-	{
-		return false;
-	}
-
-	unsigned char info[54];
-	fread( info, sizeof( unsigned char ), 54, f ); // read the 54-byte header
-
-	// extract image height and width from header
-	int width = *(int*)&info[18];
-	int height = *(int*)&info[22];
-
-	m_BattleMap.reserve( height );
-
-	int row_padded = ( width * 3 + 3 ) & ( ~3 );
-	unsigned char* data = new unsigned char[row_padded];
-
-
-	unsigned char tmp;
-	for ( int i = 0; i < height; i++ )
-	{
-		std::vector<Tile> row;
-		row.reserve( width );
-		fread( data, sizeof( unsigned char ), row_padded, f );
-		for ( int j = 0; j < width * 3; j += 3 )
-		{
-			// Convert (B, G, R) to (R, G, B)
-			tmp = data[j];
-			data[j] = data[j + 2];
-			data[j + 2] = tmp;
-
-			//Tile tile = { (int)data[j], (int)data[j + 1], (int)data[j + 2] };
-			Tile tile = { data[j], data[j + 1], data[j + 2] };
-
-			// 맵이 뒤집어져 있을 것 같다!!
-			row.push_back( tile );
-		}
-		m_BattleMap.push_back( row );
-	}
-	Log( "[%d][%d] Map Loaded! \n", m_BattleMap.size(), m_BattleMap.at( 0 ).size() );
-
-	fclose( f );
-
-	return true;
-}
 
 const Corps* GameRoom::GenerateCorps( int playerID, UnitType type, PositionInfo position )
 {

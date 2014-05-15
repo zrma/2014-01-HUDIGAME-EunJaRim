@@ -67,7 +67,7 @@ ULONGLONG UnitStatus::g_SwordAttackDelayBonus = 0;
 
 bool UnitStatus::LoadUnitStatus()
 {
-	TiXmlDocument document = TiXmlDocument( "UnitStatus.xml" );
+	TiXmlDocument document = TiXmlDocument( "./Config/UnitStatus.xml" );
 	bool m_LoadSuccess = document.LoadFile();
 
 	if ( m_LoadSuccess )
