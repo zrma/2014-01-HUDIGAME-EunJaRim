@@ -160,7 +160,9 @@
     <ClInclude Include="King.h">
       <Filter>Corps</Filter>
     </ClInclude>
-    <ClInclude Include="GameMapManager.h" />
+    <ClInclude Include="GameMapManager.h">
+      <Filter>YaMang</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DatabaseJobContext.cpp">
@@ -262,7 +264,9 @@
     <ClCompile Include="King.cpp">
       <Filter>Corps</Filter>
     </ClCompile>
-    <ClCompile Include="GameMapManager.cpp" />
+    <ClCompile Include="GameMapManager.cpp">
+      <Filter>YaMang</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="YaMangServer.rc">

@@ -7,6 +7,8 @@ class Corps;
 class ClientSession;
 class ActionScheduler;
 class Action;
+class GameMapManager;
+
 struct PositionInfo;
 struct PacketHeader;
 struct DatabaseJobContext;
@@ -14,7 +16,7 @@ struct DatabaseJobContext;
 class GameRoom
 {
 public:
-	GameRoom( int roomNumber );
+	GameRoom( int roomNumber, GameMapManager* gameMapManager );
 	~GameRoom();
 
 	void				GameStart();
@@ -77,25 +79,25 @@ private:
 
 
 private:
-	int					m_RoomNumber;
+	int					m_RoomNumber = -1;
+	GameMapManager*		m_GameMapManager = nullptr;
 
 	typedef std::map<SOCKET, ClientSession*> ClientList;
 	ClientList			m_ClientList;
 
 	
 	CorpsList			m_CorpsList;
-	int					m_CorpsIDCount = 0;
+	int					m_CorpsIDCount = 10;
 
 	DWORD				m_LastGCTick;
 	DWORD				m_LastClientWorkTick;
 
 
 
-	typedef std::hash_map<int, PositionInfo> BaseGuardList; // corpsID
-	BaseGuardList		m_BaseGuardList;
 
-	std::vector<int> m_KingIDList;
-	std::vector<int> m_GuardIDList;
+
+	std::vector<int>	m_KingIDList;
+	std::vector<int>	m_GuardIDList;
 
 
 	bool				m_IsGameStart = false;

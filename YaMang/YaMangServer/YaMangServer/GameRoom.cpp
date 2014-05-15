@@ -16,8 +16,10 @@
 #include "MacroSet.h"
 #include "Corps.h"
 #include "King.h"
+#include "GameMapManager.h"
 
-GameRoom::GameRoom( int roomNumber ): m_RoomNumber( roomNumber ), m_LastGCTick( 0 ), m_LastClientWorkTick( 0 )
+GameRoom::GameRoom( int roomNumber, GameMapManager* gameMapManager ):
+m_RoomNumber( roomNumber ), m_GameMapManager( gameMapManager), m_LastGCTick( 0 ), m_LastClientWorkTick( 0 )
 {
 
 	// 액션 스케쥴러 실행
@@ -45,16 +47,26 @@ void GameRoom::GameStart()
 {
 	// 거점병사 만들기 임시 하드코딩
 
-	PositionInfo position;
-	position.m_EyePoint = { 10.0f, 0.0f, 10.0f };
-	position.m_LookAtPoint = { 10.0f, 0.0f, 10.0f - 1.0f };
-	const Corps* corps = GenerateCorps( 0, UnitType::UNIT_GUARD, position ); // 0번은 봇 playerID
-	m_BaseGuardList.insert( BaseGuardList::value_type( corps->GetCorpsID(), position ) );
+	const std::vector<PositionInfo>& kingPositionList = m_GameMapManager->GetKingPositionList( );
+	const std::vector<PositionInfo>& guardPositionList = m_GameMapManager->GetGuardPositionList();
 
+	m_KingIDList.clear();
+	m_GuardIDList.clear();
 
-	position.m_EyePoint = { -50.0f, 0.0f, -50.0f };
-	position.m_LookAtPoint = { 0.0f, 0.0f, 0.0f };
-	corps = GenerateCorps( 0, UnitType::UNIT_KING, position ); // playerID 변경해야함
+	m_KingIDList.reserve( kingPositionList.size() );
+	m_GuardIDList.reserve( guardPositionList.size( ) );
+
+	for ( PositionInfo position : kingPositionList )
+	{
+		const Corps* corps = GenerateCorps( 0, UnitType::UNIT_KING, position ); // playerID로 변경해야함...
+		m_KingIDList.push_back( corps->GetCorpsID() );
+	}
+
+	for ( PositionInfo position : guardPositionList )
+	{
+		const Corps* corps = GenerateCorps( 0, UnitType::UNIT_GUARD, position ); // 0번은 봇의 playerID
+		m_GuardIDList.push_back( corps->GetCorpsID( ) );
+	}
 
 	m_IsGameStart = true;
 	for ( auto& it : m_ClientList )
@@ -427,8 +439,8 @@ void GameRoom::TakeBase( int ownerPlayerID, int targetPlayerID, int ownerCorpsID
 		return;
 	}
 
-	auto targetGuardPosition = m_BaseGuardList.find( targetGuardID );
-	if ( targetGuardPosition == m_BaseGuardList.end() )
+	int targetGuardListID = std::find( m_GuardIDList.begin( ), m_GuardIDList.end( ), targetGuardID ) - m_GuardIDList.begin( );
+	if ( -1 == targetGuardListID )
 	{
 		return;
 	}
@@ -446,12 +458,12 @@ void GameRoom::TakeBase( int ownerPlayerID, int targetPlayerID, int ownerCorpsID
 		if ( 0 == targetPlayerID )
 		{
 			ClientSession* ownerClient = findOwner->second;
-			ownerClient->AddBaseNum( );
-			PositionInfo guardPosition = targetGuardPosition->second;
+			ownerClient->AddBaseNum();
+
+			PositionInfo guardPosition = m_GameMapManager->GetGuardPositionInfo( targetGuardListID );
 			const Corps* corps = GenerateCorps( ownerPlayerID, UnitType::UNIT_GUARD, guardPosition );
 
-			m_BaseGuardList.insert( BaseGuardList::value_type( corps->GetCorpsID(), guardPosition ) );
-			m_BaseGuardList.erase( targetGuardPosition );
+			m_GuardIDList.at( targetGuardListID ) = corps->GetCorpsID( );
 
 			GenerateCorpOnce* action = new GenerateCorpOnce();
 			action->SetClientManager( this );
@@ -480,11 +492,10 @@ void GameRoom::TakeBase( int ownerPlayerID, int targetPlayerID, int ownerCorpsID
 	ownerClient->AddBaseNum();
 	targetClient->SubBaseNum();
 	
-	PositionInfo guardPosition = targetGuardPosition->second;
+	PositionInfo guardPosition = m_GameMapManager->GetGuardPositionInfo( targetGuardListID );
 	const Corps* corps = GenerateCorps( ownerPlayerID, UnitType::UNIT_GUARD, guardPosition );
-	
-	m_BaseGuardList.insert( BaseGuardList::value_type( corps->GetCorpsID( ), guardPosition ) );
-	m_BaseGuardList.erase( targetGuardPosition );
+
+	m_GuardIDList.at( targetGuardListID ) = corps->GetCorpsID( );
 
 	GenerateCorpOnce* action = new GenerateCorpOnce();
 	action->SetClientManager( this );

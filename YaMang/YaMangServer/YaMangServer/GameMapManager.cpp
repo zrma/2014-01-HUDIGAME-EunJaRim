@@ -22,7 +22,7 @@ GameMapManager::~GameMapManager()
 
 bool GameMapManager::Initialize()
 {
-	TiXmlDocument document = TiXmlDocument( "../../SharedPreference/ServerConfig.xml" );
+	TiXmlDocument document = TiXmlDocument( "./Config/ServerConfig.xml" );
 	bool xmlLoadSuccess = document.LoadFile();
 	
 	if ( xmlLoadSuccess )
@@ -31,9 +31,39 @@ bool GameMapManager::Initialize()
 		Log( "Map Path Loaded! :%s \n", mapFilePath.c_str() );
 		if ( ReadMapFile( mapFilePath.c_str() ) )
 		{
+			// 임시 하드 코딩...
+			int mapKingSize = 2;
+			int mapGuardSize = 3;
+
+			m_KingPositionList.reserve( mapKingSize );
+			m_GuardPositionList.reserve( mapGuardSize );
+
+			PositionInfo position;
+			position.m_EyePoint = { -200.0f, 0.0f, -200.0f };
+			position.m_LookAtPoint = { 0.0f, 0.0f, 0.0f };
+			m_KingPositionList.push_back( position );
+
+			position.m_EyePoint = { 200.0f, 0.0f, 200.0f };
+			position.m_LookAtPoint = { 0.0f, 0.0f, 0.0f };
+			m_KingPositionList.push_back( position );
+
+
+			position.m_EyePoint = { 10.0f, 0.0f, 10.0f };
+			position.m_LookAtPoint = { 0.0f, 0.0f, 0.0f };
+			m_GuardPositionList.push_back( position );
+
+			position.m_EyePoint = { 150.0f, 0.0f, -150.0f };
+			position.m_LookAtPoint = { 0.0f, 0.0f, 0.0f };
+			m_GuardPositionList.push_back( position );
+
+			position.m_EyePoint = { -150.0f, 0.0f, 150.0f };
+			position.m_LookAtPoint = { 0.0f, 0.0f, 0.0f };
+			m_GuardPositionList.push_back( position );
+
 			return true;
 		}
 	}
+	Log( "Map Load FAIL! \n" );
 	return false;
 }
 

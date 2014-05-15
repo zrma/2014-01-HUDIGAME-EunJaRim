@@ -3,6 +3,7 @@
 #include "ClientSession.h"
 #include "GameRoom.h"
 #include "MacroSet.h"
+#include "GameMapManager.h"
 
 
 
@@ -12,9 +13,12 @@ std::hash_map<int, ClientSession*>	g_PidSessionTable;
 RoomManager* g_RoomManager = nullptr;
 RoomManager::RoomManager()
 {
+	m_GameMapManager = new GameMapManager();
+	m_GameMapManager->Initialize();
+
 	g_PidSessionTable.clear( );
 
-	m_Lobby = new GameRoom( LOBBY_NUMBER );
+	m_Lobby = new GameRoom( LOBBY_NUMBER, m_GameMapManager );
 	// Test room start;
 	m_Lobby->GameStart( );
 
@@ -35,7 +39,7 @@ RoomManager::~RoomManager()
 
 int RoomManager::AddRoom()
 {
-	GameRoom* room = new GameRoom( ++m_RoomCount );
+	GameRoom* room = new GameRoom( ++m_RoomCount, m_GameMapManager );
 
 	// Test room start;
 	room->GameStart( );
