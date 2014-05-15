@@ -64,9 +64,9 @@
       <AdditionalLibraryDirectories>$(SolutionDir)Debug;$(SolutionDir)YaMangClient\LibraryFMOD;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "ClientConfig.xml" "..\..\..\Bin\YaMangClient\" /e /d /y
-xcopy ".\\Resource\*" "..\..\..\Bin\YaMangClient\" /e /d /y
-xcopy ".\\FmodDLL\*" "..\..\..\Bin\YaMangClient\" /e /d /y</Command>
+      <Command>xcopy "ClientConfig.xml" "..\..\..\Bin\YaMangClient\" /s /d /y
+xcopy ".\\Resource\*" "..\..\..\Bin\YaMangClient\" /s /d /y
+xcopy ".\\FmodDLL\*" "..\..\..\Bin\YaMangClient\" /s /d /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
