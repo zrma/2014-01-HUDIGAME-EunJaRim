@@ -109,7 +109,7 @@ void ResourceManager::Destroy()
 	}
 }
 
-void ResourceManager::AddMap( LPCTSTR& heightMapFileName, LPCTSTR& textureFileName, MapKeyType key )
+void ResourceManager::AddMap( LPCTSTR heightMapFileName, LPCTSTR textureFileName, MapKeyType key )
 {
 	SafeDelete( m_HeightMapArray[key] );
 		
@@ -146,7 +146,7 @@ void ResourceManager::DeleteMap()
 	m_IsMapReady = false;
 }
 
-bool ResourceManager::AddMesh( LPCTSTR& fileName, MeshKeyType key )
+bool ResourceManager::AddMesh( LPCTSTR fileName, MeshKeyType key )
 {
 	ResourceMesh* mesh = new ResourceMesh();
 	mesh->m_MeshObject = new MESHOBJECT();
@@ -166,7 +166,7 @@ bool ResourceManager::AddMesh( LPCTSTR& fileName, MeshKeyType key )
 	return false;
 }
 
-void ResourceManager::CreateMesh( LPCTSTR& fileName, MESHOBJECT* mesh )
+void ResourceManager::CreateMesh( LPCTSTR fileName, MESHOBJECT* mesh )
 {
 	if ( S_OK == InitGeometry( MainWindow::GetInstance()->Window(), fileName, mesh ) )
 	{

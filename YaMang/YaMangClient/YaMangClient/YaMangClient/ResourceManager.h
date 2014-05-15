@@ -53,12 +53,12 @@ public:
 	ResourceMesh*	GetMeshByKey( MeshKeyType key ) const { return m_MeshArray[key]; }
 
 private:
-	void	AddMap( LPCTSTR& heightMapFileName, LPCTSTR& textureFileName, MapKeyType key );
+	void	AddMap( LPCTSTR heightMapFileName, LPCTSTR textureFileName, MapKeyType key );
 	bool	CreateMap( MapKeyType key );
 	void	DeleteMap();
 
-	bool	AddMesh( LPCTSTR& fileName, MeshKeyType key );
-	void	CreateMesh( LPCTSTR& fileName, MESHOBJECT* mesh );
+	bool	AddMesh( LPCTSTR fileName, MeshKeyType key );
+	void	CreateMesh( LPCTSTR fileName, MESHOBJECT* mesh );
 	void	DeleteMesh( MESHOBJECT* mesh );
 
 	std::array<ResourceMesh*, MESH_KEY_MAX>	m_MeshArray;
