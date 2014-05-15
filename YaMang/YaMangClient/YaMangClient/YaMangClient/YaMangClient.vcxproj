@@ -63,6 +63,11 @@
       <AdditionalDependencies>d3d9.lib;d3dx9d.lib;dxerr.lib;dxguid.lib;winmm.lib;comctl32.lib;TinyXmlLib.lib;fmodL_vc.lib;fmodstudioL_vc.lib;fmod_vc.lib;fmodstudio_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Debug;$(SolutionDir)YaMangClient\LibraryFMOD;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy "ClientConfig.xml" "..\..\..\Bin\YaMangClient\" /e /d /y
+xcopy ".\\Resource\*" "..\..\..\Bin\YaMangClient\" /e /d /y
+xcopy ".\\FmodDLL\*" "..\..\..\Bin\YaMangClient\" /e /d /y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -187,6 +192,9 @@
     <ProjectReference Include="..\..\yaMangDxDll\yaMangDxDll\yaMangDxDll.vcxproj">
       <Project>{e6d200dd-4fe0-48a2-921e-8807c91e08d6}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="ClientConfig.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

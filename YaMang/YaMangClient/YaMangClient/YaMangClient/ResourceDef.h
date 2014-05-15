@@ -1,6 +1,6 @@
 #pragma once
 
-#define CLIENT_CONFIG			"SharedPreference/ClientConfig.xml"
+#define CLIENT_CONFIG			"ClientConfig.xml"
 
 #define PATH_MODEL		L"ModelFiles\\"
 #define PATH_TEXTURE	L"ModelFiles\\"
