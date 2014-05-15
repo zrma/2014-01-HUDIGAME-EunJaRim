@@ -82,6 +82,7 @@ bool GameManager::Process() const
 
 		Renderer::GetInstance()->RenderMap();
 		SceneManager::GetInstance()->Render();
+		TextManager::GetInstance()->DrawTexts();
 	}
 	return true;
 }

@@ -369,7 +369,7 @@ void ClientSession::CalculateRegenTime()
 	else
 	{
 		// m_CorpsRegenTime = static_cast<ULONGLONG>( sqrt( ( 100 * ( m_CorpsMax + m_CorpsNow ) ) / ( m_CorpsMax - m_CorpsNow ) ) + 30000 );
-		m_CorpsRegenTime = static_cast<ULONGLONG>( ( 100 * ( m_CorpsMax + m_CorpsNow ) ) / ( m_CorpsMax - m_CorpsNow + 0 ) + 30000 ); // + 0에 보정치를 넣으면 부대수가 많을때 증가하는 타임차를 줄일수 있다.
+		m_CorpsRegenTime = static_cast<ULONGLONG>( ( 1000 * ( m_CorpsMax + m_CorpsNow ) ) / ( m_CorpsMax - m_CorpsNow + 0 ) + 30000 ); // + 0에 보정치를 넣으면 부대수가 많을때 증가하는 타임차를 줄일수 있다.
 	}
 
 	
