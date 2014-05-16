@@ -99,7 +99,7 @@ extern "C"{
 	//////////////////////////////////////////////////////////////////////////
 	//  UI
 	//////////////////////////////////////////////////////////////////////////
-	YAMANGDXDLL_API HRESULT InitUI(int textureSize, int UIPosX = 0, int UIPosY = 0);
+	YAMANGDXDLL_API HRESULT InitUISprite(int textureSize, int UIPosX = 0, int UIPosY = 0);
 	YAMANGDXDLL_API void SetUIPos(int typeNum, int UIPosX = 0, int UIPosY = 0);
 	YAMANGDXDLL_API HRESULT CreateUIImage(LPCWSTR ImagePath = L"UI_default.png", INT typeNum = 0);
 	YAMANGDXDLL_API HRESULT RenderUI();

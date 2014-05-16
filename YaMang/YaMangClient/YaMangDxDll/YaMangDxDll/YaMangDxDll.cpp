@@ -951,7 +951,7 @@ YAMANGDXDLL_API void TakeScreenShot()
 //////////////////////////////////////////////////////////////////////////
 // UI
 //////////////////////////////////////////////////////////////////////////
-YAMANGDXDLL_API HRESULT InitUI(int textureSize, int UIPosX /*= 0*/, int UIPosY /*= 0*/)
+YAMANGDXDLL_API HRESULT InitUISprite(int textureSize, int UIPosX /*= 0*/, int UIPosY /*= 0*/)
 {
 	if (FAILED(D3DXCreateSprite(g_D3dDevice, &g_UISprite))) //first parameter is our device, second is a empty sprite variable
 	{

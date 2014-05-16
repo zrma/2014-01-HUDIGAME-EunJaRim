@@ -17,7 +17,14 @@ public:
 	UIManager();
 	~UIManager();
 
+	HRESULT		InitUI();
+	void		RegistUI( UIType key, int PosX, int PosY, bool visible);
+	void		CleanUp();
+	
+
 private:
 	std::array<UIObject*, UI_TYPE_MAX> m_UIList;
+
+	bool		m_IsUIReady = false;
 };
 

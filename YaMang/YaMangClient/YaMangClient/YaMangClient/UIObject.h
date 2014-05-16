@@ -16,6 +16,10 @@ public:
 	float			GetUIPosY() { return m_UIPosition.y; }
 	bool			GetVisible() { return m_Visible; }
 	void			SetUIPosition(int m_UIType, int x, int y);
+
+	void			SetUIPosX(int x) { m_UIPosition.x = static_cast<float>(x); }
+	void			SetUIPosY(int y) { m_UIPosition.y = static_cast<float>(y); }
+
 private:
 	D3DXVECTOR3			m_UIPosition;
 	bool				m_Visible;
