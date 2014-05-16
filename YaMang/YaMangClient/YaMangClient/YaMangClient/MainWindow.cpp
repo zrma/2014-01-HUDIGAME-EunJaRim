@@ -148,7 +148,7 @@ LRESULT MainWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam ) con
 			int MouseX = LOWORD( lParam );
 			int MouseY = HIWORD( lParam );
 			MouseManager::GetInstance()->MoveMousePosition( MouseX, MouseY );
-			MouseManager::GetInstance()->MoveHiddenCursorToCenter();
+			//MouseManager::GetInstance()->MoveHiddenCursorToCenter();
 
 		}
 			return 0;

@@ -57,26 +57,31 @@ void MouseManager::MoveMousePosition( int x, int y )
 		return;
 	}
 
-	if ( ( x + m_WndLocationX ) > m_WndXPos )
-	{
-		m_MousePosition.X += ( ( x + m_WndLocationX ) - m_WndXPos );
-		// m_MousePosition.X += static_cast<SHORT>( time * 1000.0f * ( ( x + m_WndLocationX ) - m_WndXPos ) );
-	}
-	if ( ( x + m_WndLocationX ) < m_WndXPos )
-	{
-		m_MousePosition.X -= ( m_WndXPos - ( x + m_WndLocationX ) );
-		// m_MousePosition.X -= static_cast<SHORT>( time * 1000.0f * ( m_WndXPos - ( x + m_WndLocationX ) ) );
-	}
-	if ( ( y + m_WndLocationY ) > m_WndYPos )
-	{
-		m_MousePosition.Y += ( ( y + m_WndLocationY ) - m_WndYPos );
-		// m_MousePosition.Y += static_cast<SHORT>( time * 1000.0f * ( ( y + m_WndLocationY ) - m_WndYPos ) );
-	}
-	if ( ( y + m_WndLocationY ) < m_WndYPos )
-	{
-		m_MousePosition.Y -= ( m_WndYPos - ( y + m_WndLocationY ) );
-		// m_MousePosition.Y -= static_cast<SHORT>( time * 1000.0f *( m_WndYPos - ( y + m_WndLocationY ) ) );
-	}
+	// 윈도우 커서를 화면 중앙에 고정시키고 변화량을 적용하던 방식
+// 	if ( ( x + m_WndLocationX ) > m_WndXPos )
+// 	{
+// 		m_MousePosition.X += ( ( x + m_WndLocationX ) - m_WndXPos );
+// 		// m_MousePosition.X += static_cast<SHORT>( time * 1000.0f * ( ( x + m_WndLocationX ) - m_WndXPos ) );
+// 	}
+// 	if ( ( x + m_WndLocationX ) < m_WndXPos )
+// 	{
+// 		m_MousePosition.X -= ( m_WndXPos - ( x + m_WndLocationX ) );
+// 		// m_MousePosition.X -= static_cast<SHORT>( time * 1000.0f * ( m_WndXPos - ( x + m_WndLocationX ) ) );
+// 	}
+// 	if ( ( y + m_WndLocationY ) > m_WndYPos )
+// 	{
+// 		m_MousePosition.Y += ( ( y + m_WndLocationY ) - m_WndYPos );
+// 		// m_MousePosition.Y += static_cast<SHORT>( time * 1000.0f * ( ( y + m_WndLocationY ) - m_WndYPos ) );
+// 	}
+// 	if ( ( y + m_WndLocationY ) < m_WndYPos )
+// 	{
+// 		m_MousePosition.Y -= ( m_WndYPos - ( y + m_WndLocationY ) );
+// 		// m_MousePosition.Y -= static_cast<SHORT>( time * 1000.0f *( m_WndYPos - ( y + m_WndLocationY ) ) );
+// 	}
+
+	//윈도 커서 절대좌표로 커서 위치를 지정
+	m_MousePosition.X = x;
+	m_MousePosition.Y = y;
 
 	//일단 창밖으로 나가는거 값 때려박음
 	if ( m_MousePosition.X > m_Boundary.X - 35 )
