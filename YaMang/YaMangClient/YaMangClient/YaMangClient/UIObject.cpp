@@ -22,7 +22,7 @@ void UIObject::Render() const
 
 }
 
-void UIObject::SetUIPosition( int x, int y )
+void UIObject::SetUIPosition( int m_UIType, int x, int y )
 {
 	SetUIPos(m_UIType, x, y);
 }

@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+class UIObject;
+
 enum UIType
 {
 	UI_TYPE_NONE,
