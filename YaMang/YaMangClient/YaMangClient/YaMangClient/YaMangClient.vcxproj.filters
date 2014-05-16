@@ -193,9 +193,6 @@
     <ClInclude Include="UIManager.h">
       <Filter>Render</Filter>
     </ClInclude>
-    <ClInclude Include="UIObject.h">
-      <Filter>Render</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -310,9 +307,6 @@
       <Filter>UnitObject\Unit</Filter>
     </ClCompile>
     <ClCompile Include="UIManager.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="UIObject.cpp">
       <Filter>Render</Filter>
     </ClCompile>
   </ItemGroup>

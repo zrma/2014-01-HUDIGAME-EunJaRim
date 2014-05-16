@@ -135,7 +135,6 @@ xcopy ".\\FmodDLL\*" "..\..\..\Bin\YaMangClient\" /s /d /y</Command>
     <ClInclude Include="TextObject.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="UIManager.h" />
-    <ClInclude Include="UIObject.h" />
     <ClInclude Include="Unit.h" />
     <ClInclude Include="YaMangClient.h" />
   </ItemGroup>
@@ -179,7 +178,6 @@ xcopy ".\\FmodDLL\*" "..\..\..\Bin\YaMangClient\" /s /d /y</Command>
     <ClCompile Include="TextObject.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="UIManager.cpp" />
-    <ClCompile Include="UIObject.cpp" />
     <ClCompile Include="Unit.cpp" />
     <ClCompile Include="YaMangClient.cpp" />
   </ItemGroup>
