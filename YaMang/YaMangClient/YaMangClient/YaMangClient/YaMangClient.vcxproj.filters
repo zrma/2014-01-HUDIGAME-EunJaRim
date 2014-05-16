@@ -94,9 +94,6 @@
     <ClInclude Include="Timer.h">
       <Filter>MainLoop</Filter>
     </ClInclude>
-    <ClInclude Include="UIManager.h">
-      <Filter>MainLoop</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\SharedPreference\SharedDefine.h">
       <Filter>SharedPreference</Filter>
     </ClInclude>
@@ -193,6 +190,12 @@
     <ClInclude Include="ResourceDef.h">
       <Filter>Resource</Filter>
     </ClInclude>
+    <ClInclude Include="UIManager.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="UIObject.h">
+      <Filter>Render</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -226,9 +229,6 @@
       <Filter>Network</Filter>
     </ClCompile>
     <ClCompile Include="Timer.cpp">
-      <Filter>MainLoop</Filter>
-    </ClCompile>
-    <ClCompile Include="UIManager.cpp">
       <Filter>MainLoop</Filter>
     </ClCompile>
     <ClCompile Include="Interface3D.cpp">
@@ -308,6 +308,12 @@
     </ClCompile>
     <ClCompile Include="King.cpp">
       <Filter>UnitObject\Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="UIManager.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="UIObject.cpp">
+      <Filter>Render</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

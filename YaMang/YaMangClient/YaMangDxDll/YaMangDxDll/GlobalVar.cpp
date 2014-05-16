@@ -45,3 +45,10 @@ float	g_Width = 1280;
 // 스카이 박스
 LPDIRECT3DTEXTURE9	g_SkyBoxTextures[6] = { 0, };
 LPD3DXMESH          g_SkyBoxMesh = nullptr;
+
+///UI Sprite
+LPDIRECT3DTEXTURE9*		g_UITexures = nullptr;
+LPD3DXSPRITE			g_UISprite = nullptr;
+INT						g_UIType = 0;
+INT						g_UIMaxSize = 0;
+D3DXVECTOR3				g_UIPos = { 0, 0, 0 };
