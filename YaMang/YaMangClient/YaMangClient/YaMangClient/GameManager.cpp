@@ -42,7 +42,7 @@ bool GameManager::Init() const
 	
 	// 씬 생성 및 초기화
 	SceneManager::GetInstance()->Init();
-	SceneManager::GetInstance()->ChangeScene( SCENE_PLAY );
+	SceneManager::GetInstance()->ChangeScene( SCENE_LOAD );
 
 	// 네트워크 생성 및 초기화
 	NetworkManager::GetInstance()->Init();

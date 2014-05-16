@@ -10,6 +10,7 @@
 
 #include "Logger.h"
 #include "MainWindow.h"
+#include "NetworkManager.h"
 
 #pragma comment(lib,"ws2_32.lib")
 
@@ -32,6 +33,8 @@ int APIENTRY _tWinMain( _In_ HINSTANCE hInstance,
 #ifdef _PRINT_CONSOLE
 	Logger::GetInstance();
 #endif
+	Log( "!!!:%S \n", lpCmdLine );
+	NetworkManager::GetInstance()->SetRoomNumber( 1 );
 
 	// WS_POPUPWINDOW
 	// WS_OVERLAPPEDWINDOW

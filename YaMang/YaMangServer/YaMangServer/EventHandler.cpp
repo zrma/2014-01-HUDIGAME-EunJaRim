@@ -170,12 +170,14 @@ void ClientSession::HandleEnterRoomRequest( EnterRoomRequest& inPacket )
 
 	int roomNumber = inPacket.m_RoomNumber;
 
+	g_RoomManager->AddRoom( );
+
 	if ( !g_RoomManager->CheckRoom( roomNumber ) )
 	{
 		++m_ErrorNumber;
 		return;
 	}
-
+	
 	if ( !g_RoomManager->EnterRoom( roomNumber, m_PlayerID ) )
 	{
 		Log( "[Disconnected from:]ClientSession::HandleEnterRoomRequest Enter Room \n" );
@@ -187,8 +189,8 @@ void ClientSession::HandleEnterRoomRequest( EnterRoomRequest& inPacket )
 
 	if ( !Broadcast( &outPacket ) )
 	{
-		Log( "[Disconnected from:]ClientSession::HandleEnterRoomRequest Broadcast Fail \n" );
-		Disconnect();
+		//Log( "[Disconnected from:]ClientSession::HandleEnterRoomRequest Broadcast Fail \n" );
+		//Disconnect();
 	}
 
 	Log( "Enter Room! ID:%d ROOM:%d \n", m_PlayerID, roomNumber );

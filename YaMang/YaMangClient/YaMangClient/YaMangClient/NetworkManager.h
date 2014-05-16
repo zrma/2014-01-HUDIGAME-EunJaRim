@@ -15,6 +15,8 @@ struct RefreshUIResult;
 struct AttackCorpsResult;
 struct SyncOneCorpResult;
 struct RefreshBaseResult;
+struct GameStartResult;
+struct EnterRoomResult;
 
 class NetworkManager:public Singleton<NetworkManager>
 {
@@ -30,6 +32,8 @@ public:
 
 	int		GetMyPlayerID() { return m_MyPlayerId; }
 	
+	void	SetRoomNumber( int roomNumber ) { m_RoomNumber = roomNumber; }
+
 	//////////////////////////////////////////////////////////////////////////
 	// 패킷 핸들러
 	//////////////////////////////////////////////////////////////////////////
@@ -44,11 +48,14 @@ public:
 	void	HandleAttackCorpsResult( AttackCorpsResult& inPacket );
 	void	HandleSyncOneCorpResult( SyncOneCorpResult& inPacket );
 	void	HandleBaseResult( RefreshBaseResult& inPacket );
-
+	void	HandleGameStartResult( GameStartResult& inPacket );
+	void	HandleEnterRoomResult( EnterRoomResult& inPacket );
+	
 	//////////////////////////////////////////////////////////////////////////
 	// 리퀘스트 패킷 보내기
 	//////////////////////////////////////////////////////////////////////////
 	void	SendPacket( PacketHeader* pkt );
+	void	SendPlayPacket( PacketHeader* pkt );
 
 private:
 	SOCKET			m_Socket = NULL;
@@ -57,6 +64,9 @@ private:
 	int				m_MyPlayerId;
 
 	UINT			m_PrevTime = 0;
+
+	int				m_RoomNumber = 0;
+	bool			m_IsPlaying = false;
 };
 
 typedef void( *HandlerFunc )( PacketHeader& pktBase );

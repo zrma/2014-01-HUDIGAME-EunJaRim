@@ -30,6 +30,8 @@ enum PacketTypes: short
 	PKT_CS_LEAVE_ROOM = 11,
 	PKT_SC_LEAVE_ROOM = 12,
 
+	PKT_SC_GAME_START = 50,
+
 	PKT_CS_GENERATE_CORPS = 100,
 	PKT_SC_GENERATE_CORPS = 101,
 
@@ -226,6 +228,15 @@ struct LeaveRoomResult: public PacketHeader
 	}
 
 	int	m_RoomNumber;
+};
+
+struct GameStartResult: public PacketHeader
+{
+	GameStartResult( )
+	{
+		m_Size = sizeof( GameStartResult );
+		m_Type = PKT_SC_GAME_START;
+	}
 };
 
 // 사실 request는 테스트용

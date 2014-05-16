@@ -10,7 +10,7 @@ class ScenePlay:
 {
 public:
 	ScenePlay();
-	~ScenePlay();
+	virtual ~ScenePlay();
 
 	void		Create();
 	void		Destroy();

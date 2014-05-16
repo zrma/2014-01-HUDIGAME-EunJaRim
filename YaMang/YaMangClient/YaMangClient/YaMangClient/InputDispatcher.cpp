@@ -232,7 +232,7 @@ REGISTER_KEY_HANDLER( VK_U )
 		generateCorps.m_PlayerId = NetworkManager::GetInstance()->GetMyPlayerID();
 		generateCorps.m_UnitType = UnitType::UNIT_ARROW;
 
-		NetworkManager::GetInstance()->SendPacket( &generateCorps );
+		NetworkManager::GetInstance()->SendPlayPacket( &generateCorps );
 	}
 
 }
@@ -250,7 +250,7 @@ REGISTER_KEY_HANDLER( VK_I )
 		generateCorps.m_PlayerId = NetworkManager::GetInstance()->GetMyPlayerID();
 		generateCorps.m_UnitType = UnitType::UNIT_KNIGHT;
 
-		NetworkManager::GetInstance()->SendPacket( &generateCorps );
+		NetworkManager::GetInstance( )->SendPlayPacket( &generateCorps );
 	}
 }
 
@@ -267,7 +267,7 @@ REGISTER_KEY_HANDLER( VK_O )
 		generateCorps.m_PlayerId = NetworkManager::GetInstance()->GetMyPlayerID();
 		generateCorps.m_UnitType = UnitType::UNIT_PIKE;
 
-		NetworkManager::GetInstance()->SendPacket( &generateCorps );
+		NetworkManager::GetInstance( )->SendPlayPacket( &generateCorps );
 	}
 }
 
@@ -284,7 +284,7 @@ REGISTER_KEY_HANDLER( VK_P )
 		generateCorps.m_PlayerId = NetworkManager::GetInstance()->GetMyPlayerID();
 		generateCorps.m_UnitType = UnitType::UNIT_SWORD;
 
-		NetworkManager::GetInstance()->SendPacket( &generateCorps );
+		NetworkManager::GetInstance( )->SendPlayPacket( &generateCorps );
 	}
 }
 
@@ -301,6 +301,6 @@ REGISTER_KEY_HANDLER( VK_L )
 		generateCorps.m_PlayerId = 0; // BOT ID
 		generateCorps.m_UnitType = UnitType::UNIT_SWORD;
 
-		NetworkManager::GetInstance()->SendPacket( &generateCorps );
+		NetworkManager::GetInstance( )->SendPlayPacket( &generateCorps );
 	}
 }

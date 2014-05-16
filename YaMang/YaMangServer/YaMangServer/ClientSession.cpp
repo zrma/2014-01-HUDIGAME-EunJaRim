@@ -212,6 +212,11 @@ void ClientSession::OnWriteComplete( size_t len )
 
 bool ClientSession::Broadcast( PacketHeader* pkt )
 {
+	if ( !m_GameStarted )
+	{
+		return false;
+	}
+
 	if ( !SendRequest( pkt ) )
 	{
 		return false;
@@ -229,6 +234,11 @@ bool ClientSession::Broadcast( PacketHeader* pkt )
 
 bool ClientSession::DirectSend( PacketHeader* pkt )
 {
+	if ( !m_GameStarted )
+	{
+		return false;
+	}
+
 	if ( !SendRequest( pkt ) )
 	{
 		return false;
@@ -283,7 +293,7 @@ void ClientSession::DatabaseJobDone( DatabaseJobContext* result )
 
 		// DEBUG!!!!
 		// 로비에서도 게임이 실행되도록 함 나중에 지워야함
-		GameStart();
+		//GameStart();
 		/*GenerateCorpAction * action = new GenerateCorpAction();
 		action->SetClientManager( m_ClientManager );
 		action->SetPlayerID( m_PlayerID );

@@ -5,6 +5,6 @@ class SceneResult:
 {
 public:
 	SceneResult();
-	~SceneResult();
+	virtual ~SceneResult( );
 };
 

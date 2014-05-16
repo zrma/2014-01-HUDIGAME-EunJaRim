@@ -255,3 +255,11 @@ void NetworkManager::SendPacket( PacketHeader* pkt )
 		m_PrevTime = nowTime;
 	}
 }
+
+void NetworkManager::SendPlayPacket( PacketHeader* pkt )
+{
+	if ( m_IsPlaying )
+	{
+		SendPacket( pkt );
+	}
+}

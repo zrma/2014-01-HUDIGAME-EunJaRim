@@ -5,5 +5,11 @@ class SceneLoad : public Scene
 {
 public:
 	SceneLoad();
-	~SceneLoad();
+	virtual ~SceneLoad();
+
+	void		Create();
+	void		Destroy();
+	void		Update();
+	void		Render() const;
+
 };

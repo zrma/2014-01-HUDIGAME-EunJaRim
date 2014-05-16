@@ -63,7 +63,7 @@ void PlayerManager::AttackCorpsById( int corpsID ) const
 			attackCorpsData.m_MyCorpsID = iter;
 			attackCorpsData.m_TargetCorpsID = corpsID;
 
-			NetworkManager::GetInstance()->SendPacket( &attackCorpsData );
+			NetworkManager::GetInstance( )->SendPlayPacket( &attackCorpsData );
 		}
 	}
 }
@@ -88,7 +88,7 @@ void PlayerManager::MoveCorpsToPosition( float x, float z ) const
 			moveCorpsData.m_TargetX = x;
 			moveCorpsData.m_TargetZ = z;
 
-			NetworkManager::GetInstance()->SendPacket( &moveCorpsData );
+			NetworkManager::GetInstance( )->SendPlayPacket( &moveCorpsData );
 		}
 	}
 }
@@ -103,7 +103,7 @@ void PlayerManager::ChangeCorpsFormation( FormationType formation ) const
 			changeCorpsFormationData.m_CorpsID = iter;
 			changeCorpsFormationData.m_FormationType = formation;
 
-			NetworkManager::GetInstance()->SendPacket( &changeCorpsFormationData );
+			NetworkManager::GetInstance( )->SendPlayPacket( &changeCorpsFormationData );
 		}
 	}
 }

@@ -105,6 +105,14 @@ void GameRoom::InputClient( ClientSession* client )
 {
 	m_ClientList.insert( ClientList::value_type( client->m_Socket, client ) );
 	client->SetClientManager( this );
+
+	if (2 == m_ClientList.size())
+	{
+		Log( "[%d]GameStarted!! \n",m_RoomNumber );
+		GameStartResult gameStartResult;
+		BroadcastPacket( &gameStartResult );
+		GameStart( );
+	}
 }
 
 

@@ -62,13 +62,59 @@ void NetworkManager::HandleLoginResult( LoginResult& inPacket )
 		m_MyPlayerId = inPacket.m_PlayerId;
 
 
+		EnterRoomRequest enterRoomRequest;
+		enterRoomRequest.m_RoomNumber = m_RoomNumber;
+		NetworkManager::GetInstance( )->SendPacket( &enterRoomRequest );
 
+	}
+	else
+	{
+		assert( false );
+	}
+}
+
+REGISTER_HANDLER( PKT_SC_ENTER_ROOM )
+{
+	EnterRoomResult recvData = static_cast<EnterRoomResult&>( pktBase );
+	NetworkManager::GetInstance( )->HandleEnterRoomResult( recvData );
+}
+
+void NetworkManager::HandleEnterRoomResult( EnterRoomResult& inPacket )
+{
+	if ( m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size ) )
+	{
+		// 패킷처리
+		
+		m_RoomNumber = inPacket.m_RoomNumber;
+
+
+	}
+	else
+	{
+		assert( false );
+	}
+}
+
+REGISTER_HANDLER( PKT_SC_GAME_START )
+{
+	GameStartResult recvData = static_cast<GameStartResult&>( pktBase );
+	NetworkManager::GetInstance()->HandleGameStartResult( recvData );
+}
+
+void NetworkManager::HandleGameStartResult( GameStartResult& inPacket )
+{
+	if ( m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size ) )
+	{
+		SceneManager::GetInstance()->ChangeScene( SCENE_PLAY );
+		m_IsPlaying = true;
+
+
+		// 테스트 온리!!!
 		SyncAllRequest syncRequestData;
 		syncRequestData.m_PlayerId = NetworkManager::GetInstance()->GetMyPlayerID();
-		syncRequestData.m_RoomNumber = 0; // 로비 번호... 테스트용
+		syncRequestData.m_RoomNumber = m_RoomNumber;
 
 		NetworkManager::GetInstance()->SendPacket( &syncRequestData );
-
 
 	}
 	else

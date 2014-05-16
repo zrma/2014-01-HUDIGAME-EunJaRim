@@ -20,7 +20,7 @@ RoomManager::RoomManager()
 
 	m_Lobby = new GameRoom( LOBBY_NUMBER, m_GameMapManager );
 	// Test room start;
-	m_Lobby->GameStart( );
+	//m_Lobby->GameStart( );
 
 	m_RoomList.clear();
 	m_RoomList.insert( RoomList::value_type( LOBBY_NUMBER, m_Lobby ) );
@@ -42,7 +42,7 @@ int RoomManager::AddRoom()
 	GameRoom* room = new GameRoom( ++m_RoomCount, m_GameMapManager );
 
 	// Test room start;
-	room->GameStart( );
+	//room->GameStart( );
 	m_RoomList.insert( RoomList::value_type( m_RoomCount, room ) );
 
 	Log( "ROOM [%d] CREATED! \n", room->GetRoomNumber() );

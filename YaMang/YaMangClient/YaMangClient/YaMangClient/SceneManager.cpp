@@ -16,7 +16,8 @@ SceneManager::~SceneManager()
 
 void SceneManager::Init()
 {
-	// m_SceneList[SCENE_LOAD] = new SceneLoad();
+	m_SceneList[SCENE_LOAD] = new SceneLoad();
+	m_SceneList[SCENE_LOAD]->Create( );
 
 	m_SceneList[SCENE_PLAY] = new ScenePlay();
 	m_SceneList[SCENE_PLAY]->Create();
