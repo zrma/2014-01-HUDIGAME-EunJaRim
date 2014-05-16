@@ -14,6 +14,14 @@ UIManager::~UIManager()
 {
 }
 
+void UIManager::Render() const
+{
+	if (m_IsUIReady)
+	{
+		RenderUI();
+	}
+}
+
 HRESULT UIManager::InitUI()
 {
 	if (FAILED(InitUISprite(UI_TYPE_MAX)))

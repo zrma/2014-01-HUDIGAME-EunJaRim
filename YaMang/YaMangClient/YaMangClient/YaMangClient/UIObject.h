@@ -1,15 +1,13 @@
 ﻿#pragma once
 #include "Interface3D.h"
 
-class UIObject :
-	public Interface3D
+class UIObject //: public Interface3D
 {
 public:
 	UIObject();
 	~UIObject();
 
-	virtual void			Update();
-	virtual void			Render() const;
+	void			Update();
 
 	D3DXVECTOR3		GetUIPos() { return m_UIPosition; }
 	float			GetUIPosX() { return m_UIPosition.x; }
@@ -19,6 +17,7 @@ public:
 
 	void			SetUIPosX(int x) { m_UIPosition.x = static_cast<float>(x); }
 	void			SetUIPosY(int y) { m_UIPosition.y = static_cast<float>(y); }
+	void			SetVisible(bool visible) { m_Visible = visible; }
 
 private:
 	D3DXVECTOR3			m_UIPosition;

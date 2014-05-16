@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include "MacroSet.h"
 
 class UIObject;
 
@@ -11,16 +12,17 @@ enum UIType
 	UI_TYPE_MAX
 };
 
-class UIManager
+class UIManager :public Singleton<UIManager>
 {
 public:
 	UIManager();
 	~UIManager();
 
+	void		Render() const;
+
 	HRESULT		InitUI();
 	void		RegistUI( UIType key, int PosX, int PosY, bool visible);
 	void		CleanUp();
-	
 
 private:
 	std::array<UIObject*, UI_TYPE_MAX> m_UIList;
