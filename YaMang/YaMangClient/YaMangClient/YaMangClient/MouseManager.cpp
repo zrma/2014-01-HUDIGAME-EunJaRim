@@ -66,14 +66,14 @@ void MouseManager::MoveMousePosition( int x, int y )
 		{
 			CameraController::GetInstance()->RotateSide(0.1f);
 			SetDragStartPoint(x,y);
-			SetMousePosition(m_PressedMousePosition.X, m_PressedMousePosition.Y);
+			//SetMousePosition(m_PressedMousePosition.X, m_PressedMousePosition.Y);
 		}
 		
 		if (m_PressedMousePosition.X < x)
 		{
 			CameraController::GetInstance()->RotateSide(-0.1f);
 			SetDragStartPoint(x, y);
-			SetMousePosition(m_PressedMousePosition.X, m_PressedMousePosition.Y);
+			//SetMousePosition(m_PressedMousePosition.X, m_PressedMousePosition.Y);
 		}
 
 		return;
