@@ -18,6 +18,7 @@ public:
 	UIManager();
 	~UIManager();
 
+	void		Update();
 	void		Render() const;
 
 	HRESULT		InitUI();
