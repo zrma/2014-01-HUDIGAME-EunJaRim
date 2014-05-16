@@ -262,7 +262,7 @@ void ScenePlay::UpdateBase( int BaseIndex, int playerID )
 
 	// 테스트용 프린트
 	std::wstring test = L"";
-	for ( int i = 0; i < m_BasePlayerIDList.size(); ++i )
+	for ( UINT i = 0; i < m_BasePlayerIDList.size(); ++i )
 	{
 		test = test + L"[";
 		test = test + std::to_wstring( i );
