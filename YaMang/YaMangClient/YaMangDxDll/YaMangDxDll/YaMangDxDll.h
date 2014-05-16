@@ -95,6 +95,16 @@ extern "C"{
 	// ScreenShot
 	//////////////////////////////////////////////////////////////////////////
 	YAMANGDXDLL_API void TakeScreenShot();
+
+	//////////////////////////////////////////////////////////////////////////
+	//  UI
+	//////////////////////////////////////////////////////////////////////////
+	YAMANGDXDLL_API HRESULT InitUI(int textureSize, int UIPosX = 0, int UIPosY = 0);
+	YAMANGDXDLL_API void SetUIPos(int typeNum, int UIPosX = 0, int UIPosY = 0);
+	YAMANGDXDLL_API HRESULT CreateUIImage(LPCWSTR ImagePath = L"UI_default.png", INT typeNum = 0);
+	YAMANGDXDLL_API HRESULT RenderUI();
+	YAMANGDXDLL_API void SetUIVisible(int typeNum, bool visibleType = true);
+	YAMANGDXDLL_API void UICleanUp();
 }
 //단일 변수 out sample
 //extern YAMANGDXDLL_API int nyaMangDxDll;

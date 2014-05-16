@@ -95,6 +95,28 @@ YAMANGDXDLL_API void SkyBoxCleanUp()
 	}
 }
 
+YAMANGDXDLL_API void UICleanUp()
+{
+	if (g_UISprite)
+	{
+		g_UISprite->Release();
+		g_UISprite = nullptr;
+	}
+
+	if (g_UITexures)
+	{
+		for (int i = 0; i < g_UIMaxSize; ++i)
+		{
+			if (g_UITexures[i])
+			{
+				g_UITexures[i]->Release();
+			}
+		}
+		delete[] g_UITexures;
+		g_UITexures = nullptr;
+	}
+}
+
 
 YAMANGDXDLL_API void D3DCleanUp()
 {
