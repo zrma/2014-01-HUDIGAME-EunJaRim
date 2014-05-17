@@ -19,7 +19,7 @@ public:
 	GameRoom( int roomNumber, GameMapManager* gameMapManager );
 	~GameRoom();
 
-	void				GameStart();
+	void				GameRoomStart();
 
 
 	ClientSession*		CreateClient( SOCKET sock );

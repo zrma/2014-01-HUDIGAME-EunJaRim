@@ -217,10 +217,10 @@ bool ClientSession::Broadcast( PacketHeader* pkt )
 		return false;
 	}
 
-	if ( !SendRequest( pkt ) )
-	{
-		return false;
-	}
+// 	if ( !SendRequest( pkt ) )
+// 	{
+// 		return false;
+// 	}
 
 	if ( !IsConnected() )
 	{
@@ -235,11 +235,6 @@ bool ClientSession::Broadcast( PacketHeader* pkt )
 bool ClientSession::DirectSend( PacketHeader* pkt )
 {
 	if ( !m_GameStarted )
-	{
-		return false;
-	}
-
-	if ( !SendRequest( pkt ) )
 	{
 		return false;
 	}

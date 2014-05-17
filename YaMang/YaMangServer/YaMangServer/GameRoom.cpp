@@ -43,7 +43,7 @@ GameRoom::~GameRoom()
 	delete m_ActionScheduler;
 }
 
-void GameRoom::GameStart()
+void GameRoom::GameRoomStart()
 {
 
 	
@@ -125,7 +125,7 @@ void GameRoom::InputClient( ClientSession* client )
 		Log( "[%d]GameStarted!! \n",m_RoomNumber );
 		GameStartResult gameStartResult;
 		BroadcastPacket( &gameStartResult );
-		GameStart( );
+		GameRoomStart( );
 	}
 }
 
