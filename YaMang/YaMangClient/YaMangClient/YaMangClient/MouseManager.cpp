@@ -121,7 +121,7 @@ void MouseManager::MoveMousePosition( int x, int y )
 		CalcPickingRay( m_MousePosition.X, m_MousePosition.Y );
 
 		HRESULT hr = S_OK;
-		if ( S_FALSE != ( hr = TransPickedTriangle( 0, &pickedX, &pickedZ ) ) )
+		if ( S_FALSE != ( hr = TransPickedTriangle( &pickedX, &pickedZ, 0 ) ) )
 		{
 			Corps* pickedCorps = static_cast<ScenePlay*>( scene )->SearchCorpsByPosition( pickedX, pickedZ, false );
 
@@ -172,7 +172,7 @@ void MouseManager::MoveMousePosition( int x, int y )
 		CalcPickingRay( m_MousePosition.X, m_MousePosition.Y );
 
 		HRESULT hr = S_OK;
-		if ( S_FALSE != ( hr = TransPickedTriangle( 0, &pickedX, &pickedZ ) ) )
+		if ( S_FALSE != ( hr = TransPickedTriangle( &pickedX, &pickedZ, 0 ) ) )
 		{
 			Corps* pickedCorps = static_cast<ScenePlay*>( scene )->SearchCorpsByPosition( pickedX, pickedZ, false );
 
@@ -233,7 +233,7 @@ void MouseManager::SetLeftClick( bool isclicked )
 		CalcPickingRay( m_MousePosition.X, m_MousePosition.Y );
 
 		HRESULT hr = S_OK;
-		if ( S_FALSE != ( hr = TransPickedTriangle( 0, &pickedX, &pickedZ ) ) )
+		if ( S_FALSE != ( hr = TransPickedTriangle( &pickedX, &pickedZ, 0 ) ) )
 		{
 			Corps* pickedCorps = static_cast<ScenePlay*>( scene )->SearchCorpsByPosition( pickedX, pickedZ );
 
@@ -306,7 +306,7 @@ void MouseManager::SetRightClick( bool isclicked )
 			CalcPickingRay( m_MousePosition.X, m_MousePosition.Y );
 
 			HRESULT hr = S_OK;
-			if ( S_FALSE != ( hr = TransPickedTriangle( 0, &pickedX, &pickedZ ) ) )
+			if ( S_FALSE != ( hr = TransPickedTriangle( &pickedX, &pickedZ, 0 ) ) )
 			{
 				Corps* pickedCorps = static_cast<ScenePlay*>( scene )->SearchCorpsByPosition( pickedX, pickedZ, false );
 
