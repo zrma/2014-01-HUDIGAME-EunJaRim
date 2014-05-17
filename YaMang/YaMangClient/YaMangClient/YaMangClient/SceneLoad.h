@@ -7,9 +7,9 @@ public:
 	SceneLoad();
 	virtual ~SceneLoad();
 
-	void		Create();
-	void		Destroy();
-	void		Update();
-	void		Render() const;
+	virtual void	Create();
+	virtual void	Destroy();
+	virtual void	Update();
+	virtual void	Render() const;
 
 };

@@ -7,6 +7,7 @@
 #include "ScenePlay.h"
 #include "TextManager.h"
 #include "SoundManager.h"
+#include "CameraController.h"
 
 HandlerFunc HandlerTable[PKT_MAX];
 
@@ -105,10 +106,14 @@ void NetworkManager::HandleGameStartResult( GameStartResult& inPacket )
 {
 	if ( m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size ) )
 	{
+		CameraController::GetInstance()->Init();
+
+		SoundManager::GetInstance()->PlaySound( SOUND_SCENE_PLAY_BGM2 );
+		SoundManager::GetInstance()->SetVolume( SOUND_SCENE_PLAY_BGM2, 0.3f );
+
 		SceneManager::GetInstance()->ChangeScene( SCENE_PLAY );
 		m_IsPlaying = true;
-
-
+		
 		// 테스트 온리!!!
 		SyncAllRequest syncRequestData;
 		syncRequestData.m_PlayerId = NetworkManager::GetInstance()->GetMyPlayerID();

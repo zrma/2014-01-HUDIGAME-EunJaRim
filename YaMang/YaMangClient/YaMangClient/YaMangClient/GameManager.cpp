@@ -49,8 +49,8 @@ bool GameManager::Init() const
 	NetworkManager::GetInstance()->Connect();
 	
 	// 카메라 초기화
-	CameraController::GetInstance()->Init();
-
+	// 카메라 초기화는 게임 시작 패킷을 받는 부분으로 보냅니다.
+	
 	// 텍스트 매니저
 	// 타이머
 	// 플레이어
@@ -75,14 +75,12 @@ bool GameManager::Process() const
 
 	CameraController::GetInstance()->Update();
 	SceneManager::GetInstance()->Update();
-
-	// 더미 렌더
+		
 	{
+		// 더미 렌더
 		DummyRender dRender;
 
-		Renderer::GetInstance()->RenderMap();
-		SceneManager::GetInstance()->Render();
-		TextManager::GetInstance()->DrawTexts();
+		SceneManager::GetInstance()->Render();	
 	}
 	return true;
 }

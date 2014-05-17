@@ -11,6 +11,7 @@
 #include "NetworkManager.h"
 #include "CameraController.h"
 #include "TextManager.h"
+#include "Renderer.h"
 
 ScenePlay::ScenePlay()
 {
@@ -34,8 +35,6 @@ void ScenePlay::Create()
 		m_BasePlayerIDList.push_back( 0 ); // 0은 봇의 id
 	}
 
-	SoundManager::GetInstance()->PlaySound( SOUND_SCENE_PLAY_BGM2 );
-	SoundManager::GetInstance()->SetVolume( SOUND_SCENE_PLAY_BGM2, 0.3f );
 	m_MouseCursor = new MouseRender();
 }
 
@@ -66,6 +65,9 @@ void ScenePlay::Update()
 
 void ScenePlay::Render() const
 {
+	Renderer::GetInstance()->RenderMap();
+	TextManager::GetInstance()->DrawTexts();
+
 	for ( auto& iter : m_CorpsList )
 	{
 		auto& corps = iter.second;

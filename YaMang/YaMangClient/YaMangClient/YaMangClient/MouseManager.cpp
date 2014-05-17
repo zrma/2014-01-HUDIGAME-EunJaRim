@@ -39,68 +39,27 @@ void MouseManager::MoveMousePosition( int x, int y )
 
 	float time = static_cast<float>( Timer::GetInstance()->GetElapsedTime() ) / 1000;
 
-	//마우스 커서를 계속 중앙으로 고정시켜 사용하던 방식
-	//마우스 오른쪽 드래그 시 마우스 고정하고 카메라 회전
-// 	if ( m_IsRightDragging )
-// 	{
-// 		m_CursorType = CURSOR_CAMERA_ROTATING;
-// 		if ( ( x + m_WndLocationX ) > m_WndXPos )
-// 		{
-// 			// CameraController::GetInstance()->RotateSide( time *( ( x + m_WndLocationX ) - m_WndXPos ) );
-// 			CameraController::GetInstance()->RotateSide( ( ( x + m_WndLocationX ) - m_WndXPos ) / 120.f );
-// 		}
-// 		if ( ( x + m_WndLocationX ) < m_WndXPos )
-// 		{
-// 			// CameraController::GetInstance()->RotateSide( -time *( m_WndXPos - ( x + m_WndLocationX ) ) );
-// 			CameraController::GetInstance()->RotateSide( -( m_WndXPos - ( x + m_WndLocationX ) ) / 120.f );
-// 		}
-// 
-// 		return;
-// 	}
-
 	//이젠 드래그 시작 하면 드래그 시작 좌표와 비교해서 회전하도록 한다
 	if ( m_IsRightDragging )
 	{
 		m_CursorType = CURSOR_CAMERA_ROTATING;
-		if (m_PressedMousePosition.X > x)
+		if ( m_PressedMousePosition.X > x )
 		{
-			CameraController::GetInstance()->RotateSide(0.1f);
-			SetDragStartPoint(x,y);
+			CameraController::GetInstance()->RotateSide( -0.1f );
+			SetDragStartPoint( x, y );
 			//SetMousePosition(m_PressedMousePosition.X, m_PressedMousePosition.Y);
 		}
-		
-		if (m_PressedMousePosition.X < x)
+
+		if ( m_PressedMousePosition.X < x )
 		{
-			CameraController::GetInstance()->RotateSide(-0.1f);
-			SetDragStartPoint(x, y);
+			CameraController::GetInstance()->RotateSide( 0.1f );
+			SetDragStartPoint( x, y );
 			//SetMousePosition(m_PressedMousePosition.X, m_PressedMousePosition.Y);
 		}
 
 		return;
 	}
-
-	// 윈도우 커서를 화면 중앙에 고정시키고 변화량을 적용하던 방식
-// 	if ( ( x + m_WndLocationX ) > m_WndXPos )
-// 	{
-// 		m_MousePosition.X += ( ( x + m_WndLocationX ) - m_WndXPos );
-// 		// m_MousePosition.X += static_cast<SHORT>( time * 1000.0f * ( ( x + m_WndLocationX ) - m_WndXPos ) );
-// 	}
-// 	if ( ( x + m_WndLocationX ) < m_WndXPos )
-// 	{
-// 		m_MousePosition.X -= ( m_WndXPos - ( x + m_WndLocationX ) );
-// 		// m_MousePosition.X -= static_cast<SHORT>( time * 1000.0f * ( m_WndXPos - ( x + m_WndLocationX ) ) );
-// 	}
-// 	if ( ( y + m_WndLocationY ) > m_WndYPos )
-// 	{
-// 		m_MousePosition.Y += ( ( y + m_WndLocationY ) - m_WndYPos );
-// 		// m_MousePosition.Y += static_cast<SHORT>( time * 1000.0f * ( ( y + m_WndLocationY ) - m_WndYPos ) );
-// 	}
-// 	if ( ( y + m_WndLocationY ) < m_WndYPos )
-// 	{
-// 		m_MousePosition.Y -= ( m_WndYPos - ( y + m_WndLocationY ) );
-// 		// m_MousePosition.Y -= static_cast<SHORT>( time * 1000.0f *( m_WndYPos - ( y + m_WndLocationY ) ) );
-// 	}
-
+	
 	//윈도 커서 절대좌표로 커서 위치를 지정
 	m_MousePosition.X = x;
 	m_MousePosition.Y = y;
@@ -109,18 +68,22 @@ void MouseManager::MoveMousePosition( int x, int y )
 	if ( m_MousePosition.X > m_Boundary.X - 35 )
 	{
 		m_MousePosition.X = m_Boundary.X - 35;
+		SetCursorPos( m_MousePosition.X, m_MousePosition.Y );
 	}
 	if ( m_MousePosition.Y > m_Boundary.Y - 35 )
 	{
 		m_MousePosition.Y = m_Boundary.Y - 35;
+		SetCursorPos( m_MousePosition.X, m_MousePosition.Y );
 	}
 	if ( m_MousePosition.X < 3 )
 	{
 		m_MousePosition.X = 3;
+		SetCursorPos( m_MousePosition.X, m_MousePosition.Y );
 	}
 	if ( m_MousePosition.Y < 5 )
 	{
 		m_MousePosition.Y = 5;
+		SetCursorPos( m_MousePosition.X, m_MousePosition.Y );
 	}
 
 	// 처음 클릭 시작된 점과 일정 거리 이상 떨어졌을 경우 드래그 상태로 전환

@@ -12,10 +12,10 @@ public:
 	ScenePlay();
 	virtual ~ScenePlay();
 
-	void		Create();
-	void		Destroy();
-	void		Update();
-	void		Render() const;
+	virtual void	Create();
+	virtual void	Destroy();
+	virtual void	Update();
+	virtual void	Render() const;
 
 	void		AddCorps( int corpsID, Corps* corps );
 	bool		CheckCorps( int corpsID );
