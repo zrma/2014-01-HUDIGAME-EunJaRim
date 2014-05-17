@@ -128,6 +128,48 @@ void NetworkManager::HandleGameStartResult( GameStartResult& inPacket )
 	}
 }
 
+// 왕의 인덱스 번호와(미니맵에 그릴때 맵정보와 비교해서 표시) 초기 게임시작 카메라 위치를 전달
+REGISTER_HANDLER( PKT_SC_KING_INDEX )
+{
+	KingIndexResult recvData = static_cast<KingIndexResult&>( pktBase );
+	NetworkManager::GetInstance( )->HandleKingIndexResult( recvData );
+}
+
+void NetworkManager::HandleKingIndexResult( KingIndexResult& inPacket )
+{
+	if ( m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size ) )
+	{
+		int kingIndex = inPacket.m_KingIndex;
+		float cameraX = inPacket.m_CameraX;
+		float cameraZ = inPacket.m_CameraZ;
+
+		assert( kingIndex != -1 );
+
+		Scene* scene = SceneManager::GetInstance()->GetNowScene();
+		if ( typeid( ScenePlay ) == typeid( *scene ) )
+		{
+			ScenePlay* scenePlay = static_cast<ScenePlay*>( scene );
+
+			scenePlay->SetKingIndex( kingIndex );
+
+			// 여기에 카메라 저 좌표로 보게끔 이동시키는 코드 필요함
+
+			Log( "Your King Index:%d And Start At[%f][%f] \n", kingIndex, cameraX, cameraZ );
+		}
+		else
+		{
+			// 플레이중이 아닌데 플레이용 패킷을 받음 
+			assert( false );
+		}
+
+
+	}
+	else
+	{
+		assert( false );
+	}
+}
+
 REGISTER_HANDLER( PKT_SC_GAMEOVER )
 {
 	GameOverResult recvData = static_cast<GameOverResult&>( pktBase );

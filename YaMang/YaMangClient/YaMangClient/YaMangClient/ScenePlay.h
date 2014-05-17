@@ -32,10 +32,16 @@ public:
 
 	void		UpdateBase( int BaseIndex, int playerID );
 
+
+	void		SetKingIndex( int index ) { m_KingIndex = index; }
+
 private:
 	std::hash_map<int, Corps*>	m_CorpsList;
 	std::vector<int>			m_BasePlayerIDList;
 
 	MouseRender*				m_MouseCursor;
+
+
+	int							m_KingIndex = -1;
 };
 

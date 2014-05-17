@@ -17,6 +17,7 @@ struct SyncOneCorpResult;
 struct RefreshBaseResult;
 struct GameStartResult;
 struct EnterRoomResult;
+struct KingIndexResult;
 
 class NetworkManager:public Singleton<NetworkManager>
 {
@@ -50,7 +51,8 @@ public:
 	void	HandleBaseResult( RefreshBaseResult& inPacket );
 	void	HandleGameStartResult( GameStartResult& inPacket );
 	void	HandleEnterRoomResult( EnterRoomResult& inPacket );
-	
+	void	HandleKingIndexResult( KingIndexResult& inPacket );
+
 	//////////////////////////////////////////////////////////////////////////
 	// 리퀘스트 패킷 보내기
 	//////////////////////////////////////////////////////////////////////////

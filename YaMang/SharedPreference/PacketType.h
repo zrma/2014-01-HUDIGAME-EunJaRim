@@ -32,6 +32,8 @@ enum PacketTypes: short
 
 	PKT_SC_GAME_START = 50,
 
+	PKT_SC_KING_INDEX = 60,
+
 	PKT_CS_GENERATE_CORPS = 100,
 	PKT_SC_GENERATE_CORPS = 101,
 
@@ -237,6 +239,22 @@ struct GameStartResult: public PacketHeader
 		m_Size = sizeof( GameStartResult );
 		m_Type = PKT_SC_GAME_START;
 	}
+};
+
+struct KingIndexResult: public PacketHeader
+{
+	KingIndexResult( )
+	{
+		m_Size = sizeof( KingIndexResult );
+		m_Type = PKT_SC_KING_INDEX;
+		m_KingIndex = -1;
+		m_CameraX = NOT_A_NUMBER_FLOAT;
+		m_CameraZ = NOT_A_NUMBER_FLOAT;
+	}
+
+	int		m_KingIndex;
+	float	m_CameraX;
+	float	m_CameraZ;
 };
 
 // 사실 request는 테스트용

@@ -95,7 +95,7 @@ public:
 
 	ULONGLONG	GetCorpsRegenTime( ) { return m_CorpsRegenTime; }
 
-	void		SetKingIndex( int index ) { m_KingIndex = index; }
+	void		SetKingIndex( int index, float cameraX, float cameraZ );
 
 private:
 	void		CalculateRegenTime();
@@ -134,13 +134,12 @@ private:
 	//////////////////////////////////////////////////////////////////////////
 	// 게임 컨텐츠 관련 데이터
 	//////////////////////////////////////////////////////////////////////////
+	int						m_KingIndex = -1;
 	int						m_CorpsMax = 10;
 	int						m_CorpsNow = 0;
 	int						m_BaseNum = 0;
 	ULONGLONG				m_CorpsRegenTime = INT_MAX;
 	bool					m_GameStarted = false;
-
-	int						m_KingIndex = -1;
 
 
 	unsigned char			m_ErrorNumber = 0;

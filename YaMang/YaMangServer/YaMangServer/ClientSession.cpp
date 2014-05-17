@@ -395,6 +395,21 @@ void ClientSession::CalculateRegenTime()
 	}
 }
 
+void ClientSession::SetKingIndex( int index, float cameraX, float cameraZ )
+{
+	m_KingIndex = index;
+
+	KingIndexResult outPacket;
+	outPacket.m_KingIndex = index;
+	outPacket.m_CameraX = cameraX;
+	outPacket.m_CameraZ = cameraZ;
+
+	if ( !DirectSend( &outPacket ) )
+	{
+		// Disconnect();
+	}
+}
+
 
 
 ///////////////////////////////////////////////////////////

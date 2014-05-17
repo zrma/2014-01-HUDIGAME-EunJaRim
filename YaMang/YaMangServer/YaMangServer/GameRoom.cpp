@@ -85,6 +85,7 @@ void GameRoom::GameStart()
 
 		const Corps* corps = GenerateCorps( client->GetPlayerID(), UnitType::UNIT_KING, kingPositionList.at( i ) );
 		m_KingIDList.push_back( corps->GetCorpsID() );
+		client->SetKingIndex( i, kingPositionList.at( i ).m_EyePoint.x, kingPositionList.at( i ).m_EyePoint.z );
 		++i;
 	}
 
