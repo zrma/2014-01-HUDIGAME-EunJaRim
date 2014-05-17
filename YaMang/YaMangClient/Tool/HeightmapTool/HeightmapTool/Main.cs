@@ -25,13 +25,13 @@ namespace YamangTools
         int mouseXPosition = 0;
         int mouseYPosition = 0;
 
-        string heightMap = ".\\heightmap_128_128.bmp";
-        string mapTexture = ".\\heightmap_128_128.bmp";
-        string mapTexture0 = ".\\greengrass.bmp";
-        string mapTexture1 = ".\\leaf.bmp";
-        string mapTexture2 = ".\\sky.bmp";
-        string mapTexture3 = ".\\stone.bmp";
-        string mapTexture4 = ".\\tile.bmp";
+        string heightMap = ".\\MapResource\\heightmap_128_128.bmp";
+        string mapTexture = ".\\MapResource\\heightmap_128_128.bmp";
+        string mapTexture0 = ".\\TextureResource\\grass.bmp";
+        string mapTexture1 = ".\\TextureResource\\leaf.bmp";
+        string mapTexture2 = ".\\TextureResource\\sky.bmp";
+        string mapTexture3 = ".\\TextureResource\\stone.bmp";
+        string mapTexture4 = ".\\TextureResource\\tile.bmp";
 
         ~Main()
         {
