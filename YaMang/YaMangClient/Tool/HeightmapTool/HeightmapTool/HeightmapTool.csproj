@@ -112,8 +112,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy ".\\TextureResource\*" "..\..\..\..\Bin\YaMangMapTool\TextureResource\" /s /d /y
-xcopy ".\\MapResource\*" "..\..\..\..\Bin\YaMangMapTool\MapResource\" /s /d /y</PostBuildEvent>
+    <PostBuildEvent>xcopy "..\..\YaMangClient\Tool\HeightmapTool\HeightmapTool\TextureResource\*" ".\TextureResource\" /s /d /y
+xcopy "..\..\YaMangClient\Tool\HeightmapTool\HeightmapTool\MapResource\*" ".\MapResource\" /s /d /y</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
