@@ -20,5 +20,6 @@ private:
 private:
 	int				m_PlayerID = -1;
 	ClientSession*	m_ClientSession = nullptr;
+	ULONGLONG		m_LastGeneratedTime = 0;
 };
 

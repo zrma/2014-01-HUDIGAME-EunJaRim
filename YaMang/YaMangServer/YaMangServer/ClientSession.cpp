@@ -291,16 +291,6 @@ void ClientSession::DatabaseJobDone( DatabaseJobContext* result )
 		Log( "[DEBUG][%d] Login DONE! \n", login->m_PlayerId );
 		LoginDone( login->m_PlayerId, login->m_PlayerName );
 
-		// DEBUG!!!!
-		// 로비에서도 게임이 실행되도록 함 나중에 지워야함
-		//GameStart();
-		/*GenerateCorpAction * action = new GenerateCorpAction();
-		action->SetClientManager( m_ClientManager );
-		action->SetPlayerID( m_PlayerID );
-		action->SetClientSession( this );
-
-		m_ClientManager->AddActionToScheduler( action, 0 );*/
-
 	}
 	else if ( typeInfo == typeid( UpdatePlayerDataContext ) )
 	{
@@ -341,6 +331,13 @@ void ClientSession::GameStart()
 {
 	m_GameStarted = true;
 	CalculateRegenTime();
+
+	GenerateCorpAction * action = new GenerateCorpAction();
+	action->SetClientManager( m_ClientManager );
+	action->SetPlayerID( m_PlayerID );
+	action->SetClientSession( this );
+
+	m_ClientManager->AddActionToScheduler( action, 0 );
 }
 
 void ClientSession::AddCorpsNum()

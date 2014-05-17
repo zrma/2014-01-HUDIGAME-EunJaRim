@@ -81,6 +81,7 @@ public:
 	bool		IsGameStarted() const { return m_GameStarted; }
 
 	void		GameStart();
+	int			GetPlayerID() const { return m_PlayerID; }
 
 	int			GetFood() const { return m_CorpsMax; }
 
@@ -93,6 +94,8 @@ public:
 	void		SubBaseNum( );
 
 	ULONGLONG	GetCorpsRegenTime( ) { return m_CorpsRegenTime; }
+
+	void		SetKingIndex( int index ) { m_KingIndex = index; }
 
 private:
 	void		CalculateRegenTime();
@@ -134,8 +137,11 @@ private:
 	int						m_CorpsMax = 10;
 	int						m_CorpsNow = 0;
 	int						m_BaseNum = 0;
-	ULONGLONG				m_CorpsRegenTime = 10000;
+	ULONGLONG				m_CorpsRegenTime = INT_MAX;
 	bool					m_GameStarted = false;
+
+	int						m_KingIndex = -1;
+
 
 	unsigned char			m_ErrorNumber = 0;
 	const unsigned char		m_ErrorNumberMax = 5;

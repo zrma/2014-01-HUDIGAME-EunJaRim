@@ -45,10 +45,20 @@ GameRoom::~GameRoom()
 
 void GameRoom::GameStart()
 {
+
+	
+
 	// 거점병사 만들기 임시 하드코딩
 
 	const std::vector<PositionInfo>& kingPositionList = m_GameMapManager->GetKingPositionList( );
 	const std::vector<PositionInfo>& guardPositionList = m_GameMapManager->GetGuardPositionList();
+
+	if ( kingPositionList.size() != m_ClientList.size() )
+	{
+		// 방 인원수하고 시작 가능 인원수 하고 맞지 않은데 시작할려고 하고 있음
+		assert( false );
+		return;
+	}
 
 	m_KingIDList.clear();
 	m_GuardIDList.clear();
@@ -56,11 +66,7 @@ void GameRoom::GameStart()
 	m_KingIDList.reserve( kingPositionList.size() );
 	m_GuardIDList.reserve( guardPositionList.size( ) );
 
-	for ( PositionInfo position : kingPositionList )
-	{
-		const Corps* corps = GenerateCorps( 0, UnitType::UNIT_KING, position ); // playerID로 변경해야함...
-		m_KingIDList.push_back( corps->GetCorpsID() );
-	}
+
 
 	for ( PositionInfo position : guardPositionList )
 	{
@@ -68,11 +74,18 @@ void GameRoom::GameStart()
 		m_GuardIDList.push_back( corps->GetCorpsID( ) );
 	}
 
+
+
 	m_IsGameStart = true;
+	int i = 0;
 	for ( auto& it : m_ClientList )
 	{
 		ClientSession* client = it.second;
 		client->GameStart();
+
+		const Corps* corps = GenerateCorps( client->GetPlayerID(), UnitType::UNIT_KING, kingPositionList.at( i ) );
+		m_KingIDList.push_back( corps->GetCorpsID() );
+		++i;
 	}
 
 }
