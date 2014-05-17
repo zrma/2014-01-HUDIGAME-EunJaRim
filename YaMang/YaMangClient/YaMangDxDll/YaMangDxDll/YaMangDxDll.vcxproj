@@ -62,6 +62,10 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>d3d9.lib;d3dx9d.lib;dxerr.lib;dxguid.lib;winmm.lib;comctl32.lib;Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy "..\..\..\Bin\YaMangClient\YaMangDxDll.dll" "..\..\..\Bin\YaMangMapTool\" /s /d /y
+xcopy "..\..\..\Bin\YaMangClient\YaMangDxDll.lib" "..\..\..\Bin\YaMangMapTool\" /s /d /y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
