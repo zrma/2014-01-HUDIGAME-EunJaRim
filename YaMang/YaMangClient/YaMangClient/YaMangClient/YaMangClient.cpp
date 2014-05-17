@@ -38,7 +38,7 @@ int APIENTRY _tWinMain( _In_ HINSTANCE hInstance,
 
 	// WS_POPUPWINDOW
 	// WS_OVERLAPPEDWINDOW
-	if ( false == MainWindow::GetInstance()->Create( L"YaMang", WS_POPUPWINDOW ) )
+	if ( false == MainWindow::GetInstance()->Create( L"YaMang", WS_OVERLAPPEDWINDOW ) )
 	{
 		return 0;
 	}
