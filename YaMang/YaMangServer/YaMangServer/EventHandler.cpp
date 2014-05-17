@@ -325,6 +325,15 @@ void ClientSession::HandleMoveCorpsRequest( MoveCorpsRequest& inPacket )
 		++m_ErrorNumber;
 		return;
 	}
+
+	// 가드나 킹이 이동 요청해옴
+	if ( UnitType::UNIT_GUARD == corps->GetUnitType( ) || UnitType::UNIT_KING == corps->GetUnitType( ) )
+	{
+		Log( "[Error] [%d]Type Move Request \n", corpsID );
+		++m_ErrorNumber;
+		return;
+	}
+
 	if ( m_ErrorNumber > m_ErrorNumberMax )
 	{
 		Log( "[Disconnected from:]ClientSession::HandleMoveCorpsRequest Error MAX \n" );

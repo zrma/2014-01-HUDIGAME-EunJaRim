@@ -215,7 +215,7 @@ void MouseManager::MoveMousePosition( int x, int y )
 
 			if ( pickedCorps )
 			{
-				if ( UnitType::UNIT_GUARD == pickedCorps->GetUnitType() ||
+				if ( UnitType::UNIT_GUARD == pickedCorps->GetUnitType( ) || UnitType::UNIT_KING == pickedCorps->GetUnitType( ) ||
 					 pickedCorps->GetOwnPlayerID() != NetworkManager::GetInstance()->GetMyPlayerID() )
 				{
 					// Log( "클릭 선택 할 수 없음! \n" );
@@ -279,7 +279,7 @@ void MouseManager::SetLeftClick( bool isclicked )
 			if ( pickedCorps )
 			{
 				// 여기에 플레이어의 유닛이 아닌가 확인하는 코드 넣어야 됨
-				if ( UnitType::UNIT_GUARD == pickedCorps->GetUnitType() ||
+				if ( UnitType::UNIT_GUARD == pickedCorps->GetUnitType( ) || UnitType::UNIT_KING == pickedCorps->GetUnitType( ) ||
 					 pickedCorps->GetOwnPlayerID() != NetworkManager::GetInstance()->GetMyPlayerID() )
 				{
 					// Log( "피킹한 놈 %d, 내 아이디 %d \n",
