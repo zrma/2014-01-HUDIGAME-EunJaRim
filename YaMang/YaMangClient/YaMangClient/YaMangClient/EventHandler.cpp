@@ -183,21 +183,35 @@ void NetworkManager::HandleGameOverResult( GameOverResult& inPacket )
 		/// 여기 걸리면 서버로부터 잘못된 아이디가 넘어온것
 		assert( inPacket.m_PlayerId != -1 );
 
-		if ( m_MyPlayerId != inPacket.m_PlayerId )
+		Scene* scene = SceneManager::GetInstance()->GetNowScene();
+		if ( typeid( ScenePlay ) == typeid( *scene ) )
 		{
-			return;
-		}
+			if ( m_MyPlayerId != inPacket.m_PlayerId )
+			{
+				return;
+			}
 
-		if ( inPacket.m_IsWon )
-		{
-			Log( "I'm WIN!! \n" );
-			TextManager::GetInstance( )->RegistText( TEXT_GAME_RESULT, L"I'm WIN!!", 200, 200 );
+			if ( inPacket.m_IsWon )
+			{
+				Log( "I'm WIN!! \n" );
+				TextManager::GetInstance()->RegistText( TEXT_GAME_RESULT, L"I'm WIN!!", 200, 200 );
+			}
+			else
+			{
+				Log( "I'm Lose... \n" );
+				TextManager::GetInstance()->RegistText( TEXT_GAME_RESULT, L"I'm Lose... ", 200, 200 );
+			}
+			m_IsPlaying = false;
+			SceneManager::GetInstance()->ChangeScene( SCENE_RESULT );
+			
 		}
 		else
 		{
-			Log( "I'm Lose... \n" );
-			TextManager::GetInstance( )->RegistText( TEXT_GAME_RESULT, L"I'm Lose... ", 200, 200 );
+			// 플레이중이 아닌데 플레이용 패킷을 받음 
+			assert( false );
 		}
+
+
 	}
 	else
 	{

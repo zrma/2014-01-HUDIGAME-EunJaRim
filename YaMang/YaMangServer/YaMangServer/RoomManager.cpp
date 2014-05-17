@@ -52,7 +52,7 @@ int RoomManager::AddRoom()
 
 bool RoomManager::EnterRoom( int roomNumber, int pid )
 {
-
+	Log( "EnterRoom [player:%d]->[%d] \n", pid, roomNumber );
 	if ( m_RoomList.find( roomNumber ) == m_RoomList.end() )
 	{
 		return false;
@@ -75,6 +75,7 @@ bool RoomManager::EnterRoom( int roomNumber, int pid )
 
 bool RoomManager::LeaveRoom( int roomNumber, int pid )
 {
+	Log( "LeaveRoom [player:%d]->[%d] \n", pid, roomNumber );
 	if ( m_RoomList.find( roomNumber ) == m_RoomList.end() )
 	{
 		return false;
@@ -98,6 +99,7 @@ bool RoomManager::LeaveRoom( int roomNumber, int pid )
 
 bool RoomManager::DeleteRoom( int roomNumber )
 {
+	Log( "DeleteRoom [%d] \n", roomNumber );
 	if ( m_RoomList.find( roomNumber ) == m_RoomList.end() )
 	{
 		return false;
@@ -109,6 +111,7 @@ bool RoomManager::DeleteRoom( int roomNumber )
 		{
 			delete toBeDelete;
 			m_RoomList.erase( roomNumber );
+			PrintClientList();
 			return true;
 		}
 

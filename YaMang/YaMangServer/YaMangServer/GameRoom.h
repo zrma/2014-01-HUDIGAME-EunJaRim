@@ -20,7 +20,7 @@ public:
 	~GameRoom();
 
 	void				GameRoomStart();
-
+	void				GameRoomGiveUp( );
 
 	ClientSession*		CreateClient( SOCKET sock );
 

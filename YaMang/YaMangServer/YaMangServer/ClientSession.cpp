@@ -86,7 +86,7 @@ void ClientSession::Disconnect()
 	}
 
 	printf( "[DEBUG] Client Disconnected: IP=%s, PORT=%d\n", inet_ntoa( m_ClientAddr.sin_addr ), ntohs( m_ClientAddr.sin_port ) );
-
+	
 	/// 즉각 해제
 	LINGER lingerOption;
 	lingerOption.l_onoff = 1;
@@ -102,6 +102,13 @@ void ClientSession::Disconnect()
 	closesocket( m_Socket );
 
 	m_Connected = false;
+
+	if ( m_GameStarted )
+	{
+		m_GameStarted = false;
+		m_ClientManager->GameRoomGiveUp( );
+	}
+	
 }
 
 // 비동기 입력 완료 후 RecvCompletion 콜백 발생하면

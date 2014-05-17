@@ -81,6 +81,7 @@ public:
 	bool		IsGameStarted() const { return m_GameStarted; }
 
 	void		GameStart();
+	void		GameOver() { m_GameStarted = false; }
 	int			GetPlayerID() const { return m_PlayerID; }
 
 	int			GetFood() const { return m_CorpsMax; }
@@ -127,13 +128,16 @@ private:
 	OverlappedIO	m_OverlappedRecv;
 	int				m_OverlappedRequested;
 
-	GameRoom*	m_ClientManager = nullptr;
+	
 
 
 
 	//////////////////////////////////////////////////////////////////////////
 	// 게임 컨텐츠 관련 데이터
 	//////////////////////////////////////////////////////////////////////////
+
+	GameRoom*				m_ClientManager = nullptr;
+
 	int						m_KingIndex = -1;
 	int						m_CorpsMax = 10;
 	int						m_CorpsNow = 0;

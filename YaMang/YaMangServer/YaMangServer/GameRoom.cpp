@@ -92,6 +92,32 @@ void GameRoom::GameRoomStart()
 }
 
 
+void GameRoom::GameRoomGiveUp( )
+{
+
+	CollectGarbageSessions();
+
+	ClientList safetyClientList = m_ClientList;
+
+	for ( auto& it : safetyClientList )
+	{
+		ClientSession* client = it.second;
+
+		client->GameOver();
+		int playerID = client->GetPlayerID();
+		GameOverResult outPacket;
+		outPacket.m_PlayerId = playerID;
+		outPacket.m_IsWon = true;
+
+		DirectPacket( playerID, &outPacket );
+		g_RoomManager->LeaveRoom( m_RoomNumber, playerID );
+	}
+
+	m_IsGameStart = false;
+	
+	g_RoomManager->DeleteRoom( m_RoomNumber ); // 위험할것 같다.
+}
+
 // 클라 생성
 // _tmain() 쪽의 클라이언트 핸들링 스레드에서 WaitForSingleObjectEx(hEvent, INFINITE, TRUE) 가
 // 이벤트를 발생하기를 기다려서 이벤트 발생 신호가 오면(클라이언트 쪽에서 접속 요청하면)
