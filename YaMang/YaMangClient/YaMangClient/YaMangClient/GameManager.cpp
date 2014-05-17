@@ -15,6 +15,7 @@
 #include "CollisionManager.h"
 #include "PlayerManager.h"
 #include "MouseManager.h"
+#include "SoundManager.h"
 
 GameManager::GameManager()
 {
@@ -32,6 +33,9 @@ bool GameManager::Init() const
 	//////////////////////////////////////////////////////////////////////////
 	// 하단의 코드들은 방어코드가 필요합니다.
 	//////////////////////////////////////////////////////////////////////////
+
+	// 사운드 초기화
+	SoundManager::GetInstance();
 
 	// 렌더러 생성 및 초기화
 	Renderer::GetInstance()->Init();
@@ -119,4 +123,6 @@ void GameManager::Destroy() const
 	Timer::Release();
 	PlayerManager::Release();
 	MouseManager::Release();
+
+	SoundManager::Release();
 }

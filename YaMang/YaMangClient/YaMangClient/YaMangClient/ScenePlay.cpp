@@ -40,8 +40,6 @@ void ScenePlay::Create()
 
 void ScenePlay::Destroy()
 {
-	SoundManager::Release();
-
 	for ( auto iter : m_CorpsList )
 	{
 		auto& toBeDelete = iter.second;
