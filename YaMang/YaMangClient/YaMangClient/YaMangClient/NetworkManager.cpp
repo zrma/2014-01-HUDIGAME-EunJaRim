@@ -100,7 +100,9 @@ bool NetworkManager::Connect()
 	if ( SOCKET_ERROR == connect( m_Socket, (LPSOCKADDR)( &SockAddr ), sizeof( SockAddr ) ) )
 	{
 		if ( GetLastError() != WSAEWOULDBLOCK )
+		{
 			return false;
+		}
 	}
 
 	return true;
@@ -135,10 +137,7 @@ bool NetworkManager::HandleMessage( WPARAM wParam, LPARAM lParam )
 	if ( WSAGETSELECTERROR( lParam ) )
 	{
 		MessageBox( MainWindow::GetInstance()->Window(), L"WSAGETSELECTERROR", L"Error", MB_OK | MB_ICONERROR );
-		
-		// agebreak 교수님 피드백을 적용해서 일단 이 부분 블록처리 해 둠
-		// 서버와 연결이 되지 않아도, 기본적인 테스트는 가능하도록 함
-		// SendMessage( MainWindow::GetInstance()->Window(), WM_DESTROY, NULL, NULL );
+		SendMessage( MainWindow::GetInstance()->Window(), WM_DESTROY, NULL, NULL );
 
 		return false;
 	}
