@@ -24,8 +24,8 @@ public:
 
 	ClientSession*		CreateClient( SOCKET sock );
 
-	bool				DeleteClient( ClientSession* client );
-	void				InputClient( ClientSession* client );
+	void				EnterGameRoom( ClientSession* client );
+	bool				LeaveGameRoom( ClientSession* client );
 
 	int					GetClientSize() const { return static_cast<int>( m_ClientList.size() ); }
 	int					GetRoomNumber() const { return m_RoomNumber; }
@@ -45,7 +45,7 @@ public:
 
 	const Corps*		GenerateCorps( int playerID, UnitType type, PositionInfo position );
 
-	typedef std::hash_map<int, Corps*> CorpsList;
+	typedef std::map<int, Corps*> CorpsList;
 	const CorpsList&	GetCorpsList() { return m_CorpsList; }
 
 	void				AddActionToScheduler( Action* addedAction, ULONGLONG remainTime );
@@ -89,8 +89,8 @@ private:
 	CorpsList			m_CorpsList;
 	int					m_CorpsIDCount = 0;
 
-	DWORD				m_LastGCTick;
-	DWORD				m_LastClientWorkTick;
+	ULONGLONG			m_LastGCTick;
+	ULONGLONG			m_LastClientWorkTick;
 
 
 

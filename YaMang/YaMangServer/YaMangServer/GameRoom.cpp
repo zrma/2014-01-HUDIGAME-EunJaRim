@@ -141,7 +141,7 @@ ClientSession* GameRoom::CreateClient( SOCKET sock )
 }
 
 
-void GameRoom::InputClient( ClientSession* client )
+void GameRoom::EnterGameRoom( ClientSession* client )
 {
 	m_ClientList.insert( ClientList::value_type( client->m_Socket, client ) );
 	client->SetClientManager( this );
@@ -209,7 +209,7 @@ bool GameRoom::DirectPacket( int pid, PacketHeader* pkt )
 void GameRoom::OnPeriodWork()
 {
 	/// 접속이 끊긴 세션들 주기적으로 정리 (1초 정도 마다 해주자)
-	DWORD currTick = GetTickCount();
+	ULONGLONG currTick = GetTickCount64( );
 	if ( currTick - m_LastGCTick >= 1000 )
 	{
 		CollectGarbageSessions();
@@ -405,7 +405,7 @@ void GameRoom::DeletePlayerDone( DatabaseJobContext* dbJob )
 
 }
 
-bool GameRoom::DeleteClient( ClientSession* client )
+bool GameRoom::LeaveGameRoom( ClientSession* client )
 {
 	if ( client->m_Socket != NULL )
 	{
@@ -468,9 +468,10 @@ const Corps* GameRoom::GenerateCorps( int playerID, UnitType type, PositionInfo 
 
 Corps* GameRoom::GetCorpsByCorpsID( int corpsID )
 {
-	if ( m_CorpsList.find( corpsID ) != m_CorpsList.end( ) )
+	auto it = m_CorpsList.find( corpsID );
+	if ( it != m_CorpsList.end( ) )
 	{
-		return m_CorpsList.find( corpsID )->second;
+		return it->second;
 	}
 
 	return nullptr;

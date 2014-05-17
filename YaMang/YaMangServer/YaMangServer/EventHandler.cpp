@@ -272,7 +272,7 @@ void ClientSession::HandleGenerateCorpsRequest( GenerateCorpsRequest& inPacket )
 
 	if ( nullptr == corps )
 	{
-		assert( false );
+		return;
 	}
 
 	GenerateCorpsResult outPacket;
@@ -541,7 +541,7 @@ void ClientSession::HandleSyncAllRequest( SyncAllRequest& inPacket )
 	int roomNumber = inPacket.m_RoomNumber;
 	int playerID = inPacket.m_PlayerId;
 
-	const std::hash_map<int, Corps*> corpsList = m_ClientManager->GetCorpsList( );
+	const std::map<int, Corps*> corpsList = m_ClientManager->GetCorpsList( );
 
 	for ( auto& it : corpsList )
 	{

@@ -19,8 +19,6 @@ RoomManager::RoomManager()
 	g_PidSessionTable.clear( );
 
 	m_Lobby = new GameRoom( LOBBY_NUMBER, m_GameMapManager );
-	// Test room start;
-	//m_Lobby->GameStart( );
 
 	m_RoomList.clear();
 	m_RoomList.insert( RoomList::value_type( LOBBY_NUMBER, m_Lobby ) );
@@ -41,8 +39,6 @@ int RoomManager::AddRoom()
 {
 	GameRoom* room = new GameRoom( ++m_RoomCount, m_GameMapManager );
 
-	// Test room start;
-	//room->GameStart( );
 	m_RoomList.insert( RoomList::value_type( m_RoomCount, room ) );
 
 	Log( "ROOM [%d] CREATED! \n", room->GetRoomNumber() );
@@ -53,18 +49,20 @@ int RoomManager::AddRoom()
 bool RoomManager::EnterRoom( int roomNumber, int pid )
 {
 	Log( "EnterRoom [player:%d]->[%d] \n", pid, roomNumber );
-	if ( m_RoomList.find( roomNumber ) == m_RoomList.end() )
+	RoomList::iterator roomIter = m_RoomList.find( roomNumber );
+	if ( roomIter == m_RoomList.end( ) )
 	{
 		return false;
 	}
 	else
 	{
-		if ( g_PidSessionTable.find( pid ) != g_PidSessionTable.end() )
+		std::hash_map<int, ClientSession*>::iterator sessionIter = g_PidSessionTable.find( pid );
+		if ( sessionIter != g_PidSessionTable.end( ) )
 		{
-			ClientSession* mover = g_PidSessionTable.find( pid )->second;
-			if ( m_Lobby->DeleteClient( mover ) )
+			ClientSession* mover = sessionIter->second;
+			if ( m_Lobby->LeaveGameRoom( mover ) )
 			{
-				m_RoomList.find( roomNumber )->second->InputClient( mover );
+				roomIter->second->EnterGameRoom( mover );
 				return true;
 			}
 		}
@@ -76,18 +74,20 @@ bool RoomManager::EnterRoom( int roomNumber, int pid )
 bool RoomManager::LeaveRoom( int roomNumber, int pid )
 {
 	Log( "LeaveRoom [player:%d]->[%d] \n", pid, roomNumber );
-	if ( m_RoomList.find( roomNumber ) == m_RoomList.end() )
+	RoomList::iterator roomIter = m_RoomList.find( roomNumber );
+	if ( roomIter == m_RoomList.end() )
 	{
 		return false;
 	}
 	else
 	{
-		if ( g_PidSessionTable.find( pid ) != g_PidSessionTable.end() )
+		std::hash_map<int, ClientSession*>::iterator sessionIter = g_PidSessionTable.find( pid );
+		if ( sessionIter != g_PidSessionTable.end() )
 		{
-			ClientSession* mover = g_PidSessionTable.find( pid )->second;
-			if ( m_RoomList.find( roomNumber )->second->DeleteClient( mover ) )
+			ClientSession* mover = sessionIter->second;
+			if ( roomIter->second->LeaveGameRoom( mover ) )
 			{
-				m_Lobby->InputClient( mover );
+				m_Lobby->EnterGameRoom( mover );
 				return true;
 			}
 		}
@@ -100,13 +100,14 @@ bool RoomManager::LeaveRoom( int roomNumber, int pid )
 bool RoomManager::DeleteRoom( int roomNumber )
 {
 	Log( "DeleteRoom [%d] \n", roomNumber );
-	if ( m_RoomList.find( roomNumber ) == m_RoomList.end() )
+	RoomList::iterator roomIter = m_RoomList.find( roomNumber );
+	if ( roomIter == m_RoomList.end() )
 	{
 		return false;
 	}
 	else
 	{
-		GameRoom* toBeDelete = m_RoomList.find( roomNumber )->second;
+		GameRoom* toBeDelete = roomIter->second;
 		if ( 0 == toBeDelete->GetClientSize() )
 		{
 			delete toBeDelete;

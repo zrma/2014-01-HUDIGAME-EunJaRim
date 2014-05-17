@@ -344,24 +344,28 @@ void ClientSession::GameStart()
 
 void ClientSession::AddCorpsNum()
 {
+	assert( 0 <= m_CorpsNow );
 	++m_CorpsNow;
 	CalculateRegenTime( );
 }
 
 void ClientSession::SubCorpsNum()
 {
+	assert( 0 < m_CorpsNow );
 	--m_CorpsNow;
 	CalculateRegenTime( );
 }
 
 void ClientSession::AddBaseNum()
 {
+	assert( 0 <= m_BaseNum );
 	++m_BaseNum;
 	CalculateRegenTime( );
 }
 
 void ClientSession::SubBaseNum()
 {
+	assert( 0 < m_BaseNum );
 	--m_BaseNum;
 	CalculateRegenTime( );
 }

@@ -32,7 +32,7 @@ public:
 	GameRoom*					m_Lobby;
 
 private:
-	typedef std::hash_map<int, GameRoom*> RoomList;
+	typedef std::map<int, GameRoom*> RoomList;
 	RoomList						m_RoomList;
 	int								m_RoomCount = 0;
 	GameMapManager*					m_GameMapManager = nullptr;
