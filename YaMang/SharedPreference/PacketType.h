@@ -248,13 +248,13 @@ struct KingIndexResult: public PacketHeader
 		m_Size = sizeof( KingIndexResult );
 		m_Type = PKT_SC_KING_INDEX;
 		m_KingIndex = -1;
-		m_CameraX = NOT_A_NUMBER_FLOAT;
-		m_CameraZ = NOT_A_NUMBER_FLOAT;
+		m_StartPositionX = NOT_A_NUMBER_FLOAT;
+		m_StartPositionZ = NOT_A_NUMBER_FLOAT;
 	}
 
 	int		m_KingIndex;
-	float	m_CameraX;
-	float	m_CameraZ;
+	float	m_StartPositionX;
+	float	m_StartPositionZ;
 };
 
 // 사실 request는 테스트용

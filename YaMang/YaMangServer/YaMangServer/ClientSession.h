@@ -95,7 +95,7 @@ public:
 
 	ULONGLONG	GetCorpsRegenTime( ) { return m_CorpsRegenTime; }
 
-	void		SetKingIndex( int index, float cameraX, float cameraZ );
+	void		SetKingIndex( int index, float startPositionX, float startPositionZ );
 
 private:
 	void		CalculateRegenTime();

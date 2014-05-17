@@ -140,8 +140,8 @@ void NetworkManager::HandleKingIndexResult( KingIndexResult& inPacket )
 	if ( m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size ) )
 	{
 		int kingIndex = inPacket.m_KingIndex;
-		float cameraX = inPacket.m_CameraX;
-		float cameraZ = inPacket.m_CameraZ;
+		float startPositionX = inPacket.m_StartPositionX;
+		float startPositionZ = inPacket.m_StartPositionZ;
 
 		assert( kingIndex != -1 );
 
@@ -154,7 +154,7 @@ void NetworkManager::HandleKingIndexResult( KingIndexResult& inPacket )
 
 			// 여기에 카메라 저 좌표로 보게끔 이동시키는 코드 필요함
 
-			Log( "Your King Index:%d And Start At[%f][%f] \n", kingIndex, cameraX, cameraZ );
+			Log( "Your King Index:%d And Start At[%f][%f] \n", kingIndex, startPositionX, startPositionZ );
 		}
 		else
 		{
