@@ -24,6 +24,8 @@ namespace YamangTools
 
         int mouseXPosition = 0;
         int mouseYPosition = 0;
+        float returnedXPos = 0.0f;
+        float returnedZPos = 0.0f;
 
         string heightMap = ".\\MapResource\\heightmap_128_128.bmp";
         string mapTexture = ".\\MapResource\\heightmap_128_128.bmp";
@@ -122,7 +124,7 @@ namespace YamangTools
                     SetAction();
 
                     YamangDll.CalcPickingRay(mouseXPosition, mouseYPosition);
-                    YamangDll.TransPickedTriangle(actionFlag);
+                    YamangDll.TransPickedTriangle(ref returnedXPos, ref returnedZPos, actionFlag);
                     mouseEventFlag = false;
                 }
 

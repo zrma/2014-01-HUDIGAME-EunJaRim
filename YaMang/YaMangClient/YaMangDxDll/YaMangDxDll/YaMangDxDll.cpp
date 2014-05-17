@@ -481,7 +481,7 @@ YAMANGDXDLL_API void CalcPickingRay( int mouseX, int mouseY )
 
 }
 
-YAMANGDXDLL_API HRESULT TransPickedTriangle( int modeSelector, float* pickedX, float* pickedZ )
+YAMANGDXDLL_API HRESULT TransPickedTriangle( float* pickedX, float* pickedZ, int modeSelector )
 {
 	if ( !( pickedX && pickedZ ) )
 	{
