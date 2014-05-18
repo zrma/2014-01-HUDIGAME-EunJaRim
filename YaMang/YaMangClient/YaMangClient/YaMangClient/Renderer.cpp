@@ -87,12 +87,12 @@ void Renderer::RenderMap() const
 
 void Renderer::SetViewMatrix( D3DXMATRIXA16& matrix ) const
 {
-	SetMatrix( &matrix, true );
+	SetCameraMatrix( &matrix );
 }
 
 void Renderer::SetWorldMatrix( D3DXMATRIXA16& matrix ) const
 {
-	SetMatrix( &matrix, false );
+	SetWorldAreaMatrix( &matrix );
 }
 
 void Renderer::ResizeWindow( LONG width, LONG height )

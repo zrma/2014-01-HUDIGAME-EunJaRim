@@ -67,7 +67,7 @@ YAMANGDXDLL_API void PostRendering()
 {
 	D3DXMATRIXA16 identityMatrix;
 	D3DXMatrixIdentity( &identityMatrix );
-	SetWorldMatirx( &identityMatrix );
+	SetWorldAreaMatrix( &identityMatrix );
 
 	g_D3dDevice->EndScene();
 

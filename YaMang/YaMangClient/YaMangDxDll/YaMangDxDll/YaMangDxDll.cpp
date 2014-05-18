@@ -111,7 +111,7 @@ YAMANGDXDLL_API void SetCameraMatrix( D3DXMATRIXA16* matrix )
 	g_D3dDevice->SetTransform( D3DTS_VIEW, matrix );
 }
 
-YAMANGDXDLL_API void SetWorldMatirx( D3DXMATRIXA16* matrix )
+YAMANGDXDLL_API void SetWorldAreaMatrix( D3DXMATRIXA16* matrix )
 {
 	g_D3dDevice->SetTransform( D3DTS_WORLD, matrix );
 }
@@ -141,7 +141,7 @@ YAMANGDXDLL_API void SetCameraView(float x /* = 0 */, float y /* = 0 */, float z
 	D3DXMATRIXA16 mat;
 	D3DXMatrixIdentity(&mat);
 	D3DXMatrixLookAtLH(&mat, &g_EyePoint, &g_LookAtPoint, &g_UpVector);
-	SetMatrix(&mat, true);
+	SetCameraMatrix(&mat);
 }
 
 YAMANGDXDLL_API void MoveCamera( float x, float y, float z )
@@ -159,20 +159,22 @@ YAMANGDXDLL_API void MoveCamera( float x, float y, float z )
 
 	D3DXMATRIXA16 viewMatrix;
 	D3DXMatrixLookAtLH( &viewMatrix, &g_EyePoint, &g_LookAtPoint, &g_UpVector );
-	SetMatrix( &viewMatrix, true );
+	SetCameraMatrix( &viewMatrix );
 }
 
-YAMANGDXDLL_API void ZoomCamera( float zoom )
-{
-	D3DXVECTOR3 view = g_LookAtPoint - g_EyePoint;
-	D3DXVec3Normalize( &view, &view );
-	g_EyePoint += view * zoom;
-	g_LookAtPoint += view * zoom;
-
-	D3DXMATRIXA16 viewMatrix;
-	D3DXMatrixLookAtLH( &viewMatrix, &g_EyePoint, &g_LookAtPoint, &g_UpVector );
-	SetMatrix( &viewMatrix, true );
-}
+// 사용하는 곳이 없는 함수
+// 더 쉬운 구현이 있는데 필요시 구현
+// YAMANGDXDLL_API void ZoomCamera( float zoom )
+// {
+// 	D3DXVECTOR3 view = g_LookAtPoint - g_EyePoint;
+// 	D3DXVec3Normalize( &view, &view );
+// 	g_EyePoint += view * zoom;
+// 	g_LookAtPoint += view * zoom;
+// 
+// 	D3DXMATRIXA16 viewMatrix;
+// 	D3DXMatrixLookAtLH( &viewMatrix, &g_EyePoint, &g_LookAtPoint, &g_UpVector );
+// 	SetCameraMatrix( &viewMatrix );
+// }
 
 
 

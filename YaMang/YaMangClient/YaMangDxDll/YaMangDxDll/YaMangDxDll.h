@@ -34,7 +34,7 @@ extern "C"{
 	YAMANGDXDLL_API void MeshObjectCleanUp( MESHOBJECT* inputVal );
 
 	//YAMANGDXDLL_API void SetMatrix( D3DXMATRIXA16* matrix, bool cameraSet = false );
-	YAMANGDXDLL_API void SetWorldMatirx( D3DXMATRIXA16* matrix );
+	YAMANGDXDLL_API void SetWorldAreaMatrix( D3DXMATRIXA16* matrix );
 	
 	YAMANGDXDLL_API void SetCameraMatrix( D3DXMATRIXA16* matrix );
 	YAMANGDXDLL_API void SetCameraView(float x = 0.f, float y = 0.f, float z = 0.f);
@@ -87,7 +87,7 @@ extern "C"{
 	// Camera 함수
 	//////////////////////////////////////////////////////////////////////////
 	YAMANGDXDLL_API void MoveCamera( float x = 0, float y = 0, float z = 0);
-	YAMANGDXDLL_API void ZoomCamera( float zoom );
+	//YAMANGDXDLL_API void ZoomCamera( float zoom );
 
 	//////////////////////////////////////////////////////////////////////////
 	// SKYBOX
