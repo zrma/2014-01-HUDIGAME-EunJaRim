@@ -120,8 +120,8 @@ void Corps::Render() const
 	}
 
 	D3DXMATRIXA16 thisMatrix = GetMatrix();
-	
-	float hp = static_cast<float>(m_UnitList.size() * 0.008);
+
+	float hp = static_cast<float>( m_UnitList.size() * 0.008 );
 
 	if ( IsSelected() )
 	{

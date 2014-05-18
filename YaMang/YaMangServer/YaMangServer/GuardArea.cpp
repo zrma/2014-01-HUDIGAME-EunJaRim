@@ -191,21 +191,17 @@ void GuardArea::OnTick()
 				originalPosition = m_ClientManager->GetKingPositionInfo( kingIndex );
 			}
 
-			targetX = originalPosition.m_EyePoint.x;
-			targetZ = originalPosition.m_EyePoint.z;
+			targetX = originalPosition.m_EyePoint.x + 0.01f;
+			targetZ = originalPosition.m_EyePoint.z + 0.01f;
 			vector.x = targetX - nowX;
 			vector.y = targetZ - nowZ;
 
 			m_GuardModeOn = false;
 		}
-
-
-
+		
 		length = D3DXVec2Length( &vector );
 		D3DXVec2Normalize( &vector, &vector );
-
-
-
+		
 		float speed = m_OwnerCrops->GetSpeed();
 		ULONGLONG movingTime = static_cast<ULONGLONG>( ( length * 1000 ) / speed );
 
