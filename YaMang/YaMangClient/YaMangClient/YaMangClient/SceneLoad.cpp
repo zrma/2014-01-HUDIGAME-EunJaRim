@@ -1,6 +1,8 @@
 ﻿#include "stdafx.h"
 #include "SceneLoad.h"
-
+#include "yaMangDxDll.h"
+#include "EnumSet.h"
+#include "MainWindow.h"
 
 SceneLoad::SceneLoad()
 {
@@ -28,5 +30,5 @@ void SceneLoad::Update()
 
 void SceneLoad::Render() const
 {
-
+	RenderSprite( SPRITE_LOADING, m_Position );
 }

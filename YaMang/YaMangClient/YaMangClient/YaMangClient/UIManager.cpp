@@ -42,7 +42,7 @@ void UIManager::Render() const
 	}
 }
 
-void UIManager::AddUIObject( UISpriteKeyType key, int PosX, int PosY, bool visible)
+void UIManager::AddUIObject( SpriteKeyType key, int PosX, int PosY, bool visible)
 {
 	UIObject* Object = new UIObject();
 	Object->SetUIPosX(PosX);

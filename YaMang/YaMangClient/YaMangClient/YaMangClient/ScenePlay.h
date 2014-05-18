@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include "Scene.h"
-#include <d3dx9math.h>
 
 class Corps;
 class MouseRender;

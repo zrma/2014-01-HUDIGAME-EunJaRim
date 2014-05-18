@@ -1,7 +1,6 @@
 ﻿#pragma once
 
 #include "MacroSet.h"
-#include <d3dx9math.h>
 
 const FLOAT NEAREST_Y = 5.0f;
 const FLOAT DEGREE_1_Y = 40.0f;

@@ -43,6 +43,8 @@
 #define SPRITE_UI_DEFAULT					PATH_SPRITE L"UI_default.png"
 #define SPRITE_UI_IMSIMAP					PATH_SPRITE L"UI_MapImsi.png"
 
+#define SPRITE_IMAGE_LOADING				PATH_SPRITE L"Loading.png"
+
 #define PATH_SOUND			L"SoundFiles\\"
 
 #define SOUND_FILE_LOOP						PATH_SOUND L"loop.bank"

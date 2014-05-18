@@ -34,3 +34,4 @@
 #include <functional>
 #include <memory>
 #include <atlconv.h>
+#include <d3dx9math.h>

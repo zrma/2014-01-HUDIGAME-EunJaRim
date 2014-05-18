@@ -1,7 +1,5 @@
 #pragma once
 
-#include <d3dx9math.h>
-
 extern const float NOT_A_NUMBER_FLOAT;
 class Collision;
 

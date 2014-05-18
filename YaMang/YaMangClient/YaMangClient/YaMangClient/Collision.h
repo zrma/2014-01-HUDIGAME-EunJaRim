@@ -1,5 +1,4 @@
 #pragma once
-#include <d3dx9math.h>
 
 class Interface3D;
 extern const float NOT_A_NUMBER_FLOAT;

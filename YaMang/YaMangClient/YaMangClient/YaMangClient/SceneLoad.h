@@ -12,4 +12,5 @@ public:
 	virtual void	Update();
 	virtual void	Render() const;
 
+	D3DXVECTOR3 m_Position = { 0, 0, 0 };
 };

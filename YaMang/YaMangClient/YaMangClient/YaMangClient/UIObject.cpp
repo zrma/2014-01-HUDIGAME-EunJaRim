@@ -18,11 +18,11 @@ void UIObject::Update()
 
 void UIObject::Render() const
 {
-	RenderUI(m_UISpriteType, m_UIPosition);
+	RenderSprite( m_SpriteType, m_UIPosition );
 }
 
 void UIObject::SetUIPosition( int x, int y )
 {
-	SetUIPosX(x);
-	SetUIPosY(y);
+	SetUIPosX( x );
+	SetUIPosY( y );
 }

@@ -58,10 +58,13 @@ void ResourceManager::Init()
 	CreateCursorImage( SPRITE_CURSOR_OVER_PICKED_CORPS, CURSOR_OVER_PICKED_CORPS );
 
 	m_ISCursorReady = true;
+
+	CreateSprite();
 }
 
 void ResourceManager::Destroy()
 {
+	DeleteSprite();
 	CursorCleanUp();
 
 	SkyBoxCleanUp();
@@ -159,10 +162,12 @@ void ResourceManager::DeleteMesh( MESHOBJECT* mesh )
 void ResourceManager::CreateSprite()
 {
 	m_IsUISpriteReady = true;
-	InitUISprite(UISPRITE_MAX);
+	InitUISprite( SPRITE_MAX );
+
+	CreateSpriteImage( SPRITE_IMAGE_LOADING, SPRITE_LOADING );
 
 	//CreateUIImage
-	CreateUIImage(SPRITE_UI_IMSIMAP, UISPRITE_MAP);
+	CreateSpriteImage( SPRITE_UI_IMSIMAP, SPRITE_UI_MAP );
 }
 
 void ResourceManager::DeleteSprite()

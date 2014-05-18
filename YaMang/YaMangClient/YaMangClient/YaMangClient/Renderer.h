@@ -1,7 +1,6 @@
 ﻿#pragma once
 
 #include "MacroSet.h"
-#include <d3dx9math.h>
 
 struct MESHOBJECT;
 

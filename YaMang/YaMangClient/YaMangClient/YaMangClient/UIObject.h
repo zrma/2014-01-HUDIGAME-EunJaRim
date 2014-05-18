@@ -1,6 +1,5 @@
 ﻿#pragma once
 
-#include <d3dx9math.h>
 #include "EnumSet.h"
 
 class UIObject //: public Interface3D
@@ -19,7 +18,7 @@ public:
 	bool				GetSuicide() { return m_Suicide; }
 
 	SceneType			GetSceneType() { return m_SceneType; }
-	UISpriteKeyType		GetSpriteType() { return m_UISpriteType; }
+	SpriteKeyType		GetSpriteType() { return m_SpriteType; }
 
 	void				SetUIPosition(int x, int y);
 	void				SetUIPosX(int x) { m_UIPosition.x = static_cast<float>(x); }
@@ -30,14 +29,14 @@ public:
 	void				SetSuicide(bool suicide) { m_Suicide = suicide; }
 
 	void				SetSceneType(SceneType type) { m_SceneType = type; }
-	void				SetSpriteType(UISpriteKeyType type) { m_UISpriteType = type; }
+	void				SetSpriteType(SpriteKeyType type) { m_SpriteType = type; }
 
 private:
 	D3DXVECTOR3			m_UIPosition = {0, 0, 0};
 	bool				m_Visible = true;
 	bool				m_Suicide = false;
 
-	UISpriteKeyType		m_UISpriteType = UISPRITE_NONE;
+	SpriteKeyType		m_SpriteType = SPRITE_NONE;
 	SceneType			m_SceneType = SCENE_NONE;
 };
 

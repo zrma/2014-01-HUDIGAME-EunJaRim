@@ -37,7 +37,7 @@ YAMANGDXDLL_API HRESULT InitUISprite( int textureSize )
 	return S_OK;
 }
 
-YAMANGDXDLL_API HRESULT CreateUIImage( LPCWSTR ImagePath /*= L"UI_default.png"*/, INT typeNum /*= 0*/ )
+YAMANGDXDLL_API HRESULT CreateSpriteImage( LPCWSTR ImagePath /*= L"UI_default.png"*/, INT typeNum /*= 0*/ )
 {
 	if ( g_D3dDevice )
 	{
@@ -57,7 +57,7 @@ YAMANGDXDLL_API HRESULT CreateUIImage( LPCWSTR ImagePath /*= L"UI_default.png"*/
 	return E_FAIL;
 }
 
-YAMANGDXDLL_API HRESULT RenderUI( INT typeNum, D3DXVECTOR3 UIPos )
+YAMANGDXDLL_API HRESULT RenderSprite( INT typeNum, D3DXVECTOR3 UIPos )
 {
 	if ( g_UISprite )
 	{

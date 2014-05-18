@@ -16,7 +16,7 @@ public:
 	void		Update();
 	void		Render() const;
 
-	void		AddUIObject( UISpriteKeyType key, int PosX, int PosY, bool visible);
+	void		AddUIObject( SpriteKeyType key, int PosX, int PosY, bool visible);
 
 private:
 	std::list<UIObject*> m_UIList;
