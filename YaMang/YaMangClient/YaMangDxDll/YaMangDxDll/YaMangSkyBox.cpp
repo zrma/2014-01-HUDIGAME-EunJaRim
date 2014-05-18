@@ -1,4 +1,4 @@
-#include "stdafx.h"
+Ôªø#include "stdafx.h"
 #include "yaMangDxDll.h"
 #include "GlobalVar.h"
 
@@ -42,32 +42,32 @@ YAMANGDXDLL_API HRESULT InitSkyBoxMesh( int size )
 		return hr;
 	}
 
-	// ¿¸∏È   
+	// Ï†ÑÎ©¥   
 	vertexBuffer[0] = SKYBOXVERTEX( -1.0f, -1.0f, -1.0f, 0.0f, 1.0f );
 	vertexBuffer[1] = SKYBOXVERTEX( -1.0f, 1.0f, -1.0f, 0.0f, 0.0f );
 	vertexBuffer[2] = SKYBOXVERTEX( 1.0f, 1.0f, -1.0f, 1.0f, 0.0f );
 	vertexBuffer[3] = SKYBOXVERTEX( 1.0f, -1.0f, -1.0f, 1.0f, 1.0f );
-	// »ƒ∏È
+	// ÌõÑÎ©¥
 	vertexBuffer[4] = SKYBOXVERTEX( -1.0f, -1.0f, 1.0f, 1.0f, 1.0f );
 	vertexBuffer[5] = SKYBOXVERTEX( -1.0f, 1.0f, 1.0f, 1.0f, 0.0f );
 	vertexBuffer[6] = SKYBOXVERTEX( 1.0f, 1.0f, 1.0f, 0.0f, 0.0f );
 	vertexBuffer[7] = SKYBOXVERTEX( 1.0f, -1.0f, 1.0f, 0.0f, 1.0f );
-	// ¡¬√¯
+	// Ï¢åÏ∏°
 	vertexBuffer[8] = SKYBOXVERTEX( -1.0f, -1.0f, 1.0f, 0.0f, 1.0f );
 	vertexBuffer[9] = SKYBOXVERTEX( -1.0f, 1.0f, 1.0f, 0.0f, 0.0f );
 	vertexBuffer[10] = SKYBOXVERTEX( -1.0f, 1.0f, -1.0f, 1.0f, 0.0f );
 	vertexBuffer[11] = SKYBOXVERTEX( -1.0f, -1.0f, -1.0f, 1.0f, 1.0f );
-	// øÏ√¯
+	// Ïö∞Ï∏°
 	vertexBuffer[12] = SKYBOXVERTEX( 1.0f, -1.0f, 1.0f, 1.0f, 1.0f );
 	vertexBuffer[13] = SKYBOXVERTEX( 1.0f, 1.0f, 1.0f, 1.0f, 0.0f );
 	vertexBuffer[14] = SKYBOXVERTEX( 1.0f, 1.0f, -1.0f, 0.0f, 0.0f );
 	vertexBuffer[15] = SKYBOXVERTEX( 1.0f, -1.0f, -1.0f, 0.0f, 1.0f );
-	// ªÛ¥‹
+	// ÏÉÅÎã®
 	vertexBuffer[16] = SKYBOXVERTEX( -1.0f, 1.0f, -1.0f, 0.0f, 1.0f );
 	vertexBuffer[17] = SKYBOXVERTEX( -1.0f, 1.0f, 1.0f, 0.0f, 0.0f );
 	vertexBuffer[18] = SKYBOXVERTEX( 1.0f, 1.0f, 1.0f, 1.0f, 0.0f );
 	vertexBuffer[19] = SKYBOXVERTEX( 1.0f, 1.0f, -1.0f, 1.0f, 1.0f );
-	// «œ¥‹
+	// ÌïòÎã®
 	vertexBuffer[20] = SKYBOXVERTEX( -1.0f, -1.0f, -1.0f, 1.0f, 0.0f );
 	vertexBuffer[21] = SKYBOXVERTEX( -1.0f, -1.0f, 1.0f, 1.0f, 1.0f );
 	vertexBuffer[22] = SKYBOXVERTEX( 1.0f, -1.0f, 1.0f, 0.0f, 1.0f );

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "yaMangDxDll.h"
 #include "GlobalVar.h"
 
@@ -16,8 +16,8 @@ YAMANGDXDLL_API void TakeScreenShot()
 	time_t timer;
 	struct tm t;
 
-	timer = time( NULL ); // ÇöÀç ½Ã°¢À» ÃÊ ´ÜÀ§·Î ¾ò±â
-	localtime_s( &t, &timer ); // ÃÊ ´ÜÀ§ÀÇ ½Ã°£À» ºĞ¸®ÇÏ¿© ±¸Á¶Ã¼¿¡ ³Ö±â
+	timer = time( NULL ); // í˜„ì¬ ì‹œê°ì„ ì´ˆ ë‹¨ìœ„ë¡œ ì–»ê¸°
+	localtime_s( &t, &timer ); // ì´ˆ ë‹¨ìœ„ì˜ ì‹œê°„ì„ ë¶„ë¦¬í•˜ì—¬ êµ¬ì¡°ì²´ì— ë„£ê¸°
 
 	std::string directoryName = "ScreenShot";
 

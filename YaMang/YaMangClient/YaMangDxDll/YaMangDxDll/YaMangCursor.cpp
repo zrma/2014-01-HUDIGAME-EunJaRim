@@ -1,9 +1,9 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "yaMangDxDll.h"
 #include "GlobalVar.h"
 
 //////////////////////////////////////////////////////////////////////////
-// Ä¿¼­ ÀÔ·Â¿¡ ´ëÇÑ Ã³¸®
+// ì»¤ì„œ ì…ë ¥ì— ëŒ€í•œ ì²˜ë¦¬
 //////////////////////////////////////////////////////////////////////////
 
 YAMANGDXDLL_API HRESULT InitCursor( int textureSize, int cursorPosX, int cursorPosY )
@@ -33,9 +33,9 @@ YAMANGDXDLL_API HRESULT InitCursor( int textureSize, int cursorPosX, int cursorP
 		g_CursorTex[i] = nullptr;
 	}
 
-	SetCursorPosition( cursorPosX, cursorPosY ); // 0,0,0À¸·Î ÃÊ±âÈ­
+	SetCursorPosition( cursorPosX, cursorPosY ); // 0,0,0ìœ¼ë¡œ ì´ˆê¸°í™”
 
-	Log( "½ºÇÁ¶óÀÌÆ® %d°³ »ı¼º ", g_CursorMaxSize );
+	Log( "ìŠ¤í”„ë¼ì´íŠ¸ %dê°œ ìƒì„± ", g_CursorMaxSize );
 
 	return S_OK;
 }

@@ -1,11 +1,11 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "yaMangDxDll.h"
 #include "GlobalVar.h"
 
 //////////////////////////////////////////////////////////////////////////
-//Ä³¸¯ÅÍ mesh¸¦ °¡Á®¿À´Â ÇÔ¼ö
+//ìºë¦­í„° meshë¥¼ ê°€ì ¸ì˜¤ëŠ” í•¨ìˆ˜
 //x file read
-//normal vector »ý¼º µî Æ÷ÇÔ
+//normal vector ìƒì„± ë“± í¬í•¨
 //////////////////////////////////////////////////////////////////////////
 YAMANGDXDLL_API HRESULT InitCharacterModel( HWND hWnd, LPCTSTR fileName, MESHOBJECT* inputVal )
 {
@@ -19,7 +19,7 @@ YAMANGDXDLL_API HRESULT InitCharacterModel( HWND hWnd, LPCTSTR fileName, MESHOBJ
 		return E_FAIL;
 	}
 
-	//importÇÑ mesh¿¡ normal °ªÀÌ ¾ø´Â °æ¿ì normal °è»ê
+	//importí•œ meshì— normal ê°’ì´ ì—†ëŠ” ê²½ìš° normal ê³„ì‚°
 	if ( !( ( inputVal->importedMesh )->GetFVF()&D3DFVF_NORMAL ) )
 	{
 		ID3DXMesh* pTempMesh = 0;

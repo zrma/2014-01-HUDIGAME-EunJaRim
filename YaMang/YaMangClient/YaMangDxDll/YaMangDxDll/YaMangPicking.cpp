@@ -1,9 +1,9 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "yaMangDxDll.h"
 #include "GlobalVar.h"
 
 //////////////////////////////////////////////////////////////////////////
-// Picking Ray¸¦ À§ÇÑ ºÎºĞ
+// Picking Rayë¥¼ ìœ„í•œ ë¶€ë¶„
 //////////////////////////////////////////////////////////////////////////
 
 YAMANGDXDLL_API void CalcPickingRay( int mouseX, int mouseY )
@@ -21,28 +21,28 @@ YAMANGDXDLL_API void CalcPickingRay( int mouseX, int mouseY )
 	rayY = ( ( -( ( ( mouseY - viewPort.Y ) * 2.0f / (float)viewPort.Height ) - 1.0f ) ) - projectionMatrix( 2, 1 ) ) / projectionMatrix( 1, 1 );
 	// Log( "Ray x : %f, y : %f\n", rayX, rayY );
 
-	//viewportÆ®·£½º, ÇÁ·ÎÁ§¼Ç Æ®·£½º ¿ªÇà
+	//viewportíŠ¸ëœìŠ¤, í”„ë¡œì ì…˜ íŠ¸ëœìŠ¤ ì—­í–‰
 	g_RayOrigin = { 0.f, 0.f, 0.f };
 	g_RayDirection = { rayX, rayY, 1.f };
-	// Log( "ºäÆ÷Æ®, ÇÁ·ÎÁ§¼Ç ¿ªÇà\n" );
+	// Log( "ë·°í¬íŠ¸, í”„ë¡œì ì…˜ ì—­í–‰\n" );
 
-	//ºäÀ× Æ®·£½º ¿ªÇà
+	//ë·°ì‰ íŠ¸ëœìŠ¤ ì—­í–‰
 	D3DXMATRIXA16 viewingMatrix;
 	g_D3dDevice->GetTransform( D3DTS_VIEW, &viewingMatrix );
 	D3DXMatrixInverse( &viewingMatrix, 0, &viewingMatrix );
 
 	D3DXVec3TransformCoord( &g_RayOrigin, &g_RayOrigin, &viewingMatrix );
 	D3DXVec3TransformNormal( &g_RayDirection, &g_RayDirection, &viewingMatrix );
-	// Log( "ºäÀ× ÁÂÇ¥ ¿ªÇà\n" );
+	// Log( "ë·°ì‰ ì¢Œí‘œ ì—­í–‰\n" );
 
-	//¿ùµå ÁÂÇ¥·Î ¿ªÇà
+	//ì›”ë“œ ì¢Œí‘œë¡œ ì—­í–‰
 	D3DXMATRIXA16 worldMatrix;
 	g_D3dDevice->GetTransform( D3DTS_WORLD, &worldMatrix );
 	D3DXMatrixInverse( &worldMatrix, 0, &worldMatrix );
 
 	D3DXVec3TransformCoord( &g_RayOrigin, &g_RayOrigin, &worldMatrix );
 	D3DXVec3TransformNormal( &g_RayDirection, &g_RayDirection, &worldMatrix );
-	// Log( "¿ùµå ÁÂÇ¥ ¿ªÇà\n" );
+	// Log( "ì›”ë“œ ì¢Œí‘œ ì—­í–‰\n" );
 	// Log( "origin: %f,%f,%f\n direction: %f, %f, %f\n", g_RayOrigin.x, g_RayOrigin.y, g_RayOrigin.z, g_RayDirection.x, g_RayDirection.y, g_RayDirection.z );
 
 }
@@ -68,9 +68,9 @@ YAMANGDXDLL_API HRESULT TransPickedTriangle( float* pickedX, float* pickedZ )
 	int trianglePointA = NULL, trianglePointB = NULL, trianglePointC = NULL, trianglePointD = NULL;
 
 	
-	//ÇÑ¹ø ·çÇÁ¿¡¿¡¼­ 4Á¡¾¿ È®ÀÎ(ABCD)
-	//4Á¡À¸·Î »ï°¢Çü 2°³¸¦ È®ÀÎÇÒ ¼ö ÀÖ±â ¶§¹®¿¡ ÇÑ ·çÇÁ¿¡¼­ hit°¡ µÎ Á¾·ù ¹ß»ıµÉ ¼ö ÀÖÀ½
-	//hit°¡ ¹ß»ıÇÏ¸é ´õ ÀÌ»ó Å½»öÇÏÁö ¾Ê¾Æµµ µÇ±â ¶§¹®¿¡ loop¹® Å»Ãâ
+	//í•œë²ˆ ë£¨í”„ì—ì—ì„œ 4ì ì”© í™•ì¸(ABCD)
+	//4ì ìœ¼ë¡œ ì‚¼ê°í˜• 2ê°œë¥¼ í™•ì¸í•  ìˆ˜ ìˆê¸° ë•Œë¬¸ì— í•œ ë£¨í”„ì—ì„œ hitê°€ ë‘ ì¢…ë¥˜ ë°œìƒë  ìˆ˜ ìˆìŒ
+	//hitê°€ ë°œìƒí•˜ë©´ ë” ì´ìƒ íƒìƒ‰í•˜ì§€ ì•Šì•„ë„ ë˜ê¸° ë•Œë¬¸ì— loopë¬¸ íƒˆì¶œ
 	for ( UINT z = 0; ( z < ( g_ZHeight - 1 ) ) && !( hit1 | hit2 ); ++z )
 	{
 		if ( z % 2 == 0 )
@@ -166,7 +166,7 @@ YAMANGDXDLL_API HRESULT TransPickedTriangle( float* pickedX, float* pickedZ )
 				pointC->m_VertexPoint.y -= 3;
 				break;
 			case AREA_MODE_PAINT_TEXTURE:
-				//ÅØ½ºÃÄ ÀÔÈ÷±â ½ÇÇè
+				//í…ìŠ¤ì³ ì…íˆê¸° ì‹¤í—˜
 				pointA->m_VertexTexturePoint1.x = 0.f;
 				pointA->m_VertexTexturePoint1.y = 0.f;
 				pointB->m_VertexTexturePoint1.x = 1.f;

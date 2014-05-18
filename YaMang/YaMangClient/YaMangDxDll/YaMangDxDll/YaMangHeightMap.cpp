@@ -1,10 +1,10 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "yaMangDxDll.h"
 #include "GlobalVar.h"
 
 
 //////////////////////////////////////////////////////////////////////////
-//ÀÌÇÏ heightMap °ü·Ã ÇÔ¼ö
+//ì´í•˜ heightMap ê´€ë ¨ í•¨ìˆ˜
 //////////////////////////////////////////////////////////////////////////
 /**
 *@breif
@@ -30,18 +30,18 @@ YAMANGDXDLL_API HRESULT HeightMapTextureImport( HWND hWnd, LPCTSTR heightMap, LP
 }
 
 ////////////////////////////////////////////////////////////////////////// triz
-//Å¬¶óÀÌ¾ğÆ® ÀĞ±â Àü¿ë ÇÔ¼ö Á¦ÀÛÇÒ °Í
-//1. Á¦°ø ¹ŞÀº ³ôÀÌ ÆÄÀÏ·Î ÁöÇü ±×¸®±â(vertexBuffer)
-//   ³ôÀÌ°ª array return
-//2. Á¦°ø ¹ŞÀº ÅØ½ºÃÄ ÀÔÈ÷±â
-//3. ÀÎµ¦½º °è»êÇØ¼­ ³Ö±â(Åø¿ë ÇÔ¼ö¿¡¼­ ÇØ´ç ¿µ¿ª ¶¼¾î ÇÔ¼öÈ­)
+//í´ë¼ì´ì–¸íŠ¸ ì½ê¸° ì „ìš© í•¨ìˆ˜ ì œì‘í•  ê²ƒ
+//1. ì œê³µ ë°›ì€ ë†’ì´ íŒŒì¼ë¡œ ì§€í˜• ê·¸ë¦¬ê¸°(vertexBuffer)
+//   ë†’ì´ê°’ array return
+//2. ì œê³µ ë°›ì€ í…ìŠ¤ì³ ì…íˆê¸°
+//3. ì¸ë±ìŠ¤ ê³„ì‚°í•´ì„œ ë„£ê¸°(íˆ´ìš© í•¨ìˆ˜ì—ì„œ í•´ë‹¹ ì˜ì—­ ë–¼ì–´ í•¨ìˆ˜í™”)
 //////////////////////////////////////////////////////////////////////////
 
 
 //////////////////////////////////////////////////////////////////////////
-//Åø¿ë ÁöÇü ÇÔ¼ö
-//ÀÌÇÏ Åø¿ë ÇÔ¼ö
-//¾²±â¸¦ À§ÇÑ ÇÔ¼ö
+//íˆ´ìš© ì§€í˜• í•¨ìˆ˜
+//ì´í•˜ íˆ´ìš© í•¨ìˆ˜
+//ì“°ê¸°ë¥¼ ìœ„í•œ í•¨ìˆ˜
 //////////////////////////////////////////////////////////////////////////
 YAMANGDXDLL_API HRESULT MapToolTextureImport( HWND hWnd, LPCTSTR toolTexture )
 {
@@ -75,8 +75,8 @@ YAMANGDXDLL_API void InitGroundMesh( int row, int col )
 	int verticesCount = (g_XHeight)* ( g_ZHeight );
 	int faceCount = ( g_XHeight - 1 ) * ( g_ZHeight - 1 ) * 2;
 
-	//mesh¸¦ Á÷Á¢ ¸¸µé¾î º¸ÀÚ
-	//mesh¸¦ Á÷Á¢ ¸¸µé°Ô µÇ¸é »ç½Ç global vertex buffer¿Í index buffer°¡ ¹«ÀÇ¹Ì ÇÏ´Ù.
+	//meshë¥¼ ì§ì ‘ ë§Œë“¤ì–´ ë³´ì
+	//meshë¥¼ ì§ì ‘ ë§Œë“¤ê²Œ ë˜ë©´ ì‚¬ì‹¤ global vertex bufferì™€ index bufferê°€ ë¬´ì˜ë¯¸ í•˜ë‹¤.
 
 	HRESULT hr = NULL;
 	hr = D3DXCreateMeshFVF( faceCount, verticesCount, D3DXMESH_MANAGED | D3DXMESH_32BIT, D3DFVF_CUSTOMVERTEX, g_D3dDevice, &g_Mesh );
@@ -121,7 +121,7 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 		}
 	}
 	/*
-	//vertex ³»¿ë È®ÀÎ
+	//vertex ë‚´ìš© í™•ì¸
 	for ( int i = 0; i < startIdx; ++i )
 	{
 	printf_s( "vertex %d: (%f, %f)\n", i, baseVertex[i].vertexPoint.x, baseVertex[i].vertexPoint.z );
@@ -151,7 +151,7 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 		assert( false );
 	}
 
-	//ÅğÀû »ï°¢Çü Àû¿ë ºÎºĞ
+	//í‡´ì  ì‚¼ê°í˜• ì ìš© ë¶€ë¶„
 	startIdx = 0;
 	for ( int z = 0; z < row; ++z )
 	{
@@ -194,7 +194,7 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 	}
 
 	/*
-	//index buffer¿¡ ¹¹ÀÖ³ª?
+	//index bufferì— ë­ìˆë‚˜?
 	for ( int i = 0; i < startIdx; ++i )
 	{
 	printf_s( "index %d: %d\n", i, baseIndex[i] );
@@ -233,10 +233,10 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 	}
 }
 
-//Ä«¸Ş¶ó Çà·ÄÀ» ÀÎÀÚ°ª ¹Ş¾Æ¼­ Á¤·ÄµÇµµ·Ï ¼öÁ¤ ÇÊ¿ä triz
+//ì¹´ë©”ë¼ í–‰ë ¬ì„ ì¸ìê°’ ë°›ì•„ì„œ ì •ë ¬ë˜ë„ë¡ ìˆ˜ì • í•„ìš” triz
 YAMANGDXDLL_API void ToolViewSetting( int width, int height )
 {
-	// ¿ùµå Çà·Ä
+	// ì›”ë“œ í–‰ë ¬
 	D3DXMATRIXA16 world;
 	D3DXMatrixIdentity( &world );
 	g_D3dDevice->SetTransform( D3DTS_WORLD, &world );
@@ -250,8 +250,8 @@ YAMANGDXDLL_API void ToolViewSetting( int width, int height )
 	D3DXMatrixLookAtLH( &matView, &vEyePt, &vLookatPt, &vUpVec );
 	g_D3dDevice->SetTransform( D3DTS_VIEW, &matView );
 
-	// ÇÁ·ÎÁ§¼Ç Çà·Ä
-	// Ã¢Å©±â º¯°æ¿¡ µû¶ó Å©°í ÀÛ¾ÆÁö°Ô ÇÒ °Í
+	// í”„ë¡œì ì…˜ í–‰ë ¬
+	// ì°½í¬ê¸° ë³€ê²½ì— ë”°ë¼ í¬ê³  ì‘ì•„ì§€ê²Œ í•  ê²ƒ
 	//SetAspectRatio( 729, 588 );
 	SetAspectRatio( width, height );
 }
@@ -274,7 +274,7 @@ return E_FAIL;
 }
 
 //surface lock
-//È®ÀÎ¸¸ ÇÏ°í ¾µÀÏÀº ¾øÀ¸¹Ç·Î readonly
+//í™•ì¸ë§Œ í•˜ê³  ì“¸ì¼ì€ ì—†ìœ¼ë¯€ë¡œ readonly
 g_TexHeight->LockRect( 0, &d3drc, NULL, D3DLOCK_READONLY );
 
 VOID* vertices;
@@ -285,7 +285,7 @@ return E_FAIL;
 }
 
 
-// Vertex ±¸Á¶Ã¼ Ã¤¿ì±â
+// Vertex êµ¬ì¡°ì²´ ì±„ìš°ê¸°
 CUSTOMVERTEX vertex;
 CUSTOMVERTEX* vertexPointer = (CUSTOMVERTEX*)vertices;
 
@@ -297,14 +297,14 @@ vertex.vertexPoint.x = (float)x - g_XHeight / 2.0f;
 vertex.vertexPoint.z = -( (float)z - g_ZHeight / 2.0f );
 vertex.vertexPoint.y = ( (float)( *( (LPDWORD)d3drc.pBits + x + z*( d3drc.Pitch / 4 ) ) & 0x000000ff ) ) / 10.f;
 
-// normal °ªÀÌ°í
-// 0,0,0 ±âÁØÀ¸·Î °¢ ÁöÁ¡ÀÇ normal °ªÀ» °è»ê
+// normal ê°’ì´ê³ 
+// 0,0,0 ê¸°ì¤€ìœ¼ë¡œ ê° ì§€ì ì˜ normal ê°’ì„ ê³„ì‚°
 // vertex.vertexNormal.x = vertex.vertexPoint.x;
 // vertex.vertexNormal.y = vertex.vertexPoint.y;
 // vertex.vertexNormal.z = vertex.vertexPoint.z;
 //
-// // ´ÜÀ§ º¤ÅÍ·Î ¸¸µå´Â °Í
-// // Á¤±ÔÈ­ º¤ÅÍ·Î º¯°æÇÏ´Â ¿¬»ê
+// // ë‹¨ìœ„ ë²¡í„°ë¡œ ë§Œë“œëŠ” ê²ƒ
+// // ì •ê·œí™” ë²¡í„°ë¡œ ë³€ê²½í•˜ëŠ” ì—°ì‚°
 // D3DXVec3Normalize(&vertex.vertexNormal, &vertex.vertexNormal);
 
 vertex.vertexTexturePoint.x = (float)x / ( g_XHeight - 1 );
