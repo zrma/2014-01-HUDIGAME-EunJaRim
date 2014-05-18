@@ -57,7 +57,7 @@ YAMANGDXDLL_API HRESULT CreateSpriteImage( LPCWSTR ImagePath /*= L"UI_default.pn
 	return E_FAIL;
 }
 
-YAMANGDXDLL_API HRESULT RenderSprite( INT typeNum, D3DXVECTOR3 UIPos )
+YAMANGDXDLL_API HRESULT RenderSprite( INT typeNum, D3DXVECTOR3 pos )
 {
 	if ( g_UISprite )
 	{
@@ -69,7 +69,7 @@ YAMANGDXDLL_API HRESULT RenderSprite( INT typeNum, D3DXVECTOR3 UIPos )
 		g_UISprite->SetTransform( &ratioMat );
 
 		g_UISprite->Begin( D3DXSPRITE_ALPHABLEND );
-		g_UISprite->Draw( g_UITexures[typeNum], NULL, NULL, &UIPos, 0xFFFFFFFF );
+		g_UISprite->Draw( g_UITexures[typeNum], NULL, NULL, &pos, 0xFFFFFFFF );
 		g_UISprite->End();
 
 		g_D3dDevice->EndScene();
