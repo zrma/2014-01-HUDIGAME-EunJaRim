@@ -19,7 +19,7 @@ RoomManager::RoomManager()
 	g_PidSessionTable.clear( );
 
 	m_Lobby = new GameRoom( LOBBY_NUMBER, m_GameMapManager );
-
+	
 	m_RoomList.clear();
 	m_RoomList.insert( RoomList::value_type( LOBBY_NUMBER, m_Lobby ) );
 }

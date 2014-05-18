@@ -127,7 +127,17 @@ void TakeArea::OnTick()
 			Log( "Dead! \n" );
 			m_ActionStatus = ACTION_END;
 			m_OwnerCrops->DoNextAction( this, 0 );
-			m_ClientManager->TakeBase( m_OwnerCrops->GetPlayerID( ), m_TargerCrops->GetPlayerID( ), m_OwnerCrops->GetCorpsID( ), m_TargerCrops->GetCorpsID( ) );
+
+			UnitType unitType = m_TargerCrops->GetUnitType();
+			if ( UnitType::UNIT_GUARD == unitType )
+			{
+				m_ClientManager->TakeBase( m_OwnerCrops->GetPlayerID( ), m_TargerCrops->GetPlayerID( ), m_OwnerCrops->GetCorpsID( ), m_TargerCrops->GetCorpsID( ) );
+			}
+			else if ( UnitType::UNIT_KING == unitType )
+			{
+				m_ClientManager->GameRoomLoose( m_TargerCrops->GetPlayerID() );
+			}
+			
 			
 		}
 		else

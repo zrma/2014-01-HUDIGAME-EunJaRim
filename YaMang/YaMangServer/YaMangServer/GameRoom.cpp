@@ -76,7 +76,7 @@ void GameRoom::GameRoomStart()
 
 
 
-	m_IsGameStart = true;
+	m_GameRoomStart = true;
 	int i = 0;
 	for ( auto& it : m_ClientList )
 	{
@@ -94,6 +94,11 @@ void GameRoom::GameRoomStart()
 
 void GameRoom::GameRoomGiveUp( )
 {
+	// 로비면 무시한다.
+	if ( 0 == m_RoomNumber )
+	{
+		return;
+	}
 
 	CollectGarbageSessions();
 
@@ -113,14 +118,20 @@ void GameRoom::GameRoomGiveUp( )
 		g_RoomManager->LeaveRoom( m_RoomNumber, playerID );
 	}
 
-	m_IsGameStart = false;
+	m_GameRoomStart = false;
 	
-	g_RoomManager->DeleteRoom( m_RoomNumber ); // 위험할것 같다.
+	//g_RoomManager->DeleteRoom( m_RoomNumber ); // 위험할것 같다.
 }
 
 
-void GameRoom::GameRoomWin( int loserKingIndex )
+void GameRoom::GameRoomLoose( int loserPlayerID )
 {
+	// 로비면 무시한다.
+	if ( 0 == m_RoomNumber )
+	{
+		return;
+	}
+
 	CollectGarbageSessions();
 
 	ClientList safetyClientList = m_ClientList;
@@ -134,7 +145,7 @@ void GameRoom::GameRoomWin( int loserKingIndex )
 		GameOverResult outPacket;
 		outPacket.m_PlayerId = playerID;
 
-		if ( loserKingIndex == client->GetKingIndex( ) )
+		if ( loserPlayerID == playerID )
 		{
 			outPacket.m_IsWon = false;
 		}
@@ -148,9 +159,9 @@ void GameRoom::GameRoomWin( int loserKingIndex )
 		g_RoomManager->LeaveRoom( m_RoomNumber, playerID );
 	}
 
-	m_IsGameStart = false;
+	m_GameRoomStart = false;
 
-	g_RoomManager->DeleteRoom( m_RoomNumber ); // 위험할것 같다.
+	//g_RoomManager->DeleteRoom( m_RoomNumber ); // 위험할것 같다.
 }
 
 
@@ -262,7 +273,7 @@ void GameRoom::OnPeriodWork()
 
 	// 방을 만들어야지만 실행됨 로비에서는 불가
 	#ifndef DEBUG
-		if ( m_IsGameStart )
+		if ( m_GameRoomStart )
 	#endif // DEBUG
 	{
 		m_ActionScheduler->DoScheduledAction( );
@@ -313,7 +324,7 @@ void GameRoom::ClientPeriodWork()
 {
 
 	// 실행이 안된 룸막기... 근데 Tick이 없어질텐데...
-	if ( !m_IsGameStart )
+	if ( !m_GameRoomStart )
 	{
 		return;
 	}

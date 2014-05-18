@@ -21,12 +21,16 @@ public:
 
 	void				GameRoomStart();
 	void				GameRoomGiveUp( );
-	void				GameRoomWin( int loserKingIndex );
+	void				GameRoomLoose( int loserPlayerID );
 
 	ClientSession*		CreateClient( SOCKET sock );
 
 	void				EnterGameRoom( ClientSession* client );
 	bool				LeaveGameRoom( ClientSession* client );
+
+
+	bool				IsGameRoomStart() const { return m_GameRoomStart; }
+
 
 	int					GetClientSize() const { return static_cast<int>( m_ClientList.size() ); }
 	int					GetRoomNumber() const { return m_RoomNumber; }
@@ -109,6 +113,6 @@ private:
 	std::vector<int>	m_GuardIDList;
 
 
-	bool				m_IsGameStart = false;
+	bool				m_GameRoomStart = false;
 	ActionScheduler*	m_ActionScheduler = nullptr;
 };

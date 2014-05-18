@@ -103,9 +103,10 @@ void ClientSession::Disconnect()
 
 	m_Connected = false;
 
-	if ( m_GameStarted )
+	if ( m_GameStarted && m_ClientManager->IsGameRoomStart() )
 	{
 		m_GameStarted = false;
+		
 		m_ClientManager->GameRoomGiveUp( );
 	}
 	
