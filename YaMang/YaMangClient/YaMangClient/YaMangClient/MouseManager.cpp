@@ -339,6 +339,8 @@ void MouseManager::SetRightClick( bool isclicked )
 
 void MouseManager::SetLeftDrag()
 {
+
+
 	Log( "드래그 종료 결과 %d, %d \n", m_MousePosition.X, m_MousePosition.Y );
 	m_IsLeftDragging = false;
 }

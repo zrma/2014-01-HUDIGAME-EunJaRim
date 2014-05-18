@@ -44,7 +44,7 @@ public:
 	CameraController();
 	~CameraController();
 
-	void	Init();
+	void	Init( float x, float z );
 
 	void	MoveForward( float speed, bool zoom = false );
 	void	MoveSide( float speed );

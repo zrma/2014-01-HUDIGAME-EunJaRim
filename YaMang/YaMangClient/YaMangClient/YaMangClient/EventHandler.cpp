@@ -106,11 +106,6 @@ void NetworkManager::HandleGameStartResult( GameStartResult& inPacket )
 {
 	if ( m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size ) )
 	{
-		CameraController::GetInstance()->Init();
-
-		SoundManager::GetInstance()->PlaySound( SOUND_SCENE_PLAY_BGM2 );
-		SoundManager::GetInstance()->SetVolume( SOUND_SCENE_PLAY_BGM2, 0.3f );
-
 		SceneManager::GetInstance()->ChangeScene( SCENE_PLAY );
 		m_IsPlaying = true;
 		
@@ -153,6 +148,11 @@ void NetworkManager::HandleKingIndexResult( KingIndexResult& inPacket )
 			scenePlay->SetKingIndex( kingIndex );
 
 			// 여기에 카메라 저 좌표로 보게끔 이동시키는 코드 필요함
+
+			CameraController::GetInstance()->Init( startPositionX, startPositionZ);
+
+			SoundManager::GetInstance()->PlaySound( SOUND_SCENE_PLAY_BGM2 );
+			SoundManager::GetInstance()->SetVolume( SOUND_SCENE_PLAY_BGM2, 0.3f );
 
 			Log( "Your King Index:%d And Start At[%f][%f] \n", kingIndex, startPositionX, startPositionZ );
 		}

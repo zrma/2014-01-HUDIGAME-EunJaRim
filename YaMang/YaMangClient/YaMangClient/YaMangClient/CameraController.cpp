@@ -14,11 +14,17 @@ CameraController::~CameraController()
 {
 }
 
-void CameraController::Init()
+void CameraController::Init( float x, float z )
 {
-	m_EyePoint = { 0, 1.0f, 0 };
-	m_LookAtPoint = { 0, 0.5f, 1.0f };
-	
+	m_EyePoint = { x, 1.0f, z };
+	m_LookAtPoint = { 0, 1.0f, 0 };
+
+	D3DXVECTOR3 view = m_LookAtPoint - m_EyePoint;
+	D3DXVec3Normalize( &view, &view );
+
+	m_LookAtPoint = m_EyePoint + view;
+	m_LookAtPoint.y = 0.5f;
+
 	D3DXMATRIXA16 viewMatrix;
 	D3DXMatrixLookAtLH( &viewMatrix, &m_EyePoint, &m_LookAtPoint, &m_UpVector );
 	Renderer::GetInstance()->SetViewMatrix( viewMatrix );

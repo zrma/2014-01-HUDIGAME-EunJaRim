@@ -119,7 +119,7 @@ REGISTER_KEY_HANDLER( VK_SPACE )
 	{
 		case KeyStatusType::KEY_DOWN:
 		{
-			CameraController::GetInstance()->Init();
+			CameraController::GetInstance()->Init(0, 0);
 			// test code 
 			// 서버 상황 동기화를 위한 테스트 코드
 			// 원래는 방만들고 방시작하고 게임진행하면 필요없음 
