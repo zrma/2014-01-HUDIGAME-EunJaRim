@@ -110,6 +110,8 @@ extern "C"{
 	YAMANGDXDLL_API HRESULT RenderUI(INT typeNum, D3DXVECTOR3 UIPos);
 	YAMANGDXDLL_API void UICleanUp();
 }
+
+void Lighting( int lightNum );
 //단일 변수 out sample
 //extern YAMANGDXDLL_API int nyaMangDxDll;
 

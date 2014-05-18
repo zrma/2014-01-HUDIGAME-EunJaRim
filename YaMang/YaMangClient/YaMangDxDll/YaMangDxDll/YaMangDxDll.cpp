@@ -4,7 +4,6 @@
 #include "stdafx.h"
 #include "yaMangDxDll.h"
 #include "GlobalVar.h"
-#include "InnerResource.h"
 
 //////////////////////////////////////////////////////////////////////////
 //input args: 윈도우 핸들
@@ -176,6 +175,61 @@ YAMANGDXDLL_API void MoveCamera( float x, float y, float z )
 // 	SetCameraMatrix( &viewMatrix );
 // }
 
+
+void Lighting( int lightNum )
+{
+	//재질 속성 부여
+	D3DMATERIAL9 mtrl;
+	ZeroMemory( &mtrl, sizeof( D3DMATERIAL9 ) );
+	mtrl.Diffuse.r = mtrl.Ambient.r = 1.0f;
+	mtrl.Diffuse.g = mtrl.Ambient.g = 1.0f;
+	mtrl.Diffuse.b = mtrl.Ambient.b = 1.0f;
+	mtrl.Diffuse.a = mtrl.Ambient.a = 1.0f;
+	g_D3dDevice->SetMaterial( &mtrl );
+
+	D3DXVECTOR3 vecDir0;
+	D3DLIGHT9 light0;
+	ZeroMemory( &light0, sizeof( D3DLIGHT9 ) );
+	light0.Type = D3DLIGHT_DIRECTIONAL;
+	light0.Diffuse.r = 1.f;
+	light0.Diffuse.g = 1.f;
+	light0.Diffuse.b = 1.f;
+	vecDir0 = D3DXVECTOR3( -1.f, 1.f, 0.f );
+	D3DXVec3Normalize( (D3DXVECTOR3*)&light0.Direction, &vecDir0 );
+	light0.Range = 1000.f;
+
+
+	D3DXVECTOR3 vecDir1;
+	D3DLIGHT9 light1;
+	ZeroMemory( &light1, sizeof( D3DLIGHT9 ) );
+	light1.Type = D3DLIGHT_DIRECTIONAL;
+	light1.Diffuse.r = 1.f;
+	light1.Diffuse.g = 1.f;
+	light1.Diffuse.b = 1.f;
+	vecDir1 = D3DXVECTOR3( 1.f, 1.f, 0.f );
+	D3DXVec3Normalize( (D3DXVECTOR3*)&light1.Direction, &vecDir1 );
+	light1.Range = 1000.f;
+
+	g_D3dDevice->SetLight( 0, &light0 );
+	g_D3dDevice->SetLight( 1, &light1 );
+
+	switch ( lightNum )
+	{
+		case 1:
+			g_D3dDevice->LightEnable( 0, TRUE );
+			g_D3dDevice->LightEnable( 1, FALSE );
+			break;
+		case 2:
+			g_D3dDevice->LightEnable( 0, FALSE );
+			g_D3dDevice->LightEnable( 1, TRUE );
+			break;
+		default:
+			break;
+	}
+
+	g_D3dDevice->SetRenderState( D3DRS_LIGHTING, TRUE );
+	g_D3dDevice->SetRenderState( D3DRS_AMBIENT, 0x00808080 );
+}
 
 
 // 내보낸 변수의 예제입니다.

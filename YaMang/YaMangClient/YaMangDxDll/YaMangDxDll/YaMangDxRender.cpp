@@ -1,8 +1,19 @@
 ﻿#include "stdafx.h"
 #include "yaMangDxDll.h"
 #include "GlobalVar.h"
-#include "InnerResource.h"
 
+enum RenderingOption
+{
+	SETTING_NONE,
+
+	BASIC_TEX_SETTING,
+
+	LIGHT_SETTING_ON,
+	LIGHT_SETTING_OFF,
+
+
+
+};
 
 //////////////////////////////////////////////////////////////////////////
 //render를 pre - main - post renderring으로 변경
@@ -25,21 +36,22 @@ YAMANGDXDLL_API bool PreRendering()
 	// pre rendering 단계에서 진행되지 않으면 향후 render 모두 실패
 	if ( SUCCEEDED( g_D3dDevice->BeginScene() ) )
 	{
-		SetupTranslateMatrices();
+		D3DXMATRIXA16 matWorld;
+		D3DXMatrixIdentity( &matWorld );
+		g_D3dDevice->SetTransform( D3DTS_WORLD, &matWorld );
+
+		D3DXMATRIXA16 thisMatrix;
+		D3DXMatrixTranslation( &thisMatrix, 0, 0, 0 );
+		g_D3dDevice->MultiplyTransform( D3DTS_WORLD, &thisMatrix );
 
 		// lightsetting
-		// 일단 1로 진행, 향후 라이트 개수 등 확정되면 인자 받아 설정
 		int lightNum = 1;
 		Lighting( lightNum );
-		// Log( "라이팅 세팅!\n" );
 
 		g_D3dDevice->SetTextureStageState( 0, D3DTSS_COLOROP, D3DTOP_MODULATE );
 		g_D3dDevice->SetTextureStageState( 0, D3DTSS_COLORARG1, D3DTA_TEXTURE );
 		g_D3dDevice->SetTextureStageState( 0, D3DTSS_COLORARG2, D3DTA_DIFFUSE );
 		g_D3dDevice->SetTextureStageState( 0, D3DTSS_ALPHAOP, D3DTOP_DISABLE );
-
-		// Log( "Render Begin \n" );
-		// Log( "pre render 완료!\n" );
 
 		flag = true;
 	}
@@ -183,7 +195,9 @@ YAMANGDXDLL_API void RenderingTool( MESHOBJECT* inputVal )
 	// 렌더 방어코드
 	if ( SUCCEEDED( g_D3dDevice->BeginScene() ) )
 	{
-		SetupTranslateMatricesTool();
+		// SetupTranslateMatricesTool();
+		// 일단 height map 등 다른 쪽을 생각할 것
+
 		// ViewSetting();
 
 		// lightsetting
