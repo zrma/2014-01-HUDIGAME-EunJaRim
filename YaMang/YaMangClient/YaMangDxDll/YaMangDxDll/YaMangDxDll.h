@@ -105,9 +105,9 @@ extern "C"{
 	//////////////////////////////////////////////////////////////////////////
 	//  UI
 	//////////////////////////////////////////////////////////////////////////
-	YAMANGDXDLL_API HRESULT InitUISprite(int textureSize);
-	YAMANGDXDLL_API HRESULT CreateSpriteImage(LPCWSTR ImagePath = L"UI_default.png", INT typeNum = 0);
-	YAMANGDXDLL_API HRESULT RenderSprite(INT typeNum, D3DXVECTOR3 pos, float scale = 1.0f );
+	YAMANGDXDLL_API HRESULT InitUISprite( int textureSize );
+	YAMANGDXDLL_API HRESULT CreateSpriteImage( LPCWSTR ImagePath = L"UI_default.png", INT typeNum = 0 );
+	YAMANGDXDLL_API HRESULT RenderSprite( INT typeNum, D3DXVECTOR3 pos );
 	YAMANGDXDLL_API void UICleanUp();
 }
 
