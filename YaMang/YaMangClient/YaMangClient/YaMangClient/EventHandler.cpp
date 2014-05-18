@@ -290,7 +290,10 @@ void NetworkManager::HandleGenerateCorpsResult( GenerateCorpsResult& inPacket )
 				scenePlay->AddCorps( corpsID, corps );
 				Log( "GenerateCorps! Type:%d CorpID:%d \n", unitType, corpsID );
 
-				SoundManager::GetInstance()->PlaySound( SOUND_CORPS_GENERATE );
+				if ( playerID == m_MyPlayerId )
+				{
+					SoundManager::GetInstance()->PlaySound( SOUND_CORPS_GENERATE );
+				}
 			}
 
 		}
@@ -369,7 +372,6 @@ void NetworkManager::HandleMoveCorpsResult( MoveCorpsResult& inPacket )
 			ScenePlay* scenePlay = static_cast<ScenePlay*>( scene );
 			scenePlay->MoveCorpsStart( corpsID, targetPosition, lookAtVector, speed );
 			Log( "CorpsMoving! CorpID:%d - Move Toward X:%f Z:%f Speed:%f \n", corpsID, lookAtVector.x, lookAtVector.z, speed );
-			SoundManager::GetInstance()->PlaySound( SOUND_CORPS_MOVE );
 		}
 		else
 		{
@@ -463,31 +465,6 @@ void NetworkManager::HandleAttackCorpsResult( AttackCorpsResult& inPacket )
 			scenePlay->MoveCorpsStop( attackerCorpsID, attackerNow, attackerLook );
 			scenePlay->MoveCorpsStop( targetCorpsID, targetNow, targetLook );
 			scenePlay->SetCorpsHP( targetCorpsID, unitNum );
-
-			UnitType unitType = scenePlay->GetCorpsByID( attackerCorpsID )->GetUnitType();
-			switch ( unitType )
-			{
-				case UnitType::UNIT_ARROW:
-					SoundManager::GetInstance()->PlaySound( SOUND_CORPS_ATTACK_ARROW );
-					break;
-				case UnitType::UNIT_GUARD:
-					SoundManager::GetInstance()->PlaySound( SOUND_CORPS_ATTACK_GUARD );
-					break;
-				case UnitType::UNIT_KNIGHT:
-					SoundManager::GetInstance()->PlaySound( SOUND_CORPS_ATTACK_KNIGHT );
-					break;
-				case UnitType::UNIT_PIKE:
-					SoundManager::GetInstance()->PlaySound( SOUND_CORPS_ATTACK_PIKE );
-					break;
-				case UnitType::UNIT_SWORD:
-					SoundManager::GetInstance()->PlaySound( SOUND_CORPS_ATTACK_SWORD );
-					break;
-				case UnitType::UNIT_KING:
-					SoundManager::GetInstance()->PlaySound( SOUND_CORPS_ATTACK_SWORD );
-					break;
-				default:
-					break;
-			}
 
 			Log( "CorpsAttack! [%d]->[%d] \n", attackerCorpsID, targetCorpsID );
 			// Log( "Eye [%f %f]  LookAt [%f %f] \n", attackerNowX, attackerNowZ, targetNowX, targetNowZ );

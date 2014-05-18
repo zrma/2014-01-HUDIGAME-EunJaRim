@@ -5,6 +5,7 @@
 #include "SceneManager.h"
 #include "ScenePlay.h"
 #include "Corps.h"
+#include "SoundManager.h"
 
 PlayerManager::PlayerManager()
 {
@@ -63,6 +64,30 @@ void PlayerManager::AttackCorpsById( int corpsID ) const
 			attackCorpsData.m_MyCorpsID = iter;
 			attackCorpsData.m_TargetCorpsID = corpsID;
 
+			switch ( myCorps->GetUnitType() )
+			{
+				case UnitType::UNIT_ARROW:
+					SoundManager::GetInstance()->PlaySound( SOUND_CORPS_ATTACK_ARROW );
+					break;
+				case UnitType::UNIT_GUARD:
+					SoundManager::GetInstance()->PlaySound( SOUND_CORPS_ATTACK_GUARD );
+					break;
+				case UnitType::UNIT_KNIGHT:
+					SoundManager::GetInstance()->PlaySound( SOUND_CORPS_ATTACK_KNIGHT );
+					break;
+				case UnitType::UNIT_PIKE:
+					SoundManager::GetInstance()->PlaySound( SOUND_CORPS_ATTACK_PIKE );
+					break;
+				case UnitType::UNIT_SWORD:
+					SoundManager::GetInstance()->PlaySound( SOUND_CORPS_ATTACK_SWORD );
+					break;
+				case UnitType::UNIT_KING:
+					SoundManager::GetInstance()->PlaySound( SOUND_CORPS_ATTACK_SWORD );
+					break;
+				default:
+					break;
+			}
+			
 			NetworkManager::GetInstance( )->SendPlayPacket( &attackCorpsData );
 		}
 	}
@@ -77,6 +102,8 @@ void PlayerManager::MoveCorpsToPosition( float x, float z ) const
 		{
 			return;
 		}
+
+		SoundManager::GetInstance()->PlaySound( SOUND_CORPS_MOVE );
 
 		for ( auto& iter : m_SelectedCorpsList )
 		{
