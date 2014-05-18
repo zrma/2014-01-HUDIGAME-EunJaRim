@@ -165,6 +165,8 @@ void ResourceManager::CreateSprite()
 	InitUISprite( SPRITE_MAX );
 
 	CreateSpriteImage( SPRITE_IMAGE_LOADING, SPRITE_LOADING );
+	CreateSpriteImage( SPRITE_IMAGE_RESULT_WIN, SPRITE_RESULT_WIN );
+	CreateSpriteImage( SPRITE_IMAGE_RESULT_LOSE, SPRITE_RESULT_LOSE );
 
 	//CreateUIImage
 	CreateSpriteImage( SPRITE_UI_IMSIMAP, SPRITE_UI_MAP );

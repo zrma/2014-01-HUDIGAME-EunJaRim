@@ -18,6 +18,8 @@
 #include "Timer.h"
 #include "PlayerManager.h"
 #include "yaMangDxDll.h"
+#include "SceneManager.h"
+#include "SceneResult.h"
 
 typedef void( *KeyEventHandler )( KeyInput inputKey );
 static KeyEventHandler KeyHandlerTable[MAX_KEY];
@@ -118,15 +120,17 @@ REGISTER_KEY_HANDLER( VK_SPACE )
 	switch ( inputKey.GetKeyStatus() )
 	{
 		case KeyStatusType::KEY_DOWN:
-		{
-			CameraController::GetInstance()->Init(0, 0);
-		}
 			break;
 		case KeyStatusType::KEY_PRESSED:
 			// Log( "** 키 누르고 있다! ** \n" );
 			break;
 		case KeyStatusType::KEY_UP:
 		{
+			Scene* scene = SceneManager::GetInstance()->GetNowScene();
+			if ( typeid( SceneResult ) == typeid( *scene ) )
+			{
+				GameManager::GetInstance()->Stop();
+			}
 		}
 			break;
 		default:
@@ -212,92 +216,5 @@ REGISTER_KEY_HANDLER( VK_4 )
 	if ( KeyStatusType::KEY_UP == inputKey.GetKeyStatus() )
 	{
 		TakeScreenShot();
-	}
-}
-
-// Cheat Key
-REGISTER_KEY_HANDLER( VK_U )
-{
-	// generate arrow
-	if ( KeyStatusType::KEY_UP == inputKey.GetKeyStatus( ) )
-	{
-		GenerateCorpsRequest generateCorps;
-		generateCorps.m_NowX = 40.0f;
-		generateCorps.m_NowZ = 40.0f;
-		generateCorps.m_LookX = 0.0f;
-		generateCorps.m_LookZ = 0.0f;
-		generateCorps.m_PlayerId = NetworkManager::GetInstance()->GetMyPlayerID();
-		generateCorps.m_UnitType = UnitType::UNIT_ARROW;
-
-		NetworkManager::GetInstance()->SendPlayPacket( &generateCorps );
-	}
-
-}
-
-REGISTER_KEY_HANDLER( VK_I )
-{
-	// generate knight
-	if ( KeyStatusType::KEY_UP == inputKey.GetKeyStatus() )
-	{
-		GenerateCorpsRequest generateCorps;
-		generateCorps.m_NowX = 40.0f;
-		generateCorps.m_NowZ = 40.0f;
-		generateCorps.m_LookX = 0.0f;
-		generateCorps.m_LookZ = 0.0f;
-		generateCorps.m_PlayerId = NetworkManager::GetInstance()->GetMyPlayerID();
-		generateCorps.m_UnitType = UnitType::UNIT_KNIGHT;
-
-		NetworkManager::GetInstance( )->SendPlayPacket( &generateCorps );
-	}
-}
-
-REGISTER_KEY_HANDLER( VK_O )
-{
-	// generate pike
-	if ( KeyStatusType::KEY_UP == inputKey.GetKeyStatus() )
-	{
-		GenerateCorpsRequest generateCorps;
-		generateCorps.m_NowX = 40.0f;
-		generateCorps.m_NowZ = 40.0f;
-		generateCorps.m_LookX = 0.0f;
-		generateCorps.m_LookZ = 0.0f;
-		generateCorps.m_PlayerId = NetworkManager::GetInstance()->GetMyPlayerID();
-		generateCorps.m_UnitType = UnitType::UNIT_PIKE;
-
-		NetworkManager::GetInstance( )->SendPlayPacket( &generateCorps );
-	}
-}
-
-REGISTER_KEY_HANDLER( VK_P )
-{
-	// generate sword
-	if ( KeyStatusType::KEY_UP == inputKey.GetKeyStatus() )
-	{
-		GenerateCorpsRequest generateCorps;
-		generateCorps.m_NowX = 40.0f;
-		generateCorps.m_NowZ = 40.0f;
-		generateCorps.m_LookX = 0.0f;
-		generateCorps.m_LookZ = 0.0f;
-		generateCorps.m_PlayerId = NetworkManager::GetInstance()->GetMyPlayerID();
-		generateCorps.m_UnitType = UnitType::UNIT_SWORD;
-
-		NetworkManager::GetInstance( )->SendPlayPacket( &generateCorps );
-	}
-}
-
-REGISTER_KEY_HANDLER( VK_L )
-{
-	// generate Bot sword
-	if ( KeyStatusType::KEY_UP == inputKey.GetKeyStatus() )
-	{
-		GenerateCorpsRequest generateCorps;
-		generateCorps.m_NowX = -20.0f;
-		generateCorps.m_NowZ = -20.0f;
-		generateCorps.m_LookX = 0.0f;
-		generateCorps.m_LookZ = 0.0f;
-		generateCorps.m_PlayerId = 0; // BOT ID
-		generateCorps.m_UnitType = UnitType::UNIT_SWORD;
-
-		NetworkManager::GetInstance( )->SendPlayPacket( &generateCorps );
 	}
 }

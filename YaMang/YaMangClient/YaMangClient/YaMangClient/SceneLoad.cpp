@@ -2,7 +2,6 @@
 #include "SceneLoad.h"
 #include "yaMangDxDll.h"
 #include "EnumSet.h"
-#include "MainWindow.h"
 
 SceneLoad::SceneLoad()
 {

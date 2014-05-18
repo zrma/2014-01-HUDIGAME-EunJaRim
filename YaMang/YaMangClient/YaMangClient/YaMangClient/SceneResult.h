@@ -11,5 +11,8 @@ public:
 	virtual void	Destroy();
 	virtual void	Update();
 	virtual void	Render() const;
+
+private:
+	D3DXVECTOR3 m_Position = { 0, 0, 0 };
 };
 

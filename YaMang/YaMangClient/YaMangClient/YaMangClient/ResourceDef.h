@@ -44,6 +44,8 @@
 #define SPRITE_UI_IMSIMAP					PATH_SPRITE L"UI_MapImsi.png"
 
 #define SPRITE_IMAGE_LOADING				PATH_SPRITE L"Loading.png"
+#define SPRITE_IMAGE_RESULT_WIN				PATH_SPRITE L"ResultWin.png"
+#define SPRITE_IMAGE_RESULT_LOSE			PATH_SPRITE L"ResultLose.png"
 
 #define PATH_SOUND			L"SoundFiles\\"
 
