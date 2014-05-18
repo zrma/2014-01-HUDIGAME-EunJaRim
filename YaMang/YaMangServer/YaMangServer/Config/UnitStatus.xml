@@ -16,15 +16,15 @@
 	</Arrow>
 	<Guard>
 		<HP>49.0f</HP>
-		<MoveSpeed>0.01f</MoveSpeed>
+		<MoveSpeed>8.0f</MoveSpeed>
 		<MoveSpeedBonus>0.0f</MoveSpeedBonus>
-		<AttackRange>1.0f</AttackRange>
+		<AttackRange>3.0f</AttackRange>
 		<AttackRangeBonus>0.0f</AttackRangeBonus>
-		<AttackPower>10.0f</AttackPower>
+		<AttackPower>15.0f</AttackPower>
 		<AttackPowerBonus>0.0f</AttackPowerBonus>
 		<Defense>6.0f</Defense>
 		<DefenseBonus>0.0f</DefenseBonus>
-		<AttackDelay>5000</AttackDelay>
+		<AttackDelay>2000</AttackDelay>
 		<AttackDelayBonus>0</AttackDelayBonus>
 	</Guard>
 	<Knight>

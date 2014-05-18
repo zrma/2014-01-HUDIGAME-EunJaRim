@@ -118,6 +118,42 @@ void GameRoom::GameRoomGiveUp( )
 	g_RoomManager->DeleteRoom( m_RoomNumber ); // 위험할것 같다.
 }
 
+
+void GameRoom::GameRoomWin( int loserKingIndex )
+{
+	CollectGarbageSessions();
+
+	ClientList safetyClientList = m_ClientList;
+
+	for ( auto& it : safetyClientList )
+	{
+		ClientSession* client = it.second;
+
+		client->GameOver();
+		int playerID = client->GetPlayerID();
+		GameOverResult outPacket;
+		outPacket.m_PlayerId = playerID;
+
+		if ( loserKingIndex == client->GetKingIndex( ) )
+		{
+			outPacket.m_IsWon = false;
+		}
+		else
+		{
+			outPacket.m_IsWon = true;
+		}
+		
+
+		DirectPacket( playerID, &outPacket );
+		g_RoomManager->LeaveRoom( m_RoomNumber, playerID );
+	}
+
+	m_IsGameStart = false;
+
+	g_RoomManager->DeleteRoom( m_RoomNumber ); // 위험할것 같다.
+}
+
+
 // 클라 생성
 // _tmain() 쪽의 클라이언트 핸들링 스레드에서 WaitForSingleObjectEx(hEvent, INFINITE, TRUE) 가
 // 이벤트를 발생하기를 기다려서 이벤트 발생 신호가 오면(클라이언트 쪽에서 접속 요청하면)
@@ -487,8 +523,8 @@ void GameRoom::TakeBase( int ownerPlayerID, int targetPlayerID, int ownerCorpsID
 	{
 		return;
 	}
-
-	int targetGuardListIndex = static_cast<int> ( std::find( m_GuardIDList.begin(), m_GuardIDList.end(), targetGuardID ) - m_GuardIDList.begin() );
+	
+	int targetGuardListIndex = GetGuardIndexByID( targetGuardID );
 	if ( -1 == targetGuardListIndex )
 	{
 		return;
@@ -604,8 +640,23 @@ void GameRoom::SyncOneCorp( int corpsID )
 
 }
 
+const PositionInfo& GameRoom::GetGuardPositionInfo( int index ) const
+{
+	return m_GameMapManager->GetGuardPositionInfo( index );
+}
 const PositionInfo& GameRoom::GetKingPositionInfo( int index ) const
 {
 	return m_GameMapManager->GetKingPositionInfo( index );
 }
+
+int GameRoom::GetGuardIndexByID( int corpsID )
+{
+	return static_cast<int> ( std::find( m_GuardIDList.begin( ), m_GuardIDList.end( ), corpsID ) - m_GuardIDList.begin( ) );
+}
+
+int GameRoom::GetKingIndexByID( int corpsID )
+{
+	return static_cast<int> ( std::find( m_KingIDList.begin( ), m_KingIDList.end( ), corpsID ) - m_KingIDList.begin( ) );
+}
+
 

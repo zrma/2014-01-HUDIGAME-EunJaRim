@@ -21,6 +21,7 @@ public:
 
 	void				GameRoomStart();
 	void				GameRoomGiveUp( );
+	void				GameRoomWin( int loserKingIndex );
 
 	ClientSession*		CreateClient( SOCKET sock );
 
@@ -63,13 +64,17 @@ public:
 	void				PrintClientList(); // 테스트용 함수
 
 	Corps*				GetCorpsByCorpsID( int corpsID );
+	int					GetGuardIndexByID( int corpsID );
+	int					GetKingIndexByID( int corpsID );
 
+
+	const PositionInfo&	GetGuardPositionInfo( int index ) const;
+	const PositionInfo&	GetKingPositionInfo( int index ) const;
 
 	void				TakeBase( int ownerPlayerID, int targetPlayerID, int ownerCorpsID, int targetGuardID );
 	void				SyncOneCorp( int corpsID );
 
 
-	const PositionInfo&	GetKingPositionInfo( int index ) const;
 
 
 private:

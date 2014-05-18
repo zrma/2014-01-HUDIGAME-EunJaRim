@@ -75,9 +75,10 @@ void TakeArea::OnTick()
 	float length = D3DXVec2Length( &vector );
 
 	Action* targetAction = m_TargerCrops->GetHoldingAction( );
-	if ( nullptr == targetAction )
+	if ( nullptr == targetAction || ACTION_END == targetAction->GetActionStatus( ) )
 	{
 		Log( "Guard Start! \n" );
+
 		m_TargerCrops->ChangeFormation( FormationType::FORMATION_DEFENSE );
 		GuardArea* action = new GuardArea( );
 		action->SetClientManager( m_ClientManager );

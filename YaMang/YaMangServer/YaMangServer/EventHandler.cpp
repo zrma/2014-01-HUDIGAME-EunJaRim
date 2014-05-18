@@ -485,7 +485,8 @@ void ClientSession::HandleAttackCorpsRequest( AttackCorpsRequest& inPacket )
 		Disconnect();
 	}
 
-	if ( UnitType::UNIT_GUARD == targetCorps->GetUnitType() )
+	UnitType unitType = targetCorps->GetUnitType();
+	if ( UnitType::UNIT_GUARD == unitType || UnitType::UNIT_KING == unitType )
 	{
 		TakeArea* action = new TakeArea();
 		action->SetClientManager( m_ClientManager );
@@ -497,7 +498,7 @@ void ClientSession::HandleAttackCorpsRequest( AttackCorpsRequest& inPacket )
 	}
 	else
 	{
-		if ( UnitType::UNIT_KNIGHT == myCorps->GetUnitType( ) )
+		if ( UnitType::UNIT_KNIGHT == unitType )
 		{
 			KnightAttack* action = new KnightAttack( );
 			action->SetClientManager( m_ClientManager );
