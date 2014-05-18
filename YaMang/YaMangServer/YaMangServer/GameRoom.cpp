@@ -509,7 +509,7 @@ void GameRoom::TakeBase( int ownerPlayerID, int targetPlayerID, int ownerCorpsID
 			ClientSession* ownerClient = findOwner->second;
 			ownerClient->AddBaseNum();
 
-			PositionInfo guardPosition = m_GameMapManager->GetGuardPositionInfo( targetGuardListIndex );
+			const PositionInfo& guardPosition = m_GameMapManager->GetGuardPositionInfo( targetGuardListIndex );
 			const Corps* corps = GenerateCorps( ownerPlayerID, UnitType::UNIT_GUARD, guardPosition );
 
 			m_GuardIDList.at( targetGuardListIndex ) = corps->GetCorpsID( );
@@ -546,7 +546,7 @@ void GameRoom::TakeBase( int ownerPlayerID, int targetPlayerID, int ownerCorpsID
 	ownerClient->AddBaseNum();
 	targetClient->SubBaseNum();
 	
-	PositionInfo guardPosition = m_GameMapManager->GetGuardPositionInfo( targetGuardListIndex );
+	const PositionInfo& guardPosition = m_GameMapManager->GetGuardPositionInfo( targetGuardListIndex );
 	const Corps* corps = GenerateCorps( ownerPlayerID, UnitType::UNIT_GUARD, guardPosition );
 
 	m_GuardIDList.at( targetGuardListIndex ) = corps->GetCorpsID( );
@@ -602,5 +602,10 @@ void GameRoom::SyncOneCorp( int corpsID )
 
 	
 
+}
+
+const PositionInfo& GameRoom::GetKingPositionInfo( int index ) const
+{
+	return m_GameMapManager->GetKingPositionInfo( index );
 }
 

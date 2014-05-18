@@ -260,7 +260,7 @@ void ScenePlay::UpdateBase( int BaseIndex, int playerID )
 	// 안전장치를 여기에 달자...
 	m_BasePlayerIDList.at( BaseIndex ) = playerID;
 
-	// 테스트용 프린트
+	// 테스트용 프린트 실제로는 사용 안함
 	std::wstring test = L"";
 	for ( UINT i = 0; i < m_BasePlayerIDList.size(); ++i )
 	{
@@ -270,5 +270,5 @@ void ScenePlay::UpdateBase( int BaseIndex, int playerID )
 		test = test + std::to_wstring( m_BasePlayerIDList.at( i ) );
 		test = test + L"] ";
 	}
-	TextManager::GetInstance( )->RegistText( TEXT_TEST_BASE, test.c_str( ), 250, 350 );
+	TextManager::GetInstance( )->RegistText( TEXT_TEST_BASE, test.c_str( ), 250, 300 );
 }

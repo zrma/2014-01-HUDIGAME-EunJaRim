@@ -96,6 +96,7 @@ public:
 
 	ULONGLONG	GetCorpsRegenTime( ) { return m_CorpsRegenTime; }
 
+	int			GetKingIndex( ) const { return m_KingIndex; }
 	void		SetKingIndex( int index, float startPositionX, float startPositionZ );
 
 private:

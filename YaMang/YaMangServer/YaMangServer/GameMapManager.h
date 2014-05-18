@@ -20,6 +20,8 @@ public:
 
 	const std::vector<PositionInfo>&	GetKingPositionList() { return m_KingPositionList; }
 	const std::vector<PositionInfo>&	GetGuardPositionList() { return m_GuardPositionList; }
+
+	const PositionInfo&					GetKingPositionInfo( int index ) const { return m_KingPositionList.at( index ); }
 	const PositionInfo&					GetGuardPositionInfo( int index ) const { return m_GuardPositionList.at( index ); }
 
 private:

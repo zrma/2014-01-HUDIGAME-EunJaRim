@@ -60,9 +60,33 @@ void GenerateCorpAction::OnTick()
 				break;
 		}
 
-		// 하드 코딩중... 랜덤으로 나와라1
-		float nowX = static_cast<float>( rand() % 30 );
-		float nowZ = static_cast<float>( rand() % 30 );
+		
+		const PositionInfo& kingPosition = m_ClientManager->GetKingPositionInfo( m_ClientSession->GetKingIndex() );
+
+		float nowX = kingPosition.m_EyePoint.x;
+		float nowZ = kingPosition.m_EyePoint.z;
+
+		// 하드 코딩중... 왕 앞쪽으로 랜덤으로 나와라2
+		int spawnRange = 20;
+		int xDirection = 1;
+		int zDirection = 1;
+
+		if ( nowX > 0 )
+		{
+			xDirection = -1;
+		}
+
+		if ( nowZ > 0 )
+		{
+			zDirection = -1;
+		}
+
+		nowX += xDirection * ( spawnRange / 2 );
+		nowZ += zDirection * ( spawnRange / 2 );
+
+		nowX += static_cast<float>( xDirection * ( rand() % spawnRange ) );
+		nowZ += static_cast<float>( zDirection * ( rand( ) % spawnRange ) );
+
 		float lookX = 0.0f;
 		float lookZ = 0.0f;
 

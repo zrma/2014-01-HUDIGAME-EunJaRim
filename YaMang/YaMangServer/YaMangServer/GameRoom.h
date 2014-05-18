@@ -68,6 +68,10 @@ public:
 	void				TakeBase( int ownerPlayerID, int targetPlayerID, int ownerCorpsID, int targetGuardID );
 	void				SyncOneCorp( int corpsID );
 
+
+	const PositionInfo&	GetKingPositionInfo( int index ) const;
+
+
 private:
 	void				CreatePlayerDone( DatabaseJobContext* dbJob );
 	void				DeletePlayerDone( DatabaseJobContext* dbJob );
