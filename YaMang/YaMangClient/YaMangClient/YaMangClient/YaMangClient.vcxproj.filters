@@ -199,6 +199,9 @@
     <ClInclude Include="UIObject.h">
       <Filter>UI</Filter>
     </ClInclude>
+    <ClInclude Include="Exception.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -317,6 +320,9 @@
     </ClCompile>
     <ClCompile Include="UIObject.cpp">
       <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Exception.cpp">
+      <Filter>Utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

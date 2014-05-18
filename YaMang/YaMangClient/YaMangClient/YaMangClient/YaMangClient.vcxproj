@@ -60,7 +60,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d9.lib;d3dx9d.lib;dxerr.lib;dxguid.lib;winmm.lib;comctl32.lib;TinyXmlLib.lib;fmodL_vc.lib;fmodstudioL_vc.lib;fmod_vc.lib;fmodstudio_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d9.lib;d3dx9d.lib;dxerr.lib;dxguid.lib;winmm.lib;comctl32.lib;DbgHelp.lib;TinyXmlLib.lib;fmodL_vc.lib;fmodstudioL_vc.lib;fmod_vc.lib;fmodstudio_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Debug;$(SolutionDir)YaMangClient\LibraryFMOD;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
@@ -103,6 +103,7 @@ xcopy ".\\FmodDLL\*" "..\..\..\Bin\YaMangClient\" /s /d /y</Command>
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="Corps.h" />
     <ClInclude Include="DummyRender.h" />
+    <ClInclude Include="Exception.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Guard.h" />
     <ClInclude Include="InputDispatcher.h" />
@@ -148,6 +149,7 @@ xcopy ".\\FmodDLL\*" "..\..\..\Bin\YaMangClient\" /s /d /y</Command>
     <ClCompile Include="Corps.cpp" />
     <ClCompile Include="DummyRender.cpp" />
     <ClCompile Include="EventHandler.cpp" />
+    <ClCompile Include="Exception.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Guard.cpp" />
     <ClCompile Include="InputDispatcher.cpp" />
