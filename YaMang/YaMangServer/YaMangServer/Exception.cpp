@@ -23,7 +23,6 @@ LONG WINAPI ExceptionFilter( EXCEPTION_POINTERS* exceptionInfo )
 		++offSet;
 	}
 	
-
 	/// dump file 남기자.
 	// 디버깅 중이 아닐 때 생긴 Crash에 대해서 dmp 파일을 남기는 부분
 	HANDLE hFile = CreateFileA( fileName, GENERIC_READ | GENERIC_WRITE,

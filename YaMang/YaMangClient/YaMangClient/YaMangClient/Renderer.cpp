@@ -15,15 +15,14 @@ Renderer::~Renderer()
 
 bool Renderer::Init()
 {
-	if ( S_OK == InitD3D( MainWindow::GetInstance( )->Window( ) ) )
+	RECT rect;
+	GetWindowRect( MainWindow::GetInstance()->Window(), &rect );
+	LONG width = rect.right - rect.left;
+	LONG height = rect.bottom - rect.top;
+
+	if ( S_OK == InitD3D( MainWindow::GetInstance( )->Window( ), width, height ) )
 	{
 		m_Result = true;
-
-		RECT rect;
-		GetWindowRect( MainWindow::GetInstance()->Window(), &rect );
-		LONG width = rect.right - rect.left;
-		LONG height = rect.bottom - rect.top;
-
 		m_PrevTime = timeGetTime();
 	}
 

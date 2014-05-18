@@ -135,12 +135,12 @@ YAMANGDXDLL_API HRESULT RenderCursor()
 {
 	if ( g_CursorSprite && g_CursorTex && g_CursorTex[g_CursorType] )
 	{
+		// 비율 고정
 		D3DXMATRIXA16 ratioMat;
-
-		float ratio = ( 720.0f / g_Width ) * g_Ratio;
 		D3DXMatrixIdentity( &ratioMat );
-		D3DXMatrixScaling( &ratioMat, 1280 / g_Width, ratio, 1 );
+		D3DXMatrixScaling( &ratioMat, g_StartWidth / g_NowWidth, g_StartHeight / g_NowHeight, 1 );
 		g_CursorSprite->SetTransform( &ratioMat );
+
 		g_CursorSprite->Begin( D3DXSPRITE_ALPHABLEND );
 		g_CursorSprite->Draw( g_CursorTex[g_CursorType], NULL, NULL, &g_CursorPos, 0xFFFFFFFF );
 		g_CursorSprite->End();

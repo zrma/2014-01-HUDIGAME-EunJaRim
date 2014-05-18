@@ -39,8 +39,10 @@ D3DXVECTOR3		g_RayOrigin = { 0, 0, 0 };
 D3DXVECTOR3		g_RayDirection = { 0, 0, 0 };
 
 //화면 종횡비 관련 변수
-float	g_Ratio = 1280 / 720;
-float	g_Width = 1280;
+float			g_StartWidth = 1280.0f;
+float			g_StartHeight = 720.0f;
+float			g_NowWidth = 1280.0f;
+float			g_NowHeight = 720.0f;
 
 // 스카이 박스
 LPDIRECT3DTEXTURE9	g_SkyBoxTextures[6] = { 0, };

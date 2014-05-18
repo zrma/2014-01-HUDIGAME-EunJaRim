@@ -39,6 +39,9 @@ YAMANGDXDLL_API HRESULT InitD3D( HWND hWnd, long width, long height )
 	g_D3dDevice->SetRenderState( D3DRS_CULLMODE, D3DCULL_NONE );
 	g_D3dDevice->SetRenderState( D3DRS_ZENABLE, TRUE );
 	
+	g_StartWidth = static_cast<float>( width );
+	g_StartHeight = static_cast<float>( height );
+
 	SetAspectRatio( width, height );
 
 	//텍스트 출력 자원 초기화
@@ -80,12 +83,11 @@ YAMANGDXDLL_API void RenderText( LPCWSTR text, float left, float top, int RGB_R,
 		static_cast<LONG>( right ),
 		static_cast<LONG>( bottom )
 	}; // 그릴 위치
-
+	
 	// 비율 고정
 	D3DXMATRIXA16 ratioMat;
-	float ratio = ( 720.0f / g_Width ) * g_Ratio;
 	D3DXMatrixIdentity( &ratioMat );
-	D3DXMatrixScaling( &ratioMat, 1280 / g_Width, ratio, 1 );
+	D3DXMatrixScaling( &ratioMat, g_StartWidth / g_NowWidth, g_StartHeight / g_NowHeight, 1 );
 	g_Sprite->SetTransform( &ratioMat );
 
 	g_Font->DrawText( g_Sprite, text
@@ -120,10 +122,12 @@ YAMANGDXDLL_API void SetAspectRatio( long width, long height )
 {
 	D3DXMATRIXA16 matProj;
 	float aspectRatio = static_cast<float>( width ) / static_cast<float>( height );
-	g_Ratio = aspectRatio;
-	g_Width = static_cast<float>(width);
+	
 	D3DXMatrixPerspectiveFovLH( &matProj, D3DX_PI / 5, aspectRatio, 1.0f, 3000.0f );
 	g_D3dDevice->SetTransform( D3DTS_PROJECTION, &matProj );
+
+	g_NowWidth = static_cast<float>( width );
+	g_NowHeight = static_cast<float>( height );
 }
 
 
@@ -160,21 +164,6 @@ YAMANGDXDLL_API void MoveCamera( float x, float y, float z )
 	D3DXMatrixLookAtLH( &viewMatrix, &g_EyePoint, &g_LookAtPoint, &g_UpVector );
 	SetCameraMatrix( &viewMatrix );
 }
-
-// 사용하는 곳이 없는 함수
-// 더 쉬운 구현이 있는데 필요시 구현
-// YAMANGDXDLL_API void ZoomCamera( float zoom )
-// {
-// 	D3DXVECTOR3 view = g_LookAtPoint - g_EyePoint;
-// 	D3DXVec3Normalize( &view, &view );
-// 	g_EyePoint += view * zoom;
-// 	g_LookAtPoint += view * zoom;
-// 
-// 	D3DXMATRIXA16 viewMatrix;
-// 	D3DXMatrixLookAtLH( &viewMatrix, &g_EyePoint, &g_LookAtPoint, &g_UpVector );
-// 	SetCameraMatrix( &viewMatrix );
-// }
-
 
 void Lighting( int lightNum )
 {
