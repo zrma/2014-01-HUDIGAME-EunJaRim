@@ -37,6 +37,9 @@ D3DXVECTOR3		g_UpVector = { 0, 1, 0 };
 //Picking 관련 변수
 D3DXVECTOR3		g_RayOrigin = { 0, 0, 0 };
 D3DXVECTOR3		g_RayDirection = { 0, 0, 0 };
+CUSTOMVERTEX*	g_PickedPointA = nullptr;
+CUSTOMVERTEX*	g_PickedPointB = nullptr;
+CUSTOMVERTEX*	g_PickedPointC = nullptr;
 
 //화면 종횡비 관련 변수
 float			g_StartWidth = 1280.0f;

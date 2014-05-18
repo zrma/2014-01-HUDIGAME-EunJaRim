@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include <DbgHelp.h>
 #include "Exception.h"
 #include "MacroSet.h"
@@ -50,7 +50,7 @@ LONG WINAPI ExceptionFilter( EXCEPTION_POINTERS* exceptionInfo )
 		Log( "CreateFile failed. Error: %u \n", GetLastError() );
 	}
 
-	// ¿¹¿ÜÃ³¸® Á¾·á ½ÅÈ£ ¹ÝÈ¯
+	// ì˜ˆì™¸ì²˜ë¦¬ ì¢…ë£Œ ì‹ í˜¸ ë°˜í™˜
 	return EXCEPTION_EXECUTE_HANDLER;
 
 }

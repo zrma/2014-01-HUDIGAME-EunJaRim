@@ -18,7 +18,12 @@ public:
 	void	MoveCorpsToPosition( float x, float z ) const;
 	void	ChangeCorpsFormation( FormationType formation ) const;
 
+	void	SetWin( bool win ) { m_IsWinner = win; }
+	bool	GetWin() const { return m_IsWinner; }
+
 private:
 	std::list<int>	m_SelectedCorpsList;
+
+	bool	m_IsWinner = false;
 };
 

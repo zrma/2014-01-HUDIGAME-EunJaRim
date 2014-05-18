@@ -108,25 +108,21 @@ YAMANGDXDLL_API HRESULT TransPickedTriangle( float* pickedX, float* pickedZ )
 		CUSTOMVERTEX* intersectedVertexBufferStart;
 		g_Mesh->LockVertexBuffer( 0, (void**)&intersectedVertexBufferStart );
 
-		CUSTOMVERTEX* pointA;
-		CUSTOMVERTEX* pointB;
-		CUSTOMVERTEX* pointC;
-
 		if ( hit1 )
 		{
-			pointA = &VerticesStartPoint[trianglePointA];
-			pointB = &VerticesStartPoint[trianglePointB];
-			pointC = &VerticesStartPoint[trianglePointC];
+			g_PickedPointA = &VerticesStartPoint[trianglePointA];
+			g_PickedPointB = &VerticesStartPoint[trianglePointB];
+			g_PickedPointC = &VerticesStartPoint[trianglePointC];
 		}
 		else
 		{
-			pointA = &VerticesStartPoint[trianglePointB];
-			pointB = &VerticesStartPoint[trianglePointC];
-			pointC = &VerticesStartPoint[trianglePointD];
+			g_PickedPointA = &VerticesStartPoint[trianglePointB];
+			g_PickedPointB = &VerticesStartPoint[trianglePointC];
+			g_PickedPointC = &VerticesStartPoint[trianglePointD];
 		}
 
-		*pickedX += pointA->m_VertexPoint.x;
-		*pickedZ += pointA->m_VertexPoint.z;
+		*pickedX += g_PickedPointA->m_VertexPoint.x;
+		*pickedZ += g_PickedPointA->m_VertexPoint.z;
 
 		g_Mesh->UnlockVertexBuffer();
 
@@ -139,45 +135,68 @@ YAMANGDXDLL_API HRESULT TransPickedTriangle( float* pickedX, float* pickedZ )
 	return result;
 }
 
-/*
 
-		modeSelector = static_cast<AreaModeType>( modeSelector );
 
-		switch ( modeSelector )
-		{
-			case AREA_MODE_NONE:
+enum AreaModeType
+{
+	AREA_MODE_NONE,
 
-				break;
-				// 			case AREA_MODE_COLOR:
-				// 			{
-				// 				pointA->m_Diffuse = D3DCOLOR_ARGB( 255, 30, 100, 100 );
-				// 				pointB->m_Diffuse = D3DCOLOR_ARGB( 255, 30, 100, 100 );
-				// 				pointC->m_Diffuse = D3DCOLOR_ARGB( 255, 30, 100, 100 );
-				// 			}
-				break;
-			case AREA_MODE_HIGHER:
-				pointA->m_VertexPoint.y += 3;
-				pointB->m_VertexPoint.y += 3;
-				pointC->m_VertexPoint.y += 3;
-				break;
-			case AREA_MODE_LOWER:
-				pointA->m_VertexPoint.y -= 3;
-				pointB->m_VertexPoint.y -= 3;
-				pointC->m_VertexPoint.y -= 3;
-				break;
-			case AREA_MODE_PAINT_TEXTURE:
-				//텍스쳐 입히기 실험
-				pointA->m_VertexTexturePoint1.x = 0.f;
-				pointA->m_VertexTexturePoint1.y = 0.f;
-				pointB->m_VertexTexturePoint1.x = 1.f;
-				pointB->m_VertexTexturePoint1.y = 1.f;
-				pointC->m_VertexTexturePoint1.x = 1.f;
-				pointC->m_VertexTexturePoint1.y = 1.f;
-				break;
-			default:
-				break;
-		}	
+	AREA_MODE_HIGHER,
+	AREA_MODE_LOWER,
+
+	AREA_MODE_PAINT_TEXTURE,
+
+	AREA_MODE_MAX
+};
+
+YAMANGDXDLL_API void MapToolPickingEvent( int modeSelector )
+{
+	modeSelector = static_cast<AreaModeType>( modeSelector );
+
+
+	//해당 모드에 따라서 동작이 발생하도록 하면 됨
+	switch ( modeSelector )
+	{
+		case AREA_MODE_NONE:
+			break;
+
+		case AREA_MODE_HIGHER:
+			g_PickedPointA->m_VertexPoint.y += 3;
+			g_PickedPointB->m_VertexPoint.y += 3;
+			g_PickedPointC->m_VertexPoint.y += 3;
+			break;
+
+		case AREA_MODE_LOWER:
+			g_PickedPointA->m_VertexPoint.y -= 3;
+			g_PickedPointB->m_VertexPoint.y -= 3;
+			g_PickedPointC->m_VertexPoint.y -= 3;
+			break;
+
+		case AREA_MODE_PAINT_TEXTURE:
+			//텍스쳐 입히는 방법은 4가지가 존재함
+			//삼각형 모양이 4가지이기 때문에
+// 			if ()
+// 			{
+				g_PickedPointA->m_VertexTexturePoint1.x = 0.f;
+				g_PickedPointA->m_VertexTexturePoint1.y = 0.f;
+				g_PickedPointB->m_VertexTexturePoint1.x = 1.f;
+				g_PickedPointB->m_VertexTexturePoint1.y = 0.f;
+				g_PickedPointC->m_VertexTexturePoint1.x = 1.f;
+				g_PickedPointC->m_VertexTexturePoint1.y = 1.f;
+// 			}
+// 			else
+// 			{
+// 				g_PickedPointA->m_VertexTexturePoint1.x = 0.f;
+// 				g_PickedPointA->m_VertexTexturePoint1.y = 0.f;
+// 				g_PickedPointB->m_VertexTexturePoint1.x = 1.f;
+// 				g_PickedPointB->m_VertexTexturePoint1.y = 1.f;
+// 				g_PickedPointC->m_VertexTexturePoint1.x = 1.f;
+// 				g_PickedPointC->m_VertexTexturePoint1.y = 1.f;
+// 			}
+			
+			break;
+
+		default:
+			break;
 	}
 }
-
-*/

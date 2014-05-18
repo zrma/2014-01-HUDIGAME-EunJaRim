@@ -16,6 +16,7 @@ namespace YamangTools
         bool renderStop = false;
         bool meshSizeChanged = true;
         bool mouseEventFlag = false;
+        
         int actionFlag = 0;
 
         int preWidth = 0;
@@ -24,16 +25,17 @@ namespace YamangTools
 
         int mouseXPosition = 0;
         int mouseYPosition = 0;
+
         float returnedXPos = 0.0f;
         float returnedZPos = 0.0f;
 
-        string heightMap = ".\\MapResource\\heightmap_128_128.bmp";
-        string mapTexture = ".\\MapResource\\heightmap_128_128.bmp";
-        string mapTexture0 = ".\\TextureResource\\grass.bmp";
-        string mapTexture1 = ".\\TextureResource\\leaf.bmp";
-        string mapTexture2 = ".\\TextureResource\\sky.bmp";
-        string mapTexture3 = ".\\TextureResource\\stone.bmp";
-        string mapTexture4 = ".\\TextureResource\\tile.bmp";
+        //string heightMap = ".\\MapResource\\heightmap_128_128.bmp";
+        //string mapTexture = ".\\MapResource\\heightmap_128_128.bmp";
+        string mapTexture0 = ".\\MapResource\\heightmap_128_128.bmp";
+        string mapTexture1 = ".\\TextureResource\\grass.bmp";
+        string mapTexture2 = ".\\TextureResource\\leaf.bmp";
+        string mapTexture3 = ".\\TextureResource\\sky.bmp";
+        string mapTexture4 = ".\\TextureResource\\stone.bmp";
 
         ~Main()
         {
@@ -43,7 +45,7 @@ namespace YamangTools
         {
             InitializeComponent();
             YamangDll.InitD3D(this.RenderTarget.Handle);
-            YamangDll.HeightMapTextureImport(this.RenderTarget.Handle, heightMap, mapTexture);
+            //YamangDll.HeightMapTextureImport( this.RenderTarget.Handle, heightMap );
             YamangDll.MapToolTextureImport(this.RenderTarget.Handle, mapTexture0);
             YamangDll.MapToolTextureImport(this.RenderTarget.Handle, mapTexture1);
             YamangDll.MapToolTextureImport(this.RenderTarget.Handle, mapTexture2);
@@ -51,48 +53,6 @@ namespace YamangTools
             YamangDll.MapToolTextureImport(this.RenderTarget.Handle, mapTexture4);
             Render();
         }
-        
-        private float GetNumber(object target)
-        {
-            float result;
-
-            try
-            {
-                result = Convert.ToSingle(((TextBox)target).Text);
-                if(result <= 0 )
-                {
-                    ((TextBox)target).Text = "1";
-                    result = 1;
-                }
-            }
-            catch
-            {
-                ((TextBox)target).Text = "1";
-                result = 1;
-            }
-            return result;
-        }
-
-        private void SetAction()
-        {
-            if(Higher.Checked)
-            {
-                actionFlag = 1;
-            }
-            else if(Lower.Checked)
-            {
-                actionFlag = 2;
-            }
-            else if(TextureTest.Checked)
-            {
-                actionFlag = 3;
-            }
-            else 
-            {
-                actionFlag = 0;
-            }
-        }
-
 
         async private void Render()
         {
@@ -125,6 +85,7 @@ namespace YamangTools
 
                     YamangDll.CalcPickingRay(mouseXPosition, mouseYPosition);
                     YamangDll.TransPickedTriangle(ref returnedXPos, ref returnedZPos);
+                    YamangDll.MapToolPickingEvent(actionFlag);
                     mouseEventFlag = false;
                 }
 
@@ -140,7 +101,47 @@ namespace YamangTools
                 await Task.Delay(10);
             }
         }
-       
+
+        private void SetAction()
+        {
+            if (Higher.Checked)
+            {
+                actionFlag = 1;
+            }
+            else if (Lower.Checked)
+            {
+                actionFlag = 2;
+            }
+            else if (TextureTest.Checked)
+            {
+                actionFlag = 3;
+            }
+            else
+            {
+                actionFlag = 0;
+            }
+        }
+
+        private float GetNumber(object target)
+        {
+            float result;
+
+            try
+            {
+                result = Convert.ToSingle(((TextBox)target).Text);
+                if (result <= 0)
+                {
+                    ((TextBox)target).Text = "1";
+                    result = 1;
+                }
+            }
+            catch
+            {
+                ((TextBox)target).Text = "1";
+                result = 1;
+            }
+            return result;
+        }
 
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {

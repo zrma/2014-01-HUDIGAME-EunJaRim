@@ -37,19 +37,6 @@ struct MYINDEX
 	UINT _0, _1, _2;
 };
 
-
-enum AreaModeType
-{
-	AREA_MODE_NONE,
-
-/*	AREA_MODE_COLOR,*/
-	AREA_MODE_HIGHER,
-	AREA_MODE_LOWER,
-	AREA_MODE_PAINT_TEXTURE,
-
-	AREA_MODE_MAX
-};
-
 #define MAP_TEXTURE_COUNT 5
 
 //////////////////////////////////////////////////////////////////////////
@@ -104,6 +91,9 @@ extern D3DXVECTOR3		g_UpVector;
 //////////////////////////////////////////////////////////////////////////
 extern D3DXVECTOR3		g_RayOrigin;
 extern D3DXVECTOR3		g_RayDirection;
+extern CUSTOMVERTEX*	g_PickedPointA;
+extern CUSTOMVERTEX*	g_PickedPointB;
+extern CUSTOMVERTEX*	g_PickedPointC;
 
 //////////////////////////////////////////////////////////////////////////
 // 화면 종횡비

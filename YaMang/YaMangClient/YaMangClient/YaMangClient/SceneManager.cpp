@@ -22,7 +22,8 @@ void SceneManager::Init()
 	m_SceneList[SCENE_PLAY] = new ScenePlay();
 	m_SceneList[SCENE_PLAY]->Create();
 
-	// m_SceneList[SCENE_RESULT] = new SceneResult();
+	m_SceneList[SCENE_RESULT] = new SceneResult();
+	m_SceneList[SCENE_RESULT]->Create();
 }
 
 void SceneManager::Destroy()

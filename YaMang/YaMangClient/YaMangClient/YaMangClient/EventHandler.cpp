@@ -8,6 +8,7 @@
 #include "TextManager.h"
 #include "SoundManager.h"
 #include "CameraController.h"
+#include "PlayerManager.h"
 
 HandlerFunc HandlerTable[PKT_MAX];
 
@@ -194,12 +195,16 @@ void NetworkManager::HandleGameOverResult( GameOverResult& inPacket )
 			if ( inPacket.m_IsWon )
 			{
 				Log( "I'm WIN!! \n" );
-				TextManager::GetInstance()->RegistText( TEXT_GAME_RESULT, L"I'm WIN!!", 200, 200 );
+				// TextManager::GetInstance()->RegistText( TEXT_GAME_RESULT, L"I'm WIN!!", 200, 200 );
+
+				PlayerManager::GetInstance()->SetWin( true );
 			}
 			else
 			{
 				Log( "I'm Lose... \n" );
-				TextManager::GetInstance()->RegistText( TEXT_GAME_RESULT, L"I'm Lose... ", 200, 200 );
+				// TextManager::GetInstance()->RegistText( TEXT_GAME_RESULT, L"I'm Lose... ", 200, 200 );
+
+				PlayerManager::GetInstance()->SetWin( false );
 			}
 			m_IsPlaying = false;
 			SceneManager::GetInstance()->ChangeScene( SCENE_RESULT );

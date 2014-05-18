@@ -18,6 +18,8 @@
 #include "Timer.h"
 #include "PlayerManager.h"
 #include "yaMangDxDll.h"
+#include "SceneManager.h"
+#include "SceneResult.h"
 
 typedef void( *KeyEventHandler )( KeyInput inputKey );
 static KeyEventHandler KeyHandlerTable[MAX_KEY];
@@ -118,15 +120,17 @@ REGISTER_KEY_HANDLER( VK_SPACE )
 	switch ( inputKey.GetKeyStatus() )
 	{
 		case KeyStatusType::KEY_DOWN:
-		{
-			CameraController::GetInstance()->Init(0, 0);
-		}
 			break;
 		case KeyStatusType::KEY_PRESSED:
 			// Log( "** 키 누르고 있다! ** \n" );
 			break;
 		case KeyStatusType::KEY_UP:
 		{
+			Scene* scene = SceneManager::GetInstance()->GetNowScene();
+			if ( typeid( SceneResult ) == typeid( *scene ) )
+			{
+				GameManager::GetInstance()->Stop();
+			}
 		}
 			break;
 		default:

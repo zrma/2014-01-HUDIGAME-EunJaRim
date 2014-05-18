@@ -15,5 +15,7 @@ public:
 
 private:
 	SceneType		m_SceneType = SCENE_RESULT;
+
+	D3DXVECTOR3 m_Position = { 0, 0, 0 };
 };
 
