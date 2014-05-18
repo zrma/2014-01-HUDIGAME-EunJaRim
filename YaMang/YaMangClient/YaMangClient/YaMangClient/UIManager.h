@@ -20,5 +20,7 @@ public:
 
 private:
 	std::list<UIObject*> m_UIList;
+
+	SceneType	m_NowSceneType = SCENE_NONE;
 };
 

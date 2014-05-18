@@ -24,6 +24,13 @@ void UIManager::Update()
 	for (auto &iter : m_UIList)
 	{
 		iter->Update();
+
+		if (iter->GetSceneType() != m_NowSceneType || iter->GetSuicide() == true)
+		{
+			UIObject* tobeRemoved = iter;
+			SafeDelete(tobeRemoved);
+			m_UIList.remove(tobeRemoved);
+		}
 	}
 }
 

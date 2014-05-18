@@ -47,6 +47,9 @@
     <Filter Include="Player">
       <UniqueIdentifier>{78444145-5232-461d-9f90-03b763774cf0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{7a560131-5cc2-4294-a4fc-82cddf39668e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -191,10 +194,10 @@
       <Filter>Resource</Filter>
     </ClInclude>
     <ClInclude Include="UIManager.h">
-      <Filter>Render</Filter>
+      <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="UIObject.h">
-      <Filter>Render</Filter>
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -310,10 +313,10 @@
       <Filter>UnitObject\Unit</Filter>
     </ClCompile>
     <ClCompile Include="UIManager.cpp">
-      <Filter>Render</Filter>
+      <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="UIObject.cpp">
-      <Filter>Render</Filter>
+      <Filter>UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
