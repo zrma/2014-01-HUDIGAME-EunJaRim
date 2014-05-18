@@ -18,7 +18,7 @@ extern "C"{
 	YAMANGDXDLL_API void D3DCleanUp();
 
 	//파일 이름 넣어 mesh object 받아오기
-	YAMANGDXDLL_API HRESULT InitGeometry( HWND hWnd, LPCTSTR fileName, MESHOBJECT* inputVal );
+	YAMANGDXDLL_API HRESULT InitCharacterModel( HWND hWnd, LPCTSTR fileName, MESHOBJECT* inputVal );
 
 	//render 사전 준비 beginScene
 	//x,y,z축 이동이 없으면 0을 넣으면 됩니다.
@@ -54,7 +54,7 @@ extern "C"{
 	// Picking Ray를 위한 함수
 	//////////////////////////////////////////////////////////////////////////
 	YAMANGDXDLL_API void CalcPickingRay( int mouseX, int mouseY );
-	YAMANGDXDLL_API HRESULT TransPickedTriangle( float* pickedX, float* pickedZ, int modeSelector = 0 );
+	YAMANGDXDLL_API HRESULT TransPickedTriangle( float* pickedX, float* pickedZ );
 	
 	//////////////////////////////////////////////////////////////////////////
 	//Text Render 를 위한 함수

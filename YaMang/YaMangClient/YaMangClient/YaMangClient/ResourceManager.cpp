@@ -141,7 +141,7 @@ bool ResourceManager::AddMesh( LPCTSTR fileName, MeshKeyType key )
 
 void ResourceManager::CreateMesh( LPCTSTR fileName, MESHOBJECT* mesh )
 {
-	if ( S_OK == InitGeometry( MainWindow::GetInstance()->Window(), fileName, mesh ) )
+	if ( S_OK == InitCharacterModel( MainWindow::GetInstance( )->Window( ), fileName, mesh ) )
 	{
 		return;
 	}

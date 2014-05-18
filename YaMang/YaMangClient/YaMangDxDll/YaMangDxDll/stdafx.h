@@ -21,3 +21,6 @@
 #include <direct.h>
 #include <atlconv.h>
 #include <shlwapi.h>
+#include <assert.h>
+
+#include "Logger.h"

@@ -15,6 +15,18 @@
     <Filter Include="DllDefault">
       <UniqueIdentifier>{2da69dfa-204b-41a5-b470-898e3cced746}</UniqueIdentifier>
     </Filter>
+    <Filter Include="YaMangDxDll\globalValue">
+      <UniqueIdentifier>{fe0c0bc1-b8d7-4036-bf63-63518f5ef98c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="YaMangDxDll\innerFunc">
+      <UniqueIdentifier>{7031c6a9-f13d-4e7f-8afe-df9138cbaca2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="YaMangDxDll\meshObject">
+      <UniqueIdentifier>{e8c5d948-756e-4994-92c2-33c6f21486a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="YaMangDxDll\Specific">
+      <UniqueIdentifier>{336c5808-9be4-49eb-a857-a425f9d423e5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -23,22 +35,22 @@
     <ClInclude Include="Logger.h">
       <Filter>console</Filter>
     </ClInclude>
-    <ClInclude Include="MeshObject.h">
-      <Filter>YaMangDxDll</Filter>
-    </ClInclude>
-    <ClInclude Include="YaMangDxDll.h">
-      <Filter>YaMangDxDll</Filter>
-    </ClInclude>
     <ClInclude Include="stdafx.h">
       <Filter>DllDefault</Filter>
     </ClInclude>
     <ClInclude Include="targetver.h">
       <Filter>DllDefault</Filter>
     </ClInclude>
-    <ClInclude Include="InnerResource.h">
-      <Filter>YaMangDxDll</Filter>
-    </ClInclude>
     <ClInclude Include="GlobalVar.h">
+      <Filter>YaMangDxDll\globalValue</Filter>
+    </ClInclude>
+    <ClInclude Include="InnerResource.h">
+      <Filter>YaMangDxDll\innerFunc</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshObject.h">
+      <Filter>YaMangDxDll\meshObject</Filter>
+    </ClInclude>
+    <ClInclude Include="YaMangDxDll.h">
       <Filter>YaMangDxDll</Filter>
     </ClInclude>
   </ItemGroup>
@@ -55,17 +67,38 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>DllDefault</Filter>
     </ClCompile>
-    <ClCompile Include="InnerResource.cpp">
-      <Filter>YaMangDxDll</Filter>
-    </ClCompile>
-    <ClCompile Include="GlobalVar.cpp">
-      <Filter>YaMangDxDll</Filter>
-    </ClCompile>
     <ClCompile Include="YaMangDxRender.cpp">
       <Filter>YaMangDxDll</Filter>
     </ClCompile>
     <ClCompile Include="YaMangDxClear.cpp">
       <Filter>YaMangDxDll</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalVar.cpp">
+      <Filter>YaMangDxDll\globalValue</Filter>
+    </ClCompile>
+    <ClCompile Include="InnerResource.cpp">
+      <Filter>YaMangDxDll\innerFunc</Filter>
+    </ClCompile>
+    <ClCompile Include="YaMangHeightMap.cpp">
+      <Filter>YaMangDxDll\Specific</Filter>
+    </ClCompile>
+    <ClCompile Include="YaMangPicking.cpp">
+      <Filter>YaMangDxDll\Specific</Filter>
+    </ClCompile>
+    <ClCompile Include="YaMangScreenCapture.cpp">
+      <Filter>YaMangDxDll\Specific</Filter>
+    </ClCompile>
+    <ClCompile Include="YaMangSkyBox.cpp">
+      <Filter>YaMangDxDll\Specific</Filter>
+    </ClCompile>
+    <ClCompile Include="YaMangCharacter.cpp">
+      <Filter>YaMangDxDll\Specific</Filter>
+    </ClCompile>
+    <ClCompile Include="YaMangCursor.cpp">
+      <Filter>YaMangDxDll\Specific</Filter>
+    </ClCompile>
+    <ClCompile Include="YaMangSpriteUI.cpp">
+      <Filter>YaMangDxDll\Specific</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

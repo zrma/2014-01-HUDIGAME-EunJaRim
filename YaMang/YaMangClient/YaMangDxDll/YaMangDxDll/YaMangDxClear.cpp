@@ -1,6 +1,5 @@
 ﻿#include "stdafx.h"
 #include "yaMangDxDll.h"
-#include "Logger.h"
 #include "GlobalVar.h"
 
 
