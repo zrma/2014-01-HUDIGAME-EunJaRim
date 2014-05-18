@@ -156,3 +156,15 @@ void ResourceManager::DeleteMesh( MESHOBJECT* mesh )
 	}
 }
 
+void ResourceManager::CreateSprite()
+{
+	InitUISprite(UISPRITE_MAX);
+
+	//CreateUIImage
+}
+
+void ResourceManager::DeleteSprite()
+{
+	UICleanUp();
+}
+

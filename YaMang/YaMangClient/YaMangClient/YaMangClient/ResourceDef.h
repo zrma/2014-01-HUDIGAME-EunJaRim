@@ -40,6 +40,7 @@
 #define SPRITE_CURSOR_CORPS_MOVABLE_CLICK	PATH_SPRITE L"cursor_movable_clicked.png"
 #define SPRITE_CURSOR_OVER_PICKED_CORPS		PATH_SPRITE L"cursor_over_clicked_corps.png"
 
+#define SPRITE_UI_DEFAULT					PATH_SPRITE L"UI_default.png"
 
 #define PATH_SOUND			L"SoundFiles\\"
 

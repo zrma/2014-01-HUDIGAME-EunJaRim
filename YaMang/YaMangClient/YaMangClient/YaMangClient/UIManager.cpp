@@ -14,39 +14,39 @@ UIManager::~UIManager()
 {
 }
 
-void UIManager::Render() const
+void UIManager::Init()
 {
-	if (m_IsUIReady)
+
+}
+
+void UIManager::Update()
+{
+	for (auto &iter : m_UIList)
 	{
-		//Render
+		iter->Update();
 	}
 }
 
-HRESULT UIManager::InitUI()
+void UIManager::Render() const
 {
-	if (FAILED(InitUISprite(UI_TYPE_MAX)))
+	for (auto &iter : m_UIList)
 	{
-		return E_FAIL;
-	};
-	//CreateImage 하고 List에 Regist해야하는 부분
-
-	m_IsUIReady = true;
-	return S_OK;
+		iter->Render();
+	}
 }
 
-void UIManager::RegistUI( UIType key, int PosX, int PosY, bool visible )
+void UIManager::AddUIObject( UISpriteKeyType key, int PosX, int PosY, bool visible)
 {
-	UIObject* Object = m_UIList[key];
+	UIObject* Object = new UIObject();
 	Object->SetUIPosX(PosX);
 	Object->SetUIPosY(PosY);
 	Object->SetVisible(visible);
+
+	m_UIList.push_back(Object);
 }
 
-void UIManager::CleanUp()
+void UIManager::Destroy()
 {
-	if (m_IsUIReady)
-	{
-		UICleanUp();
-	}
+
 }
 

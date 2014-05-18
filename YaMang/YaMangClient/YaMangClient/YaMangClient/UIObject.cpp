@@ -14,9 +14,14 @@ UIObject::~UIObject()
 
 void UIObject::Update()
 {
-
 }
 
-void UIObject::SetUIPosition( int m_UIType, int x, int y )
+void UIObject::Render() const
 {
+}
+
+void UIObject::SetUIPosition( int x, int y )
+{
+	SetUIPosX(x);
+	SetUIPosY(y);
 }

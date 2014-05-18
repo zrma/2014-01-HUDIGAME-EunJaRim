@@ -63,12 +63,20 @@ enum MapKeyType
 	MAP_KEY_MAX
 };
 
+enum UISpriteKeyType
+{
+	UISPRITE_NONE,
+
+	UISPRITE_MAX
+};
+
 enum ResourceType
 {
 	RESOURCE_NONE,
 
 	RESOURCE_MESH,
 	RESOURCE_SOUNDE,
+	RESOURCE_SPRITE,
 
 	RESOURCE_MAX
 };

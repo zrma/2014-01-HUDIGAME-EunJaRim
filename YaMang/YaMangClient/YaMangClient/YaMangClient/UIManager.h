@@ -1,16 +1,8 @@
 ﻿#pragma once
 #include "MacroSet.h"
+#include "EnumSet.h"
 
 class UIObject;
-
-enum UIType
-{
-	UI_TYPE_NONE,
-
-	UI_TYPE_MAP,
-
-	UI_TYPE_MAX
-};
 
 class UIManager :public Singleton<UIManager>
 {
@@ -18,16 +10,15 @@ public:
 	UIManager();
 	~UIManager();
 
+	void		Init();
+	void		Destroy();
+
 	void		Update();
 	void		Render() const;
 
-	HRESULT		InitUI();
-	void		RegistUI( UIType key, int PosX, int PosY, bool visible);
-	void		CleanUp();
+	void		AddUIObject( UISpriteKeyType key, int PosX, int PosY, bool visible);
 
 private:
-	std::array<UIObject*, UI_TYPE_MAX> m_UIList;
-
-	bool		m_IsUIReady = false;
+	std::list<UIObject*> m_UIList;
 };
 

@@ -16,6 +16,7 @@
 #include "PlayerManager.h"
 #include "MouseManager.h"
 #include "SoundManager.h"
+#include "UIManager.h"
 
 GameManager::GameManager()
 {
@@ -44,6 +45,9 @@ bool GameManager::Init() const
 	// 리소스는 씬보다 먼저 생성해야 함
 	ResourceManager::GetInstance()->Init();
 	
+	// UI 매니져 생성 및 초기화
+	UIManager::GetInstance()->Init();
+
 	// 씬 생성 및 초기화
 	SceneManager::GetInstance()->Init();
 	SceneManager::GetInstance()->ChangeScene( SCENE_LOAD );
@@ -51,7 +55,7 @@ bool GameManager::Init() const
 	// 네트워크 생성 및 초기화
 	NetworkManager::GetInstance()->Init();
 	NetworkManager::GetInstance()->Connect();
-	
+
 	// 카메라 초기화
 	// 카메라 초기화는 게임 시작 패킷을 받는 부분으로 보냅니다.
 	
@@ -79,12 +83,15 @@ bool GameManager::Process() const
 
 	CameraController::GetInstance()->Update();
 	SceneManager::GetInstance()->Update();
-		
+
+	UIManager::GetInstance()->Update();
+
 	{
 		// 더미 렌더
 		DummyRender dRender;
 
-		SceneManager::GetInstance()->Render();	
+		SceneManager::GetInstance()->Render();
+		UIManager::GetInstance()->Render();
 	}
 	return true;
 }
@@ -100,6 +107,10 @@ void GameManager::Destroy() const
 	// 네트워크에서 씬을 참조하는 부분이 있으므로 씬을 먼저 해제하면 안 됨
 	NetworkManager::GetInstance()->Destroy();
 	NetworkManager::Release();
+
+	// UI 매니져 해제
+	UIManager::GetInstance()->Destroy();
+	UIManager::Release();
 
 	// 씬 해제
 	SceneManager::GetInstance()->Destroy();

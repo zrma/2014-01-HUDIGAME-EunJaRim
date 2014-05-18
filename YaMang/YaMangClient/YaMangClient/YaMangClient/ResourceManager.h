@@ -61,11 +61,17 @@ private:
 	void	CreateMesh( LPCTSTR fileName, MESHOBJECT* mesh );
 	void	DeleteMesh( MESHOBJECT* mesh );
 
+	void	CreateSprite();
+	void	DeleteSprite();
+
 	std::array<ResourceMesh*, MESH_KEY_MAX>	m_MeshArray;
 	std::array<ResourceMap*, MAP_KEY_MAX> m_HeightMapArray;
 	
+
 	bool	m_IsMapReady = false;
 	int		m_MapSize = 0;
 
 	bool	m_ISCursorReady = false;
+
+	bool	m_IsUISpriteReady = false;
 };
