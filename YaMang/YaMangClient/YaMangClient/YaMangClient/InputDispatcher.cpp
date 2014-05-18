@@ -301,3 +301,8 @@ REGISTER_KEY_HANDLER( VK_L )
 		NetworkManager::GetInstance( )->SendPlayPacket( &generateCorps );
 	}
 }
+
+REGISTER_KEY_HANDLER( VK_TAB )
+{
+
+}

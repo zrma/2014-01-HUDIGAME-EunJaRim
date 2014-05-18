@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "Scene.h"
+#include "EnumSet.h"
 
 class Corps;
 class MouseRender;
@@ -40,7 +41,8 @@ private:
 
 	MouseRender*				m_MouseCursor;
 
-
 	int							m_KingIndex = -1;
+
+	SceneType					m_SceneType = SCENE_PLAY;
 };
 

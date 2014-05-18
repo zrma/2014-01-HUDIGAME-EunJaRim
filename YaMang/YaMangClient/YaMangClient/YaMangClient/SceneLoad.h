@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "Scene.h"
+#include "EnumSet.h"
 
 class SceneLoad : public Scene
 {
@@ -13,4 +14,6 @@ public:
 	virtual void	Render() const;
 
 	D3DXVECTOR3 m_Position = { 0, 0, 0 };
+
+	SceneType	m_SceneType = SCENE_LOAD;
 };

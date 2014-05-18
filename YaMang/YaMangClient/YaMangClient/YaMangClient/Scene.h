@@ -1,5 +1,5 @@
 ﻿#pragma once
-
+#include "EnumSet.h"
 class Scene
 {
 public:
@@ -11,5 +11,10 @@ public:
 
 	virtual void	Update() = 0;
 	virtual void	Render() const = 0;
+
+	SceneType		GetSceneType() { return m_SceneType; }
+
+private:
+	SceneType		m_SceneType;
 };
 
