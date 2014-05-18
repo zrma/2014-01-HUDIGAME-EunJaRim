@@ -99,11 +99,9 @@ extern "C"{
 	//////////////////////////////////////////////////////////////////////////
 	//  UI
 	//////////////////////////////////////////////////////////////////////////
-	YAMANGDXDLL_API HRESULT InitUISprite(int textureSize, int UIPosX = 0, int UIPosY = 0);
-	YAMANGDXDLL_API void SetUIPos(int typeNum, int UIPosX = 0, int UIPosY = 0);
+	YAMANGDXDLL_API HRESULT InitUISprite(int textureSize);
 	YAMANGDXDLL_API HRESULT CreateUIImage(LPCWSTR ImagePath = L"UI_default.png", INT typeNum = 0);
-	YAMANGDXDLL_API HRESULT RenderUI();
-	YAMANGDXDLL_API void SetUIVisible(int typeNum, bool visibleType = true);
+	YAMANGDXDLL_API HRESULT RenderUI(INT typeNum, D3DXVECTOR3 UIPos);
 	YAMANGDXDLL_API void UICleanUp();
 }
 //단일 변수 out sample

@@ -18,7 +18,7 @@ void UIManager::Render() const
 {
 	if (m_IsUIReady)
 	{
-		RenderUI();
+		//Render
 	}
 }
 

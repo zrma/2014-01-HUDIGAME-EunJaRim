@@ -123,5 +123,3 @@ extern LPD3DXMESH			g_SkyBoxMesh;
 extern LPDIRECT3DTEXTURE9*	g_UITexures;
 extern LPD3DXSPRITE			g_UISprite;
 extern INT					g_UIMaxSize;
-extern D3DXVECTOR3*			g_UIPos;
-extern bool*				g_UIVisible;

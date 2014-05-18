@@ -951,7 +951,7 @@ YAMANGDXDLL_API void TakeScreenShot()
 //////////////////////////////////////////////////////////////////////////
 // UI
 //////////////////////////////////////////////////////////////////////////
-YAMANGDXDLL_API HRESULT InitUISprite(int textureSize, int UIPosX /*= 0*/, int UIPosY /*= 0*/)
+YAMANGDXDLL_API HRESULT InitUISprite(int textureSize)
 {
 	if (FAILED(D3DXCreateSprite(g_D3dDevice, &g_UISprite))) //first parameter is our device, second is a empty sprite variable
 	{
@@ -976,8 +976,6 @@ YAMANGDXDLL_API HRESULT InitUISprite(int textureSize, int UIPosX /*= 0*/, int UI
 	for (int i = 0; i < g_UIMaxSize; ++i)
 	{
 		g_UITexures[i] = nullptr;
-		SetUIPos(i, UIPosX, UIPosY);
-		SetUIVisible(i, true);
 	}
 
 	Log(" UI 스프라이트 %d개 생성 ", g_UIMaxSize);
@@ -1005,7 +1003,7 @@ YAMANGDXDLL_API HRESULT CreateUIImage(LPCWSTR ImagePath /*= L"UI_default.png"*/,
 	return E_FAIL;
 }
 
-YAMANGDXDLL_API HRESULT RenderUI()
+YAMANGDXDLL_API HRESULT RenderUI(INT typeNum, D3DXVECTOR3 UIPos)
 {
 	if (g_UISprite)
 	{
@@ -1015,33 +1013,17 @@ YAMANGDXDLL_API HRESULT RenderUI()
 		D3DXMatrixIdentity(&ratioMat);
 		D3DXMatrixScaling(&ratioMat, 1280 / g_Width, ratio, 1);
 		g_UISprite->SetTransform(&ratioMat);
-		
-		for (int i = 0; i < g_UIMaxSize; ++i)
-		{
-			if (g_UIVisible[i] == true)
-			{
-				g_UISprite->Begin(D3DXSPRITE_ALPHABLEND);
-				g_UISprite->Draw(g_UITexures[i], NULL, NULL, &g_UIPos[i], 0xFFFFFFFF);
-				g_UISprite->End();
-			}
-		}
+
+		g_UISprite->Begin(D3DXSPRITE_ALPHABLEND);
+		g_UISprite->Draw(g_UITexures[typeNum], NULL, NULL, &UIPos, 0xFFFFFFFF);
+		g_UISprite->End();
+
 		g_D3dDevice->EndScene();
 		return S_OK;
 	}
 	return E_FAIL;
 }
 
-YAMANGDXDLL_API void SetUIPos(int typeNum, int UIPosX /*= 0*/, int UIPosY /*= 0*/)
-{
-	g_UIPos[typeNum].x = static_cast<float>(UIPosX);
-	g_UIPos[typeNum].y = static_cast<float>(UIPosY);
-	g_UIPos[typeNum].z = 0;
-};
-
-YAMANGDXDLL_API void SetUIVisible(int typeNum, bool visibleType /*= true*/)
-{
-	g_UIVisible[typeNum] = visibleType;
-}
 
 
 // 내보낸 변수의 예제입니다.
