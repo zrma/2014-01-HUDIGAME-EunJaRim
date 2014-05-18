@@ -4,66 +4,12 @@
 #include "xpath_static.h"
 #include "MacroSet.h"
 
-float UnitStatus::g_ArrowHP = 50.0f;
-float UnitStatus::g_ArrowMoveSpeed = 3.0f;
-float UnitStatus::g_ArrowMoveSpeedBonus = 0.0f;
-float UnitStatus::g_ArrowAttackRange = 1.0f;
-float UnitStatus::g_ArrowAttackRangeBonus = 0.0f;
-float UnitStatus::g_ArrowAttackPower = 15.0f;
-float UnitStatus::g_ArrowAttackPowerBonus = 0.0f;
-float UnitStatus::g_ArrowDefense = 3.0f;
-float UnitStatus::g_ArrowDefenseBonus = 0.0f;
-ULONGLONG UnitStatus::g_ArrowAttackDelay = 3000;
-ULONGLONG UnitStatus::g_ArrowAttackDelayBonus = 0;
-
-float UnitStatus::g_GuardHP = 100.0f;
-float UnitStatus::g_GuardMoveSpeed = 3.0f;
-float UnitStatus::g_GuardMoveSpeedBonus = 0.0f;
-float UnitStatus::g_GuardAttackRange = 1.0f;
-float UnitStatus::g_GuardAttackRangeBonus = 0.0f;
-float UnitStatus::g_GuardAttackPower = 10.0f;
-float UnitStatus::g_GuardAttackPowerBonus = 0.0f;
-float UnitStatus::g_GuardDefense = 6.0f;
-float UnitStatus::g_GuardDefenseBonus = 0.0f;
-ULONGLONG UnitStatus::g_GuardAttackDelay = 5000;
-ULONGLONG UnitStatus::g_GuardAttackDelayBonus = 0;
-
-float UnitStatus::g_KnightHP = 100.0f;
-float UnitStatus::g_KnightMoveSpeed = 12.0f;
-float UnitStatus::g_KnightMoveSpeedBonus = 0.0f;
-float UnitStatus::g_KnightAttackRange = 3.0f;
-float UnitStatus::g_KnightAttackRangeBonus = 0.0f;
-float UnitStatus::g_KnightAttackPower = 15.0f;
-float UnitStatus::g_KnightAttackPowerBonus = 0.0f;
-float UnitStatus::g_KnightDefense = 1.0f;
-float UnitStatus::g_KnightDefenseBonus = 0.0f;
-ULONGLONG UnitStatus::g_KnightAttackDelay = 3000;
-ULONGLONG UnitStatus::g_KnightAttackDelayBonus = 0;
-
-float UnitStatus::g_PikeHP = 100.0f;
-float UnitStatus::g_PikeMoveSpeed = 3.0f;
-float UnitStatus::g_PikeMoveSpeedBonus = 0.0f;
-float UnitStatus::g_PikeAttackRange = 3.0f;
-float UnitStatus::g_PikeAttackRangeBonus = 0.0f;
-float UnitStatus::g_PikeAttackPower = 12.0f;
-float UnitStatus::g_PikeAttackPowerBonus = 0.0f;
-float UnitStatus::g_PikeDefense = 5.0f;
-float UnitStatus::g_PikeDefenseBonus = 0.0f;
-ULONGLONG UnitStatus::g_PikeAttackDelay = 2000;
-ULONGLONG UnitStatus::g_PikeAttackDelayBonus = 0;
-
-float UnitStatus::g_SwordHP = 100.0f;
-float UnitStatus::g_SwordMoveSpeed = 3.0f;
-float UnitStatus::g_SwordMoveSpeedBonus = 0.0f;
-float UnitStatus::g_SwordAttackRange = 3.0f;
-float UnitStatus::g_SwordAttackRangeBonus = 0.0f;
-float UnitStatus::g_SwordAttackPower = 8.0f;
-float UnitStatus::g_SwordAttackPowerBonus = 0.0f;
-float UnitStatus::g_SwordDefense = 5.0f;
-float UnitStatus::g_SwordDefenseBonus = 0.0f;
-ULONGLONG UnitStatus::g_SwordAttackDelay = 1000;
-ULONGLONG UnitStatus::g_SwordAttackDelayBonus = 0;
-
+UnitData UnitStatus::g_Arrow;
+UnitData UnitStatus::g_Guard;
+UnitData UnitStatus::g_Knight;
+UnitData UnitStatus::g_Pike;
+UnitData UnitStatus::g_Sword;
+UnitData UnitStatus::g_King;
 
 bool UnitStatus::LoadUnitStatus()
 {
@@ -75,123 +21,148 @@ bool UnitStatus::LoadUnitStatus()
 		std::string data;
 		
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Arrow/HP/text()" ).c_str();
-		g_ArrowHP = std::stof( data );
+		g_Arrow.HP = std::stof( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Arrow/MoveSpeed/text()" ).c_str();
-		g_ArrowMoveSpeed = std::stof( data );
+		g_Arrow.MoveSpeed = std::stof( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Arrow/MoveSpeedBonus/text()" ).c_str();
-		g_ArrowMoveSpeedBonus = std::stof( data );
+		g_Arrow.MoveSpeedBonus = std::stof( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Arrow/AttackRange/text()" ).c_str();
-		g_ArrowAttackRange = std::stof( data );
+		g_Arrow.AttackRange = std::stof( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Arrow/AttackRangeBonus/text()" ).c_str();
-		g_ArrowAttackRangeBonus = std::stof( data );
+		g_Arrow.AttackRangeBonus = std::stof( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Arrow/AttackPower/text()" ).c_str();
-		g_ArrowAttackPower = std::stof( data );
+		g_Arrow.AttackPower = std::stof( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Arrow/AttackPowerBonus/text()" ).c_str();
-		g_ArrowAttackPowerBonus = std::stof( data );
+		g_Arrow.AttackPowerBonus = std::stof( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Arrow/Defense/text()" ).c_str();
-		g_ArrowDefense = std::stof( data );
+		g_Arrow.Defense = std::stof( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Arrow/DefenseBonus/text()" ).c_str();
-		g_ArrowDefenseBonus = std::stof( data );
+		g_Arrow.DefenseBonus = std::stof( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Arrow/AttackDelay/text()" ).c_str();
-		g_ArrowAttackDelay = std::stoull( data );
+		g_Arrow.AttackDelay = std::stoull( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Arrow/AttackDelayBonus/text()" ).c_str();
-		g_ArrowAttackDelayBonus = std::stoull( data );
+		g_Arrow.AttackDelayBonus = std::stoull( data );
 
 
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Guard/HP/text()" ).c_str();
-		g_GuardHP = std::stof( data );
+		g_Guard.HP = std::stof( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Guard/MoveSpeed/text()" ).c_str();
-		g_GuardMoveSpeed = std::stof( data );
+		g_Guard.MoveSpeed = std::stof( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Guard/MoveSpeedBonus/text()" ).c_str();
-		g_GuardMoveSpeedBonus = std::stof( data );
+		g_Guard.MoveSpeedBonus = std::stof( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Guard/AttackRange/text()" ).c_str();
-		g_GuardAttackRange = std::stof( data );
+		g_Guard.AttackRange = std::stof( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Guard/AttackRangeBonus/text()" ).c_str();
-		g_GuardAttackRangeBonus = std::stof( data );
+		g_Guard.AttackRangeBonus = std::stof( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Guard/AttackPower/text()" ).c_str();
-		g_GuardAttackPower = std::stof( data );
+		g_Guard.AttackPower = std::stof( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Guard/AttackPowerBonus/text()" ).c_str();
-		g_GuardAttackPowerBonus = std::stof( data );
+		g_Guard.AttackPowerBonus = std::stof( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Guard/Defense/text()" ).c_str();
-		g_GuardDefense = std::stof( data );
+		g_Guard.Defense = std::stof( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Guard/DefenseBonus/text()" ).c_str();
-		g_GuardDefenseBonus = std::stof( data );
+		g_Guard.DefenseBonus = std::stof( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Guard/AttackDelay/text()" ).c_str();
-		g_GuardAttackDelay = std::stoull( data );
+		g_Guard.AttackDelay = std::stoull( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Guard/AttackDelayBonus/text()" ).c_str();
-		g_GuardAttackDelayBonus = std::stoull( data );
+		g_Guard.AttackDelayBonus = std::stoull( data );
 
 
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Knight/HP/text()" ).c_str();
-		g_KnightHP = std::stof( data );
+		g_Knight.HP = std::stof( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Knight/MoveSpeed/text()" ).c_str();
-		g_KnightMoveSpeed = std::stof( data );
+		g_Knight.MoveSpeed = std::stof( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Knight/MoveSpeedBonus/text()" ).c_str();
-		g_KnightMoveSpeedBonus = std::stof( data );
+		g_Knight.MoveSpeedBonus = std::stof( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Knight/AttackRange/text()" ).c_str();
-		g_KnightAttackRange = std::stof( data );
+		g_Knight.AttackRange = std::stof( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Knight/AttackRangeBonus/text()" ).c_str();
-		g_KnightAttackRangeBonus = std::stof( data );
+		g_Knight.AttackRangeBonus = std::stof( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Knight/AttackPower/text()" ).c_str();
-		g_KnightAttackPower = std::stof( data );
+		g_Knight.AttackPower = std::stof( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Knight/AttackPowerBonus/text()" ).c_str();
-		g_KnightAttackPowerBonus = std::stof( data );
+		g_Knight.AttackPowerBonus = std::stof( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Knight/Defense/text()" ).c_str();
-		g_KnightDefense = std::stof( data );
+		g_Knight.Defense = std::stof( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Knight/DefenseBonus/text()" ).c_str();
-		g_KnightDefenseBonus = std::stof( data );
+		g_Knight.DefenseBonus = std::stof( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Knight/AttackDelay/text()" ).c_str();
-		g_KnightAttackDelay = std::stoull( data );
+		g_Knight.AttackDelay = std::stoull( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Knight/AttackDelayBonus/text()" ).c_str();
-		g_KnightAttackDelayBonus = std::stoull( data );
+		g_Knight.AttackDelayBonus = std::stoull( data );
 
 
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Pike/HP/text()" ).c_str();
-		g_PikeHP = std::stof( data );
+		g_Pike.HP = std::stof( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Pike/MoveSpeed/text()" ).c_str();
-		g_PikeMoveSpeed = std::stof( data );
+		g_Pike.MoveSpeed = std::stof( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Pike/MoveSpeedBonus/text()" ).c_str();
-		g_PikeMoveSpeedBonus = std::stof( data );
+		g_Pike.MoveSpeedBonus = std::stof( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Pike/AttackRange/text()" ).c_str();
-		g_PikeAttackRange = std::stof( data );
+		g_Pike.AttackRange = std::stof( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Pike/AttackRangeBonus/text()" ).c_str();
-		g_PikeAttackRangeBonus = std::stof( data );
+		g_Pike.AttackRangeBonus = std::stof( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Pike/AttackPower/text()" ).c_str();
-		g_PikeAttackPower = std::stof( data );
+		g_Pike.AttackPower = std::stof( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Pike/AttackPowerBonus/text()" ).c_str();
-		g_PikeAttackPowerBonus = std::stof( data );
+		g_Pike.AttackPowerBonus = std::stof( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Pike/Defense/text()" ).c_str();
-		g_PikeDefense = std::stof( data );
+		g_Pike.Defense = std::stof( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Pike/DefenseBonus/text()" ).c_str();
-		g_PikeDefenseBonus = std::stof( data );
+		g_Pike.DefenseBonus = std::stof( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Pike/AttackDelay/text()" ).c_str();
-		g_PikeAttackDelay = std::stoull( data );
+		g_Pike.AttackDelay = std::stoull( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Pike/AttackDelayBonus/text()" ).c_str();
-		g_PikeAttackDelayBonus = std::stoull( data );
+		g_Pike.AttackDelayBonus = std::stoull( data );
 
 
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Sword/HP/text()" ).c_str();
-		g_SwordHP = std::stof( data );
+		g_Sword.HP = std::stof( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Sword/MoveSpeed/text()" ).c_str();
-		g_SwordMoveSpeed = std::stof( data );
+		g_Sword.MoveSpeed = std::stof( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Sword/MoveSpeedBonus/text()" ).c_str();
-		g_SwordMoveSpeedBonus = std::stof( data );
+		g_Sword.MoveSpeedBonus = std::stof( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Sword/AttackRange/text()" ).c_str();
-		g_SwordAttackRange = std::stof( data );
+		g_Sword.AttackRange = std::stof( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Sword/AttackRangeBonus/text()" ).c_str();
-		g_SwordAttackRangeBonus = std::stof( data );
+		g_Sword.AttackRangeBonus = std::stof( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Sword/AttackPower/text()" ).c_str();
-		g_SwordAttackPower = std::stof( data );
+		g_Sword.AttackPower = std::stof( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Sword/AttackPowerBonus/text()" ).c_str();
-		g_SwordAttackPowerBonus = std::stof( data );
+		g_Sword.AttackPowerBonus = std::stof( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Sword/Defense/text()" ).c_str();
-		g_SwordDefense = std::stof( data );
+		g_Sword.Defense = std::stof( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Sword/DefenseBonus/text()" ).c_str();
-		g_SwordDefenseBonus = std::stof( data );
+		g_Sword.DefenseBonus = std::stof( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Sword/AttackDelay/text()" ).c_str();
-		g_SwordAttackDelay = std::stoull( data );
+		g_Sword.AttackDelay = std::stoull( data );
 		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/Sword/AttackDelayBonus/text()" ).c_str();
-		g_SwordAttackDelayBonus = std::stoull( data );
+		g_Sword.AttackDelayBonus = std::stoull( data );
+
+
+
+		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/King/HP/text()" ).c_str();
+		g_King.HP = std::stof( data );
+		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/King/MoveSpeed/text()" ).c_str();
+		g_King.MoveSpeed = std::stof( data );
+		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/King/MoveSpeedBonus/text()" ).c_str();
+		g_King.MoveSpeedBonus = std::stof( data );
+		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/King/AttackRange/text()" ).c_str();
+		g_King.AttackRange = std::stof( data );
+		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/King/AttackRangeBonus/text()" ).c_str();
+		g_King.AttackRangeBonus = std::stof( data );
+		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/King/AttackPower/text()" ).c_str();
+		g_King.AttackPower = std::stof( data );
+		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/King/AttackPowerBonus/text()" ).c_str();
+		g_King.AttackPowerBonus = std::stof( data );
+		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/King/Defense/text()" ).c_str();
+		g_King.Defense = std::stof( data );
+		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/King/DefenseBonus/text()" ).c_str();
+		g_King.DefenseBonus = std::stof( data );
+		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/King/AttackDelay/text()" ).c_str();
+		g_King.AttackDelay = std::stoull( data );
+		data = TinyXPath::S_xpath_string( document.RootElement(), "/Unit/King/AttackDelayBonus/text()" ).c_str();
+		g_King.AttackDelayBonus = std::stoull( data );
 
 		Log( "UnitStatus Load OK! \n" );
 

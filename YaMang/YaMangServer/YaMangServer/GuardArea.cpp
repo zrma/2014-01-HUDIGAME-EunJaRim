@@ -127,9 +127,59 @@ void GuardArea::OnTick()
 		Log( "GuardArea OnTick Attack Success \n" );
 
 
-		if ( m_OwnerCrops->IsDead() || m_TargerCrops->IsDead() )
+		if ( m_TargerCrops->IsDead() )
 		{
 			Log( "Dead! \n" );
+			Log( "Return to my original Position! \n" );
+
+			// 중복 코드
+			MoveCorpsResult outPacket;
+			outPacket.m_CorpsID = m_OwnerCrops->GetCorpsID();
+
+			UnitType unitType = m_OwnerCrops->GetUnitType();
+			PositionInfo originalPosition;
+
+			if ( UnitType::UNIT_GUARD == unitType )
+			{
+				int guardIndex = m_ClientManager->GetGuardIndexByID( m_OwnerCrops->GetCorpsID() );
+				originalPosition = m_ClientManager->GetGuardPositionInfo( guardIndex );
+			}
+			else if ( UnitType::UNIT_KING == unitType )
+			{
+				int kingIndex = m_ClientManager->GetKingIndexByID( m_OwnerCrops->GetCorpsID() );
+				originalPosition = m_ClientManager->GetKingPositionInfo( kingIndex );
+			}
+
+			targetX = originalPosition.m_EyePoint.x + 0.01f;
+			targetZ = originalPosition.m_EyePoint.z + 0.01f;
+			vector.x = targetX - nowX;
+			vector.y = targetZ - nowZ;
+
+			m_GuardModeOn = false;
+			length = D3DXVec2Length( &vector );
+			D3DXVec2Normalize( &vector, &vector );
+
+			float speed = m_OwnerCrops->GetSpeed();
+			ULONGLONG movingTime = static_cast<ULONGLONG>( ( length * 1000 ) / speed );
+
+			m_OwnerCrops->MoveStart( movingTime, vector );
+
+			outPacket.m_Speed = speed;
+			outPacket.m_TargetX = targetX;
+			outPacket.m_TargetZ = targetZ;
+			outPacket.m_LookX = vector.x;
+			outPacket.m_LookZ = vector.y;
+			Log( "[GuardArea]m_TargetX:%f m_TargetZ:%f m_LookX:%f m_LookZ:%f \n", outPacket.m_TargetX, outPacket.m_TargetZ, outPacket.m_LookX, outPacket.m_LookZ );
+
+			m_ClientManager->BroadcastPacket( &outPacket );
+
+			Log( "GuardArea OnTick Return to my original Position \n" );
+			m_ActionStatus = ACTION_END;
+			m_OwnerCrops->DoNextAction( this, movingTime );
+
+		}
+		else if ( m_OwnerCrops->IsDead() )
+		{
 			m_ActionStatus = ACTION_END;
 			m_OwnerCrops->DoNextAction( this, 0 );
 		}

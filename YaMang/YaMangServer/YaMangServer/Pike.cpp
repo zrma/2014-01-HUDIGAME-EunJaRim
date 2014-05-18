@@ -5,21 +5,21 @@
 Pike::Pike( int playerID, int corpsID, UnitType unitType, PositionInfo position, GameRoom* clientManager )
 :Corps( playerID, corpsID, unitType, position, clientManager )
 {
-	m_HP = UnitStatus::g_PikeHP;
-	m_MoveSpeed = UnitStatus::g_PikeMoveSpeed;
-	m_MoveSpeedBonus = UnitStatus::g_PikeMoveSpeedBonus;
+	m_HP = UnitStatus::g_Pike.HP;
+	m_MoveSpeed = UnitStatus::g_Pike.MoveSpeed;
+	m_MoveSpeedBonus = UnitStatus::g_Pike.MoveSpeedBonus;
 
-	m_AttackRange = UnitStatus::g_PikeAttackRange;
-	m_AttackRangeBonus = UnitStatus::g_PikeAttackRangeBonus;
+	m_AttackRange = UnitStatus::g_Pike.AttackRange;
+	m_AttackRangeBonus = UnitStatus::g_Pike.AttackRangeBonus;
 
-	m_AttackPower = UnitStatus::g_PikeAttackPower;
-	m_AttackPowerBonus = UnitStatus::g_PikeAttackPowerBonus;
+	m_AttackPower = UnitStatus::g_Pike.AttackPower;
+	m_AttackPowerBonus = UnitStatus::g_Pike.AttackPowerBonus;
 
-	m_Defense = UnitStatus::g_PikeDefense;
-	m_DefenseBonus = UnitStatus::g_PikeDefenseBonus;
+	m_Defense = UnitStatus::g_Pike.Defense;
+	m_DefenseBonus = UnitStatus::g_Pike.DefenseBonus;
 
-	m_AttackDelay = UnitStatus::g_PikeAttackDelay;
-	m_AttackDelayBonus = UnitStatus::g_PikeAttackDelayBonus;
+	m_AttackDelay = UnitStatus::g_Pike.AttackDelay;
+	m_AttackDelayBonus = UnitStatus::g_Pike.AttackDelayBonus;
 
 	CalculateHP();
 }
