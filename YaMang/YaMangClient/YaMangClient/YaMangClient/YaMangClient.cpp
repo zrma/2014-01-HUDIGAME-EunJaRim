@@ -33,6 +33,7 @@ int APIENTRY _tWinMain( _In_ HINSTANCE hInstance,
 #ifdef _PRINT_CONSOLE
 	Logger::GetInstance();
 #endif
+
 	Log( "!!!:%S \n", lpCmdLine );
 	NetworkManager::GetInstance()->SetRoomNumber( 1 );
 
@@ -45,6 +46,32 @@ int APIENTRY _tWinMain( _In_ HINSTANCE hInstance,
 
 	MainWindow::GetInstance()->Display( nCmdShow );
 	
+
+#ifndef DEBUG
+	HANDLE mutex = CreateMutex( NULL, FALSE, L"YaMangClientMutex" );
+	if ( mutex == NULL )
+	{
+		MessageBox( MainWindow::GetInstance()->Window(), L"Create Mutex Error", L"Mutex", MB_OK | MB_ICONERROR );
+		return -1;
+	}
+
+	DWORD waitResult = WaitForSingleObject( mutex, 1 );
+	switch ( waitResult )
+	{
+		case WAIT_TIMEOUT:
+		{	
+			MessageBox( MainWindow::GetInstance()->Window(), L"Client Already Running", L"Mutex", MB_OK | MB_ICONERROR );
+			MainWindow::Release();
+			return -1;
+		}
+			break;
+		case WAIT_OBJECT_0:
+		case WAIT_ABANDONED:
+		default:
+			break;
+	}
+#endif
+
 	int result = MainWindow::GetInstance()->RunGame();
 	MainWindow::Release();
 
