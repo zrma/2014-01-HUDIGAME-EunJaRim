@@ -71,7 +71,7 @@ private:
 	D3DXVECTOR3		m_NowZoomPoint = { 0, 0, 0 };
 	D3DXVECTOR3		m_PrevZoomPoint = { 0, 0, 0 };
 
-	ZoomStatusType	m_ZoomStatus = ZoomStatusType::ZOOM_STATUS_FARTHEST;
+	ZoomStatusType	m_ZoomStatus = ZoomStatusType::ZOOM_STATUS_DEGREE_1;
 	INT				m_ZoomDegree = 0;
 	FLOAT			m_ZoomPointX = 0;
 	FLOAT			m_ZoomPointY = 0;
