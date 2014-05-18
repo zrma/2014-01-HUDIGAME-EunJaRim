@@ -60,46 +60,50 @@ YAMANGDXDLL_API HRESULT TransPickedTriangle( float* pickedX, float* pickedZ )
 	CUSTOMVERTEX* VerticesStartPoint;
 	presentVertexBuffer->Lock( 0, 0, (void**)&VerticesStartPoint, 0 );
 
-	BOOL Hit1 = false;
-	BOOL Hit2 = false;
+	BOOL hit1 = false;
+	BOOL hit2 = false;
 	float dist1 = 0;
 	float dist2 = 0;
 
 	int trianglePointA = NULL, trianglePointB = NULL, trianglePointC = NULL, trianglePointD = NULL;
 
-	for ( UINT z = 0; ( z < ( g_ZHeight - 1 ) ) && !( Hit1 | Hit2 ); ++z )
+	
+	//한번 루프에에서 4점씩 확인(ABCD)
+	//4점으로 삼각형 2개를 확인할 수 있기 때문에 한 루프에서 hit가 두 종류 발생될 수 있음
+	//hit가 발생하면 더 이상 탐색하지 않아도 되기 때문에 loop문 탈출
+	for ( UINT z = 0; ( z < ( g_ZHeight - 1 ) ) && !( hit1 | hit2 ); ++z )
 	{
 		if ( z % 2 == 0 )
 		{
-			for ( UINT x = 0; ( x < ( g_XHeight - 1 ) ) && !( Hit1 | Hit2 ); ++x )
+			for ( UINT x = 0; ( x < ( g_XHeight - 1 ) ) && !( hit1 | hit2 ); ++x )
 			{
 				trianglePointA = g_ZHeight*z + x;
 				trianglePointB = g_ZHeight*z + ( x + 1 );
 				trianglePointC = g_ZHeight*( z + 1 ) + x;
-				Hit1 = D3DXIntersectTri( &VerticesStartPoint[trianglePointA].m_VertexPoint, &VerticesStartPoint[trianglePointB].m_VertexPoint, &VerticesStartPoint[trianglePointC].m_VertexPoint, &g_RayOrigin, &g_RayDirection, pickedX, pickedZ, &dist1 );
+				hit1 = D3DXIntersectTri( &VerticesStartPoint[trianglePointA].m_VertexPoint, &VerticesStartPoint[trianglePointB].m_VertexPoint, &VerticesStartPoint[trianglePointC].m_VertexPoint, &g_RayOrigin, &g_RayDirection, pickedX, pickedZ, &dist1 );
 
 				trianglePointD = g_ZHeight*( z + 1 ) + ( x + 1 );
-				Hit2 = D3DXIntersectTri( &VerticesStartPoint[trianglePointB].m_VertexPoint, &VerticesStartPoint[trianglePointC].m_VertexPoint, &VerticesStartPoint[trianglePointD].m_VertexPoint, &g_RayOrigin, &g_RayDirection, pickedX, pickedZ, &dist2 );
+				hit2 = D3DXIntersectTri( &VerticesStartPoint[trianglePointB].m_VertexPoint, &VerticesStartPoint[trianglePointC].m_VertexPoint, &VerticesStartPoint[trianglePointD].m_VertexPoint, &g_RayOrigin, &g_RayDirection, pickedX, pickedZ, &dist2 );
 			}
 		}
 		else
 		{
-			for ( UINT x = g_ZHeight - 1; ( x > 0 ) && !( Hit1 | Hit2 ); --x )
+			for ( UINT x = g_ZHeight - 1; ( x > 0 ) && !( hit1 | hit2 ); --x )
 			{
 				trianglePointA = g_ZHeight*z + x;
 				trianglePointB = g_ZHeight*z + ( x - 1 );
 				trianglePointC = g_ZHeight*( z + 1 ) + x;
-				Hit1 = D3DXIntersectTri( &VerticesStartPoint[trianglePointA].m_VertexPoint, &VerticesStartPoint[trianglePointB].m_VertexPoint, &VerticesStartPoint[trianglePointC].m_VertexPoint, &g_RayOrigin, &g_RayDirection, pickedX, pickedZ, &dist1 );
+				hit1 = D3DXIntersectTri( &VerticesStartPoint[trianglePointA].m_VertexPoint, &VerticesStartPoint[trianglePointB].m_VertexPoint, &VerticesStartPoint[trianglePointC].m_VertexPoint, &g_RayOrigin, &g_RayDirection, pickedX, pickedZ, &dist1 );
 
 				trianglePointD = g_ZHeight*( z + 1 ) + ( x - 1 );
-				Hit2 = D3DXIntersectTri( &VerticesStartPoint[trianglePointB].m_VertexPoint, &VerticesStartPoint[trianglePointC].m_VertexPoint, &VerticesStartPoint[trianglePointD].m_VertexPoint, &g_RayOrigin, &g_RayDirection, pickedX, pickedZ, &dist2 );
+				hit2 = D3DXIntersectTri( &VerticesStartPoint[trianglePointB].m_VertexPoint, &VerticesStartPoint[trianglePointC].m_VertexPoint, &VerticesStartPoint[trianglePointD].m_VertexPoint, &g_RayOrigin, &g_RayDirection, pickedX, pickedZ, &dist2 );
 			}
 		}
 	}
 
 	HRESULT result = S_FALSE;
 
-	if ( ( Hit1 && ( dist1 > 0 ) ) || ( Hit2 && ( dist2 > 0 ) ) )
+	if ( ( hit1 && ( dist1 > 0 ) ) || ( hit2 && ( dist2 > 0 ) ) )
 	{
 		CUSTOMVERTEX* intersectedVertexBufferStart;
 		g_Mesh->LockVertexBuffer( 0, (void**)&intersectedVertexBufferStart );
@@ -108,7 +112,7 @@ YAMANGDXDLL_API HRESULT TransPickedTriangle( float* pickedX, float* pickedZ )
 		CUSTOMVERTEX* pointB;
 		CUSTOMVERTEX* pointC;
 
-		if ( Hit1 )
+		if ( hit1 )
 		{
 			pointA = &VerticesStartPoint[trianglePointA];
 			pointB = &VerticesStartPoint[trianglePointB];

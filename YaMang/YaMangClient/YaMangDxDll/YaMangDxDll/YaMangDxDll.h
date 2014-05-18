@@ -33,7 +33,10 @@ extern "C"{
 	//각 object 해제시 사용
 	YAMANGDXDLL_API void MeshObjectCleanUp( MESHOBJECT* inputVal );
 
-	YAMANGDXDLL_API void SetMatrix( D3DXMATRIXA16* matrix, bool cameraSet = false );
+	//YAMANGDXDLL_API void SetMatrix( D3DXMATRIXA16* matrix, bool cameraSet = false );
+	YAMANGDXDLL_API void SetWorldMatirx( D3DXMATRIXA16* matrix );
+	
+	YAMANGDXDLL_API void SetCameraMatrix( D3DXMATRIXA16* matrix );
 	YAMANGDXDLL_API void SetCameraView(float x = 0.f, float y = 0.f, float z = 0.f);
 	YAMANGDXDLL_API void SetAspectRatio( long width, long height );
 
@@ -43,11 +46,14 @@ extern "C"{
 
 	YAMANGDXDLL_API HRESULT HeightMapTextureImport( HWND hWnd, LPCTSTR heightMap, LPCTSTR mapTexture );
 	YAMANGDXDLL_API HRESULT MapToolTextureImport( HWND hWnd, LPCTSTR toolTexture );
-	YAMANGDXDLL_API void HeightMapCleanup();
-	YAMANGDXDLL_API void PreSettingForTool();
-	YAMANGDXDLL_API void RenderHeightMap();
+	
 	YAMANGDXDLL_API void InitGroundMesh( int row, int col );
 	YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize );
+
+	YAMANGDXDLL_API void ToolViewSetting( int width, int height );
+	YAMANGDXDLL_API void RenderHeightMap();
+	
+	YAMANGDXDLL_API void HeightMapCleanup( );
 
 	
 	//////////////////////////////////////////////////////////////////////////

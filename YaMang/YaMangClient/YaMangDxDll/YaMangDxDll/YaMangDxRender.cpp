@@ -67,7 +67,7 @@ YAMANGDXDLL_API void PostRendering()
 {
 	D3DXMATRIXA16 identityMatrix;
 	D3DXMatrixIdentity( &identityMatrix );
-	SetMatrix( &identityMatrix );
+	SetWorldMatirx( &identityMatrix );
 
 	g_D3dDevice->EndScene();
 
@@ -204,7 +204,7 @@ YAMANGDXDLL_API void RenderingTool( MESHOBJECT* inputVal )
 	// 카메라 셋팅
 	D3DXMATRIXA16 viewMatrix;
 	D3DXMatrixLookAtLH( &viewMatrix, &g_EyePoint, &g_LookAtPoint, &g_UpVector );
-	SetMatrix( &viewMatrix, true );
+	SetCameraMatrix( &viewMatrix );
 
 	// 보여주기 위한 땅을 만듬
 	//InitGroundMesh(100, 100);

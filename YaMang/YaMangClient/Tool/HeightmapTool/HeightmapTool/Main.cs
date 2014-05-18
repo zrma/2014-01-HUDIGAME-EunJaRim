@@ -117,14 +117,14 @@ namespace YamangTools
                     YamangDll.CreateRawGround(curWidth, curHeight, curMapSpace);
                 }
 
-                YamangDll.PreSettingForTool();
+                YamangDll.ToolViewSetting(RenderTarget.Size.Width, RenderTarget.Size.Height);
 
                 if(mouseEventFlag)
                 {
                     SetAction();
 
                     YamangDll.CalcPickingRay(mouseXPosition, mouseYPosition);
-                    YamangDll.TransPickedTriangle(ref returnedXPos, ref returnedZPos, actionFlag);
+                    YamangDll.TransPickedTriangle(ref returnedXPos, ref returnedZPos);
                     mouseEventFlag = false;
                 }
 
@@ -160,8 +160,7 @@ namespace YamangTools
             mouseXPosition = (e.X + ((Control)sender).Location.X) - 295;
             mouseYPosition = (e.Y + ((Control)sender).Location.Y) - 51;
 
-            Console.WriteLine(mouseXPosition);
-            Console.WriteLine(mouseYPosition);
+            Console.WriteLine("x좌표 :" + mouseXPosition + ", y좌표 :" + mouseYPosition);
         }
     }
 }

@@ -234,7 +234,7 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 }
 
 //카메라 행렬을 인자값 받아서 정렬되도록 수정 필요 triz
-YAMANGDXDLL_API void PreSettingForTool( )
+YAMANGDXDLL_API void ToolViewSetting( int width, int height )
 {
 	// 월드 행렬
 	D3DXMATRIXA16 world;
@@ -252,5 +252,6 @@ YAMANGDXDLL_API void PreSettingForTool( )
 
 	// 프로젝션 행렬
 	// 창크기 변경에 따라 크고 작아지게 할 것
-	SetAspectRatio( 729, 588 );
+	//SetAspectRatio( 729, 588 );
+	SetAspectRatio( width, height );
 }
