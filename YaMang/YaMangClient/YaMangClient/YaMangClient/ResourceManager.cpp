@@ -158,9 +158,11 @@ void ResourceManager::DeleteMesh( MESHOBJECT* mesh )
 
 void ResourceManager::CreateSprite()
 {
+	m_IsUISpriteReady = true;
 	InitUISprite(UISPRITE_MAX);
 
 	//CreateUIImage
+	CreateUIImage(SPRITE_UI_IMSIMAP, UISPRITE_MAP);
 }
 
 void ResourceManager::DeleteSprite()

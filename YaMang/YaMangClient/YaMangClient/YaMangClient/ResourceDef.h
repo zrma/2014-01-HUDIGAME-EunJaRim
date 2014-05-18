@@ -41,6 +41,7 @@
 #define SPRITE_CURSOR_OVER_PICKED_CORPS		PATH_SPRITE L"cursor_over_clicked_corps.png"
 
 #define SPRITE_UI_DEFAULT					PATH_SPRITE L"UI_default.png"
+#define SPRITE_UI_IMSIMAP					PATH_SPRITE L"UI_MapImsi.png"
 
 #define PATH_SOUND			L"SoundFiles\\"
 

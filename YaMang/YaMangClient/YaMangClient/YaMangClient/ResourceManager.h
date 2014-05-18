@@ -66,7 +66,6 @@ private:
 
 	std::array<ResourceMesh*, MESH_KEY_MAX>	m_MeshArray;
 	std::array<ResourceMap*, MAP_KEY_MAX> m_HeightMapArray;
-	
 
 	bool	m_IsMapReady = false;
 	int		m_MapSize = 0;

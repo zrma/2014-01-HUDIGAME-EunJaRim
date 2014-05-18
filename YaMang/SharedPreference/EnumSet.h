@@ -67,6 +67,8 @@ enum UISpriteKeyType
 {
 	UISPRITE_NONE,
 
+	UISPRITE_MAP,
+
 	UISPRITE_MAX
 };
 
