@@ -74,19 +74,7 @@ void TakeArea::OnTick()
 
 	float length = D3DXVec2Length( &vector );
 
-	Action* targetAction = m_TargerCrops->GetHoldingAction( );
-	if ( nullptr == targetAction || ACTION_END == targetAction->GetActionStatus( ) )
-	{
-		Log( "Guard Start! \n" );
 
-		m_TargerCrops->ChangeFormation( FormationType::FORMATION_DEFENSE );
-		GuardArea* action = new GuardArea( );
-		action->SetClientManager( m_ClientManager );
-		action->SetOwnerCorps( m_TargerCrops );
-		action->SetTargetCorps( m_OwnerCrops );
-
-		m_ClientManager->AddActionToScheduler( action, m_TargerCrops->GetAttackDelay() / 2 ); // 반격하려고 정신차리는 딜레이
-	}
 
 	if ( length < m_OwnerCrops->GetAttackRange() )
 	{
@@ -143,6 +131,21 @@ void TakeArea::OnTick()
 		else
 		{
 			Log( "Ready Re Attack!! \n" );
+
+			Action* targetAction = m_TargerCrops->GetHoldingAction();
+			if ( nullptr == targetAction || ACTION_END == targetAction->GetActionStatus() )
+			{
+				Log( "Guard Start! \n" );
+
+				m_TargerCrops->ChangeFormation( FormationType::FORMATION_DEFENSE );
+				GuardArea* action = new GuardArea();
+				action->SetClientManager( m_ClientManager );
+				action->SetOwnerCorps( m_TargerCrops );
+				action->SetTargetCorps( m_OwnerCrops );
+
+				m_ClientManager->AddActionToScheduler( action, 0 ); // 반격하려고 정신차리는 딜레이 빠른 반격을 위해 여기는 없애자
+			}
+
 			m_ActionStatus = ACTION_TICK;
 			m_OwnerCrops->DoNextAction( this, m_OwnerCrops->GetAttackDelay() );
 		}
