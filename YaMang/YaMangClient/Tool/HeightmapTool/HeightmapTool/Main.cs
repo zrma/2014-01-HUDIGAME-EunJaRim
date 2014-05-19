@@ -90,8 +90,7 @@ namespace YamangTools
                     YamangDll.MapToolPickingEvent(actionFlag);
                     mouseEventFlag = false;
                 }
-
-                YamangDll.RenderHeightTool();
+                YamangDll.RenderHeightMap();
                 YamangDll.PostRendering();
 
                 preWidth = curWidth;

@@ -52,7 +52,6 @@ extern "C"{
 
 	YAMANGDXDLL_API void ToolViewSetting( int width, int height );
 	YAMANGDXDLL_API void RenderHeightMap();
-	YAMANGDXDLL_API void RenderHeightTool();
 	
 	YAMANGDXDLL_API void HeightMapCleanup( );
 

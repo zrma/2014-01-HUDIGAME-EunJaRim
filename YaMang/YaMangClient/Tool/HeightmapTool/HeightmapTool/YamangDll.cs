@@ -60,9 +60,6 @@ namespace YamangTools
         public static extern void RenderHeightMap();
 
         [DllImport("YaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void RenderHeightTool();
-
-        [DllImport("YaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void InitGroundMesh( int row, int col );
 
         [DllImport("YaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
