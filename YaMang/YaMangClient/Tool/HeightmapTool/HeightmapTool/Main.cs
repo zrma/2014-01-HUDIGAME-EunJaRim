@@ -29,13 +29,12 @@ namespace YamangTools
         float returnedXPos = 0.0f;
         float returnedZPos = 0.0f;
 
-        //string heightMap = ".\\MapResource\\heightmap_128_128.bmp";
-        //string mapTexture = ".\\MapResource\\heightmap_128_128.bmp";
         string mapTexture0 = ".\\MapResource\\heightmap_128_128.bmp";
         string mapTexture1 = ".\\TextureResource\\grass.bmp";
         string mapTexture2 = ".\\TextureResource\\leaf.bmp";
         string mapTexture3 = ".\\TextureResource\\sky.bmp";
         string mapTexture4 = ".\\TextureResource\\stone.bmp";
+
 
         ~Main()
         {
@@ -45,7 +44,6 @@ namespace YamangTools
         {
             InitializeComponent();
             YamangDll.InitD3D(this.RenderTarget.Handle);
-            //YamangDll.HeightMapTextureImport( this.RenderTarget.Handle, heightMap );
             YamangDll.MapToolTextureImport(this.RenderTarget.Handle, mapTexture0);
             YamangDll.MapToolTextureImport(this.RenderTarget.Handle, mapTexture1);
             YamangDll.MapToolTextureImport(this.RenderTarget.Handle, mapTexture2);
@@ -85,13 +83,15 @@ namespace YamangTools
 
                     YamangDll.CalcPickingRay(mouseXPosition, mouseYPosition);
                     YamangDll.TransPickedTriangle(ref returnedXPos, ref returnedZPos);
+                    
+                    //이거 활용해서 해당 위치에 나무 같은거 뿌리면 될 듯
+                    Console.WriteLine("Xpos: " + returnedXPos + ", ZPos: " + returnedZPos);
+                    
                     YamangDll.MapToolPickingEvent(actionFlag);
                     mouseEventFlag = false;
                 }
 
-
-                YamangDll.RenderHeightMap();
-
+                YamangDll.RenderHeightTool();
                 YamangDll.PostRendering();
 
                 preWidth = curWidth;

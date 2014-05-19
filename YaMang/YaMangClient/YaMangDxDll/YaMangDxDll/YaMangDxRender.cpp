@@ -98,12 +98,12 @@ YAMANGDXDLL_API void RenderHeightMap()
 	g_D3dDevice->SetStreamSource( 0, RenderVertexBuffer, 0, sizeof( CUSTOMVERTEX ) );
 	g_D3dDevice->SetFVF( D3DFVF_CUSTOMVERTEX );
 
-	g_D3dDevice->SetTexture( 0, g_MapTextureArray[0] );
-	g_D3dDevice->SetTexture( 1, g_MapTextureArray[1] );
+	g_D3dDevice->SetTexture( 0, g_MapTexture );
+/*	g_D3dDevice->SetTexture( 1, g_MapTextureArray[1] );*/
 
 	//설정된 uv 좌표값에 따라 연산
 	g_D3dDevice->SetTextureStageState( 0, D3DTSS_TEXCOORDINDEX, 0 );
-	g_D3dDevice->SetTextureStageState( 1, D3DTSS_TEXCOORDINDEX, 1 );
+/*	g_D3dDevice->SetTextureStageState( 1, D3DTSS_TEXCOORDINDEX, 1 );*/
 
 	g_D3dDevice->SetSamplerState( 0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR );
 	g_D3dDevice->SetSamplerState( 0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR );
@@ -112,9 +112,9 @@ YAMANGDXDLL_API void RenderHeightMap()
 // 	g_D3dDevice->SetSamplerState( 1, D3DSAMP_MINFILTER, D3DTEXF_LINEAR );
 
 	
-	g_D3dDevice->SetTextureStageState( 1, D3DTSS_COLORARG1, D3DTA_TEXTURE );
-	g_D3dDevice->SetTextureStageState( 1, D3DTSS_COLORARG2, D3DTA_CURRENT );
-	g_D3dDevice->SetTextureStageState( 1, D3DTSS_COLOROP, D3DTOP_MODULATE );
+// 	g_D3dDevice->SetTextureStageState( 1, D3DTSS_COLORARG1, D3DTA_TEXTURE );
+// 	g_D3dDevice->SetTextureStageState( 1, D3DTSS_COLORARG2, D3DTA_CURRENT );
+// 	g_D3dDevice->SetTextureStageState( 1, D3DTSS_COLOROP, D3DTOP_MODULATE );
 	
 	//연산 해제 영역
 	//g_D3dDevice->SetTextureStageState( 0, D3DTSS_COLOROP, D3DTOP_DISABLE );
@@ -125,6 +125,43 @@ YAMANGDXDLL_API void RenderHeightMap()
 
 	g_D3dDevice->SetIndices( RenderIndexBuffer );
 	g_D3dDevice->DrawIndexedPrimitive( D3DPT_TRIANGLESTRIP, 0, 0, g_XHeight * g_ZHeight, 0, ( g_XHeight - 1 ) * ( g_ZHeight - 1 ) * 2 + ( g_ZHeight - 2 ) * 3 );
+}
+
+YAMANGDXDLL_API void RenderHeightTool()
+{
+	//현재 조명이 적용되지 않았음
+	g_D3dDevice->SetRenderState( D3DRS_LIGHTING, FALSE );
+	g_D3dDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_SOLID );
+
+	IDirect3DVertexBuffer9* RenderVertexBuffer = nullptr;
+	g_Mesh->GetVertexBuffer( &RenderVertexBuffer );
+
+	IDirect3DIndexBuffer9* RenderIndexBuffer = nullptr;
+	g_Mesh->GetIndexBuffer( &RenderIndexBuffer );
+
+	g_D3dDevice->SetStreamSource( 0, RenderVertexBuffer, 0, sizeof( CUSTOMVERTEX ) );
+	g_D3dDevice->SetFVF( D3DFVF_CUSTOMVERTEX );
+
+	
+
+	//설정된 uv 좌표값에 따라 연산
+	
+
+	g_D3dDevice->SetSamplerState( 0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR );
+	g_D3dDevice->SetSamplerState( 0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR );
+	
+	for ( int i = 0; i < 2; ++i )
+	{
+		g_D3dDevice->SetTextureStageState( i, D3DTSS_TEXCOORDINDEX, i );
+
+		g_D3dDevice->SetTextureStageState( i, D3DTSS_COLORARG1, D3DTA_TEXTURE );
+		g_D3dDevice->SetTextureStageState( i, D3DTSS_COLORARG2, D3DTA_DIFFUSE );
+		g_D3dDevice->SetTextureStageState( i, D3DTSS_COLOROP, D3DTOP_MODULATE );
+
+		g_D3dDevice->SetTexture( i, g_MapTextureArray[i] );
+		g_D3dDevice->SetIndices( RenderIndexBuffer );
+		g_D3dDevice->DrawIndexedPrimitive( D3DPT_TRIANGLESTRIP, 0, 0, g_XHeight * g_ZHeight, 0, ( g_XHeight - 1 ) * ( g_ZHeight - 1 ) * 2 + ( g_ZHeight - 2 ) * 3 );
+	}	
 }
 
 //////////////////////////////////////////////////////////////////////////
