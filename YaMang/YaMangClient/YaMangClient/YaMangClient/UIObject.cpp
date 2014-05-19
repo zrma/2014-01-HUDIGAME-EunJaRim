@@ -1,10 +1,21 @@
 ﻿#include "stdafx.h"
 #include "UIObject.h"
 #include "YaMangDxDll.h"
+#include "UIManager.h"
 
 
 UIObject::UIObject()
 {
+}
+
+UIObject::UIObject(SpriteKeyType key, int PosX, int PosY, bool visible)
+{
+	SetSpriteType(key);
+	SetUIPosX(PosX);
+	SetUIPosY(PosY);
+	SetVisible(visible);
+
+	UIManager::GetInstance()->AddUIObject(this);
 }
 
 

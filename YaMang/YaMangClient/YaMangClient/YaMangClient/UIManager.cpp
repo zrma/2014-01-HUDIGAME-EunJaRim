@@ -38,17 +38,15 @@ void UIManager::Render() const
 {
 	for (auto &iter : m_UIList)
 	{
-		iter->Render();
+		if (iter->GetVisible() == true)
+		{
+			iter->Render();
+		}
 	}
 }
 
-void UIManager::AddUIObject( SpriteKeyType key, int PosX, int PosY, bool visible)
+void UIManager::AddUIObject(UIObject* Object)
 {
-	UIObject* Object = new UIObject();
-	Object->SetUIPosX(PosX);
-	Object->SetUIPosY(PosY);
-	Object->SetVisible(visible);
-
 	m_UIList.push_back(Object);
 }
 

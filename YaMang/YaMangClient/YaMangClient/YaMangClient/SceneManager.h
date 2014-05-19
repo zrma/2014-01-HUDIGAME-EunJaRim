@@ -16,10 +16,12 @@ public:
 	void	Update() const;
 	void	Render() const;
 
-	Scene*	GetNowScene() const { return m_NowScene; }
+	Scene*		GetNowScene() const { return m_NowScene; }
+	SceneType	GetNowSceneType() { return m_NowSceneType; }
 
 private:
 	std::array<Scene*, SCENE_MAX>		m_SceneList;
-	Scene*	m_NowScene = nullptr;
+	Scene*				m_NowScene = nullptr;
+	SceneType			m_NowSceneType = SCENE_NONE;
 };
 

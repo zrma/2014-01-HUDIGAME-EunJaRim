@@ -12,6 +12,7 @@
 #include "CameraController.h"
 #include "TextManager.h"
 #include "Renderer.h"
+#include "UIObject.h"
 
 ScenePlay::ScenePlay()
 {
@@ -36,6 +37,9 @@ void ScenePlay::Create()
 	}
 
 	m_MouseCursor = new MouseRender();
+
+	//UIObjects Init
+	InitUIObjects();
 }
 
 void ScenePlay::Destroy()
@@ -59,6 +63,9 @@ void ScenePlay::Update()
 	}
 
 	m_MouseCursor->Update();
+
+	//Map 보일지 말지 업데이트. 키보드 누를 때마다 인풋 디스패쳐에서 SetVisible 설정해줌
+	m_Minimap->SetVisible(m_IsMapVisible);
 }
 
 void ScenePlay::Render() const
@@ -271,4 +278,9 @@ void ScenePlay::UpdateBase( int BaseIndex, int playerID )
 		test = test + L"] ";
 	}
 	TextManager::GetInstance( )->RegistText( TEXT_TEST_BASE, test.c_str( ), 250, 300 );
+}
+
+void ScenePlay::InitUIObjects()
+{
+	m_Minimap = new UIObject(SPRITE_UI_MAP, 50, 0, false);
 }

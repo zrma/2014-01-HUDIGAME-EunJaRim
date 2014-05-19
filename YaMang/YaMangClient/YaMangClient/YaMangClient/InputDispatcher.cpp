@@ -20,6 +20,7 @@
 #include "yaMangDxDll.h"
 #include "SceneManager.h"
 #include "SceneResult.h"
+#include "ScenePlay.h"
 
 typedef void( *KeyEventHandler )( KeyInput inputKey );
 static KeyEventHandler KeyHandlerTable[MAX_KEY];
@@ -308,5 +309,23 @@ REGISTER_KEY_HANDLER( VK_L )
 
 REGISTER_KEY_HANDLER( VK_TAB )
 {
+	// 씬 플레이의 맵 보이기
+	if (SceneManager::GetInstance()->GetNowSceneType() == SCENE_PLAY)
+	{
+		if (KeyStatusType::KEY_DOWN == inputKey.GetKeyStatus())
+		{
+			Scene* scene = SceneManager::GetInstance()->GetNowScene();
+			ScenePlay* thisScene = dynamic_cast<ScenePlay*>(scene);
 
+			thisScene->SetMapVisible(true);
+		}
+
+		if (KeyStatusType::KEY_UP == inputKey.GetKeyStatus())
+		{
+			Scene* scene = SceneManager::GetInstance()->GetNowScene();
+			ScenePlay* thisScene = dynamic_cast<ScenePlay*>(scene);
+
+			thisScene->SetMapVisible(false);
+		}
+	}
 }

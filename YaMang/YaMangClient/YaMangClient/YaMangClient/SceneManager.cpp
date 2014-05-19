@@ -47,18 +47,21 @@ void SceneManager::ChangeScene( SceneType scene )
 			if ( m_SceneList[SCENE_LOAD] )
 			{
 				m_NowScene = m_SceneList[SCENE_LOAD];
+				m_NowSceneType = SCENE_LOAD;
 			}
 			break;
 		case SCENE_PLAY:
 			if ( m_SceneList[SCENE_PLAY] )
 			{
 				m_NowScene = m_SceneList[SCENE_PLAY];
+				m_NowSceneType = SCENE_PLAY;
 			}
 			break;
 		case SCENE_RESULT:
 			if ( m_SceneList[SCENE_RESULT] )
 			{
 				m_NowScene = m_SceneList[SCENE_RESULT];
+				m_NowSceneType = SCENE_RESULT;
 			}
 			break;
 		default:

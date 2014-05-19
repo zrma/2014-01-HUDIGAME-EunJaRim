@@ -4,6 +4,7 @@
 
 class Corps;
 class MouseRender;
+class UIObject;
 
 class ScenePlay:
 	public Scene
@@ -35,6 +36,10 @@ public:
 
 	void		SetKingIndex( int index ) { m_KingIndex = index; }
 
+	// 맵 출력을 위한 함수
+	void		InitUIObjects();
+	void		SetMapVisible(bool visible){ m_IsMapVisible = visible; }
+
 private:
 	std::hash_map<int, Corps*>	m_CorpsList;
 	std::vector<int>			m_BasePlayerIDList;
@@ -44,5 +49,10 @@ private:
 	int							m_KingIndex = -1;
 
 	SceneType					m_SceneType = SCENE_PLAY;
+
+	// 맵 출력을 위한 멤버
+	UIObject*					m_Minimap;
+	bool						m_IsMapVisible = false;
+	
 };
 
