@@ -3,7 +3,7 @@
 class MiniMap : public UIObject
 {
 public:
-	MiniMap(SpriteKeyType key, int PosX, int PosY, bool visible);
+	MiniMap(SpriteKeyType key, SceneType scene, int PosX, int PosY, bool visible);
 	virtual ~MiniMap();
 
 	virtual void		Update();

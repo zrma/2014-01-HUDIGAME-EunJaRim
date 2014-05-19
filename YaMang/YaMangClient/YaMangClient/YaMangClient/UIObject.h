@@ -6,7 +6,7 @@ class UIObject //: public Interface3D
 {
 public:
 	UIObject();
-	UIObject(SpriteKeyType key, int PosX, int PosY, bool visible);
+	UIObject(SpriteKeyType key, SceneType scene, int PosX, int PosY, bool visible);
 	virtual ~UIObject();
 
 	virtual void		Update();

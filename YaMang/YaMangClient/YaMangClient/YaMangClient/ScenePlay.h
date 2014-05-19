@@ -54,6 +54,8 @@ private:
 	// 맵 출력을 위한 멤버
 	MiniMap*					m_Minimap;
 	bool						m_IsMapVisible = false;
-	
+	UIObject*					m_RegenBar;
+	UIObject*					m_RegenFlag;
+
 };
 

@@ -170,6 +170,8 @@ void ResourceManager::CreateSprite()
 
 	//CreateUIImage
 	CreateSpriteImage( SPRITE_UI_IMSIMAP, SPRITE_UI_MAP );
+	CreateSpriteImage( SPRITE_UI_IMSIREGENBAR, SPRITE_UI_REGEN_BAR );
+	CreateSpriteImage( SPRITE_UI_IMSIREGENFLAG, SPRITE_UI_REGEN_FLAG );
 }
 
 void ResourceManager::DeleteSprite()

@@ -3,6 +3,7 @@
 #include "UIObject.h"
 #include "YaMangDxDll.h"
 #include "ResourceDef.h"
+#include "SceneManager.h"
 
 
 UIManager::UIManager()
@@ -21,11 +22,13 @@ void UIManager::Init()
 
 void UIManager::Update()
 {
+	m_NowSceneType = SceneManager::GetInstance()->GetNowSceneType();
+
 	for (auto &iter : m_UIList)
 	{
 		iter->Update();
 
-		if (iter->GetSceneType() != m_NowSceneType || iter->GetSuicide() == true)
+		if (iter->GetSuicide() == true)
 		{
 			UIObject* tobeRemoved = iter;
 			SafeDelete(tobeRemoved);
@@ -38,7 +41,7 @@ void UIManager::Render() const
 {
 	for (auto &iter : m_UIList)
 	{
-		if (iter->GetVisible() == true)
+		if (iter->GetVisible() == true && (iter->GetSceneType() == m_NowSceneType))
 		{
 			iter->Render();
 		}

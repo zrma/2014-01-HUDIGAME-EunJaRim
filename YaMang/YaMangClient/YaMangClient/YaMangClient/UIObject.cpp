@@ -9,12 +9,13 @@ UIObject::UIObject()
 {
 }
 
-UIObject::UIObject(SpriteKeyType key, int PosX, int PosY, bool visible)
+UIObject::UIObject(SpriteKeyType key, SceneType scene, int PosX, int PosY, bool visible)
 {
 	SetSpriteType(key);
 	SetUIPosX(PosX);
 	SetUIPosY(PosY);
 	SetVisible(visible);
+	SetSceneType(scene);
 
 	UIManager::GetInstance()->AddUIObject(this);
 }
