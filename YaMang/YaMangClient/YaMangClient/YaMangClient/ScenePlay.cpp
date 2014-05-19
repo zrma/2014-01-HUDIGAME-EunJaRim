@@ -13,6 +13,7 @@
 #include "TextManager.h"
 #include "Renderer.h"
 #include "UIObject.h"
+#include "MiniMap.h"
 
 ScenePlay::ScenePlay()
 {
@@ -282,5 +283,5 @@ void ScenePlay::UpdateBase( int BaseIndex, int playerID )
 
 void ScenePlay::InitUIObjects()
 {
-	m_Minimap = new UIObject(SPRITE_UI_MAP, 50, 0, false);
+	m_Minimap = new MiniMap(SPRITE_UI_MAP, 50, 0, false);
 }

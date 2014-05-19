@@ -102,6 +102,7 @@ xcopy ".\\FmodDLL\*" "..\..\..\Bin\YaMangClient\" /s /d /y</Command>
     <ClInclude Include="Collision.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="Corps.h" />
+    <ClInclude Include="CorpsMark.h" />
     <ClInclude Include="DummyRender.h" />
     <ClInclude Include="Exception.h" />
     <ClInclude Include="GameManager.h" />
@@ -113,6 +114,7 @@ xcopy ".\\FmodDLL\*" "..\..\..\Bin\YaMangClient\" /s /d /y</Command>
     <ClInclude Include="Logger.h" />
     <ClInclude Include="MacroSet.h" />
     <ClInclude Include="MainWindow.h" />
+    <ClInclude Include="MiniMap.h" />
     <ClInclude Include="MouseManager.h" />
     <ClInclude Include="MouseRender.h" />
     <ClInclude Include="NetworkManager.h" />
@@ -147,6 +149,7 @@ xcopy ".\\FmodDLL\*" "..\..\..\Bin\YaMangClient\" /s /d /y</Command>
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="Corps.cpp" />
+    <ClCompile Include="CorpsMark.cpp" />
     <ClCompile Include="DummyRender.cpp" />
     <ClCompile Include="EventHandler.cpp" />
     <ClCompile Include="Exception.cpp" />
@@ -158,6 +161,7 @@ xcopy ".\\FmodDLL\*" "..\..\..\Bin\YaMangClient\" /s /d /y</Command>
     <ClCompile Include="Knight.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="MainWindow.cpp" />
+    <ClCompile Include="MiniMap.cpp" />
     <ClCompile Include="MouseManager.cpp" />
     <ClCompile Include="MouseRender.cpp" />
     <ClCompile Include="NetworkManager.cpp" />

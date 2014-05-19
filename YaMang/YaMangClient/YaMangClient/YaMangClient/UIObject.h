@@ -7,7 +7,7 @@ class UIObject //: public Interface3D
 public:
 	UIObject();
 	UIObject(SpriteKeyType key, int PosX, int PosY, bool visible);
-	~UIObject();
+	virtual ~UIObject();
 
 	virtual void		Update();
 	virtual void		Render() const;

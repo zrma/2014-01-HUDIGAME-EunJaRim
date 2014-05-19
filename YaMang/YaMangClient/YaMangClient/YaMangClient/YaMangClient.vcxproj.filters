@@ -202,6 +202,12 @@
     <ClInclude Include="Exception.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="MiniMap.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="CorpsMark.h">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -323,6 +329,12 @@
     </ClCompile>
     <ClCompile Include="Exception.cpp">
       <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="MiniMap.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CorpsMark.cpp">
+      <Filter>UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

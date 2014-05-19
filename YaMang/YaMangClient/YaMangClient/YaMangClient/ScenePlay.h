@@ -5,6 +5,7 @@
 class Corps;
 class MouseRender;
 class UIObject;
+class MiniMap;
 
 class ScenePlay:
 	public Scene
@@ -51,7 +52,7 @@ private:
 	SceneType					m_SceneType = SCENE_PLAY;
 
 	// 맵 출력을 위한 멤버
-	UIObject*					m_Minimap;
+	MiniMap*					m_Minimap;
 	bool						m_IsMapVisible = false;
 	
 };

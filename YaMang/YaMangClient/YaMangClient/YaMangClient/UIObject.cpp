@@ -4,6 +4,7 @@
 #include "UIManager.h"
 
 
+
 UIObject::UIObject()
 {
 }
@@ -17,7 +18,6 @@ UIObject::UIObject(SpriteKeyType key, int PosX, int PosY, bool visible)
 
 	UIManager::GetInstance()->AddUIObject(this);
 }
-
 
 UIObject::~UIObject()
 {
