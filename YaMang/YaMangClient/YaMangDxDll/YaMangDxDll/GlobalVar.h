@@ -4,13 +4,11 @@ struct CUSTOMVERTEX
 {
 	D3DXVECTOR3	m_VertexPoint = { 0, 0, 0 };
 	DWORD		m_Diffuse = 0;
-	D3DXVECTOR2	m_VertexTexturePoint0 = { 0, 0 };
-	D3DXVECTOR2	m_VertexTexturePoint1 = { 0, 0 };
-	D3DXVECTOR2	m_VertexTexturePoint2 = { 0, 0 };
+	D3DXVECTOR2	m_VertexTexturePoint = { 0, 0 };
 };
 
 //마지막에는 각 texturepoint의 차원과 index를 의미
-#define D3DFVF_CUSTOMVERTEX ( D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX3| D3DFVF_TEXCOORDSIZE2(0) | D3DFVF_TEXCOORDSIZE2(1) | D3DFVF_TEXCOORDSIZE2(2) )
+#define D3DFVF_CUSTOMVERTEX ( D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1 )
 
 struct SKYBOXVERTEX
 {
@@ -91,9 +89,6 @@ extern D3DXVECTOR3		g_UpVector;
 //////////////////////////////////////////////////////////////////////////
 extern D3DXVECTOR3		g_RayOrigin;
 extern D3DXVECTOR3		g_RayDirection;
-extern CUSTOMVERTEX*	g_PickedPointA;
-extern CUSTOMVERTEX*	g_PickedPointB;
-extern CUSTOMVERTEX*	g_PickedPointC;
 
 //////////////////////////////////////////////////////////////////////////
 // 화면 종횡비

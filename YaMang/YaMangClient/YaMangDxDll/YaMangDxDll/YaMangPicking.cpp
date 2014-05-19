@@ -65,7 +65,10 @@ YAMANGDXDLL_API HRESULT TransPickedTriangle( float* pickedX, float* pickedZ )
 	float dist1 = 0;
 	float dist2 = 0;
 
-	int trianglePointA = NULL, trianglePointB = NULL, trianglePointC = NULL, trianglePointD = NULL;
+	int trianglePointA = NULL;
+	int trianglePointB = NULL;
+	int trianglePointC = NULL;
+	int trianglePointD = NULL;
 
 	
 	//한번 루프에에서 4점씩 확인(ABCD)
@@ -102,6 +105,9 @@ YAMANGDXDLL_API HRESULT TransPickedTriangle( float* pickedX, float* pickedZ )
 	}
 
 	HRESULT result = S_FALSE;
+	CUSTOMVERTEX* PickedPointA = nullptr;
+	CUSTOMVERTEX* PickedPointB = nullptr;
+	CUSTOMVERTEX* PickedPointC = nullptr;
 
 	if ( ( hit1 && ( dist1 > 0 ) ) || ( hit2 && ( dist2 > 0 ) ) )
 	{
@@ -110,19 +116,19 @@ YAMANGDXDLL_API HRESULT TransPickedTriangle( float* pickedX, float* pickedZ )
 
 		if ( hit1 )
 		{
-			g_PickedPointA = &VerticesStartPoint[trianglePointA];
-			g_PickedPointB = &VerticesStartPoint[trianglePointB];
-			g_PickedPointC = &VerticesStartPoint[trianglePointC];
+			PickedPointA = &VerticesStartPoint[trianglePointA];
+			PickedPointB = &VerticesStartPoint[trianglePointB];
+			PickedPointC = &VerticesStartPoint[trianglePointC];
 		}
 		else
 		{
-			g_PickedPointA = &VerticesStartPoint[trianglePointB];
-			g_PickedPointB = &VerticesStartPoint[trianglePointC];
-			g_PickedPointC = &VerticesStartPoint[trianglePointD];
+			PickedPointA = &VerticesStartPoint[trianglePointB];
+			PickedPointB = &VerticesStartPoint[trianglePointC];
+			PickedPointC = &VerticesStartPoint[trianglePointD];
 		}
 
-		*pickedX += g_PickedPointA->m_VertexPoint.x;
-		*pickedZ += g_PickedPointA->m_VertexPoint.z;
+		*pickedX += PickedPointA->m_VertexPoint.x;
+		*pickedZ += PickedPointA->m_VertexPoint.z;
 
 		g_Mesh->UnlockVertexBuffer();
 
@@ -159,7 +165,7 @@ YAMANGDXDLL_API void MapToolPickingEvent( int modeSelector )
 	{
 		case AREA_MODE_NONE:
 			break;
-
+			/*
 		case AREA_MODE_HIGHER:
 			g_PickedPointA->m_VertexPoint.y += 3;
 			g_PickedPointB->m_VertexPoint.y += 3;
@@ -195,7 +201,7 @@ YAMANGDXDLL_API void MapToolPickingEvent( int modeSelector )
 // 			}
 			
 			break;
-
+			*/
 		default:
 			break;
 	}
