@@ -12,9 +12,12 @@
 #define MODEL_UNIT_GUARD		PATH_MODEL L"UnitGuard.x"
 #define MODEL_UNIT_KING			PATH_MODEL L"UnitKing.x"
 
-#define MODEL_CORPS_DESTROY		PATH_MODEL L"Corps_Destroy.x"
-#define MODEL_CORPS_DEFENSE		PATH_MODEL L"Corps_Defense.x"
-#define MODEL_CORPS_RUSH		PATH_MODEL L"Corps_Rush.x"
+#define MODEL_CORPS_DESTROY_A		PATH_MODEL L"Corps_Destroy_A.x"
+#define MODEL_CORPS_DESTROY_B		PATH_MODEL L"Corps_Destroy_B.x"
+#define MODEL_CORPS_DEFENSE_A		PATH_MODEL L"Corps_Defense_A.x"
+#define MODEL_CORPS_DEFENSE_B		PATH_MODEL L"Corps_Defense_B.x"
+#define MODEL_CORPS_RUSH_A		PATH_MODEL L"Corps_Rush_A.x"
+#define MODEL_CORPS_RUSH_B		PATH_MODEL L"Corps_Rush_A.x"
 
 
 #define PATH_MAP		L"MapFiles\\"

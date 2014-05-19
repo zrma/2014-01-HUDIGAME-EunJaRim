@@ -15,9 +15,12 @@ YAMANGDXDLL_API HRESULT InitCharacterModel( HWND hWnd, LPCTSTR fileName, MESHOBJ
 	if ( FAILED( D3DXLoadMeshFromX( fileName, D3DXMESH_SYSTEMMEM, g_D3dDevice, NULL,
 		&D3dxMtrialBuffer, NULL, &( inputVal->NumMaterials ), &inputVal->importedMesh ) ) )
 	{
-		MessageBox( NULL, L"Could not find x file", L"YaMang.DLL", MB_OK );
+		std::wstring errorFileName = L"Could not find x file:";
+		errorFileName += fileName;
+		MessageBox( NULL, errorFileName.c_str(), L"YaMang.DLL", MB_OK );
 		return E_FAIL;
 	}
+
 
 	//import한 mesh에 normal 값이 없는 경우 normal 계산
 	if ( !( ( inputVal->importedMesh )->GetFVF()&D3DFVF_NORMAL ) )
@@ -64,7 +67,8 @@ YAMANGDXDLL_API HRESULT InitCharacterModel( HWND hWnd, LPCTSTR fileName, MESHOBJ
 
 			if ( FAILED( D3DXCreateTextureFromFile( g_D3dDevice, texName.c_str(), &( inputVal->MeshTexture[i] ) ) ) )
 			{
-				MessageBox( NULL, L"Could not find texture map", L"YaMang.DLL", MB_OK );
+				texName = L"Could not find texture map:" + texName;
+				MessageBox( NULL, texName.c_str(), L"YaMang.DLL", MB_OK );
 			}
 		}
 	}
