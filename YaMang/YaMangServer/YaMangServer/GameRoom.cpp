@@ -203,25 +203,26 @@ void GameRoom::EnterGameRoom( ClientSession* client )
 }
 
 
-void GameRoom::BroadcastPacket( ClientSession* from, PacketHeader* pkt )
-{
-	///FYI: C++ STL iterator 스타일의 루프
-	// 연산자 오버로딩 된 ++ 연산자를 이용해서 차례대로 순회
-	for ( ClientList::const_iterator it = m_ClientList.begin(); it != m_ClientList.end(); ++it )
-	{
-		// ClientList는 맵이므로 it(iterator)는 해당 pair의 포인터이다.
-		// 그러므로 it->second 는 밸류(클라이언트 세션)
-		ClientSession* client = it->second;
-
-		// 보낸 이에게는 패스
-		if ( from == client )
-		{
-			continue;
-		}
-
-		client->SendRequest( pkt );
-	}
-}
+// 필요 없어 보임... 혹 필요한 일이 생기면 사용
+// void GameRoom::BroadcastPacket( ClientSession* from, PacketHeader* pkt )
+// {
+// 	///FYI: C++ STL iterator 스타일의 루프
+// 	// 연산자 오버로딩 된 ++ 연산자를 이용해서 차례대로 순회
+// 	for ( ClientList::const_iterator it = m_ClientList.begin(); it != m_ClientList.end(); ++it )
+// 	{
+// 		// ClientList는 맵이므로 it(iterator)는 해당 pair의 포인터이다.
+// 		// 그러므로 it->second 는 밸류(클라이언트 세션)
+// 		ClientSession* client = it->second;
+// 
+// 		// 보낸 이에게는 패스
+// 		if ( from == client )
+// 		{
+// 			continue;
+// 		}
+// 
+// 		client->SendRequest( pkt );
+// 	}
+// }
 void GameRoom::BroadcastPacket( PacketHeader* pkt )
 {
 	for ( ClientList::const_iterator it = m_ClientList.begin(); it != m_ClientList.end(); ++it )

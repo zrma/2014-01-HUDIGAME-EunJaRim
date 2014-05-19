@@ -50,11 +50,18 @@ void ActionScheduler::DoScheduledAction()
 		// @author 신동찬
 		// Action을 뜯어서 상태를 확인
 		// 상태가 영 좋지 않은 곳에 맞았다면 제거
-		if ( headAction->Gozarani() )
+		if ( headAction->Gozarani( )  )
 		{
-			SafeDelete( headAction );
+			delete headAction;
 			continue;
 		}
+		if ( ACTION_END == headAction->GetActionStatus( ) )
+		{
+			headAction->DoAction();
+			delete headAction;
+			continue;
+		}
+		
 		// 상태가 좋으면 owner corps id 탐색 후 action 지정
 
 		Corps* corp = headAction->GetOwnerCorps( );

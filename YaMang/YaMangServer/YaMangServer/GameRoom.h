@@ -35,7 +35,6 @@ public:
 	int					GetClientSize() const { return static_cast<int>( m_ClientList.size() ); }
 	int					GetRoomNumber() const { return m_RoomNumber; }
 
-	void				BroadcastPacket( ClientSession* from, PacketHeader* pkt );
 	void				BroadcastPacket( PacketHeader* pkt );
 
 	bool				DirectPacket( int pid, PacketHeader* pkt );
