@@ -16,6 +16,7 @@
 #include "Renderer.h"
 #include "ResourceManager.h"
 #include "King.h"
+#include "NetworkManager.h"
 
 Corps::Corps( int corpsId, int playerId, PositionInfo pos )
 : m_CorpsID( corpsId ), m_OwnerPlayerID( playerId )
@@ -34,6 +35,15 @@ Corps::Corps( int corpsId, int playerId, PositionInfo pos )
 
 	ActionDefault action;
 	m_Action = action;
+
+	if ( m_OwnerPlayerID == NetworkManager::GetInstance()->GetMyPlayerID() )
+	{
+		m_MeshKey = MESH_KEY_CORPS_RUSH_MINE;
+	}
+	else
+	{
+		m_MeshKey = MESH_KEY_CORPS_RUSH_ENEMY;
+	}
 }
 
 Corps::~Corps()
@@ -259,12 +269,26 @@ void Corps::SetFormation( FormationType formation )
 	{
 		case FormationType::FORMATION_DEFENSE:
 		{
-			m_MeshKey = MESH_KEY_CORPS_DEFENSE;
+			if ( m_OwnerPlayerID == NetworkManager::GetInstance()->GetMyPlayerID() )
+			{
+				m_MeshKey = MESH_KEY_CORPS_DEFENSE_MINE;
+			}
+			else
+			{
+				m_MeshKey = MESH_KEY_CORPS_DEFENSE_ENEMY;
+			}
 		}
 			break;
 		case FormationType::FORMATION_DESTROY:
 		{
-			m_MeshKey = MESH_KEY_CORPS_DESTROY;
+			if ( m_OwnerPlayerID == NetworkManager::GetInstance()->GetMyPlayerID() )
+			{
+				m_MeshKey = MESH_KEY_CORPS_DESTROY_MINE;
+			}
+			else
+			{
+				m_MeshKey = MESH_KEY_CORPS_DESTROY_ENEMY;
+			}
 		}
 			break;
 		case FormationType::FORMATION_RUSH:
@@ -272,7 +296,14 @@ void Corps::SetFormation( FormationType formation )
 		case FormationType::FORMATION_MAX:
 		default:
 		{
-			m_MeshKey = MESH_KEY_CORPS_RUSH;
+			if ( m_OwnerPlayerID == NetworkManager::GetInstance()->GetMyPlayerID() )
+			{
+				m_MeshKey = MESH_KEY_CORPS_RUSH_MINE;
+			}
+			else
+			{
+				m_MeshKey = MESH_KEY_CORPS_RUSH_ENEMY;
+			}
 		}
 			break;
 	}

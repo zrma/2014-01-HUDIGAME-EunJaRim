@@ -71,6 +71,8 @@ struct ActionTransFormation: public Action
 {
 	virtual void operator() ( Corps& corps )
 	{
+		corps.GoFoward();
+		
 		ActMoveSeries act;
 		corps.SetAct( act );
 		corps.LookForward();

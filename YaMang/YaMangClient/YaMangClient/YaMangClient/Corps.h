@@ -55,7 +55,7 @@ private:
 	Corps( const Corps& );
 	Corps& operator=( const Corps& );
 
-	MeshKeyType				m_MeshKey = MESH_KEY_CORPS_RUSH;
+	MeshKeyType				m_MeshKey = MESH_KEY_CORPS_RUSH_MINE;
 
 	std::vector<Unit*>		m_UnitList;
 	int						m_CorpsID = -1;

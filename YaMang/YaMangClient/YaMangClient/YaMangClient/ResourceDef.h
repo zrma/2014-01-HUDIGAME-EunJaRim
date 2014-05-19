@@ -16,8 +16,8 @@
 #define MODEL_CORPS_DESTROY_B		PATH_MODEL L"Corps_Destroy_B.x"
 #define MODEL_CORPS_DEFENSE_A		PATH_MODEL L"Corps_Defense_A.x"
 #define MODEL_CORPS_DEFENSE_B		PATH_MODEL L"Corps_Defense_B.x"
-#define MODEL_CORPS_RUSH_A		PATH_MODEL L"Corps_Rush_A.x"
-#define MODEL_CORPS_RUSH_B		PATH_MODEL L"Corps_Rush_A.x"
+#define MODEL_CORPS_RUSH_A			PATH_MODEL L"Corps_Rush_A.x"
+#define MODEL_CORPS_RUSH_B			PATH_MODEL L"Corps_Rush_B.x"
 
 
 #define PATH_MAP		L"MapFiles\\"
