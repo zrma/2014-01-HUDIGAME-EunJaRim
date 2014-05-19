@@ -23,16 +23,30 @@ void UIManager::Init()
 void UIManager::Update()
 {
 	m_NowSceneType = SceneManager::GetInstance()->GetNowSceneType();
-
-	for (auto &iter : m_UIList)
+	if (m_UIList.empty() == false)
 	{
-		iter->Update();
-
-		if (iter->GetSuicide() == true)
+		for (auto& iter = m_UIList.begin(); iter != m_UIList.end();)
 		{
-			UIObject* tobeRemoved = iter;
-			SafeDelete(tobeRemoved);
-			m_UIList.remove(tobeRemoved);
+			UIObject* thisObject = (*iter);
+
+			if ( !thisObject)
+			{
+				iter = m_UIList.erase(iter);
+				continue;
+			}
+
+			(*iter)->Update();
+
+			if ((*iter)->GetSuicide() == true)
+			{
+				UIObject* tobeRemoved = *iter;
+				SafeDelete(tobeRemoved);
+				iter = m_UIList.erase(iter);
+			}
+			else
+			{
+				++iter;
+			}
 		}
 	}
 }
