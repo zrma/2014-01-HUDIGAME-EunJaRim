@@ -119,10 +119,14 @@ YAMANGDXDLL_API HRESULT TransPickedTriangle( float* pickedX, float* pickedZ, int
 			PickedPointA = &VerticesStartPoint[trianglePointA];
 			PickedPointB = &VerticesStartPoint[trianglePointB];
 			PickedPointC = &VerticesStartPoint[trianglePointC];
-
-			*PickedTriPointA = trianglePointA;
-			*PickedTriPointB = trianglePointB;
-			*PickedTriPointC = trianglePointC;
+			
+			if (PickedTriPointA && PickedTriPointB && PickedTriPointC)
+			{
+				*PickedTriPointA = trianglePointA;
+				*PickedTriPointB = trianglePointB;
+				*PickedTriPointC = trianglePointC;
+			}
+			
 
 		}
 		else
@@ -131,9 +135,13 @@ YAMANGDXDLL_API HRESULT TransPickedTriangle( float* pickedX, float* pickedZ, int
 			PickedPointB = &VerticesStartPoint[trianglePointC];
 			PickedPointC = &VerticesStartPoint[trianglePointD];
 
-			*PickedTriPointA = trianglePointB;
-			*PickedTriPointB = trianglePointC;
-			*PickedTriPointC = trianglePointD;
+			if (PickedTriPointA && PickedTriPointB && PickedTriPointC)
+			{
+				*PickedTriPointA = trianglePointB;
+				*PickedTriPointB = trianglePointC;
+				*PickedTriPointC = trianglePointD;
+			}
+			
 		}
 
 		*pickedX += PickedPointA->m_VertexPoint.x;

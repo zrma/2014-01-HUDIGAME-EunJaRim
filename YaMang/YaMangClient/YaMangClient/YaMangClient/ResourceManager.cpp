@@ -32,12 +32,13 @@ void ResourceManager::Init()
 	AddMesh( MODEL_CORPS_DEFENSE_B, MESH_KEY_CORPS_DEFENSE_MINE );
 	AddMesh( MODEL_CORPS_RUSH_B, MESH_KEY_CORPS_RUSH_MINE );
 
-	InitGroundMesh( 100, 100 );
-	CreateRawGround( 100, 100, 5.0f );
-	m_MapSize = 500;
-
 	AddMap( HEIGHT_MAP, HEIGHT_MAP, MAP_KEY_TEST );
 	CreateMap( MAP_KEY_TEST );
+
+	InitGroundMesh( 128, 128 );
+	CreateRawGround( 128, 128, 5.0f );
+
+	m_MapSize = 640;
 
 	InitSkyBoxMesh( 1000 );
 
