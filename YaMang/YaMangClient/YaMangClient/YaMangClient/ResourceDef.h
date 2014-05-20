@@ -23,6 +23,7 @@
 #define PATH_MAP		L"MapFiles\\"
 
 #define HEIGHT_MAP				PATH_MAP L"heightmap_128_128.bmp"
+#define HEIGHT_TEX				PATH_MAP L"heightmap_tex_128_128.bmp"
 
 #define PATH_SPRITE		L"SpriteFiles\\"
 
