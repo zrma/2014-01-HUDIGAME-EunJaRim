@@ -164,7 +164,7 @@ enum AreaModeType
 	AREA_MODE_MAX
 };
 
-YAMANGDXDLL_API void MapToolPickingEvent( int modeSelector )
+YAMANGDXDLL_API void MapToolPickingEvent( int modeSelector, int PickedTriPointA, int PickedTriPointB, int PickedTriPointC )
 {
 	modeSelector = static_cast<AreaModeType>( modeSelector );
 
@@ -181,44 +181,34 @@ YAMANGDXDLL_API void MapToolPickingEvent( int modeSelector )
 	{
 		case AREA_MODE_NONE:
 			break;
-			/*
+
 		case AREA_MODE_HIGHER:
-			g_PickedPointA->m_VertexPoint.y += 3;
-			g_PickedPointB->m_VertexPoint.y += 3;
-			g_PickedPointC->m_VertexPoint.y += 3;
+			VerticesStartPoint[PickedTriPointA].m_VertexPoint.y += 3;
+			VerticesStartPoint[PickedTriPointB].m_VertexPoint.y += 3;
+			VerticesStartPoint[PickedTriPointC].m_VertexPoint.y += 3;
 			break;
 
 		case AREA_MODE_LOWER:
-			g_PickedPointA->m_VertexPoint.y -= 3;
-			g_PickedPointB->m_VertexPoint.y -= 3;
-			g_PickedPointC->m_VertexPoint.y -= 3;
+			VerticesStartPoint[PickedTriPointA].m_VertexPoint.y -= 3;
+			VerticesStartPoint[PickedTriPointB].m_VertexPoint.y -= 3;
+			VerticesStartPoint[PickedTriPointC].m_VertexPoint.y -= 3;
 			break;
 
 		case AREA_MODE_PAINT_TEXTURE:
 			//텍스쳐 입히는 방법은 4가지가 존재함
 			//삼각형 모양이 4가지이기 때문에
-// 			if ()
-// 			{
-				g_PickedPointA->m_VertexTexturePoint1.x = 0.f;
-				g_PickedPointA->m_VertexTexturePoint1.y = 0.f;
-				g_PickedPointB->m_VertexTexturePoint1.x = 1.f;
-				g_PickedPointB->m_VertexTexturePoint1.y = 0.f;
-				g_PickedPointC->m_VertexTexturePoint1.x = 1.f;
-				g_PickedPointC->m_VertexTexturePoint1.y = 1.f;
-// 			}
-// 			else
-// 			{
-// 				g_PickedPointA->m_VertexTexturePoint1.x = 0.f;
-// 				g_PickedPointA->m_VertexTexturePoint1.y = 0.f;
-// 				g_PickedPointB->m_VertexTexturePoint1.x = 1.f;
-// 				g_PickedPointB->m_VertexTexturePoint1.y = 1.f;
-// 				g_PickedPointC->m_VertexTexturePoint1.x = 1.f;
-// 				g_PickedPointC->m_VertexTexturePoint1.y = 1.f;
-// 			}
-			
+// 			g_PickedPointA->m_VertexTexturePoint1.x = 0.f;
+// 			g_PickedPointA->m_VertexTexturePoint1.y = 0.f;
+// 			g_PickedPointB->m_VertexTexturePoint1.x = 1.f;
+// 			g_PickedPointB->m_VertexTexturePoint1.y = 0.f;
+// 			g_PickedPointC->m_VertexTexturePoint1.x = 1.f;
+// 			g_PickedPointC->m_VertexTexturePoint1.y = 1.f;
 			break;
-			*/
+
 		default:
 			break;
 	}
+
+	presentVertexBuffer->Unlock();
+	presentVertexBuffer->Release();
 }

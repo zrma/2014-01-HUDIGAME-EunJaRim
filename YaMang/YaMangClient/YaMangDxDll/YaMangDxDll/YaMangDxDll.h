@@ -61,7 +61,7 @@ extern "C"{
 	//////////////////////////////////////////////////////////////////////////
 	YAMANGDXDLL_API void CalcPickingRay( int mouseX, int mouseY );
 	YAMANGDXDLL_API HRESULT TransPickedTriangle( float* pickedX, float* pickedZ, int* PickedTriPointA = nullptr, int* PickedTriPointB = nullptr, int* PickedTriPointC = nullptr );
-	YAMANGDXDLL_API void MapToolPickingEvent( int modeSelector );
+	YAMANGDXDLL_API void MapToolPickingEvent( int modeSelector, int PickedTriPointA, int PickedTriPointB, int PickedTriPointC );
 	
 	//////////////////////////////////////////////////////////////////////////
 	//Text Render 를 위한 함수

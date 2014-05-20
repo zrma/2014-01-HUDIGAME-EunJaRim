@@ -33,11 +33,13 @@ namespace YamangTools
         int PickedTriPointB = 0;
         int PickedTriPointC = 0;
 
-        string mapTexture0 = ".\\MapResource\\heightmap_128_128.bmp";
-        string mapTexture1 = ".\\TextureResource\\grass.bmp";
-        string mapTexture2 = ".\\TextureResource\\leaf.bmp";
-        string mapTexture3 = ".\\TextureResource\\sky.bmp";
-        string mapTexture4 = ".\\TextureResource\\stone.bmp";
+        string heightMap = ".\\MapResource\\heightmap_128_128.bmp";
+        string mapTexture = ".\\MapResource\\heightmap_128_128.bmp";
+//         string mapTexture0 = ".\\MapResource\\heightmap_128_128.bmp";
+//         string mapTexture1 = ".\\TextureResource\\grass.bmp";
+//         string mapTexture2 = ".\\TextureResource\\leaf.bmp";
+//         string mapTexture3 = ".\\TextureResource\\sky.bmp";
+//         string mapTexture4 = ".\\TextureResource\\stone.bmp";
 
 
         ~Main()
@@ -48,11 +50,12 @@ namespace YamangTools
         {
             InitializeComponent();
             YamangDll.InitD3D(this.RenderTarget.Handle);
-            YamangDll.MapToolTextureImport(this.RenderTarget.Handle, mapTexture0);
-            YamangDll.MapToolTextureImport(this.RenderTarget.Handle, mapTexture1);
-            YamangDll.MapToolTextureImport(this.RenderTarget.Handle, mapTexture2);
-            YamangDll.MapToolTextureImport(this.RenderTarget.Handle, mapTexture3);
-            YamangDll.MapToolTextureImport(this.RenderTarget.Handle, mapTexture4);
+            YamangDll.HeightMapTextureImport(this.RenderTarget.Handle, heightMap, mapTexture);
+//             YamangDll.MapToolTextureImport(this.RenderTarget.Handle, mapTexture0);
+//             YamangDll.MapToolTextureImport(this.RenderTarget.Handle, mapTexture1);
+//             YamangDll.MapToolTextureImport(this.RenderTarget.Handle, mapTexture2);
+//             YamangDll.MapToolTextureImport(this.RenderTarget.Handle, mapTexture3);
+//             YamangDll.MapToolTextureImport(this.RenderTarget.Handle, mapTexture4);
             Render();
         }
 
@@ -93,7 +96,8 @@ namespace YamangTools
                     Console.WriteLine("A: " + PickedTriPointA + "\nB: " + PickedTriPointB + "\nC: " + PickedTriPointC);
                     Console.WriteLine("Xpos: " + returnedXPos + ", ZPos: " + returnedZPos);
                     
-                    YamangDll.MapToolPickingEvent(actionFlag);
+                    YamangDll.MapToolPickingEvent(actionFlag, PickedTriPointA, PickedTriPointB, PickedTriPointC);
+
                     mouseEventFlag = false;
                 }
                 YamangDll.RenderHeightMap();

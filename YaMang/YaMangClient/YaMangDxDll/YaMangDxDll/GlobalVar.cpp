@@ -11,7 +11,7 @@ LPDIRECT3DDEVICE9 g_D3dDevice = nullptr;
 //Height Map 생성용 공용 자원
 LPD3DXMESH g_Mesh = nullptr;
 
-LPDIRECT3DTEXTURE9 g_MapHeightTexture = nullptr;
+LPDIRECT3DTEXTURE9 g_MapHeightInfo = nullptr;
 LPDIRECT3DTEXTURE9 g_MapTexture = nullptr;
 LPDIRECT3DTEXTURE9 g_MapTextureArray[MAP_TEXTURE_COUNT] = { 0, };
 

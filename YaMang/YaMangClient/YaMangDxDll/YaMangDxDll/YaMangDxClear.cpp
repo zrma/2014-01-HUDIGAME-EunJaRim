@@ -33,9 +33,9 @@ YAMANGDXDLL_API void MeshObjectCleanUp( MESHOBJECT* inputVal )
 
 YAMANGDXDLL_API void HeightMapCleanup()
 {
-	if ( NULL != g_MapHeightTexture )
+	if ( NULL != g_MapHeightInfo )
 	{
-		g_MapHeightTexture->Release();
+		g_MapHeightInfo->Release();
 	}
 
 	if ( NULL != g_MapTexture )

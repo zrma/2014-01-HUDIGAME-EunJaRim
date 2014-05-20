@@ -51,6 +51,9 @@ namespace YamangTools
         public static extern Int32 MapToolTextureImport(IntPtr hWnd, [MarshalAs(UnmanagedType.LPWStr)] String toolTexture );
 
         [DllImport("YaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern Int32 HeightMapTextureImport( IntPtr hWnd, [MarshalAs(UnmanagedType.LPWStr)] String heightMap, [MarshalAs(UnmanagedType.LPWStr)] String mapTexture );
+
+        [DllImport("YaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void HeightMapCleanup();
 
         [DllImport("YaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -77,7 +80,7 @@ namespace YamangTools
         public static extern Int32 TransPickedTriangle(ref float pickedX, ref float pickedZ, ref int PickedTriPointA, ref int PickedTriPointB, ref int PickedTriPointC);
 
         [DllImport("YaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void MapToolPickingEvent( int modeSelector );
+        public static extern void MapToolPickingEvent(int modeSelector, int PickedTriPointA, int PickedTriPointB, int PickedTriPointC);
 
 
         //////////////////////////////////////////////////////////////////////////
