@@ -99,22 +99,22 @@ YAMANGDXDLL_API void RenderHeightMap()
 	g_D3dDevice->SetFVF( D3DFVF_CUSTOMVERTEX );
 
 	g_D3dDevice->SetTexture( 0, g_MapTexture );
-	g_D3dDevice->SetTexture( 1, g_MapTextureArray[1] );
+	//g_D3dDevice->SetTexture( 1, g_MapTextureArray[1] );
 
 	//설정된 uv 좌표값에 따라 연산
 	g_D3dDevice->SetTextureStageState( 0, D3DTSS_TEXCOORDINDEX, 0 );
-	g_D3dDevice->SetTextureStageState( 1, D3DTSS_TEXCOORDINDEX, 1 );
+	//g_D3dDevice->SetTextureStageState( 1, D3DTSS_TEXCOORDINDEX, 1 );
 
 	g_D3dDevice->SetSamplerState( 0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR );
 	g_D3dDevice->SetSamplerState( 0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR );
 
-	g_D3dDevice->SetSamplerState( 1, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR );
-	g_D3dDevice->SetSamplerState( 1, D3DSAMP_MINFILTER, D3DTEXF_LINEAR );
-
-	
-	g_D3dDevice->SetTextureStageState( 1, D3DTSS_COLORARG1, D3DTA_TEXTURE );
-	g_D3dDevice->SetTextureStageState( 1, D3DTSS_COLORARG2, D3DTA_CURRENT );
-	g_D3dDevice->SetTextureStageState( 1, D3DTSS_COLOROP, D3DTOP_MODULATE );
+// 	g_D3dDevice->SetSamplerState( 1, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR );
+// 	g_D3dDevice->SetSamplerState( 1, D3DSAMP_MINFILTER, D3DTEXF_LINEAR );
+// 
+// 	
+// 	g_D3dDevice->SetTextureStageState( 1, D3DTSS_COLORARG1, D3DTA_TEXTURE );
+// 	g_D3dDevice->SetTextureStageState( 1, D3DTSS_COLORARG2, D3DTA_CURRENT );
+// 	g_D3dDevice->SetTextureStageState( 1, D3DTSS_COLOROP, D3DTOP_MODULATE );
 	
 	//연산 해제 영역
 	//g_D3dDevice->SetTextureStageState( 0, D3DTSS_COLOROP, D3DTOP_DISABLE );

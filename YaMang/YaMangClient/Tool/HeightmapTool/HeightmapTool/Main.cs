@@ -29,6 +29,10 @@ namespace YamangTools
         float returnedXPos = 0.0f;
         float returnedZPos = 0.0f;
 
+        int PickedTriPointA = 0;
+        int PickedTriPointB = 0;
+        int PickedTriPointC = 0;
+
         string mapTexture0 = ".\\MapResource\\heightmap_128_128.bmp";
         string mapTexture1 = ".\\TextureResource\\grass.bmp";
         string mapTexture2 = ".\\TextureResource\\leaf.bmp";
@@ -82,9 +86,11 @@ namespace YamangTools
                     SetAction();
 
                     YamangDll.CalcPickingRay(mouseXPosition, mouseYPosition);
-                    YamangDll.TransPickedTriangle(ref returnedXPos, ref returnedZPos);
+                    //YamangDll.TransPickedTriangle(ref returnedXPos, ref returnedZPos);
+                    YamangDll.TransPickedTriangle(ref returnedXPos, ref returnedZPos, ref PickedTriPointA, ref PickedTriPointB, ref PickedTriPointC);
                     
                     //이거 활용해서 해당 위치에 나무 같은거 뿌리면 될 듯
+                    Console.WriteLine("A: " + PickedTriPointA + "\nB: " + PickedTriPointB + "\nC: " + PickedTriPointC);
                     Console.WriteLine("Xpos: " + returnedXPos + ", ZPos: " + returnedZPos);
                     
                     YamangDll.MapToolPickingEvent(actionFlag);

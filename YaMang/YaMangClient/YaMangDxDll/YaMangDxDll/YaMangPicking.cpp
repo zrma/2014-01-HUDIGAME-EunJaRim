@@ -47,7 +47,7 @@ YAMANGDXDLL_API void CalcPickingRay( int mouseX, int mouseY )
 
 }
 
-YAMANGDXDLL_API HRESULT TransPickedTriangle( float* pickedX, float* pickedZ )
+YAMANGDXDLL_API HRESULT TransPickedTriangle( float* pickedX, float* pickedZ, int* PickedTriPointA, int* PickedTriPointB, int* PickedTriPointC )
 {
 	if ( !( pickedX && pickedZ ) )
 	{
@@ -111,26 +111,35 @@ YAMANGDXDLL_API HRESULT TransPickedTriangle( float* pickedX, float* pickedZ )
 
 	if ( ( hit1 && ( dist1 > 0 ) ) || ( hit2 && ( dist2 > 0 ) ) )
 	{
-		CUSTOMVERTEX* intersectedVertexBufferStart;
-		g_Mesh->LockVertexBuffer( 0, (void**)&intersectedVertexBufferStart );
+		//CUSTOMVERTEX* intersectedVertexBufferStart;
+		//g_Mesh->LockVertexBuffer( 0, (void**)&intersectedVertexBufferStart );
 
 		if ( hit1 )
 		{
 			PickedPointA = &VerticesStartPoint[trianglePointA];
 			PickedPointB = &VerticesStartPoint[trianglePointB];
 			PickedPointC = &VerticesStartPoint[trianglePointC];
+
+			*PickedTriPointA = trianglePointA;
+			*PickedTriPointB = trianglePointB;
+			*PickedTriPointC = trianglePointC;
+
 		}
 		else
 		{
 			PickedPointA = &VerticesStartPoint[trianglePointB];
 			PickedPointB = &VerticesStartPoint[trianglePointC];
 			PickedPointC = &VerticesStartPoint[trianglePointD];
+
+			*PickedTriPointA = trianglePointB;
+			*PickedTriPointB = trianglePointC;
+			*PickedTriPointC = trianglePointD;
 		}
 
 		*pickedX += PickedPointA->m_VertexPoint.x;
 		*pickedZ += PickedPointA->m_VertexPoint.z;
 
-		g_Mesh->UnlockVertexBuffer();
+		//g_Mesh->UnlockVertexBuffer();
 
 		result = S_OK;
 	}
@@ -158,6 +167,13 @@ enum AreaModeType
 YAMANGDXDLL_API void MapToolPickingEvent( int modeSelector )
 {
 	modeSelector = static_cast<AreaModeType>( modeSelector );
+
+	LPDIRECT3DVERTEXBUFFER9 presentVertexBuffer;
+	g_Mesh->GetVertexBuffer( &presentVertexBuffer );
+
+	CUSTOMVERTEX* VerticesStartPoint;
+	presentVertexBuffer->Lock( 0, 0, (void**)&VerticesStartPoint, 0 );
+
 
 
 	//해당 모드에 따라서 동작이 발생하도록 하면 됨

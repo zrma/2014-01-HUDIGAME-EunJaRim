@@ -74,7 +74,7 @@ namespace YamangTools
         public static extern void CalcPickingRay(int mouseX, int mouseY);
 
         [DllImport("YaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void TransPickedTriangle(ref float pickedX, ref float pickedZ);
+        public static extern Int32 TransPickedTriangle(ref float pickedX, ref float pickedZ, ref int PickedTriPointA, ref int PickedTriPointB, ref int PickedTriPointC);
 
         [DllImport("YaMangDxDll.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void MapToolPickingEvent( int modeSelector );

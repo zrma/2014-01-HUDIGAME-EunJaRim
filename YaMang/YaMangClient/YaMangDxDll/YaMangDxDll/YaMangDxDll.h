@@ -60,7 +60,7 @@ extern "C"{
 	// Picking Ray를 위한 함수
 	//////////////////////////////////////////////////////////////////////////
 	YAMANGDXDLL_API void CalcPickingRay( int mouseX, int mouseY );
-	YAMANGDXDLL_API HRESULT TransPickedTriangle( float* pickedX, float* pickedZ );
+	YAMANGDXDLL_API HRESULT TransPickedTriangle( float* pickedX, float* pickedZ, int* PickedTriPointA = nullptr, int* PickedTriPointB = nullptr, int* PickedTriPointC = nullptr );
 	YAMANGDXDLL_API void MapToolPickingEvent( int modeSelector );
 	
 	//////////////////////////////////////////////////////////////////////////
