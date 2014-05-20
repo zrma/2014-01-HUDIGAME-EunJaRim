@@ -133,6 +133,8 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 			baseVertex[startIdx].m_VertexTexturePoint.x = static_cast<float>(x)* 1 / col;
 			baseVertex[startIdx].m_VertexTexturePoint.y = static_cast<float>(z)* 1 / row;
 
+
+
 			++startIdx;
 		}
 	}

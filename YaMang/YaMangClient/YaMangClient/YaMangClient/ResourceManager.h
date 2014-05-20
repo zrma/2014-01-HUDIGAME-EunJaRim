@@ -32,8 +32,10 @@ struct ResourceMesh: public Resource
 
 struct ResourceMap: public Resource
 {
-// 	LPCTSTR	m_HeightMap = nullptr;
-// 	LPCTSTR m_TextureMap = nullptr;
+	ResourceMap()
+	{
+		m_Type = RESOURCE_MAP;
+	}
 	std::wstring	m_HeightMap;
 	std::wstring	m_TextureMap;
 };

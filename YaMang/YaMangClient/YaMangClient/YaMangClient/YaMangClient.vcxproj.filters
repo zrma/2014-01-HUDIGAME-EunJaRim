@@ -50,6 +50,9 @@
     <Filter Include="UI">
       <UniqueIdentifier>{7a560131-5cc2-4294-a4fc-82cddf39668e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Map">
+      <UniqueIdentifier>{771c1ac9-df50-4e04-8e73-2158a849f244}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -208,6 +211,9 @@
     <ClInclude Include="CorpsMark.h">
       <Filter>UI</Filter>
     </ClInclude>
+    <ClInclude Include="MapManager.h">
+      <Filter>Map</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -335,6 +341,9 @@
     </ClCompile>
     <ClCompile Include="CorpsMark.cpp">
       <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="MapManager.cpp">
+      <Filter>Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
