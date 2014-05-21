@@ -38,6 +38,8 @@ void ActionScheduler::DoScheduledAction()
 	while ( !m_ActionQueue.empty() )
 	{
 		Action* headAction = m_ActionQueue.top();
+		
+		assert( headAction );
 
 		if ( m_CurrentTime < (headAction->GetTime()) )
 		{
