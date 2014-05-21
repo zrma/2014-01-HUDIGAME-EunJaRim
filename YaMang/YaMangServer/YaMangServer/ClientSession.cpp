@@ -373,6 +373,8 @@ void ClientSession::SubBaseNum()
 
 void ClientSession::CalculateRegenTime()
 {
+	///# 이 부분은 콘텐츠에 해당하는 부분이니까.. 다른 관련 객체로 이관하도록 함.
+
 	// 하드 코딩~~ 베이스 하나당 최대 동원수 증가량과 기본값
 	m_CorpsMax = (m_BaseNum * 10) + 10;
 
@@ -402,6 +404,7 @@ void ClientSession::CalculateRegenTime()
 	}
 }
 
+///# 이것도 마찬가지 콘텐츠 관련 내용..
 void ClientSession::SetKingIndex( int index, float startPositionX, float startPositionZ )
 {
 	m_KingIndex = index;

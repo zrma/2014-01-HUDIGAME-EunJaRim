@@ -65,7 +65,7 @@ void GenerateCorpOnce::OnTick()
 	position.m_EyePoint = { nowX, 0.0f, nowZ };
 	position.m_LookAtPoint = { lookX, 0.0f, lookZ };
 
-	if ( nullptr == m_Corps )
+	if ( nullptr == m_Corps ) ///# if ( m_Corps)
 	{
 		m_Corps = m_ClientManager->GenerateCorps( m_PlayerID, unitType, position );
 	}
@@ -84,7 +84,8 @@ void GenerateCorpOnce::OnTick()
 
 	if ( m_CorpsHP > 0)
 	{
-		const_cast<Corps*>( m_Corps )->SetHP( m_CorpsHP ); // 우와 const_cast... 설계가 정말 꼬여간다!!!!!
+		const_cast<Corps*>( m_Corps )->SetHP( m_CorpsHP ); // 우와 const_cast... 설계가 정말 꼬여간다!!!!! 
+		///#  const_cast -.-; 왜 이렇게...  정 안되면 mutable도 고려 가능..
 	}
 	outPacket.m_UnitNum = m_Corps->GetUnitNum( );
 

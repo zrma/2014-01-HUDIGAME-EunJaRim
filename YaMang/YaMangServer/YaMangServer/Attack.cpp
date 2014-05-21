@@ -55,7 +55,7 @@ void Attack::OnTick()
 	{
 		Log( "Attack Failed \n" );
 		m_ActionStatus = ACTION_END;
-		m_OwnerCrops->DoNextAction( this, 0 );
+		m_OwnerCrops->DoNextAction( this, 0 ); ///# 이런거는 따로 만들어 놓으면 편함. DoCancelAction()안에서 DoNextAction(0)ㄱㄱ 하는 식
 		return;
 	}
 

@@ -35,7 +35,7 @@ void GuardArea::OnBegin()
 		return;
 	}
 
-	// length를 구하기 위한 중복이지만 한번정도는 괜찮겠지...
+	// length를 구하기 위한 중복이지만 한번정도는 괜찮겠지... ///# 코드가 훨씬 깔끔해진다면 OK
 	const PositionInfo& myCorpsPositionInfo = m_OwnerCrops->GetPositionInfo();
 	const PositionInfo& targetPositionInfo = m_TargerCrops->GetPositionInfo();
 
@@ -129,6 +129,7 @@ void GuardArea::OnTick()
 
 		if ( m_TargerCrops->IsDead() )
 		{
+			///# 이런식으로 로그 2개 같이 남길거면 하나로 합치는게 맞음.
 			Log( "Dead! \n" );
 			Log( "Return to my original Position! \n" );
 

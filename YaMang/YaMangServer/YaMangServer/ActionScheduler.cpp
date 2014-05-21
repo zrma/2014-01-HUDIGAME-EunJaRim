@@ -66,14 +66,14 @@ void ActionScheduler::DoScheduledAction()
 
 		Corps* corp = headAction->GetOwnerCorps( );
 		
-		if ( nullptr != corp )
+		if ( nullptr != corp ) ///# 널체크 수준은 그냥 if ( corp ) 이렇게.. 
 		{
 			Action* holdingAction = corp->GetHoldingAction();
 
 			// 처음 액션을 받는 콥스가 아닐 경우
 			if ( nullptr != holdingAction && headAction != holdingAction)
 			{
-				holdingAction->LowKick();
+				holdingAction->LowKick(); ///# lowkick은 OnEnd에서 자동적으로 불리도록 하면 되는데.. 이렇게 강제로 불러주는 이유가 있다면 구조적으로 좋지 못함.
 			}
 			corp->SetHoldingAction( headAction );
 

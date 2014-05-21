@@ -68,7 +68,7 @@ void GameRoom::GameRoomStart()
 
 
 
-	for ( PositionInfo position : guardPositionList )
+	for ( PositionInfo position : guardPositionList ) ///# 객체 순회는 복사 아닌 참조로... 
 	{
 		const Corps* corps = GenerateCorps( 0, UnitType::UNIT_GUARD, position ); // 0번은 봇의 playerID
 		m_GuardIDList.push_back( corps->GetCorpsID( ) );
@@ -120,7 +120,7 @@ void GameRoom::GameRoomGiveUp( )
 
 	m_GameRoomStart = false;
 	
-	//g_RoomManager->DeleteRoom( m_RoomNumber ); // 위험할것 같다.
+	//g_RoomManager->DeleteRoom( m_RoomNumber ); // 위험할것 같다. ///# 그렇지.. 자기 자신을 지워버리는 것은 조심해야 함. 보통 상위 객체에 위임..
 }
 
 

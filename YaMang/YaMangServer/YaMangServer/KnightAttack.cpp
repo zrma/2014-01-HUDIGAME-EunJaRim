@@ -116,7 +116,7 @@ void KnightAttack::OnTick()
 
 		if ( m_OwnerCrops->IsDead() || m_TargerCrops->IsDead() )
 		{
-			Log( "Dead! \n" );
+			Log( "Dead! \n" ); ///# 로그는 최대한 구체적으로 남겨야 의미가 있다. 누가 어떻게 죽었는지...
 			m_ActionStatus = ACTION_END;
 			m_OwnerCrops->DoNextAction( this, 0 );
 			return;

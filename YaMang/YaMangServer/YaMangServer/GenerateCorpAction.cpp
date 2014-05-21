@@ -23,6 +23,7 @@ void GenerateCorpAction::OnBegin( )
 
 	m_LastGeneratedTime = GetTickCount64();
 
+	///# 아래 2줄에 해당하는 인터페이스를 전용으로 만들어 놓으면 편함.. DoTickBegin() 뭐 이런식으로...
 	m_ActionStatus = ACTION_TICK;
 	m_ClientManager->AddActionToScheduler( this, 0 );
 }
@@ -31,6 +32,7 @@ void GenerateCorpAction::OnTick()
 {
 	if ( m_PlayerID == -1 )
 	{
+		///# 아래 2줄에 해당하는 인터페이스를 전용으로 만들어 놓으면 편함...예: DoEndRequest(reason = normal or canceled)
 		m_ActionStatus = ACTION_END;
 		m_ClientManager->AddActionToScheduler( this, 0 );
 	}
@@ -120,6 +122,7 @@ void GenerateCorpAction::OnTick()
 
 
 	// 0.5초마다 리젠타임이 되었는지 확인
+	///# 아래 두줄도 일반화 가능.. Action::DoNextTick(500) 이런식으로
 	m_ActionStatus = ACTION_TICK;
 	m_ClientManager->AddActionToScheduler( this, 500 );
 }
