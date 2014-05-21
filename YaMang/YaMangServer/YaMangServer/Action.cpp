@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 #include "Action.h"
 #include "ActionScheduler.h"
-
+#include "GameRoom.h"
 
 Action::Action()
 {
@@ -31,4 +31,5 @@ void Action::DoAction()
 void Action::OnEnd()
 {
 	LowKick();
+	m_ClientManager->AddActionToScheduler( this, 0 );
 }

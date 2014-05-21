@@ -40,7 +40,7 @@ void ActionScheduler::DoScheduledAction()
 	{
 		Action* headAction = m_ActionQueue.top();
 		
-		CRASH_ASSERT( headAction );
+		CRASH_ASSERT( headAction != nullptr );
 
 		if ( m_CurrentTime < (headAction->GetTime()) )
 		{
@@ -61,7 +61,7 @@ void ActionScheduler::DoScheduledAction()
 		if ( ACTION_END == headAction->GetActionStatus( ) )
 		{
 			headAction->DoAction();
-			delete headAction;
+			// delete headAction;
 			continue;
 		}
 		
