@@ -38,7 +38,18 @@ int APIENTRY _tWinMain( _In_ HINSTANCE hInstance,
 #endif
 
 	Log( "!!!:%S \n", lpCmdLine );
-	NetworkManager::GetInstance()->SetRoomNumber( 1 );
+
+	// test code
+	std::wstring parameter = lpCmdLine;
+	if (0 == parameter.size())
+	{
+		NetworkManager::GetInstance()->SetRoomNumber(1);
+	}
+	else
+	{
+		NetworkManager::GetInstance()->SetRoomNumber(std::stoi(parameter));
+	}
+	
 
 	// WS_POPUPWINDOW
 	// WS_OVERLAPPEDWINDOW
