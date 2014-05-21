@@ -28,14 +28,8 @@ void CameraController::Init( float x, float z )
 
 	D3DXMATRIXA16 viewMatrix;
 	D3DXMatrixLookAtLH( &viewMatrix, &m_EyePoint, &m_LookAtPoint, &m_UpVector );
-
-	//////////////////////////////////////////////////////////////////////////
-	// 카메라는 view 행렬이므로, 월드 상의 모든 물체에 대해서 사실은 역변환하는 행렬임
-	// 그러므로 카메라를 높이값 만큼 이동하는 것은, 다른 모든 물체에 대해서 -높이값 만큼 이동
-	//////////////////////////////////////////////////////////////////////////
 	D3DXMATRIXA16 heightMatrix;
-	D3DXMatrixTranslation( &heightMatrix, 0, -MapManager::GetInstance()->GetHeightByPosition( m_EyePoint.x, m_EyePoint.z ), 0 );
-	viewMatrix = viewMatrix * heightMatrix;
+	D3DXMatrixTranslation( &heightMatrix, 0, MapManager::GetInstance()->GetHeightByPosition( m_EyePoint.x, m_EyePoint.z ), 0 );
 	Renderer::GetInstance()->SetViewMatrix( viewMatrix );
 	
 	m_ZoomDirection = ZOOM_DIRECTION_BACK;
@@ -62,9 +56,6 @@ void CameraController::MoveForward( float speed, bool zoom )
 
 	D3DXMATRIXA16 viewMatrix;
 	D3DXMatrixLookAtLH( &viewMatrix, &m_EyePoint, &m_LookAtPoint, &m_UpVector );
-	D3DXMATRIXA16 heightMatrix;
-	D3DXMatrixTranslation( &heightMatrix, 0, -MapManager::GetInstance()->GetHeightByPosition( m_EyePoint.x, m_EyePoint.z ), 0 );
-	viewMatrix = viewMatrix * heightMatrix;
 	Renderer::GetInstance()->SetViewMatrix( viewMatrix );
 }
 
@@ -82,9 +73,6 @@ void CameraController::MoveSide( float speed )
 
 	D3DXMATRIXA16 viewMatrix;
 	D3DXMatrixLookAtLH( &viewMatrix, &m_EyePoint, &m_LookAtPoint, &m_UpVector );
-	D3DXMATRIXA16 heightMatrix;
-	D3DXMatrixTranslation( &heightMatrix, 0, -MapManager::GetInstance()->GetHeightByPosition( m_EyePoint.x, m_EyePoint.z ), 0 );
-	viewMatrix = viewMatrix * heightMatrix;
 	Renderer::GetInstance()->SetViewMatrix( viewMatrix );
 }
 
@@ -97,9 +85,6 @@ void CameraController::MoveElevate( float speed )
 
 	D3DXMATRIXA16 viewMatrix;
 	D3DXMatrixLookAtLH( &viewMatrix, &m_EyePoint, &m_LookAtPoint, &m_UpVector );
-	D3DXMATRIXA16 heightMatrix;
-	D3DXMatrixTranslation( &heightMatrix, 0, -MapManager::GetInstance()->GetHeightByPosition( m_EyePoint.x, m_EyePoint.z ), 0 );
-	viewMatrix = viewMatrix * heightMatrix;
 	Renderer::GetInstance()->SetViewMatrix( viewMatrix );
 }
 
@@ -134,10 +119,12 @@ void CameraController::RotateUp( float angle )
 
 	D3DXMATRIXA16 viewMatrix;
 	D3DXMatrixLookAtLH( &viewMatrix, &m_EyePoint, &m_LookAtPoint, &m_UpVector );
-	D3DXMATRIXA16 heightMatrix;
-	D3DXMatrixTranslation( &heightMatrix, 0, -MapManager::GetInstance()->GetHeightByPosition( m_EyePoint.x, m_EyePoint.z ), 0 );
-	viewMatrix = viewMatrix * heightMatrix;
 	Renderer::GetInstance()->SetViewMatrix( viewMatrix );
+
+// 	printf_s( "\n%f %f %f %f \n", viewMatrix._11, viewMatrix._12, viewMatrix._13, viewMatrix._14 );
+// 	printf_s( "%f %f %f %f \n", viewMatrix._21, viewMatrix._22, viewMatrix._23, viewMatrix._24 );
+// 	printf_s( "%f %f %f %f \n", viewMatrix._31, viewMatrix._32, viewMatrix._33, viewMatrix._34 );
+// 	printf_s( "%f %f %f %f \n", viewMatrix._41, viewMatrix._42, viewMatrix._43, viewMatrix._44 );
 }
 
 void CameraController::RotateSide( float angle )
@@ -163,9 +150,6 @@ void CameraController::RotateSide( float angle )
 
 	D3DXMATRIXA16 viewMatrix;
 	D3DXMatrixLookAtLH( &viewMatrix, &m_EyePoint, &m_LookAtPoint, &m_UpVector );
-	D3DXMATRIXA16 heightMatrix;
-	D3DXMatrixTranslation( &heightMatrix, 0, -MapManager::GetInstance()->GetHeightByPosition( m_EyePoint.x, m_EyePoint.z ), 0 );
-	viewMatrix = viewMatrix * heightMatrix;
 	Renderer::GetInstance()->SetViewMatrix( viewMatrix );
 }
 

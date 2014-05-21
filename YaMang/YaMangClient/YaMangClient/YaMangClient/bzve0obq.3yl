@@ -32,7 +32,6 @@ void CameraController::Init( float x, float z )
 	//////////////////////////////////////////////////////////////////////////
 	// 카메라는 view 행렬이므로, 월드 상의 모든 물체에 대해서 사실은 역변환하는 행렬임
 	// 그러므로 카메라를 높이값 만큼 이동하는 것은, 다른 모든 물체에 대해서 -높이값 만큼 이동
-	//////////////////////////////////////////////////////////////////////////
 	D3DXMATRIXA16 heightMatrix;
 	D3DXMatrixTranslation( &heightMatrix, 0, -MapManager::GetInstance()->GetHeightByPosition( m_EyePoint.x, m_EyePoint.z ), 0 );
 	viewMatrix = viewMatrix * heightMatrix;

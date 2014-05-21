@@ -9,6 +9,7 @@
 #include "Collision.h"
 #include "CollisionManager.h"
 #include "CameraController.h"
+#include "MapManager.h"
 
 Unit::Unit( Corps* owner, UINT unitId )
 : m_Corps( owner ), m_UnitID( unitId )
@@ -45,6 +46,10 @@ void Unit::Render() const
 
 		thisMatrix = scaleMatrix * thisMatrix;
 	}
+
+	D3DXMATRIXA16 heightMatrix;
+	D3DXMatrixTranslation( &heightMatrix, 0, MapManager::GetInstance()->GetHeightByPosition( m_EyePoint.x, m_EyePoint.z ), 0 );
+	thisMatrix = thisMatrix * heightMatrix;
 	Renderer::GetInstance()->SetWorldMatrix( thisMatrix );
 
 	ResourceMesh* mesh = ResourceManager::GetInstance()->GetMeshByKey( m_MeshKey );

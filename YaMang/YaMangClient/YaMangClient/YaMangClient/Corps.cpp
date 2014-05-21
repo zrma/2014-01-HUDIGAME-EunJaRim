@@ -17,6 +17,7 @@
 #include "ResourceManager.h"
 #include "King.h"
 #include "NetworkManager.h"
+#include "MapManager.h"
 
 Corps::Corps( int corpsId, int playerId, PositionInfo pos )
 : m_CorpsID( corpsId ), m_OwnerPlayerID( playerId )
@@ -131,8 +132,6 @@ void Corps::Render() const
 
 	D3DXMATRIXA16 thisMatrix = GetMatrix();
 
-
-
 	float hp = static_cast<float>( m_UnitList.size() * 0.008 );
 
 	if ( IsSelected() )
@@ -150,6 +149,9 @@ void Corps::Render() const
 		thisMatrix = scaleMatrix * thisMatrix;
 	}
 
+	D3DXMATRIXA16 heightMatrix;
+	D3DXMatrixTranslation( &heightMatrix, 0, MapManager::GetInstance()->GetHeightByPosition( m_EyePoint.x, m_EyePoint.z ), 0 );
+	thisMatrix = thisMatrix * heightMatrix;
 	Renderer::GetInstance()->SetWorldMatrix( thisMatrix );
 
 	ResourceMesh* mesh = ResourceManager::GetInstance()->GetMeshByKey( m_MeshKey );
