@@ -4,6 +4,7 @@
 #include "GameRoom.h"
 #include "Corps.h"
 #include "MacroSet.h"
+#include "Exception.h"
 
 
 ActionScheduler::ActionScheduler( GameRoom* clientManager ):
@@ -39,7 +40,7 @@ void ActionScheduler::DoScheduledAction()
 	{
 		Action* headAction = m_ActionQueue.top();
 		
-		assert( headAction );
+		CRASH_ASSERT( headAction );
 
 		if ( m_CurrentTime < (headAction->GetTime()) )
 		{
