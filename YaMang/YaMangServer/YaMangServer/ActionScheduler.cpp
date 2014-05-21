@@ -55,9 +55,11 @@ void ActionScheduler::DoScheduledAction()
 		// 상태가 영 좋지 않은 곳에 맞았다면 제거
 		if ( headAction->Gozarani( )  )
 		{
+			headAction->ClearOwnerCorps();
 			delete headAction;
 			continue;
 		}
+
 		if ( ACTION_END == headAction->GetActionStatus( ) )
 		{
 			headAction->DoAction();

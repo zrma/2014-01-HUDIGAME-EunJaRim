@@ -22,6 +22,19 @@ RoomManager::RoomManager()
 	
 	m_RoomList.clear();
 	m_RoomList.insert( RoomList::value_type( LOBBY_NUMBER, m_Lobby ) );
+
+	// test code
+	AddRoom();
+	AddRoom();
+	AddRoom();
+	AddRoom();
+	AddRoom();
+	AddRoom();
+	AddRoom();
+	AddRoom();
+	AddRoom();
+	AddRoom();
+
 }
 
 
