@@ -14,6 +14,8 @@
 #include "Renderer.h"
 #include "UIObject.h"
 #include "MiniMap.h"
+#include "CorpsMark.h"
+
 
 ScenePlay::ScenePlay()
 {
@@ -88,6 +90,20 @@ void ScenePlay::AddCorps( int corpsID, Corps* corps )
 	if ( m_CorpsList.find( corpsID ) == m_CorpsList.end() )
 	{
 		m_CorpsList[corpsID] = corps;
+
+		//부대 마크 추가
+		int PosX = static_cast<int>((corps->GetEyePoint().x / 400 * 128) + 350); // 맵 상대위치 하드코딩
+		int PosY = static_cast<int>((corps->GetEyePoint().z / 400 * 128) + 100);
+		if (corps->GetOwnPlayerID() == NetworkManager::GetInstance()->GetMyPlayerID())
+		{
+			CorpsMark* mark = new CorpsMark(SPRITE_UI_CORPSMARK_BLUE,SCENE_PLAY, PosX, PosY, false, corps, true);
+			m_CorpsMarkList.push_back(mark);
+		}
+		else
+		{
+			CorpsMark* mark = new CorpsMark(SPRITE_UI_CORPSMARK_RED, SCENE_PLAY, PosX, PosY, false, corps, false);
+			m_CorpsMarkList.push_back(mark);
+		}
 	}
 	else
 	{
@@ -286,4 +302,13 @@ void ScenePlay::InitUIObjects()
 	m_RegenBar = new UIObject(SPRITE_UI_REGEN_BAR, SCENE_PLAY, 100, 0, true);
 	m_RegenFlag = new UIObject(SPRITE_UI_REGEN_FLAG, SCENE_PLAY, 180, 30, true);
 	m_Minimap = new MiniMap(SPRITE_UI_MAP, SCENE_PLAY, 350, 100, false);
+}
+
+void ScenePlay::SetMapVisible(bool visible)
+{
+	m_IsMapVisible = visible;
+	for (auto& iter : m_CorpsMarkList) 
+	{ 
+		iter->SetVisible(visible); 
+	}
 }

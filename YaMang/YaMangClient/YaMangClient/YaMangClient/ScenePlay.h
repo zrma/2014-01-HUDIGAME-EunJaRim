@@ -6,6 +6,7 @@ class Corps;
 class MouseRender;
 class UIObject;
 class MiniMap;
+class CorpsMark;
 
 class ScenePlay:
 	public Scene
@@ -39,7 +40,7 @@ public:
 
 	// 맵 출력을 위한 함수
 	void		InitUIObjects();
-	void		SetMapVisible(bool visible){ m_IsMapVisible = visible; }
+	void		SetMapVisible(bool visible);
 
 private:
 	std::hash_map<int, Corps*>	m_CorpsList;
@@ -56,6 +57,7 @@ private:
 	bool						m_IsMapVisible = false;
 	UIObject*					m_RegenBar;
 	UIObject*					m_RegenFlag;
+	std::list<CorpsMark*>		m_CorpsMarkList;
 
 };
 

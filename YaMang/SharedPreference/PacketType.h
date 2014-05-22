@@ -13,7 +13,7 @@ enum PacketTypes: short
 	PKT_NONE = 0,
 
 	PKT_CS_LOGIN = 1,
-	PKT_SC_LOGIN = 2,
+	PKT_SC_LOGIN = 2, 
 
 	PKT_CS_CHAT = 3,
 	PKT_SC_CHAT = 4,

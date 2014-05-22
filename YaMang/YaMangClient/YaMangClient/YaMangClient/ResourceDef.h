@@ -48,6 +48,8 @@
 #define SPRITE_UI_IMSIMAP					PATH_SPRITE L"UI_MapImsi.png"
 #define SPRITE_UI_IMSIREGENBAR				PATH_SPRITE L"UI_RegenBarImsi.png"
 #define SPRITE_UI_IMSIREGENFLAG				PATH_SPRITE L"UI_RegenFlagImsi.png"
+#define SPRITE_UI_CORPS_MARK_BLUE			PATH_SPRITE L"UI_CorpsMark_Blue.png"
+#define SPRITE_UI_CORPS_MARK_RED			PATH_SPRITE L"UI_CorpsMark_Red.png"
 
 #define SPRITE_IMAGE_LOADING				PATH_SPRITE L"Loading.png"
 #define SPRITE_IMAGE_RESULT_WIN				PATH_SPRITE L"ResultWin.png"
