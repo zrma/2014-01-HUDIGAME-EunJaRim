@@ -41,13 +41,13 @@ int APIENTRY _tWinMain( _In_ HINSTANCE hInstance,
 
 	// test code
 	std::wstring parameter = lpCmdLine;
-	if (0 == parameter.size())
+	if ( 0 == parameter.size() )
 	{
-		NetworkManager::GetInstance()->SetRoomNumber(1);
+		NetworkManager::GetInstance()->SetRoomNumber( 1 );
 	}
 	else
 	{
-		NetworkManager::GetInstance()->SetRoomNumber(std::stoi(parameter));
+		NetworkManager::GetInstance()->SetRoomNumber( std::stoi( parameter ) );
 	}
 	
 

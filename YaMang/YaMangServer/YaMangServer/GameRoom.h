@@ -30,7 +30,7 @@ public:
 
 
 	bool				IsGameRoomStart() const { return m_GameRoomStart; }
-
+	bool				IsGameRoomEnd() const { return m_GameRoomEnd; }
 
 	int					GetClientSize() const { return static_cast<int>( m_ClientList.size() ); }
 	int					GetRoomNumber() const { return m_RoomNumber; }
@@ -113,5 +113,6 @@ private:
 
 
 	bool				m_GameRoomStart = false;
+	bool				m_GameRoomEnd = false;
 	ActionScheduler*	m_ActionScheduler = nullptr;
 };

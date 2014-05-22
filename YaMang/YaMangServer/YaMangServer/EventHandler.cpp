@@ -170,13 +170,7 @@ void ClientSession::HandleEnterRoomRequest( EnterRoomRequest& inPacket )
 
 	int roomNumber = inPacket.m_RoomNumber;
 
-	g_RoomManager->AddRoom( );
-
-	if ( !g_RoomManager->CheckRoom( roomNumber ) )
-	{
-		++m_ErrorNumber;
-		return;
-	}
+	// g_RoomManager->AddRoom( );
 	
 	if ( !g_RoomManager->EnterRoom( roomNumber, m_PlayerID ) )
 	{
@@ -185,7 +179,7 @@ void ClientSession::HandleEnterRoomRequest( EnterRoomRequest& inPacket )
 	}
 
 	EnterRoomResult outPacket;
-	outPacket.m_RoomNumber = roomNumber;
+	outPacket.m_RoomNumber = m_ClientManager->GetRoomNumber();
 
 	if ( !Broadcast( &outPacket ) )
 	{
@@ -193,7 +187,7 @@ void ClientSession::HandleEnterRoomRequest( EnterRoomRequest& inPacket )
 		//Disconnect();
 	}
 
-	Log( "Enter Room! ID:%d ROOM:%d \n", m_PlayerID, roomNumber );
+	Log( "Enter Room! ID:%d ROOM:%d \n", m_PlayerID, m_ClientManager->GetRoomNumber( ) );
 	g_RoomManager->PrintClientList(); // 테스트 프린트
 
 }

@@ -18,6 +18,12 @@ ActionScheduler::~ActionScheduler()
 {
 	m_BeginTime = GetTickCount64( );
 	m_CurrentTime = GetTickCount64( );
+
+	for ( auto& it : m_UsedActions )
+	{
+		Action* toBeDelete = it;
+		delete toBeDelete;
+	}
 }
 
 ULONGLONG ActionScheduler::GetCurrentTick( ) const
@@ -27,6 +33,8 @@ ULONGLONG ActionScheduler::GetCurrentTick( ) const
 
 void ActionScheduler::AddActionToScheduler( Action* addedAction, ULONGLONG remainTime )
 {
+	m_UsedActions.insert( addedAction );
+
 	ULONGLONG workingTime = remainTime + GetTickCount64();
 	addedAction->SetTime( workingTime );
 	m_ActionQueue.push( addedAction );
@@ -56,7 +64,7 @@ void ActionScheduler::DoScheduledAction()
 		if ( headAction->Gozarani( )  )
 		{
 			headAction->ClearOwnerCorps();
-			delete headAction;
+			// delete headAction; // 방이 종료될때 다 정리 m_UsedActions에서
 			continue;
 		}
 

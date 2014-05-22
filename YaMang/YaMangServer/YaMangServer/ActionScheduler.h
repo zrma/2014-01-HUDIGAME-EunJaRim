@@ -31,5 +31,8 @@ private:
 	std::priority_queue<Action*, std::vector<Action*>, ActionComparator>	m_ActionQueue;
 
 	GameRoom*	m_ClientManager = nullptr;
+
+	// 임시 코드
+	std::set<Action*>	m_UsedActions;
 };
 

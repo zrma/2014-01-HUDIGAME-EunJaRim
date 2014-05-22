@@ -7,7 +7,7 @@
 
 
 
-const int LOBBY_NUMBER = 0;
+
 
 std::hash_map<int, ClientSession*>	g_PidSessionTable;
 RoomManager* g_RoomManager = nullptr;
@@ -65,22 +65,65 @@ bool RoomManager::EnterRoom( int roomNumber, int pid )
 	RoomList::iterator roomIter = m_RoomList.find( roomNumber );
 	if ( roomIter == m_RoomList.end( ) )
 	{
+		// 다른 방을 찾아야함
+		if ( QuickJoin( pid ) )
+		{
+			return true;
+		}
 		return false;
 	}
-	else
+
+	GameRoom* room = roomIter->second;
+	if ( !room->IsGameRoomStart( ) && !room->IsGameRoomEnd() )
 	{
 		std::hash_map<int, ClientSession*>::iterator sessionIter = g_PidSessionTable.find( pid );
-		if ( sessionIter != g_PidSessionTable.end( ) )
+		if ( sessionIter != g_PidSessionTable.end() )
 		{
 			ClientSession* mover = sessionIter->second;
 			if ( m_Lobby->LeaveGameRoom( mover ) )
 			{
-				roomIter->second->EnterGameRoom( mover );
+				room->EnterGameRoom( mover );
 				return true;
 			}
 		}
 	}
+	else
+	{
+		// 다른 방을 찾아야함
+		if ( QuickJoin( pid ) )
+		{
+			return true;
+		}
+	}
 
+	return false;
+}
+
+
+bool RoomManager::QuickJoin( int pid )
+{
+	std::hash_map<int, ClientSession*>::iterator sessionIter = g_PidSessionTable.find( pid );
+	if ( sessionIter != g_PidSessionTable.end() )
+	{
+		ClientSession* mover = sessionIter->second;
+		for ( auto it = m_RoomList.begin(); it != m_RoomList.end(); ++it )
+		{
+			GameRoom* room = it->second;
+			if ( LOBBY_NUMBER != room->GetRoomNumber() )
+			{
+				if ( !room->IsGameRoomStart( ) && !room->IsGameRoomEnd( ) )
+				{
+					if ( m_Lobby->LeaveGameRoom( mover ) )
+					{
+						room->EnterGameRoom( mover );
+						return true;
+					}
+				}
+			}
+		}
+	}
+
+	// AddRoom, QuickJoin recursive? ClientSession careful
 	return false;
 }
 
@@ -164,6 +207,24 @@ void RoomManager::OnPeriodWork()
 	{
 		GameRoom* room = it->second;
 		room->OnPeriodWork( );
+	}
+
+	ULONGLONG currTick = GetTickCount64();
+	if ( currTick - m_LastGCRoomTick >= 3000 )
+	{
+		RoomList safetyRoomList = m_RoomList;
+		for ( auto& it : safetyRoomList )
+		{
+			GameRoom* room = it.second;
+			if ( room->IsGameRoomEnd() && !room->IsGameRoomStart() )
+			{
+				DeleteRoom( room->GetRoomNumber( ) );
+				AddRoom(); // 일정수의 방 유지
+			}
+			
+		}
+		PrintClientList();
+		m_LastGCRoomTick = currTick;
 	}
 }
 

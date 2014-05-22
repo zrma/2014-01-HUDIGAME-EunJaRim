@@ -168,7 +168,7 @@ void GameRoom::GameRoomGiveUp( )
 	}
 
 	m_GameRoomStart = false;
-	
+	m_GameRoomEnd = true;
 	//g_RoomManager->DeleteRoom( m_RoomNumber ); // 위험할것 같다.
 }
 
@@ -209,7 +209,7 @@ void GameRoom::GameRoomLoose( int loserPlayerID )
 	}
 
 	m_GameRoomStart = false;
-
+	m_GameRoomEnd = true;
 	//g_RoomManager->DeleteRoom( m_RoomNumber ); // 위험할것 같다.
 }
 
@@ -242,8 +242,12 @@ void GameRoom::EnterGameRoom( ClientSession* client )
 	m_ClientList.insert( ClientList::value_type( client->m_Socket, client ) );
 	client->SetClientManager( this );
 
-	if (2 == m_ClientList.size())
+	// 로비가 아니고 인원이 2명이면 게임 스타트
+	if ( LOBBY_NUMBER != m_RoomNumber && 2 == m_ClientList.size( ) )
 	{
+		CRASH_ASSERT( !m_GameRoomStart );
+		CRASH_ASSERT( !m_GameRoomEnd );
+		
 		Log( "[%d]GameStarted!! \n",m_RoomNumber );
 		GameStartResult gameStartResult;
 		BroadcastPacket( &gameStartResult );
