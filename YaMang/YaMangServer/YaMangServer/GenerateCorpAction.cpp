@@ -24,7 +24,7 @@ void GenerateCorpAction::OnBegin( )
 	m_LastGeneratedTime = GetTickCount64();
 
 	m_ActionStatus = ACTION_TICK;
-	m_ClientManager->AddActionToScheduler( this, 0 );
+	m_ClientManager->AddActionToScheduler( std::shared_ptr<Action>( this ), 0 );
 }
 
 void GenerateCorpAction::OnTick()
@@ -32,7 +32,7 @@ void GenerateCorpAction::OnTick()
 	if ( m_PlayerID == -1 )
 	{
 		m_ActionStatus = ACTION_END;
-		m_ClientManager->AddActionToScheduler( this, 0 );
+		m_ClientManager->AddActionToScheduler( std::shared_ptr<Action>( this ), 0 );
 	}
 
 	if ( GetTickCount64() - m_LastGeneratedTime > m_ClientSession->GetCorpsRegenTime() )
@@ -121,7 +121,7 @@ void GenerateCorpAction::OnTick()
 
 	// 0.5초마다 리젠타임이 되었는지 확인
 	m_ActionStatus = ACTION_TICK;
-	m_ClientManager->AddActionToScheduler( this, 500 );
+	m_ClientManager->AddActionToScheduler( std::shared_ptr<Action>( this ), 500 );
 }
 
 void GenerateCorpAction::OnEnd( )

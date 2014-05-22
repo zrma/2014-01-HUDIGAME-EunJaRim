@@ -25,7 +25,7 @@ ULONGLONG ActionScheduler::GetCurrentTick( ) const
 	return GetTickCount64( ) - m_BeginTime;
 }
 
-void ActionScheduler::AddActionToScheduler( Action* addedAction, ULONGLONG remainTime )
+void ActionScheduler::AddActionToScheduler( std::shared_ptr<Action> addedAction, ULONGLONG remainTime )
 {
 	ULONGLONG workingTime = remainTime + GetTickCount64();
 	addedAction->SetTime( workingTime );
@@ -38,7 +38,7 @@ void ActionScheduler::DoScheduledAction()
 
 	while ( !m_ActionQueue.empty() )
 	{
-		Action* headAction = m_ActionQueue.top();
+		std::shared_ptr<Action> headAction = m_ActionQueue.top( );
 		
 		CRASH_ASSERT( headAction != nullptr );
 
@@ -53,16 +53,16 @@ void ActionScheduler::DoScheduledAction()
 		// @author 신동찬
 		// Action을 뜯어서 상태를 확인
 		// 상태가 영 좋지 않은 곳에 맞았다면 제거
-		if ( headAction->Gozarani( )  )
+		if ( headAction->Gozarani( ) )
 		{
-			headAction->ClearOwnerCorps();
-			delete headAction;
+			headAction->ClearOwnerCorps( );
+			//delete headAction;
 			continue;
 		}
 
 		if ( ACTION_END == headAction->GetActionStatus( ) )
 		{
-			headAction->DoAction();
+			headAction->DoAction( );
 			// delete headAction;
 			continue;
 		}
@@ -73,7 +73,7 @@ void ActionScheduler::DoScheduledAction()
 		
 		if ( nullptr != corp )
 		{
-			Action* holdingAction = corp->GetHoldingAction();
+			std::shared_ptr<Action> holdingAction = corp->GetHoldingAction( );
 
 			// 처음 액션을 받는 콥스가 아닐 경우
 			if ( nullptr != holdingAction && headAction != holdingAction)

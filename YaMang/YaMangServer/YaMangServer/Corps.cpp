@@ -65,7 +65,7 @@ void Corps::CalculateHP()
 }
 
 
-void Corps::DoNextAction( Action* addedAction, ULONGLONG remainTime )
+void Corps::DoNextAction( std::shared_ptr<Action> addedAction, ULONGLONG remainTime )
 {
 	m_ClientManager->AddActionToScheduler( addedAction, remainTime );
 }

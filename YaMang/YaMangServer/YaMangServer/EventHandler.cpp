@@ -347,8 +347,9 @@ void ClientSession::HandleMoveCorpsRequest( MoveCorpsRequest& inPacket )
 	// 이동 액션은 내부적으로 Corps의 상황을 파악하여
 	// 방향과 속도 등의 정보를 담아서 타이머 발생 때 마다 Result Packet을 보낸다.
 
-
-	MovePosition* action = new MovePosition( );
+	
+	std::shared_ptr<MovePosition>action( new MovePosition );
+	
 	action->SetClientManager( m_ClientManager );
 	action->SetOwnerCorps( corps );
 	action->SetDestination( destination );
@@ -488,7 +489,7 @@ void ClientSession::HandleAttackCorpsRequest( AttackCorpsRequest& inPacket )
 	UnitType unitType = targetCorps->GetUnitType();
 	if ( UnitType::UNIT_GUARD == unitType || UnitType::UNIT_KING == unitType )
 	{
-		TakeArea* action = new TakeArea();
+		std::shared_ptr<TakeArea>action( new TakeArea );
 		action->SetClientManager( m_ClientManager );
 		action->SetOwnerCorps( myCorps );
 		action->SetTargetCorps( targetCorps );
@@ -500,7 +501,7 @@ void ClientSession::HandleAttackCorpsRequest( AttackCorpsRequest& inPacket )
 	{
 		if ( UnitType::UNIT_KNIGHT == unitType )
 		{
-			KnightAttack* action = new KnightAttack( );
+			std::shared_ptr<KnightAttack>action( new KnightAttack );
 			action->SetClientManager( m_ClientManager );
 			action->SetOwnerCorps( myCorps );
 			action->SetTargetCorps( targetCorps );
@@ -510,7 +511,7 @@ void ClientSession::HandleAttackCorpsRequest( AttackCorpsRequest& inPacket )
 		}
 		else
 		{
-			Attack* action = new Attack();
+			std::shared_ptr<Attack>action( new Attack );
 			action->SetClientManager( m_ClientManager );
 			action->SetOwnerCorps( myCorps );
 			action->SetTargetCorps( targetCorps );

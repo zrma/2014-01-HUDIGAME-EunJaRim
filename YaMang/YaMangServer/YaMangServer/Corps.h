@@ -17,8 +17,8 @@ public:
 	const PositionInfo&		GetPositionInfo( ) const { return m_Position; }
 	void					SetPositionInfo( PositionInfo position ) { m_Position = position; };
 
-	void					SetHoldingAction( Action* holdAction ) { m_HoldAction = holdAction; }
-	Action*					GetHoldingAction( ) const { return m_HoldAction; }
+	void					SetHoldingAction( std::shared_ptr<Action> holdAction ) { m_HoldAction = holdAction; }
+	std::shared_ptr<Action>					GetHoldingAction( ) const { return m_HoldAction; }
 
 	void					ChangeFormation( FormationType formation ) { m_Formation = formation; }
 	FormationType			GetFormationType() const { return m_Formation; }
@@ -34,7 +34,7 @@ public:
 	ULONGLONG				GetAttackDelay() const { return m_AttackDelay - m_AttackDelayBonus; }
 	bool					IsDead() const { return m_IsDead; }
 
-	void					DoNextAction( Action* addedAction, ULONGLONG remainTime );
+	void					DoNextAction( std::shared_ptr<Action> addedAction, ULONGLONG remainTime );
 
 	void					MoveStart( ULONGLONG movingDuringTime, D3DXVECTOR2 lookVector );
 	void					MoveStop();
@@ -60,7 +60,7 @@ protected:
 	PositionInfo			m_Position;
 	FormationType			m_Formation = FormationType::FORMATION_RUSH;
 
-	Action*					m_HoldAction = nullptr;
+	std::shared_ptr<Action>				m_HoldAction = nullptr;
 
 	float					m_HP = 0.0f;
 	float					m_MoveSpeed = 0.0f;

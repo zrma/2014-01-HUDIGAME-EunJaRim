@@ -58,7 +58,7 @@ void MovePosition::OnBegin()
 	Log( "[MOVE]m_TargetX:%f m_TargetZ:%f m_LookX:%f m_LookZ:%f \n", outPacket.m_TargetX, outPacket.m_TargetZ, outPacket.m_LookX, outPacket.m_LookZ );
 
 	m_ActionStatus = ACTION_TICK;
-	m_OwnerCrops->DoNextAction( this, movingTime );
+	m_OwnerCrops->DoNextAction( std::shared_ptr<Action>( this ), movingTime );
 
 }
 
@@ -68,7 +68,7 @@ void MovePosition::OnTick()
 	Log( "MovePosition OnTick \n" );
 
 	m_ActionStatus = ACTION_END;
-	m_OwnerCrops->DoNextAction( this, 0 );
+	m_OwnerCrops->DoNextAction( std::shared_ptr<Action>( this ), 0 );
 }
 
 void MovePosition::OnEnd()

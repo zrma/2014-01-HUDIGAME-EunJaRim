@@ -335,7 +335,7 @@ void ClientSession::GameStart()
 	m_GameStarted = true;
 	CalculateRegenTime();
 
-	GenerateCorpAction * action = new GenerateCorpAction();
+	std::shared_ptr<GenerateCorpAction>action( new GenerateCorpAction );
 	action->SetClientManager( m_ClientManager );
 	action->SetPlayerID( m_PlayerID );
 	action->SetClientSession( this );

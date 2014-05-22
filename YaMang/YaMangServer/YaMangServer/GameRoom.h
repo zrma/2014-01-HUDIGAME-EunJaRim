@@ -52,7 +52,7 @@ public:
 	typedef std::map<int, Corps*> CorpsList;
 	const CorpsList&	GetCorpsList() { return m_CorpsList; }
 
-	void				AddActionToScheduler( Action* addedAction, ULONGLONG remainTime );
+	void				AddActionToScheduler( std::shared_ptr<Action> addedAction, ULONGLONG remainTime );
 
 
 	/// DB에 플레이어 정보를 생성하거나 삭제하는 함수

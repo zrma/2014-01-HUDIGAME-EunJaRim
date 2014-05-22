@@ -2,6 +2,7 @@
 #include "Action.h"
 #include "ActionScheduler.h"
 #include "GameRoom.h"
+#include "Exception.h"
 
 Action::Action()
 {
@@ -31,5 +32,7 @@ void Action::DoAction()
 void Action::OnEnd()
 {
 	LowKick();
-	m_ClientManager->AddActionToScheduler( this, 0 );
+
+	CRASH_ASSERT( m_ClientManager != nullptr );
+	m_ClientManager->AddActionToScheduler( std::shared_ptr<Action>(this), 0 );
 }

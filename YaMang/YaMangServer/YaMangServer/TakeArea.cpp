@@ -38,11 +38,11 @@ void TakeArea::OnBegin()
 	// 공격명령이 바로 앞에서 지시될때와 이동해야할 때를 구분 
 	if ( length < m_OwnerCrops->GetAttackRange() )
 	{
-		m_OwnerCrops->DoNextAction( this, m_OwnerCrops->GetAttackDelay() );
+		m_OwnerCrops->DoNextAction( std::shared_ptr<Action>( this ), m_OwnerCrops->GetAttackDelay( ) );
 	}
 	else
 	{
-		m_OwnerCrops->DoNextAction( this, 0 );
+		m_OwnerCrops->DoNextAction( std::shared_ptr<Action>( this ), 0 );
 	}
 }
 
@@ -54,7 +54,7 @@ void TakeArea::OnTick()
 	{
 		Log( "TakeArea Failed \n" );
 		m_ActionStatus = ACTION_END;
-		m_OwnerCrops->DoNextAction( this, 0 );
+		m_OwnerCrops->DoNextAction( std::shared_ptr<Action>( this ), 0 );
 		return;
 	}
 
@@ -114,7 +114,7 @@ void TakeArea::OnTick()
 		{
 			Log( "Dead! \n" );
 			m_ActionStatus = ACTION_END;
-			m_OwnerCrops->DoNextAction( this, 0 );
+			m_OwnerCrops->DoNextAction( std::shared_ptr<Action>( this ), 0 );
 
 			UnitType unitType = m_TargerCrops->GetUnitType();
 			if ( UnitType::UNIT_GUARD == unitType )
@@ -132,13 +132,14 @@ void TakeArea::OnTick()
 		{
 			Log( "Ready Re Attack!! \n" );
 
-			Action* targetAction = m_TargerCrops->GetHoldingAction();
+			std::shared_ptr<Action> targetAction = m_TargerCrops->GetHoldingAction( );
 			if ( nullptr == targetAction || ACTION_END == targetAction->GetActionStatus() )
 			{
 				Log( "Guard Start! \n" );
 
 				m_TargerCrops->ChangeFormation( FormationType::FORMATION_DEFENSE );
-				GuardArea* action = new GuardArea();
+
+				std::shared_ptr<GuardArea>action( new GuardArea );
 				action->SetClientManager( m_ClientManager );
 				action->SetOwnerCorps( m_TargerCrops );
 				action->SetTargetCorps( m_OwnerCrops );
@@ -147,7 +148,7 @@ void TakeArea::OnTick()
 			}
 
 			m_ActionStatus = ACTION_TICK;
-			m_OwnerCrops->DoNextAction( this, m_OwnerCrops->GetAttackDelay() );
+			m_OwnerCrops->DoNextAction( std::shared_ptr<Action>( this ), m_OwnerCrops->GetAttackDelay( ) );
 		}
 	}
 	else
@@ -202,7 +203,7 @@ void TakeArea::OnTick()
 
 		Log( "TakeArea OnTick Chase \n" );
 		m_ActionStatus = ACTION_TICK;
-		m_OwnerCrops->DoNextAction( this, movingTime );
+		m_OwnerCrops->DoNextAction( std::shared_ptr<Action>( this ), movingTime );
 	}
 }
 

@@ -19,7 +19,7 @@ void KnightAttack::OnBegin()
 {
 	Log( "Knight Attack OnBegin \n" );
 	m_ActionStatus = ACTION_TICK;
-	m_OwnerCrops->DoNextAction( this, 0 );
+	m_OwnerCrops->DoNextAction( std::shared_ptr<Action>( this ), 0 );
 }
 
 void KnightAttack::OnTick()
@@ -30,7 +30,7 @@ void KnightAttack::OnTick()
 	{
 		Log( "Knight Attack Failed \n" );
 		m_ActionStatus = ACTION_END;
-		m_OwnerCrops->DoNextAction( this, 0 );
+		m_OwnerCrops->DoNextAction( std::shared_ptr<Action>( this ), 0 );
 		return;
 	}
 
@@ -65,12 +65,12 @@ void KnightAttack::OnTick()
 		if ( eTime < m_OwnerCrops->GetAttackDelay() )
 		{
 			m_ActionStatus = ACTION_TICK;
-			m_OwnerCrops->DoNextAction( this, m_OwnerCrops->GetAttackDelay( ) - eTime );
+			m_OwnerCrops->DoNextAction( std::shared_ptr<Action>( this ), m_OwnerCrops->GetAttackDelay( ) - eTime );
 			return;
 		}
 
 		m_TargerCrops->MoveStop();
-		Action* targetAction = m_TargerCrops->GetHoldingAction();
+		std::shared_ptr<Action> targetAction = m_TargerCrops->GetHoldingAction();
 
 		// targetCorps의 액션이 없으면(idle)이면 반격
 		// 아니면 그냥 무시하고 계속 진행
@@ -78,7 +78,7 @@ void KnightAttack::OnTick()
 		{
 			Log( "target CounterAttack! \n" );
 			m_TargerCrops->ChangeFormation( FormationType::FORMATION_DEFENSE );// 망진으로 변경해야함
-			Attack* action = new Attack();
+			std::shared_ptr<Attack> action( new Attack() );
 			action->SetClientManager( m_ClientManager );
 			action->SetOwnerCorps( m_TargerCrops );
 			action->SetTargetCorps( m_OwnerCrops );
@@ -118,7 +118,7 @@ void KnightAttack::OnTick()
 		{
 			Log( "Dead! \n" );
 			m_ActionStatus = ACTION_END;
-			m_OwnerCrops->DoNextAction( this, 0 );
+			m_OwnerCrops->DoNextAction( std::shared_ptr<Action>( this ), 0 );
 			return;
 		}
 
@@ -126,7 +126,7 @@ void KnightAttack::OnTick()
 		m_AttackedTime = GetTickCount64( );
 
 		m_ActionStatus = ACTION_TICK;
-		m_OwnerCrops->DoNextAction( this, 0 );
+		m_OwnerCrops->DoNextAction( std::shared_ptr<Action>( this ), 0 );
 	}
 	else
 	{
@@ -188,7 +188,7 @@ void KnightAttack::OnTick()
 
 		Log( "Knight Attack OnTick Chase \n" );
 		m_ActionStatus = ACTION_TICK;
-		m_OwnerCrops->DoNextAction( this, movingTime );
+		m_OwnerCrops->DoNextAction( std::shared_ptr<Action>( this ), movingTime );
 	}
 }
 

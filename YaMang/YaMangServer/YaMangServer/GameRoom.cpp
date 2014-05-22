@@ -611,7 +611,7 @@ void GameRoom::TakeBase( int ownerPlayerID, int targetPlayerID, int ownerCorpsID
 
 			m_GuardIDList.at( targetGuardListIndex ) = corps->GetCorpsID( );
 
-			GenerateCorpOnce* action = new GenerateCorpOnce();
+			std::shared_ptr<GenerateCorpOnce>action( new GenerateCorpOnce );
 			action->SetClientManager( this );
 			action->SetPlayerID( ownerPlayerID );
 			action->SetClientSession( ownerClient );
@@ -648,7 +648,7 @@ void GameRoom::TakeBase( int ownerPlayerID, int targetPlayerID, int ownerCorpsID
 
 	m_GuardIDList.at( targetGuardListIndex ) = corps->GetCorpsID( );
 
-	GenerateCorpOnce* action = new GenerateCorpOnce();
+	std::shared_ptr<GenerateCorpOnce>action( new GenerateCorpOnce );
 	action->SetClientManager( this );
 	action->SetPlayerID( ownerPlayerID );
 	action->SetClientSession( ownerClient );
@@ -671,7 +671,7 @@ void GameRoom::TakeBase( int ownerPlayerID, int targetPlayerID, int ownerCorpsID
 
 }
 
-void GameRoom::AddActionToScheduler( Action* addedAction, ULONGLONG remainTime )
+void GameRoom::AddActionToScheduler( std::shared_ptr<Action> addedAction, ULONGLONG remainTime )
 {
 	m_ActionScheduler->AddActionToScheduler( addedAction, remainTime );
 }

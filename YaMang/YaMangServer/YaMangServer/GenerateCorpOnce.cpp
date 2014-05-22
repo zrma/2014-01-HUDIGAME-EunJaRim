@@ -21,7 +21,7 @@ void GenerateCorpOnce::OnBegin()
 	Log( "[%d]GenerateCorpOnce OnBegin \n", m_PlayerID );
 
 	m_ActionStatus = ACTION_TICK;
-	m_ClientManager->AddActionToScheduler( this, 0 );
+	m_ClientManager->AddActionToScheduler( std::shared_ptr<Action>(this), 0 );
 }
 
 void GenerateCorpOnce::OnTick()
@@ -29,7 +29,7 @@ void GenerateCorpOnce::OnTick()
 	if ( m_PlayerID == -1 )
 	{
 		m_ActionStatus = ACTION_END;
-		m_ClientManager->AddActionToScheduler( this, 0 );
+		m_ClientManager->AddActionToScheduler( std::shared_ptr<Action>( this ), 0 );
 		return;
 	}
 
@@ -96,7 +96,7 @@ void GenerateCorpOnce::OnTick()
 
 	m_ClientSession->AddCorpsNum();
 	m_ActionStatus = ACTION_END;
-	m_ClientManager->AddActionToScheduler( this, 0 );
+	m_ClientManager->AddActionToScheduler( std::shared_ptr<Action>( this ), 0 );
 }
 
 void GenerateCorpOnce::OnEnd()
