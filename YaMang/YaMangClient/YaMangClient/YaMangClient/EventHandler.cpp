@@ -109,6 +109,10 @@ void NetworkManager::HandleGameStartResult( GameStartResult& inPacket )
 {
 	if ( m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size ) )
 	{
+		if ( SCENE_LOAD != SceneManager::GetInstance()->GetNowSceneType() )
+		{
+			return;
+		}
 		SceneManager::GetInstance()->ChangeScene( SCENE_PLAY );
 		m_IsPlaying = true;
 		
@@ -142,10 +146,10 @@ void NetworkManager::HandleKingIndexResult( KingIndexResult& inPacket )
 		float startPositionZ = inPacket.m_StartPositionZ;
 
 		assert( kingIndex != -1 );
-
-		Scene* scene = SceneManager::GetInstance()->GetNowScene();
-		if ( typeid( ScenePlay ) == typeid( *scene ) )
+				
+		if ( SCENE_PLAY != SceneManager::GetInstance()->GetNowSceneType() )
 		{
+			Scene* scene = SceneManager::GetInstance()->GetNowScene();
 			ScenePlay* scenePlay = static_cast<ScenePlay*>( scene );
 
 			scenePlay->SetKingIndex( kingIndex );
@@ -186,8 +190,7 @@ void NetworkManager::HandleGameOverResult( GameOverResult& inPacket )
 		/// 여기 걸리면 서버로부터 잘못된 아이디가 넘어온것
 		assert( inPacket.m_PlayerId != -1 );
 
-		Scene* scene = SceneManager::GetInstance()->GetNowScene();
-		if ( typeid( ScenePlay ) == typeid( *scene ) )
+		if ( SCENE_PLAY != SceneManager::GetInstance()->GetNowSceneType() )
 		{
 			if ( m_MyPlayerId != inPacket.m_PlayerId )
 			{
@@ -282,9 +285,9 @@ void NetworkManager::HandleGenerateCorpsResult( GenerateCorpsResult& inPacket )
 		int unitNum = inPacket.m_UnitNum;
 
 
-		Scene* scene =  SceneManager::GetInstance()->GetNowScene();
-		if ( typeid( ScenePlay ) == typeid( *scene ) )
+		if ( SCENE_PLAY != SceneManager::GetInstance()->GetNowSceneType() )
 		{
+			Scene* scene = SceneManager::GetInstance()->GetNowScene();
 			ScenePlay* scenePlay = static_cast<ScenePlay*>( scene );
 
 			if ( scenePlay->CheckCorps( corpsID ) )
@@ -331,9 +334,9 @@ void NetworkManager::HandleChangeCorpsFormationResult( ChangeCorpsFormationResul
 		int corpsID = inPacket.m_CorpsID;
 		FormationType formationType = inPacket.m_FormationType;
 
-		Scene* scene = SceneManager::GetInstance()->GetNowScene();
-		if ( typeid( ScenePlay ) == typeid( *scene ) )
+		if ( SCENE_PLAY != SceneManager::GetInstance()->GetNowSceneType() )
 		{
+			Scene* scene = SceneManager::GetInstance()->GetNowScene();
 			ScenePlay* scenePlay = static_cast<ScenePlay*>( scene );
 			scenePlay->ChangeCorpsFormation( corpsID, formationType );
 			Log( "ChangeCorpsFormation! CorpID:%d Type:%d  \n", corpsID, formationType );
@@ -373,9 +376,9 @@ void NetworkManager::HandleMoveCorpsResult( MoveCorpsResult& inPacket )
 		D3DXVECTOR3 targetPosition = { targetX, 0.0f, targetZ };
 		D3DXVECTOR3 lookAtVector = { lookX, 0.0f, lookZ };
 
-		Scene* scene = SceneManager::GetInstance()->GetNowScene();
-		if ( typeid( ScenePlay ) == typeid( *scene ) )
+		if ( SCENE_PLAY != SceneManager::GetInstance()->GetNowSceneType() )
 		{
+			Scene* scene = SceneManager::GetInstance()->GetNowScene();
 			ScenePlay* scenePlay = static_cast<ScenePlay*>( scene );
 			scenePlay->MoveCorpsStart( corpsID, targetPosition, lookAtVector, speed );
 			Log( "CorpsMoving! CorpID:%d - Move Toward X:%f Z:%f Speed:%f \n", corpsID, lookAtVector.x, lookAtVector.z, speed );
@@ -413,9 +416,9 @@ void NetworkManager::HandleStopCorpsResult( StopCorpsResult& inPacket )
 		D3DXVECTOR3 targetPosition = { nowX, 0.0f, nowZ };
 		D3DXVECTOR3 lookAtPoint = { lookX, 0.0f, lookZ };
 
-		Scene* scene = SceneManager::GetInstance()->GetNowScene();
-		if ( typeid( ScenePlay ) == typeid( *scene ) )
+		if ( SCENE_PLAY != SceneManager::GetInstance()->GetNowSceneType() )
 		{
+			Scene* scene = SceneManager::GetInstance()->GetNowScene();
 			ScenePlay* scenePlay = static_cast<ScenePlay*>( scene );
 			scenePlay->MoveCorpsStop( corpsID, targetPosition, lookAtPoint );
 			Log( "CorpsStop! CorpID:%d \n", corpsID );
@@ -465,9 +468,9 @@ void NetworkManager::HandleAttackCorpsResult( AttackCorpsResult& inPacket )
 
 		int unitNum = inPacket.m_TargetUnitNum;
 
-		Scene* scene = SceneManager::GetInstance()->GetNowScene();
-		if ( typeid( ScenePlay ) == typeid( *scene ) )
+		if ( SCENE_PLAY != SceneManager::GetInstance()->GetNowSceneType() )
 		{
+			Scene* scene = SceneManager::GetInstance()->GetNowScene();
 			ScenePlay* scenePlay = static_cast<ScenePlay*>( scene );
 			scenePlay->MoveCorpsStop( attackerCorpsID, attackerNow, attackerLook );
 			scenePlay->MoveCorpsStop( targetCorpsID, targetNow, targetLook );
@@ -511,8 +514,7 @@ void NetworkManager::HandleRefreshUIResult( RefreshUIResult& inPacket )
 			assert( false );
 		}
 
-		Scene* scene = SceneManager::GetInstance()->GetNowScene();
-		if ( typeid( ScenePlay ) == typeid( *scene ) )
+		if ( SCENE_PLAY != SceneManager::GetInstance()->GetNowSceneType() )
 		{
 			wchar_t wsCorpsNum[100] = { 0, };
 			wsprintf( wsCorpsNum, L"CorpsNum : %d/%d", nowCorpsNum, maxCorpsNum );
@@ -551,9 +553,9 @@ void NetworkManager::HandleBaseResult( RefreshBaseResult& inPacket )
 		int baseID = inPacket.m_BaseID;
 		int playerID = inPacket.m_PlayerID;
 
-		Scene* scene = SceneManager::GetInstance()->GetNowScene();
-		if ( typeid( ScenePlay ) == typeid( *scene ) )
+		if ( SCENE_PLAY != SceneManager::GetInstance()->GetNowSceneType() )
 		{
+			Scene* scene = SceneManager::GetInstance()->GetNowScene();
 			ScenePlay* scenePlay = static_cast<ScenePlay*>( scene );
 			scenePlay->UpdateBase( baseID, playerID );
 			Log( "Base Owner Changed! : [%d]->[%d] \n", baseID, playerID );
@@ -588,9 +590,10 @@ void NetworkManager::HandleSyncOneCorpResult( SyncOneCorpResult& inPacket )
 		D3DXVECTOR3 corpsLook = { corpsLookX, 0.0f, corpsLookZ };
 		int unitNum = inPacket.m_UnitNum;
 		FormationType formationType = inPacket.m_FormationType;
-		Scene* scene = SceneManager::GetInstance()->GetNowScene();
-		if ( typeid( ScenePlay ) == typeid( *scene ) )
+
+		if ( SCENE_PLAY != SceneManager::GetInstance()->GetNowSceneType() )
 		{
+			Scene* scene = SceneManager::GetInstance()->GetNowScene();
 			ScenePlay* scenePlay = static_cast<ScenePlay*>( scene );
 			scenePlay->SyncOneCorp( corpsID, corpsNow, corpsLook, unitNum, formationType );
 			Log( "Synced One Corp! : %d \n", corpsID );

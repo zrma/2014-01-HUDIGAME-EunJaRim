@@ -127,8 +127,7 @@ REGISTER_KEY_HANDLER( VK_SPACE )
 			break;
 		case KeyStatusType::KEY_UP:
 		{
-			Scene* scene = SceneManager::GetInstance()->GetNowScene();
-			if ( typeid( SceneResult ) == typeid( *scene ) )
+			if ( SCENE_RESULT != SceneManager::GetInstance()->GetNowSceneType() )
 			{
 				GameManager::GetInstance()->Stop();
 			}
@@ -310,22 +309,22 @@ REGISTER_KEY_HANDLER( VK_L )
 REGISTER_KEY_HANDLER( VK_TAB )
 {
 	// 씬 플레이의 맵 보이기
-	if (SceneManager::GetInstance()->GetNowSceneType() == SCENE_PLAY)
+	if ( SCENE_PLAY == SceneManager::GetInstance()->GetNowSceneType() )
 	{
-		if (KeyStatusType::KEY_DOWN == inputKey.GetKeyStatus())
+		if ( KeyStatusType::KEY_DOWN == inputKey.GetKeyStatus() )
 		{
 			Scene* scene = SceneManager::GetInstance()->GetNowScene();
-			ScenePlay* thisScene = dynamic_cast<ScenePlay*>(scene);
+			ScenePlay* thisScene = static_cast<ScenePlay*>( scene );
 
-			thisScene->SetMapVisible(true);
+			thisScene->SetMapVisible( true );
 		}
 
-		if (KeyStatusType::KEY_UP == inputKey.GetKeyStatus())
+		if ( KeyStatusType::KEY_UP == inputKey.GetKeyStatus() )
 		{
 			Scene* scene = SceneManager::GetInstance()->GetNowScene();
-			ScenePlay* thisScene = dynamic_cast<ScenePlay*>(scene);
+			ScenePlay* thisScene = static_cast<ScenePlay*>( scene );
 
-			thisScene->SetMapVisible(false);
+			thisScene->SetMapVisible( false );
 		}
 	}
 }
