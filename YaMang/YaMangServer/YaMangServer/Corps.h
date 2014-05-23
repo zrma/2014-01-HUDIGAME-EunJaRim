@@ -37,10 +37,10 @@ public:
 	void					DoNextAction( Action* addedAction, ULONGLONG remainTime );
 
 	float					GetTargetLength( D3DXVECTOR2 destination );
-	void					MoveStart( ULONGLONG movingDuringTime, D3DXVECTOR2 lookVector );
-	ULONGLONG				MoveStart2( D3DXVECTOR2 destination, int divideMove = 1 );
-
+	ULONGLONG				MoveStart( D3DXVECTOR2 destination, int divideMove = 1 );
 	void					MoveStop();
+	void					AttackCorps( Corps* targetCrops );
+
 	void					ReCalculatePosition();
 
 protected:

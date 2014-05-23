@@ -12,6 +12,8 @@
 #include "RoomManager.h"
 #include "ClientSession.h"
 #include "MovePosition.h"
+#include "MacroSet.h"
+#include "Attack.h"
 
 Corps::Corps( int playerID, int corpsID, UnitType unitType, PositionInfo position, GameRoom* clientManager )
 : m_PlayerID( playerID ), m_CorpsID( corpsID ), m_UnitType(unitType), m_Position( position ), m_ClientManager( clientManager )
@@ -121,19 +123,7 @@ float Corps::GetTargetLength( D3DXVECTOR2 destination )
 }
 
 
-void Corps::MoveStart( ULONGLONG movingDuringTime, D3DXVECTOR2 lookVector )
-{
-	m_IsMoving = true;
-
-	m_MovingStartedTime = GetTickCount64();
-	m_MovingDuringTime = movingDuringTime;
-
-	m_MovingRoute.m_EyePoint = { m_Position.m_EyePoint.x, 0.0f, m_Position.m_EyePoint.z };
-	m_MovingRoute.m_LookAtPoint = { lookVector.x, 0.0f, lookVector.y };
-}
-
-
-ULONGLONG Corps::MoveStart2( D3DXVECTOR2 destination, int divideMove )
+ULONGLONG Corps::MoveStart( D3DXVECTOR2 destination, int divideMove )
 {
 	MoveStop();
 
@@ -188,6 +178,58 @@ void Corps::MoveStop()
 	outPacket.m_LookX = m_Position.m_LookAtPoint.x;
 	outPacket.m_LookZ = m_Position.m_LookAtPoint.z;
 	m_ClientManager->BroadcastPacket( &outPacket );
+
+}
+
+
+void Corps::AttackCorps( Corps* targetCrops )
+{
+	targetCrops->MoveStop( );
+	Action* targetAction = targetCrops->GetHoldingAction( );
+
+	// targetCorps의 액션이 없으면(idle)이면 반격
+	// 아니면 그냥 무시하고 계속 진행
+	if ( nullptr == targetAction || ACTION_END == targetAction->GetActionStatus() )
+	{
+		Log( "target CounterAttack! \n" );
+		// m_TargerCrops->ChangeFormation( FormationType::FORMATION_DEFENSE );// 망진으로 변경해야함
+		Attack* action = new Attack();
+		action->SetClientManager( m_ClientManager );
+		action->SetOwnerCorps( targetCrops );
+		action->SetTargetCorps( this );
+
+		m_ClientManager->AddActionToScheduler( action, targetCrops->GetAttackDelay( ) / 3 ); // 반격하려고 정신차리는 딜레이
+	}
+
+
+	// 공격 하세요
+	// attack result packet 보내기
+	targetCrops->AddDamage( GetAttackPower( ) );
+
+	const PositionInfo& targetPositionInfo = targetCrops->GetPositionInfo( );
+
+	AttackCorpsResult outPacket;
+	outPacket.m_AttackerCorpsID = GetCorpsID();
+	outPacket.m_TargetCorpsID = targetCrops->GetCorpsID( );
+	outPacket.m_AttackerNowX = m_Position.m_EyePoint.x;
+	outPacket.m_AttackerNowZ = m_Position.m_EyePoint.z;
+
+	outPacket.m_AttackerLookX = targetPositionInfo.m_EyePoint.x;
+	outPacket.m_AttackerLookZ = targetPositionInfo.m_EyePoint.z;
+
+	outPacket.m_TargetNowX = targetPositionInfo.m_EyePoint.x;
+	outPacket.m_TargetNowZ = targetPositionInfo.m_EyePoint.z;
+
+	outPacket.m_TargetLookX = m_Position.m_EyePoint.x;
+	outPacket.m_TargetLookZ = m_Position.m_EyePoint.z;
+
+	outPacket.m_TargetUnitNum = targetCrops->GetUnitNum( );
+
+
+	m_ClientManager->BroadcastPacket( &outPacket );
+
+	Log( "[Attack] range:%f damage:%f \n", GetAttackRange(), GetAttackPower() );
+	Log( "[Attack] Attacker:[%f][%f] Defencer:[%f][%f] \n", GetPositionInfo( ).m_EyePoint.x, GetPositionInfo( ).m_EyePoint.z, targetCrops->GetPositionInfo( ).m_EyePoint.x, targetCrops->GetPositionInfo( ).m_EyePoint.z );
 
 }
 

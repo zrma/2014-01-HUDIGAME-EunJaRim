@@ -66,50 +66,9 @@ void Attack::OnTick()
 
 	if ( length < m_OwnerCrops->GetAttackRange() )
 	{
-		m_TargerCrops->MoveStop();
-		Action* targetAction = m_TargerCrops->GetHoldingAction( );
-
-		// targetCorps의 액션이 없으면(idle)이면 반격
-		// 아니면 그냥 무시하고 계속 진행
-		if ( nullptr == targetAction || ACTION_END == targetAction->GetActionStatus( ) )
-		{
-			Log( "target CounterAttack! \n" );
-			// m_TargerCrops->ChangeFormation( FormationType::FORMATION_DEFENSE );// 망진으로 변경해야함
-			Attack* action = new Attack();
-			action->SetClientManager( m_ClientManager );
-			action->SetOwnerCorps( m_TargerCrops );
-			action->SetTargetCorps( m_OwnerCrops );
-
-			m_ClientManager->AddActionToScheduler( action, m_TargerCrops->GetAttackDelay() / 3 ); // 반격하려고 정신차리는 딜레이
-		}
 		
+		m_OwnerCrops->AttackCorps( m_TargerCrops );
 
-		// 공격 하세요
-		// attack result packet 보내기
-		m_TargerCrops->AddDamage( m_OwnerCrops->GetAttackPower( ) );
-
-		AttackCorpsResult outPacket;
-		outPacket.m_AttackerCorpsID = m_OwnerCrops->GetCorpsID( );
-		outPacket.m_TargetCorpsID = m_TargerCrops->GetCorpsID();
-		outPacket.m_AttackerNowX = myCorpsPositionInfo.m_EyePoint.x;
-		outPacket.m_AttackerNowZ = myCorpsPositionInfo.m_EyePoint.z;
-
-		outPacket.m_AttackerLookX = targetPositionInfo.m_EyePoint.x;
-		outPacket.m_AttackerLookZ = targetPositionInfo.m_EyePoint.z;
-
-		outPacket.m_TargetNowX = targetPositionInfo.m_EyePoint.x;
-		outPacket.m_TargetNowZ = targetPositionInfo.m_EyePoint.z;
-		
-		outPacket.m_TargetLookX = myCorpsPositionInfo.m_LookAtPoint.x;
-		outPacket.m_TargetLookZ = myCorpsPositionInfo.m_LookAtPoint.z;
-
-		outPacket.m_TargetUnitNum = m_TargerCrops->GetUnitNum();
-
-
-		m_ClientManager->BroadcastPacket( &outPacket );
-
-		Log( "[Attack] length:%f  range:%f damage:%f \n", length, m_OwnerCrops->GetAttackRange( ), m_OwnerCrops->GetAttackPower( ) );
-		Log( "[Attack] Attacker:[%f][%f] Defencer:[%f][%f] \n", m_OwnerCrops->GetPositionInfo( ).m_EyePoint.x, m_OwnerCrops->GetPositionInfo( ).m_EyePoint.z, m_TargerCrops->GetPositionInfo( ).m_EyePoint.x, m_TargerCrops->GetPositionInfo( ).m_EyePoint.z );
 		Log( "Attack OnTick Attack Success \n" );
 
 
@@ -161,7 +120,7 @@ void Attack::OnTick()
 		D3DXVECTOR2 destination;
 		destination.x = targetX;
 		destination.y = targetZ;
-		ULONGLONG movingTime = m_OwnerCrops->MoveStart2( destination, 2 );
+		ULONGLONG movingTime = m_OwnerCrops->MoveStart( destination, 2 );
 
 
 		Log( "Attack OnTick Chase \n" );

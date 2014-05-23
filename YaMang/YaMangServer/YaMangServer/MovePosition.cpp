@@ -23,7 +23,7 @@ void MovePosition::OnBegin()
 	destination.x = m_Destination.m_EyePoint.x;
 	destination.y = m_Destination.m_EyePoint.z;
 
-	ULONGLONG movingTime = m_OwnerCrops->MoveStart2( destination );
+	ULONGLONG movingTime = m_OwnerCrops->MoveStart( destination );
 
 	m_ActionStatus = ACTION_TICK;
 	m_OwnerCrops->DoNextAction( this, movingTime );
