@@ -20,7 +20,7 @@ public:
 	void					SetHoldingAction( Action* holdAction ) { m_HoldAction = holdAction; }
 	Action*					GetHoldingAction( ) const { return m_HoldAction; }
 
-	void					ChangeFormation( FormationType formation ) { m_Formation = formation; }
+	void					ChangeFormation( FormationType formation );
 	FormationType			GetFormationType() const { return m_Formation; }
 
 	void					AddDamage( float damage );
@@ -36,7 +36,10 @@ public:
 
 	void					DoNextAction( Action* addedAction, ULONGLONG remainTime );
 
+	float					GetTargetLength( D3DXVECTOR2 destination );
 	void					MoveStart( ULONGLONG movingDuringTime, D3DXVECTOR2 lookVector );
+	ULONGLONG				MoveStart2( D3DXVECTOR2 destination, int divideMove = 1 );
+
 	void					MoveStop();
 	void					ReCalculatePosition();
 

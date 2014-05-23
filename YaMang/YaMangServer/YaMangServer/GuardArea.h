@@ -15,6 +15,8 @@ private:
 	virtual void OnTick();
 	virtual void OnEnd();
 
+	void		ReturnMyBase();
+
 private:
 	Corps*		m_TargerCrops = nullptr;
 	bool		m_GuardModeOn = false;

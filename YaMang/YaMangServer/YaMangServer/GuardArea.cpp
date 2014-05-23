@@ -35,20 +35,13 @@ void GuardArea::OnBegin()
 		return;
 	}
 
-	// length를 구하기 위한 중복이지만 한번정도는 괜찮겠지...
-	const PositionInfo& myCorpsPositionInfo = m_OwnerCrops->GetPositionInfo();
+
 	const PositionInfo& targetPositionInfo = m_TargerCrops->GetPositionInfo();
 
-	float nowX = myCorpsPositionInfo.m_EyePoint.x;
-	float nowZ = myCorpsPositionInfo.m_EyePoint.z;
-	float targetX = targetPositionInfo.m_EyePoint.x;
-	float targetZ = targetPositionInfo.m_EyePoint.z;
-
-	D3DXVECTOR2 vector;
-	vector.x = targetX - nowX;
-	vector.y = targetZ - nowZ;
-
-	float length = D3DXVec2Length( &vector );
+	D3DXVECTOR2 destination;
+	destination.x = targetPositionInfo.m_EyePoint.x;
+	destination.y = targetPositionInfo.m_EyePoint.z;
+	float length = m_OwnerCrops->GetTargetLength( destination );
 
 	// 공격명령이 바로 앞에서 지시될때와 이동해야할 때를 구분 
 	if ( length < m_OwnerCrops->GetAttackRange() )
@@ -83,11 +76,16 @@ void GuardArea::OnTick()
 	float targetX = targetPositionInfo.m_EyePoint.x;
 	float targetZ = targetPositionInfo.m_EyePoint.z;
 
+
+	D3DXVECTOR2 destination;
+	destination.x = targetPositionInfo.m_EyePoint.x;
+	destination.y = targetPositionInfo.m_EyePoint.z;
+	float length = m_OwnerCrops->GetTargetLength( destination );
+
 	D3DXVECTOR2 vector;
 	vector.x = targetX - nowX;
 	vector.y = targetZ - nowZ;
 
-	float length = D3DXVec2Length( &vector );
 
 	if ( m_GuardModeOn && length < m_OwnerCrops->GetAttackRange( ) )
 	{
@@ -106,16 +104,12 @@ void GuardArea::OnTick()
 
 		outPacket.m_AttackerLookX = targetPositionInfo.m_EyePoint.x;
 		outPacket.m_AttackerLookZ = targetPositionInfo.m_EyePoint.z;
-		// outPacket.m_AttackerLookX = myCorpsPositionInfo.m_LookAtPoint.x;
-		// outPacket.m_AttackerLookZ = myCorpsPositionInfo.m_LookAtPoint.z;
 
 		outPacket.m_TargetNowX = targetPositionInfo.m_EyePoint.x;
 		outPacket.m_TargetNowZ = targetPositionInfo.m_EyePoint.z;
 
 		outPacket.m_TargetLookX = myCorpsPositionInfo.m_LookAtPoint.x;
 		outPacket.m_TargetLookZ = myCorpsPositionInfo.m_LookAtPoint.z;
-		// outPacket.m_TargetLookX = targetPositionInfo.m_LookAtPoint.x;
-		// outPacket.m_TargetLookZ = targetPositionInfo.m_LookAtPoint.z;
 
 		outPacket.m_TargetUnitNum = m_TargerCrops->GetUnitNum();
 
@@ -129,54 +123,9 @@ void GuardArea::OnTick()
 
 		if ( m_TargerCrops->IsDead() )
 		{
-			Log( "Dead! \n" );
-			Log( "Return to my original Position! \n" );
-
-			// 중복 코드
-			MoveCorpsResult outPacket;
-			outPacket.m_CorpsID = m_OwnerCrops->GetCorpsID();
-
-			UnitType unitType = m_OwnerCrops->GetUnitType();
-			PositionInfo originalPosition;
-
-			if ( UnitType::UNIT_GUARD == unitType )
-			{
-				int guardIndex = m_ClientManager->GetGuardIndexByID( m_OwnerCrops->GetCorpsID() );
-				originalPosition = m_ClientManager->GetGuardPositionInfo( guardIndex );
-			}
-			else if ( UnitType::UNIT_KING == unitType )
-			{
-				int kingIndex = m_ClientManager->GetKingIndexByID( m_OwnerCrops->GetCorpsID() );
-				originalPosition = m_ClientManager->GetKingPositionInfo( kingIndex );
-			}
-
-			targetX = originalPosition.m_EyePoint.x + 0.01f;
-			targetZ = originalPosition.m_EyePoint.z + 0.01f;
-			vector.x = targetX - nowX;
-			vector.y = targetZ - nowZ;
-
-			m_GuardModeOn = false;
-			length = D3DXVec2Length( &vector );
-			D3DXVec2Normalize( &vector, &vector );
-
-			float speed = m_OwnerCrops->GetSpeed();
-			ULONGLONG movingTime = static_cast<ULONGLONG>( ( length * 1000 ) / speed );
-
-			m_OwnerCrops->MoveStart( movingTime, vector );
-
-			outPacket.m_Speed = speed;
-			outPacket.m_TargetX = targetX;
-			outPacket.m_TargetZ = targetZ;
-			outPacket.m_LookX = vector.x;
-			outPacket.m_LookZ = vector.y;
-			Log( "[GuardArea]m_TargetX:%f m_TargetZ:%f m_LookX:%f m_LookZ:%f \n", outPacket.m_TargetX, outPacket.m_TargetZ, outPacket.m_LookX, outPacket.m_LookZ );
-
-			m_ClientManager->BroadcastPacket( &outPacket );
-
-			Log( "GuardArea OnTick Return to my original Position \n" );
-			m_ActionStatus = ACTION_END;
-			m_OwnerCrops->DoNextAction( this, movingTime );
-
+			Log( "Guarder Killed Target! \n" );
+			ReturnMyBase();
+			return;
 		}
 		else if ( m_OwnerCrops->IsDead() )
 		{
@@ -192,10 +141,18 @@ void GuardArea::OnTick()
 	}
 	else
 	{
+		// 하드 코딩 쫓아가는것을 포기하는 거리
+		if ( length > 25 )
+		{
+			Log( "Too far to chase \n" );
+			ReturnMyBase();
+			return;
+		}
 
 		// 마저 쫓아 가세요
-		MoveCorpsResult outPacket;
-		outPacket.m_CorpsID = m_OwnerCrops->GetCorpsID();
+		D3DXVECTOR2 vector;
+		vector.x = targetX - nowX;
+		vector.y = targetZ - nowZ;
 
 		float halfRange = m_OwnerCrops->GetAttackRange() / 2;
 		if ( vector.x > 0 )
@@ -215,71 +172,15 @@ void GuardArea::OnTick()
 			targetZ = targetZ + halfRange;
 		}
 
-		vector.x = targetX - nowX;
-		vector.y = targetZ - nowZ;
-
-		// 실제 거리의 한 1/2정도씩 끊어서 움직이자
-		vector.x = vector.x / 2;
-		vector.y = vector.y / 2;
+		D3DXVECTOR2 destination;
+		destination.x = targetX;
+		destination.y = targetZ;
+		ULONGLONG movingTime = m_OwnerCrops->MoveStart2( destination, 2 );
 
 
-		// 하드 코딩 쫓아가는것을 포기하는 거리
-		if ( length > 25 )
-		{
-			Log( "Return to my original Position! \n" );
-			UnitType unitType = m_OwnerCrops->GetUnitType();
-			PositionInfo originalPosition;
-
-			if ( UnitType::UNIT_GUARD == unitType )
-			{
-				int guardIndex = m_ClientManager->GetGuardIndexByID( m_OwnerCrops->GetCorpsID( ) );
-				originalPosition = m_ClientManager->GetGuardPositionInfo( guardIndex );
-			}
-			else if ( UnitType::UNIT_KING == unitType )
-			{
-				int kingIndex = m_ClientManager->GetKingIndexByID( m_OwnerCrops->GetCorpsID( ) );
-				originalPosition = m_ClientManager->GetKingPositionInfo( kingIndex );
-			}
-
-			targetX = originalPosition.m_EyePoint.x + 0.01f;
-			targetZ = originalPosition.m_EyePoint.z + 0.01f;
-			vector.x = targetX - nowX;
-			vector.y = targetZ - nowZ;
-
-			m_GuardModeOn = false;
-		}
-		
-		length = D3DXVec2Length( &vector );
-		D3DXVec2Normalize( &vector, &vector );
-		
-		float speed = m_OwnerCrops->GetSpeed();
-		ULONGLONG movingTime = static_cast<ULONGLONG>( ( length * 1000 ) / speed );
-
-		m_OwnerCrops->MoveStart( movingTime, vector );
-
-		outPacket.m_Speed = speed;
-		outPacket.m_TargetX = targetX;
-		outPacket.m_TargetZ = targetZ;
-		outPacket.m_LookX = vector.x;
-		outPacket.m_LookZ = vector.y;
-
-
-		Log( "[GuardArea]m_TargetX:%f m_TargetZ:%f m_LookX:%f m_LookZ:%f \n", outPacket.m_TargetX, outPacket.m_TargetZ, outPacket.m_LookX, outPacket.m_LookZ );
-
-		m_ClientManager->BroadcastPacket( &outPacket );
-
-		if ( !m_GuardModeOn )
-		{
-			Log( "GuardArea OnTick Return to my original Position \n" );
-			m_ActionStatus = ACTION_END;
-			m_OwnerCrops->DoNextAction( this, movingTime );
-		}
-		else
-		{
-			Log( "GuardArea OnTick Chase \n" );
-			m_ActionStatus = ACTION_TICK;
-			m_OwnerCrops->DoNextAction( this, movingTime );
-		}
+		Log( "GuardArea OnTick Chase \n" );
+		m_ActionStatus = ACTION_TICK;
+		m_OwnerCrops->DoNextAction( this, movingTime );
 
 
 
@@ -291,4 +192,37 @@ void GuardArea::OnEnd()
 	Log( "GuardArea OnEnd \n" );
 	m_OwnerCrops->MoveStop();
 	Action::OnEnd();
+}
+
+void GuardArea::ReturnMyBase()
+{
+	Log( "Return to my original Position! \n" );
+
+	const PositionInfo& targetPositionInfo = m_TargerCrops->GetPositionInfo();
+
+
+	UnitType unitType = m_OwnerCrops->GetUnitType();
+	PositionInfo originalPosition;
+
+	if ( UnitType::UNIT_GUARD == unitType )
+	{
+		int guardIndex = m_ClientManager->GetGuardIndexByID( m_OwnerCrops->GetCorpsID() );
+		originalPosition = m_ClientManager->GetGuardPositionInfo( guardIndex );
+	}
+	else if ( UnitType::UNIT_KING == unitType )
+	{
+		int kingIndex = m_ClientManager->GetKingIndexByID( m_OwnerCrops->GetCorpsID() );
+		originalPosition = m_ClientManager->GetKingPositionInfo( kingIndex );
+	}
+	m_GuardModeOn = false;
+
+
+	D3DXVECTOR2 destination;
+	destination.x = originalPosition.m_EyePoint.x + 0.01f;
+	destination.y = originalPosition.m_EyePoint.z + 0.01f;
+	ULONGLONG movingTime = m_OwnerCrops->MoveStart2( destination );
+
+	Log( "GuardArea OnTick Return to my original Position \n" );
+	m_ActionStatus = ACTION_END;
+	m_OwnerCrops->DoNextAction( this, movingTime );
 }

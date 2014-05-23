@@ -39,20 +39,18 @@ void KnightAttack::OnTick()
 	const PositionInfo& myCorpsPositionInfo = m_OwnerCrops->GetPositionInfo();
 	const PositionInfo& targetPositionInfo = m_TargerCrops->GetPositionInfo();
 
-	float nowX = myCorpsPositionInfo.m_EyePoint.x;
-	float nowZ = myCorpsPositionInfo.m_EyePoint.z;
-	float targetX = targetPositionInfo.m_EyePoint.x;
-	float targetZ = targetPositionInfo.m_EyePoint.z;
-
-	D3DXVECTOR2 vector;
-	vector.x = targetX - nowX;
-	vector.y = targetZ - nowZ;
-
-	float length = D3DXVec2Length( &vector );
 
 
+	D3DXVECTOR2 destination;
+	destination.x = targetPositionInfo.m_EyePoint.x;
+	destination.y = targetPositionInfo.m_EyePoint.z;
+	float length = m_OwnerCrops->GetTargetLength( destination );
+
+
+	// 하드 코딩 더 움직이는 거리
 	float moveMoreDistance = 25;
 
+	// 하드 코딩 반환해도 되는 거리
 	if ( length > 5 )
 	{
 		m_CanAttack = true;
@@ -77,7 +75,7 @@ void KnightAttack::OnTick()
 		if ( nullptr == targetAction || ACTION_END == targetAction->GetActionStatus() )
 		{
 			Log( "target CounterAttack! \n" );
-			m_TargerCrops->ChangeFormation( FormationType::FORMATION_DEFENSE );// 망진으로 변경해야함
+			//m_TargerCrops->ChangeFormation( FormationType::FORMATION_DEFENSE );// 망진으로 변경해야함
 			Attack* action = new Attack();
 			action->SetClientManager( m_ClientManager );
 			action->SetOwnerCorps( m_TargerCrops );
@@ -132,8 +130,14 @@ void KnightAttack::OnTick()
 	{
 
 		// 마저 쫓아 가세요
-		MoveCorpsResult outPacket;
-		outPacket.m_CorpsID = m_OwnerCrops->GetCorpsID();
+		float nowX = myCorpsPositionInfo.m_EyePoint.x;
+		float nowZ = myCorpsPositionInfo.m_EyePoint.z;
+		float targetX = targetPositionInfo.m_EyePoint.x;
+		float targetZ = targetPositionInfo.m_EyePoint.z;
+
+		D3DXVECTOR2 vector;
+		vector.x = targetX - nowX;
+		vector.y = targetZ - nowZ;
 
 		if ( !m_CanAttack )
 		{
@@ -157,34 +161,11 @@ void KnightAttack::OnTick()
 			}
 		}
 
+		D3DXVECTOR2 destination;
+		destination.x = targetX;
+		destination.y = targetZ;
+		ULONGLONG movingTime = m_OwnerCrops->MoveStart2( destination, 2 );
 
-		vector.x = targetX - nowX;
-		vector.y = targetZ - nowZ;
-
-		// 실제 거리의 한 1/2정도씩 끊어서 움직이자
-		vector.x = vector.x / 2;
-		vector.y = vector.y / 2;
-
-		length = D3DXVec2Length( &vector );
-		D3DXVec2Normalize( &vector, &vector );
-
-
-
-		float speed = m_OwnerCrops->GetSpeed();
-		ULONGLONG movingTime = static_cast<ULONGLONG>( ( length * 1000 ) / speed );
-
-		m_OwnerCrops->MoveStart( movingTime, vector );
-
-		outPacket.m_Speed = speed;
-		outPacket.m_TargetX = targetX;
-		outPacket.m_TargetZ = targetZ;
-		outPacket.m_LookX = vector.x;
-		outPacket.m_LookZ = vector.y;
-
-
-		Log( "[Knight ATTACK]m_TargetX:%f m_TargetZ:%f m_LookX:%f m_LookZ:%f \n", outPacket.m_TargetX, outPacket.m_TargetZ, outPacket.m_LookX, outPacket.m_LookZ );
-
-		m_ClientManager->BroadcastPacket( &outPacket );
 
 		Log( "Knight Attack OnTick Chase \n" );
 		m_ActionStatus = ACTION_TICK;

@@ -71,6 +71,7 @@ void GameRoom::GameRoomStart()
 	for ( PositionInfo position : guardPositionList )
 	{
 		const Corps* corps = GenerateCorps( 0, UnitType::UNIT_GUARD, position ); // 0번은 봇의 playerID
+		//corps->ChangeFormation( FormationType::FORMATION_DEFENSE );
 		m_GuardIDList.push_back( corps->GetCorpsID( ) );
 	}
 

@@ -410,7 +410,8 @@ void ClientSession::HandleChangeCorpsFormationRequest( ChangeCorpsFormationReque
 	int corpsID = inPacket.m_CorpsID;
 	FormationType formation = inPacket.m_FormationType;
 
-	if ( nullptr == m_ClientManager->GetCorpsByCorpsID( corpsID ) )
+	Corps* corps = m_ClientManager->GetCorpsByCorpsID( corpsID );
+	if ( !corps || FormationType::FORMATION_NONE == formation)
 	{
 		++m_ErrorNumber;
 		return;
@@ -423,6 +424,7 @@ void ClientSession::HandleChangeCorpsFormationRequest( ChangeCorpsFormationReque
 	}
 
 	// 내 콥스 맵에서 포메이션바꿔주자
+	corps->ChangeFormation( formation );
 
 	ChangeCorpsFormationResult outPacket;
 	outPacket.m_CorpsID = corpsID;

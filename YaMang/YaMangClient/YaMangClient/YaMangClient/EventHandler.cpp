@@ -147,7 +147,7 @@ void NetworkManager::HandleKingIndexResult( KingIndexResult& inPacket )
 
 		assert( kingIndex != -1 );
 				
-		if ( SCENE_PLAY != SceneManager::GetInstance()->GetNowSceneType() )
+		if ( SCENE_PLAY == SceneManager::GetInstance()->GetNowSceneType() )
 		{
 			Scene* scene = SceneManager::GetInstance()->GetNowScene();
 			ScenePlay* scenePlay = static_cast<ScenePlay*>( scene );
@@ -190,7 +190,7 @@ void NetworkManager::HandleGameOverResult( GameOverResult& inPacket )
 		/// 여기 걸리면 서버로부터 잘못된 아이디가 넘어온것
 		assert( inPacket.m_PlayerId != -1 );
 
-		if ( SCENE_PLAY != SceneManager::GetInstance()->GetNowSceneType() )
+		if ( SCENE_PLAY == SceneManager::GetInstance()->GetNowSceneType() )
 		{
 			if ( m_MyPlayerId != inPacket.m_PlayerId )
 			{
@@ -285,7 +285,7 @@ void NetworkManager::HandleGenerateCorpsResult( GenerateCorpsResult& inPacket )
 		int unitNum = inPacket.m_UnitNum;
 
 
-		if ( SCENE_PLAY != SceneManager::GetInstance()->GetNowSceneType() )
+		if ( SCENE_PLAY == SceneManager::GetInstance()->GetNowSceneType() )
 		{
 			Scene* scene = SceneManager::GetInstance()->GetNowScene();
 			ScenePlay* scenePlay = static_cast<ScenePlay*>( scene );
@@ -334,7 +334,7 @@ void NetworkManager::HandleChangeCorpsFormationResult( ChangeCorpsFormationResul
 		int corpsID = inPacket.m_CorpsID;
 		FormationType formationType = inPacket.m_FormationType;
 
-		if ( SCENE_PLAY != SceneManager::GetInstance()->GetNowSceneType() )
+		if ( SCENE_PLAY == SceneManager::GetInstance()->GetNowSceneType() )
 		{
 			Scene* scene = SceneManager::GetInstance()->GetNowScene();
 			ScenePlay* scenePlay = static_cast<ScenePlay*>( scene );
@@ -376,7 +376,7 @@ void NetworkManager::HandleMoveCorpsResult( MoveCorpsResult& inPacket )
 		D3DXVECTOR3 targetPosition = { targetX, 0.0f, targetZ };
 		D3DXVECTOR3 lookAtVector = { lookX, 0.0f, lookZ };
 
-		if ( SCENE_PLAY != SceneManager::GetInstance()->GetNowSceneType() )
+		if ( SCENE_PLAY == SceneManager::GetInstance()->GetNowSceneType() )
 		{
 			Scene* scene = SceneManager::GetInstance()->GetNowScene();
 			ScenePlay* scenePlay = static_cast<ScenePlay*>( scene );
@@ -416,7 +416,7 @@ void NetworkManager::HandleStopCorpsResult( StopCorpsResult& inPacket )
 		D3DXVECTOR3 targetPosition = { nowX, 0.0f, nowZ };
 		D3DXVECTOR3 lookAtPoint = { lookX, 0.0f, lookZ };
 
-		if ( SCENE_PLAY != SceneManager::GetInstance()->GetNowSceneType() )
+		if ( SCENE_PLAY == SceneManager::GetInstance()->GetNowSceneType() )
 		{
 			Scene* scene = SceneManager::GetInstance()->GetNowScene();
 			ScenePlay* scenePlay = static_cast<ScenePlay*>( scene );
@@ -468,7 +468,7 @@ void NetworkManager::HandleAttackCorpsResult( AttackCorpsResult& inPacket )
 
 		int unitNum = inPacket.m_TargetUnitNum;
 
-		if ( SCENE_PLAY != SceneManager::GetInstance()->GetNowSceneType() )
+		if ( SCENE_PLAY == SceneManager::GetInstance()->GetNowSceneType() )
 		{
 			Scene* scene = SceneManager::GetInstance()->GetNowScene();
 			ScenePlay* scenePlay = static_cast<ScenePlay*>( scene );
@@ -514,7 +514,7 @@ void NetworkManager::HandleRefreshUIResult( RefreshUIResult& inPacket )
 			assert( false );
 		}
 
-		if ( SCENE_PLAY != SceneManager::GetInstance()->GetNowSceneType() )
+		if ( SCENE_PLAY == SceneManager::GetInstance()->GetNowSceneType() )
 		{
 			wchar_t wsCorpsNum[100] = { 0, };
 			wsprintf( wsCorpsNum, L"CorpsNum : %d/%d", nowCorpsNum, maxCorpsNum );
@@ -553,7 +553,7 @@ void NetworkManager::HandleBaseResult( RefreshBaseResult& inPacket )
 		int baseID = inPacket.m_BaseID;
 		int playerID = inPacket.m_PlayerID;
 
-		if ( SCENE_PLAY != SceneManager::GetInstance()->GetNowSceneType() )
+		if ( SCENE_PLAY == SceneManager::GetInstance()->GetNowSceneType() )
 		{
 			Scene* scene = SceneManager::GetInstance()->GetNowScene();
 			ScenePlay* scenePlay = static_cast<ScenePlay*>( scene );
@@ -591,7 +591,7 @@ void NetworkManager::HandleSyncOneCorpResult( SyncOneCorpResult& inPacket )
 		int unitNum = inPacket.m_UnitNum;
 		FormationType formationType = inPacket.m_FormationType;
 
-		if ( SCENE_PLAY != SceneManager::GetInstance()->GetNowSceneType() )
+		if ( SCENE_PLAY == SceneManager::GetInstance()->GetNowSceneType() )
 		{
 			Scene* scene = SceneManager::GetInstance()->GetNowScene();
 			ScenePlay* scenePlay = static_cast<ScenePlay*>( scene );

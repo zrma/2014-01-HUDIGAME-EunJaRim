@@ -20,19 +20,13 @@ void TakeArea::OnBegin()
 	m_OwnerCrops->ReCalculatePosition();
 	m_TargerCrops->ReCalculatePosition();
 
-	const PositionInfo& myCorpsPositionInfo = m_OwnerCrops->GetPositionInfo( );
-	const PositionInfo& targetPositionInfo = m_TargerCrops->GetPositionInfo( );
 
-	float nowX = myCorpsPositionInfo.m_EyePoint.x;
-	float nowZ = myCorpsPositionInfo.m_EyePoint.z;
-	float targetX = targetPositionInfo.m_EyePoint.x;
-	float targetZ = targetPositionInfo.m_EyePoint.z;
+	const PositionInfo& targetPositionInfo = m_TargerCrops->GetPositionInfo();
 
-	D3DXVECTOR2 vector;
-	vector.x = targetX - nowX;
-	vector.y = targetZ - nowZ;
-
-	float length = D3DXVec2Length( &vector );
+	D3DXVECTOR2 destination;
+	destination.x = targetPositionInfo.m_EyePoint.x;
+	destination.y = targetPositionInfo.m_EyePoint.z;
+	float length = m_OwnerCrops->GetTargetLength( destination );
 
 	m_ActionStatus = ACTION_TICK;
 	// 공격명령이 바로 앞에서 지시될때와 이동해야할 때를 구분 
@@ -63,18 +57,10 @@ void TakeArea::OnTick()
 	const PositionInfo& myCorpsPositionInfo = m_OwnerCrops->GetPositionInfo( );
 	const PositionInfo& targetPositionInfo = m_TargerCrops->GetPositionInfo( );
 
-	float nowX = myCorpsPositionInfo.m_EyePoint.x;
-	float nowZ = myCorpsPositionInfo.m_EyePoint.z;
-	float targetX = targetPositionInfo.m_EyePoint.x;
-	float targetZ = targetPositionInfo.m_EyePoint.z;
-
-	D3DXVECTOR2 vector;
-	vector.x = targetX - nowX;
-	vector.y = targetZ - nowZ;
-
-	float length = D3DXVec2Length( &vector );
-
-
+	D3DXVECTOR2 destination;
+	destination.x = targetPositionInfo.m_EyePoint.x;
+	destination.y = targetPositionInfo.m_EyePoint.z;
+	float length = m_OwnerCrops->GetTargetLength( destination );
 
 	if ( length < m_OwnerCrops->GetAttackRange() )
 	{
@@ -137,7 +123,7 @@ void TakeArea::OnTick()
 			{
 				Log( "Guard Start! \n" );
 
-				m_TargerCrops->ChangeFormation( FormationType::FORMATION_DEFENSE );
+				// m_TargerCrops->ChangeFormation( FormationType::FORMATION_DEFENSE );
 				GuardArea* action = new GuardArea();
 				action->SetClientManager( m_ClientManager );
 				action->SetOwnerCorps( m_TargerCrops );
@@ -154,8 +140,15 @@ void TakeArea::OnTick()
 	{
 
 		// 마저 쫓아 가세요
-		MoveCorpsResult outPacket;
-		outPacket.m_CorpsID = m_OwnerCrops->GetCorpsID();
+
+		float nowX = myCorpsPositionInfo.m_EyePoint.x;
+		float nowZ = myCorpsPositionInfo.m_EyePoint.z;
+		float targetX = targetPositionInfo.m_EyePoint.x;
+		float targetZ = targetPositionInfo.m_EyePoint.z;
+
+		D3DXVECTOR2 vector;
+		vector.x = targetX - nowX;
+		vector.y = targetZ - nowZ;
 
 		float halfRange = m_OwnerCrops->GetAttackRange() / 2;
 		if ( vector.x > 0 )
@@ -175,30 +168,11 @@ void TakeArea::OnTick()
 			targetZ = targetZ + halfRange;
 		}
 
-		vector.x = targetX - nowX;
-		vector.y = targetZ - nowZ;
 
-
-		length = D3DXVec2Length( &vector );
-		D3DXVec2Normalize( &vector, &vector );
-
-
-
-		float speed = m_OwnerCrops->GetSpeed();
-		ULONGLONG movingTime = static_cast<ULONGLONG>( ( length * 1000 ) / speed );
-
-		m_OwnerCrops->MoveStart( movingTime, vector );
-
-		outPacket.m_Speed = speed;
-		outPacket.m_TargetX = targetX;
-		outPacket.m_TargetZ = targetZ;
-		outPacket.m_LookX = vector.x;
-		outPacket.m_LookZ = vector.y;
-
-
-		Log( "[TakeArea]m_TargetX:%f m_TargetZ:%f m_LookX:%f m_LookZ:%f \n", outPacket.m_TargetX, outPacket.m_TargetZ, outPacket.m_LookX, outPacket.m_LookZ );
-
-		m_ClientManager->BroadcastPacket( &outPacket );
+		D3DXVECTOR2 destination;
+		destination.x = targetX;
+		destination.y = targetZ;
+		ULONGLONG movingTime = m_OwnerCrops->MoveStart2( destination );
 
 		Log( "TakeArea OnTick Chase \n" );
 		m_ActionStatus = ACTION_TICK;

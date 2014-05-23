@@ -17,13 +17,27 @@ MovePosition::~MovePosition()
 
 void MovePosition::OnBegin()
 {
+	//m_OwnerCrops->MoveStop( );
 
-	m_OwnerCrops->ReCalculatePosition( );
+	D3DXVECTOR2 destination;
+	destination.x = m_Destination.m_EyePoint.x;
+	destination.y = m_Destination.m_EyePoint.z;
+
+	ULONGLONG movingTime = m_OwnerCrops->MoveStart2( destination );
+
+	m_ActionStatus = ACTION_TICK;
+	m_OwnerCrops->DoNextAction( this, movingTime );
+
+}
+/*
+void MovePosition::OnBegin()
+{
+	m_OwnerCrops->MoveStop();
 
 	MoveCorpsResult outPacket;
 	outPacket.m_CorpsID = m_OwnerCrops->GetCorpsID();
 
-	const PositionInfo& myCorpsPositionInfo = m_OwnerCrops->GetPositionInfo( );
+	const PositionInfo& myCorpsPositionInfo = m_OwnerCrops->GetPositionInfo();
 	float nowX = myCorpsPositionInfo.m_EyePoint.x;
 	float nowZ = myCorpsPositionInfo.m_EyePoint.z;
 	float targetX = m_Destination.m_EyePoint.x;
@@ -48,7 +62,7 @@ void MovePosition::OnBegin()
 	outPacket.m_LookX = vector.x;
 	outPacket.m_LookZ = vector.y;
 
-	
+
 	ULONGLONG movingTime = static_cast<ULONGLONG>( ( length * 1000 ) / speed );
 	m_OwnerCrops->MoveStart( movingTime, vector );
 
@@ -60,8 +74,7 @@ void MovePosition::OnBegin()
 	m_ActionStatus = ACTION_TICK;
 	m_OwnerCrops->DoNextAction( this, movingTime );
 
-}
-
+}*/
 void MovePosition::OnTick()
 {
 	// onTick의 역할은?

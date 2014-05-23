@@ -11,6 +11,7 @@
 #include "Action.h"
 #include "RoomManager.h"
 #include "ClientSession.h"
+#include "MovePosition.h"
 
 Corps::Corps( int playerID, int corpsID, UnitType unitType, PositionInfo position, GameRoom* clientManager )
 : m_PlayerID( playerID ), m_CorpsID( corpsID ), m_UnitType(unitType), m_Position( position ), m_ClientManager( clientManager )
@@ -58,6 +59,45 @@ void Corps::AddDamage( float damage )
 	CalculateHP();
 }
 
+void Corps::ChangeFormation( FormationType formation )
+{
+	
+	MoveStop();
+
+	m_Formation = formation;
+
+	switch ( formation )
+	{
+		case FormationType::FORMATION_DEFENSE:
+			m_MoveSpeedBonus = 0.0f;
+			m_AttackRangeBonus = 0.0f;
+			m_AttackPowerBonus = 0.0f;
+			m_DefenseBonus = 2.0f;
+			m_AttackDelayBonus = 0;
+			break;
+		case FormationType::FORMATION_DESTROY:
+			m_MoveSpeedBonus = 0.0f;
+			m_AttackRangeBonus = 0.0f;
+			m_AttackPowerBonus = 2.0f;
+			m_DefenseBonus = 0.0f;
+			m_AttackDelayBonus = 0;
+			break;
+		case FormationType::FORMATION_RUSH:
+			m_MoveSpeedBonus = 20.0f;
+			m_AttackRangeBonus = 0.0f;
+			m_AttackPowerBonus = 0.0f;
+			m_DefenseBonus = 0.0f;
+			m_AttackDelayBonus = 0;
+			break;
+		default:
+			m_MoveSpeedBonus = 0.0f;
+			m_AttackRangeBonus = 0.0f;
+			m_AttackPowerBonus = 0.0f;
+			m_DefenseBonus = 0.0f;
+			m_AttackDelayBonus = 0;
+			break;
+	}
+}
 
 void Corps::CalculateHP()
 {
@@ -70,6 +110,17 @@ void Corps::DoNextAction( Action* addedAction, ULONGLONG remainTime )
 	m_ClientManager->AddActionToScheduler( addedAction, remainTime );
 }
 
+
+float Corps::GetTargetLength( D3DXVECTOR2 destination )
+{
+	D3DXVECTOR2 vector;
+	vector.x = destination.x - m_Position.m_EyePoint.x;
+	vector.y = destination.y - m_Position.m_EyePoint.z;
+
+	return D3DXVec2Length( &vector );
+}
+
+
 void Corps::MoveStart( ULONGLONG movingDuringTime, D3DXVECTOR2 lookVector )
 {
 	m_IsMoving = true;
@@ -79,6 +130,50 @@ void Corps::MoveStart( ULONGLONG movingDuringTime, D3DXVECTOR2 lookVector )
 
 	m_MovingRoute.m_EyePoint = { m_Position.m_EyePoint.x, 0.0f, m_Position.m_EyePoint.z };
 	m_MovingRoute.m_LookAtPoint = { lookVector.x, 0.0f, lookVector.y };
+}
+
+
+ULONGLONG Corps::MoveStart2( D3DXVECTOR2 destination, int divideMove )
+{
+	MoveStop();
+
+	m_IsMoving = true;
+
+	float nowX = m_Position.m_EyePoint.x;
+	float nowZ = m_Position.m_EyePoint.z;
+	float targetX = destination.x;
+	float targetZ = destination.y;
+
+	D3DXVECTOR2 vector;
+	vector.x = targetX - nowX;
+	vector.y = targetZ - nowZ;
+
+	float length = GetTargetLength( destination );
+
+	length = length / divideMove;
+
+	float speed = GetSpeed();
+	D3DXVec2Normalize( &vector, &vector );
+
+	ULONGLONG movingTime = static_cast<ULONGLONG>( ( length * 1000 ) / speed );
+	m_MovingStartedTime = GetTickCount64();
+	m_MovingDuringTime = movingTime;
+
+	m_MovingRoute.m_EyePoint = { m_Position.m_EyePoint.x, 0.0f, m_Position.m_EyePoint.z };
+	m_MovingRoute.m_LookAtPoint = { vector.x, 0.0f, vector.y };
+
+
+	MoveCorpsResult outPacket;
+	outPacket.m_CorpsID = m_CorpsID;
+	outPacket.m_Speed = speed;
+	outPacket.m_TargetX = targetX; // divide했을때의 목표 필요
+	outPacket.m_TargetZ = targetZ;
+	outPacket.m_LookX = vector.x;
+	outPacket.m_LookZ = vector.y;
+
+	m_ClientManager->BroadcastPacket( &outPacket );
+
+	return movingTime;
 }
 
 void Corps::MoveStop()
@@ -109,5 +204,6 @@ void Corps::ReCalculatePosition()
 
 	}
 }
+
 
 
