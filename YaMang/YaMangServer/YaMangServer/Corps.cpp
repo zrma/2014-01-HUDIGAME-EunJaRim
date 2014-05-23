@@ -71,12 +71,15 @@ void Corps::ChangeFormation( FormationType formation )
 // 	destination.x = m_Position.m_EyePoint.x;
 // 	destination.y = m_Position.m_EyePoint.z;
 // 	MoveStart( destination );
+
+
 	if ( m_HoldAction )
 	{
 		ReCalculatePosition();
 		PositionInfo destination;
 		destination.m_EyePoint = { m_Position.m_EyePoint.x, 0.0f, m_Position.m_EyePoint.z };
-		destination.m_LookAtPoint = { m_Position.m_LookAtPoint.x, 0.0f, m_Position.m_LookAtPoint.z };
+		destination.m_LookAtPoint = { m_Position.m_EyePoint.x + m_Position.m_LookAtPoint.x, 0.0f, m_Position.m_EyePoint.z + m_Position.m_LookAtPoint.z };
+		destination.m_EyePoint += ( m_MovingRoute.m_LookAtPoint * 10);
 
 		MovePosition* action = new MovePosition();
 		action->SetClientManager( m_ClientManager );
@@ -106,7 +109,7 @@ void Corps::ChangeFormation( FormationType formation )
 			m_AttackDelayBonus = 0;
 			break;
 		case FormationType::FORMATION_RUSH:
-			m_MoveSpeedBonus = 20.0f;
+			m_MoveSpeedBonus = 2.0f;
 			m_AttackRangeBonus = 0.0f;
 			m_AttackPowerBonus = 0.0f;
 			m_DefenseBonus = 0.0f;
@@ -120,6 +123,14 @@ void Corps::ChangeFormation( FormationType formation )
 			m_AttackDelayBonus = 0;
 			break;
 	}
+
+
+
+	ChangeCorpsFormationResult outPacket;
+	outPacket.m_CorpsID = m_CorpsID;
+	outPacket.m_FormationType = formation;
+
+	m_ClientManager->BroadcastPacket( &outPacket );
 }
 
 void Corps::CalculateHP()
@@ -177,11 +188,11 @@ ULONGLONG Corps::MoveStart( D3DXVECTOR2 destination, int divideMove )
 	MoveCorpsResult outPacket;
 	outPacket.m_CorpsID = m_CorpsID;
 	outPacket.m_Speed = speed;
-	outPacket.m_TargetX = targetX; // divide했을때의 목표 필요
+	outPacket.m_TargetX = targetX;
 	outPacket.m_TargetZ = targetZ;
 	outPacket.m_LookX = vector.x;
 	outPacket.m_LookZ = vector.y;
-
+	Log( "Move [%f][%f][%f][%f] \n", targetX, targetZ, vector.x, vector.y );
 	m_ClientManager->BroadcastPacket( &outPacket );
 
 	return movingTime;
@@ -199,7 +210,7 @@ void Corps::MoveStop()
 	outPacket.m_LookX = m_Position.m_LookAtPoint.x;
 	outPacket.m_LookZ = m_Position.m_LookAtPoint.z;
 	m_ClientManager->BroadcastPacket( &outPacket );
-
+	Log( "Stop [%f][%f][%f][%f] \n", m_Position.m_EyePoint.x, m_Position.m_EyePoint.z, m_Position.m_LookAtPoint.x, m_Position.m_LookAtPoint.z );
 }
 
 

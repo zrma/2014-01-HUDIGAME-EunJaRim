@@ -99,6 +99,7 @@ xcopy ".\GameMap\*" "..\..\Bin\Server\GameMap\" /s /d /y</Command>
     <ClInclude Include="ActionScheduler.h" />
     <ClInclude Include="Arrow.h" />
     <ClInclude Include="Attack.h" />
+    <ClInclude Include="ChangeFormation.h" />
     <ClInclude Include="CircularBuffer.h" />
     <ClInclude Include="GameMapManager.h" />
     <ClInclude Include="GameRoom.h" />
@@ -143,6 +144,7 @@ xcopy ".\GameMap\*" "..\..\Bin\Server\GameMap\" /s /d /y</Command>
     <ClCompile Include="ActionScheduler.cpp" />
     <ClCompile Include="Arrow.cpp" />
     <ClCompile Include="Attack.cpp" />
+    <ClCompile Include="ChangeFormation.cpp" />
     <ClCompile Include="CircularBuffer.cpp" />
     <ClCompile Include="GameMapManager.cpp" />
     <ClCompile Include="GameRoom.cpp" />

@@ -431,15 +431,15 @@ void ClientSession::HandleChangeCorpsFormationRequest( ChangeCorpsFormationReque
 	// 내 콥스 맵에서 포메이션바꿔주자
 	corps->ChangeFormation( formation );
 
-	ChangeCorpsFormationResult outPacket;
-	outPacket.m_CorpsID = corpsID;
-	outPacket.m_FormationType = formation;
-
-	if ( !Broadcast( &outPacket ) )
-	{
-		Log( "[Disconnected from:]ClientSession::HandleChangeCorpsFormationRequest BoradCast Fail \n" );
-		Disconnect();
-	}
+// 	ChangeCorpsFormationResult outPacket;
+// 	outPacket.m_CorpsID = corpsID;
+// 	outPacket.m_FormationType = formation;
+// 
+// 	if ( !Broadcast( &outPacket ) )
+// 	{
+// 		Log( "[Disconnected from:]ClientSession::HandleChangeCorpsFormationRequest BoradCast Fail \n" );
+// 		Disconnect();
+// 	}
 
 	Log( "Corps Change Formation CorpID:%d Formation:%d \n", corpsID, formation );
 

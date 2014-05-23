@@ -223,7 +223,7 @@ void RoomManager::OnPeriodWork()
 			}
 			
 		}
-		PrintClientList();
+		//PrintClientList();
 		m_LastGCRoomTick = currTick;
 	}
 }

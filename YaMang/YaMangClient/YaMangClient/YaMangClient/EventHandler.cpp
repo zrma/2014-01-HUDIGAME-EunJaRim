@@ -421,7 +421,7 @@ void NetworkManager::HandleStopCorpsResult( StopCorpsResult& inPacket )
 			Scene* scene = SceneManager::GetInstance()->GetNowScene();
 			ScenePlay* scenePlay = static_cast<ScenePlay*>( scene );
 			scenePlay->MoveCorpsStop( corpsID, targetPosition, lookAtPoint );
-			Log( "CorpsStop! CorpID:%d \n", corpsID );
+			Log( "CorpsStop! CorpID:%d [%f][%f][%f][%f]\n", corpsID, nowX, nowZ, lookX, lookZ );
 		}
 		else
 		{
