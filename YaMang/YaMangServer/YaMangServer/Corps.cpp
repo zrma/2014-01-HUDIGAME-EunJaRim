@@ -63,8 +63,29 @@ void Corps::AddDamage( float damage )
 
 void Corps::ChangeFormation( FormationType formation )
 {
-	
-	MoveStop();
+// 	if ( m_HoldAction )
+// 	{
+// 		m_HoldAction->LowKick( );
+// 	}
+// 	D3DXVECTOR2 destination;
+// 	destination.x = m_Position.m_EyePoint.x;
+// 	destination.y = m_Position.m_EyePoint.z;
+// 	MoveStart( destination );
+	if ( m_HoldAction )
+	{
+		ReCalculatePosition();
+		PositionInfo destination;
+		destination.m_EyePoint = { m_Position.m_EyePoint.x, 0.0f, m_Position.m_EyePoint.z };
+		destination.m_LookAtPoint = { m_Position.m_LookAtPoint.x, 0.0f, m_Position.m_LookAtPoint.z };
+
+		MovePosition* action = new MovePosition();
+		action->SetClientManager( m_ClientManager );
+		action->SetOwnerCorps( this );
+		action->SetDestination( destination );
+
+		m_ClientManager->AddActionToScheduler( action, 0 );
+	}
+
 
 	m_Formation = formation;
 

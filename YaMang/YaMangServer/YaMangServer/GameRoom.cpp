@@ -71,7 +71,6 @@ void GameRoom::GameRoomStart()
 	for ( PositionInfo position : guardPositionList )
 	{
 		const Corps* corps = GenerateCorps( 0, UnitType::UNIT_GUARD, position ); // 0번은 봇의 playerID
-		//corps->ChangeFormation( FormationType::FORMATION_DEFENSE );
 		m_GuardIDList.push_back( corps->GetCorpsID( ) );
 	}
 
@@ -537,21 +536,27 @@ const Corps* GameRoom::GenerateCorps( int playerID, UnitType type, PositionInfo 
 	{
 		case UnitType::UNIT_ARROW:
 			corps = new Arrow( playerID, ++m_CorpsIDCount, type, position, this );
+			corps->ChangeFormation( FormationType::FORMATION_DESTROY );
 			break;
 		case  UnitType::UNIT_GUARD:
 			corps = new Guard( playerID, ++m_CorpsIDCount, type, position, this );
+			corps->ChangeFormation( FormationType::FORMATION_DEFENSE );
 			break;
 		case  UnitType::UNIT_KNIGHT:
 			corps = new Knight( playerID, ++m_CorpsIDCount, type, position, this );
+			corps->ChangeFormation( FormationType::FORMATION_DESTROY );
 			break;
 		case  UnitType::UNIT_PIKE:
 			corps = new Pike( playerID, ++m_CorpsIDCount, type, position, this );
+			corps->ChangeFormation( FormationType::FORMATION_DESTROY );
 			break;
 		case  UnitType::UNIT_SWORD:
 			corps = new Sword( playerID, ++m_CorpsIDCount, type, position, this );
+			corps->ChangeFormation( FormationType::FORMATION_DESTROY );
 			break;
 		case  UnitType::UNIT_KING:
 			corps = new King( playerID, ++m_CorpsIDCount, type, position, this );
+			corps->ChangeFormation( FormationType::FORMATION_DEFENSE );
 			break;
 		default:
 			return nullptr;

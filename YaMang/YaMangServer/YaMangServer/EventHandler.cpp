@@ -423,6 +423,11 @@ void ClientSession::HandleChangeCorpsFormationRequest( ChangeCorpsFormationReque
 		Disconnect();
 	}
 
+	// 이미 동일 포메이션이면 무시
+	if ( formation == corps->GetFormationType() )
+	{
+		return;
+	}
 	// 내 콥스 맵에서 포메이션바꿔주자
 	corps->ChangeFormation( formation );
 
