@@ -264,7 +264,7 @@ void ClientSession::HandleGenerateCorpsRequest( GenerateCorpsRequest& inPacket )
 
 	const Corps* corps = m_ClientManager->GenerateCorps( playerID, unitType, position );
 
-	if ( nullptr == corps )
+	if ( !corps )
 	{
 		return;
 	}
@@ -314,7 +314,7 @@ void ClientSession::HandleMoveCorpsRequest( MoveCorpsRequest& inPacket )
 
 	Corps* corps = m_ClientManager->GetCorpsByCorpsID( corpsID );
 
-	if ( nullptr == corps )
+	if ( !corps )
 	{
 		++m_ErrorNumber;
 		return;
@@ -366,7 +366,7 @@ void ClientSession::HandleStopCorpsRequest( StopCorpsRequest& inPacket )
 
 	int corpsID = inPacket.m_CorpsID;
 
-	if ( nullptr == m_ClientManager->GetCorpsByCorpsID( corpsID ) )
+	if ( !m_ClientManager->GetCorpsByCorpsID( corpsID ) )
 	{
 		++m_ErrorNumber;
 		return;
@@ -467,7 +467,7 @@ void ClientSession::HandleAttackCorpsRequest( AttackCorpsRequest& inPacket )
 	Corps* myCorps = m_ClientManager->GetCorpsByCorpsID( myCorpsID );
 	Corps* targetCorps = m_ClientManager->GetCorpsByCorpsID( targetCorpsID );
 
-	if ( nullptr == myCorps || nullptr == targetCorps )
+	if ( !myCorps || !targetCorps )
 	{
 		++m_ErrorNumber;
 		return;

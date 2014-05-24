@@ -68,7 +68,7 @@ void GameRoom::GameRoomStart()
 
 
 
-	for ( PositionInfo position : guardPositionList )
+	for ( auto& position : guardPositionList )
 	{
 		const Corps* corps = GenerateCorps( 0, UnitType::UNIT_GUARD, position ); // 0번은 봇의 playerID
 		m_GuardIDList.push_back( corps->GetCorpsID( ) );
@@ -169,7 +169,6 @@ void GameRoom::GameRoomGiveUp( )
 
 	m_GameRoomStart = false;
 	m_GameRoomEnd = true;
-	//g_RoomManager->DeleteRoom( m_RoomNumber ); // 위험할것 같다.
 }
 
 
@@ -210,7 +209,6 @@ void GameRoom::GameRoomLoose( int loserPlayerID )
 
 	m_GameRoomStart = false;
 	m_GameRoomEnd = true;
-	//g_RoomManager->DeleteRoom( m_RoomNumber ); // 위험할것 같다.
 }
 
 
@@ -590,7 +588,7 @@ void GameRoom::TakeBase( int ownerPlayerID, int targetPlayerID, int ownerCorpsID
 	Corps* ownerCorps = GetCorpsByCorpsID( ownerCorpsID );
 	Corps* targetGuard = GetCorpsByCorpsID( targetGuardID );
 
-	if ( nullptr == ownerCorps || nullptr == targetGuard )
+	if ( !ownerCorps || !targetGuard )
 	{
 		return;
 	}
@@ -689,7 +687,7 @@ void GameRoom::AddActionToScheduler( Action* addedAction, ULONGLONG remainTime )
 void GameRoom::SyncOneCorp( int corpsID )
 {
 	Corps* corps = GetCorpsByCorpsID( corpsID );
-	if ( nullptr == corps )
+	if ( !corps )
 	{
 		return;
 	}

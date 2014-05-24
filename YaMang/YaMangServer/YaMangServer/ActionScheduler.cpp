@@ -79,12 +79,12 @@ void ActionScheduler::DoScheduledAction()
 
 		Corps* corp = headAction->GetOwnerCorps( );
 		
-		if ( nullptr != corp )
+		if ( corp )
 		{
 			Action* holdingAction = corp->GetHoldingAction();
 
 			// 처음 액션을 받는 콥스가 아닐 경우
-			if ( nullptr != holdingAction && headAction != holdingAction)
+			if ( holdingAction && headAction != holdingAction)
 			{
 				holdingAction->LowKick();
 			}

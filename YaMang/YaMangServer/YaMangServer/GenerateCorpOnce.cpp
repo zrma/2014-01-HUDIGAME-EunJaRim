@@ -65,7 +65,7 @@ void GenerateCorpOnce::OnTick()
 	position.m_EyePoint = { nowX, 0.0f, nowZ };
 	position.m_LookAtPoint = { lookX, 0.0f, lookZ };
 
-	if ( nullptr == m_Corps )
+	if ( !m_Corps )
 	{
 		m_Corps = m_ClientManager->GenerateCorps( m_PlayerID, unitType, position );
 	}

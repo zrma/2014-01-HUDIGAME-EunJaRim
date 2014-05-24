@@ -195,9 +195,6 @@
     <ClCompile Include="YaMangServer.cpp">
       <Filter>YaMang</Filter>
     </ClCompile>
-    <ClCompile Include="EventHandler.cpp">
-      <Filter>YaMang</Filter>
-    </ClCompile>
     <ClCompile Include="RoomManager.cpp">
       <Filter>YaMang</Filter>
     </ClCompile>
@@ -272,6 +269,12 @@
     </ClCompile>
     <ClCompile Include="ChangeFormation.cpp">
       <Filter>Action</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientSessionNetworkEventHandler.cpp">
+      <Filter>YaMang</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientSessionEvent.cpp">
+      <Filter>YaMang</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

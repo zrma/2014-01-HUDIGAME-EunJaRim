@@ -146,6 +146,7 @@ xcopy ".\GameMap\*" "..\..\Bin\Server\GameMap\" /s /d /y</Command>
     <ClCompile Include="Attack.cpp" />
     <ClCompile Include="ChangeFormation.cpp" />
     <ClCompile Include="CircularBuffer.cpp" />
+    <ClCompile Include="ClientSessionEvent.cpp" />
     <ClCompile Include="GameMapManager.cpp" />
     <ClCompile Include="GameRoom.cpp" />
     <ClCompile Include="ClientSession.cpp" />
@@ -155,7 +156,7 @@ xcopy ".\GameMap\*" "..\..\Bin\Server\GameMap\" /s /d /y</Command>
     <ClCompile Include="DbHelper.cpp" />
     <ClCompile Include="DefenseFormation.cpp" />
     <ClCompile Include="DestroyFormation.cpp" />
-    <ClCompile Include="EventHandler.cpp" />
+    <ClCompile Include="ClientSessionNetworkEventHandler.cpp" />
     <ClCompile Include="Exception.cpp" />
     <ClCompile Include="GenerateCorpAction.cpp" />
     <ClCompile Include="GenerateCorpOnce.cpp" />

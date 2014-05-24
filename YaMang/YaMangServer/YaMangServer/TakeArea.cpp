@@ -92,7 +92,7 @@ void TakeArea::OnTick()
 			Log( "Ready Re Attack!! \n" );
 
 			Action* targetAction = m_TargerCrops->GetHoldingAction();
-			if ( nullptr == targetAction || ACTION_END == targetAction->GetActionStatus() )
+			if ( !targetAction || ACTION_END == targetAction->GetActionStatus() )
 			{
 				Log( "Guard Start! \n" );
 
