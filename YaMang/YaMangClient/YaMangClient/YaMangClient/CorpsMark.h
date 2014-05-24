@@ -16,10 +16,10 @@ public:
 	void				SetIsOurCorps(bool ourCorps) { m_IsOurCorps = ourCorps; }
 	bool				GetIsOurCorps() { return m_IsOurCorps; }
 	void				SetMarkPos();
+	void				CheckSuicide();
 
 private:
 	Corps*				m_Corps;
 	bool				m_IsOurCorps = false;
-
 };
 
