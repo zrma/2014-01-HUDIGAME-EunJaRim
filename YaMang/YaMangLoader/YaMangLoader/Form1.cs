@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Diagnostics;
 
 namespace YaMangLoader
 {
@@ -26,18 +27,54 @@ namespace YaMangLoader
 
             //sthis.webBrowser1.WebBrowserShortcutsEnabled = false;
             this.webBrowser1.Url = new Uri(String.Format("file:///{0}/loaderTemplate.html", curDir));
-            this.webBrowser1.DocumentCompleted += webBrowser1_DocumentCompleted;
+            //this.webBrowser1.DocumentCompleted += webBrowser1_DocumentCompleted;
         }
 
+        private static Boolean IsDoubleOpen = false;
         private void webBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
             if (e.Url.AbsolutePath != (sender as WebBrowser).Url.AbsolutePath)
             {
-                MessageBox.Show("로드완료 !!");
                 return;
             }
-                
+
+            //String checkURL = e.Url.OriginalString;
+            String checkURL = (sender as WebBrowser).Url.OriginalString;
+
+
+            if (!checkURL.Contains("?r="))
+            {
+                return;
+            }
+
+
+            if (IsDoubleOpen)
+            {
+                Application.Exit();
+                return;
+            }
+
+            IsDoubleOpen = true;
+
+            int index = checkURL.IndexOf("?r=");
+            String room = checkURL.Substring(index);
+            room = room.Replace("?r=", "");
+            room = room.Replace("#", "");
+
+
+            String curDir = Directory.GetCurrentDirectory();
+
+            String ClientPath = curDir + "\\" + "YamangClient.exe";
+
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.FileName = ClientPath;
+            startInfo.Arguments = room;
+            Process.Start(startInfo);
+
+
+            Application.Exit();
         }
+
        
     }
 }
