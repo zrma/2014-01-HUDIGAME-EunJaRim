@@ -19,18 +19,30 @@ namespace YaMangLoader
             InitializeComponent();
         }
 
+        private static Boolean IsDoubleOpen = false;
+
         private void Form1_Load(object sender, EventArgs e)
         {
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.WindowState = FormWindowState.Maximized;
             string curDir = Directory.GetCurrentDirectory();
 
-            //sthis.webBrowser1.WebBrowserShortcutsEnabled = false;
+            this.webBrowser1.WebBrowserShortcutsEnabled = false;
             this.webBrowser1.Url = new Uri(String.Format("file:///{0}/loaderTemplate.html", curDir));
             //this.webBrowser1.DocumentCompleted += webBrowser1_DocumentCompleted;
+            this.webBrowser1.PreviewKeyDown += webBrowser1_PreviewKeyDown;
         }
 
-        private static Boolean IsDoubleOpen = false;
+        private void webBrowser1_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                Application.Exit();
+                return;
+            }
+        }
+
+        
         private void webBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
             if (e.Url.AbsolutePath != (sender as WebBrowser).Url.AbsolutePath)
