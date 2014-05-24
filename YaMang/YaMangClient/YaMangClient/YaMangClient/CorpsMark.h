@@ -15,9 +15,11 @@ public:
 	void				SetCorps(Corps* corps) { m_Corps = corps; }
 	void				SetIsOurCorps(bool ourCorps) { m_IsOurCorps = ourCorps; }
 	bool				GetIsOurCorps() { return m_IsOurCorps; }
+	void				SetMarkPos();
 
 private:
 	Corps*				m_Corps;
 	bool				m_IsOurCorps = false;
+
 };
 
