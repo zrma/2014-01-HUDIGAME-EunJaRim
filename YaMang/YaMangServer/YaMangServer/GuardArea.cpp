@@ -179,13 +179,13 @@ void GuardArea::ReturnMyBase()
 
 	if ( UnitType::UNIT_GUARD == unitType )
 	{
-		int guardIndex = m_ClientManager->GetGuardIndexByID( m_OwnerCrops->GetCorpsID() );
-		originalPosition = m_ClientManager->GetGuardPositionInfo( guardIndex );
+		int guardIndex = m_GameRoom->GetGuardIndexByID( m_OwnerCrops->GetCorpsID() );
+		originalPosition = m_GameRoom->GetGuardPositionInfo( guardIndex );
 	}
 	else if ( UnitType::UNIT_KING == unitType )
 	{
-		int kingIndex = m_ClientManager->GetKingIndexByID( m_OwnerCrops->GetCorpsID() );
-		originalPosition = m_ClientManager->GetKingPositionInfo( kingIndex );
+		int kingIndex = m_GameRoom->GetKingIndexByID( m_OwnerCrops->GetCorpsID() );
+		originalPosition = m_GameRoom->GetKingPositionInfo( kingIndex );
 	}
 	m_GuardModeOn = false;
 

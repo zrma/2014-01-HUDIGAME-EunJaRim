@@ -5,7 +5,7 @@ class King:
 	public Corps
 {
 public:
-	King( int playerID, int corpsID, UnitType unitType, PositionInfo position, GameRoom* clientManager );
+	King( int playerID, int corpsID, UnitType unitType, PositionInfo position, GameRoom* gameRoom );
 	virtual ~King( );
 };
 

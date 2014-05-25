@@ -2,8 +2,8 @@
 #include "King.h"
 #include "UnitStatus.h"
 
-King::King( int playerID, int corpsID, UnitType unitType, PositionInfo position, GameRoom* clientManager )
-:Corps( playerID, corpsID, unitType, position, clientManager )
+King::King( int playerID, int corpsID, UnitType unitType, PositionInfo position, GameRoom* gameRoom )
+:Corps( playerID, corpsID, unitType, position, gameRoom )
 {
 	m_HP = UnitStatus::g_King.HP;
 	m_MoveSpeed = UnitStatus::g_King.MoveSpeed;

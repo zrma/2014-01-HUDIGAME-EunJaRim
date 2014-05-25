@@ -2,8 +2,8 @@
 #include "Sword.h"
 #include "UnitStatus.h"
 
-Sword::Sword( int playerID, int corpsID, UnitType unitType, PositionInfo position, GameRoom* clientManager )
-:Corps( playerID, corpsID, unitType, position, clientManager )
+Sword::Sword( int playerID, int corpsID, UnitType unitType, PositionInfo position, GameRoom* gameRoom )
+:Corps( playerID, corpsID, unitType, position, gameRoom )
 {
 	m_HP = UnitStatus::g_Sword.HP;
 	m_MoveSpeed = UnitStatus::g_Sword.MoveSpeed;

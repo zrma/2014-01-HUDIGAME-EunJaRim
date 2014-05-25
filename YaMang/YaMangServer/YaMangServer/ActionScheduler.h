@@ -15,7 +15,7 @@ struct ActionComparator
 class ActionScheduler
 {
 public:
-	ActionScheduler( GameRoom* clientManager );
+	ActionScheduler( GameRoom* gameRoom );
 	~ActionScheduler();
 
 	void	AddActionToScheduler( Action* addedAction, ULONGLONG remainTime );
@@ -30,7 +30,7 @@ private:
 
 	std::priority_queue<Action*, std::vector<Action*>, ActionComparator>	m_ActionQueue;
 
-	GameRoom*	m_ClientManager = nullptr;
+	GameRoom*	m_GameRoom = nullptr;
 
 	// 임시 코드
 	std::set<Action*>	m_UsedActions;

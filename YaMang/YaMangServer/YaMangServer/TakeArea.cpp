@@ -78,11 +78,11 @@ void TakeArea::OnTick()
 			UnitType unitType = m_TargerCrops->GetUnitType();
 			if ( UnitType::UNIT_GUARD == unitType )
 			{
-				m_ClientManager->TakeBase( m_OwnerCrops->GetPlayerID( ), m_TargerCrops->GetPlayerID( ), m_OwnerCrops->GetCorpsID( ), m_TargerCrops->GetCorpsID( ) );
+				m_GameRoom->TakeBase( m_OwnerCrops->GetPlayerID( ), m_TargerCrops->GetPlayerID( ), m_OwnerCrops->GetCorpsID( ), m_TargerCrops->GetCorpsID( ) );
 			}
 			else if ( UnitType::UNIT_KING == unitType )
 			{
-				m_ClientManager->GameRoomLoose( m_TargerCrops->GetPlayerID() );
+				m_GameRoom->GameRoomLoose( m_TargerCrops->GetPlayerID() );
 			}
 			
 			
@@ -98,11 +98,11 @@ void TakeArea::OnTick()
 
 				// m_TargerCrops->ChangeFormation( FormationType::FORMATION_DEFENSE );
 				GuardArea* action = new GuardArea();
-				action->SetClientManager( m_ClientManager );
+				action->SetGameRoom( m_GameRoom );
 				action->SetOwnerCorps( m_TargerCrops );
 				action->SetTargetCorps( m_OwnerCrops );
 
-				m_ClientManager->AddActionToScheduler( action, 0 ); // 반격하려고 정신차리는 딜레이 빠른 반격을 위해 여기는 없애자
+				m_GameRoom->AddActionToScheduler( action, 0 ); // 반격하려고 정신차리는 딜레이 빠른 반격을 위해 여기는 없애자
 			}
 
 			m_ActionStatus = ACTION_TICK;

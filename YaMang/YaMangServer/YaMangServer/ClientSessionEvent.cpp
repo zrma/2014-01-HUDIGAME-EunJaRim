@@ -68,11 +68,11 @@ void ClientSession::GameStart()
 	CalculateRegenTime();
 
 	GenerateCorpAction * action = new GenerateCorpAction();
-	action->SetClientManager( m_ClientManager );
+	action->SetGameRoom( m_GameRoom );
 	action->SetPlayerID( m_PlayerID );
 	action->SetClientSession( this );
 
-	m_ClientManager->AddActionToScheduler( action, 0 );
+	m_GameRoom->AddActionToScheduler( action, 0 );
 }
 
 void ClientSession::OnTick()
@@ -189,7 +189,7 @@ bool ClientSession::Broadcast( PacketHeader* pkt )
 		return false;
 	}
 
-	m_ClientManager->BroadcastPacket( pkt );
+	m_GameRoom->BroadcastPacket( pkt );
 
 	return true;
 }
@@ -206,7 +206,7 @@ bool ClientSession::DirectSend( PacketHeader* pkt )
 		return false;
 	}
 
-	if ( m_ClientManager->DirectPacket( m_PlayerID, pkt ) )
+	if ( m_GameRoom->DirectPacket( m_PlayerID, pkt ) )
 	{
 		return true;
 	}
@@ -252,11 +252,11 @@ void ClientSession::Disconnect()
 
 	m_Connected = false;
 
-	if ( m_GameStarted && m_ClientManager->IsGameRoomStart() )
+	if ( m_GameStarted && m_GameRoom->IsGameRoomStart() )
 	{
 		m_GameStarted = false;
 
-		m_ClientManager->GameRoomGiveUp();
+		m_GameRoom->GameRoomGiveUp();
 	}
 
 }

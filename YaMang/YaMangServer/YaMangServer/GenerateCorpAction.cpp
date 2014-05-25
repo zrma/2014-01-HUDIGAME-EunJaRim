@@ -24,7 +24,7 @@ void GenerateCorpAction::OnBegin( )
 	m_LastGeneratedTime = GetTickCount64();
 
 	m_ActionStatus = ACTION_TICK;
-	m_ClientManager->AddActionToScheduler( this, 0 );
+	m_GameRoom->AddActionToScheduler( this, 0 );
 }
 
 void GenerateCorpAction::OnTick()
@@ -32,7 +32,7 @@ void GenerateCorpAction::OnTick()
 	if ( m_PlayerID == -1 )
 	{
 		m_ActionStatus = ACTION_END;
-		m_ClientManager->AddActionToScheduler( this, 0 );
+		m_GameRoom->AddActionToScheduler( this, 0 );
 	}
 
 	if ( GetTickCount64() - m_LastGeneratedTime > m_ClientSession->GetCorpsRegenTime() )
@@ -61,7 +61,7 @@ void GenerateCorpAction::OnTick()
 		}
 
 		
-		const PositionInfo& kingPosition = m_ClientManager->GetKingPositionInfo( m_ClientSession->GetKingIndex() );
+		const PositionInfo& kingPosition = m_GameRoom->GetKingPositionInfo( m_ClientSession->GetKingIndex() );
 
 		float nowX = kingPosition.m_EyePoint.x;
 		float nowZ = kingPosition.m_EyePoint.z;
@@ -94,7 +94,7 @@ void GenerateCorpAction::OnTick()
 		position.m_EyePoint = { nowX, 0.0f, nowZ };
 		position.m_LookAtPoint = { lookX, 0.0f, lookZ };
 
-		const Corps* corps = m_ClientManager->GenerateCorps( m_PlayerID, unitType, position );
+		const Corps* corps = m_GameRoom->GenerateCorps( m_PlayerID, unitType, position );
 
 
 		GenerateCorpsResult outPacket;
@@ -110,7 +110,7 @@ void GenerateCorpAction::OnTick()
 		outPacket.m_UnitNum = corps->GetUnitNum();
 
 
-		m_ClientManager->BroadcastPacket( &outPacket );
+		m_GameRoom->BroadcastPacket( &outPacket );
 
 		Log( "GenerateCorps! Type:%d CorpID:%d PlayerID:%d \n",
 			 unitType, corps->GetCorpsID(), m_PlayerID );
@@ -121,7 +121,7 @@ void GenerateCorpAction::OnTick()
 
 	// 0.5초마다 리젠타임이 되었는지 확인
 	m_ActionStatus = ACTION_TICK;
-	m_ClientManager->AddActionToScheduler( this, 500 );
+	m_GameRoom->AddActionToScheduler( this, 500 );
 }
 
 void GenerateCorpAction::OnEnd( )

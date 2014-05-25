@@ -2,8 +2,8 @@
 #include "Guard.h"
 #include "UnitStatus.h"
 
-Guard::Guard( int playerID, int corpsID, UnitType unitType, PositionInfo position, GameRoom* clientManager )
-:Corps( playerID, corpsID, unitType, position, clientManager )
+Guard::Guard( int playerID, int corpsID, UnitType unitType, PositionInfo position, GameRoom* gameRoom )
+:Corps( playerID, corpsID, unitType, position, gameRoom )
 {
 	m_HP = UnitStatus::g_Guard.HP;
 	m_MoveSpeed = UnitStatus::g_Guard.MoveSpeed;

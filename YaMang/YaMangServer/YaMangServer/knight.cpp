@@ -2,8 +2,8 @@
 #include "Knight.h"
 #include "UnitStatus.h"
 
-Knight::Knight( int playerID, int corpsID, UnitType unitType, PositionInfo position, GameRoom* clientManager )
-:Corps( playerID, corpsID, unitType, position, clientManager )
+Knight::Knight( int playerID, int corpsID, UnitType unitType, PositionInfo position, GameRoom* gameRoom )
+:Corps( playerID, corpsID, unitType, position, gameRoom )
 {
 	m_HP = UnitStatus::g_Knight.HP;
 	m_MoveSpeed = UnitStatus::g_Knight.MoveSpeed;

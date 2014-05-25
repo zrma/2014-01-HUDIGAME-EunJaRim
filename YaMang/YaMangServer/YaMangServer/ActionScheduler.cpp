@@ -7,8 +7,8 @@
 #include "Exception.h"
 
 
-ActionScheduler::ActionScheduler( GameRoom* clientManager ):
-m_ClientManager( clientManager )
+ActionScheduler::ActionScheduler( GameRoom* gameRoom ):
+m_GameRoom( gameRoom )
 {
 	m_BeginTime = GetTickCount64( );
 }
@@ -18,7 +18,7 @@ ActionScheduler::~ActionScheduler()
 {
 	m_BeginTime = GetTickCount64( );
 	m_CurrentTime = GetTickCount64( );
-
+	
 	for ( auto& it : m_UsedActions )
 	{
 		Action* toBeDelete = it;

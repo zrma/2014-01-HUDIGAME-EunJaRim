@@ -57,7 +57,7 @@ public:
 	void	DecOverlappedRequest() { --m_OverlappedRequested; }
 	bool	DoingOverlappedOperation() const { return m_OverlappedRequested > 0; }
 
-	void	SetClientManager( GameRoom* clientManager ) { m_ClientManager = clientManager; }
+	void	SetGameRoom( GameRoom* gameRoom ) { m_GameRoom = gameRoom; }
 
 	//////////////////////////////////////////////////////////////////////////
 	// 패킷 핸들러
@@ -137,7 +137,7 @@ private:
 	// 게임 컨텐츠 관련 데이터
 	//////////////////////////////////////////////////////////////////////////
 
-	GameRoom*				m_ClientManager = nullptr;
+	GameRoom*				m_GameRoom = nullptr;
 
 	int						m_KingIndex = -1;
 	int						m_CorpsMax = 10;

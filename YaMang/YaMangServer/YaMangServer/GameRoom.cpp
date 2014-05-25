@@ -229,7 +229,7 @@ ClientSession* GameRoom::CreateClient( SOCKET sock )
 	// typedef pair<const Key, Type> value_type;
 	// value_type은 키와 밸류를 한 쌍으로 묶어주는 자료구조
 	m_ClientList.insert( ClientList::value_type( sock, client ) );
-	client->SetClientManager( this );
+	client->SetGameRoom( this );
 
 	return client;
 }
@@ -238,7 +238,7 @@ ClientSession* GameRoom::CreateClient( SOCKET sock )
 void GameRoom::EnterGameRoom( ClientSession* client )
 {
 	m_ClientList.insert( ClientList::value_type( client->m_Socket, client ) );
-	client->SetClientManager( this );
+	client->SetGameRoom( this );
 
 	// 로비가 아니고 인원이 2명이면 게임 스타트
 	if ( LOBBY_NUMBER != m_RoomNumber && 2 == m_ClientList.size( ) )
@@ -620,7 +620,7 @@ void GameRoom::TakeBase( int ownerPlayerID, int targetPlayerID, int ownerCorpsID
 			m_GuardIDList.at( targetGuardListIndex ) = corps->GetCorpsID( );
 
 			GenerateCorpOnce* action = new GenerateCorpOnce();
-			action->SetClientManager( this );
+			action->SetGameRoom( this );
 			action->SetPlayerID( ownerPlayerID );
 			action->SetClientSession( ownerClient );
 			action->SetCorpData( corps );
@@ -657,7 +657,7 @@ void GameRoom::TakeBase( int ownerPlayerID, int targetPlayerID, int ownerCorpsID
 	m_GuardIDList.at( targetGuardListIndex ) = corps->GetCorpsID( );
 
 	GenerateCorpOnce* action = new GenerateCorpOnce();
-	action->SetClientManager( this );
+	action->SetGameRoom( this );
 	action->SetPlayerID( ownerPlayerID );
 	action->SetClientSession( ownerClient );
 	action->SetCorpData( corps );

@@ -7,7 +7,7 @@ class GameRoom;
 class Corps
 {
 public:
-	Corps( int playerID, int corpsID, UnitType unitType, PositionInfo position, GameRoom* clientManager );
+	Corps( int playerID, int corpsID, UnitType unitType, PositionInfo position, GameRoom* gameRoom );
 	virtual ~Corps();
 
 	int						GetCorpsID( ) const { return m_CorpsID; }
@@ -87,6 +87,6 @@ protected:
 	PositionInfo			m_MovingRoute;
 
 private:
-	GameRoom*			m_ClientManager = nullptr;
+	GameRoom*			m_GameRoom = nullptr;
 };
 

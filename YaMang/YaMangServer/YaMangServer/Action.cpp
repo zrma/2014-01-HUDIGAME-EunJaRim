@@ -31,5 +31,4 @@ void Action::DoAction()
 void Action::OnEnd()
 {
 	LowKick();
-	// m_ClientManager->AddActionToScheduler( this, 0 );
 }

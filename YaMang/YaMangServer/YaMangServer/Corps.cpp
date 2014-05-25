@@ -15,8 +15,8 @@
 #include "MacroSet.h"
 #include "Attack.h"
 
-Corps::Corps( int playerID, int corpsID, UnitType unitType, PositionInfo position, GameRoom* clientManager )
-: m_PlayerID( playerID ), m_CorpsID( corpsID ), m_UnitType(unitType), m_Position( position ), m_ClientManager( clientManager )
+Corps::Corps( int playerID, int corpsID, UnitType unitType, PositionInfo position, GameRoom* gameRoom )
+: m_PlayerID( playerID ), m_CorpsID( corpsID ), m_UnitType(unitType), m_Position( position ), m_GameRoom( gameRoom )
 {
 	D3DXVECTOR3 view = m_Position.m_LookAtPoint - m_Position.m_EyePoint;
 	m_MovingRoute.m_EyePoint = { m_Position.m_EyePoint.x, 0.0f, m_Position.m_EyePoint.z };
@@ -82,11 +82,11 @@ void Corps::ChangeFormation( FormationType formation )
 		destination.m_EyePoint += ( m_MovingRoute.m_LookAtPoint * 10);
 
 		MovePosition* action = new MovePosition();
-		action->SetClientManager( m_ClientManager );
+		action->SetGameRoom( m_GameRoom );
 		action->SetOwnerCorps( this );
 		action->SetDestination( destination );
 
-		m_ClientManager->AddActionToScheduler( action, 0 );
+		m_GameRoom->AddActionToScheduler( action, 0 );
 	}
 
 
@@ -130,7 +130,7 @@ void Corps::ChangeFormation( FormationType formation )
 	outPacket.m_CorpsID = m_CorpsID;
 	outPacket.m_FormationType = formation;
 
-	m_ClientManager->BroadcastPacket( &outPacket );
+	m_GameRoom->BroadcastPacket( &outPacket );
 }
 
 void Corps::CalculateHP()
@@ -141,7 +141,7 @@ void Corps::CalculateHP()
 
 void Corps::DoNextAction( Action* addedAction, ULONGLONG remainTime )
 {
-	m_ClientManager->AddActionToScheduler( addedAction, remainTime );
+	m_GameRoom->AddActionToScheduler( addedAction, remainTime );
 }
 
 
@@ -193,7 +193,7 @@ ULONGLONG Corps::MoveStart( D3DXVECTOR2 destination, int divideMove )
 	outPacket.m_LookX = vector.x;
 	outPacket.m_LookZ = vector.y;
 	Log( "Move [%f][%f][%f][%f] \n", targetX, targetZ, vector.x, vector.y );
-	m_ClientManager->BroadcastPacket( &outPacket );
+	m_GameRoom->BroadcastPacket( &outPacket );
 
 	return movingTime;
 }
@@ -209,7 +209,7 @@ void Corps::MoveStop()
 	outPacket.m_NowZ = m_Position.m_EyePoint.z;
 	outPacket.m_LookX = m_Position.m_LookAtPoint.x;
 	outPacket.m_LookZ = m_Position.m_LookAtPoint.z;
-	m_ClientManager->BroadcastPacket( &outPacket );
+	m_GameRoom->BroadcastPacket( &outPacket );
 	Log( "Stop [%f][%f][%f][%f] \n", m_Position.m_EyePoint.x, m_Position.m_EyePoint.z, m_Position.m_LookAtPoint.x, m_Position.m_LookAtPoint.z );
 }
 
@@ -226,11 +226,11 @@ void Corps::AttackCorps( Corps* targetCrops )
 		Log( "target CounterAttack! \n" );
 		// m_TargerCrops->ChangeFormation( FormationType::FORMATION_DEFENSE );// 망진으로 변경해야함
 		Attack* action = new Attack();
-		action->SetClientManager( m_ClientManager );
+		action->SetGameRoom( m_GameRoom );
 		action->SetOwnerCorps( targetCrops );
 		action->SetTargetCorps( this );
 
-		m_ClientManager->AddActionToScheduler( action, targetCrops->GetAttackDelay( ) / 3 ); // 반격하려고 정신차리는 딜레이
+		m_GameRoom->AddActionToScheduler( action, targetCrops->GetAttackDelay( ) / 3 ); // 반격하려고 정신차리는 딜레이
 	}
 
 
@@ -258,7 +258,7 @@ void Corps::AttackCorps( Corps* targetCrops )
 	outPacket.m_TargetUnitNum = targetCrops->GetUnitNum( );
 
 
-	m_ClientManager->BroadcastPacket( &outPacket );
+	m_GameRoom->BroadcastPacket( &outPacket );
 
 	Log( "[Attack] range:%f damage:%f \n", GetAttackRange(), GetAttackPower() );
 	Log( "[Attack] Attacker:[%f][%f] Defencer:[%f][%f] \n", GetPositionInfo( ).m_EyePoint.x, GetPositionInfo( ).m_EyePoint.z, targetCrops->GetPositionInfo( ).m_EyePoint.x, targetCrops->GetPositionInfo( ).m_EyePoint.z );

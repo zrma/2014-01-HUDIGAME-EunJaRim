@@ -21,7 +21,7 @@ void GenerateCorpOnce::OnBegin()
 	Log( "[%d]GenerateCorpOnce OnBegin \n", m_PlayerID );
 
 	m_ActionStatus = ACTION_TICK;
-	m_ClientManager->AddActionToScheduler( this, 0 );
+	m_GameRoom->AddActionToScheduler( this, 0 );
 }
 
 void GenerateCorpOnce::OnTick()
@@ -29,7 +29,7 @@ void GenerateCorpOnce::OnTick()
 	if ( m_PlayerID == -1 )
 	{
 		m_ActionStatus = ACTION_END;
-		m_ClientManager->AddActionToScheduler( this, 0 );
+		m_GameRoom->AddActionToScheduler( this, 0 );
 		return;
 	}
 
@@ -67,7 +67,7 @@ void GenerateCorpOnce::OnTick()
 
 	if ( !m_Corps )
 	{
-		m_Corps = m_ClientManager->GenerateCorps( m_PlayerID, unitType, position );
+		m_Corps = m_GameRoom->GenerateCorps( m_PlayerID, unitType, position );
 	}
 
 	position = m_Corps->GetPositionInfo();
@@ -89,14 +89,14 @@ void GenerateCorpOnce::OnTick()
 	outPacket.m_UnitNum = m_Corps->GetUnitNum( );
 
 
-	m_ClientManager->BroadcastPacket( &outPacket );
+	m_GameRoom->BroadcastPacket( &outPacket );
 
 	Log( "GenerateCorpOnce! Type:%d CorpID:%d PlayerID:%d \n",
 			  unitType, m_Corps->GetCorpsID( ), m_PlayerID );
 
 	m_ClientSession->AddCorpsNum();
 	m_ActionStatus = ACTION_END;
-	m_ClientManager->AddActionToScheduler( this, 0 );
+	m_GameRoom->AddActionToScheduler( this, 0 );
 }
 
 void GenerateCorpOnce::OnEnd()

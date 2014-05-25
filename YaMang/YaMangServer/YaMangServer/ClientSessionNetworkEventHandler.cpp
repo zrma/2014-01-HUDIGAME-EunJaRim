@@ -179,7 +179,7 @@ void ClientSession::HandleEnterRoomRequest( EnterRoomRequest& inPacket )
 	}
 
 	EnterRoomResult outPacket;
-	outPacket.m_RoomNumber = m_ClientManager->GetRoomNumber();
+	outPacket.m_RoomNumber = m_GameRoom->GetRoomNumber();
 
 	if ( !Broadcast( &outPacket ) )
 	{
@@ -187,7 +187,7 @@ void ClientSession::HandleEnterRoomRequest( EnterRoomRequest& inPacket )
 		//Disconnect();
 	}
 
-	Log( "Enter Room! ID:%d ROOM:%d \n", m_PlayerID, m_ClientManager->GetRoomNumber( ) );
+	Log( "Enter Room! ID:%d ROOM:%d \n", m_PlayerID, m_GameRoom->GetRoomNumber( ) );
 	g_RoomManager->PrintClientList(); // 테스트 프린트
 
 }
@@ -262,7 +262,7 @@ void ClientSession::HandleGenerateCorpsRequest( GenerateCorpsRequest& inPacket )
 	position.m_EyePoint = { nowX, 0.0f, nowZ };
 	position.m_LookAtPoint = { lookX, 0.0f, lookZ };
 
-	const Corps* corps = m_ClientManager->GenerateCorps( playerID, unitType, position );
+	const Corps* corps = m_GameRoom->GenerateCorps( playerID, unitType, position );
 
 	if ( !corps )
 	{
@@ -312,7 +312,7 @@ void ClientSession::HandleMoveCorpsRequest( MoveCorpsRequest& inPacket )
 	destination.m_EyePoint = { nowX, 0.0f, nowZ };
 	destination.m_LookAtPoint = { targetX, 0.0f, targetZ };
 
-	Corps* corps = m_ClientManager->GetCorpsByCorpsID( corpsID );
+	Corps* corps = m_GameRoom->GetCorpsByCorpsID( corpsID );
 
 	if ( !corps )
 	{
@@ -343,11 +343,11 @@ void ClientSession::HandleMoveCorpsRequest( MoveCorpsRequest& inPacket )
 
 
 	MovePosition* action = new MovePosition( );
-	action->SetClientManager( m_ClientManager );
+	action->SetGameRoom( m_GameRoom );
 	action->SetOwnerCorps( corps );
 	action->SetDestination( destination );
 
-	m_ClientManager->AddActionToScheduler( action, 0 );
+	m_GameRoom->AddActionToScheduler( action, 0 );
 
 	Log( "CorpsMoved CorpID:%d PlayerID:%d DesX:%f DesZ:%f \n", corpsID, m_PlayerID, destination.m_EyePoint.x, destination.m_EyePoint.z );
 
@@ -366,7 +366,7 @@ void ClientSession::HandleStopCorpsRequest( StopCorpsRequest& inPacket )
 
 	int corpsID = inPacket.m_CorpsID;
 
-	if ( !m_ClientManager->GetCorpsByCorpsID( corpsID ) )
+	if ( !m_GameRoom->GetCorpsByCorpsID( corpsID ) )
 	{
 		++m_ErrorNumber;
 		return;
@@ -410,7 +410,7 @@ void ClientSession::HandleChangeCorpsFormationRequest( ChangeCorpsFormationReque
 	int corpsID = inPacket.m_CorpsID;
 	FormationType formation = inPacket.m_FormationType;
 
-	Corps* corps = m_ClientManager->GetCorpsByCorpsID( corpsID );
+	Corps* corps = m_GameRoom->GetCorpsByCorpsID( corpsID );
 	if ( !corps || FormationType::FORMATION_NONE == formation)
 	{
 		++m_ErrorNumber;
@@ -464,8 +464,8 @@ void ClientSession::HandleAttackCorpsRequest( AttackCorpsRequest& inPacket )
 	int myCorpsID = inPacket.m_MyCorpsID;
 	int targetCorpsID = inPacket.m_TargetCorpsID;
 
-	Corps* myCorps = m_ClientManager->GetCorpsByCorpsID( myCorpsID );
-	Corps* targetCorps = m_ClientManager->GetCorpsByCorpsID( targetCorpsID );
+	Corps* myCorps = m_GameRoom->GetCorpsByCorpsID( myCorpsID );
+	Corps* targetCorps = m_GameRoom->GetCorpsByCorpsID( targetCorpsID );
 
 	if ( !myCorps || !targetCorps )
 	{
@@ -490,11 +490,11 @@ void ClientSession::HandleAttackCorpsRequest( AttackCorpsRequest& inPacket )
 	if ( UnitType::UNIT_GUARD == targetUnitType || UnitType::UNIT_KING == targetUnitType )
 	{
 		TakeArea* action = new TakeArea();
-		action->SetClientManager( m_ClientManager );
+		action->SetGameRoom( m_GameRoom );
 		action->SetOwnerCorps( myCorps );
 		action->SetTargetCorps( targetCorps );
 
-		m_ClientManager->AddActionToScheduler( action, 0 );
+		m_GameRoom->AddActionToScheduler( action, 0 );
 		Log( "[Packet GET]TakeBase FromCorpID:%d ToCorpID:%d \n", myCorpsID, targetCorpsID );
 	}
 	else
@@ -503,21 +503,21 @@ void ClientSession::HandleAttackCorpsRequest( AttackCorpsRequest& inPacket )
 		if ( UnitType::UNIT_KNIGHT == myUnitType )
 		{
 			KnightAttack* action = new KnightAttack( );
-			action->SetClientManager( m_ClientManager );
+			action->SetGameRoom( m_GameRoom );
 			action->SetOwnerCorps( myCorps );
 			action->SetTargetCorps( targetCorps );
 
-			m_ClientManager->AddActionToScheduler( action, 0 );
+			m_GameRoom->AddActionToScheduler( action, 0 );
 			Log( "[Packet GET]KnightAttackCorps FromCorpID:%d ToCorpID:%d \n", myCorpsID, targetCorpsID );
 		}
 		else
 		{
 			Attack* action = new Attack();
-			action->SetClientManager( m_ClientManager );
+			action->SetGameRoom( m_GameRoom );
 			action->SetOwnerCorps( myCorps );
 			action->SetTargetCorps( targetCorps );
 
-			m_ClientManager->AddActionToScheduler( action, 0 );
+			m_GameRoom->AddActionToScheduler( action, 0 );
 			Log( "[Packet GET]AttackCorps FromCorpID:%d ToCorpID:%d \n", myCorpsID, targetCorpsID );
 		}
 
@@ -544,7 +544,7 @@ void ClientSession::HandleSyncAllRequest( SyncAllRequest& inPacket )
 	int roomNumber = inPacket.m_RoomNumber;
 	int playerID = inPacket.m_PlayerId;
 
-	const std::map<int, Corps*> corpsList = m_ClientManager->GetCorpsList( );
+	const std::map<int, Corps*> corpsList = m_GameRoom->GetCorpsList( );
 
 	for ( auto& it : corpsList )
 	{
