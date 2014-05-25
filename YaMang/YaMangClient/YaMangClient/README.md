@@ -2,8 +2,8 @@
 =========================
 
 
-### 사운드 실행 방법
+Google BreakPad for Window 소스가 필요합니다.
 
-YaMangClient의 빌드 폴더(Debug)에 Fmod DLL이 필요합니다.
+참고 사이트
 
-CopyToDebug 폴더에 있는 DLL 파일을 Debug 폴더로 복사해야 합니다.
+https://code.google.com/p/google-breakpad/wiki/GettingStartedWithBreakpad
