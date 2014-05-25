@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "ChangeFormation.h"
 #include "Corps.h"
 #include "MacroSet.h"
@@ -40,7 +40,7 @@ void ChangeFormation::OnBegin()
 
 	m_ActionStatus = ACTION_TICK;
 	m_OwnerCrops->DoNextAction( this, movingTime );
-	m_OwnerCrops->ChangeFormation( FormationType::FORMATION_DEFENSE ); // ¸ÁÆ÷¸ÞÀÌ¼Ç
+	m_OwnerCrops->ChangeFormation( FormationType::FORMATION_DEFENSE ); // ë§í¬ë©”ì´ì…˜
 }
 
 void ChangeFormation::OnTick()
@@ -73,5 +73,5 @@ void ChangeFormation::OnEnd()
 		Log( "ChangeFormation Failed \n" );
 		return;
 	}
-	m_OwnerCrops->ChangeFormation( FormationType::FORMATION_DESTROY ); // ¼¼ÆÃÇÑ Æ÷¸ÞÀÌ¼Ç
+	m_OwnerCrops->ChangeFormation( FormationType::FORMATION_DESTROY ); // ì„¸íŒ…í•œ í¬ë©”ì´ì…˜
 }

@@ -25,6 +25,28 @@ enum class FormationType: unsigned char
 	FORMATION_MAX = 255
 };
 
+enum class MapTileType: unsigned char
+{
+	MAP_TILE_NONE = 0,
+
+	MAP_TILE_ROAD = 10,
+	MAP_TILE_GRASS = 20,
+	MAP_TILE_WATER = 30,
+	MAP_TILE_WALL = 40,
+
+	MAP_TILE_MAX = 255
+};
+
+enum class MapObjectType: unsigned char
+{
+	MAP_OBJECT_NONE = 0,
+
+	MAP_OBJECT_BASE = 10,
+	MAP_OBJECT_KING = 20,
+
+	MAP_OBJECT_MAX = 255
+};
+
 enum SceneType
 {
 	SCENE_NONE,

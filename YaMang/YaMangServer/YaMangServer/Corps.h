@@ -27,11 +27,11 @@ public:
 
 	float					GetHP() const { return m_HP; }
 	void					SetHP( float HP );
-	float					GetSpeed( ) const { return m_MoveSpeed + m_MoveSpeedFormationBonus; }
-	float					GetAttackRange( ) const { return m_AttackRange + m_AttackRangeFormationBonus; }
-	float					GetAttackPower( ) const { return m_AttackPower + m_AttackPowerFormationBonus; }
-	float					GetDefense( ) const { return m_Defense + m_DefenseFormationBonus; }
-	ULONGLONG				GetAttackDelay() const { return m_AttackDelay - m_AttackDelayFormationBonus; }
+	float					GetSpeed( ) const;
+	float					GetAttackRange( ) const;
+	float					GetAttackPower( ) const;
+	float					GetDefense( ) const;
+	ULONGLONG				GetAttackDelay() const;
 	bool					IsDead() const { return m_IsDead; }
 
 	void					DoNextAction( Action* addedAction, ULONGLONG remainTime );
@@ -42,6 +42,7 @@ public:
 	void					AttackCorps( Corps* targetCrops );
 
 	void					ReCalculatePosition();
+	void					ReCalculateStatus();
 
 protected:
 	void					CalculateHP();

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "GameMapManager.h"
 #include "MacroSet.h"
 #include "tinyxml.h"
@@ -31,7 +31,7 @@ bool GameMapManager::Initialize()
 		Log( "Map Path Loaded! :%s \n", mapFilePath.c_str() );
 		if ( ReadMapFile( mapFilePath.c_str() ) )
 		{
-			// ÀÓ½Ã ÇÏµå ÄÚµù...
+			// ì„ì‹œ í•˜ë“œ ì½”ë”©...
 			int mapKingSize = 2;
 			int mapGuardSize = 3;
 
@@ -105,9 +105,9 @@ bool GameMapManager::ReadMapFile( const char* filename )
 			data[j + 2] = tmp;
 
 			//Tile tile = { (int)data[j], (int)data[j + 1], (int)data[j + 2] };
-			Tile tile = { data[j], data[j + 1], data[j + 2] };
+			Tile tile = { static_cast<MapTileType>( data[j] ), static_cast<MapObjectType>( data[j + 1]), data[j + 2] };
 
-			// ¸ÊÀÌ µÚÁı¾îÁ® ÀÖÀ» °Í °°´Ù!!
+			// ë§µì´ ë’¤ì§‘ì–´ì ¸ ìˆì„ ê²ƒ ê°™ë‹¤!!
 			row.push_back( tile );
 		}
 		m_BattleMap.push_back( row );

@@ -1,11 +1,12 @@
-#pragma once
+癤�#pragma once
 #include "SharedDefine.h"
+#include "EnumSet.h"
 
 struct Tile
 {
-	unsigned char R; // 맵 데이터의 R값 아직 어떤 속성값을 넣을지 정해지지 않음 맵툴쪽과 합의 필요
-	unsigned char G;
-	unsigned char B; // 아마도 height값이 올 예정
+	MapTileType m_MapTileType; // R
+	MapObjectType m_MapObjectType; // G
+	unsigned char m_MapHeight; // B
 };
 
 class GameMapManager
@@ -23,6 +24,10 @@ public:
 
 	const PositionInfo&					GetKingPositionInfo( int index ) const { return m_KingPositionList.at( index ); }
 	const PositionInfo&					GetGuardPositionInfo( int index ) const { return m_GuardPositionList.at( index ); }
+
+	const MapTileType&					GetMapTileType( int x, int z ) const { return m_BattleMap.at( x ).at( z ).m_MapTileType; }
+	const MapObjectType&				GetMapObjectType( int x, int z ) const { return m_BattleMap.at( x ).at( z ).m_MapObjectType; }
+	const unsigned char&				GetMapHeight( int x, int z ) const { return m_BattleMap.at( x ).at( z ).m_MapHeight; }
 
 private:
 	std::vector<std::vector<Tile>>	m_BattleMap;

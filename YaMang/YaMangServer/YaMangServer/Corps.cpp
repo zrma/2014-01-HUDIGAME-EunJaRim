@@ -115,12 +115,15 @@ void Corps::ChangeFormation( FormationType formation )
 			m_DefenseFormationBonus = 0.0f;
 			m_AttackDelayFormationBonus = 0;
 			break;
+		case FormationType::FORMATION_NONE:
+		case FormationType::FORMATION_MAX:
 		default:
 			m_MoveSpeedFormationBonus = 0.0f;
 			m_AttackRangeFormationBonus = 0.0f;
 			m_AttackPowerFormationBonus = 0.0f;
 			m_DefenseFormationBonus = 0.0f;
 			m_AttackDelayFormationBonus = 0;
+			assert( false );
 			break;
 	}
 
@@ -201,6 +204,7 @@ ULONGLONG Corps::MoveStart( D3DXVECTOR2 destination, int divideMove )
 void Corps::MoveStop()
 {
 	ReCalculatePosition();
+	// ReCalculateStatus(); 지금 맵 데이터가 없을때 사용하면 엉망됨
 	m_IsMoving = false;
 
 	StopCorpsResult outPacket;
@@ -211,6 +215,99 @@ void Corps::MoveStop()
 	outPacket.m_LookZ = m_Position.m_LookAtPoint.z;
 	m_GameRoom->BroadcastPacket( &outPacket );
 	Log( "Stop [%f][%f][%f][%f] \n", m_Position.m_EyePoint.x, m_Position.m_EyePoint.z, m_Position.m_LookAtPoint.x, m_Position.m_LookAtPoint.z );
+}
+
+
+float Corps::GetSpeed() const
+{
+	float speed = m_MoveSpeed + m_MoveSpeedFormationBonus + m_MoveSpeedMapBonus;
+	if ( speed <= 0 )
+	{
+		return 0.01f;
+	}
+	return speed;
+}
+
+float Corps::GetAttackRange() const
+{
+	float attackRange = m_AttackRange + m_AttackRangeFormationBonus + m_AttackRangeMapBonus;
+	if ( attackRange <= 0 )
+	{
+		return 0.01f;
+	}
+	return attackRange;
+}
+
+float Corps::GetAttackPower() const
+{
+	float attackPower = m_AttackPower + m_AttackPowerFormationBonus + m_AttackPowerMapBonus;
+	if ( attackPower <= 0 )
+	{
+		return 0.01f;
+	}
+	return attackPower;
+}
+
+float Corps::GetDefense() const
+{
+	float defense = m_Defense + m_DefenseFormationBonus + m_DefenseMapBonus;
+	if ( defense <= 0 )
+	{
+		return 0.01f;
+	}
+	return defense;
+}
+
+ULONGLONG Corps::GetAttackDelay() const
+{
+	ULONGLONG attackDelay = m_AttackDelay + m_AttackDelayFormationBonus + m_AttackDelayMapBonus;
+	if ( attackDelay <= 0 )
+	{
+		return 1000;
+	}
+	return attackDelay;
+}
+
+void Corps::ReCalculateStatus()
+{
+	const MapTileType& mapTileType = m_GameRoom->GetMapTileType( static_cast<int>( m_Position.m_EyePoint.x ), static_cast<int>( m_Position.m_EyePoint.z) );
+	
+	switch ( mapTileType )
+	{
+		case MapTileType::MAP_TILE_ROAD:
+			m_MoveSpeedMapBonus = 2.0f;
+			m_AttackRangeMapBonus = 0.0f;
+			m_AttackPowerMapBonus = 0.0f;
+			m_DefenseMapBonus = 0.0f;
+			m_AttackDelayMapBonus = 0;
+			break;
+		case MapTileType::MAP_TILE_GRASS:
+			m_MoveSpeedMapBonus = -2.0f;
+			m_AttackRangeMapBonus = -2.0f;
+			m_AttackPowerMapBonus = 0.0f;
+			m_DefenseMapBonus = 2.0f;
+			m_AttackDelayMapBonus = 100;
+			break;
+		case MapTileType::MAP_TILE_WATER:
+			m_MoveSpeedMapBonus = -4.0f;
+			m_AttackRangeMapBonus = -2.0f;
+			m_AttackPowerMapBonus = -2.0f;
+			m_DefenseMapBonus = -4.0f;
+			m_AttackDelayMapBonus = 200;
+			break;
+		case MapTileType::MAP_TILE_WALL:
+			m_MoveSpeedMapBonus = 2.0f;
+			m_AttackRangeMapBonus = 0.0f;
+			m_AttackPowerMapBonus = 0.0f;
+			m_DefenseMapBonus = 0.0f;
+			m_AttackDelayMapBonus = 0;
+			break;
+		case MapTileType::MAP_TILE_NONE:
+		case MapTileType::MAP_TILE_MAX:
+		default:
+			assert( false );
+			break;
+	}
 }
 
 
@@ -278,6 +375,4 @@ void Corps::ReCalculatePosition()
 
 	}
 }
-
-
 

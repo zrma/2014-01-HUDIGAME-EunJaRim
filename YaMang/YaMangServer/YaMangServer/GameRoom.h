@@ -2,12 +2,12 @@
 
 #include <WinSock2.h>
 #include "EnumSet.h"
+#include "GameMapManager.h"
 
 class Corps;
 class ClientSession;
 class ActionScheduler;
 class Action;
-class GameMapManager;
 
 struct PositionInfo;
 struct PacketHeader;
@@ -73,6 +73,10 @@ public:
 
 	const PositionInfo&	GetGuardPositionInfo( int index ) const;
 	const PositionInfo&	GetKingPositionInfo( int index ) const;
+
+	const MapTileType&		GetMapTileType( int x, int z ) const { return m_GameMapManager->GetMapTileType( x, z ); }
+	const MapObjectType&	GetMapObjectType( int x, int z ) const { return m_GameMapManager->GetMapObjectType( x, z ); }
+	const unsigned char&	GetMapHeight( int x, int z ) const { return m_GameMapManager->GetMapHeight( x, z ); }
 
 	void				TakeBase( int ownerPlayerID, int targetPlayerID, int ownerCorpsID, int targetGuardID );
 	void				SyncOneCorp( int corpsID );
