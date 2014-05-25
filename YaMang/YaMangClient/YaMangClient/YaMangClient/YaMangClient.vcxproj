@@ -60,7 +60,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>ws2_32.lib;d3d9.lib;d3dx9d.lib;dxerr.lib;dxguid.lib;winmm.lib;comctl32.lib;TinyXmlLib.lib;DbgHelp.lib;fmodL_vc.lib;fmodstudioL_vc.lib;fmod_vc.lib;fmodstudio_vc.lib;common.lib;exception_handler.lib;crash_report_sender.lib;crash_generation_client.lib;crash_generation_server.lib;gmock.lib;gtest.lib;processor_bits.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ws2_32.lib;d3d9.lib;d3dx9d.lib;dxerr.lib;dxguid.lib;winmm.lib;comctl32.lib;TinyXmlLib.lib;DbgHelp.lib;fmodL_vc.lib;fmodstudioL_vc.lib;fmod_vc.lib;fmodstudio_vc.lib;common.lib;exception_handler.lib;crash_report_sender.lib;crash_generation_client.lib;crash_generation_server.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Debug;$(SolutionDir)YaMangClient\BreakPad\src\client\windows\Debug\lib;$(SolutionDir)YaMangClient\LibraryFMOD;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
