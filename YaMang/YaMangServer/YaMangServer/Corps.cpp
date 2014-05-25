@@ -40,7 +40,7 @@ void Corps::AddDamage( float damage )
 {
 	if ( !m_IsDead )
 	{
-		float defense = m_Defense + m_DefenseBonus - damage;
+		float defense = m_Defense + m_DefenseFormationBonus - damage;
 		if ( defense < 0 )
 		{
 			m_HP = m_HP + defense;
@@ -95,32 +95,32 @@ void Corps::ChangeFormation( FormationType formation )
 	switch ( formation )
 	{
 		case FormationType::FORMATION_DEFENSE:
-			m_MoveSpeedBonus = 0.0f;
-			m_AttackRangeBonus = 0.0f;
-			m_AttackPowerBonus = 0.0f;
-			m_DefenseBonus = 2.0f;
-			m_AttackDelayBonus = 0;
+			m_MoveSpeedFormationBonus = 0.0f;
+			m_AttackRangeFormationBonus = 0.0f;
+			m_AttackPowerFormationBonus = 0.0f;
+			m_DefenseFormationBonus = 2.0f;
+			m_AttackDelayFormationBonus = 0;
 			break;
 		case FormationType::FORMATION_DESTROY:
-			m_MoveSpeedBonus = 0.0f;
-			m_AttackRangeBonus = 0.0f;
-			m_AttackPowerBonus = 2.0f;
-			m_DefenseBonus = 0.0f;
-			m_AttackDelayBonus = 0;
+			m_MoveSpeedFormationBonus = 0.0f;
+			m_AttackRangeFormationBonus = 0.0f;
+			m_AttackPowerFormationBonus = 2.0f;
+			m_DefenseFormationBonus = 0.0f;
+			m_AttackDelayFormationBonus = 0;
 			break;
 		case FormationType::FORMATION_RUSH:
-			m_MoveSpeedBonus = 2.0f;
-			m_AttackRangeBonus = 0.0f;
-			m_AttackPowerBonus = 0.0f;
-			m_DefenseBonus = 0.0f;
-			m_AttackDelayBonus = 0;
+			m_MoveSpeedFormationBonus = 2.0f;
+			m_AttackRangeFormationBonus = 0.0f;
+			m_AttackPowerFormationBonus = 0.0f;
+			m_DefenseFormationBonus = 0.0f;
+			m_AttackDelayFormationBonus = 0;
 			break;
 		default:
-			m_MoveSpeedBonus = 0.0f;
-			m_AttackRangeBonus = 0.0f;
-			m_AttackPowerBonus = 0.0f;
-			m_DefenseBonus = 0.0f;
-			m_AttackDelayBonus = 0;
+			m_MoveSpeedFormationBonus = 0.0f;
+			m_AttackRangeFormationBonus = 0.0f;
+			m_AttackPowerFormationBonus = 0.0f;
+			m_DefenseFormationBonus = 0.0f;
+			m_AttackDelayFormationBonus = 0;
 			break;
 	}
 

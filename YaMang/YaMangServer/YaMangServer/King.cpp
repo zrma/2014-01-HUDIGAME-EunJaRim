@@ -5,21 +5,26 @@
 King::King( int playerID, int corpsID, UnitType unitType, PositionInfo position, GameRoom* gameRoom )
 :Corps( playerID, corpsID, unitType, position, gameRoom )
 {
-	m_HP = UnitStatus::g_King.HP;
-	m_MoveSpeed = UnitStatus::g_King.MoveSpeed;
-	m_MoveSpeedBonus = UnitStatus::g_King.MoveSpeedBonus;
+	m_HP = g_King.HP;
+	m_MoveSpeed = g_King.MoveSpeed;
+	m_MoveSpeedFormationBonus = g_King.MoveSpeedFormationBonus;
+	m_MoveSpeedMapBonus = g_King.MoveSpeedMapBonus;
 
-	m_AttackRange = UnitStatus::g_King.AttackRange;
-	m_AttackRangeBonus = UnitStatus::g_King.AttackRangeBonus;
+	m_AttackRange = g_King.AttackRange;
+	m_AttackRangeFormationBonus = g_King.AttackRangeFormationBonus;
+	m_AttackRangeMapBonus = g_King.AttackRangeMapBonus;
 
-	m_AttackPower = UnitStatus::g_King.AttackPower;
-	m_AttackPowerBonus = UnitStatus::g_King.AttackPowerBonus;
+	m_AttackPower = g_King.AttackPower;
+	m_AttackPowerFormationBonus = g_King.AttackPowerFormationBonus;
+	m_AttackPowerMapBonus = g_King.AttackPowerMapBonus;
 
-	m_Defense = UnitStatus::g_King.Defense;
-	m_DefenseBonus = UnitStatus::g_King.DefenseBonus;
+	m_Defense = g_King.Defense;
+	m_DefenseFormationBonus = g_King.DefenseFormationBonus;
+	m_DefenseMapBonus = g_King.DefenseMapBonus;
 
-	m_AttackDelay = UnitStatus::g_King.AttackDelay;
-	m_AttackDelayBonus = UnitStatus::g_King.AttackDelayBonus;
+	m_AttackDelay = g_King.AttackDelay;
+	m_AttackDelayFormationBonus = g_King.AttackDelayFormationBonus;
+	m_AttackDelayMapBonus = g_King.AttackDelayMapBonus;
 
 	CalculateHP();
 }

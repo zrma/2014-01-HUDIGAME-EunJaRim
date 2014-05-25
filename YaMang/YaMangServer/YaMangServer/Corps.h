@@ -27,11 +27,11 @@ public:
 
 	float					GetHP() const { return m_HP; }
 	void					SetHP( float HP );
-	float					GetSpeed( ) const { return m_MoveSpeed + m_MoveSpeedBonus; }
-	float					GetAttackRange( ) const { return m_AttackRange + m_AttackRangeBonus; }
-	float					GetAttackPower( ) const { return m_AttackPower + m_AttackPowerBonus; }
-	float					GetDefense( ) const { return m_Defense + m_DefenseBonus; }
-	ULONGLONG				GetAttackDelay() const { return m_AttackDelay - m_AttackDelayBonus; }
+	float					GetSpeed( ) const { return m_MoveSpeed + m_MoveSpeedFormationBonus; }
+	float					GetAttackRange( ) const { return m_AttackRange + m_AttackRangeFormationBonus; }
+	float					GetAttackPower( ) const { return m_AttackPower + m_AttackPowerFormationBonus; }
+	float					GetDefense( ) const { return m_Defense + m_DefenseFormationBonus; }
+	ULONGLONG				GetAttackDelay() const { return m_AttackDelay - m_AttackDelayFormationBonus; }
 	bool					IsDead() const { return m_IsDead; }
 
 	void					DoNextAction( Action* addedAction, ULONGLONG remainTime );
@@ -67,19 +67,24 @@ protected:
 
 	float					m_HP = 0.0f;
 	float					m_MoveSpeed = 0.0f;
-	float					m_MoveSpeedBonus = 0.0f;
+	float					m_MoveSpeedFormationBonus = 0.0f;
+	float					m_MoveSpeedMapBonus = 0.0f;
 
 	float					m_AttackRange = 0.0f;
-	float					m_AttackRangeBonus = 0.0f;
+	float					m_AttackRangeFormationBonus = 0.0f;
+	float					m_AttackRangeMapBonus = 0.0f;
 
 	float					m_AttackPower = 0.0f;
-	float					m_AttackPowerBonus = 0.0f;
+	float					m_AttackPowerFormationBonus = 0.0f;
+	float					m_AttackPowerMapBonus = 0.0f;
 
 	float					m_Defense = 0.0f;
-	float					m_DefenseBonus = 0.0f;
+	float					m_DefenseFormationBonus = 0.0f;
+	float					m_DefenseMapBonus = 0.0f;
 
 	ULONGLONG				m_AttackDelay = 0;
-	ULONGLONG				m_AttackDelayBonus = 0;
+	ULONGLONG				m_AttackDelayFormationBonus = 0;
+	ULONGLONG				m_AttackDelayMapBonus = 0;
 
 	bool					m_IsMoving = false;
 	ULONGLONG				m_MovingStartedTime = 0;

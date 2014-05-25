@@ -4,79 +4,109 @@
 		<HP>100.0f</HP>
 		<HP>100.0f</HP>
 		<MoveSpeed>3.0f</MoveSpeed>
-		<MoveSpeedBonus>0.0f</MoveSpeedBonus>
+		<MoveSpeedFormationBonus>0.0f</MoveSpeedFormationBonus>
+		<MoveSpeedMapBonus>0.0f</MoveSpeedMapBonus>
 		<AttackRange>24.0f</AttackRange>
-		<AttackRangeBonus>0.0f</AttackRangeBonus>
+		<AttackRangeFormationBonus>0.0f</AttackRangeFormationBonus>
+		<AttackRangeMapBonus>0.0f</AttackRangeMapBonus>
 		<AttackPower>15.0f</AttackPower>
-		<AttackPowerBonus>0.0f</AttackPowerBonus>
+		<AttackPowerFormationBonus>0.0f</AttackPowerFormationBonus>
+		<AttackPowerMapBonus>0.0f</AttackPowerMapBonus>
 		<Defense>1.0f</Defense>
-		<DefenseBonus>0.0f</DefenseBonus>
+		<DefenseFormationBonus>0.0f</DefenseFormationBonus>
+		<DefenseMapBonus>0.0f</DefenseMapBonus>
 		<AttackDelay>5000</AttackDelay>
-		<AttackDelayBonus>0</AttackDelayBonus>
+		<AttackDelayFormationBonus>0</AttackDelayFormationBonus>
+		<AttackDelayMapBonus>0</AttackDelayMapBonus>
 	</Arrow>
 	<Guard>
 		<HP>49.0f</HP>
 		<MoveSpeed>8.0f</MoveSpeed>
-		<MoveSpeedBonus>0.0f</MoveSpeedBonus>
+		<MoveSpeedFormationBonus>0.0f</MoveSpeedFormationBonus>
+		<MoveSpeedMapBonus>0.0f</MoveSpeedMapBonus>
 		<AttackRange>3.0f</AttackRange>
-		<AttackRangeBonus>0.0f</AttackRangeBonus>
+		<AttackRangeFormationBonus>0.0f</AttackRangeFormationBonus>
+		<AttackRangeMapBonus>0.0f</AttackRangeMapBonus>
 		<AttackPower>10.0f</AttackPower>
-		<AttackPowerBonus>0.0f</AttackPowerBonus>
+		<AttackPowerFormationBonus>0.0f</AttackPowerFormationBonus>
+		<AttackPowerMapBonus>0.0f</AttackPowerMapBonus>
 		<Defense>6.0f</Defense>
-		<DefenseBonus>0.0f</DefenseBonus>
+		<DefenseFormationBonus>0.0f</DefenseFormationBonus>
+		<DefenseMapBonus>0.0f</DefenseMapBonus>
 		<AttackDelay>2000</AttackDelay>
-		<AttackDelayBonus>0</AttackDelayBonus>
+		<AttackDelayFormationBonus>0</AttackDelayFormationBonus>
+		<AttackDelayMapBonus>0</AttackDelayMapBonus>
 	</Guard>
 	<Knight>
 		<HP>100.0f</HP>
 		<MoveSpeed>12.0f</MoveSpeed>
-		<MoveSpeedBonus>0.0f</MoveSpeedBonus>
+		<MoveSpeedFormationBonus>0.0f</MoveSpeedFormationBonus>
+		<MoveSpeedMapBonus>0.0f</MoveSpeedMapBonus>
 		<AttackRange>1.0f</AttackRange>
-		<AttackRangeBonus>0.0f</AttackRangeBonus>
+		<AttackRangeFormationBonus>0.0f</AttackRangeFormationBonus>
+		<AttackRangeMapBonus>0.0f</AttackRangeMapBonus>
 		<AttackPower>10.0f</AttackPower>
-		<AttackPowerBonus>0.0f</AttackPowerBonus>
+		<AttackPowerFormationBonus>0.0f</AttackPowerFormationBonus>
+		<AttackPowerMapBonus>0.0f</AttackPowerMapBonus>
 		<Defense>1.0f</Defense>
-		<DefenseBonus>0.0f</DefenseBonus>
+		<DefenseFormationBonus>0.0f</DefenseFormationBonus>
+		<DefenseMapBonus>0.0f</DefenseMapBonus>
 		<AttackDelay>3000</AttackDelay>
-		<AttackDelayBonus>0</AttackDelayBonus>
+		<AttackDelayFormationBonus>0</AttackDelayFormationBonus>
+		<AttackDelayMapBonus>0</AttackDelayMapBonus>
 	</Knight>
 	<Pike>
 		<HP>100.0f</HP>
 		<MoveSpeed>3.0f</MoveSpeed>
-		<MoveSpeedBonus>0.0f</MoveSpeedBonus>
+		<MoveSpeedFormationBonus>0.0f</MoveSpeedFormationBonus>
+		<MoveSpeedMapBonus>0.0f</MoveSpeedMapBonus>
 		<AttackRange>3.0f</AttackRange>
-		<AttackRangeBonus>0.0f</AttackRangeBonus>
+		<AttackRangeFormationBonus>0.0f</AttackRangeFormationBonus>
+		<AttackRangeMapBonus>0.0f</AttackRangeMapBonus>
 		<AttackPower>12.0f</AttackPower>
-		<AttackPowerBonus>0.0f</AttackPowerBonus>
+		<AttackPowerFormationBonus>0.0f</AttackPowerFormationBonus>
+		<AttackPowerMapBonus>0.0f</AttackPowerMapBonus>
 		<Defense>5.0f</Defense>
-		<DefenseBonus>0.0f</DefenseBonus>
+		<DefenseFormationBonus>0.0f</DefenseFormationBonus>
+		<DefenseMapBonus>0.0f</DefenseMapBonus>
 		<AttackDelay>2000</AttackDelay>
-		<AttackDelayBonus>0</AttackDelayBonus>
+		<AttackDelayFormationBonus>0</AttackDelayFormationBonus>
+		<AttackDelayMapBonus>0</AttackDelayMapBonus>
 	</Pike>
 	<Sword>
 		<HP>100.0f</HP>
 		<MoveSpeed>3.0f</MoveSpeed>
-		<MoveSpeedBonus>0.0f</MoveSpeedBonus>
+		<MoveSpeedFormationBonus>0.0f</MoveSpeedFormationBonus>
+		<MoveSpeedMapBonus>0.0f</MoveSpeedMapBonus>
 		<AttackRange>3.0f</AttackRange>
-		<AttackRangeBonus>0.0f</AttackRangeBonus>
+		<AttackRangeFormationBonus>0.0f</AttackRangeFormationBonus>
+		<AttackRangeMapBonus>0.0f</AttackRangeMapBonus>
 		<AttackPower>8.0f</AttackPower>
-		<AttackPowerBonus>0.0f</AttackPowerBonus>
+		<AttackPowerFormationBonus>0.0f</AttackPowerFormationBonus>
+		<AttackPowerMapBonus>0.0f</AttackPowerMapBonus>
 		<Defense>5.0f</Defense>
-		<DefenseBonus>0.0f</DefenseBonus>
+		<DefenseFormationBonus>0.0f</DefenseFormationBonus>
+		<DefenseMapBonus>0.0f</DefenseMapBonus>
 		<AttackDelay>1000</AttackDelay>
-		<AttackDelayBonus>0</AttackDelayBonus>
+		<AttackDelayFormationBonus>0</AttackDelayFormationBonus>
+		<AttackDelayMapBonus>0</AttackDelayMapBonus>
 	</Sword>
 	<King>
 		<HP>49.0f</HP>
 		<MoveSpeed>8.0f</MoveSpeed>
-		<MoveSpeedBonus>0.0f</MoveSpeedBonus>
+		<MoveSpeedFormationBonus>0.0f</MoveSpeedFormationBonus>
+		<MoveSpeedMapBonus>0.0f</MoveSpeedMapBonus>
 		<AttackRange>3.0f</AttackRange>
-		<AttackRangeBonus>0.0f</AttackRangeBonus>
+		<AttackRangeFormationBonus>0.0f</AttackRangeFormationBonus>
+		<AttackRangeMapBonus>0.0f</AttackRangeMapBonus>
 		<AttackPower>15.0f</AttackPower>
-		<AttackPowerBonus>0.0f</AttackPowerBonus>
+		<AttackPowerFormationBonus>0.0f</AttackPowerFormationBonus>
+		<AttackPowerMapBonus>0.0f</AttackPowerMapBonus>
 		<Defense>6.0f</Defense>
-		<DefenseBonus>0.0f</DefenseBonus>
+		<DefenseFormationBonus>0.0f</DefenseFormationBonus>
+		<DefenseMapBonus>0.0f</DefenseMapBonus>
 		<AttackDelay>2000</AttackDelay>
-		<AttackDelayBonus>0</AttackDelayBonus>
+		<AttackDelayFormationBonus>0</AttackDelayFormationBonus>
+		<AttackDelayMapBonus>0</AttackDelayMapBonus>
 	</King>
 </Unit>
