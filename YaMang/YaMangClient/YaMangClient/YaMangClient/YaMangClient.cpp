@@ -12,9 +12,7 @@
 #include "MainWindow.h"
 #include "NetworkManager.h"
 #include "Exception.h"
-
-#pragma comment(lib,"ws2_32.lib")
-
+#include "client/windows/handler/exception_handler.h"
 
 int APIENTRY _tWinMain( _In_ HINSTANCE hInstance,
 						_In_opt_ HINSTANCE hPrevInstance,
@@ -31,8 +29,10 @@ int APIENTRY _tWinMain( _In_ HINSTANCE hInstance,
 	// _CrtSetBreakAlloc( #### );
 	// _CrtSetBreakAlloc( 192 );
 
-	SetUnhandledExceptionFilter( ExceptionFilter );
+	// SetUnhandledExceptionFilter( ExceptionFilter );
 
+	google_breakpad::ExceptionHandler eh( L".", NULL, NULL, NULL, google_breakpad::ExceptionHandler::HANDLER_ALL );
+	
 #ifdef _PRINT_CONSOLE
 	Logger::GetInstance();
 #endif

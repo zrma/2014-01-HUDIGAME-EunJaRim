@@ -49,8 +49,6 @@ LONG WINAPI ExceptionFilter( EXCEPTION_POINTERS* exceptionInfo )
 	{
 		Log( "CreateFile failed. Error: %u \n", GetLastError() );
 	}
-
 	// 예외처리 종료 신호 반환
 	return EXCEPTION_EXECUTE_HANDLER;
-
 }
