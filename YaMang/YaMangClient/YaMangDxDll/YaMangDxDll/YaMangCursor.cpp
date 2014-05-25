@@ -35,8 +35,6 @@ YAMANGDXDLL_API HRESULT InitCursor( int textureSize, int cursorPosX, int cursorP
 
 	SetCursorPosition( cursorPosX, cursorPosY ); // 0,0,0으로 초기화
 
-	Log( "스프라이트 %d개 생성 ", g_CursorMaxSize );
-
 	return S_OK;
 }
 

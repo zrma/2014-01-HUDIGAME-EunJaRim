@@ -32,8 +32,6 @@ YAMANGDXDLL_API HRESULT InitUISprite( int textureSize )
 		g_UITexures[i] = nullptr;
 	}
 
-	Log( " UI 스프라이트 %d개 생성 ", g_UIMaxSize );
-
 	return S_OK;
 }
 
