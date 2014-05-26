@@ -33,12 +33,10 @@ int APIENTRY _tWinMain( _In_ HINSTANCE hInstance,
 	// SetUnhandledExceptionFilter( ExceptionFilter );
 
 	InstallCrashReporter();
-	// set_terminate() must be called from every thread
 
+	// set_terminate() must be called from every thread
 	BT_SetTerminate();
 	BT_InsLogEntry( g_LogHandle, BTLL_INFO, _T( "Entering main() function" ) );
-
-	CRASH_ASSERT( false );
 
 #ifdef _PRINT_CONSOLE
 	Logger::GetInstance();

@@ -9,7 +9,7 @@ extern INT_PTR g_LogHandle;
 static void InstallCrashReporter()
 {
 	BT_SetAppName( _T( "YaMangClient Crash Report" ) );
-	BT_SetFlags( BTF_DETAILEDMODE | BTF_ATTACHREPORT | BTF_SCREENCAPTURE );
+	BT_SetFlags( BTF_DETAILEDMODE | BTF_SCREENCAPTURE );
 
 	BT_SetSupportServer( _T( "10.73.45.142" ), 9999 );
 	
