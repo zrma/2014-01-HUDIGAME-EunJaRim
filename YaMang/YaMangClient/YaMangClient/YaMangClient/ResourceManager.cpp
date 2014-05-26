@@ -178,6 +178,8 @@ void ResourceManager::CreateSprite()
 	CreateSpriteImage( SPRITE_UI_IMSIREGENFLAG, SPRITE_UI_REGEN_FLAG );
 	CreateSpriteImage( SPRITE_UI_CORPS_MARK_BLUE, SPRITE_UI_CORPSMARK_BLUE );
 	CreateSpriteImage( SPRITE_UI_CORPS_MARK_RED, SPRITE_UI_CORPSMARK_RED );
+	CreateSpriteImage( SPRITE_UI_CORPS_FLAG_GRAY, SPRITE_UI_CORPSFLAG_GRAY);
+
 }
 
 void ResourceManager::DeleteSprite()

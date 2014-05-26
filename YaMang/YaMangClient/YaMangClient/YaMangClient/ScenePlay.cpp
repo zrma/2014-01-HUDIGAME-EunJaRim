@@ -94,16 +94,35 @@ void ScenePlay::AddCorps( int corpsID, Corps* corps )
 		//부대 마크 추가
 		int PosX = static_cast<int>((corps->GetEyePoint().x / 512 * 400) + 550); // 맵 상대위치 하드코딩
 		int PosY = static_cast<int>((corps->GetEyePoint().z / 512 * 400) + 300);
+		SpriteKeyType spriteType = SPRITE_NONE;
 		if (corps->GetOwnPlayerID() == NetworkManager::GetInstance()->GetMyPlayerID())
 		{
-			CorpsMark* mark = new CorpsMark(SPRITE_UI_CORPSMARK_BLUE,SCENE_PLAY, PosX, PosY, false, corps, true);
-			m_CorpsMarkList.push_back(mark);
+			if (corps->GetUnitType() == UnitType::UNIT_GUARD)
+			{
+				spriteType = SPRITE_UI_CORPSFLAG_BLUE;
+			}
+			else
+			{
+				spriteType = SPRITE_UI_CORPSMARK_BLUE;
+			}
+		}
+		else if (corps->GetOwnPlayerID() == 0)
+		{
+			spriteType = SPRITE_UI_CORPSFLAG_GRAY;
 		}
 		else
 		{
-			CorpsMark* mark = new CorpsMark(SPRITE_UI_CORPSMARK_RED, SCENE_PLAY, PosX, PosY, false, corps, false);
-			m_CorpsMarkList.push_back(mark);
+			if (corps->GetUnitType() == UnitType::UNIT_GUARD)
+			{
+				spriteType = SPRITE_UI_CORPSFLAG_RED;
+			}
+			else
+			{
+				spriteType = SPRITE_UI_CORPSMARK_RED;
+			}
 		}
+		CorpsMark* mark = new CorpsMark(spriteType, SCENE_PLAY, PosX, PosY, false, corps, true);
+		m_CorpsMarkList.push_back(mark);
 	}
 	else
 	{
