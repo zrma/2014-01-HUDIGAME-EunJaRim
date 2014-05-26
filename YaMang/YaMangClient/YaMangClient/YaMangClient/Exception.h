@@ -20,6 +20,9 @@ static void InstallCrashReporter()
 	BT_SetLogFlags( g_LogHandle, BTLF_SHOWTIMESTAMP );
 	BT_SetLogEchoMode( g_LogHandle, BTLE_STDERR | BTLE_DBGOUT );
 
+	WCHAR buildTime[] = L"Build Time : " _T( __DATE__ ) L"-" _T( __TIME__ );
+	BT_InsLogEntry( g_LogHandle, BTLL_INFO, buildTime );
+
 	PCTSTR logFileName = BT_GetLogFileName( g_LogHandle );
 	BT_AddLogFile( logFileName );
 }

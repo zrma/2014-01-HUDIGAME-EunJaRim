@@ -38,6 +38,8 @@ int APIENTRY _tWinMain( _In_ HINSTANCE hInstance,
 	BT_SetTerminate();
 	BT_InsLogEntry( g_LogHandle, BTLL_INFO, _T( "Entering main() function" ) );
 
+	CRASH_ASSERT( false );
+
 #ifdef _PRINT_CONSOLE
 	Logger::GetInstance();
 #endif
