@@ -93,7 +93,7 @@ void ScenePlay::AddCorps( int corpsID, Corps* corps )
 
 		//부대 마크 추가
 		int PosX = static_cast<int>((corps->GetEyePoint().x / 512 * 400) + 550); // 맵 상대위치 하드코딩
-		int PosY = static_cast<int>((corps->GetEyePoint().z / 512 * 400) + 300);
+		int PosY = static_cast<int>((-corps->GetEyePoint().z / 512 * 400) + 300);
 		SpriteKeyType spriteType = SPRITE_NONE;
 		if (corps->GetOwnPlayerID() == NetworkManager::GetInstance()->GetMyPlayerID())
 		{
