@@ -166,6 +166,9 @@
     <ClInclude Include="ChangeFormation.h">
       <Filter>Action</Filter>
     </ClInclude>
+    <ClInclude Include="GameMapPathFinder.h">
+      <Filter>YaMang</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DatabaseJobContext.cpp">
@@ -274,6 +277,9 @@
       <Filter>YaMang</Filter>
     </ClCompile>
     <ClCompile Include="ClientSessionEvent.cpp">
+      <Filter>YaMang</Filter>
+    </ClCompile>
+    <ClCompile Include="GameMapPathFinder.cpp">
       <Filter>YaMang</Filter>
     </ClCompile>
   </ItemGroup>
