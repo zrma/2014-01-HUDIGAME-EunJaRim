@@ -12,11 +12,6 @@
 #include "MainWindow.h"
 #include "NetworkManager.h"
 #include "Exception.h"
-#include "client/windows/handler/exception_handler.h"
-#include "client/windows/sender/crash_report_sender.h"
-
-static google_breakpad::ExceptionHandler *eh;
-static google_breakpad::CrashReportSender *sender;
 
 int APIENTRY _tWinMain( _In_ HINSTANCE hInstance,
 						_In_opt_ HINSTANCE hPrevInstance,
@@ -33,12 +28,8 @@ int APIENTRY _tWinMain( _In_ HINSTANCE hInstance,
 	// _CrtSetBreakAlloc( #### );
 	// _CrtSetBreakAlloc( 192 );
 
-	// SetUnhandledExceptionFilter( ExceptionFilter );
-
-	eh = new google_breakpad::ExceptionHandler( L".", NULL, ExceptResult, NULL, google_breakpad::ExceptionHandler::HANDLER_ALL );
-	// sender = new google_breakpad::CrashReportSender( L"YaMang_Dump_Send" );
-	// sender->set_max_reports_per_day( 3 );
-		
+	SetUnhandledExceptionFilter( ExceptionFilter );
+	
 #ifdef _PRINT_CONSOLE
 	Logger::GetInstance();
 #endif
