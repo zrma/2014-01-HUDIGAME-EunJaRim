@@ -13,6 +13,8 @@
 #include "NetworkManager.h"
 #include "Exception.h"
 
+INT_PTR g_LogHandle = -1;
+
 int APIENTRY _tWinMain( _In_ HINSTANCE hInstance,
 						_In_opt_ HINSTANCE hPrevInstance,
 						_In_ LPTSTR    lpCmdLine,
@@ -23,13 +25,19 @@ int APIENTRY _tWinMain( _In_ HINSTANCE hInstance,
 	UNREFERENCED_PARAMETER( lpCmdLine );
 
 	_CrtSetDbgFlag( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
-	
+
 	// 메모리 릭을 체크하려면 아래의 #### 칸에 릭 난 곳 { 숫자 } 표기 된 숫자를 넣어주면 됩니다.
 	// _CrtSetBreakAlloc( #### );
 	// _CrtSetBreakAlloc( 192 );
 
-	SetUnhandledExceptionFilter( ExceptionFilter );
-	
+	// SetUnhandledExceptionFilter( ExceptionFilter );
+
+	InstallCrashReporter();
+	// set_terminate() must be called from every thread
+
+	BT_SetTerminate();
+	BT_InsLogEntry( g_LogHandle, BTLL_INFO, _T( "Entering main() function" ) );
+
 #ifdef _PRINT_CONSOLE
 	Logger::GetInstance();
 #endif
@@ -46,7 +54,6 @@ int APIENTRY _tWinMain( _In_ HINSTANCE hInstance,
 	{
 		NetworkManager::GetInstance()->SetRoomNumber( std::stoi( parameter ) );
 	}
-	
 
 	// WS_POPUPWINDOW
 	// WS_OVERLAPPEDWINDOW
@@ -56,7 +63,7 @@ int APIENTRY _tWinMain( _In_ HINSTANCE hInstance,
 	}
 
 	MainWindow::GetInstance()->Display( nCmdShow );
-	
+
 #ifndef DEBUG
 	HANDLE mutex = CreateMutex( NULL, FALSE, L"YaMangClientMutex" );
 	if ( mutex == NULL )
@@ -70,9 +77,9 @@ int APIENTRY _tWinMain( _In_ HINSTANCE hInstance,
 	{
 		case WAIT_TIMEOUT:
 		{	
-			MessageBox( MainWindow::GetInstance()->Window(), L"Client Already Running", L"Mutex", MB_OK | MB_ICONERROR );
-			MainWindow::Release();
-			return -1;
+							 MessageBox( MainWindow::GetInstance()->Window(), L"Client Already Running", L"Mutex", MB_OK | MB_ICONERROR );
+							 MainWindow::Release();
+							 return -1;
 		}
 			break;
 		case WAIT_OBJECT_0:
@@ -88,6 +95,9 @@ int APIENTRY _tWinMain( _In_ HINSTANCE hInstance,
 #ifdef _PRINT_CONSOLE
 	Logger::Release();
 #endif
+
+	BT_InsLogEntry( g_LogHandle, BTLL_INFO, _T( "Leaving main() function" ) );
+	BT_CloseLogFile( g_LogHandle );
 
 	return result;
 }
