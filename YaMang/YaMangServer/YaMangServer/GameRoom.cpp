@@ -92,47 +92,30 @@ void GameRoom::GameRoomStart()
 
 		// test code
 		PositionInfo position;
-		if (kingPositionList.at(i).m_EyePoint.x > 0)
-		{
-			position.m_EyePoint = { kingPositionList.at(i).m_EyePoint.x - 30.0f, 0.0f, kingPositionList.at(i).m_EyePoint.z - 30.0f };
-			position.m_LookAtPoint = kingPositionList.at(i).m_LookAtPoint;
-		}
-		else
-		{
-			position.m_EyePoint = { kingPositionList.at(i).m_EyePoint.x + 30.0f, 0.0f, kingPositionList.at(i).m_EyePoint.z + 30.0f };
-			position.m_LookAtPoint = kingPositionList.at(i).m_LookAtPoint;
-		}
-		GenerateCorps(client->GetPlayerID(), UnitType::UNIT_ARROW, position);
-
-
 		PositionInfo position1;
-		if (kingPositionList.at(i).m_EyePoint.x > 0)
-		{
-			position1.m_EyePoint = { kingPositionList.at(i).m_EyePoint.x - 30.0f, 0.0f, kingPositionList.at(i).m_EyePoint.z };
-			position1.m_LookAtPoint = kingPositionList.at(i).m_LookAtPoint;
-		}
-		else
-		{
-			position1.m_EyePoint = { kingPositionList.at(i).m_EyePoint.x + 30.0f, 0.0f, kingPositionList.at(i).m_EyePoint.z };
-			position1.m_LookAtPoint = kingPositionList.at(i).m_LookAtPoint;
-		}
-		GenerateCorps(client->GetPlayerID(), UnitType::UNIT_KNIGHT, position1);
-
 		PositionInfo position2;
 		if (kingPositionList.at(i).m_EyePoint.x > 0)
 		{
-			position2.m_EyePoint = { kingPositionList.at(i).m_EyePoint.x, 0.0f, kingPositionList.at(i).m_EyePoint.z - 30.0f };
-			position2.m_LookAtPoint = kingPositionList.at(i).m_LookAtPoint;
+			position.m_EyePoint = { kingPositionList.at( i ).m_EyePoint.x - 30.0f, 0.0f, kingPositionList.at( i ).m_EyePoint.z - 30.0f };
+			position.m_LookAtPoint = kingPositionList.at( i ).m_LookAtPoint;
+			position1.m_EyePoint = { kingPositionList.at(i).m_EyePoint.x - 30.0f, 0.0f, kingPositionList.at(i).m_EyePoint.z };
+			position1.m_LookAtPoint = kingPositionList.at(i).m_LookAtPoint;
+			position2.m_EyePoint = { kingPositionList.at( i ).m_EyePoint.x, 0.0f, kingPositionList.at( i ).m_EyePoint.z - 30.0f };
+			position2.m_LookAtPoint = kingPositionList.at( i ).m_LookAtPoint;
 		}
 		else
 		{
-			position2.m_EyePoint = { kingPositionList.at(i).m_EyePoint.x, 0.0f, kingPositionList.at(i).m_EyePoint.z + 30.0f };
-			position2.m_LookAtPoint = kingPositionList.at(i).m_LookAtPoint;
+			position.m_EyePoint = { kingPositionList.at( i ).m_EyePoint.x + 30.0f, 0.0f, kingPositionList.at( i ).m_EyePoint.z + 30.0f };
+			position.m_LookAtPoint = kingPositionList.at( i ).m_LookAtPoint;
+			position1.m_EyePoint = { kingPositionList.at(i).m_EyePoint.x + 30.0f, 0.0f, kingPositionList.at(i).m_EyePoint.z };
+			position1.m_LookAtPoint = kingPositionList.at(i).m_LookAtPoint;
+			position2.m_EyePoint = { kingPositionList.at( i ).m_EyePoint.x, 0.0f, kingPositionList.at( i ).m_EyePoint.z + 30.0f };
+			position2.m_LookAtPoint = kingPositionList.at( i ).m_LookAtPoint;
 		}
-		GenerateCorps(client->GetPlayerID(), UnitType::UNIT_KNIGHT, position2);
 
-
-
+		GenerateCorps( client->GetPlayerID(), UnitType::UNIT_ARROW, position );
+		GenerateCorps( client->GetPlayerID(), UnitType::UNIT_KNIGHT, position1 );
+		GenerateCorps( client->GetPlayerID(), UnitType::UNIT_KNIGHT, position2 );
 
 
 		++i;
