@@ -15,6 +15,7 @@
 #include "UIObject.h"
 #include "MiniMap.h"
 #include "CorpsMark.h"
+#include "Timer.h"
 
 
 ScenePlay::ScenePlay()
@@ -69,6 +70,7 @@ void ScenePlay::Update()
 
 	//Map 보일지 말지 업데이트. 키보드 누를 때마다 인풋 디스패쳐에서 SetVisible 설정해줌
 	m_Minimap->SetVisible(m_IsMapVisible);
+	CheckRegenFlag();
 }
 
 void ScenePlay::Render() const
@@ -97,6 +99,9 @@ void ScenePlay::AddCorps( int corpsID, Corps* corps )
 		SpriteKeyType spriteType = SPRITE_NONE;
 		if (corps->GetOwnPlayerID() == NetworkManager::GetInstance()->GetMyPlayerID())
 		{
+			//RegenTime 초기화
+			m_StackedTime = 0;
+
 			if (corps->GetUnitType() == UnitType::UNIT_GUARD)
 			{
 				spriteType = SPRITE_UI_CORPSFLAG_BLUE;
@@ -123,6 +128,7 @@ void ScenePlay::AddCorps( int corpsID, Corps* corps )
 		}
 		CorpsMark* mark = new CorpsMark(spriteType, SCENE_PLAY, PosX, PosY, false, corps, true);
 		m_CorpsMarkList.push_back(mark);
+
 	}
 	else
 	{
@@ -330,4 +336,20 @@ void ScenePlay::SetMapVisible(bool visible)
 	{ 
 		iter->SetVisible(visible); 
 	}
+}
+
+void ScenePlay::CheckRegenFlag()
+{
+	m_StackedTime += Timer::GetInstance()->GetElapsedTime();
+	Log("stacked time : %f\n", m_StackedTime);
+	//full width = 600
+	if (m_RegenTime > 0)
+	{
+		float flagPos = static_cast<float>(m_StackedTime / m_RegenTime * 600 + 180);
+		if (flagPos >= 180)
+		{
+			m_RegenFlag->SetUIPosX(flagPos);
+		}
+	}
+
 }

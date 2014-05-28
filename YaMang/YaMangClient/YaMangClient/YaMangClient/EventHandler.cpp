@@ -10,6 +10,7 @@
 #include "CameraController.h"
 #include "PlayerManager.h"
 
+
 HandlerFunc HandlerTable[PKT_MAX];
 
 static void DefaultHandler( PacketHeader& pktBase )
@@ -525,7 +526,10 @@ void NetworkManager::HandleRefreshUIResult( RefreshUIResult& inPacket )
 			TextManager::GetInstance( )->RegistText( TEXT_CORPS_NUM, wsCorpsNum, 20, 200 );
 			TextManager::GetInstance( )->RegistText( TEXT_BASE_NUM, wsBaseNum, 20, 250 );
 			TextManager::GetInstance( )->RegistText( TEXT_REGEN_TIME, wsRegenTime, 20, 300 ); // 텍스트로 보이는건 임시
-			Log( "Refresh UI! \n" );
+			Log("Refresh UI! \n");
+
+			ScenePlay* playScene = dynamic_cast<ScenePlay*>(SceneManager::GetInstance()->GetNowScene());
+			playScene->SetRegenTime(regenTime);
 		}
 		else
 		{

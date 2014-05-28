@@ -42,6 +42,10 @@ public:
 	void		InitUIObjects();
 	void		SetMapVisible(bool visible);
 
+	// 리젠 플래그 위치 이동을 위한 함수
+	void		CheckRegenFlag();
+	void		SetRegenTime(ULONGLONG time){ m_RegenTime = static_cast<float>(time); }
+
 private:
 	std::hash_map<int, Corps*>	m_CorpsList;
 	std::vector<int>			m_BasePlayerIDList;
@@ -58,6 +62,10 @@ private:
 	UIObject*					m_RegenBar;
 	UIObject*					m_RegenFlag;
 	std::list<CorpsMark*>		m_CorpsMarkList;
+
+	//리젠 타임 출력을 위한 멤버
+	float						m_RegenTime;
+	float						m_StackedTime = 0;
 
 };
 
