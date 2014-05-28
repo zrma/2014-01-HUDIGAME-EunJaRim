@@ -218,17 +218,80 @@ bool GameMapPathFinder::ValidPoint( NodePoint nodeP )
 	return true;
 }
 
+enum Way
+{
+	NONE,
+	LEFT,
+	RIGHT,
+	UP,
+	DOWN
+};
+Way m_Way = NONE;
+std::vector<NodePoint> m_PathPoint;
 //목적지에서 부터 출발지점으로 부모의 노드를 따라서 이동
-void GameMapPathFinder::WritePathOnTheMap( )
+void GameMapPathFinder::WritePathOnTheMap()
 {
 	NodePoint p = m_EndNode;
+
+	int pastX = m_EndNode.x;
+	int pastY = m_EndNode.y;
+
+	m_PathPoint.clear();
+
 	while ( p != m_Map[m_StartNode.x][m_StartNode.y].parent )
 	{
+
+		int x = pastX - p.x;
+		int y = pastY - p.y;
+
+
+		Way nowWay = NONE;
+
+		if ( 0 != x )
+		{
+			if ( 1 == x )
+			{
+				nowWay = LEFT;
+			}
+			else
+			{
+				nowWay = RIGHT;
+			}
+		}
+		else if ( 0 != y )
+		{
+			if ( 1 == y )
+			{
+				nowWay = UP;
+			}
+			else
+			{
+				nowWay = DOWN;
+			}
+		}
+
+		if ( m_Way != nowWay )
+		{
+			m_Way = nowWay;
+			NodePoint np = { pastX, pastY };
+			m_PathPoint.push_back( np );
+		}
+
+		pastX = p.x;
+		pastY = p.y;
+
 		m_Map[p.x][p.y].type = NodeStatusPath;
 		p = m_Map[p.x][p.y].parent;
+
+
 	}
+	// 마지막 위치1
+	NodePoint np = { pastX, pastY };
+	m_PathPoint.push_back( np );
+
 	m_Map[m_StartNode.x][m_StartNode.y].type = NodeStatusStart;
 	m_Map[m_EndNode.x][m_EndNode.y].type = NodeStatusEnd;
+
 }
 
 // 지도 상황을 프린트

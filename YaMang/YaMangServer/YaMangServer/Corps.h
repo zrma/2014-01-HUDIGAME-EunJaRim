@@ -55,42 +55,45 @@ private:
 
 protected:
 
-	int						m_PlayerID = -1;
-	int						m_CorpsID = -1;
-	UnitType				m_UnitType = UnitType::UNIT_NONE;
-	bool					m_IsDead = false;
-	int						m_UnitNum = -1;
+	int							m_PlayerID = -1;
+	int							m_CorpsID = -1;
+	UnitType					m_UnitType = UnitType::UNIT_NONE;
+	bool						m_IsDead = false;
+	int							m_UnitNum = -1;
 
-	PositionInfo			m_Position;
-	FormationType			m_Formation = FormationType::FORMATION_RUSH;
+	PositionInfo				m_Position;
+	FormationType				m_Formation = FormationType::FORMATION_RUSH;
 
-	Action*					m_HoldAction = nullptr;
+	Action*						m_HoldAction = nullptr;
 
-	float					m_HP = 0.0f;
-	float					m_MoveSpeed = 0.0f;
-	float					m_MoveSpeedFormationBonus = 0.0f;
-	float					m_MoveSpeedMapBonus = 0.0f;
+	float						m_HP = 0.0f;
+	float						m_MoveSpeed = 0.0f;
+	float						m_MoveSpeedFormationBonus = 0.0f;
+	float						m_MoveSpeedMapBonus = 0.0f;
 
-	float					m_AttackRange = 0.0f;
-	float					m_AttackRangeFormationBonus = 0.0f;
-	float					m_AttackRangeMapBonus = 0.0f;
+	float						m_AttackRange = 0.0f;
+	float						m_AttackRangeFormationBonus = 0.0f;
+	float						m_AttackRangeMapBonus = 0.0f;
 
-	float					m_AttackPower = 0.0f;
-	float					m_AttackPowerFormationBonus = 0.0f;
-	float					m_AttackPowerMapBonus = 0.0f;
+	float						m_AttackPower = 0.0f;
+	float						m_AttackPowerFormationBonus = 0.0f;
+	float						m_AttackPowerMapBonus = 0.0f;
 
-	float					m_Defense = 0.0f;
-	float					m_DefenseFormationBonus = 0.0f;
-	float					m_DefenseMapBonus = 0.0f;
+	float						m_Defense = 0.0f;
+	float						m_DefenseFormationBonus = 0.0f;
+	float						m_DefenseMapBonus = 0.0f;
 
-	ULONGLONG				m_AttackDelay = 0;
-	ULONGLONG				m_AttackDelayFormationBonus = 0;
-	ULONGLONG				m_AttackDelayMapBonus = 0;
+	ULONGLONG					m_AttackDelay = 0;
+	ULONGLONG					m_AttackDelayFormationBonus = 0;
+	ULONGLONG					m_AttackDelayMapBonus = 0;
 
-	bool					m_IsMoving = false;
-	ULONGLONG				m_MovingStartedTime = 0;
-	ULONGLONG				m_MovingDuringTime = 0;
-	PositionInfo			m_MovingRoute;
+	bool						m_IsMoving = false;
+	ULONGLONG					m_MovingStartedTime = 0;
+	ULONGLONG					m_MovingDuringTime = 0;
+	PositionInfo				m_MovingRoute;
+
+
+	std::vector<D3DXVECTOR2>	m_MovingAllRoute;
 
 private:
 	GameRoom*			m_GameRoom = nullptr;
