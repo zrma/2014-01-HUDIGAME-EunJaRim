@@ -51,9 +51,58 @@ inline void SafeDelete( T* &p )
 }
 
 template <typename ... Types >
-inline void Log( const Types& ...args )
+inline void LogT( const Types& ...args )
 {
 #ifdef _DEBUG
-	printf_s( args... );
+	char buf[100];
+	sprintf_s( buf, sizeof( buf ), args... );
+	printf_s( "[TRACE]%s", buf );
 #endif // _DEBUG
 }
+template <typename ... Types >
+inline void LogD( const Types& ...args )
+{
+#ifdef _DEBUG
+	char buf[100];
+	sprintf_s( buf, sizeof( buf ), args... );
+	printf_s( "[DEBUG]%s", buf );
+#endif // _DEBUG
+}
+template <typename ... Types >
+inline void LogI( const Types& ...args )
+{
+#ifdef _DEBUG
+	char buf[100];
+	sprintf_s( buf, sizeof( buf ), args... );
+	printf_s( "[INFO]%s", buf );
+#endif // _DEBUG
+}
+template <typename ... Types >
+inline void LogW( const Types& ...args )
+{
+#ifdef _DEBUG
+	char buf[100];
+	sprintf_s( buf, sizeof( buf ), args... );
+	printf_s( "[WARN]%s", buf );
+#endif // _DEBUG
+}
+template <typename ... Types >
+inline void LogE( const Types& ...args )
+{
+#ifdef _DEBUG
+	char buf[100];
+	sprintf_s( buf, sizeof( buf ), args... );
+	printf_s( "[ERROR]%s", buf );
+#endif // _DEBUG
+}
+template <typename ... Types >
+inline void LogF( const Types& ...args )
+{
+#ifdef _DEBUG
+	char buf[100];
+	sprintf_s( buf, sizeof( buf ), args... );
+	printf_s( "[FATAL]%s", buf );
+#endif // _DEBUG
+}
+
+

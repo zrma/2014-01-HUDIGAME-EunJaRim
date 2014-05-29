@@ -85,7 +85,7 @@ void ClientSession::HandleChatRequest( ChatBroadcastRequest& inPacket )
 	/// 채팅은 바로 방송 하면 끝
 	if ( !Broadcast( &outPacket ) )
 	{
-		Log( "[Disconnected from:]ClientSession::HandleChatRequest \n" );
+		LogD( "[Disconnected from:]ClientSession::HandleChatRequest \n" );
 		Disconnect();
 	}
 }
@@ -106,7 +106,7 @@ void ClientSession::HandleGameOverRequest( GameOverRequest& inPacket )
 	// GM이 아니면 아웃
 	if ( playerID < 101 && playerID > 199 )
 	{
-		Log( "[Disconnected from:]ClientSession::HandleGameOverRequest GM out \n" );
+		LogD( "[Disconnected from:]ClientSession::HandleGameOverRequest GM out \n" );
 		Disconnect( );
 		return;
 	}
@@ -117,12 +117,12 @@ void ClientSession::HandleGameOverRequest( GameOverRequest& inPacket )
 
 	outPacket.m_IsWon = isWon;
 
-	Log( "[GameOverMessage][%d]%d \n", inPacket.m_PlayerId, isWon );
+	LogD( "[GameOverMessage][%d]%d \n", inPacket.m_PlayerId, isWon );
 
 	/// 채팅은 바로 방송 하면 끝
 	if ( !Broadcast( &outPacket ) )
 	{
-		Log( "[Disconnected from:]ClientSession::HandleGameOverRequest Broadcast Fail \n" );
+		LogD( "[Disconnected from:]ClientSession::HandleGameOverRequest Broadcast Fail \n" );
 		Disconnect();
 	}
 }
@@ -149,7 +149,7 @@ void ClientSession::HandleRoomCreateRequest( RoomCreateRequest& inPacket )
 
 	if ( !DirectSend( &outPacket ) )
 	{
-		Log( "[Disconnected from:]ClientSession::HandleRoomCreateRequest \n" );
+		LogD( "[Disconnected from:]ClientSession::HandleRoomCreateRequest \n" );
 		Disconnect();
 	}
 
@@ -174,7 +174,7 @@ void ClientSession::HandleEnterRoomRequest( EnterRoomRequest& inPacket )
 	
 	if ( !g_RoomManager->EnterRoom( roomNumber, m_PlayerID ) )
 	{
-		Log( "[Disconnected from:]ClientSession::HandleEnterRoomRequest Enter Room \n" );
+		LogD( "[Disconnected from:]ClientSession::HandleEnterRoomRequest Enter Room \n" );
 		Disconnect();
 	}
 
@@ -187,7 +187,7 @@ void ClientSession::HandleEnterRoomRequest( EnterRoomRequest& inPacket )
 		//Disconnect();
 	}
 
-	Log( "Enter Room! ID:%d ROOM:%d \n", m_PlayerID, m_GameRoom->GetRoomNumber( ) );
+	LogD( "Enter Room! ID:%d ROOM:%d \n", m_PlayerID, m_GameRoom->GetRoomNumber( ) );
 	g_RoomManager->PrintClientList(); // 테스트 프린트
 
 }
@@ -214,7 +214,7 @@ void ClientSession::HandleLeaveRoomRequest( LeaveRoomRequest& inPacket )
 
 	if ( !g_RoomManager->LeaveRoom( roomNumber, m_PlayerID ) )
 	{
-		Log( "[Disconnected from:]ClientSession::HandleLeaveRoomRequest LeaveRoom Error \n" );
+		LogD( "[Disconnected from:]ClientSession::HandleLeaveRoomRequest LeaveRoom Error \n" );
 		Disconnect();
 	}
 
@@ -223,11 +223,11 @@ void ClientSession::HandleLeaveRoomRequest( LeaveRoomRequest& inPacket )
 
 	if ( !Broadcast( &outPacket ) )
 	{
-		Log( "[Disconnected from:]ClientSession::HandleLeaveRoomRequest Broadcast Fail \n" );
+		LogD( "[Disconnected from:]ClientSession::HandleLeaveRoomRequest Broadcast Fail \n" );
 		Disconnect();
 	}
 
-	Log( "Leave Room! ID:%d ROOM:%d \n", m_PlayerID, roomNumber );
+	LogD( "Leave Room! ID:%d ROOM:%d \n", m_PlayerID, roomNumber );
 	g_RoomManager->PrintClientList(); // 테스트 프린트
 
 }
@@ -282,11 +282,11 @@ void ClientSession::HandleGenerateCorpsRequest( GenerateCorpsRequest& inPacket )
 
 	if ( !Broadcast( &outPacket ) )
 	{
-		Log( "[Disconnected from:]ClientSession::HandleGenerateCorpsRequest Broadcast Fail \n" );
+		LogD( "[Disconnected from:]ClientSession::HandleGenerateCorpsRequest Broadcast Fail \n" );
 		Disconnect();
 	}
 
-	Log( "GenerateCorps! Type:%d CorpID:%d PlayerID:%d \n",
+	LogD( "GenerateCorps! Type:%d CorpID:%d PlayerID:%d \n",
 			  unitType, corps->GetCorpsID( ), m_PlayerID );
 }
 
@@ -323,14 +323,14 @@ void ClientSession::HandleMoveCorpsRequest( MoveCorpsRequest& inPacket )
 	// 가드나 킹이 이동 요청해옴
 	if ( UnitType::UNIT_GUARD == corps->GetUnitType( ) || UnitType::UNIT_KING == corps->GetUnitType( ) )
 	{
-		Log( "[Error] [%d]Type Move Request \n", corpsID );
+		LogD( "[Error] [%d]Type Move Request \n", corpsID );
 		++m_ErrorNumber;
 		return;
 	}
 
 	if ( m_ErrorNumber > m_ErrorNumberMax )
 	{
-		Log( "[Disconnected from:]ClientSession::HandleMoveCorpsRequest Error MAX \n" );
+		LogD( "[Disconnected from:]ClientSession::HandleMoveCorpsRequest Error MAX \n" );
 		Disconnect();
 	}
 
@@ -349,7 +349,7 @@ void ClientSession::HandleMoveCorpsRequest( MoveCorpsRequest& inPacket )
 
 	m_GameRoom->AddActionToScheduler( action, 0 );
 
-	Log( "CorpsMoved CorpID:%d PlayerID:%d DesX:%f DesZ:%f \n", corpsID, m_PlayerID, destination.m_EyePoint.x, destination.m_EyePoint.z );
+	LogD( "CorpsMoved CorpID:%d PlayerID:%d DesX:%f DesZ:%f \n", corpsID, m_PlayerID, destination.m_EyePoint.x, destination.m_EyePoint.z );
 
 }
 
@@ -374,7 +374,7 @@ void ClientSession::HandleStopCorpsRequest( StopCorpsRequest& inPacket )
 
 	if ( m_ErrorNumber > m_ErrorNumberMax )
 	{
-		Log( "[Disconnected from:]ClientSession::HandleStopCorpsRequest Error MAX \n" );
+		LogD( "[Disconnected from:]ClientSession::HandleStopCorpsRequest Error MAX \n" );
 		Disconnect();
 	}
 
@@ -386,11 +386,11 @@ void ClientSession::HandleStopCorpsRequest( StopCorpsRequest& inPacket )
 
 	if ( !Broadcast( &outPacket ) )
 	{
-		Log( "[Disconnected from:]ClientSession::HandleStopCorpsRequest BroadCast fail \n" );
+		LogD( "[Disconnected from:]ClientSession::HandleStopCorpsRequest BroadCast fail \n" );
 		Disconnect();
 	}
 
-	Log( "CorpsStopped! CorpID:%d PlayerID:%d \n", corpsID, m_PlayerID );
+	LogD( "CorpsStopped! CorpID:%d PlayerID:%d \n", corpsID, m_PlayerID );
 
 }
 
@@ -419,7 +419,7 @@ void ClientSession::HandleChangeCorpsFormationRequest( ChangeCorpsFormationReque
 
 	if ( m_ErrorNumber > m_ErrorNumberMax )
 	{
-		Log( "[Disconnected from:]ClientSession::HandleChangeCorpsFormationRequest Error Max \n" );
+		LogD( "[Disconnected from:]ClientSession::HandleChangeCorpsFormationRequest Error Max \n" );
 		Disconnect();
 	}
 
@@ -441,7 +441,7 @@ void ClientSession::HandleChangeCorpsFormationRequest( ChangeCorpsFormationReque
 // 		Disconnect();
 // 	}
 
-	Log( "Corps Change Formation CorpID:%d Formation:%d \n", corpsID, formation );
+	LogD( "Corps Change Formation CorpID:%d Formation:%d \n", corpsID, formation );
 
 }
 
@@ -475,14 +475,14 @@ void ClientSession::HandleAttackCorpsRequest( AttackCorpsRequest& inPacket )
 
 	if ( myCorps->GetPlayerID() == targetCorps->GetPlayerID() )
 	{
-		Log( "[BUG]Attack Own Corps! \n" );
+		LogD( "[BUG]Attack Own Corps! \n" );
 		++m_ErrorNumber;
 		return;
 	}
 
 	if ( m_ErrorNumber > m_ErrorNumberMax )
 	{
-		Log( "[Disconnected from:]ClientSession::HandleAttackCorpsRequest Error Max \n" );
+		LogD( "[Disconnected from:]ClientSession::HandleAttackCorpsRequest Error Max \n" );
 		Disconnect();
 	}
 
@@ -495,7 +495,7 @@ void ClientSession::HandleAttackCorpsRequest( AttackCorpsRequest& inPacket )
 		action->SetTargetCorps( targetCorps );
 
 		m_GameRoom->AddActionToScheduler( action, 0 );
-		Log( "[Packet GET]TakeBase FromCorpID:%d ToCorpID:%d \n", myCorpsID, targetCorpsID );
+		LogD( "[Packet GET]TakeBase FromCorpID:%d ToCorpID:%d \n", myCorpsID, targetCorpsID );
 	}
 	else
 	{
@@ -508,7 +508,7 @@ void ClientSession::HandleAttackCorpsRequest( AttackCorpsRequest& inPacket )
 			action->SetTargetCorps( targetCorps );
 
 			m_GameRoom->AddActionToScheduler( action, 0 );
-			Log( "[Packet GET]KnightAttackCorps FromCorpID:%d ToCorpID:%d \n", myCorpsID, targetCorpsID );
+			LogD( "[Packet GET]KnightAttackCorps FromCorpID:%d ToCorpID:%d \n", myCorpsID, targetCorpsID );
 		}
 		else
 		{
@@ -518,7 +518,7 @@ void ClientSession::HandleAttackCorpsRequest( AttackCorpsRequest& inPacket )
 			action->SetTargetCorps( targetCorps );
 
 			m_GameRoom->AddActionToScheduler( action, 0 );
-			Log( "[Packet GET]AttackCorps FromCorpID:%d ToCorpID:%d \n", myCorpsID, targetCorpsID );
+			LogD( "[Packet GET]AttackCorps FromCorpID:%d ToCorpID:%d \n", myCorpsID, targetCorpsID );
 		}
 
 	}
@@ -570,7 +570,7 @@ void ClientSession::HandleSyncAllRequest( SyncAllRequest& inPacket )
 
 		if ( !DirectSend( &outPacket ) )
 		{
-			Log( "[Disconnected from:]ClientSession::HandleSyncAllRequest DirectSend Fail \n" );
+			LogD( "[Disconnected from:]ClientSession::HandleSyncAllRequest DirectSend Fail \n" );
 			Disconnect();
 		}
 	}

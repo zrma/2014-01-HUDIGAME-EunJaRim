@@ -47,7 +47,7 @@ void ChangeFormation::OnTick()
 {
 	if ( m_OwnerCrops->IsDead() )
 	{
-		Log( "ChangeFormation Failed \n" );
+		LogD( "ChangeFormation Failed \n" );
 		m_ActionStatus = ACTION_END;
 		m_OwnerCrops->DoNextAction( this, 0 );
 		return;
@@ -70,7 +70,7 @@ void ChangeFormation::OnEnd()
 {
 	if ( m_OwnerCrops->IsDead() )
 	{
-		Log( "ChangeFormation Failed \n" );
+		LogD( "ChangeFormation Failed \n" );
 		return;
 	}
 	m_OwnerCrops->ChangeFormation( FormationType::FORMATION_DESTROY ); // 세팅한 포메이션

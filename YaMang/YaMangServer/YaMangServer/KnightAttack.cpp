@@ -17,7 +17,7 @@ KnightAttack::~KnightAttack()
 
 void KnightAttack::OnBegin()
 {
-	Log( "Knight Attack OnBegin \n" );
+	LogD( "Knight Attack OnBegin \n" );
 	m_ActionStatus = ACTION_TICK;
 	m_OwnerCrops->DoNextAction( this, 0 );
 }
@@ -28,7 +28,7 @@ void KnightAttack::OnTick()
 	// 둘중 하나라도 죽으면 어텍 취소
 	if ( m_OwnerCrops->IsDead() || m_TargerCrops->IsDead() )
 	{
-		Log( "Knight Attack Failed \n" );
+		LogD( "Knight Attack Failed \n" );
 		m_ActionStatus = ACTION_END;
 		m_OwnerCrops->DoNextAction( this, 0 );
 		return;
@@ -70,12 +70,12 @@ void KnightAttack::OnTick()
 
 		m_OwnerCrops->AttackCorps( m_TargerCrops );
 
-		Log( "Knight Attack OnTick Attack Success \n" );
+		LogD( "Knight Attack OnTick Attack Success \n" );
 
 
 		if ( m_OwnerCrops->IsDead() || m_TargerCrops->IsDead() )
 		{
-			Log( "Dead! \n" );
+			LogD( "Dead! \n" );
 			m_ActionStatus = ACTION_END;
 			m_OwnerCrops->DoNextAction( this, 0 );
 			return;
@@ -102,7 +102,7 @@ void KnightAttack::OnTick()
 
 		if ( !m_CanAttack )
 		{
-			Log( "move more \n" );
+			LogD( "move more \n" );
 			
 			if ( vector.x > 0 )
 			{
@@ -128,7 +128,7 @@ void KnightAttack::OnTick()
 		ULONGLONG movingTime = m_OwnerCrops->MoveStart( destination, 2 );
 
 
-		Log( "Knight Attack OnTick Chase \n" );
+		LogD( "Knight Attack OnTick Chase \n" );
 		m_ActionStatus = ACTION_TICK;
 		m_OwnerCrops->DoNextAction( this, movingTime );
 	}
@@ -136,7 +136,7 @@ void KnightAttack::OnTick()
 
 void KnightAttack::OnEnd()
 {
-	Log( "Knight Attack OnEnd \n" );
+	LogD( "Knight Attack OnEnd \n" );
 	m_OwnerCrops->MoveStop();
 	Action::OnEnd();
 }

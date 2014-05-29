@@ -36,7 +36,7 @@ void ClientSession::DatabaseJobDone( DatabaseJobContext* result )
 	{
 		LoadPlayerDataContext* login = dynamic_cast<LoadPlayerDataContext*>( result );
 
-		Log( "[DEBUG][%d] Login DONE! \n", login->m_PlayerId );
+		LogD( "[DEBUG][%d] Login DONE! \n", login->m_PlayerId );
 		LoginDone( login->m_PlayerId, login->m_PlayerName );
 
 	}
@@ -244,7 +244,7 @@ void ClientSession::Disconnect()
 	/// no TCP TIME_WAIT
 	if ( SOCKET_ERROR == setsockopt( m_Socket, SOL_SOCKET, SO_LINGER, (char*)&lingerOption, sizeof( LINGER ) ) )
 	{
-		Log( "[DEBUG] setsockopt linger option error: %d\n", GetLastError() );
+		LogD( "[DEBUG] setsockopt linger option error: %d\n", GetLastError() );
 		return;
 	}
 

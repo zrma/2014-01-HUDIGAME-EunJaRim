@@ -28,7 +28,7 @@ bool GameMapManager::Initialize()
 	if ( xmlLoadSuccess )
 	{
 		std::string mapFilePath = TinyXPath::S_xpath_string( document.RootElement(), "/server/mapFilePath/text()" ).c_str();
-		Log( "Map Path Loaded! :%s \n", mapFilePath.c_str() );
+		LogD( "Map Path Loaded! :%s \n", mapFilePath.c_str() );
 		if ( ReadMapFile( mapFilePath.c_str() ) )
 		{
 			// 임시 하드 코딩...
@@ -63,7 +63,7 @@ bool GameMapManager::Initialize()
 			return true;
 		}
 	}
-	Log( "Map Load FAIL! \n" );
+	LogD( "Map Load FAIL! \n" );
 	return false;
 }
 
@@ -112,7 +112,7 @@ bool GameMapManager::ReadMapFile( const char* filename )
 		}
 		m_BattleMap.push_back( row );
 	}
-	Log( "[%d][%d] Map Loaded! \n", m_BattleMap.size(), m_BattleMap.at( 0 ).size() );
+	LogD( "[%d][%d] Map Loaded! \n", m_BattleMap.size(), m_BattleMap.at( 0 ).size() );
 
 	fclose( f );
 

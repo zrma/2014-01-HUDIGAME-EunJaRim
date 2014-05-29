@@ -18,7 +18,7 @@ GenerateCorpOnce::~GenerateCorpOnce()
 
 void GenerateCorpOnce::OnBegin()
 {
-	Log( "[%d]GenerateCorpOnce OnBegin \n", m_PlayerID );
+	LogD( "[%d]GenerateCorpOnce OnBegin \n", m_PlayerID );
 
 	m_ActionStatus = ACTION_TICK;
 	m_GameRoom->AddActionToScheduler( this, 0 );
@@ -91,7 +91,7 @@ void GenerateCorpOnce::OnTick()
 
 	m_GameRoom->BroadcastPacket( &outPacket );
 
-	Log( "GenerateCorpOnce! Type:%d CorpID:%d PlayerID:%d \n",
+	LogD( "GenerateCorpOnce! Type:%d CorpID:%d PlayerID:%d \n",
 			  unitType, m_Corps->GetCorpsID( ), m_PlayerID );
 
 	m_ClientSession->AddCorpsNum();
@@ -101,7 +101,7 @@ void GenerateCorpOnce::OnTick()
 
 void GenerateCorpOnce::OnEnd()
 {
-	Log( "GenerateCorpOnce OnEnd \n" );
+	LogD( "GenerateCorpOnce OnEnd \n" );
 
 	Action::OnEnd();
 }

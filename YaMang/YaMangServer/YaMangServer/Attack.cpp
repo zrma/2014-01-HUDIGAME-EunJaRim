@@ -15,7 +15,7 @@ Attack::~Attack()
 
 void Attack::OnBegin()
 {
-	Log( "Attack OnBegin \n" );
+	LogD( "Attack OnBegin \n" );
 	m_OwnerCrops->ReCalculatePosition();
 	m_TargerCrops->ReCalculatePosition();
 
@@ -46,7 +46,7 @@ void Attack::OnTick()
 	// 둘중 하나라도 죽으면 어텍 취소
 	if ( m_OwnerCrops->IsDead( ) || m_TargerCrops->IsDead( ) )
 	{
-		Log( "Attack Failed \n" );
+		LogD( "Attack Failed \n" );
 		m_ActionStatus = ACTION_END;
 		m_OwnerCrops->DoNextAction( this, 0 );
 		return;
@@ -69,18 +69,18 @@ void Attack::OnTick()
 		
 		m_OwnerCrops->AttackCorps( m_TargerCrops );
 
-		Log( "Attack OnTick Attack Success \n" );
+		LogD( "Attack OnTick Attack Success \n" );
 
 
 		if ( m_OwnerCrops->IsDead() || m_TargerCrops->IsDead() )
 		{
-			Log( "Dead! \n" );
+			LogD( "Dead! \n" );
 			m_ActionStatus = ACTION_END;
 			m_OwnerCrops->DoNextAction( this, 0 );
 		}
 		else
 		{
-			Log( "Ready Re Attack!! \n" );
+			LogD( "Ready Re Attack!! \n" );
 			m_ActionStatus = ACTION_TICK;
 			m_OwnerCrops->DoNextAction( this, m_OwnerCrops->GetAttackDelay() );
 		}
@@ -123,7 +123,7 @@ void Attack::OnTick()
 		ULONGLONG movingTime = m_OwnerCrops->MoveStart( destination, 2 );
 
 
-		Log( "Attack OnTick Chase \n" );
+		LogD( "Attack OnTick Chase \n" );
 		m_ActionStatus = ACTION_TICK;
 		m_OwnerCrops->DoNextAction( this, movingTime );
 	}
@@ -131,7 +131,7 @@ void Attack::OnTick()
 
 void Attack::OnEnd()
 {
-	Log( "Attack OnEnd \n" );
+	LogD( "Attack OnEnd \n" );
 	m_OwnerCrops->MoveStop( );
 	Action::OnEnd();
 }

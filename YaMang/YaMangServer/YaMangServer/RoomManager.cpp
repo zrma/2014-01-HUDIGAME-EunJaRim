@@ -54,14 +54,14 @@ int RoomManager::AddRoom()
 
 	m_RoomList.insert( RoomList::value_type( m_RoomCount, room ) );
 
-	Log( "ROOM [%d] CREATED! \n", room->GetRoomNumber() );
+	LogD( "ROOM [%d] CREATED! \n", room->GetRoomNumber() );
 
 	return room->GetRoomNumber( );
 }
 
 bool RoomManager::EnterRoom( int roomNumber, int pid )
 {
-	Log( "EnterRoom [player:%d]->[%d] \n", pid, roomNumber );
+	LogD( "EnterRoom [player:%d]->[%d] \n", pid, roomNumber );
 	RoomList::iterator roomIter = m_RoomList.find( roomNumber );
 	if ( roomIter == m_RoomList.end( ) )
 	{
@@ -129,7 +129,7 @@ bool RoomManager::QuickJoin( int pid )
 
 bool RoomManager::LeaveRoom( int roomNumber, int pid )
 {
-	Log( "LeaveRoom [player:%d]->[%d] \n", pid, roomNumber );
+	LogD( "LeaveRoom [player:%d]->[%d] \n", pid, roomNumber );
 	RoomList::iterator roomIter = m_RoomList.find( roomNumber );
 	if ( roomIter == m_RoomList.end() )
 	{
@@ -155,7 +155,7 @@ bool RoomManager::LeaveRoom( int roomNumber, int pid )
 
 bool RoomManager::DeleteRoom( int roomNumber )
 {
-	Log( "DeleteRoom [%d] \n", roomNumber );
+	LogD( "DeleteRoom [%d] \n", roomNumber );
 	RoomList::iterator roomIter = m_RoomList.find( roomNumber );
 	if ( roomIter == m_RoomList.end() )
 	{
@@ -233,7 +233,7 @@ void RoomManager::PrintClientList()
 	for ( auto it = m_RoomList.begin(); it != m_RoomList.end(); ++it )
 	{
 		GameRoom* room = it->second;
-		Log( "-ROOM %d ClientList- \n", room->GetRoomNumber() );
+		LogD( "-ROOM %d ClientList- \n", room->GetRoomNumber() );
 		room->PrintClientList();
 	}
 }

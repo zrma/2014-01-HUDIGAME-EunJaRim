@@ -195,7 +195,7 @@ ULONGLONG Corps::MoveStart( D3DXVECTOR2 destination, int divideMove )
 	outPacket.m_TargetZ = targetZ;
 	outPacket.m_LookX = vector.x;
 	outPacket.m_LookZ = vector.y;
-	Log( "Move [%f][%f][%f][%f] \n", targetX, targetZ, vector.x, vector.y );
+	LogD( "Move [%f][%f][%f][%f] \n", targetX, targetZ, vector.x, vector.y );
 	m_GameRoom->BroadcastPacket( &outPacket );
 
 	return movingTime;
@@ -214,7 +214,7 @@ void Corps::MoveStop()
 	outPacket.m_LookX = m_Position.m_LookAtPoint.x;
 	outPacket.m_LookZ = m_Position.m_LookAtPoint.z;
 	m_GameRoom->BroadcastPacket( &outPacket );
-	Log( "Stop [%f][%f][%f][%f] \n", m_Position.m_EyePoint.x, m_Position.m_EyePoint.z, m_Position.m_LookAtPoint.x, m_Position.m_LookAtPoint.z );
+	LogD( "Stop [%f][%f][%f][%f] \n", m_Position.m_EyePoint.x, m_Position.m_EyePoint.z, m_Position.m_LookAtPoint.x, m_Position.m_LookAtPoint.z );
 }
 
 
@@ -320,7 +320,7 @@ void Corps::AttackCorps( Corps* targetCrops )
 	// 아니면 그냥 무시하고 계속 진행
 	if ( !targetAction || ACTION_END == targetAction->GetActionStatus() )
 	{
-		Log( "target CounterAttack! \n" );
+		LogD( "target CounterAttack! \n" );
 		// m_TargerCrops->ChangeFormation( FormationType::FORMATION_DEFENSE );// 망진으로 변경해야함
 		Attack* action = new Attack();
 		action->SetGameRoom( m_GameRoom );
@@ -357,8 +357,8 @@ void Corps::AttackCorps( Corps* targetCrops )
 
 	m_GameRoom->BroadcastPacket( &outPacket );
 
-	Log( "[Attack] range:%f damage:%f \n", GetAttackRange(), GetAttackPower() );
-	Log( "[Attack] Attacker:[%f][%f] Defencer:[%f][%f] \n", GetPositionInfo( ).m_EyePoint.x, GetPositionInfo( ).m_EyePoint.z, targetCrops->GetPositionInfo( ).m_EyePoint.x, targetCrops->GetPositionInfo( ).m_EyePoint.z );
+	LogD( "[Attack] range:%f damage:%f \n", GetAttackRange(), GetAttackPower() );
+	LogD( "[Attack] Attacker:[%f][%f] Defencer:[%f][%f] \n", GetPositionInfo( ).m_EyePoint.x, GetPositionInfo( ).m_EyePoint.z, targetCrops->GetPositionInfo( ).m_EyePoint.x, targetCrops->GetPositionInfo( ).m_EyePoint.z );
 
 }
 

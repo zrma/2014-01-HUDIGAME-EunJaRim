@@ -51,11 +51,11 @@ int _tmain( int argc, _TCHAR* argv[] )
 		std::string port;
 		port = TinyXPath::S_xpath_string( document.RootElement( ), "/server/port/text()" ).c_str( );
 		LISTEN_PORT = std::stoi( port );
-		Log( "Loaded Port Number :%s \n", port.c_str( ) );
+		LogD( "Loaded Port Number :%s \n", port.c_str( ) );
 	}
 	else
 	{
-		Log( "PORT Load Fail! \n" );
+		LogD( "PORT Load Fail! \n" );
 	}
 
 	// 유닛 데이터 로드
@@ -215,7 +215,7 @@ unsigned int WINAPI ClientHandlingThread( LPVOID lpParam )
 			// 클라 접속 처리
 			if ( false == client->OnConnect( &clientaddr ) )
 			{
-				Log( "[Disconnected from:]YaMangServer ClientHandlingThread \n" );
+				LogD( "[Disconnected from:]YaMangServer ClientHandlingThread \n" );
 				client->Disconnect();
 			}
 

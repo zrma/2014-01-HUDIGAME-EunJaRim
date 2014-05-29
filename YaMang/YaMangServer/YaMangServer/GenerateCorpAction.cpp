@@ -19,7 +19,7 @@ GenerateCorpAction::~GenerateCorpAction( )
 
 void GenerateCorpAction::OnBegin( )
 {
-	Log( "[%d]GenerateCorps OnBegin \n", m_PlayerID);
+	LogD( "[%d]GenerateCorps OnBegin \n", m_PlayerID);
 
 	m_LastGeneratedTime = GetTickCount64();
 
@@ -112,7 +112,7 @@ void GenerateCorpAction::OnTick()
 
 		m_GameRoom->BroadcastPacket( &outPacket );
 
-		Log( "GenerateCorps! Type:%d CorpID:%d PlayerID:%d \n",
+		LogD( "GenerateCorps! Type:%d CorpID:%d PlayerID:%d \n",
 			 unitType, corps->GetCorpsID(), m_PlayerID );
 
 		m_LastGeneratedTime = GetTickCount64();
@@ -126,7 +126,7 @@ void GenerateCorpAction::OnTick()
 
 void GenerateCorpAction::OnEnd( )
 {
-	Log( "GenerateCorps OnEnd \n" );
+	LogD( "GenerateCorps OnEnd \n" );
 
 	Action::OnEnd();
 }

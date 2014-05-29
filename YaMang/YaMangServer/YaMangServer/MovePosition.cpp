@@ -33,7 +33,7 @@ void MovePosition::OnBegin()
 void MovePosition::OnTick()
 {
 	// onTick의 역할은?
-	Log( "MovePosition OnTick \n" );
+	LogD( "MovePosition OnTick \n" );
 
 	m_ActionStatus = ACTION_END;
 	m_OwnerCrops->DoNextAction( this, 0 );
@@ -41,7 +41,7 @@ void MovePosition::OnTick()
 
 void MovePosition::OnEnd()
 {
-	Log( "MovePosition OnEnd \n" );
+	LogD( "MovePosition OnEnd \n" );
 	m_OwnerCrops->MoveStop();
 	Action::OnEnd();
 }

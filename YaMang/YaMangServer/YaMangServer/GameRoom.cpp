@@ -229,7 +229,7 @@ void GameRoom::EnterGameRoom( ClientSession* client )
 		CRASH_ASSERT( !m_GameRoomStart );
 		CRASH_ASSERT( !m_GameRoomEnd );
 		
-		Log( "[%d]GameStarted!! \n",m_RoomNumber );
+		LogD( "[%d]GameStarted!! \n",m_RoomNumber );
 		GameStartResult gameStartResult;
 		BroadcastPacket( &gameStartResult );
 		GameRoomStart( );
@@ -434,7 +434,7 @@ void GameRoom::FlushClientSend()
 		ClientSession* client = it.second;
 		if ( false == client->SendFlush() )
 		{
-			Log( "[Disconnected from:]GameRoom::FlushClientSend \n" );
+			LogD( "[Disconnected from:]GameRoom::FlushClientSend \n" );
 			client->Disconnect();
 		}
 	}
@@ -503,7 +503,7 @@ void GameRoom::PrintClientList()
 	for ( auto& it : m_ClientList )
 	{
 		ClientSession* client = it.second;
-		Log( "[%d][%s] \n", client->m_PlayerID, client->m_PlayerName );
+		LogD( "[%d][%s] \n", client->m_PlayerID, client->m_PlayerName );
 	}
 }
 

@@ -222,13 +222,13 @@ bool UnitStatus::LoadUnitStatus()
 		g_King.AttackDelayMapBonus = std::stoull( data );
 
 
-		Log( "UnitStatus Load OK! \n" );
+		LogD( "UnitStatus Load OK! \n" );
 
 		return true;
 	}
 	else
 	{
-		Log( "UnitStatus Load Fail! \n" );
+		LogD( "UnitStatus Load Fail! \n" );
 	}
 
 	return false;

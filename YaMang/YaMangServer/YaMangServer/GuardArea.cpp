@@ -23,7 +23,7 @@ void GuardArea::SetTargetCorps( Corps* targetCrops )
 
 void GuardArea::OnBegin()
 {
-	Log( "GuardArea OnBegin \n" );
+	LogD( "GuardArea OnBegin \n" );
 	m_ActionStatus = ACTION_TICK;
 
 	m_OwnerCrops->ReCalculatePosition();
@@ -60,7 +60,7 @@ void GuardArea::OnTick()
 	// 둘중 하나라도 죽으면 어텍 취소
 	if ( m_OwnerCrops->IsDead() || m_TargerCrops->IsDead() )
 	{
-		Log( "Attack Failed \n" );
+		LogD( "Attack Failed \n" );
 		m_ActionStatus = ACTION_END;
 		m_OwnerCrops->DoNextAction( this, 0 );
 		return;
@@ -91,12 +91,12 @@ void GuardArea::OnTick()
 	{
 		m_OwnerCrops->AttackCorps( m_TargerCrops );
 
-		Log( "GuardArea OnTick Attack Success \n" );
+		LogD( "GuardArea OnTick Attack Success \n" );
 
 
 		if ( m_TargerCrops->IsDead() )
 		{
-			Log( "Guarder Killed Target! \n" );
+			LogD( "Guarder Killed Target! \n" );
 			ReturnMyBase();
 			return;
 		}
@@ -107,7 +107,7 @@ void GuardArea::OnTick()
 		}
 		else
 		{
-			Log( "Ready Re Attack!! \n" );
+			LogD( "Ready Re Attack!! \n" );
 			m_ActionStatus = ACTION_TICK;
 			m_OwnerCrops->DoNextAction( this, m_OwnerCrops->GetAttackDelay() );
 		}
@@ -117,7 +117,7 @@ void GuardArea::OnTick()
 		// 하드 코딩 쫓아가는것을 포기하는 거리
 		if ( length > 25 )
 		{
-			Log( "Too far to chase \n" );
+			LogD( "Too far to chase \n" );
 			ReturnMyBase();
 			return;
 		}
@@ -151,7 +151,7 @@ void GuardArea::OnTick()
 		ULONGLONG movingTime = m_OwnerCrops->MoveStart( destination, 2 );
 
 
-		Log( "GuardArea OnTick Chase \n" );
+		LogD( "GuardArea OnTick Chase \n" );
 		m_ActionStatus = ACTION_TICK;
 		m_OwnerCrops->DoNextAction( this, movingTime );
 
@@ -162,14 +162,14 @@ void GuardArea::OnTick()
 
 void GuardArea::OnEnd()
 {
-	Log( "GuardArea OnEnd \n" );
+	LogD( "GuardArea OnEnd \n" );
 	m_OwnerCrops->MoveStop();
 	Action::OnEnd();
 }
 
 void GuardArea::ReturnMyBase()
 {
-	Log( "Return to my original Position! \n" );
+	LogD( "Return to my original Position! \n" );
 
 	const PositionInfo& targetPositionInfo = m_TargerCrops->GetPositionInfo();
 
@@ -195,7 +195,7 @@ void GuardArea::ReturnMyBase()
 	destination.y = originalPosition.m_EyePoint.z + 0.01f;
 	ULONGLONG movingTime = m_OwnerCrops->MoveStart( destination );
 
-	Log( "GuardArea OnTick Return to my original Position \n" );
+	LogD( "GuardArea OnTick Return to my original Position \n" );
 	m_ActionStatus = ACTION_END;
 	m_OwnerCrops->DoNextAction( this, movingTime );
 }

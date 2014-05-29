@@ -46,7 +46,7 @@ void TakeArea::OnTick()
 	// 둘중 하나라도 죽으면 어텍 취소
 	if ( m_OwnerCrops->IsDead() || m_TargerCrops->IsDead() )
 	{
-		Log( "TakeArea Failed \n" );
+		LogD( "TakeArea Failed \n" );
 		m_ActionStatus = ACTION_END;
 		m_OwnerCrops->DoNextAction( this, 0 );
 		return;
@@ -66,12 +66,12 @@ void TakeArea::OnTick()
 	{
 		m_OwnerCrops->AttackCorps( m_TargerCrops ); 
 		
-		Log( "TakeArea OnTick Attack Success \n" );
+		LogD( "TakeArea OnTick Attack Success \n" );
 
 
 		if ( m_TargerCrops->IsDead() )
 		{
-			Log( "Dead! \n" );
+			LogD( "Dead! \n" );
 			m_ActionStatus = ACTION_END;
 			m_OwnerCrops->DoNextAction( this, 0 );
 
@@ -89,12 +89,12 @@ void TakeArea::OnTick()
 		}
 		else
 		{
-			Log( "Ready Re Attack!! \n" );
+			LogD( "Ready Re Attack!! \n" );
 
 			Action* targetAction = m_TargerCrops->GetHoldingAction();
 			if ( !targetAction || ACTION_END == targetAction->GetActionStatus() )
 			{
-				Log( "Guard Start! \n" );
+				LogD( "Guard Start! \n" );
 
 				// m_TargerCrops->ChangeFormation( FormationType::FORMATION_DEFENSE );
 				GuardArea* action = new GuardArea();
@@ -147,7 +147,7 @@ void TakeArea::OnTick()
 		destination.y = targetZ;
 		ULONGLONG movingTime = m_OwnerCrops->MoveStart( destination );
 
-		Log( "TakeArea OnTick Chase \n" );
+		LogD( "TakeArea OnTick Chase \n" );
 		m_ActionStatus = ACTION_TICK;
 		m_OwnerCrops->DoNextAction( this, movingTime );
 	}
@@ -155,7 +155,7 @@ void TakeArea::OnTick()
 
 void TakeArea::OnEnd()
 {
-	Log( "TakeArea OnEnd \n" );
+	LogD( "TakeArea OnEnd \n" );
 	m_OwnerCrops->MoveStop();
 	Action::OnEnd();
 }
