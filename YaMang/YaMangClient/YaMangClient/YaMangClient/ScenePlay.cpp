@@ -341,11 +341,14 @@ void ScenePlay::SetMapVisible(bool visible)
 void ScenePlay::CheckRegenFlag()
 {
 	m_StackedTime += Timer::GetInstance()->GetElapsedTime();
-	Log("stacked time : %f\n", m_StackedTime);
+	
+	// Log("stacked time : %f\n", m_StackedTime);
 	//full width = 600
+
 	if (m_RegenTime > 0)
 	{
 		float flagPos = static_cast<float>(m_StackedTime / m_RegenTime * 600 + 180);
+
 		if (flagPos >= 180)
 		{
 			m_RegenFlag->SetUIPosX(flagPos);

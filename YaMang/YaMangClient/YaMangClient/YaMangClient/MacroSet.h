@@ -64,11 +64,3 @@ inline void SafeDelete( T* &p )
 		p = nullptr;
 	}
 }
-
-template <typename ... Types >
-inline void Log( const Types& ...args )
-{
-#ifdef _DEBUG
-	printf_s( args... );
-#endif // _DEBUG
-}

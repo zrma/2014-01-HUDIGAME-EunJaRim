@@ -2,6 +2,7 @@
 #include <DbgHelp.h>
 #include "Exception.h"
 #include "MacroSet.h"
+#include "Logger.h"
 
 LONG WINAPI ExceptionFilter( EXCEPTION_POINTERS* exceptionInfo )
 {

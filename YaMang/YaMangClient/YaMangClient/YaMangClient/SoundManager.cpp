@@ -3,6 +3,7 @@
 #include "fmod_studio.hpp"
 #include "MainWindow.h"
 #include "ResourceDef.h"
+#include "Logger.h"
 
 SoundManager::SoundManager()
 {

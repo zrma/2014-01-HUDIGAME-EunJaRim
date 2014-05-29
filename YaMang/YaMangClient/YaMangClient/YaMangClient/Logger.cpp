@@ -3,12 +3,20 @@
 
 Logger::Logger()
 {
+}
+
+Logger::~Logger()
+{
+}
+
+void Logger::CreateConsole()
+{
 	AllocConsole();
 	FILE* pFile;
 	freopen_s( &pFile, "CONOUT$", "wb", stdout );
 }
 
-Logger::~Logger()
+void Logger::DestroyConsole()
 {
 	FreeConsole();
 }

@@ -39,7 +39,7 @@ int APIENTRY _tWinMain( _In_ HINSTANCE hInstance,
 	BT_InsLogEntry( g_LogHandle, BTLL_INFO, _T( "Entering main() function" ) );
 
 #ifdef _PRINT_CONSOLE
-	Logger::GetInstance();
+	Logger::GetInstance()->CreateConsole();
 #endif
 
 	Log( "!!!:%S \n", lpCmdLine );
@@ -93,6 +93,7 @@ int APIENTRY _tWinMain( _In_ HINSTANCE hInstance,
 	MainWindow::Release();
 
 #ifdef _PRINT_CONSOLE
+	Logger::GetInstance()->DestroyConsole();
 	Logger::Release();
 #endif
 

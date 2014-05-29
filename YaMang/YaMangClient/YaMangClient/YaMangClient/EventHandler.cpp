@@ -9,6 +9,7 @@
 #include "SoundManager.h"
 #include "CameraController.h"
 #include "PlayerManager.h"
+#include "Logger.h"
 
 
 HandlerFunc HandlerTable[PKT_MAX];

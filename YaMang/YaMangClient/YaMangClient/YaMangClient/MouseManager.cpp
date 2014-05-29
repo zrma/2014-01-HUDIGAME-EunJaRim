@@ -9,6 +9,7 @@
 #include "NetworkManager.h"
 #include "CameraController.h"
 #include "Timer.h"
+#include "Logger.h"
 
 MouseManager::MouseManager()
 {

@@ -9,6 +9,7 @@
 #include "Timer.h"
 
 #include "ResourceDef.h"
+#include "Logger.h"
 
 #pragma comment(lib,"ws2_32.lib")
 
