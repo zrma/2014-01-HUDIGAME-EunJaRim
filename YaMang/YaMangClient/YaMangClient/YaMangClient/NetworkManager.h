@@ -31,7 +31,7 @@ public:
 	bool	Connect();
 	bool	HandleMessage( WPARAM wParam, LPARAM lParam );
 
-	int		SetMyPlayerID( int playerID ) { m_MyPlayerId = playerID; };
+	void	SetMyPlayerID( int playerID ) { m_MyPlayerId = playerID; };
 	int		GetMyPlayerID() const { return m_MyPlayerId; }
 	
 	void	SetRoomNumber( int roomNumber ) { m_RoomNumber = roomNumber; }

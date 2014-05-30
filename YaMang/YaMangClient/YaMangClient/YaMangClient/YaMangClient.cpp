@@ -46,25 +46,29 @@ int APIENTRY _tWinMain( _In_ HINSTANCE hInstance,
 
 	// test code
 	std::wstring parameter = lpCmdLine;
-	if ( 0 == parameter.size() )
+	srand( (unsigned)time( NULL ) );
+	unsigned int pos = parameter.find( ' ' );
+	if ( -1 == pos )
 	{
 		NetworkManager::GetInstance()->SetRoomNumber( 1 );
 		NetworkManager::GetInstance()->SetMyPlayerID( 1000 + rand() % 101 );
 	}
-	else if ( 1 == parameter.size() )
-	{
-		NetworkManager::GetInstance( )->SetRoomNumber( std::stoi( parameter ) );
-		NetworkManager::GetInstance( )->SetMyPlayerID( 1000 + rand( ) % 101 );
-	}
-	else if ( 2 == parameter.size() )
-	{
-		//NetworkManager::GetInstance( )->SetRoomNumber( std::stoi( parameter ) );
-		//NetworkManager::GetInstance()->SetMyPlayerID( 1000 + rand() % 101 );
-	}
 	else
 	{
-		NetworkManager::GetInstance()->SetRoomNumber( 1 );
-		NetworkManager::GetInstance( )->SetMyPlayerID( 1000 + rand( ) % 101 );
+		if ( -1 == parameter.find( ' ', pos + 1 ) )
+		{
+			std::wstring roomNumber = parameter.substr( 0, pos );
+			std::wstring playerID = parameter.substr( pos+1 );
+			printf_s( "ROOM:%S PLAYER:%S \n", roomNumber, playerID );
+
+			NetworkManager::GetInstance( )->SetRoomNumber( std::stoi( roomNumber ) );
+			NetworkManager::GetInstance( )->SetMyPlayerID( std::stoi( playerID ) );
+		}
+		else
+		{
+			NetworkManager::GetInstance()->SetRoomNumber( 1 );
+			NetworkManager::GetInstance()->SetMyPlayerID( 1000 + rand() % 101 );
+		}
 	}
 
 	// WS_POPUPWINDOW
