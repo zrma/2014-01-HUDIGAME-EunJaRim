@@ -31,7 +31,8 @@ public:
 	bool	Connect();
 	bool	HandleMessage( WPARAM wParam, LPARAM lParam );
 
-	int		GetMyPlayerID() { return m_MyPlayerId; }
+	int		SetMyPlayerID( int playerID ) { m_MyPlayerId = playerID; };
+	int		GetMyPlayerID() const { return m_MyPlayerId; }
 	
 	void	SetRoomNumber( int roomNumber ) { m_RoomNumber = roomNumber; }
 
@@ -63,7 +64,7 @@ private:
 	SOCKET			m_Socket = NULL;
 	CircularBuffer	m_RecvBuffer;
 	CircularBuffer	m_SendBuffer;
-	int				m_MyPlayerId;
+	int				m_MyPlayerId = -1;
 
 	UINT			m_PrevTime = 0;
 

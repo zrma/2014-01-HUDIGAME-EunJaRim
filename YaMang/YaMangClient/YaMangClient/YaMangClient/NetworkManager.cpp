@@ -156,9 +156,9 @@ bool NetworkManager::HandleMessage( WPARAM wParam, LPARAM lParam )
 			srand( static_cast<unsigned int> ( time( NULL ) ) );
 			/// 대략 1000~1100 의 ID로 로그인 해보자
 
-			int playerID = 1000 + rand() % 101;
+			//int playerID = 1000 + rand() % 101;
 			LoginRequest sendData;
-			sendData.m_PlayerId = playerID;
+			sendData.m_PlayerId = m_MyPlayerId;
 
 			SendPacket( &sendData );
 

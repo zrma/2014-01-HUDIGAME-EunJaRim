@@ -42,17 +42,29 @@ int APIENTRY _tWinMain( _In_ HINSTANCE hInstance,
 	Logger::GetInstance()->CreateConsole();
 #endif
 
-	Log( "!!!:%S \n", lpCmdLine );
+	Log( "ROOM:%S \n", lpCmdLine );
 
 	// test code
 	std::wstring parameter = lpCmdLine;
 	if ( 0 == parameter.size() )
 	{
 		NetworkManager::GetInstance()->SetRoomNumber( 1 );
+		NetworkManager::GetInstance()->SetMyPlayerID( 1000 + rand() % 101 );
+	}
+	else if ( 1 == parameter.size() )
+	{
+		NetworkManager::GetInstance( )->SetRoomNumber( std::stoi( parameter ) );
+		NetworkManager::GetInstance( )->SetMyPlayerID( 1000 + rand( ) % 101 );
+	}
+	else if ( 2 == parameter.size() )
+	{
+		//NetworkManager::GetInstance( )->SetRoomNumber( std::stoi( parameter ) );
+		//NetworkManager::GetInstance()->SetMyPlayerID( 1000 + rand() % 101 );
 	}
 	else
 	{
-		NetworkManager::GetInstance()->SetRoomNumber( std::stoi( parameter ) );
+		NetworkManager::GetInstance()->SetRoomNumber( 1 );
+		NetworkManager::GetInstance( )->SetMyPlayerID( 1000 + rand( ) % 101 );
 	}
 
 	// WS_POPUPWINDOW
