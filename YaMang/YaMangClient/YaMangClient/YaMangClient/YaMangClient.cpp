@@ -42,11 +42,13 @@ int APIENTRY _tWinMain( _In_ HINSTANCE hInstance,
 	Logger::GetInstance()->CreateConsole();
 #endif
 
-	Log( "ROOM:%S \n", lpCmdLine );
+	
 
 	// test code
 	std::wstring parameter = lpCmdLine;
-	srand( (unsigned)time( NULL ) );
+	printf_s( "parameter:%S \n", parameter.c_str() );
+
+	srand( static_cast<unsigned int>( time( NULL ) ) );
 	unsigned int pos = parameter.find( ' ' );
 	if ( -1 == pos )
 	{
@@ -59,7 +61,7 @@ int APIENTRY _tWinMain( _In_ HINSTANCE hInstance,
 		{
 			std::wstring roomNumber = parameter.substr( 0, pos );
 			std::wstring playerID = parameter.substr( pos+1 );
-			printf_s( "ROOM:%S PLAYER:%S \n", roomNumber, playerID );
+			printf_s( "ROOM:%S PLAYER:%S \n", roomNumber.c_str( ), playerID.c_str( ) );
 
 			NetworkManager::GetInstance( )->SetRoomNumber( std::stoi( roomNumber ) );
 			NetworkManager::GetInstance( )->SetMyPlayerID( std::stoi( playerID ) );

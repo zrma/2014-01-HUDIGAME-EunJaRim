@@ -56,6 +56,7 @@ namespace YaMangLoader
 
             if (!checkURL.Contains("?r="))
             {
+
                 return;
             }
 
@@ -71,6 +72,7 @@ namespace YaMangLoader
             int index = checkURL.IndexOf("?r=");
             String room = checkURL.Substring(index);
             room = room.Replace("?r=", "");
+            room = room.Replace("&i=", " ");
             room = room.Replace("#", "");
 
 
