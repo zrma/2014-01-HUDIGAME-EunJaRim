@@ -17,8 +17,14 @@
 				return Math.floor(Math.random() * (max - min + 1) + min);
 			}
 			function RoomEnter(room) {
+			alert("RoomEnter");
 				window.location.href = "loaderTemplate.html?r=" + room + "&i=" + getPlayerID();
 				window.location.href=window.location.href;			
+			}
+			function LoginFaceBook() {
+			alert("asdw");
+				window.location.href = "loaderTemplate.html?status=loginProcess";
+				window.location.href=window.location.href;	
 			}
 		</script>
 				
@@ -56,7 +62,7 @@
                     }
                 })();
             </script><!--<![endif]-->
-
+	
 <div id="p4fnav-topnav-full" class="p4fnav-topnav-full origindark" style="opacity: 0; filter: alpha(opacity = 0);">
 	<div class="p4fnav-menu-block">
 		
@@ -243,6 +249,8 @@
 <div class="user-profile notloggedin closed">
 	<div class="login-popup">
 		<form class="magmaForm login-form" method="post" action="https://battlefield.play4free.com/en/user/login?destination=%2Fen%2Fcredits">
+		
+
     <input type="hidden" name="_csrf_token" value="87ab20e59f460cbdc266172b170767fe" id="csrf_token" /><div class="clearfix magmaFormElementWrapper magmaInputWrapper"><label class="magmaLabel" for="mail">Email</label><span class="magmaInput size-300"><input size="300" type="text" name="mail" tabindex="1" id="mail" /></span><div class="magmaAfter"></div></div><div class="clearfix magmaFormElementWrapper magmaInputWrapper"><label class="magmaLabel" for="password">Password</label><span class="magmaInput size-300"><input size="300" type="password" name="password" tabindex="2" id="password" /></span><div class="magmaAfter"></div></div><button class="button-view button-view-primary button-view-login" type="submit" value="" tabindex="4"><i class="glyphs glyphs-arrow"></i><span>Log in</span></button>    <div class="login-extras">
         		    <a class="extra-link" href="https://profile.ea.com/forgotpassword.do" tabindex="5">Forgot password?</a>
                 <div class="clearfix magmaFormElementWrapper magmaCheckboxWrapper"><span class="magmaCheckbox"><input type="checkbox" name="remember-me" tabindex="3" id="remember-me-header" /></span><label class="magmaLabelInline" for="remember-me-header">Keep me logged in</label><div class="magmaAfter"></div></div>        	</div>
@@ -250,6 +258,7 @@
 	</div>
 </div>
 <a href="/en/user/signup" class="signup-button">Sign up</a>
+
 ﻿<div class="social-links-wrap">	
 	<ul class="social-links">		
 		<li class="facebook"><a target="_blank" href="http://facebook.com/bfplay4free">Facebook</a></li>
@@ -316,14 +325,14 @@
 				<h1 class="credits-header">현재 참여 가능 전장</h1>
 				<span class="credits-order">참여 가능 방수 : 6</span>
 				<div class="credits-left">
-					<a href="javascript:;" onclick="RoomEnter(1)"><h2>Room.1</h2></a>
+					<a href="javascript:RoomEnter(1);"><h2>Room.1</h2></a>
 					<ul>
 						<li>sm9<span>정1품</span></li>
 						<li>대기중<span>-----</span></li>
 						<li>&nbsp;</li>
 						<li>&nbsp;</li>
 					</ul>
-					<a href="javascript:;" onclick="RoomEnter(2)"><h2>Room.2</h2></a>
+					<a href="javascript:RoomEnter(2);"><h2>Room.2</h2></a>
 					<ul>
 						<li>agebreak<span>정1품</span></li>
 						<li>대기중<span>-----</span></li>
@@ -339,7 +348,7 @@
 						<li>&nbsp;</li>
 						<li>&nbsp;</li>
 					</ul>
-					<a href="javascript:;" onclick="RoomEnter(4)"><h2>Room.4</h2></a>
+					<a href="javascript:RoomEnter(4);"><h2>Room.4</h2></a>
 					<ul>
 						<li>대기중<span>-----</span></li>
 						<li>대기중<span>-----</span></li>
@@ -348,14 +357,14 @@
 					</ul>
 				</div>
 				<div class="credits-left">
-					<a href="javascript:;" onclick="RoomEnter(5)"><h2>Room.5</h2></a>
+					<a href="javascript:RoomEnter(5);"><h2>Room.5</h2></a>
 					<ul>
 						<li>대기중<span>-----</span></li>
 						<li>대기중<span>-----</span></li>
 						<li>&nbsp;</li>
 						<li>&nbsp;</li>
 					</ul>
-					<a href="javascript:;" onclick="RoomEnter(6)"><h2>Room.6</h2></a>
+					<a href="javascript:RoomEnter(6);"><h2>Room.6</h2></a>
 					<ul>
 						<li>대기중<span>-----</span></li>
 						<li>대기중<span>-----</span></li>
@@ -367,7 +376,7 @@
 			<div class="credits-content additional">
 			<h1 class="credits-header">현재 전쟁중인 전장</h1>
 				<div class="credits-col">
-					<h2>Room.10</h2>
+					<a href="javascript:LoginFaceBook();"><h2>Room.10(LoginTest)</h2></a>
 					<ul>
 						<li>자바지기</li>
 						<li>요츠바짱</li>
@@ -470,6 +479,11 @@
 				</div>
 				<div class="credits-bottom">
 					<p>이 데이터는 과거의 데이터로 실제 전장 상황과 다를 수 있습니다.</p>
+					<div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="false"></div>
+
+											<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+</fb:login-button>
+<div id="status">
 				</div>
 			</div>
 		</div>
