@@ -23,7 +23,8 @@
 #define PATH_MAP		L"MapFiles\\"
 
 #define HEIGHT_MAP				PATH_MAP L"heightmap_128_128.bmp"
-#define HEIGHT_TEX				PATH_MAP L"heightmap_tex_128_128.bmp"
+//#define HEIGHT_TEX			PATH_MAP L"heightmap_tex_128_128.bmp"
+#define HEIGHT_TEX				PATH_MAP L"map_tex.bmp"
 
 #define PATH_SPRITE		L"SpriteFiles\\"
 
@@ -46,6 +47,7 @@
 
 #define SPRITE_UI_DEFAULT					PATH_SPRITE L"UI_default.png"
 #define SPRITE_UI_IMSIMAP					PATH_SPRITE L"UI_MapImsi.png"
+#define SPRITE_UI_MINIMAP					PATH_SPRITE L"UI_Map.png"
 #define SPRITE_UI_IMSIREGENBAR				PATH_SPRITE L"UI_RegenBarImsi.png"
 #define SPRITE_UI_IMSIREGENFLAG				PATH_SPRITE L"UI_RegenFlagImsi.png"
 #define SPRITE_UI_CORPS_MARK_BLUE			PATH_SPRITE L"UI_CorpsMark_Blue.png"
