@@ -142,7 +142,8 @@ void GameMapPathFinder::FindPath( )
 				}
 
 				// open되어있는 목록에 이 노드가없다!
-				if ( open.find( m_Map[nearNodeP.x][nearNodeP.y].f ) == open.end() )
+				auto openNode = open.find( m_Map[nearNodeP.x][nearNodeP.y].f );
+				if ( open.end() == openNode )
 				{
 					std::multimap<int, Node>::iterator iterTime = open.end();
 					CalculateG( nowNode.point, nearNodeP, cost );
@@ -161,7 +162,7 @@ void GameMapPathFinder::FindPath( )
 					//기존에 있던 노드를 비교 대상인 nearNode로 교체
 					//즉 그 노드로 가는데 더 좋은 방법 찾음
 				{
-					Node nearNode = open.find( m_Map[nearNodeP.x][nearNodeP.y].f )->second;
+					Node nearNode = openNode->second;
 					if ( nearNode.g < m_Map[nearNodeP.x][nearNodeP.y].g )
 					{
 						open.erase( m_Map[nearNode.point.x][nearNode.point.y].f );

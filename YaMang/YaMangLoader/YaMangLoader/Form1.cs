@@ -24,7 +24,7 @@ namespace YaMangLoader
 
         private String accessToken;
 
-
+        private String serverRootPath = "http://scope.hosting.bizfree.kr/next/YaMang/loaderTemplate.php";
 
         public Form1()
         {
@@ -37,10 +37,10 @@ namespace YaMangLoader
         {
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.WindowState = FormWindowState.Maximized;
-            string curDir = Directory.GetCurrentDirectory();
+            //string curDir = Directory.GetCurrentDirectory();
 
             this.webBrowser1.WebBrowserShortcutsEnabled = false;
-            this.webBrowser1.Url = new Uri(String.Format("file:///{0}/loaderTemplate.html", curDir));
+            this.webBrowser1.Url = new Uri(serverRootPath);
             //this.webBrowser1.DocumentCompleted += webBrowser1_DocumentCompleted;
             this.webBrowser1.PreviewKeyDown += webBrowser1_PreviewKeyDown;
         }
@@ -134,7 +134,7 @@ namespace YaMangLoader
             var fb = new FacebookClient();
             _LoginUrl = fb.GetLoginUrl(parameters);
 
-            webBrowser1.Navigate(_LoginUrl.AbsoluteUri);
+            this.webBrowser1.Navigate(_LoginUrl.AbsoluteUri);
         }
 
         private void faceBookParsing( String parseData )
@@ -155,8 +155,13 @@ namespace YaMangLoader
 
             MessageBox.Show("name:" + name + " id:" + id);
             Console.WriteLine("name:" + name + " id:" + id);
-            string curDir = Directory.GetCurrentDirectory();
-            this.webBrowser1.Url = new Uri(String.Format("file:///{0}/loaderTemplate.html", curDir));
+            //string curDir = Directory.GetCurrentDirectory();
+            //this.webBrowser1.Url = new Uri(serverRootPath);
+
+            // 총 2개의 POST 데이터 만들기
+            string strPostData = string.Format("name={0}&id={1}&token={2}", name, id, accessToken);
+            byte[] postData = Encoding.Default.GetBytes(strPostData);
+            this.webBrowser1.Navigate(serverRootPath, null, postData, "Content-Type: application/x-www-form-urlencoded"); 
         }
         #endregion FaceBook
 
