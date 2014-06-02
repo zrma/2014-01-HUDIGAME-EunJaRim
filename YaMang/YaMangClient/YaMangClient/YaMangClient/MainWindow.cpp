@@ -223,8 +223,8 @@ BOOL MainWindow::Create( PCWSTR lpWindowName, DWORD dwStyle, DWORD dwExStyle /*=
 	nHeight = GetSystemMetrics( SM_CYSCREEN ) + 2;
 
 	// 디버깅의 편의성을 위하여 창 사이즈를 줄여둠
-	nWidth = 800;
-	nHeight = 600;
+	//nWidth = 800;
+	//nHeight = 600;
 
 	m_HandleOfWindow = CreateWindowEx( dwExStyle, ClassName(), lpWindowName, dwStyle,
 									   x, y, nWidth, nHeight, hWndParent, hMenu, GetModuleHandle( NULL ), this );
