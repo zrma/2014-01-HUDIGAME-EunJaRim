@@ -42,8 +42,8 @@ void CorpsMark::SetMarkPos()
 {
 	if (m_Corps)
 	{
-		SetUIPosX(static_cast<int>((m_Corps->GetEyePoint().x / 512 * 400) + 550)); // 맵 상대위치 하드코딩
-		SetUIPosY(static_cast<int>((-m_Corps->GetEyePoint().z / 512 * 400) + 300));
+		SetUIPosX(static_cast<int>((m_Corps->GetEyePoint().x / 512 * 390) + 590)); // 맵 상대위치 하드코딩
+		SetUIPosY(static_cast<int>((-m_Corps->GetEyePoint().z / 512 * 390) + 340));
 	}
 }
 
