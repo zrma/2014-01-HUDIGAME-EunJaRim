@@ -18,6 +18,8 @@ LPDIRECT3DTEXTURE9 g_MapTextureArray[MAP_TEXTURE_COUNT] = { 0, };
 DWORD g_XHeight = 0;
 DWORD g_ZHeight = 0;
 
+byte* g_PosYInfo = nullptr;
+
 //텍스트 출력에 필요한 자원
 ID3DXFont*		g_Font = nullptr;		// 글자를 그릴 폰트 스타일 객체
 ID3DXSprite*	g_Sprite = nullptr;		// 폰트를 그릴 스프라이트 객체 
