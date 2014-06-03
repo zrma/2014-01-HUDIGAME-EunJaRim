@@ -62,8 +62,18 @@ void ClientSession::HandleLoginRequest( LoginRequest& inPacket )
 {
 	m_RecvBuffer.Read( (char*)&inPacket, inPacket.m_Size );
 
+	int playerID = inPacket.m_PlayerId;
+	
+	if ( g_PidSessionTable.find( playerID ) != g_PidSessionTable.end() )
+	{
+		LogE( "[Disconnected from:]ClientSession::HandleLoginRequest Already Login \n" );
+		Disconnect();
+		return;
+	}
+	
+
 	/// 로그인은 DB 작업을 거쳐야 하기 때문에 DB 작업 요청한다.
-	LoadPlayerDataContext* newDbJob = new LoadPlayerDataContext( m_Socket, inPacket.m_PlayerId );
+	LoadPlayerDataContext* newDbJob = new LoadPlayerDataContext( m_Socket, playerID );
 	g_DatabaseJobManager->PushDatabaseJobRequest( newDbJob );
 }
 
