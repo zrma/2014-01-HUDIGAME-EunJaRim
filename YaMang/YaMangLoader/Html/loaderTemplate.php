@@ -2,39 +2,126 @@
 <html lang="en" class="theme-winter">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta name="title" content="Credits - Battlefield Play4Free - Free FPS Online Action!" />
-        <title>Credits - Battlefield Play4Free - Free FPS Online Action!</title>
+        <meta name="title" content="YaMangOnline!" />
+        <title>YaMangOnline!</title>
 
                 <!--[if IE]><![endif]-->
 
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
         <script type="text/javascript" language="javascript">
+		
+		<?php
+			// not include in github repository!
+			
+			
+			$facebookID = $_POST["id"];
+			$facebookToken = $_POST["token"];
+			//$facebookName = $_POST["name"];
+			$facebookName = "";
+			
+			
+			if($facebookToken!=NULL) {
+				echo "var m_AccessToken = '".$facebookToken."';";
+			} else {
+				echo 'var m_AccessToken = "";';
+			}
+			if($facebookID!=NULL) {
+				echo 'var m_FaceBookID = '.$facebookID.';';
+				login($facebookID);
+			} else {
+				echo 'var FaceBookID = "";';
+			}
+			/*
+			if($_POST["name"]!=NULL) {
+				echo 'var m_PlayerName = '.$_POST["name"].';';
+			} else {
+				echo 'var m_PlayerName = "";';
+			}
+			*/
+			
+			function login($facebookID) {
+				
+				// not include in github repository
+				include 'db_config.php';
+				
+				$checkLogin = "SELECT game_id FROM YAMANG_USER WHERE facebook_id =$facebookID";
+				$resultCheckLogin = mysqli_query($connect, $checkLogin);
+				
+				
+				// 누구 프로시져좀 짜주시죠 (웃음)
+				$row = mysqli_fetch_array($resultCheckLogin);
+				{
+					
+					if ( $row['game_id'] == ""  || $row['game_id'] == NULL ) {
+						// 가입이 안되어 있으면 먼저 유저테이블에 데이터를 넣음
+						
+						// idx 가져오기
+						$idxQuery = "SELECT idx FROM YAMANG_USER ORDER BY `idx` DESC LIMIT 1";
+						$idxResult = mysqli_query($connect, $idxQuery);
+						
+						$index = -1;
+						while($rowIdx = mysqli_fetch_array($idxResult)) {
+							if ( $rowIdx['idx'] != ""  || $rowIdx['idx'] != NULL ) {
+								$index = $rowIdx['idx'];
+								$index = $index + 1000;
+							}
+						}
+						
+						if ( $index == -1 ) {
+							echo "index == -1";
+							//return;
+						}
+						
+						$signUpQuery = "INSERT INTO `YAMANG_USER` (`facebook_id`,`game_id`,`win`,`lose`,`error`,`name`) VALUES ('$facebookID', '$index', 0, 0, 0, '$facebookName')";
+						mysqli_query($connect, $signUpQuery);
+						
+					}
+					
+					$gameID = -1;
+					$checkLogin2 = "SELECT game_id FROM YAMANG_USER WHERE facebook_id =".$facebookID;
+					$resultCheckLogin2 = mysqli_query($connect, $checkLogin2);
+					while($row2 = mysqli_fetch_array($resultCheckLogin2)) {
+						$gameID = $row['game_id'];
+					}
+					
+					echo 'var m_PlayerID = '.$gameID.';';
+				}
+				
+				mysqli_close($connect);
+			}
+		?>
+		
 			function getPlayerID() {
 				// test
 				var min = 1000;
 				var max = 1100;
 				return Math.floor(Math.random() * (max - min + 1) + min);
 			}
+			
 			function RoomEnter(room) {
-			alert("RoomEnter");
-				window.location.href = "loaderTemplate.html?r=" + room + "&i=" + getPlayerID();
-				window.location.href=window.location.href;			
+				if(m_PlayerID == "") {
+					window.location.href = "loaderTemplate.html?r=" + room + "&i=" + getPlayerID();
+					window.location.href=window.location.href;		
+				} else {
+					window.location.href = "loaderTemplate.html?r=" + room + "&i=" + m_PlayerID;
+					window.location.href=window.location.href;			
+				}
 			}
+			
 			function LoginFaceBook() {
-			alert("asdw");
 				window.location.href = "loaderTemplate.html?status=loginProcess";
 				window.location.href=window.location.href;	
 			}
+			
+			
 		</script>
 				
 			
         <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="meta" href="/labels.rdf" type="application/rdf+xml" title="ICRA labels" />
-        <link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/oiokahphinmbmakkehgelkmpolmnbkdh">
-        <meta http-equiv="pics-label" content='(pics-1.1 "http://www.icra.org/pics/vocabularyv03/" l gen true for "http://battlefield.play4free.com" r (n 0 s 0 v 0 l 0 oa 1 c 0 ))' />
-      
+		
     <script type="text/javascript" src="./loaderAsset/js/all.js"></script>
 <link rel="stylesheet" type="text/css" media="screen" href="./loaderAsset/css/all.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="./loaderAsset/css/credit.css" />
@@ -46,6 +133,9 @@
     <!--[if IE 9 ]>    <body class="ie9 index lang-en credits web" id="credits"> <![endif]-->
     <!--[if !(IE)]>
     <!--> <body class="index lang-en credits web" id="credits">
+	
+	
+
 			<script>
                 (function () {
                     var tmp = document.documentMode, e, isIE, isIE8plus, ieVersion = 0;
@@ -251,9 +341,8 @@
 		<form class="magmaForm login-form" method="post" action="https://battlefield.play4free.com/en/user/login?destination=%2Fen%2Fcredits">
 		
 
-    <input type="hidden" name="_csrf_token" value="87ab20e59f460cbdc266172b170767fe" id="csrf_token" /><div class="clearfix magmaFormElementWrapper magmaInputWrapper"><label class="magmaLabel" for="mail">Email</label><span class="magmaInput size-300"><input size="300" type="text" name="mail" tabindex="1" id="mail" /></span><div class="magmaAfter"></div></div><div class="clearfix magmaFormElementWrapper magmaInputWrapper"><label class="magmaLabel" for="password">Password</label><span class="magmaInput size-300"><input size="300" type="password" name="password" tabindex="2" id="password" /></span><div class="magmaAfter"></div></div><button class="button-view button-view-primary button-view-login" type="submit" value="" tabindex="4"><i class="glyphs glyphs-arrow"></i><span>Log in</span></button>    <div class="login-extras">
-        		    <a class="extra-link" href="https://profile.ea.com/forgotpassword.do" tabindex="5">Forgot password?</a>
-                <div class="clearfix magmaFormElementWrapper magmaCheckboxWrapper"><span class="magmaCheckbox"><input type="checkbox" name="remember-me" tabindex="3" id="remember-me-header" /></span><label class="magmaLabelInline" for="remember-me-header">Keep me logged in</label><div class="magmaAfter"></div></div>        	</div>
+		<button class="button-view button-view-primary button-view-login" value="" tabindex="4"><i class="glyphs glyphs-arrow"></i><span>Log in</span></button>    <div class="login-extras">
+    </div>
 </form>
 	</div>
 </div>
