@@ -14,7 +14,7 @@ enum NodeStatus
 struct NodePoint
 {
 	int x, y;
-	bool operator == ( NodePoint p )
+	bool operator == ( NodePoint p ) ///# const NodePoint& p
 	{
 		return x == p.x && y == p.y;
 	}
@@ -57,7 +57,8 @@ private:
 
 
 private:
-	std::vector<std::vector<Node>> m_Map;
+	std::vector<std::vector<Node>> m_Map; ///# 마찬가지로 백터는 이런 용도가 아임 ㅜㅜ
+	///# 지형의 기반 자료구조가 동적 자료구조인 벡터면.. 길찾기 느릴텐데..
 	NodePoint m_StartNode, m_EndNode;
 	bool m_IsFindPath;
 

@@ -47,6 +47,7 @@ void Attack::OnTick()
 	if ( m_OwnerCrops->IsDead( ) || m_TargerCrops->IsDead( ) )
 	{
 		LogD( "Attack Failed \n" );
+		///# 이 부분도 공통 인터페이스 만들어 놓으면 안전한 코딩이 됨 ㅋㅋ
 		m_ActionStatus = ACTION_END;
 		m_OwnerCrops->DoNextAction( this, 0 );
 		return;

@@ -23,7 +23,7 @@ RoomManager::RoomManager()
 	m_RoomList.clear();
 	m_RoomList.insert( RoomList::value_type( LOBBY_NUMBER, m_Lobby ) );
 
-	// test code
+	// test code ///# 아무리 테스트 코드라도... 다 기술부채가 됨..
 	AddRoom();
 	AddRoom();
 	AddRoom();

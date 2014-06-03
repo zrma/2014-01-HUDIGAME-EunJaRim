@@ -73,5 +73,7 @@ void ChangeFormation::OnEnd()
 		LogD( "ChangeFormation Failed \n" );
 		return;
 	}
-	m_OwnerCrops->ChangeFormation( FormationType::FORMATION_DESTROY ); // 세팅한 포메이션
+	m_OwnerCrops->ChangeFormation( FormationType::FORMATION_DESTROY ); // 세팅한 포메이션 ///# 항상 파괴 포메이션으로 바꿔주는건가?
+
+	///# Action::OnEnd() ?? 항상 이게 불려줘야 하는 거라면 상위 액션 처리하는 부분(case ACTION_END: )에 강제로 집어 넣어야 실수의 여지가 없음.
 }

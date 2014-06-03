@@ -46,7 +46,8 @@ GameRoom::~GameRoom()
 void GameRoom::GameRoomStart()
 {
 
-	
+	///# 이 부분은 총체적으로 구조 문제 있음..
+	///# 아예 MapManager에게 포지션을 하나씩 얻어 와서 처리하던가.. 
 
 	// 거점병사 만들기 임시 하드코딩
 
@@ -701,6 +702,7 @@ const PositionInfo& GameRoom::GetKingPositionInfo( int index ) const
 	return m_GameMapManager->GetKingPositionInfo( index );
 }
 
+///# 매번 찾을때마다 선형 검색을 해야 하는 구조라니.... 
 int GameRoom::GetGuardIndexByID( int corpsID )
 {
 	return static_cast<int> ( std::find( m_GuardIDList.begin( ), m_GuardIDList.end( ), corpsID ) - m_GuardIDList.begin( ) );

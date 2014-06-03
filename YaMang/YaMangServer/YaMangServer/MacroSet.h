@@ -59,6 +59,8 @@ inline void LogT( const Types& ...args )
 	printf_s( "[TRACE]%s", buf );
 #endif // _DEBUG
 }
+
+///# 저번에 설명했다.. 함수를 따로 만들지말고.. config에 따라 쫙~ 변하게 ㅋㅋ
 template <typename ... Types >
 inline void LogD( const Types& ...args )
 {

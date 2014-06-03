@@ -43,7 +43,7 @@ protected:
 	Corps*				m_OwnerCrops = nullptr;
 	ULONGLONG			m_Time = 0;
 	bool				m_NoEgg = false;
-	ActionStatus		m_ActionStatus = ACTION_BEGIN;
+	ActionStatus		m_ActionStatus = ACTION_BEGIN; ///# ACTION_NONE을 디폴트로 해주는게 좋겠지.. 실제로 DoAction이 시작 되었을 때 ACTION_BEGIN로 바꿔주고... 그래야 버그 찾을때 편함.
 
 
 	GameRoom*		m_GameRoom = nullptr;

@@ -21,7 +21,7 @@ struct UnitData
 	ULONGLONG	AttackDelayMapBonus;
 };
 
-class UnitStatus
+class UnitStatus ///# 네이밍이 중요한데.. 보통 xxxStatus라고 하면 계속 변하는 상태를 의미.. (보통 캐릭터 스탯)
 {
 public:
 	static bool LoadUnitStatus( );

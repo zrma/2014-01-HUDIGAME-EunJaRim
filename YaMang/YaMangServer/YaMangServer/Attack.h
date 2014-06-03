@@ -16,6 +16,6 @@ private:
 	virtual void OnEnd( );
 
 private:
-	Corps*		m_TargerCrops = nullptr;
+	Corps*		m_TargerCrops = nullptr; ///# 스펠이...
 };
 
