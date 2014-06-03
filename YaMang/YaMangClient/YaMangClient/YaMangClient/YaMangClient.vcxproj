@@ -108,6 +108,7 @@ xcopy ".\\BugTrapDLL\*" "..\..\..\Bin\YaMangClient\" /s /d /y</Command>
     <ClInclude Include="CorpsMark.h" />
     <ClInclude Include="DummyRender.h" />
     <ClInclude Include="Exception.h" />
+    <ClInclude Include="Frustum.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Guard.h" />
     <ClInclude Include="InputDispatcher.h" />
@@ -157,6 +158,7 @@ xcopy ".\\BugTrapDLL\*" "..\..\..\Bin\YaMangClient\" /s /d /y</Command>
     <ClCompile Include="DummyRender.cpp" />
     <ClCompile Include="EventHandler.cpp" />
     <ClCompile Include="Exception.cpp" />
+    <ClCompile Include="Frustum.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Guard.cpp" />
     <ClCompile Include="InputDispatcher.cpp" />

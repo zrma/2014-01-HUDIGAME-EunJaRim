@@ -16,7 +16,7 @@
 #include "MiniMap.h"
 #include "CorpsMark.h"
 #include "Timer.h"
-
+#include "Frustum.h"
 
 ScenePlay::ScenePlay()
 {
@@ -41,6 +41,9 @@ void ScenePlay::Create()
 	}
 
 	m_MouseCursor = new MouseRender();
+	
+	// 뷰 프러스텀을 만들어 봅시다
+	m_Frustum = new Frustum();
 
 	//UIObjects Init
 	InitUIObjects();
@@ -55,11 +58,16 @@ void ScenePlay::Destroy()
 	}
 	m_CorpsList.clear();
 
+	SafeDelete( m_Frustum );
 	SafeDelete( m_MouseCursor );
 }
 
 void ScenePlay::Update()
 {
+	D3DXMATRIXA16	viewProjMatrix;
+	viewProjMatrix = CameraController::GetInstance()->GetViewMatrix() * CameraController::GetInstance()->GetProjMatrix();
+	m_Frustum->Make( &viewProjMatrix );
+	
 	for ( auto& iter : m_CorpsList )
 	{
 		auto& corps = iter.second;

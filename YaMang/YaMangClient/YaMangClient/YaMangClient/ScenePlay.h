@@ -7,6 +7,7 @@ class MouseRender;
 class UIObject;
 class MiniMap;
 class CorpsMark;
+class Frustum;
 
 class ScenePlay:
 	public Scene
@@ -66,6 +67,6 @@ private:
 	//리젠 타임 출력을 위한 멤버
 	float						m_RegenTime;
 	float						m_StackedTime = 0;
-
+	Frustum*					m_Frustum = nullptr;
 };
 

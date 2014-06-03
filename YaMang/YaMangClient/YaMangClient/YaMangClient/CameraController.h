@@ -56,6 +56,8 @@ public:
 	void	Update();
 
 	void	ChangeMouseZoomStatus( short zoom );
+	D3DXMATRIXA16	GetViewMatrix() { return m_ViewMatrix; }
+	D3DXMATRIXA16	GetProjMatrix() { return m_ProjMatrix; }
 
 private:
 	void	InterpolateCameraRadius();
@@ -78,4 +80,6 @@ private:
 	ZoomDirectionType	m_ZoomDirection = ZoomDirectionType::ZOOM_DIRECTION_NONE;
 	
 	FLOAT			m_Radius = 0;
+	D3DXMATRIXA16	m_ViewMatrix;
+	D3DXMATRIXA16	m_ProjMatrix;
 };

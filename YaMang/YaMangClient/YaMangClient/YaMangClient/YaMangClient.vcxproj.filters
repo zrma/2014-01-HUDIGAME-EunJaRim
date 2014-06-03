@@ -214,6 +214,7 @@
     <ClInclude Include="MapManager.h">
       <Filter>Map</Filter>
     </ClInclude>
+    <ClInclude Include="Frustum.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -345,6 +346,7 @@
     <ClCompile Include="MapManager.cpp">
       <Filter>Map</Filter>
     </ClCompile>
+    <ClCompile Include="Frustum.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="YaMangClient.rc">
