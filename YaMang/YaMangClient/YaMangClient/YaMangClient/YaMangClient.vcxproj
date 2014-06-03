@@ -125,6 +125,7 @@ xcopy ".\\BugTrapDLL\*" "..\..\..\Bin\YaMangClient\" /s /d /y</Command>
     <ClInclude Include="NetworkManager.h" />
     <ClInclude Include="Pike.h" />
     <ClInclude Include="PlayerManager.h" />
+    <ClInclude Include="QuadTree.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Interface3D.h" />
     <ClInclude Include="Resource.h" />
@@ -174,6 +175,7 @@ xcopy ".\\BugTrapDLL\*" "..\..\..\Bin\YaMangClient\" /s /d /y</Command>
     <ClCompile Include="NetworkManager.cpp" />
     <ClCompile Include="Pike.cpp" />
     <ClCompile Include="PlayerManager.cpp" />
+    <ClCompile Include="QuadTree.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Interface3D.cpp" />
     <ClCompile Include="ResourceManager.cpp" />

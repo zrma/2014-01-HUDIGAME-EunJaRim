@@ -1,8 +1,6 @@
 #pragma once
-#ifndef _FRUSTUM_H_
-#define _FRUSTUM_H_
 
-/// 프러스텀에 정확하게 포함되지 않더라도, 약간의 여분을 주어서 프러스텀에 포함시키기 위한 값
+// 프러스텀에 정확하게 포함되지 않더라도, 약간의 여분을 주어서 프러스텀에 포함시키기 위한 값
 #define PLANE_EPSILON	5.0f
 
 class Frustum
@@ -16,12 +14,10 @@ public:
 	BOOL			IsIn( D3DXVECTOR3* point );
 	BOOL			IsInSphere( D3DXVECTOR3* point, float radius );
 
-	D3DXVECTOR3*	GetPos() { return &m_CameraPosition; }
+	D3DXVECTOR3*	GetPos() { return &m_ViewerPosition; }
 
 private:
-	D3DXVECTOR3		m_Vertex[8];	/// 프러스텀을 구성할 정점 8개
-	D3DXVECTOR3		m_CameraPosition;		/// 현재 카메라의 월드좌표
-	D3DXPLANE		m_Plane[6];	/// 프러스텀을 구성하는 6개의 평면
+	D3DXVECTOR3		m_Vertex[8];		// 프러스텀을 구성할 정점 8개
+	D3DXVECTOR3		m_ViewerPosition;	// 현재 카메라의 월드좌표
+	D3DXPLANE		m_Plane[6];			// 프러스텀을 구성하는 6개의 평면
 };
-
-#endif // _FRUSTUM_H_

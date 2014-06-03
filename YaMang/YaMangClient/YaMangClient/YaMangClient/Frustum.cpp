@@ -15,7 +15,6 @@ Frustum::~Frustum()
 
 BOOL Frustum::Make( D3DXMATRIXA16* viewProjMatrix )
 {
-	int				i;
 	D3DXMATRIXA16	invMatrix;
 
 	m_Vertex[0].x = -1.0f;	m_Vertex[0].y = -1.0f;	m_Vertex[0].z = 0.0f;
@@ -29,12 +28,12 @@ BOOL Frustum::Make( D3DXMATRIXA16* viewProjMatrix )
 
 	D3DXMatrixInverse( &invMatrix, NULL, viewProjMatrix );
 
-	for ( i = 0; i < 8; i++ )
+	for ( int i = 0; i < 8; ++i )
 	{
 		D3DXVec3TransformCoord( &m_Vertex[i], &m_Vertex[i], &invMatrix );
 	}
 	
-	m_CameraPosition = ( m_Vertex[0] + m_Vertex[5] ) / 2.0f;
+	m_ViewerPosition = ( m_Vertex[0] + m_Vertex[5] ) / 2.0f;
 
 	//	D3DXPlaneFromPoints(&m_plane[0], m_vtx+4, m_vtx+7, m_vtx+6);				// 상 평면(top)
 	//	D3DXPlaneFromPoints(&m_plane[1], m_vtx  , m_vtx+1, m_vtx+2);				// 하 평면(bottom)
@@ -48,26 +47,25 @@ BOOL Frustum::Make( D3DXMATRIXA16* viewProjMatrix )
 
 BOOL Frustum::IsIn( D3DXVECTOR3* point )
 {
-	float		fDist;
-	//	int			i;
-
+	float distance = 0;
+	
 	// 현재는 left, right, far plane만 적용한다.
-	//	for( i = 0 ; i < 6 ; i++ )
+	//	for( int i = 0 ; i < 6 ; ++i )
 	{
-		fDist = D3DXPlaneDotCoord( &m_Plane[3], point );
-		if ( fDist > PLANE_EPSILON )
+		distance = D3DXPlaneDotCoord( &m_Plane[3], point );
+		if ( distance > PLANE_EPSILON )
 		{
 			// plane의 normal벡터가 far로 향하고 있으므로 양수이면 프러스텀의 바깥쪽
 			return FALSE;
 		}
-		fDist = D3DXPlaneDotCoord( &m_Plane[4], point );
-		if ( fDist > PLANE_EPSILON )
+		distance = D3DXPlaneDotCoord( &m_Plane[4], point );
+		if ( distance > PLANE_EPSILON )
 		{
 			// plane의 normal벡터가 left로 향하고 있으므로 양수이면 프러스텀의 왼쪽
 			return FALSE;
 		}
-		fDist = D3DXPlaneDotCoord( &m_Plane[5], point );
-		if ( fDist > PLANE_EPSILON )
+		distance = D3DXPlaneDotCoord( &m_Plane[5], point );
+		if ( distance > PLANE_EPSILON )
 		{
 			// plane의 normal벡터가 right로 향하고 있으므로 양수이면 프러스텀의 오른쪽
 			return FALSE;
@@ -79,22 +77,22 @@ BOOL Frustum::IsIn( D3DXVECTOR3* point )
 
 BOOL Frustum::IsInSphere( D3DXVECTOR3* point, float radius )
 {
-	float		fDist;
+	float distance = 0;
 
-	fDist = D3DXPlaneDotCoord( &m_Plane[3], point );
-	if ( fDist > ( radius + PLANE_EPSILON ) )
+	distance = D3DXPlaneDotCoord( &m_Plane[3], point );
+	if ( distance > ( radius + PLANE_EPSILON ) )
 	{
 		// 평면과 중심점의 거리가 반지름보다 크면 프러스텀에 없음
 		return FALSE;
 	}
-	fDist = D3DXPlaneDotCoord( &m_Plane[4], point );
-	if ( fDist > ( radius + PLANE_EPSILON ) )
+	distance = D3DXPlaneDotCoord( &m_Plane[4], point );
+	if ( distance > ( radius + PLANE_EPSILON ) )
 	{
 		// 평면과 중심점의 거리가 반지름보다 크면 프러스텀에 없음
 		return FALSE;
 	}
-	fDist = D3DXPlaneDotCoord( &m_Plane[5], point );
-	if ( fDist > ( radius + PLANE_EPSILON ) )
+	distance = D3DXPlaneDotCoord( &m_Plane[5], point );
+	if ( distance > ( radius + PLANE_EPSILON ) )
 	{
 		// 평면과 중심점의 거리가 반지름보다 크면 프러스텀에 없음
 		return FALSE;

@@ -214,7 +214,12 @@
     <ClInclude Include="MapManager.h">
       <Filter>Map</Filter>
     </ClInclude>
-    <ClInclude Include="Frustum.h" />
+    <ClInclude Include="Frustum.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="QuadTree.h">
+      <Filter>Render</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -346,7 +351,12 @@
     <ClCompile Include="MapManager.cpp">
       <Filter>Map</Filter>
     </ClCompile>
-    <ClCompile Include="Frustum.cpp" />
+    <ClCompile Include="Frustum.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="QuadTree.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="YaMangClient.rc">
