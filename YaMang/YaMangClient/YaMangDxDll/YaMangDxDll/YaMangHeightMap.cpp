@@ -384,9 +384,6 @@ YAMANGDXDLL_API void ToolViewSetting( int width, int height )
 
 void MakeMapFile( CUSTOMVERTEX* baseVertex )
 {
-	// 임시로 막아둠
-	return;
-
 	FILE* mapForPrinting;
 	int heightMapVerticesCount = (g_XHeight)* ( g_ZHeight );
 
@@ -405,10 +402,7 @@ void MakeMapFile( CUSTOMVERTEX* baseVertex )
 
 	fopen_s( &mapForPrinting, "mapFile.yamangmap", "w" );
 
-	for ( unsigned int i = 0; i < inBuffer.size(); ++i )
-	{
-		fwrite( &( inBuffer[i] ), sizeof( std::pair<float, byte> ), inBuffer.size(), mapForPrinting );
-	}
+	fwrite( &inBuffer, sizeof( std::pair<float, byte> ), inBuffer.size(), mapForPrinting );
 
 //	free( mapStart );
 	fclose( mapForPrinting );
