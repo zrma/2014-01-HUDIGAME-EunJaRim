@@ -114,7 +114,7 @@ YAMANGDXDLL_API void InitGroundMesh( int row, int col )
 }
 
 
-YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
+YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize, bool makeFile )
 {
 	int verticesCount = (g_XHeight)* ( g_ZHeight );
 
@@ -170,7 +170,11 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 		}
 	}
 
-	MakeMapFile( baseVertex );
+	if (makeFile)
+	{
+		MakeMapFile( baseVertex );
+	}
+	
 	/*
 	//vertex 내용 확인
 	for ( int i = 0; i < startIdx; ++i )
@@ -404,6 +408,5 @@ void MakeMapFile( CUSTOMVERTEX* baseVertex )
 
 	fwrite( &inBuffer, sizeof( std::pair<float, byte> ), inBuffer.size(), mapForPrinting );
 
-//	free( mapStart );
 	fclose( mapForPrinting );
 }
