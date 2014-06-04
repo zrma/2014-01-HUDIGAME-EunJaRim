@@ -147,7 +147,7 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 			baseVertex[startIdx].m_VertexPoint.x = vPos0.m_VertexPoint.x + ( pixelSize * x );
 			if (g_MapHeightInfo)
 			{
-				baseVertex[startIdx].m_VertexPoint.y = ( static_cast<float>( *( static_cast<LPDWORD>(d3drc.pBits) + col *( row - 1 ) + x - z*( d3drc.Pitch / 4 ) ) & 0x000000ff ) )/15.f;
+				baseVertex[startIdx].m_VertexPoint.y = ( static_cast<float>( *( static_cast<LPDWORD>(d3drc.pBits) + col *( row - 1 ) + x - z*( d3drc.Pitch / 4 ) ) & 0x000000ff ) ) * pixelSize / 30.f;
 			}
 			else
 			{
