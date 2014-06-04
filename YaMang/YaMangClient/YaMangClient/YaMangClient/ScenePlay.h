@@ -75,6 +75,6 @@ private:
 	Frustum*					m_Frustum = nullptr;
 	QuadTree*					m_QuadTree = nullptr;
 	CUSTOMVERTEX*				m_HeightMap = nullptr;
-	float						m_LODRatio = 0.05f;
+	float						m_LODRatio = 0.01f;
 };
 

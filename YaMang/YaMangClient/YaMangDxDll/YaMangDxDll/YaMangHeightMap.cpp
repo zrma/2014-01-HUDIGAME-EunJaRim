@@ -129,9 +129,9 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 
 	if (g_MapHeightInfo)
 	{
-// 		D3DSURFACE_DESC ddsd;
-// 		g_MapHeightInfo->GetLevelDesc( 0, &ddsd );
-		
+		// D3DSURFACE_DESC ddsd;
+		// g_MapHeightInfo->GetLevelDesc( 0, &ddsd );
+
 		g_MapHeightInfo->LockRect( 0, &d3drc, NULL, D3DLOCK_READONLY );
 	}
 
@@ -317,7 +317,7 @@ HRESULT PreRenderHeightWithMapQuadTree( LPDWORD* index )
 	return S_OK;
 }
 
-void RenderHeightMapWithQuadTree( int tris )
+void RenderHeightMapWithQuadTree( int tris, bool isWire )
 {
 	if ( !g_HeightMapIndexBuffer || !g_HeightMapWithQuadTreeIsReady )
 	{
@@ -328,7 +328,15 @@ void RenderHeightMapWithQuadTree( int tris )
 
 	// 라이트매핑 등을 활용할 계획이므로 조명 Off
 	g_D3dDevice->SetRenderState( D3DRS_LIGHTING, FALSE );
-	g_D3dDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_SOLID );
+	
+	if ( isWire )
+	{
+		g_D3dDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_WIREFRAME );
+	}
+	else
+	{
+		g_D3dDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_SOLID );
+	}
 
 	IDirect3DVertexBuffer9* RenderVertexBuffer = nullptr;
 	g_Mesh->GetVertexBuffer( &RenderVertexBuffer );

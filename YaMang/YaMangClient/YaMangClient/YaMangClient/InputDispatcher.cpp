@@ -22,6 +22,7 @@
 #include "SceneResult.h"
 #include "ScenePlay.h"
 #include "Logger.h"
+#include "Renderer.h"
 
 typedef void( *KeyEventHandler )( KeyInput inputKey );
 static KeyEventHandler KeyHandlerTable[MAX_KEY];
@@ -217,6 +218,14 @@ REGISTER_KEY_HANDLER( VK_4 )
 	if ( KeyStatusType::KEY_UP == inputKey.GetKeyStatus() )
 	{
 		TakeScreenShot();
+	}
+}
+
+REGISTER_KEY_HANDLER( VK_Z )
+{
+	if ( KeyStatusType::KEY_UP == inputKey.GetKeyStatus() )
+	{
+		Renderer::GetInstance()->ToggleHeightMapWire();
 	}
 }
 

@@ -22,9 +22,15 @@
 
 #define PATH_MAP		L"MapFiles\\"
 
-#define HEIGHT_MAP				PATH_MAP L"heightmap_128_128.bmp"
-//#define HEIGHT_TEX			PATH_MAP L"heightmap_tex_128_128.bmp"
-#define HEIGHT_TEX				PATH_MAP L"map_tex.bmp"
+// #define HEIGHT_MAP				PATH_MAP L"heightmap_128_128.bmp"
+// #define HEIGHT_MAP				PATH_MAP L"heightmap_1024_1024.bmp"
+
+#define HEIGHT_MAP				PATH_MAP L"heightmap_1024_1024_korea.bmp"
+#define HEIGHT_TEX				PATH_MAP L"heightmap_texture_1024_1024_korea.bmp"
+
+// #define HEIGHT_TEX				PATH_MAP L"heightmap_128_128.bmp"
+// #define HEIGHT_TEX				PATH_MAP L"heightmap_tex_128_128.bmp"
+// #define HEIGHT_TEX				PATH_MAP L"map_tex.bmp"
 
 #define PATH_SPRITE		L"SpriteFiles\\"
 

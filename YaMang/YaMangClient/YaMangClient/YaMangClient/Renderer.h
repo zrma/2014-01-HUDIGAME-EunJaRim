@@ -24,6 +24,8 @@ public:
 	CUSTOMVERTEX*	GetHeightMap() const;
 	void			GetHeightMapSize( DWORD* width, DWORD* height ) const;
 
+	void	ToggleHeightMapWire() { m_IsHeightMapWire = !m_IsHeightMapWire; }
+
 	void	ResizeWindow( LONG width, LONG height );
 
 	void	SetViewMatrix( D3DXMATRIXA16& matrix ) const;
@@ -36,6 +38,8 @@ public:
 private:
 	bool	m_Result = false;
 	bool	m_IsReady = false;
+
+	bool	m_IsHeightMapWire = false;
 	
 	UINT	m_PrevTime = 0;
 	UINT	m_Frame = 0;

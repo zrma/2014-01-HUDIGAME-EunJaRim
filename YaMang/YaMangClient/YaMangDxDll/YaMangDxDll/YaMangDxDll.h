@@ -54,7 +54,7 @@ extern "C"{
 	YAMANGDXDLL_API void GetHeightMapSizeForQuadTree( DWORD* width, DWORD* height );
 	YAMANGDXDLL_API void GetHeightMapForQuadTree( CUSTOMVERTEX** heightMap );
 	YAMANGDXDLL_API HRESULT PreRenderHeightWithMapQuadTree( LPDWORD* index );
-	YAMANGDXDLL_API void RenderHeightMapWithQuadTree( int tris );
+	YAMANGDXDLL_API void RenderHeightMapWithQuadTree( int tris, bool isWire = false );
 
 	YAMANGDXDLL_API void ToolViewSetting( int width, int height );
 	YAMANGDXDLL_API void RenderHeightMap();

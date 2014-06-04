@@ -90,7 +90,7 @@ void Renderer::RenderMap( QuadTree* quadTree, Frustum* frustum, CUSTOMVERTEX* he
 		else
 		{
 			int tris = quadTree->GenerateIndex( index, heightMap, frustum, ratioOfLOD );
-			RenderHeightMapWithQuadTree( tris );
+			RenderHeightMapWithQuadTree( tris, m_IsHeightMapWire );
 		}
 
 		RenderSkyBox( CameraController::GetInstance()->GetEyePoint() );
