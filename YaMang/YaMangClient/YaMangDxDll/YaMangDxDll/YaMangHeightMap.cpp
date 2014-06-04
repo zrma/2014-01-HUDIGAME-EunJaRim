@@ -286,12 +286,18 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 	}
 }
 
+void GetHeightMapSizeForQuadTree( DWORD* width, DWORD* height )
+{
+	*width = g_XHeight;
+	*height = g_ZHeight;
+}
+
 void GetHeightMapForQuadTree( CUSTOMVERTEX** heightMap )
 {
 	*heightMap = g_HeightMap;
 }
 
-HRESULT PreRenderHeightWithMapQuadTree( LPVOID* index )
+HRESULT PreRenderHeightWithMapQuadTree( LPDWORD* index )
 {
 	if ( !g_HeightMapIndexBuffer )
 	{

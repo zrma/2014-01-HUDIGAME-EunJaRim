@@ -5,6 +5,7 @@
 #include "ResourceManager.h"
 #include "TextManager.h"
 #include "CameraController.h"
+#include "QuadTree.h"
 
 Renderer::Renderer()
 {
@@ -76,13 +77,37 @@ void Renderer::RenderMesh( MESHOBJECT* mesh ) const
 	}
 }
 
-void Renderer::RenderMap() const
+void Renderer::RenderMap( QuadTree* quadTree, Frustum* frustum, CUSTOMVERTEX* heightMap, float ratioOfLOD ) const
 {
 	if ( ResourceManager::GetInstance()->IsMapReady() )
 	{
-		RenderHeightMap();
+		LPDWORD index = nullptr;
+
+		if ( !quadTree || !frustum || FAILED( PreRenderHeightWithMapQuadTree( &index ) ))
+		{
+			RenderHeightMap();
+		}
+		else
+		{
+			int tris = quadTree->GenerateIndex( index, heightMap, frustum, ratioOfLOD );
+			RenderHeightMapWithQuadTree( tris );
+		}
+
 		RenderSkyBox( CameraController::GetInstance()->GetEyePoint() );
 	}
+}
+
+void Renderer::GetHeightMapSize( DWORD* width, DWORD* height ) const
+{
+	GetHeightMapSizeForQuadTree( width, height );
+}
+
+CUSTOMVERTEX* Renderer::GetHeightMap() const
+{
+	CUSTOMVERTEX* heightMap;
+	GetHeightMapForQuadTree( &heightMap );
+
+	return heightMap;
 }
 
 void Renderer::SetViewMatrix( D3DXMATRIXA16& matrix ) const

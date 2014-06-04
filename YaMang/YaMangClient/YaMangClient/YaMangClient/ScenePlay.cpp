@@ -17,6 +17,7 @@
 #include "CorpsMark.h"
 #include "Timer.h"
 #include "Frustum.h"
+#include "QuadTree.h"
 
 ScenePlay::ScenePlay()
 {
@@ -44,6 +45,20 @@ void ScenePlay::Create()
 	
 	// 뷰 프러스텀을 만들어 봅시다
 	m_Frustum = new Frustum();
+
+	// 쿼드 트리도 만들어 봅시다.
+	m_HeightMap = Renderer::GetInstance()->GetHeightMap();
+
+	if ( m_HeightMap )
+	{
+		DWORD width = 0;
+		DWORD height = 0;
+
+		Renderer::GetInstance()->GetHeightMapSize( &width, &height );
+		m_QuadTree = new QuadTree( width, height );
+
+		m_QuadTree->Build( m_HeightMap );
+	}
 
 	//UIObjects Init
 	InitUIObjects();
@@ -83,7 +98,7 @@ void ScenePlay::Update()
 
 void ScenePlay::Render() const
 {
-	Renderer::GetInstance()->RenderMap();
+	Renderer::GetInstance()->RenderMap( m_QuadTree, m_Frustum, m_HeightMap, m_LODRatio );
 	TextManager::GetInstance()->DrawTexts();
 
 	for ( auto& iter : m_CorpsList )

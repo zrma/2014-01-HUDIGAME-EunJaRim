@@ -51,9 +51,10 @@ extern "C"{
 	YAMANGDXDLL_API void InitGroundMesh( int row, int col );
 	YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize );
 
+	YAMANGDXDLL_API void GetHeightMapSizeForQuadTree( DWORD* width, DWORD* height );
 	YAMANGDXDLL_API void GetHeightMapForQuadTree( CUSTOMVERTEX** heightMap );
-	YAMANGDXDLL_API HRESULT PreRenderHeightWithMapQuadTree( LPVOID* index );
-	YAMANGDXDLL_API void RenderHeightMapWithQuadTree();
+	YAMANGDXDLL_API HRESULT PreRenderHeightWithMapQuadTree( LPDWORD* index );
+	YAMANGDXDLL_API void RenderHeightMapWithQuadTree( int tris );
 
 	YAMANGDXDLL_API void ToolViewSetting( int width, int height );
 	YAMANGDXDLL_API void RenderHeightMap();

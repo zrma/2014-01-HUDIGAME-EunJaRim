@@ -3,6 +3,9 @@
 #include "MacroSet.h"
 
 struct MESHOBJECT;
+struct CUSTOMVERTEX;
+class QuadTree;
+class Frustum;
 
 class Renderer: public Singleton<Renderer>
 {
@@ -16,7 +19,11 @@ public:
 	void	RenderEnd();
 
 	void	RenderMesh( MESHOBJECT* mesh ) const;
-	void	RenderMap() const;
+	void	RenderMap( QuadTree* quadTree, Frustum* frustum, CUSTOMVERTEX* heightMap, float ratioOfLOD ) const;
+
+	CUSTOMVERTEX*	GetHeightMap() const;
+	void			GetHeightMapSize( DWORD* width, DWORD* height ) const;
+
 	void	ResizeWindow( LONG width, LONG height );
 
 	void	SetViewMatrix( D3DXMATRIXA16& matrix ) const;

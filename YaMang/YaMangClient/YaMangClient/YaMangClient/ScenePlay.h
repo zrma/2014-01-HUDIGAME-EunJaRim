@@ -8,6 +8,8 @@ class UIObject;
 class MiniMap;
 class CorpsMark;
 class Frustum;
+class QuadTree;
+struct CUSTOMVERTEX;
 
 class ScenePlay:
 	public Scene
@@ -69,6 +71,10 @@ private:
 	//리젠 타임 출력을 위한 멤버
 	float						m_RegenTime;
 	float						m_StackedTime = 0;
+
 	Frustum*					m_Frustum = nullptr;
+	QuadTree*					m_QuadTree = nullptr;
+	CUSTOMVERTEX*				m_HeightMap = nullptr;
+	float						m_LODRatio = 0.05f;
 };
 
