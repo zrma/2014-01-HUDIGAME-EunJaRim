@@ -10,6 +10,11 @@
 *@breif
 *
 */
+
+void MakeMapFile( CUSTOMVERTEX* baseVertex );
+
+
+
 YAMANGDXDLL_API HRESULT HeightMapTextureImport( HWND hWnd, LPCTSTR heightMap, LPCTSTR mapTexture )
 {
 	if ( FAILED( D3DXCreateTextureFromFileEx( g_D3dDevice, heightMap, D3DX_DEFAULT, D3DX_DEFAULT, D3DX_DEFAULT, 0, D3DFMT_X8B8G8R8, D3DPOOL_MANAGED, D3DX_DEFAULT, D3DX_DEFAULT, 0, NULL, NULL, &g_MapHeightInfo ) ) )
@@ -132,8 +137,6 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 
 			baseVertex[startIdx].m_VertexTexturePoint.x = static_cast<float>(x)* 1 / col;
 			baseVertex[startIdx].m_VertexTexturePoint.y = static_cast<float>(z)* 1 / row;
-
-
 
 			++startIdx;
 		}
@@ -276,4 +279,40 @@ YAMANGDXDLL_API void ToolViewSetting( int width, int height )
 	// 창크기 변경에 따라 크고 작아지게 할 것
 	//SetAspectRatio( 729, 588 );
 	SetAspectRatio( width, height );
+}
+
+void MakeMapFile( CUSTOMVERTEX* baseVertex )
+{
+	FILE* mapForPrinting;
+	int heightMapVerticesCount = (g_XHeight)* ( g_ZHeight );
+
+	//map에 어떤 정보를 넣을 것인가?
+	//현재는 Y값(32bit)과 기타 값(점령지역 등, 32bit)
+	int mapInfoCollection = 2;
+
+	DWORD* mapStart = nullptr;
+	int inBufferSize = sizeof(DWORD)* mapInfoCollection * heightMapVerticesCount;
+	mapStart = (DWORD*)malloc( inBufferSize );
+
+	//CUSTOMVERTEX* baseVertex = new CUSTOMVERTEX[verticesCount];
+
+	for ( int i = 0; i < ( heightMapVerticesCount*mapInfoCollection ); ++i )
+	{
+		if ( i % 2 == 0 )
+		{
+			mapStart[i] = static_cast<DWORD>( baseVertex[i].m_VertexPoint.y );
+		}
+		else
+		{
+			//일단 테스트 코드로 입력
+			//향후 거점에 대한 정보를 입력한다면 해당 거점 정보를 넣으면 될 것 같음
+			DWORD a = NULL;
+			mapStart[i] = a & 0xffffffff;
+		}
+	}
+	fopen_s( &mapForPrinting, "mapFile.map", "wb" );
+	fwrite( mapStart, sizeof( DWORD ), inBufferSize, mapForPrinting );
+
+	free( mapStart );
+	fclose( mapForPrinting );
 }
