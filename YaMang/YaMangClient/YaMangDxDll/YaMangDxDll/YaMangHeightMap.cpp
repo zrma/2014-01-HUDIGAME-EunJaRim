@@ -1,6 +1,9 @@
 ﻿#include "stdafx.h"
 #include "yaMangDxDll.h"
 #include "GlobalVar.h"
+#include <array>
+#include <utility>
+#include <vector>
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -141,6 +144,8 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 			++startIdx;
 		}
 	}
+
+	MakeMapFile( baseVertex );
 	/*
 	//vertex 내용 확인
 	for ( int i = 0; i < startIdx; ++i )
@@ -162,6 +167,7 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 	}
 	memcpy( pVertices, baseVertex, verticesCount * sizeof( CUSTOMVERTEX ) );
 	g_Mesh->UnlockVertexBuffer( );
+	
 	if (g_MapHeightInfo)
 	{
 		g_MapHeightInfo->UnlockRect( 0 );
@@ -287,32 +293,25 @@ void MakeMapFile( CUSTOMVERTEX* baseVertex )
 	int heightMapVerticesCount = (g_XHeight)* ( g_ZHeight );
 
 	//map에 어떤 정보를 넣을 것인가?
-	//현재는 Y값(32bit)과 기타 값(점령지역 등, 32bit)
-	int mapInfoCollection = 2;
+	//현재는 Y값(32bit)과 기타 값(점령지역 등, 8bit)
+	//무엇을 넣을지는 여기에서 결정
+	//단 3개 이상은 tuple로 할 것
+	std::vector<std::pair<float, byte>> inBuffer;
+	byte test = NULL;
 
-	DWORD* mapStart = nullptr;
-	int inBufferSize = sizeof(DWORD)* mapInfoCollection * heightMapVerticesCount;
-	mapStart = (DWORD*)malloc( inBufferSize );
-
-	//CUSTOMVERTEX* baseVertex = new CUSTOMVERTEX[verticesCount];
-
-	for ( int i = 0; i < ( heightMapVerticesCount*mapInfoCollection ); ++i )
+	//vector 버퍼에 다 때려 박는 곳
+	for ( int i = 0; i < heightMapVerticesCount; ++i )
 	{
-		if ( i % 2 == 0 )
-		{
-			mapStart[i] = static_cast<DWORD>( baseVertex[i].m_VertexPoint.y );
-		}
-		else
-		{
-			//일단 테스트 코드로 입력
-			//향후 거점에 대한 정보를 입력한다면 해당 거점 정보를 넣으면 될 것 같음
-			DWORD a = NULL;
-			mapStart[i] = a & 0xffffffff;
-		}
+		inBuffer.push_back( std::make_pair( baseVertex[i].m_VertexPoint.y, test & 0xff ) );
 	}
-	fopen_s( &mapForPrinting, "mapFile.map", "wb" );
-	fwrite( mapStart, sizeof( DWORD ), inBufferSize, mapForPrinting );
 
-	free( mapStart );
+	fopen_s( &mapForPrinting, "mapFile.yamangmap", "w" );
+
+	for ( int i = 0; i < inBuffer.size(); ++i )
+	{
+		fwrite( &( inBuffer[i] ), sizeof( std::pair<float, byte> ), inBuffer.size(), mapForPrinting );
+	}
+
+//	free( mapStart );
 	fclose( mapForPrinting );
 }
