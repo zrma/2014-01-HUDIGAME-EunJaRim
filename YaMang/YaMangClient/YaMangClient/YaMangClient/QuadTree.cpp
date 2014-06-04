@@ -2,6 +2,7 @@
 #include "QuadTree.h"
 #include "MacroSet.h"
 #include "Frustum.h"
+#include "CameraController.h"
 
 
 QuadTree::QuadTree( int width, int height )
@@ -115,7 +116,7 @@ int QuadTree::GenTriIndex( int tris, LPVOID index, CUSTOMVERTEX* heightMap, Frus
 
 	LPDWORD p = ( (LPDWORD)index ) + tris * 3;
 
-	if ( IsVisible( heightMap, frustum->GetPos(), ratioOfLOD ) )
+	if ( IsVisible( heightMap, &(CameraController::GetInstance()->GetEyePoint()), ratioOfLOD ) )
 	{
 		// 만약 최하위 노드라면 부분 분할(SubDivide)이 불가능하므로 그냥 출력하고 리턴
 		if ( m_Corner[CORNER_TR] - m_Corner[CORNER_TL] <= 1 )
@@ -252,7 +253,10 @@ int QuadTree::GenTriIndex( int tris, LPVOID index, CUSTOMVERTEX* heightMap, Frus
 		}
 		else	// 우측 부분분할이 필요없을 경우
 		{
-			*p++ = m_Center; *p++ = m_Corner[CORNER_TR]; *p++ = m_Corner[CORNER_BR]; tris++;
+			*p++ = m_Center;
+			*p++ = m_Corner[CORNER_TR];
+			*p++ = m_Corner[CORNER_BR];
+			tris++;
 		}
 
 		return tris;	// 이 노드 아래의 자식노드는 탐색할 필요없으므로 리턴!
@@ -303,9 +307,8 @@ void QuadTree::AllIsInFrustum()
 int QuadTree::IsInFrustum( CUSTOMVERTEX* heightMap, Frustum* frustum )
 {
 	BOOL b[4] = { 0, };
-	BOOL isInSphere = false;
+	BOOL isInSphere =frustum->IsInSphere( (D3DXVECTOR3*)( heightMap + m_Center ), m_Radius );
 
-	isInSphere = frustum->IsInSphere( (D3DXVECTOR3*)( heightMap + m_Center ), m_Radius );
 	// 경계구 안에 없으면 점 단위의 프러스텀 테스트가 필요없으므로 리턴
 	if ( !isInSphere )
 	{
@@ -513,13 +516,22 @@ int QuadTree::GetNodeIndex( int ed, int cx, int& _0, int& _1, int& _2, int& _3 )
 			_1 = _b + gap;
 			_2 = _d;
 			_3 = _d + gap;
-			if ( ( _0 / cx ) != ( _a / cx ) ) return -1;
-			if ( ( _1 / cx ) != ( _b / cx ) ) return -1;
+			if ( ( _0 / cx ) != ( _a / cx ) )
+			{
+				return -1;
+			}
+			if ( ( _1 / cx ) != ( _b / cx ) )
+			{
+				return -1;
+			}
 			break;
 	}
 
 	n = ( _0 + _1 + _2 + _3 ) / 4;	// 가운데 인덱스
-	if ( !IS_IN_RANGE( n, 0, cx * cx - 1 ) ) return -1;
+	if ( !IS_IN_RANGE( n, 0, cx * cx - 1 ) )
+	{
+		return -1;
+	}
 
 	return n;
 }
@@ -552,7 +564,9 @@ BOOL IsInRect( RECT* rc, POINT pt )
 {
 	if ( ( rc->left <= pt.x ) && ( pt.x <= rc->right ) &&
 		 ( rc->bottom <= pt.y ) && ( pt.y <= rc->top ) )
-		 return TRUE;
+	{
+		return TRUE;
+	}
 
 	return FALSE;
 }
