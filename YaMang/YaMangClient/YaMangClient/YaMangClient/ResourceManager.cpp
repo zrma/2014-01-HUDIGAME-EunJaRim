@@ -41,7 +41,7 @@ void ResourceManager::Init()
 	// 주의! 실제 하이트맵 크기는 한 변이 2^n + 1 사이즈여야 합니다!
 	//////////////////////////////////////////////////////////////////////////
 	InitGroundMesh( 128, 128 );
-	CreateRawGround( 128, 128, 1.0f );
+	CreateRawGround( 128, 128, 5.0f );
 
 	m_MapSize = 640;
 
