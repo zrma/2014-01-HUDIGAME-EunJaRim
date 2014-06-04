@@ -37,10 +37,6 @@ YAMANGDXDLL_API void HeightMapCleanup()
 	{
 		delete[] g_HeightMap;
 	}
-	if ( NULL != g_HeightMapVertexBuffer )
-	{
-		g_HeightMapVertexBuffer->Release();
-	}
 	if ( NULL != g_HeightMapIndexBuffer )
 	{
 		g_HeightMapIndexBuffer->Release();

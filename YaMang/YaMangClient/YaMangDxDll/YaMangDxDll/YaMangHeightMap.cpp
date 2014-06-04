@@ -96,6 +96,21 @@ YAMANGDXDLL_API void InitGroundMesh( int row, int col )
 	{
 		delete[] g_HeightMap;
 	}
+	g_HeightMap = new CUSTOMVERTEX[g_XHeight * g_ZHeight];
+
+	if ( g_HeightMapIndexBuffer )
+	{
+		g_HeightMapIndexBuffer->Release();
+		g_HeightMapIndexBuffer = nullptr;
+	}
+	// 쿼드트리용 인덱스 버퍼 생성
+	
+	if ( FAILED( g_D3dDevice->CreateIndexBuffer( ( g_XHeight - 1 )*( g_ZHeight - 1 ) * 2 * sizeof( MYINDEX ), 
+		0, D3DFMT_INDEX32, D3DPOOL_DEFAULT, &g_HeightMapIndexBuffer, NULL ) ) )
+	{
+		MessageBox( NULL, L"Create HeightMap Index Buffer For Quad-Tree Failed", L"YaMang.DLL", MB_OK );
+		return;
+	}
 }
 
 
@@ -144,6 +159,9 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 
 			baseVertex[startIdx].m_VertexTexturePoint.x = static_cast<float>(x)* 1 / col;
 			baseVertex[startIdx].m_VertexTexturePoint.y = static_cast<float>(z)* 1 / row;
+
+			// 쿼드트리에서 쓸 용도로 값 복사
+			g_HeightMap[startIdx] = baseVertex[startIdx];
 
 			++startIdx;
 		}
@@ -266,6 +284,62 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize )
 		delete[] baseIndex;
 		baseIndex = nullptr;
 	}
+}
+
+void GetHeightMapForQuadTree( CUSTOMVERTEX** heightMap )
+{
+	*heightMap = g_HeightMap;
+}
+
+HRESULT PreRenderHeightWithMapQuadTree( LPVOID* index )
+{
+	if ( !g_HeightMapIndexBuffer )
+	{
+		g_HeightMapWithQuadTreeIsReady = false;
+		return E_FAIL;
+	}
+
+	if ( FAILED( g_HeightMapIndexBuffer->Lock( 0, ( g_XHeight - 1 )*( g_ZHeight - 1 ) * 2 * sizeof( MYINDEX ),
+		(void**)index, 0 ) ) )
+	{
+		g_HeightMapWithQuadTreeIsReady = false;
+		MessageBox( NULL, L"Fail To Lock Index Buffer For Quad-Tree", L"YaMang.DLL", MB_OK );
+		return E_FAIL;
+	}
+
+	g_HeightMapWithQuadTreeIsReady = true;
+	return S_OK;
+}
+
+void RenderHeightMapWithQuadTree( int tris )
+{
+	if ( !g_HeightMapIndexBuffer || !g_HeightMapWithQuadTreeIsReady )
+	{
+		return;
+	}
+
+	g_HeightMapIndexBuffer->Unlock();
+
+	// 라이트매핑 등을 활용할 계획이므로 조명 Off
+	g_D3dDevice->SetRenderState( D3DRS_LIGHTING, FALSE );
+	g_D3dDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_SOLID );
+
+	IDirect3DVertexBuffer9* RenderVertexBuffer = nullptr;
+	g_Mesh->GetVertexBuffer( &RenderVertexBuffer );
+	
+	g_D3dDevice->SetStreamSource( 0, RenderVertexBuffer, 0, sizeof( CUSTOMVERTEX ) );
+	g_D3dDevice->SetFVF( D3DFVF_CUSTOMVERTEX );
+
+	g_D3dDevice->SetTexture( 0, g_MapTexture );
+	
+	//설정된 uv 좌표값에 따라 연산
+	g_D3dDevice->SetTextureStageState( 0, D3DTSS_TEXCOORDINDEX, 0 );
+
+	g_D3dDevice->SetSamplerState( 0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR );
+	g_D3dDevice->SetSamplerState( 0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR );
+
+	g_D3dDevice->SetIndices( g_HeightMapIndexBuffer );
+	g_D3dDevice->DrawIndexedPrimitive( D3DPT_TRIANGLELIST, 0, 0, g_XHeight * g_ZHeight, 0, tris );
 }
 
 //카메라 행렬을 인자값 받아서 정렬되도록 수정 필요 triz

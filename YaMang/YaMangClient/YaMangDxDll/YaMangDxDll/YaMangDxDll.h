@@ -11,6 +11,7 @@
 #endif
 
 #include "MeshObject.h"
+struct CUSTOMVERTEX;
 
 extern "C"{
 	//처음과 마지막에만 실행하는 함수들
@@ -50,11 +51,14 @@ extern "C"{
 	YAMANGDXDLL_API void InitGroundMesh( int row, int col );
 	YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize );
 
+	YAMANGDXDLL_API void GetHeightMapForQuadTree( CUSTOMVERTEX** heightMap );
+	YAMANGDXDLL_API HRESULT PreRenderHeightWithMapQuadTree( LPVOID* index );
+	YAMANGDXDLL_API void RenderHeightMapWithQuadTree();
+
 	YAMANGDXDLL_API void ToolViewSetting( int width, int height );
 	YAMANGDXDLL_API void RenderHeightMap();
 	
 	YAMANGDXDLL_API void HeightMapCleanup( );
-
 	
 	//////////////////////////////////////////////////////////////////////////
 	// Picking Ray를 위한 함수
