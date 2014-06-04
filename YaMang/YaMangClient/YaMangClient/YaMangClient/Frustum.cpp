@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "Frustum.h"
 
 
@@ -35,12 +35,12 @@ BOOL Frustum::Make( D3DXMATRIXA16* viewProjMatrix )
 	
 	m_ViewerPosition = ( m_Vertex[0] + m_Vertex[5] ) / 2.0f;
 
-	//	D3DXPlaneFromPoints(&m_plane[0], m_vtx+4, m_vtx+7, m_vtx+6);				// »ó Æò¸é(top)
-	//	D3DXPlaneFromPoints(&m_plane[1], m_vtx  , m_vtx+1, m_vtx+2);				// ÇÏ Æò¸é(bottom)
-	//	D3DXPlaneFromPoints(&m_plane[2], m_vtx  , m_vtx+4, m_vtx+5);				// ±Ù Æò¸é(near)
-	D3DXPlaneFromPoints( &m_Plane[3], m_Vertex + 2, m_Vertex + 6, m_Vertex + 7 );	// ¿ø Æò¸é(far)
-	D3DXPlaneFromPoints( &m_Plane[4], m_Vertex, m_Vertex + 3, m_Vertex + 7 );		// ÁÂ Æò¸é(left)
-	D3DXPlaneFromPoints( &m_Plane[5], m_Vertex + 1, m_Vertex + 5, m_Vertex + 6 );	// ¿ì Æò¸é(right)
+	//	D3DXPlaneFromPoints(&m_plane[0], m_vtx+4, m_vtx+7, m_vtx+6);				// ìƒ í‰ë©´(top)
+	//	D3DXPlaneFromPoints(&m_plane[1], m_vtx  , m_vtx+1, m_vtx+2);				// í•˜ í‰ë©´(bottom)
+	//	D3DXPlaneFromPoints(&m_plane[2], m_vtx  , m_vtx+4, m_vtx+5);				// ê·¼ í‰ë©´(near)
+	D3DXPlaneFromPoints( &m_Plane[3], m_Vertex + 2, m_Vertex + 6, m_Vertex + 7 );	// ì› í‰ë©´(far)
+	D3DXPlaneFromPoints( &m_Plane[4], m_Vertex, m_Vertex + 3, m_Vertex + 7 );		// ì¢Œ í‰ë©´(left)
+	D3DXPlaneFromPoints( &m_Plane[5], m_Vertex + 1, m_Vertex + 5, m_Vertex + 6 );	// ìš° í‰ë©´(right)
 
 	return TRUE;
 }
@@ -49,25 +49,25 @@ BOOL Frustum::IsIn( D3DXVECTOR3* point )
 {
 	float distance = 0;
 	
-	// ÇöÀç´Â left, right, far plane¸¸ Àû¿ëÇÑ´Ù.
+	// í˜„ì¬ëŠ” left, right, far planeë§Œ ì ìš©í•œë‹¤.
 	//	for( int i = 0 ; i < 6 ; ++i )
 	{
 		distance = D3DXPlaneDotCoord( &m_Plane[3], point );
 		if ( distance > PLANE_EPSILON )
 		{
-			// planeÀÇ normalº¤ÅÍ°¡ far·Î ÇâÇÏ°í ÀÖÀ¸¹Ç·Î ¾ç¼öÀÌ¸é ÇÁ·¯½ºÅÒÀÇ ¹Ù±ùÂÊ
+			// planeì˜ normalë²¡í„°ê°€ farë¡œ í–¥í•˜ê³  ìˆìœ¼ë¯€ë¡œ ì–‘ìˆ˜ì´ë©´ í”„ëŸ¬ìŠ¤í…€ì˜ ë°”ê¹¥ìª½
 			return FALSE;
 		}
 		distance = D3DXPlaneDotCoord( &m_Plane[4], point );
 		if ( distance > PLANE_EPSILON )
 		{
-			// planeÀÇ normalº¤ÅÍ°¡ left·Î ÇâÇÏ°í ÀÖÀ¸¹Ç·Î ¾ç¼öÀÌ¸é ÇÁ·¯½ºÅÒÀÇ ¿ŞÂÊ
+			// planeì˜ normalë²¡í„°ê°€ leftë¡œ í–¥í•˜ê³  ìˆìœ¼ë¯€ë¡œ ì–‘ìˆ˜ì´ë©´ í”„ëŸ¬ìŠ¤í…€ì˜ ì™¼ìª½
 			return FALSE;
 		}
 		distance = D3DXPlaneDotCoord( &m_Plane[5], point );
 		if ( distance > PLANE_EPSILON )
 		{
-			// planeÀÇ normalº¤ÅÍ°¡ right·Î ÇâÇÏ°í ÀÖÀ¸¹Ç·Î ¾ç¼öÀÌ¸é ÇÁ·¯½ºÅÒÀÇ ¿À¸¥ÂÊ
+			// planeì˜ normalë²¡í„°ê°€ rightë¡œ í–¥í•˜ê³  ìˆìœ¼ë¯€ë¡œ ì–‘ìˆ˜ì´ë©´ í”„ëŸ¬ìŠ¤í…€ì˜ ì˜¤ë¥¸ìª½
 			return FALSE;
 		}
 	}
@@ -82,19 +82,19 @@ BOOL Frustum::IsInSphere( D3DXVECTOR3* point, float radius )
 	distance = D3DXPlaneDotCoord( &m_Plane[3], point );
 	if ( distance > ( radius + PLANE_EPSILON ) )
 	{
-		// Æò¸é°ú Áß½ÉÁ¡ÀÇ °Å¸®°¡ ¹İÁö¸§º¸´Ù Å©¸é ÇÁ·¯½ºÅÒ¿¡ ¾øÀ½
+		// í‰ë©´ê³¼ ì¤‘ì‹¬ì ì˜ ê±°ë¦¬ê°€ ë°˜ì§€ë¦„ë³´ë‹¤ í¬ë©´ í”„ëŸ¬ìŠ¤í…€ì— ì—†ìŒ
 		return FALSE;
 	}
 	distance = D3DXPlaneDotCoord( &m_Plane[4], point );
 	if ( distance > ( radius + PLANE_EPSILON ) )
 	{
-		// Æò¸é°ú Áß½ÉÁ¡ÀÇ °Å¸®°¡ ¹İÁö¸§º¸´Ù Å©¸é ÇÁ·¯½ºÅÒ¿¡ ¾øÀ½
+		// í‰ë©´ê³¼ ì¤‘ì‹¬ì ì˜ ê±°ë¦¬ê°€ ë°˜ì§€ë¦„ë³´ë‹¤ í¬ë©´ í”„ëŸ¬ìŠ¤í…€ì— ì—†ìŒ
 		return FALSE;
 	}
 	distance = D3DXPlaneDotCoord( &m_Plane[5], point );
 	if ( distance > ( radius + PLANE_EPSILON ) )
 	{
-		// Æò¸é°ú Áß½ÉÁ¡ÀÇ °Å¸®°¡ ¹İÁö¸§º¸´Ù Å©¸é ÇÁ·¯½ºÅÒ¿¡ ¾øÀ½
+		// í‰ë©´ê³¼ ì¤‘ì‹¬ì ì˜ ê±°ë¦¬ê°€ ë°˜ì§€ë¦„ë³´ë‹¤ í¬ë©´ í”„ëŸ¬ìŠ¤í…€ì— ì—†ìŒ
 		return FALSE;
 	}
 

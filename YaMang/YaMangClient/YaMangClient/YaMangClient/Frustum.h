@@ -1,6 +1,6 @@
-#pragma once
+О╩©#pragma once
 
-// га╥╞╫╨ер©║ а╓х╝го╟т фВгт╣гаЖ ╬й╢У╤С╣╣, ╬Ю╟ёюг ©╘╨пю╩ аж╬Н╪╜ га╥╞╫╨ер©║ фВгт╫це╟╠Б ю╖гя ╟╙
+// М■└К÷╛Л┼╓М┘─Л≈░ Л═∙М≥∙М∙≤Й╡▄ М▐╛М∙╗К░≤Л╖─ Л∙┼К█■К²╪К▐└, Л∙╫Й╟└Л²≤ Л≈╛К╤└Л²└ Лё╪Л√╢Л└° М■└К÷╛Л┼╓М┘─Л≈░ М▐╛М∙╗Л▀°М┌╓Й╦╟ Л°└М∙° Й╟▓
 #define PLANE_EPSILON	5.0f
 
 class Frustum
@@ -17,7 +17,7 @@ public:
 	D3DXVECTOR3*	GetPos() { return &m_ViewerPosition; }
 
 private:
-	D3DXVECTOR3		m_Vertex[8];		// га╥╞╫╨ерю╩ ╠╦╪╨гр а╓а║ 8╟Ё
-	D3DXVECTOR3		m_ViewerPosition;	// гЖюГ д╚╦ч╤Сюг ©Ы╣Еабг╔
-	D3DXPLANE		m_Plane[6];			// га╥╞╫╨ерю╩ ╠╦╪╨го╢б 6╟Ёюг фР╦И
+	D3DXVECTOR3		m_Vertex[8];		// М■└К÷╛Л┼╓М┘─Л²└ Й╣╛Л└╠М∙═ Л═∙Л═░ 8Й╟°
+	D3DXVECTOR3		m_ViewerPosition;	// М≤└Л·╛ Л╧╢К╘■К²╪Л²≤ Л⌡■К⌠°Л╒▄М▒°
+	D3DXPLANE		m_Plane[6];			// М■└К÷╛Л┼╓М┘─Л²└ Й╣╛Л└╠М∙≤К┼■ 6Й╟°Л²≤ М▐┴К╘╢
 };

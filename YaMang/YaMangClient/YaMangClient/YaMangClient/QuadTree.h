@@ -1,8 +1,8 @@
-#pragma once
+ï»¿#pragma once
 
 #define IS_IN_RANGE(value,r0,r1) (( ((r0) <= (value)) && ((value) <= (r1)) ) ? 1 : 0)
 
-// ÄõµåÆ®¸®¿¡ º¸°üµÇ´Â 4°³ÀÇ ÄÚ³Ê°ª¿¡ ´ëÇÑ »ó¼ö°ª
+// ì¿¼ë“œíŠ¸ë¦¬ì— ë³´ê´€ë˜ëŠ” 4ê°œì˜ ì½”ë„ˆê°’ì— ëŒ€í•œ ìƒìˆ˜ê°’
 enum CornerType
 {
 	CORNER_TL, 
@@ -11,7 +11,7 @@ enum CornerType
 	CORNER_BR
 };
 
-// ÀÌ¿ô³ëµå Ã³¸®¿ë »ó¼ö°ª
+// ì´ì›ƒë…¸ë“œ ì²˜ë¦¬ìš© ìƒìˆ˜ê°’
 enum NeighborType
 {
 	EDGE_UP,
@@ -20,12 +20,12 @@ enum NeighborType
 	EDGE_RT
 };
 
-// ÄõµåÆ®¸®¿Í ÇÁ·¯½ºÅÒ°£ÀÇ °ü°è
+// ì¿¼ë“œíŠ¸ë¦¬ì™€ í”„ëŸ¬ìŠ¤í…€ê°„ì˜ ê´€ê³„
 enum QuadLocation
 {
-	FRUSTUM_OUT = 0,			// ÇÁ·¯½ºÅÒ¿¡¼­ ¿ÏÀü ¹þ¾î³²
-	FRUSTUM_PARTIALLY_IN = 1,	// ÇÁ·¯½ºÅÒ¿¡ ºÎºÐ Æ÷ÇÔ
-	FRUSTUM_COMPLETELY_IN = 2,	// ÇÁ·¯½ºÅÒ¿¡ ¿ÏÀü Æ÷ÇÔ
+	FRUSTUM_OUT = 0,			// í”„ëŸ¬ìŠ¤í…€ì—ì„œ ì™„ì „ ë²—ì–´ë‚¨
+	FRUSTUM_PARTIALLY_IN = 1,	// í”„ëŸ¬ìŠ¤í…€ì— ë¶€ë¶„ í¬í•¨
+	FRUSTUM_COMPLETELY_IN = 2,	// í”„ëŸ¬ìŠ¤í…€ì— ì™„ì „ í¬í•¨
 	FRUSTUM_UNKNOWN = -1
 };
 
@@ -41,9 +41,9 @@ class Frustum;
 class QuadTree
 {
 public:
-	// ÃÖÃÊ ³ëµå »ý¼ºÀÚ
-	QuadTree( int cx, int cy );
-	// ÇÏÀ§ ³ëµå »ý¼ºÀÚ
+	// ìµœì´ˆ ë…¸ë“œ ìƒì„±ìž
+	QuadTree( int width, int height );
+	// í•˜ìœ„ ë…¸ë“œ ìƒì„±ìž
 	QuadTree( QuadTree* parent );
 	~QuadTree();
 
@@ -92,8 +92,8 @@ private:
 	
 	QuadTree*	m_Child[4];
 
-	QuadTree*	m_Parent;			// Triangle CrackÀ» ¸·±â À§ÇØ »ç¿ëÇÑ´Ù.
-	QuadTree*	m_Neighbor[4];		// Triangle CrackÀ» ¸·±â À§ÇØ »ç¿ëÇÑ´Ù.
+	QuadTree*	m_Parent;			// Triangle Crackì„ ë§‰ê¸° ìœ„í•´ ì‚¬ìš©í•œë‹¤.
+	QuadTree*	m_Neighbor[4];		// Triangle Crackì„ ë§‰ê¸° ìœ„í•´ ì‚¬ìš©í•œë‹¤.
 
 	int			m_Center;
 	int			m_Corner[4];
@@ -102,11 +102,11 @@ private:
 	float		m_Radius = 0;
 };
 
-// 2¸¦ ¹ØÀ¸·Î ÇÏ´Â ¼ýÀÚ nÀÇ ·Î±×°ªÀ» ±¸ÇÑ´Ù.
+// 2ë¥¼ ë°‘ìœ¼ë¡œ í•˜ëŠ” ìˆ«ìž nì˜ ë¡œê·¸ê°’ì„ êµ¬í•œë‹¤.
 int	Log2( int n );
 
-// 2^n°ªÀ» ±¸ÇÑ´Ù
+// 2^nê°’ì„ êµ¬í•œë‹¤
 int	Pow2( int n );
 
-// pt°¡ rc¾È¿¡ Æ÷ÇÔµÇ´ÂÁö °Ë»çÇÑ´Ù.(PtInRect()¶ó´Â APIÇÔ¼ö´Â À½¼ö(-)°ª Ã³¸®¸¦ ¸øÇß´Ù.)
+// ptê°€ rcì•ˆì— í¬í•¨ë˜ëŠ”ì§€ ê²€ì‚¬í•œë‹¤.(PtInRect()ë¼ëŠ” APIí•¨ìˆ˜ëŠ” ìŒìˆ˜(-)ê°’ ì²˜ë¦¬ë¥¼ ëª»í–ˆë‹¤.)
 BOOL IsInRect( RECT* rc, POINT pt );
