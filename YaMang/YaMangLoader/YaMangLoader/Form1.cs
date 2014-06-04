@@ -59,7 +59,7 @@ namespace YaMangLoader
         {
             if (IsDoubleOpen)
             {
-                Application.Exit();
+                //Application.Exit();
                 return;
             }
 
@@ -112,8 +112,8 @@ namespace YaMangLoader
             startInfo.Arguments = room;
             Process.Start(startInfo);
 
-
-            Application.Exit();
+            timer1.Start();
+           // Application.Exit();
         }
 
         #region FaceBook
@@ -137,6 +137,9 @@ namespace YaMangLoader
             this.webBrowser1.Navigate(_LoginUrl.AbsoluteUri);
         }
 
+        private String m_Name;
+        private String m_ID;
+        private String m_Token;
         private void faceBookParsing( String parseData )
         {
             //https://www.facebook.com/connect/login_success.html#access_token=CAAL5FWAo8hgBAOU7VTTuS1g25xvG1Mf47UVVpZC6qRMbYtZBCZAo2Hooax4nhHh2kuBdE8C527f6lQKJphp0KpSgSt5uABlHhG9T1cTIjinSJWZBHIbOVKi5eeCXtbDIZAlZASow9Hw5Bml1lBKB0TMjTbDPn4wLwcTqwiu39tUYyKzR9c62fVmxF2FVXA0egZD&expires_in=6471"
@@ -153,17 +156,115 @@ namespace YaMangLoader
             var name = result.name;
             var id = result.id;
 
-            MessageBox.Show("name:" + name + " id:" + id);
+
+            m_Name = name;
+            m_ID = id;
+            m_Token = accessToken;
+
+           // MessageBox.Show("name:" + name + " id:" + id);
             Console.WriteLine("name:" + name + " id:" + id);
             //string curDir = Directory.GetCurrentDirectory();
             //this.webBrowser1.Url = new Uri(serverRootPath);
 
-            // 총 2개의 POST 데이터 만들기
-            string strPostData = string.Format("name={0}&id={1}&token={2}", name, id, accessToken);
+            // 총 3개의 POST 데이터 만들기
+            string strPostData = string.Format("name={0}&id={1}&token={2}&status={3}", name, id, accessToken, "facebookLogin");
             byte[] postData = Encoding.Default.GetBytes(strPostData);
             this.webBrowser1.Navigate(serverRootPath, null, postData, "Content-Type: application/x-www-form-urlencoded"); 
         }
         #endregion FaceBook
 
+
+        #region FaceBookUpload
+
+        bool gameStarted = false;
+        private static bool doubleOpenCheck = false;
+
+        const int WM_COPYDATA = 74;
+        const int WM_CLOSE = 0x10;
+        const int WM_NCACTIVATE = 0x0086;
+
+
+        const int WM_USER1 = 1024;
+
+        protected override void WndProc(ref Message m)
+        {
+            try
+            {
+                switch (m.Msg)
+                {
+
+                        // test! 이게 되면 삽질 안할텐데...
+                    case WM_COPYDATA:
+                        //COPYDATASTRUCT cds = (COPYDATASTRUCT)m.GetLParam(typeof(COPYDATASTRUCT));
+                        MessageBox.Show("DATA GET1!");
+                        break;
+                    case WM_USER1:
+                        MessageBox.Show("DATA GET2!");
+                        break;
+                    
+                       
+                    default:
+
+                        if (IsDoubleOpen && gameStarted && (m.Msg == WM_NCACTIVATE) )
+                        {
+                            if (doubleOpenCheck == false)
+                            {
+                                
+                                gameStarted = false;
+                                timer1.Stop();
+                                doubleOpenCheck = true;
+                                sendGameResult();
+                            }
+                        }
+
+                        base.WndProc(ref m);
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+       
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            gameStarted = true;
+        }
+
+
+
+        private void sendGameResult()
+        {
+            FileStream fs = new FileStream("temp.txt", FileMode.OpenOrCreate);
+            StreamReader sr = new StreamReader(fs);
+
+            String line = sr.ReadLine();
+
+            sr.Close();
+            fs.Close();
+
+            if(line == "")
+            {
+                timer1.Start();
+                doubleOpenCheck = false;
+                return;
+            }
+
+            // "1001,1003,win"
+            String[] datas = line.Split(new char[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+            String myGameID = datas[0];
+            String otherGameID = datas[1];
+            String win = datas[2];
+
+            string strPostData = string.Format("myGameID={0}&otherGameID={1}&id={2}&token={3}&status={4}&win={5}", myGameID, otherGameID, m_ID, m_Token, "gameResult", win);
+            byte[] postData = Encoding.Default.GetBytes(strPostData);
+            this.webBrowser1.Navigate(serverRootPath, null, postData, "Content-Type: application/x-www-form-urlencoded");
+
+        }
+
+        #endregion FaceBookUpload
     }
 }

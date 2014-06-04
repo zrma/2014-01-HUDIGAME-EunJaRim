@@ -12,8 +12,26 @@
 #include "MainWindow.h"
 #include "NetworkManager.h"
 #include "Exception.h"
-
+#include <tlhelp32.h>
 INT_PTR g_LogHandle = -1;
+
+
+
+
+//
+//    프로세스 간 통신을 하기 전에 전송할 데이터 종류에 대한 프로토콜 정의 ..
+//
+struct Protocol
+{
+	enum { PROTOCOL_TEST };
+};
+struct MessageInfo
+{
+	int     nVersion;
+	char   szTest[10];
+};
+
+
 
 int APIENTRY _tWinMain( _In_ HINSTANCE hInstance,
 						_In_opt_ HINSTANCE hPrevInstance,
@@ -42,7 +60,62 @@ int APIENTRY _tWinMain( _In_ HINSTANCE hInstance,
 	Logger::GetInstance()->CreateConsole();
 #endif
 
-	
+	//////////////////////////////////////////////////////////////////////////
+
+	MessageInfo sMessageInfo;
+
+	sMessageInfo.nVersion = 100;
+	strcpy_s( sMessageInfo.szTest, "TEST" );
+
+	COPYDATASTRUCT CDS;
+	CDS.dwData = Protocol::PROTOCOL_TEST;
+	CDS.cbData = sizeof( sMessageInfo );
+	CDS.lpData = &sMessageInfo;
+
+	PROCESSENTRY32 entry;
+	entry.dwSize = sizeof( PROCESSENTRY32 );
+
+	HANDLE snapshot = CreateToolhelp32Snapshot( TH32CS_SNAPPROCESS, NULL );
+
+	if ( Process32First( snapshot, &entry ) == TRUE )
+	{
+		while ( Process32Next( snapshot, &entry ) == TRUE )
+		{
+			//if ( _wcsicmp( entry.szExeFile, _T( "YaMangLoader.exe" ) ) == 0 )
+			if ( _wcsicmp( entry.szExeFile, _T( "YaMangLoader.vshost.exe") ) == 0 )
+			{
+				//HANDLE hProcess = OpenProcess( PROCESS_ALL_ACCESS, FALSE, entry.th32ProcessID );
+				HANDLE hProcess = OpenProcess( PROCESS_ALL_ACCESS, FALSE, entry.th32ProcessID );
+				HWND hwnd = (HWND)hProcess;
+				// Do stuff..
+				HWND hwnd1 = FindWindow( _T( "YaMangLoader.vshost.exe" ), NULL );//1
+
+				int WM_USER1 = WM_USER + 1;
+				BOOL bReturnValue = SendMessage( HWND_BROADCAST, WM_USER, (WPARAM)hwnd, (LPARAM)(LPVOID)&CDS ) == TRUE;
+				CloseHandle( hProcess );
+			}
+		}
+	}
+
+	CloseHandle( snapshot );
+	/*
+	//find running processes and send them a message
+	//can't just search for "MYAPP.exe" as will be called "MYAPP.exe *32" on a 64bit machine
+	std::array<System::Diagnostics::Process^>^allProcesses = System::Diagnostics::Process::GetProcesses();
+
+	for each ( System::Diagnostics::Process^ targetProcess in allProcesses )
+	{
+		if ( targetProcess->ProcessName->StartsWith( "MYAPP", System::StringComparison::OrdinalIgnoreCase ) )
+		{
+			HWND handle = static_cast<HWND>( targetProcess->MainWindowHandle.ToPointer() );
+
+			BOOL bReturnValue = SendMessage( handle, WM_COPYDATA, (WPARAM)0, (LPARAM)&CDS ) == TRUE;
+		}
+	}
+	*/
+
+	//////////////////////////////////////////////////////////////////////////
+
 
 	// test code
 	std::wstring parameter = lpCmdLine;
