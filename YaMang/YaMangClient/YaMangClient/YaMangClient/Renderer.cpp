@@ -6,6 +6,7 @@
 #include "TextManager.h"
 #include "CameraController.h"
 #include "QuadTree.h"
+#include "MapManager.h"
 
 Renderer::Renderer()
 {
@@ -100,12 +101,14 @@ void Renderer::RenderMap( QuadTree* quadTree, Frustum* frustum, CUSTOMVERTEX* he
 void Renderer::GetHeightMapSize( DWORD* width, DWORD* height ) const
 {
 	GetHeightMapSizeForQuadTree( width, height );
+	MapManager::GetInstance()->SetHeightMapSize( *width, *height );
 }
 
 CUSTOMVERTEX* Renderer::GetHeightMap() const
 {
 	CUSTOMVERTEX* heightMap;
 	GetHeightMapForQuadTree( &heightMap );
+	MapManager::GetInstance()->SetHeightMap( heightMap );
 
 	return heightMap;
 }

@@ -4,6 +4,7 @@
 #include "yaMangDxDll.h"
 #include "MouseManager.h"
 #include "ResourceDef.h"
+#include "MapManager.h"
 
 ResourceManager::ResourceManager()
 {
@@ -42,6 +43,7 @@ void ResourceManager::Init()
 	//////////////////////////////////////////////////////////////////////////
 	InitGroundMesh( 128, 128 );
 	CreateRawGround( 128, 128, 5.0f );
+	MapManager::GetInstance()->SetPixelSize( 5.0f );
 
 	m_MapSize = 640;
 
@@ -129,6 +131,8 @@ void ResourceManager::DeleteMap()
 		HeightMapCleanup();
 	}
 	m_IsMapReady = false;
+
+	MapManager::Release();
 }
 
 bool ResourceManager::AddMesh( LPCTSTR fileName, MeshKeyType key )
