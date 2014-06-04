@@ -42,7 +42,7 @@ void CameraController::Init( float x, float z )
 
 	m_Radius = static_cast<float>( ResourceManager::GetInstance()->GetMapSize() ) / 1.2f;
 
-	D3DXMatrixPerspectiveFovLH( &m_ProjMatrix, D3DX_PI / 4, 1.0f, 1.0f, 200.0f );
+	D3DXMatrixPerspectiveFovLH( &m_ProjMatrix, D3DX_PI / 4, 1.0f, 1.0f, 500.0f );
 }
 
 void CameraController::MoveForward( float speed, bool zoom )

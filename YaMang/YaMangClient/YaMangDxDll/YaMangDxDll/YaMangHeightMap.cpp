@@ -63,7 +63,6 @@ YAMANGDXDLL_API HRESULT MapToolTextureImport( HWND hWnd, LPCTSTR toolTexture )
 			}
 			break;
 		}
-
 	}
 	return S_OK;
 
@@ -72,7 +71,7 @@ YAMANGDXDLL_API HRESULT MapToolTextureImport( HWND hWnd, LPCTSTR toolTexture )
 
 YAMANGDXDLL_API void InitGroundMesh( int row, int col )
 {
-	if ( g_Mesh != nullptr )
+	if ( g_Mesh )
 	{
 		g_Mesh->Release( );
 	}
@@ -91,6 +90,11 @@ YAMANGDXDLL_API void InitGroundMesh( int row, int col )
 	{
 		MessageBox( NULL, L"CreateMesh Failed", L"YaMang.DLL", MB_OK );
 		return;
+	}
+
+	if ( g_HeightMap )
+	{
+		delete[] g_HeightMap;
 	}
 }
 
@@ -289,6 +293,9 @@ YAMANGDXDLL_API void ToolViewSetting( int width, int height )
 
 void MakeMapFile( CUSTOMVERTEX* baseVertex )
 {
+	// 임시로 막아둠
+	return;
+
 	FILE* mapForPrinting;
 	int heightMapVerticesCount = (g_XHeight)* ( g_ZHeight );
 
@@ -307,7 +314,7 @@ void MakeMapFile( CUSTOMVERTEX* baseVertex )
 
 	fopen_s( &mapForPrinting, "mapFile.yamangmap", "w" );
 
-	for ( int i = 0; i < inBuffer.size(); ++i )
+	for ( unsigned int i = 0; i < inBuffer.size(); ++i )
 	{
 		fwrite( &( inBuffer[i] ), sizeof( std::pair<float, byte> ), inBuffer.size(), mapForPrinting );
 	}

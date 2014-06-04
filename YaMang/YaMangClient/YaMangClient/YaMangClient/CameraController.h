@@ -59,6 +59,8 @@ public:
 	D3DXMATRIXA16	GetViewMatrix() { return m_ViewMatrix; }
 	D3DXMATRIXA16	GetProjMatrix() { return m_ProjMatrix; }
 
+	D3DXVECTOR3		GetEyePoint() { return m_EyePoint; }
+
 private:
 	void	InterpolateCameraRadius();
 

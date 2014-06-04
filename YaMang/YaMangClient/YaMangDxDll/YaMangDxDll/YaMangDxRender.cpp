@@ -156,11 +156,18 @@ YAMANGDXDLL_API HRESULT RenderCursor()
 //SkyBox를 위한 렌더 함수
 //render를 pre - main - post renderring 구조에서 main을 담당
 //////////////////////////////////////////////////////////////////////////
-YAMANGDXDLL_API void RenderSkyBox()
+YAMANGDXDLL_API void RenderSkyBox( D3DXVECTOR3 eyePoint )
 {
 	if ( g_SkyBoxMesh )
 	{
+		D3DXMATRIXA16 moveMatrix;
+		D3DXMatrixTranslation( &moveMatrix, eyePoint.x, eyePoint.y, eyePoint.z );
+		g_D3dDevice->SetTransform( D3DTS_WORLD, &moveMatrix );
+
 		g_D3dDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_SOLID );
+		
+		g_D3dDevice->SetSamplerState( 0, D3DSAMP_MAGFILTER, D3DTEXF_GAUSSIANQUAD );
+		g_D3dDevice->SetSamplerState( 0, D3DSAMP_MINFILTER, D3DTEXF_GAUSSIANQUAD );
 
 		g_D3dDevice->SetSamplerState( 0, D3DSAMP_ADDRESSU, D3DTADDRESS_CLAMP );
 		g_D3dDevice->SetSamplerState( 0, D3DSAMP_ADDRESSV, D3DTADDRESS_CLAMP );

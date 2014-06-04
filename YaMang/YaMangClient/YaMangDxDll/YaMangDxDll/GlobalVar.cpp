@@ -11,6 +11,11 @@ LPDIRECT3DDEVICE9 g_D3dDevice = nullptr;
 //Height Map 생성용 공용 자원
 LPD3DXMESH g_Mesh = nullptr;
 
+// 쿼드트리용
+CUSTOMVERTEX* g_HeightMap = nullptr;
+LPDIRECT3DVERTEXBUFFER9	g_HeightMapVertexBuffer = nullptr;
+LPDIRECT3DINDEXBUFFER9	g_HeightMapIndexBuffer = nullptr;
+
 LPDIRECT3DTEXTURE9 g_MapHeightInfo = nullptr;
 LPDIRECT3DTEXTURE9 g_MapTexture = nullptr;
 LPDIRECT3DTEXTURE9 g_MapTextureArray[MAP_TEXTURE_COUNT] = { 0, };

@@ -36,7 +36,6 @@ public:
 
 	void		UpdateBase( int BaseIndex, int playerID );
 
-
 	void		SetKingIndex( int index ) { m_KingIndex = index; }
 
 	// 맵 출력을 위한 함수
@@ -46,6 +45,9 @@ public:
 	// 리젠 플래그 위치 이동을 위한 함수
 	void		CheckRegenFlag();
 	void		SetRegenTime(ULONGLONG time){ m_RegenTime = static_cast<float>(time); }
+
+	// 컬링을 위한 절두체 관련 함수
+	Frustum*	GetFrustum() { return m_Frustum; }
 
 private:
 	std::hash_map<int, Corps*>	m_CorpsList;

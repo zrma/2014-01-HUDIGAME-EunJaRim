@@ -35,8 +35,11 @@ void ResourceManager::Init()
 	AddMap( HEIGHT_MAP, HEIGHT_TEX, MAP_KEY_TEST );
 	CreateMap( MAP_KEY_TEST );
 
-	InitGroundMesh( 128, 128 );
-	CreateRawGround( 128, 128, 5.0f );
+	//////////////////////////////////////////////////////////////////////////
+	// 쿼드트리를 적용하기 위해 하이트 맵은 (2^n + 1)의 크기로 만들어야 합니다.
+	//////////////////////////////////////////////////////////////////////////
+	InitGroundMesh( 129, 129 );
+	CreateRawGround( 129, 129, 5.0f );
 
 	m_MapSize = 640;
 

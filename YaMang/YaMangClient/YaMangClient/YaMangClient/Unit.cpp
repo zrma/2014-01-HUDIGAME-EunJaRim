@@ -10,6 +10,9 @@
 #include "CollisionManager.h"
 #include "CameraController.h"
 #include "MapManager.h"
+#include "SceneManager.h"
+#include "ScenePlay.h"
+#include "Frustum.h"
 
 Unit::Unit( Corps* owner, UINT unitId )
 : m_Corps( owner ), m_UnitID( unitId )
@@ -35,6 +38,23 @@ void Unit::Render() const
 	if ( !m_Visible || !m_MeshKey || CameraController::GetInstance()->GetHeightGrade() > 3 )
 	{
 		return;
+	}
+
+	if ( SCENE_PLAY == SceneManager::GetInstance()->GetNowSceneType() )
+	{
+		Scene* scene = SceneManager::GetInstance()->GetNowScene();
+		ScenePlay* scenePlay = static_cast<ScenePlay*>( scene );
+
+		Frustum* frustum = scenePlay->GetFrustum();
+		
+		if ( frustum )
+		{
+			D3DXVECTOR3	center = m_EyePoint;
+			if ( !frustum->IsIn( &center ) )
+			{
+				return;
+			}
+		}
 	}
 
 	D3DXMATRIXA16 thisMatrix = GetMatrix( false );

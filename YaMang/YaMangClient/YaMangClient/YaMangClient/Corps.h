@@ -14,6 +14,7 @@ public:
 
 	void	Update();
 	void	Render() const;
+	
 	void	Create(UINT num, UnitType unitType );
 	void	SetVisible( bool visible );
 

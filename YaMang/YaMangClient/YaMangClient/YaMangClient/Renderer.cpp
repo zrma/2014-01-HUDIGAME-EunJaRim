@@ -4,6 +4,7 @@
 #include "MainWindow.h"
 #include "ResourceManager.h"
 #include "TextManager.h"
+#include "CameraController.h"
 
 Renderer::Renderer()
 {
@@ -80,7 +81,7 @@ void Renderer::RenderMap() const
 	if ( ResourceManager::GetInstance()->IsMapReady() )
 	{
 		RenderHeightMap();
-		RenderSkyBox();
+		RenderSkyBox( CameraController::GetInstance()->GetEyePoint() );
 	}
 }
 

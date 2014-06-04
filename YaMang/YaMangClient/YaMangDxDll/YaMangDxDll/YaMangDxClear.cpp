@@ -33,6 +33,19 @@ YAMANGDXDLL_API void MeshObjectCleanUp( MESHOBJECT* inputVal )
 
 YAMANGDXDLL_API void HeightMapCleanup()
 {
+	if ( NULL != g_HeightMap )
+	{
+		delete[] g_HeightMap;
+	}
+	if ( NULL != g_HeightMapVertexBuffer )
+	{
+		g_HeightMapVertexBuffer->Release();
+	}
+	if ( NULL != g_HeightMapIndexBuffer )
+	{
+		g_HeightMapIndexBuffer->Release();
+	}
+
 	if ( NULL != g_MapHeightInfo )
 	{
 		g_MapHeightInfo->Release();

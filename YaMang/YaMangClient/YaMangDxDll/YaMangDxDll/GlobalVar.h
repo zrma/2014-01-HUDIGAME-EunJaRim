@@ -49,11 +49,20 @@ extern LPDIRECT3DDEVICE9 g_D3dDevice;
 //////////////////////////////////////////////////////////////////////////
 extern LPD3DXMESH g_Mesh;
 
-//클라이언트용 textureload함수
+// 클라이언트용 textureload함수
 extern LPDIRECT3DTEXTURE9 g_MapHeightInfo;
 extern LPDIRECT3DTEXTURE9 g_MapTexture;
 
-//맵툴용 Texture array
+//////////////////////////////////////////////////////////////////////////
+// 쿼드트리용
+// 하이트맵 버텍스 배열
+extern CUSTOMVERTEX* g_HeightMap;
+// 버텍스 버퍼
+extern LPDIRECT3DVERTEXBUFFER9	g_HeightMapVertexBuffer;
+// 인덱스 버퍼
+extern LPDIRECT3DINDEXBUFFER9	g_HeightMapIndexBuffer;
+
+// 맵툴용 Texture array
 extern LPDIRECT3DTEXTURE9 g_MapTextureArray[MAP_TEXTURE_COUNT];
 
 extern DWORD g_XHeight;

@@ -95,7 +95,7 @@ extern "C"{
 	//////////////////////////////////////////////////////////////////////////
 	YAMANGDXDLL_API HRESULT InitSkyBoxMesh( int size = 500 );
 	YAMANGDXDLL_API bool SetSkyBoxTexture( LPCTSTR skyBoxTexture, int id );
-	YAMANGDXDLL_API void RenderSkyBox();
+	YAMANGDXDLL_API void RenderSkyBox( D3DXVECTOR3 eyePoint );
 	YAMANGDXDLL_API void SkyBoxCleanUp();
 
 	//////////////////////////////////////////////////////////////////////////
