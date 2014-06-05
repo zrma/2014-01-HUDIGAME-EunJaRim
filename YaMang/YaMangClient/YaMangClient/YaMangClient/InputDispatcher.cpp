@@ -129,7 +129,7 @@ REGISTER_KEY_HANDLER( VK_SPACE )
 			break;
 		case KeyStatusType::KEY_UP:
 		{
-			if ( SCENE_RESULT != SceneManager::GetInstance()->GetNowSceneType() )
+			if ( SCENE_RESULT == SceneManager::GetInstance()->GetNowSceneType() )
 			{
 				GameManager::GetInstance()->Stop();
 			}

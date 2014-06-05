@@ -69,6 +69,7 @@ void Unit::Render() const
 
 	D3DXMATRIXA16 heightMatrix;
 	D3DXMatrixTranslation( &heightMatrix, 0, MapManager::GetInstance()->GetHeightByPosition( m_EyePoint.x, m_EyePoint.z ), 0 );
+	
 	thisMatrix = thisMatrix * heightMatrix;
 	Renderer::GetInstance()->SetWorldMatrix( thisMatrix );
 

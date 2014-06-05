@@ -22,50 +22,57 @@ float MapManager::GetHeightByPosition( float x, float z )
 
 	return 10.0f;
 
-	x = static_cast<float>(m_HeightMapWidth * m_PixelSize) / 2.0f + x;
-	z = static_cast<float>(m_HeightMapHeight * m_PixelSize) / 2.0f + z;
+	//////////////////////////////////////////////////////////////////////////
+	// 높이값이 널 뛰는 문제 때문에 막아둠
+
 	x /= m_PixelSize;
 	z /= m_PixelSize;
-
+	x = static_cast<float>(m_HeightMapWidth) / 2.0f + x;
+	z = static_cast<float>(m_HeightMapHeight) / 2.0f + z;
+	
 	int col = static_cast<int>( std::floor( x ) );
 	int row = static_cast<int>( std::floor( z ) );
 	
 	col = __min( col, m_HeightMapWidth - 1 );
 	row = __min( row, m_HeightMapHeight - 1 );
 	col = __max( 0, col );
-	row = __max( 0, col );
+	row = __max( 0, row );
 
-	float leftBottom = GetHeightInMap( row, col );
-	float rightBottom = GetHeightInMap( row, col + 1 );
-	float leftTop = GetHeightInMap( row + 1, col );
-	float rightTop = GetHeightInMap( row + 1, col + 1 );
+	float leftBottom = GetHeightInMap( col, row );
+	float rightBottom = GetHeightInMap( col, row + 1 );
+	float leftTop = GetHeightInMap( col + 1, row );
+	float rightTop = GetHeightInMap( col + 1, row + 1 );
 
 	float dx = x - col;
 	float dz = z - row;
-
-	float height = 10.0f;
-
-	if ( dz < 1.0f - dx )
+	
+	if ( dx < 0 )
 	{
-		float uy = rightBottom - leftBottom;
-		float vy = leftTop - leftBottom;
-
-		height = leftBottom + Lerp( 0.0f, uy, dx ) + Lerp( 0.0f, vy, dz );
+		dx = -dx;
 	}
-	else
+	if ( dz < 0 )
 	{
-		float uy = leftTop - rightTop;
-		float vy = rightBottom - rightTop;
-
-		height = rightTop + Lerp( 0.0f, uy, 1.0f - dx ) + Lerp( 0.0f, vy, 1.0f - dz );
+		dz = -dz;
 	}
+
+	float heightBottom = Lerp( leftBottom, rightBottom, dx );
+	float heightTop = Lerp( leftTop, rightTop, dx );
+	float height = Lerp( heightTop, heightBottom, dz );
+	
+	// Log( "(%x, %x) %4f %4f %4f %4f %4f %4f %4f \n",
+	//	 col, row, leftBottom, rightBottom, leftTop, rightTop, heightBottom, heightTop, height);
 
 	return height;
 }
 
-float MapManager::GetHeightInMap( int row, int col )
+float MapManager::GetHeightInMap( int col, int row )
 {
-	return m_HeightMap[row * ( m_HeightMapWidth - 1 ) + col].m_VertexPoint.y;
+	col = __min( col, m_HeightMapWidth - 1 );
+	col = __max( 0, col );
+	row = __min( row, m_HeightMapHeight - 1 );
+	row = __max( 0, row );
+
+	return m_HeightMap[(m_HeightMapHeight - row - 1) * m_HeightMapWidth + col].m_VertexPoint.y;
 }
 
 float MapManager::Lerp( float a, float b, float t )
