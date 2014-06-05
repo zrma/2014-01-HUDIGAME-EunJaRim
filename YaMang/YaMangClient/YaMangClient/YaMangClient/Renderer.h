@@ -18,8 +18,8 @@ public:
 	void	RenderBegin();
 	void	RenderEnd();
 
-	void	RenderMesh( MESHOBJECT* mesh ) const;
-	void	RenderMap( QuadTree* quadTree, Frustum* frustum, CUSTOMVERTEX* heightMap, float ratioOfLOD ) const;
+	void	RenderMesh( MESHOBJECT* mesh );
+	void	RenderMap( QuadTree* quadTree, Frustum* frustum, CUSTOMVERTEX* heightMap, float ratioOfLOD );
 
 	CUSTOMVERTEX*	GetHeightMap() const;
 	void			GetHeightMapSize( DWORD* width, DWORD* height ) const;
@@ -44,4 +44,6 @@ private:
 	UINT	m_PrevTime = 0;
 	UINT	m_Frame = 0;
 	UINT	m_FPS = 0;
+	UINT	m_DPCall = 0;
+	UINT	m_HeightMapVertis = 0;
 };

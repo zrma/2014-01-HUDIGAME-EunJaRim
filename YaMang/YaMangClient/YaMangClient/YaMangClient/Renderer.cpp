@@ -44,6 +44,7 @@ void Renderer::RenderBegin()
 {
 	if ( m_Result )
 	{
+		m_DPCall = 0;
 		m_IsReady = PreRendering( );
 	}
 }
@@ -61,8 +62,8 @@ void Renderer::RenderEnd()
 		}
 
 		wchar_t ws[100] = { 0, };
-		wsprintf( ws, L"FPS : %d", m_FPS );
-		TextManager::GetInstance( )->RegistText( TEXT_FPS, ws, 20, 40 );
+		wsprintf( ws, L"FPS : %d,  DPCall : %d,  Map : %d ", m_FPS, m_DPCall, m_HeightMapVertis );
+		TextManager::GetInstance( )->RegistText( TEXT_FPS, ws, 20, 20 );
 		m_Frame++;
 
 		PostRendering( );
@@ -70,15 +71,16 @@ void Renderer::RenderEnd()
 	}
 }
 
-void Renderer::RenderMesh( MESHOBJECT* mesh ) const
+void Renderer::RenderMesh( MESHOBJECT* mesh )
 {
 	if ( mesh && m_IsReady )
 	{	
+		++m_DPCall;
 		Rendering( mesh );
 	}
 }
 
-void Renderer::RenderMap( QuadTree* quadTree, Frustum* frustum, CUSTOMVERTEX* heightMap, float ratioOfLOD ) const
+void Renderer::RenderMap( QuadTree* quadTree, Frustum* frustum, CUSTOMVERTEX* heightMap, float ratioOfLOD )
 {
 	if ( ResourceManager::GetInstance()->IsMapReady() )
 	{
@@ -90,8 +92,8 @@ void Renderer::RenderMap( QuadTree* quadTree, Frustum* frustum, CUSTOMVERTEX* he
 		}
 		else
 		{
-			int tris = quadTree->GenerateIndex( index, heightMap, frustum, ratioOfLOD );
-			RenderHeightMapWithQuadTree( tris, m_IsHeightMapWire );
+			m_HeightMapVertis = quadTree->GenerateIndex( index, heightMap, frustum, ratioOfLOD );
+			RenderHeightMapWithQuadTree( m_HeightMapVertis, m_IsHeightMapWire );
 		}
 
 		RenderSkyBox( CameraController::GetInstance()->GetEyePoint() );
