@@ -18,6 +18,10 @@
 #include "King.h"
 #include "NetworkManager.h"
 #include "MapManager.h"
+#include "SceneManager.h"
+#include "Scene.h"
+#include "ScenePlay.h"
+#include "Frustum.h"
 
 Corps::Corps( int corpsId, int playerId, PositionInfo pos )
 : m_CorpsID( corpsId ), m_OwnerPlayerID( playerId )
@@ -128,6 +132,23 @@ void Corps::Render() const
 	if ( !m_Visible || !m_MeshKey || CameraController::GetInstance()->GetHeightGrade() <= 3 )
 	{
 		return;
+	}
+
+	if ( SCENE_PLAY == SceneManager::GetInstance()->GetNowSceneType() )
+	{
+		Scene* scene = SceneManager::GetInstance()->GetNowScene();
+		ScenePlay* scenePlay = static_cast<ScenePlay*>( scene );
+
+		Frustum* frustum = scenePlay->GetFrustum();
+
+		if ( frustum )
+		{
+			D3DXVECTOR3	center = m_EyePoint;
+			if ( !frustum->IsIn( &center ) )
+			{
+				return;
+			}
+		}
 	}
 
 	D3DXMATRIXA16 thisMatrix = GetMatrix();
