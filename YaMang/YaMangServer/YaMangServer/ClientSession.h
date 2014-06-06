@@ -88,7 +88,6 @@ private:
 private:
 	char			m_PlayerName[MAX_NAME_LEN];
 
-private:
 	bool			m_Connected;
 	bool			m_Logon;
 	SOCKET			m_Socket;
@@ -106,7 +105,7 @@ private:
 	
 
 
-
+public:
 
 	//////////////////////////////////////////////////////////////////////////
 	// 게임 컨텐츠 관련 메소드

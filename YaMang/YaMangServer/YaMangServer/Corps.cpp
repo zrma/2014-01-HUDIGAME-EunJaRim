@@ -47,11 +47,12 @@ void Corps::AddDamage( float damage )
 			if ( m_HP < 1 )
 			{
 				m_IsDead = true;
-				auto it = g_PidSessionTable.find( m_PlayerID );
+				auto& it = g_PidSessionTable.find( m_PlayerID );
 				if ( it != g_PidSessionTable.end() )
 				{
 					ClientSession* client = it->second;
 					client->SubCorpsNum();
+					client->AddDeathCorpsNum();
 				}
 			}
 		}
@@ -334,6 +335,18 @@ void Corps::AttackCorps( Corps* targetCrops )
 	// 공격 하세요
 	// attack result packet 보내기
 	targetCrops->AddDamage( GetAttackPower( ) );
+	
+	
+	if ( targetCrops->IsDead() )
+	{
+		auto& it = g_PidSessionTable.find( m_PlayerID );
+		if ( it != g_PidSessionTable.end() )
+		{
+			ClientSession* client = it->second;
+			client->AddKilledCorpsNum();
+		}
+	}
+
 
 	const PositionInfo& targetPositionInfo = targetCrops->GetPositionInfo( );
 

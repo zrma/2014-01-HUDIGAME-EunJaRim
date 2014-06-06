@@ -99,6 +99,8 @@ void ClientSession::AddCorpsNum()
 {
 	assert( 0 <= m_CorpsNow );
 	++m_CorpsNow;
+	
+	AddTotalMyCorpsNum();
 	CalculateRegenTime();
 }
 
