@@ -75,32 +75,6 @@ public:
 	void	HandleAttackCorpsRequest( AttackCorpsRequest& inPacket );
 	void	HandleSyncAllRequest( SyncAllRequest& inPacket );
 
-	//////////////////////////////////////////////////////////////////////////
-	// 게임 컨텐츠 관련 메소드
-	//////////////////////////////////////////////////////////////////////////
-	bool		IsGameStarted() const { return m_GameStarted; }
-
-	void		GameStart();
-	void		GameOver() { m_GameStarted = false; }
-	int			GetPlayerID() const { return m_PlayerID; }
-
-	int			GetFood() const { return m_CorpsMax; }
-
-	int			GetCorpsNum( ) const { return m_CorpsNow; }
-	void		AddCorpsNum( );
-	void		SubCorpsNum( );
-
-	int			GetBaseNum( ) const { return m_BaseNum; }
-	void		AddBaseNum( );
-	void		SubBaseNum( );
-
-	ULONGLONG	GetCorpsRegenTime( ) { return m_CorpsRegenTime; }
-
-	int			GetKingIndex( ) const { return m_KingIndex; }
-	void		SetKingIndex( int index, float startPositionX, float startPositionZ );
-
-private:
-	void		CalculateRegenTime();
 
 private:
 
@@ -133,10 +107,48 @@ private:
 
 
 
+
+	//////////////////////////////////////////////////////////////////////////
+	// 게임 컨텐츠 관련 메소드
+	//////////////////////////////////////////////////////////////////////////
+	bool		IsGameStarted() const { return m_GameStarted; }
+
+	void		GameStart();
+	void		GameOver() { m_GameStarted = false; }
+	int			GetPlayerID() const { return m_PlayerID; }
+
+	int			GetFood() const { return m_CorpsMax; }
+
+	int			GetCorpsNum() const { return m_CorpsNow; }
+	void		AddCorpsNum();
+	void		SubCorpsNum();
+
+	int			GetBaseNum() const { return m_BaseNum; }
+	void		AddBaseNum();
+	void		SubBaseNum();
+
+	ULONGLONG	GetCorpsRegenTime() { return m_CorpsRegenTime; }
+
+	int			GetKingIndex() const { return m_KingIndex; }
+	void		SetKingIndex( int index, float startPositionX, float startPositionZ );
+
+
+
+	void		AddKilledCorpsNum() { ++m_KilledCorpsNum; }
+	void		AddDeathCorpsNum( ) { ++m_DeathCorpsNum; }
+	void		AddTotalMyCorpsNum( ) { ++m_TotalMyCorpsNum; }
+	int			GetKilledCorpsNum( ) const { return m_KilledCorpsNum; }
+	int			GetDeathCorpsNum( ) const { return m_DeathCorpsNum; }
+	int			GetTotalMyCorpsNum( ) const { return m_TotalMyCorpsNum; }
+
+
+private:
+	void		CalculateRegenTime();
+
+
 	//////////////////////////////////////////////////////////////////////////
 	// 게임 컨텐츠 관련 데이터
 	//////////////////////////////////////////////////////////////////////////
-
 	GameRoom*				m_GameRoom = nullptr;
 
 	int						m_KingIndex = -1;
@@ -147,8 +159,15 @@ private:
 	bool					m_GameStarted = false;
 
 
+	// For Result Scene
+	int						m_KilledCorpsNum = 0;
+	int						m_DeathCorpsNum = 0;
+	int						m_TotalMyCorpsNum = 0;
+
+
 	unsigned char			m_ErrorNumber = 0;
 	const unsigned char		m_ErrorNumberMax = 5;
+
 	friend class GameRoom;
 };
 
