@@ -29,8 +29,16 @@ YAMANGDXDLL_API HRESULT InitD3D( HWND hWnd, long width, long height )
 	d3dpp.AutoDepthStencilFormat = D3DFMT_D16;
 	d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
 
+	D3DCAPS9 caps;
+	DWORD dwVSProcess;
+	g_D3D->GetDeviceCaps( D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, &caps );
+
+	// 지원하는 정점쉐이더 버전이 1.0이하라면 SW쉐이더를, 1.0이상이면 HW쉐이더를 생성한다.
+	dwVSProcess = 
+		( caps.VertexShaderVersion < D3DVS_VERSION( 1, 0 ) ) ? D3DCREATE_SOFTWARE_VERTEXPROCESSING : D3DCREATE_HARDWARE_VERTEXPROCESSING;
+
 	if ( FAILED( g_D3D->CreateDevice( D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, 
-		hWnd, D3DCREATE_HARDWARE_VERTEXPROCESSING, &d3dpp, &g_D3dDevice ) ) )
+		hWnd, dwVSProcess, &d3dpp, &g_D3dDevice ) ) )
 	{
 		MessageBox( NULL, L"Could not CreateDevice", L"YaMang.DLL", MB_OK );
 		return E_FAIL;
