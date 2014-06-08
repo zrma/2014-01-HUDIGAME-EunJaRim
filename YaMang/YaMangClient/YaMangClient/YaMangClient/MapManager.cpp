@@ -19,12 +19,7 @@ float MapManager::GetHeightByPosition( float x, float z )
 	{
 		return 0.0f;
 	}
-
-	// return 10.0f;
-
-	//////////////////////////////////////////////////////////////////////////
-	// 높이값이 널 뛰는 문제 때문에 막아둠
-
+	
 	x /= m_PixelSize;
 	z /= m_PixelSize;
 	x = static_cast<float>(m_HeightMapWidth) / 2.0f + x;
