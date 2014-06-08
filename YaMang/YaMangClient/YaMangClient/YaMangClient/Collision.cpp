@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Collision.h"
 #include "Interface3D.h"
+#include "MapManager.h"
 
 Collision::~Collision()
 {
@@ -15,7 +16,11 @@ bool Collision::IsCollideWith( Collision& collision )
 	
 	D3DXVECTOR3 distance;
 	D3DXVECTOR3 thisPoint = GetPosition();
+	thisPoint.y = MapManager::GetInstance()->GetHeightByPosition( thisPoint.x, thisPoint.z );
+
 	D3DXVECTOR3 targetPoint = collision.GetPosition();
+	targetPoint.y = MapManager::GetInstance()->GetHeightByPosition( targetPoint.x, targetPoint.z );
+
 	D3DXVec3Subtract( &distance, &thisPoint, &targetPoint );
 
 	float radiusSq = m_Radius + collision.GetRadius();

@@ -123,3 +123,10 @@ extern LPD3DXMESH			g_SkyBoxMesh;
 extern LPDIRECT3DTEXTURE9*	g_UITexures;
 extern LPD3DXSPRITE			g_UISprite;
 extern INT					g_UIMaxSize;
+
+//////////////////////////////////////////////////////////////////////////
+// 셰이더
+//////////////////////////////////////////////////////////////////////////
+extern LPDIRECT3DVERTEXDECLARATION9	g_pDecl;
+extern LPD3DXEFFECT					g_Effect;
+extern bool							g_IsEffectReady;

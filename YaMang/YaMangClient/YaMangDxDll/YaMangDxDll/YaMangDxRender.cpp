@@ -54,15 +54,22 @@ YAMANGDXDLL_API bool PreRendering()
 
 YAMANGDXDLL_API void Rendering( MESHOBJECT* inputVal )
 {
-	g_D3dDevice->SetRenderState( D3DRS_LIGHTING, TRUE );
-	g_D3dDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_SOLID );
-	// Log( "Now Render : %p \n", inputVal );
-	for ( DWORD i = 0; i < inputVal->NumMaterials; ++i )
+	if ( g_IsEffectReady )
 	{
-		g_D3dDevice->SetMaterial( &inputVal->MeshMarterials[i] );
-		g_D3dDevice->SetTexture( 0, inputVal->MeshTexture[i] );
 
-		( inputVal->importedMesh )->DrawSubset( i );
+	}
+	else
+	{
+		g_D3dDevice->SetRenderState( D3DRS_LIGHTING, TRUE );
+		g_D3dDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_SOLID );
+
+		for ( DWORD i = 0; i < inputVal->NumMaterials; ++i )
+		{
+			g_D3dDevice->SetMaterial( &inputVal->MeshMarterials[i] );
+			g_D3dDevice->SetTexture( 0, inputVal->MeshTexture[i] );
+
+			( inputVal->importedMesh )->DrawSubset( i );
+		}
 	}
 }
 

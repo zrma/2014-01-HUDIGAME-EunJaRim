@@ -132,6 +132,11 @@ YAMANGDXDLL_API void UICleanUp()
 
 YAMANGDXDLL_API void D3DCleanUp()
 {
+	if ( g_Effect )
+	{
+		g_Effect->Release();
+	}
+
 	// 텍스트 소멸자 합침
 	if ( g_Font != NULL )
 	{
