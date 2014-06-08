@@ -32,6 +32,12 @@ void SceneResult::Update()
 
 void SceneResult::Render() const
 {
-	RenderSprite(SPRITE_RESULT_BACKGROUND, m_Position);
-	TextManager::GetInstance()->DrawTexts();
+	if ( PlayerManager::GetInstance()->GetWin() )
+	{
+		RenderSprite( SPRITE_RESULT_WIN, m_Position );
+	}
+	else
+	{
+		RenderSprite( SPRITE_RESULT_LOSE, m_Position );
+	}
 }

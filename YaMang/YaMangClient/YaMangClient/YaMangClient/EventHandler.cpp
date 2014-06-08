@@ -216,16 +216,6 @@ void NetworkManager::HandleGameOverResult( GameOverResult& inPacket )
 			m_IsPlaying = false;
 			SceneManager::GetInstance()->ChangeScene( SCENE_RESULT );
 
-			if (PlayerManager::GetInstance()->GetWin())
-			{
-				TextManager::GetInstance()->RegistText(TEXT_GAME_RESULT, L"승리", 300, 30, SCENE_RESULT);
-				//RenderSprite( SPRITE_RESULT_WIN, m_Position );
-			}
-			else
-			{
-				TextManager::GetInstance()->RegistText(TEXT_GAME_RESULT, L"패배", 300, 30, SCENE_RESULT);
-				//RenderSprite( SPRITE_RESULT_LOSE, m_Position );
-			}
 			
 		}
 		else

@@ -67,7 +67,6 @@
 #define SPRITE_UI_CORPS_FLAG_RED			PATH_SPRITE L"UI_CorpsMark_Flag_Red.png"
 #define SPRITE_UI_CORPS_FLAG_GRAY			PATH_SPRITE L"UI_CorpsMark_Flag_Gray.png"
 
-#define SPRITE_IMAGE_RESULT_BACKGROUND		PATH_SPRITE L"UI_ResultBackground.png"
 #define SPRITE_IMAGE_LOADING				PATH_SPRITE L"Loading.png"
 #define SPRITE_IMAGE_RESULT_WIN				PATH_SPRITE L"ResultWin.png"
 #define SPRITE_IMAGE_RESULT_LOSE			PATH_SPRITE L"ResultLose.png"
