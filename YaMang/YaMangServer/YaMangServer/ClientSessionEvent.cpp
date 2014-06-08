@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "ClientSession.h"
 #include "MacroSet.h"
 
@@ -8,7 +8,7 @@
 #include "DatabaseJobContext.h"
 #include "DatabaseJobManager.h"
 
-// ·Î±×ÀÎÀ» ½ÃµµÇØ¼­ À¯Àú µ¥ÀÌÅÍ¸¦ ºÒ·¯¿À¸é, µ¥ÀÌÅÍ¸¦ ÀĞ¾î¼­ Å¬¶óÀÌ¾ğÆ® ÂÊ¿¡ Send()
+// ë¡œê·¸ì¸ì„ ì‹œë„í•´ì„œ ìœ ì € ë°ì´í„°ë¥¼ ë¶ˆëŸ¬ì˜¤ë©´, ë°ì´í„°ë¥¼ ì½ì–´ì„œ í´ë¼ì´ì–¸íŠ¸ ìª½ì— Send()
 void ClientSession::LoginDone( int pid, const char* name )
 {
 	g_PidSessionTable.insert( std::pair<int, ClientSession*>( pid, this ) );
@@ -53,7 +53,7 @@ void ClientSession::DatabaseJobDone( DatabaseJobContext* result )
 
 void ClientSession::UpdateDone()
 {
-	/// ÄÜÅÙÃ÷¸¦ ³Ö±â Àü±îÁö´Â µüÈ÷ ÇØÁÙ °ÍÀÌ ¾ø´Ù. ´ÜÁö Å×½ºÆ®¸¦ À§ÇØ¼­..
+	/// ì½˜í…ì¸ ë¥¼ ë„£ê¸° ì „ê¹Œì§€ëŠ” ë”±íˆ í•´ì¤„ ê²ƒì´ ì—†ë‹¤. ë‹¨ì§€ í…ŒìŠ¤íŠ¸ë¥¼ ìœ„í•´ì„œ..
 	printf( "DEBUG: Player[%d] Update Done\n", m_PlayerID );
 }
 
@@ -77,9 +77,9 @@ void ClientSession::GameStart()
 
 void ClientSession::OnTick()
 {
-	/// Å¬¶óº°·Î ÁÖ±âÀûÀ¸·Î ÇØ¾ßµÉ ÀÏÀº ¿©±â¿¡
+	/// í´ë¼ë³„ë¡œ ì£¼ê¸°ì ìœ¼ë¡œ í•´ì•¼ë  ì¼ì€ ì—¬ê¸°ì—
 
-	/// Æ¯Á¤ ÁÖ±â·Î DB¿¡ À§Ä¡ ÀúÀå
+	/// íŠ¹ì • ì£¼ê¸°ë¡œ DBì— ìœ„ì¹˜ ì €ì¥
 	// 	if ( ++m_DbUpdateCount == PLAYER_DB_UPDATE_CYCLE )
 	// 	{
 	// 		m_DbUpdateCount = 0;
@@ -88,7 +88,7 @@ void ClientSession::OnTick()
 	// 		updatePlayer->m_PosX = m_PosX;
 	// 		updatePlayer->m_PosY = m_PosY;
 	// 		updatePlayer->m_PosZ = m_PosZ;
-	// 		strcpy_s( updatePlayer->m_Comment, "updated_test" ); ///< ÀÏ´ÜÀº Å×½ºÆ®¸¦ À§ÇØ
+	// 		strcpy_s( updatePlayer->m_Comment, "updated_test" ); ///< ì¼ë‹¨ì€ í…ŒìŠ¤íŠ¸ë¥¼ ìœ„í•´
 	// 		g_DatabaseJobManager->PushDatabaseJobRequest( updatePlayer );
 	// 	}
 
@@ -127,7 +127,7 @@ void ClientSession::SubBaseNum()
 
 void ClientSession::CalculateRegenTime()
 {
-	// ÇÏµå ÄÚµù~~ º£ÀÌ½º ÇÏ³ª´ç ÃÖ´ë µ¿¿ø¼ö Áõ°¡·®°ú ±âº»°ª
+	// í•˜ë“œ ì½”ë”©~~ ë² ì´ìŠ¤ í•˜ë‚˜ë‹¹ ìµœëŒ€ ë™ì›ìˆ˜ ì¦ê°€ëŸ‰ê³¼ ê¸°ë³¸ê°’
 	m_CorpsMax = ( m_BaseNum * 10 ) + 10;
 
 	if ( m_CorpsMax <= m_CorpsNow )
@@ -137,9 +137,9 @@ void ClientSession::CalculateRegenTime()
 	else
 	{
 		// m_CorpsRegenTime = static_cast<ULONGLONG>( sqrt( ( 100 * ( m_CorpsMax + m_CorpsNow ) ) / ( m_CorpsMax - m_CorpsNow ) ) + 30000 );
-		// m_CorpsRegenTime = static_cast<ULONGLONG>( ( 1000 * ( m_CorpsMax + m_CorpsNow ) ) / ( m_CorpsMax - m_CorpsNow + 0 ) + 30000 ); // + 0¿¡ º¸Á¤Ä¡¸¦ ³ÖÀ¸¸é ºÎ´ë¼ö°¡ ¸¹À»¶§ Áõ°¡ÇÏ´Â Å¸ÀÓÂ÷¸¦ ÁÙÀÏ¼ö ÀÖ´Ù.
+		// m_CorpsRegenTime = static_cast<ULONGLONG>( ( 1000 * ( m_CorpsMax + m_CorpsNow ) ) / ( m_CorpsMax - m_CorpsNow + 0 ) + 30000 ); // + 0ì— ë³´ì •ì¹˜ë¥¼ ë„£ìœ¼ë©´ ë¶€ëŒ€ìˆ˜ê°€ ë§ì„ë•Œ ì¦ê°€í•˜ëŠ” íƒ€ì„ì°¨ë¥¼ ì¤„ì¼ìˆ˜ ìˆë‹¤.
 
-		// ÀÏ´Ü °£´ÜÇÑ ½ÄÀ» ÇÏ³ª ¸¸µé¾îµÎ°í Å×½ºÆ®¸¦ ÇØ º¾½Ã´Ù.
+		// ì¼ë‹¨ ê°„ë‹¨í•œ ì‹ì„ í•˜ë‚˜ ë§Œë“¤ì–´ë‘ê³  í…ŒìŠ¤íŠ¸ë¥¼ í•´ ë´…ì‹œë‹¤.
 		m_CorpsRegenTime = 30000 + ( m_CorpsNow - m_BaseNum ) * 3000;
 	}
 
@@ -150,7 +150,7 @@ void ClientSession::CalculateRegenTime()
 	outPacket.m_BaseNum = m_BaseNum;
 	outPacket.m_RegenTime = m_CorpsRegenTime;
 
-	// µğ¹ö±ë¿ë µ¥ÀÌÅÍ
+	// ë””ë²„ê¹…ìš© ë°ì´í„°
 	outPacket.m_KilledCorpsNum = m_KilledCorpsNum;
 	outPacket.m_DeathCorpsNum = m_DeathCorpsNum;
 	outPacket.m_TotalMyCorpsNum = m_TotalMyCorpsNum;
@@ -234,7 +234,7 @@ void ClientSession::Disconnect()
 		return;
 	}
 
-	// g_PidSocketTable.erase( m_PlayerId ); ÀÌ°Å ÇÑÁÙ·Î µÉ°Í °°Àºµ¥ ±³¼ö´ÔÀÌ findÇÏ°í ¹¹ ÇÏ¶ó°í Çß´ø°Ô ÀÚ²Ù »ı°¢³²
+	// g_PidSocketTable.erase( m_PlayerId ); ì´ê±° í•œì¤„ë¡œ ë ê²ƒ ê°™ì€ë° êµìˆ˜ë‹˜ì´ findí•˜ê³  ë­ í•˜ë¼ê³  í–ˆë˜ê²Œ ìê¾¸ ìƒê°ë‚¨
 	auto toBeDelete = g_PidSessionTable.find( m_PlayerID );
 	if ( toBeDelete != g_PidSessionTable.end() )
 	{
@@ -243,7 +243,7 @@ void ClientSession::Disconnect()
 
 	printf( "[DEBUG] Client Disconnected: IP=%s, PORT=%d\n", inet_ntoa( m_ClientAddr.sin_addr ), ntohs( m_ClientAddr.sin_port ) );
 
-	/// Áï°¢ ÇØÁ¦
+	/// ì¦‰ê° í•´ì œ
 	LINGER lingerOption;
 	lingerOption.l_onoff = 1;
 	lingerOption.l_linger = 0;
