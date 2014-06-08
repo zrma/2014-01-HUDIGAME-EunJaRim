@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "MacroSet.h"
+#include "EnumSet.h"
 
 enum TextType
 {
@@ -21,7 +22,7 @@ public:
 	TextManager();
 	~TextManager();
 
-	void	RegistText( TextType key, LPCWSTR text, float left, float top, int RGB_R = 255, int RGB_G = 255, int RGB_B = 255, float right = 0, float bottom = 0 );
+	void	RegistText(TextType key, LPCWSTR text, float left, float top, SceneType sceneType, int RGB_R = 255, int RGB_G = 255, int RGB_B = 255, float right = 0, float bottom = 0);
 	void	DeleteText( TextType key );
 
 	void	DrawTexts() const;

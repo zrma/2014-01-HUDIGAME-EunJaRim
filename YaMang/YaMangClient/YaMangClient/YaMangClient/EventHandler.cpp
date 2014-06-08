@@ -93,7 +93,7 @@ void NetworkManager::HandleEnterRoomResult( EnterRoomResult& inPacket )
 
 		wchar_t wsRoomNum[100] = { 0, };
 		wsprintf( wsRoomNum, L"RoomNum : %d", m_RoomNumber );
-		TextManager::GetInstance( )->RegistText( TEXT_ROOM_NUMBER, wsRoomNum, 400, 30 );
+		TextManager::GetInstance( )->RegistText( TEXT_ROOM_NUMBER, wsRoomNum, 400, 30, SCENE_PLAY );
 	}
 	else
 	{
@@ -215,6 +215,17 @@ void NetworkManager::HandleGameOverResult( GameOverResult& inPacket )
 			}
 			m_IsPlaying = false;
 			SceneManager::GetInstance()->ChangeScene( SCENE_RESULT );
+
+			if (PlayerManager::GetInstance()->GetWin())
+			{
+				TextManager::GetInstance()->RegistText(TEXT_GAME_RESULT, L"승리", 300, 30, SCENE_RESULT);
+				//RenderSprite( SPRITE_RESULT_WIN, m_Position );
+			}
+			else
+			{
+				TextManager::GetInstance()->RegistText(TEXT_GAME_RESULT, L"패배", 300, 30, SCENE_RESULT);
+				//RenderSprite( SPRITE_RESULT_LOSE, m_Position );
+			}
 			
 		}
 		else
@@ -524,9 +535,9 @@ void NetworkManager::HandleRefreshUIResult( RefreshUIResult& inPacket )
 			wsprintf( wsBaseNum, L"BaseNum : %d", baseNum );
 			wchar_t wsRegenTime[100] = { 0, };
 			wsprintf( wsRegenTime, L"Regen : %u", regenTime );
-			TextManager::GetInstance( )->RegistText( TEXT_CORPS_NUM, wsCorpsNum, 20, 200 );
-			TextManager::GetInstance( )->RegistText( TEXT_BASE_NUM, wsBaseNum, 20, 250 );
-			TextManager::GetInstance( )->RegistText( TEXT_REGEN_TIME, wsRegenTime, 20, 300 ); // 텍스트로 보이는건 임시
+			TextManager::GetInstance()->RegistText(TEXT_CORPS_NUM, wsCorpsNum, 20, 200, SCENE_PLAY );
+			TextManager::GetInstance()->RegistText(TEXT_BASE_NUM, wsBaseNum, 20, 250, SCENE_PLAY );
+			TextManager::GetInstance( )->RegistText( TEXT_REGEN_TIME, wsRegenTime, 20, 300, SCENE_PLAY ); // 텍스트로 보이는건 임시
 			Log("Refresh UI! \n");
 
 			ScenePlay* playScene = dynamic_cast<ScenePlay*>(SceneManager::GetInstance()->GetNowScene());

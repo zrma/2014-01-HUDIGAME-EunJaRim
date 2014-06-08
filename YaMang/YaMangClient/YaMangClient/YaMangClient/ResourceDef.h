@@ -58,12 +58,8 @@
 #define SPRITE_CURSOR_CORPS_MOVABLE_CLICK	PATH_SPRITE L"cursor_movable_clicked.png"
 #define SPRITE_CURSOR_OVER_PICKED_CORPS		PATH_SPRITE L"cursor_over_clicked_corps.png"
 
-#define SPRITE_UI_DEFAULT					PATH_SPRITE L"UI_default.png"
-#define SPRITE_UI_IMSIMAP					PATH_SPRITE L"UI_MapImsi.png"
 #define SPRITE_UI_MINIMAP					PATH_SPRITE L"UI_Map.png"
-#define SPRITE_UI_IMSIREGENBAR				PATH_SPRITE L"UI_RegenBarImsi.png"
 #define SPRITE_UI_REGENBAR					PATH_SPRITE L"UI_RegenBar.png"
-#define SPRITE_UI_IMSIREGENFLAG				PATH_SPRITE L"UI_RegenFlagImsi.png"
 #define SPRITE_UI_REGENFLAG					PATH_SPRITE L"UI_RegenFlag.png"
 #define SPRITE_UI_CORPS_MARK_BLUE			PATH_SPRITE L"UI_CorpsMark_Blue.png"
 #define SPRITE_UI_CORPS_MARK_RED			PATH_SPRITE L"UI_CorpsMark_Red.png"
@@ -71,6 +67,7 @@
 #define SPRITE_UI_CORPS_FLAG_RED			PATH_SPRITE L"UI_CorpsMark_Flag_Red.png"
 #define SPRITE_UI_CORPS_FLAG_GRAY			PATH_SPRITE L"UI_CorpsMark_Flag_Gray.png"
 
+#define SPRITE_IMAGE_RESULT_BACKGROUND		PATH_SPRITE L"UI_ResultBackground.png"
 #define SPRITE_IMAGE_LOADING				PATH_SPRITE L"Loading.png"
 #define SPRITE_IMAGE_RESULT_WIN				PATH_SPRITE L"ResultWin.png"
 #define SPRITE_IMAGE_RESULT_LOSE			PATH_SPRITE L"ResultLose.png"

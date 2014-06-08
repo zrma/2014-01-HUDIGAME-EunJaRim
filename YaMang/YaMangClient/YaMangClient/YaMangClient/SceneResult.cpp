@@ -3,6 +3,7 @@
 #include "yaMangDxDll.h"
 #include "EnumSet.h"
 #include "PlayerManager.h"
+#include "TextManager.h"
 
 
 SceneResult::SceneResult()
@@ -31,12 +32,6 @@ void SceneResult::Update()
 
 void SceneResult::Render() const
 {
-	if ( PlayerManager::GetInstance()->GetWin() )
-	{
-		RenderSprite( SPRITE_RESULT_WIN, m_Position );
-	}
-	else
-	{
-		RenderSprite( SPRITE_RESULT_LOSE, m_Position );
-	}
+	RenderSprite(SPRITE_RESULT_BACKGROUND, m_Position);
+	TextManager::GetInstance()->DrawTexts();
 }

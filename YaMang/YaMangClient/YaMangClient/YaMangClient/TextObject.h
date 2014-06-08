@@ -1,10 +1,11 @@
 ﻿#pragma once
 #include "Interface3D.h"
+#include "EnumSet.h"
 
 class TextObject//: public Interface3D
 {
 public:
-	TextObject( LPCWSTR text, float left, float top, int RGB_R, int RGB_G, int RGB_B, float right, float bottom );
+	TextObject( LPCWSTR text, float left, float top, int RGB_R, int RGB_G, int RGB_B, float right, float bottom, SceneType sceneType );
 	~TextObject();
 
 	void	DrawText() const;
@@ -18,6 +19,9 @@ public:
 	void	SetColorR( int red ) { m_RGB_R = red; }
 	void	SetColorG( int green ) { m_RGB_G = green; }
 	void	SetColorB( int blue ) { m_RGB_B = blue; }
+	void	SetSceneType( SceneType sceneType ) { m_SceneType = sceneType; }
+
+	SceneType		GetSceneType() { return m_SceneType; }
 
 private:
 	std::wstring	m_Text;
@@ -28,6 +32,8 @@ private:
 	int				m_RGB_B = 255;
 	float			m_Right = 0;
 	float			m_Bottom = 0;
+
+	SceneType		m_SceneType = SCENE_NONE;
 
 };
 

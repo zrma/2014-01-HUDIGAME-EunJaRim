@@ -2,7 +2,7 @@
 #include "TextObject.h"
 #include "Renderer.h"
 
-TextObject::TextObject( LPCWSTR text, float left, float top, int RGB_R, int RGB_G, int RGB_B, float right, float bottom )
+TextObject::TextObject( LPCWSTR text, float left, float top, int RGB_R, int RGB_G, int RGB_B, float right, float bottom, SceneType sceneType )
 {
 	m_Text.append( text );
 	m_Left = left;
@@ -12,6 +12,7 @@ TextObject::TextObject( LPCWSTR text, float left, float top, int RGB_R, int RGB_
 	m_RGB_B = RGB_B;
 	m_Right = right;
 	m_Bottom = bottom;
+	m_SceneType = sceneType;
 }
 
 
