@@ -505,9 +505,9 @@ void MakeMapFile( CUSTOMVERTEX* baseVertex )
 	}
 
 	mapDib = DibCreateEmpty( sizeof(MAPDETAIL)* 8, g_HeightMapWidth, g_HeightMapHeight );
-	memcpy( mapDib + 4 + sizeof( LPBITMAPINFOHEADER ), mapDetail, g_HeightMapWidth*g_HeightMapHeight*sizeof( MAPDETAIL ) );
+	memcpy( mapDib + DIB_SIZE(mapDib)-DIB_DATASIZE(mapDib), mapDetail, g_HeightMapWidth*g_HeightMapHeight*sizeof( MAPDETAIL ) );
 
-	if (false == DibSave(mapDib, "mapFile.map"))
+	if (false == DibSave(mapDib, "HeightMapFile.ddd"))
 	{
 		MessageBox( NULL, L"Fail To Make Mapfile", L"YaMang.DLL", MB_OK );
 	}
