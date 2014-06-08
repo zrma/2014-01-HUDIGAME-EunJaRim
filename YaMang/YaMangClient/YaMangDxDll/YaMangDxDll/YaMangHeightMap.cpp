@@ -189,8 +189,13 @@ YAMANGDXDLL_API HRESULT InitHeightMap( LPCTSTR fileName, float pixelSize )
 	g_HeightMapVertexBuffer->Unlock();
 
 	DibDeleteHandle( pDIB );
-
-	MakeMapFile( g_HeightMap );
+	
+	
+	if (TRUE)
+	{
+		MakeMapFile( g_HeightMap );
+	}
+	
 
 	return S_OK;
 }

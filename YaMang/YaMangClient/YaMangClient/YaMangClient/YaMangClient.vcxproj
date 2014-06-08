@@ -69,7 +69,8 @@
       <Command>xcopy "ClientConfig.xml" "..\..\..\Bin\YaMangClient\" /s /d /y
 xcopy ".\\Resource\*" "..\..\..\Bin\YaMangClient\" /s /d /y
 xcopy ".\\FmodDLL\*" "..\..\..\Bin\YaMangClient\" /s /d /y
-xcopy ".\\BugTrapDLL\*" "..\..\..\Bin\YaMangClient\" /s /d /y</Command>
+xcopy ".\\BugTrapDLL\*" "..\..\..\Bin\YaMangClient\" /s /d /y
+xcopy "..\..\..\Bin\YaMangClient\ServerMap1.ddd" "..\..\YaMangServer\YaMangServer\GameMap\" /s /d /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

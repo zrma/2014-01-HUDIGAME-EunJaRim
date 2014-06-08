@@ -75,7 +75,11 @@ bool GameMapManager::ReadMapFile( const char* filename )
 	mapInfo = DibLoadHandle( (LPSTR)filename );
 
 	int width = DIB_CX( mapInfo );
-	int Height = DIB_CY( mapInfo );
+	int height = DIB_CY( mapInfo );
+
+	m_BattleMap.reserve( height );
+
+
 
 	return true;
 	/*

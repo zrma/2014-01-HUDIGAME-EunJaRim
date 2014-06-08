@@ -27,7 +27,7 @@ public:
 
 	const MapTileType&					GetMapTileType( int x, int z ) const { return m_BattleMap.at( x ).at( z ).m_MapTileType; }
 	const MapObjectType&				GetMapObjectType( int x, int z ) const { return m_BattleMap.at( x ).at( z ).m_MapObjectType; }
-	const unsigned char&				GetMapHeight( int x, int z ) const { return m_BattleMap.at( x ).at( z ).m_MapHeight; }
+	const float&				GetMapHeight( int x, int z ) const { return m_BattleMap.at( x ).at( z ).m_MapHeight; }
 
 private:
 	std::vector<std::vector<Tile>>	m_BattleMap;

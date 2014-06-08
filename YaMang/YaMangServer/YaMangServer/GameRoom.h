@@ -76,7 +76,7 @@ public:
 
 	const MapTileType&		GetMapTileType( int x, int z ) const { return m_GameMapManager->GetMapTileType( x, z ); }
 	const MapObjectType&	GetMapObjectType( int x, int z ) const { return m_GameMapManager->GetMapObjectType( x, z ); }
-	const unsigned char&	GetMapHeight( int x, int z ) const { return m_GameMapManager->GetMapHeight( x, z ); }
+	const float&	GetMapHeight( int x, int z ) const { return m_GameMapManager->GetMapHeight( x, z ); }
 
 	void				TakeBase( int ownerPlayerID, int targetPlayerID, int ownerCorpsID, int targetGuardID );
 	void				SyncOneCorp( int corpsID );
