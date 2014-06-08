@@ -299,7 +299,7 @@ Corps* ScenePlay::SearchCorpsByPosition( float x, float z, bool selectOption )
 
 		D3DXVECTOR3& thisPosition = thisCorps->GetEyePoint();
 		
-		double	margin = CameraController::GetInstance()->GetHeightGrade() * 10.0;
+		double	margin = CameraController::GetInstance()->GetHeightGrade() + 10.0;
 		// AABB
 		if ( ( thisPosition.x - x < margin && thisPosition.x - x > -margin )
 			 && ( thisPosition.x - x < margin && thisPosition.x - x > -margin ) )
