@@ -150,6 +150,11 @@ void ClientSession::CalculateRegenTime()
 	outPacket.m_BaseNum = m_BaseNum;
 	outPacket.m_RegenTime = m_CorpsRegenTime;
 
+	// 디버깅용 데이터
+	outPacket.m_KilledCorpsNum = m_KilledCorpsNum;
+	outPacket.m_DeathCorpsNum = m_DeathCorpsNum;
+	outPacket.m_TotalMyCorpsNum = m_TotalMyCorpsNum;
+
 	if ( !DirectSend( &outPacket ) )
 	{
 		// Disconnect();

@@ -136,9 +136,9 @@ public:
 	void		AddKilledCorpsNum() { ++m_KilledCorpsNum; }
 	void		AddDeathCorpsNum( ) { ++m_DeathCorpsNum; }
 	void		AddTotalMyCorpsNum( ) { ++m_TotalMyCorpsNum; }
-	int			GetKilledCorpsNum( ) const { return m_KilledCorpsNum; }
-	int			GetDeathCorpsNum( ) const { return m_DeathCorpsNum; }
-	int			GetTotalMyCorpsNum( ) const { return m_TotalMyCorpsNum; }
+	//int			GetKilledCorpsNum( ) const { return m_KilledCorpsNum; }
+	//int			GetDeathCorpsNum( ) const { return m_DeathCorpsNum; }
+	//int			GetTotalMyCorpsNum( ) const { return m_TotalMyCorpsNum; }
 
 
 private:

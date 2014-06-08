@@ -508,6 +508,13 @@ void NetworkManager::HandleRefreshUIResult( RefreshUIResult& inPacket )
 		int maxCorpsNum = inPacket.m_MaxCorpsNum;
 		int baseNum = inPacket.m_BaseNum;
 
+		// 디버깅용 데이터
+
+		int killedCorpsNum = inPacket.m_KilledCorpsNum;
+		int deathCorpsNum = inPacket.m_DeathCorpsNum;
+		int totalMyCorpsNum = inPacket.m_TotalMyCorpsNum;
+
+
 		ULONGLONG regenTime = inPacket.m_RegenTime;
 
 		if ( -1 == nowCorpsNum || -1 == maxCorpsNum || -1 == baseNum )
@@ -524,6 +531,22 @@ void NetworkManager::HandleRefreshUIResult( RefreshUIResult& inPacket )
 			wsprintf( wsBaseNum, L"BaseNum : %d", baseNum );
 			wchar_t wsRegenTime[100] = { 0, };
 			wsprintf( wsRegenTime, L"Regen : %u", regenTime );
+
+
+
+			// 디버깅용 데이터
+			wchar_t wsKilledCorpsNum[100] = { 0, };
+			wsprintf( wsKilledCorpsNum, L"KilledCorpsNum : %d", killedCorpsNum );
+			wchar_t wsDeathCorpsNum[100] = { 0, };
+			wsprintf( wsDeathCorpsNum, L"DeathCorpsNum : %d", deathCorpsNum );
+			wchar_t wsTotalMyCorpsNum[100] = { 0, };
+			wsprintf( wsTotalMyCorpsNum, L"TotalMyCorpsNum : %u", totalMyCorpsNum );
+
+			TextManager::GetInstance( )->RegistText( TEXT_TEST_KILLED_CORPS_NUM, wsKilledCorpsNum, 200, 200 );
+			TextManager::GetInstance( )->RegistText( TEXT_TEST_DEATH_CORPS_NUM, wsDeathCorpsNum, 200, 250 );
+			TextManager::GetInstance( )->RegistText( TEXT_TEST_TOTAL_MY_CORPS_NUM, wsTotalMyCorpsNum, 200, 300 );
+			//
+
 			TextManager::GetInstance( )->RegistText( TEXT_CORPS_NUM, wsCorpsNum, 20, 200 );
 			TextManager::GetInstance( )->RegistText( TEXT_BASE_NUM, wsBaseNum, 20, 250 );
 			TextManager::GetInstance( )->RegistText( TEXT_REGEN_TIME, wsRegenTime, 20, 300 ); // 텍스트로 보이는건 임시
