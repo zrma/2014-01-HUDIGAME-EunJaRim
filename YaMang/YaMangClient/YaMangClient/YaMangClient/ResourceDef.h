@@ -23,8 +23,8 @@
 #define PATH_MAP		L"MapFiles\\"
 
 // #define HEIGHT_MAP				PATH_MAP L"heightmap_128_128.bmp"
-#define HEIGHT_MAP				PATH_MAP L"heightmap_256_256.jpg"
-#define HEIGHT_TEX				PATH_MAP L"map_tex_256_256.jpg"
+#define HEIGHT_MAP				PATH_MAP L"heightmap_129_129.bmp"
+#define HEIGHT_TEX				PATH_MAP L"heightmap_texture.tga"
 
 // #define HEIGHT_MAP				PATH_MAP L"heightmap_129_129.bmp"
 // #define HEIGHT_TEX				PATH_MAP L"map_tex.bmp"

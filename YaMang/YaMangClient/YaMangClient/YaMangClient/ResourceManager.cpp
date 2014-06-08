@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 #include "ResourceManager.h"
 #include "MainWindow.h"
-#include "yaMangDxDll.h"
+#include "YaMangDxDll.h"
 #include "MouseManager.h"
 #include "ResourceDef.h"
 #include "MapManager.h"
@@ -43,9 +43,20 @@ void ResourceManager::Init()
 	//////////////////////////////////////////////////////////////////////////
 	InitGroundMesh( 128, 128 );
 	CreateRawGround( 128, 128, 5.0f );
+
+	if ( FAILED( InitHeightMap( HEIGHT_MAP, 5.0f ) ) )
+	{
+		m_IsMapForQuadTreeReady = false;
+	}
+	else
+	{
+		m_IsMapForQuadTreeReady = true;
+	}
+
 	MapManager::GetInstance()->SetPixelSize( 5.0f );
 
 	m_MapSize = 640;
+	m_IsMapReady = true;
 
 	InitSkyBoxMesh( 1000 );
 
@@ -55,8 +66,7 @@ void ResourceManager::Init()
 	SetSkyBoxTexture( SPRITE_SKYBOX_RIGHT, SKY_BOX_RIGHT );
 	SetSkyBoxTexture( SPRITE_SKYBOX_TOP, SKY_BOX_TOP );
 	SetSkyBoxTexture( SPRITE_SKYBOX_BOTTOM, SKY_BOX_BOTTOM );
-	m_IsMapReady = true;
-
+	
 	InitCursor( CURSOR_MAX, MouseManager::GetInstance()->GetMousePositionX(), MouseManager::GetInstance()->GetMousePositionY() );
 	CreateCursorImage( SPRITE_CURSOR_DEFAULT, CURSOR_DEFAULT );
 	CreateCursorImage( SPRITE_CURSOR_ATTACK, CURSOR_ATTACK );

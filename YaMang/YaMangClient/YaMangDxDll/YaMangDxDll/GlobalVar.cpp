@@ -13,6 +13,8 @@ LPD3DXMESH g_Mesh = nullptr;
 
 // 쿼드트리용
 CUSTOMVERTEX* g_HeightMap = nullptr;
+DWORD g_HeightMapWidth = 0;
+DWORD g_HeightMapHeight = 0;
 LPDIRECT3DVERTEXBUFFER9	g_HeightMapVertexBuffer = nullptr;
 LPDIRECT3DINDEXBUFFER9	g_HeightMapIndexBuffer = nullptr;
 bool g_HeightMapWithQuadTreeIsReady = false;

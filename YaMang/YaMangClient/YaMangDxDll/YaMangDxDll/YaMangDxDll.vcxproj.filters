@@ -47,6 +47,9 @@
     <ClInclude Include="YaMangDxDll.h">
       <Filter>YaMangDxDll</Filter>
     </ClInclude>
+    <ClInclude Include="Dib.h">
+      <Filter>YaMangDxDll\Specific</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Logger.cpp">
@@ -89,6 +92,9 @@
       <Filter>YaMangDxDll\Specific</Filter>
     </ClCompile>
     <ClCompile Include="YaMangSpriteUI.cpp">
+      <Filter>YaMangDxDll\Specific</Filter>
+    </ClCompile>
+    <ClCompile Include="Dib.cpp">
       <Filter>YaMangDxDll\Specific</Filter>
     </ClCompile>
   </ItemGroup>

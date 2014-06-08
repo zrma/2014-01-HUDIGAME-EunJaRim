@@ -47,6 +47,8 @@ extern "C"{
 
 	YAMANGDXDLL_API HRESULT HeightMapTextureImport( HWND hWnd, LPCTSTR heightMap, LPCTSTR mapTexture );
 	YAMANGDXDLL_API HRESULT MapToolTextureImport( HWND hWnd, LPCTSTR toolTexture );
+
+	YAMANGDXDLL_API HRESULT InitHeightMap( LPCTSTR fileName, float pixelSize );
 	
 	YAMANGDXDLL_API void InitGroundMesh( int row, int col );
 	YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize , bool makeFile = false);

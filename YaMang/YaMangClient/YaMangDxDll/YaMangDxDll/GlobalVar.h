@@ -57,6 +57,9 @@ extern LPDIRECT3DTEXTURE9 g_MapTexture;
 // 쿼드트리용
 // 하이트맵 버텍스 배열
 extern CUSTOMVERTEX* g_HeightMap;
+extern DWORD g_HeightMapWidth;
+extern DWORD g_HeightMapHeight;
+
 // 버텍스 버퍼
 extern LPDIRECT3DVERTEXBUFFER9	g_HeightMapVertexBuffer;
 // 인덱스 버퍼

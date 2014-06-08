@@ -18,6 +18,7 @@
 #include "Timer.h"
 #include "Frustum.h"
 #include "QuadTree.h"
+#include "ResourceManager.h"
 
 ScenePlay::ScenePlay()
 {
@@ -46,18 +47,21 @@ void ScenePlay::Create()
 	// 뷰 프러스텀을 만들어 봅시다
 	m_Frustum = new Frustum();
 
-	// 쿼드 트리도 만들어 봅시다.
-	m_HeightMap = Renderer::GetInstance()->GetHeightMap();
-
-	if ( m_HeightMap )
+	if ( ResourceManager::GetInstance()->IsMapForQuadTreeReady() )
 	{
-		DWORD width = 0;
-		DWORD height = 0;
+		// 쿼드 트리도 만들어 봅시다.
+		m_HeightMap = Renderer::GetInstance()->GetHeightMap();
 
-		Renderer::GetInstance()->GetHeightMapSize( &width, &height );
-		m_QuadTree = new QuadTree( width, height );
+		if ( m_HeightMap )
+		{
+			DWORD width = 0;
+			DWORD height = 0;
 
-		m_QuadTree->Build( m_HeightMap );
+			Renderer::GetInstance()->GetHeightMapSize( &width, &height );
+			m_QuadTree = new QuadTree( width, height );
+
+			m_QuadTree->Build( m_HeightMap );
+		}
 	}
 
 	//UIObjects Init

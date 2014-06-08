@@ -1,9 +1,10 @@
 ﻿#include "stdafx.h"
-#include "yaMangDxDll.h"
+#include "YaMangDxDll.h"
 #include "GlobalVar.h"
 #include <array>
 #include <utility>
 #include <vector>
+#include "Dib.h"
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -20,7 +21,8 @@ void MakeMapFile( CUSTOMVERTEX* baseVertex );
 
 YAMANGDXDLL_API HRESULT HeightMapTextureImport( HWND hWnd, LPCTSTR heightMap, LPCTSTR mapTexture )
 {
-	if ( FAILED( D3DXCreateTextureFromFileEx( g_D3dDevice, heightMap, D3DX_DEFAULT, D3DX_DEFAULT, D3DX_DEFAULT, 0, D3DFMT_X8B8G8R8, D3DPOOL_MANAGED, D3DX_DEFAULT, D3DX_DEFAULT, 0, NULL, NULL, &g_MapHeightInfo ) ) )
+	if ( FAILED( D3DXCreateTextureFromFileEx( g_D3dDevice, heightMap, D3DX_DEFAULT, D3DX_DEFAULT, D3DX_DEFAULT,
+		0, D3DFMT_X8B8G8R8, D3DPOOL_MANAGED, D3DX_DEFAULT, D3DX_DEFAULT, 0, NULL, NULL, &g_MapHeightInfo ) ) )
 	{
 		MessageBox( NULL, L"Could not find heightMap file", L"YaMang.DLL", MB_OK );
 		return E_FAIL;
@@ -65,7 +67,128 @@ YAMANGDXDLL_API HRESULT MapToolTextureImport( HWND hWnd, LPCTSTR toolTexture )
 		}
 	}
 	return S_OK;
+}
 
+// 2를 밑으로 하는 숫자 n의 로그값을 구한다.
+int	Log2( int n )
+{
+	for ( int i = 1; i < 64; ++i )
+	{
+		n = n >> 1;
+		if ( n == 1 )
+		{
+			return i;
+		}
+	}
+
+	return 1;
+}
+
+// 2^n값을 구한다
+int	Pow2( int n )
+{
+	int val = 1;
+	val = val << n;
+	return val;
+}
+
+YAMANGDXDLL_API HRESULT InitHeightMap( LPCTSTR fileName, float pixelSize )
+{
+	if ( !g_MapHeightInfo )
+	{
+		MessageBox( NULL, L"Init Height Map Failed Because Height Map File Not Loaded", L"YaMang.DLL", MB_OK );
+		return E_FAIL;
+	}
+
+	USES_CONVERSION;
+	LPBYTE	pDIB = DibLoadHandle( W2A(fileName) );
+	if ( !pDIB )
+	{
+		MessageBox( NULL, L"Height Map For QuadTree, Init OK But File Not Found", L"YaMang.DLL", MB_OK );
+		return E_FAIL;
+	}
+
+	g_XHeight = g_HeightMapWidth = DIB_CX( pDIB );
+	g_ZHeight = g_HeightMapHeight = DIB_CY( pDIB );
+	
+	// 이미지의 한 변의 픽셀 값이 (2^n+1)이 아닌 경우 E_FAIL 반환
+	int n = Log2( g_HeightMapWidth );
+	if ( ( Pow2( n ) + 1 ) != g_HeightMapWidth )
+	{
+		MessageBox( NULL, L"Height Map Size - Width Error (Not 2^n + 1)", L"YaMang.DLL", MB_OK );
+		return E_FAIL;
+	}
+	n = Log2( g_HeightMapHeight );
+	if ( ( Pow2( n ) + 1 ) != g_HeightMapHeight )
+	{
+		MessageBox( NULL, L"Height Map Size - Height Error (Not 2^n + 1)", L"YaMang.DLL", MB_OK );
+		return E_FAIL;
+	}
+
+	if ( g_HeightMap )
+	{
+		delete[] g_HeightMap;
+	}
+	g_HeightMap = new CUSTOMVERTEX[g_HeightMapWidth * g_HeightMapHeight];
+
+	if ( g_HeightMapVertexBuffer )
+	{
+		g_HeightMapVertexBuffer->Release();
+		g_HeightMapVertexBuffer = nullptr;
+	}
+	// 쿼드트리용 버텍스 버퍼 생성
+
+	if ( FAILED( g_D3dDevice->CreateVertexBuffer( g_HeightMapWidth * g_HeightMapHeight * sizeof( CUSTOMVERTEX ),
+		0, D3DFVF_CUSTOMVERTEX, D3DPOOL_DEFAULT, &g_HeightMapVertexBuffer, NULL ) ) )
+	{
+		MessageBox( NULL, L"Create HeightMap Vertex Buffer For Quad-Tree Failed", L"YaMang.DLL", MB_OK );
+		return E_FAIL;
+	}
+
+	if ( g_HeightMapIndexBuffer )
+	{
+		g_HeightMapIndexBuffer->Release();
+		g_HeightMapIndexBuffer = nullptr;
+	}
+	// 쿼드트리용 인덱스 버퍼 생성
+
+	if ( FAILED( g_D3dDevice->CreateIndexBuffer( ( g_HeightMapWidth - 1 )*( g_HeightMapHeight - 1 ) * 2 * sizeof( MYINDEX ),
+		0, D3DFMT_INDEX32, D3DPOOL_DEFAULT, &g_HeightMapIndexBuffer, NULL ) ) )
+	{
+		MessageBox( NULL, L"Create HeightMap Index Buffer For Quad-Tree Failed", L"YaMang.DLL", MB_OK );
+		return  E_FAIL;
+	}
+	
+	VOID* pVertices;
+	if ( FAILED( g_HeightMapVertexBuffer->Lock( 0, g_HeightMapWidth * g_HeightMapHeight * sizeof( CUSTOMVERTEX ),
+		(void**)&pVertices, 0 ) ) )
+	{
+		MessageBox( NULL, L"Height Map For QuadTree Lock Failed", L"YaMang.DLL", MB_OK );
+		return E_FAIL;
+	}
+
+	CUSTOMVERTEX	v;
+	CUSTOMVERTEX*	pV = (CUSTOMVERTEX*)pVertices;
+
+	for ( DWORD z = 0; z < g_HeightMapHeight; z++ )
+	{
+		for ( DWORD x = 0; x < g_HeightMapWidth; x++ )
+		{
+			v.m_VertexPoint.x = (float)( x - g_HeightMapWidth / 2.0f ) * pixelSize;
+			v.m_VertexPoint.z = -(float)( z - g_HeightMapHeight / 2.0f ) * pixelSize;
+			v.m_VertexPoint.y = ( *( DIB_DATAXY_INV( pDIB, x, z ) ) ) / 10.0f;
+			v.m_Diffuse = D3DCOLOR_ARGB( 255, 255, 255, 255 );
+			v.m_VertexTexturePoint.x = (float)x / (float)( g_HeightMapWidth - 1 );
+			v.m_VertexTexturePoint.y = (float)z / (float)( g_HeightMapHeight - 1 );
+			g_HeightMap[x + z * g_HeightMapWidth] = v;
+		}
+	}
+
+	memcpy( pVertices, g_HeightMap, g_HeightMapWidth * g_HeightMapHeight * sizeof( CUSTOMVERTEX ) );
+	g_HeightMapVertexBuffer->Unlock();
+
+	DibDeleteHandle( pDIB );
+	return S_OK;
 }
 
 
@@ -85,44 +208,11 @@ YAMANGDXDLL_API void InitGroundMesh( int row, int col )
 	//mesh를 직접 만들게 되면 사실 global vertex buffer와 index buffer가 무의미 하다.
 
 	HRESULT hr = NULL;
-	hr = D3DXCreateMeshFVF( faceCount, verticesCount, D3DXMESH_MANAGED | D3DXMESH_32BIT, D3DFVF_CUSTOMVERTEX, g_D3dDevice, &g_Mesh );
+	hr = D3DXCreateMeshFVF( faceCount, verticesCount, D3DXMESH_MANAGED | D3DXMESH_32BIT, D3DFVF_CUSTOMVERTEX, 
+							g_D3dDevice, &g_Mesh );
 	if ( hr != S_OK )
 	{
 		MessageBox( NULL, L"CreateMesh Failed", L"YaMang.DLL", MB_OK );
-		return;
-	}
-
-	if ( g_HeightMap )
-	{
-		delete[] g_HeightMap;
-	}
-	g_HeightMap = new CUSTOMVERTEX[g_XHeight * g_ZHeight];
-
-	if ( g_HeightMapVertexBuffer )
-	{
-		g_HeightMapVertexBuffer->Release();
-		g_HeightMapVertexBuffer = nullptr;
-	}
-	// 쿼드트리용 버텍스 버퍼 생성
-	
-	if ( FAILED( g_D3dDevice->CreateVertexBuffer( g_XHeight * g_ZHeight * sizeof( CUSTOMVERTEX ),
-		0, D3DFVF_CUSTOMVERTEX, D3DPOOL_DEFAULT, &g_HeightMapVertexBuffer, NULL ) ) )
-	{
-		MessageBox( NULL, L"Create HeightMap Vertex Buffer For Quad-Tree Failed", L"YaMang.DLL", MB_OK );
-		return;
-	}
-	
-	if ( g_HeightMapIndexBuffer )
-	{
-		g_HeightMapIndexBuffer->Release();
-		g_HeightMapIndexBuffer = nullptr;
-	}
-	// 쿼드트리용 인덱스 버퍼 생성
-	
-	if ( FAILED( g_D3dDevice->CreateIndexBuffer( ( g_XHeight - 1 )*( g_ZHeight - 1 ) * 2 * sizeof( MYINDEX ), 
-		0, D3DFMT_INDEX32, D3DPOOL_DEFAULT, &g_HeightMapIndexBuffer, NULL ) ) )
-	{
-		MessageBox( NULL, L"Create HeightMap Index Buffer For Quad-Tree Failed", L"YaMang.DLL", MB_OK );
 		return;
 	}
 }
@@ -130,7 +220,7 @@ YAMANGDXDLL_API void InitGroundMesh( int row, int col )
 
 YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize, bool makeFile )
 {
-	int verticesCount = (g_XHeight)* ( g_ZHeight );
+	int verticesCount = (g_XHeight) * ( g_ZHeight );
 
 	CUSTOMVERTEX* baseVertex = new CUSTOMVERTEX[verticesCount];
 	if ( nullptr == baseVertex )
@@ -154,8 +244,6 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize, bool ma
 	vPos0.m_VertexPoint.x = -1.f * col * pixelSize * 0.5f;
 	vPos0.m_VertexPoint.y = 0.0f;
 	vPos0.m_VertexPoint.z = -1.f * row * pixelSize * 0.5f;
-
-	int maxSize = row * col;
 
 	for ( int z = 0; z <= row; ++z )
 	{
@@ -186,35 +274,6 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize, bool ma
 		MakeMapFile( baseVertex );
 	}
 	
-	VOID* pVertices = NULL;
-	if ( FAILED( g_HeightMapVertexBuffer->Lock( 0, g_XHeight * g_ZHeight * sizeof( CUSTOMVERTEX ), (void**)&pVertices, 0 ) ) )
-	{
-		MessageBox( NULL, L"HeightMap Vertex Buffer Lock For Quad-Tree Failed", L"YaMang.DLL", MB_OK );
-		return;
-	}
-	
-	CUSTOMVERTEX	v;
-	CUSTOMVERTEX*	pV = (CUSTOMVERTEX*)pVertices;
-
-	D3DXVECTOR3	normalX;
-	D3DXVECTOR3 normalZ;
-
-	for ( DWORD z = 0; z < g_ZHeight; ++z )
-	{
-		for ( DWORD x = 0; x < g_XHeight; ++x )
-		{
-			v.m_VertexPoint.x = (float)(x - g_XHeight / 2.0f) * pixelSize;
-			v.m_VertexPoint.z = -(float)( z - g_ZHeight / 2.0f ) * pixelSize;
-			v.m_VertexPoint.y = ( (float)( *( (LPDWORD)d3drc.pBits + x + z * ( d3drc.Pitch / 4 ) ) & 0x000000ff ) ) / 15.0f;
-			v.m_Diffuse = D3DCOLOR_ARGB( 255, 255, 255, 255 );
-			v.m_VertexTexturePoint.x = static_cast<float>(x) / g_XHeight;
-			v.m_VertexTexturePoint.y = static_cast<float>(z) / g_ZHeight;
-			*pV++ = v;
-		}
-	}
-	memcpy( g_HeightMap, pVertices, g_XHeight * g_ZHeight * sizeof( CUSTOMVERTEX ) );
-	g_HeightMapVertexBuffer->Unlock();
-
 	/*
 	//vertex 내용 확인
 	for ( int i = 0; i < startIdx; ++i )
@@ -223,6 +282,7 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize, bool ma
 	}
 	*/
 
+	void *pVertices;
 	if ( FAILED( g_Mesh->LockVertexBuffer( 0, &pVertices ) ) )
 	{
 		if ( baseVertex )
@@ -234,14 +294,11 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize, bool ma
 		return;
 	}
 	memcpy( pVertices, baseVertex, verticesCount * sizeof( CUSTOMVERTEX ) );
-	g_Mesh->UnlockVertexBuffer( );
-	
-	if (g_MapHeightInfo)
+	g_Mesh->UnlockVertexBuffer();
+	if ( g_MapHeightInfo )
 	{
 		g_MapHeightInfo->UnlockRect( 0 );
 	}
-	
-
 
 	int indicesCount = g_XHeight * g_ZHeight + ( g_ZHeight - 2 )*( g_XHeight + 1 );
 	UINT* baseIndex = new UINT[indicesCount];
@@ -334,8 +391,8 @@ YAMANGDXDLL_API void CreateRawGround( int row, int col, float pixelSize, bool ma
 
 void GetHeightMapSizeForQuadTree( DWORD* width, DWORD* height )
 {
-	*width = g_XHeight;
-	*height = g_ZHeight;
+	*width = g_HeightMapWidth;
+	*height = g_HeightMapHeight;
 }
 
 void GetHeightMapForQuadTree( CUSTOMVERTEX** heightMap )
@@ -351,7 +408,7 @@ HRESULT PreRenderHeightWithMapQuadTree( LPDWORD* index )
 		return E_FAIL;
 	}
 
-	if ( FAILED( g_HeightMapIndexBuffer->Lock( 0, ( g_XHeight - 1 )*( g_ZHeight - 1 ) * 2 * sizeof( MYINDEX ),
+	if ( FAILED( g_HeightMapIndexBuffer->Lock( 0, ( g_HeightMapWidth - 1 )*( g_HeightMapHeight - 1 ) * 2 * sizeof( MYINDEX ),
 		(void**)index, 0 ) ) )
 	{
 		g_HeightMapWithQuadTreeIsReady = false;

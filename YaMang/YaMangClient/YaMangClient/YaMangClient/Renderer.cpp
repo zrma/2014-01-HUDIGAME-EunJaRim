@@ -86,7 +86,7 @@ void Renderer::RenderMap( QuadTree* quadTree, Frustum* frustum, CUSTOMVERTEX* he
 	{
 		LPDWORD index = nullptr;
 
-		if ( !quadTree || !frustum || FAILED( PreRenderHeightWithMapQuadTree( &index ) ))
+		if ( !quadTree || !frustum || !heightMap || FAILED( PreRenderHeightWithMapQuadTree( &index ) ))
 		{
 			RenderHeightMap();
 		}

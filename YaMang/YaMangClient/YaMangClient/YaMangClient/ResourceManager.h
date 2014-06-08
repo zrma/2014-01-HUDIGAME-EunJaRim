@@ -49,6 +49,8 @@ public:
 	void	Init();
 	void	Destroy();
 	bool	IsMapReady() const { return m_IsMapReady; }
+	bool	IsMapForQuadTreeReady() const { return m_IsMapForQuadTreeReady; }
+
 	int		GetMapSize() const { return m_MapSize; }
 	bool	IsCursorReady() const { return m_ISCursorReady; }
 	
@@ -70,9 +72,10 @@ private:
 	std::array<ResourceMap*, MAP_KEY_MAX> m_HeightMapArray;
 
 	bool	m_IsMapReady = false;
+	bool	m_IsMapForQuadTreeReady = false;
+
 	int		m_MapSize = 0;
 
 	bool	m_ISCursorReady = false;
-
 	bool	m_IsUISpriteReady = false;
 };

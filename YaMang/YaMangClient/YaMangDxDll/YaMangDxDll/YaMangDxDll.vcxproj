@@ -88,6 +88,7 @@ xcopy "..\..\..\Bin\YaMangClient\YaMangDxDll.lib" "..\..\..\Bin\YaMangMapTool\" 
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Dib.h" />
     <ClInclude Include="GlobalVar.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="MeshObject.h" />
@@ -96,6 +97,7 @@ xcopy "..\..\..\Bin\YaMangClient\YaMangDxDll.lib" "..\..\..\Bin\YaMangMapTool\" 
     <ClInclude Include="YaMangDxDll.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Dib.cpp" />
     <ClCompile Include="GlobalVar.cpp" />
     <ClCompile Include="dllmain.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>

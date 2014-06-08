@@ -220,6 +220,5 @@ void Lighting( int lightNum )
 	g_D3dDevice->SetRenderState( D3DRS_AMBIENT, 0x00808080 );
 }
 
-
 // 내보낸 변수의 예제입니다.
 // YAMANGDXDLL_API int nyaMangDxDll=0;

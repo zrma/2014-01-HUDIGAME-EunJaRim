@@ -72,7 +72,7 @@ float MapManager::GetHeightInMap( int col, int row )
 	row = __min( row, m_HeightMapHeight - 1 );
 	row = __max( 0, row );
 
-	return m_HeightMap[(m_HeightMapHeight - row - 1) * m_HeightMapWidth + col].m_VertexPoint.y;
+	return m_HeightMap[(m_HeightMapHeight - 1 - row) * m_HeightMapWidth + col].m_VertexPoint.y;
 }
 
 float MapManager::Lerp( float a, float b, float t )
