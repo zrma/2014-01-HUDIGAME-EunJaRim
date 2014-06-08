@@ -188,6 +188,9 @@ YAMANGDXDLL_API HRESULT InitHeightMap( LPCTSTR fileName, float pixelSize )
 	g_HeightMapVertexBuffer->Unlock();
 
 	DibDeleteHandle( pDIB );
+
+	MakeMapFile( g_HeightMap );
+
 	return S_OK;
 }
 
@@ -481,6 +484,38 @@ YAMANGDXDLL_API void ToolViewSetting( int width, int height )
 
 void MakeMapFile( CUSTOMVERTEX* baseVertex )
 {
+	typedef struct MapDetail
+	{
+		float height;
+		int mapProperties;
+	}MAPDETAIL;
+
+	LPBYTE mapDib;
+	
+	MAPDETAIL* mapDetail;
+	mapDetail = new MAPDETAIL[g_HeightMapWidth * g_HeightMapHeight];
+
+	for ( unsigned int z = 0; z < g_HeightMapHeight; ++z )
+	{
+		for ( unsigned int x = 0; x < g_HeightMapWidth; ++x )
+		{
+			mapDetail[ x + z * g_HeightMapWidth ].height = g_HeightMap[x + z * g_HeightMapWidth].m_VertexPoint.y;
+			mapDetail[ x + z * g_HeightMapWidth ].mapProperties = 0xff;
+		}
+	}
+
+	mapDib = DibCreateEmpty( sizeof(MAPDETAIL)* 8, g_HeightMapWidth, g_HeightMapHeight );
+	memcpy( mapDib + 4 + sizeof( LPBITMAPINFOHEADER ), mapDetail, g_HeightMapWidth*g_HeightMapHeight*sizeof( MAPDETAIL ) );
+
+	if (false == DibSave(mapDib, "mapFile.map"))
+	{
+		MessageBox( NULL, L"Fail To Make Mapfile", L"YaMang.DLL", MB_OK );
+	}
+
+	delete mapDetail;
+	
+	//dib 형태로 변경
+	/*
 	FILE* mapForPrinting;
 	int heightMapVerticesCount = (g_XHeight)* ( g_ZHeight );
 
@@ -502,4 +537,5 @@ void MakeMapFile( CUSTOMVERTEX* baseVertex )
 	fwrite( &inBuffer, sizeof( std::pair<float, byte> ), inBuffer.size(), mapForPrinting );
 
 	fclose( mapForPrinting );
+	*/
 }
