@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "MapManager.h"
 #include "yaMangDxDll.h"
 #include "Logger.h"
@@ -19,12 +19,7 @@ float MapManager::GetHeightByPosition( float x, float z )
 	{
 		return 0.0f;
 	}
-
-	return 10.0f;
-
-	//////////////////////////////////////////////////////////////////////////
-	// ³ôÀÌ°ªÀÌ ³Î ¶Ù´Â ¹®Á¦ ¶§¹®¿¡ ¸·¾ÆµÒ
-
+	
 	x /= m_PixelSize;
 	z /= m_PixelSize;
 	x = static_cast<float>(m_HeightMapWidth) / 2.0f + x;
@@ -38,10 +33,10 @@ float MapManager::GetHeightByPosition( float x, float z )
 	col = __max( 0, col );
 	row = __max( 0, row );
 
-	float leftBottom = GetHeightInMap( col, row );
-	float rightBottom = GetHeightInMap( col, row + 1 );
-	float leftTop = GetHeightInMap( col + 1, row );
-	float rightTop = GetHeightInMap( col + 1, row + 1 );
+	float leftBottom = GetHeightInMap( col, row + 1 );
+	float rightBottom = GetHeightInMap( col + 1, row + 1 );
+	float leftTop = GetHeightInMap( col , row );
+	float rightTop = GetHeightInMap( col + 1, row );
 
 	float dx = x - col;
 	float dz = z - row;

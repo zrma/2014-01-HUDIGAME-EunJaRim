@@ -473,12 +473,22 @@ struct RefreshUIResult: public PacketHeader
 		m_MaxCorpsNum = -1;
 		m_BaseNum = -1;
 		m_RegenTime = INT_MAX;
+
+		m_KilledCorpsNum = -1;
+		m_DeathCorpsNum = -1;
+		m_TotalMyCorpsNum = -1;
 	}
 
 	int			m_NowCorpsNum;
 	int			m_MaxCorpsNum;
 	int			m_BaseNum;
 	ULONGLONG	m_RegenTime;
+
+
+	// 사실 게임 엔드에 나와도 되지만 잘 카운팅 되나 디버깅용 데이터
+	int			m_KilledCorpsNum;
+	int			m_DeathCorpsNum;
+	int			m_TotalMyCorpsNum;
 };
 
 struct RefreshBaseResult: public PacketHeader
