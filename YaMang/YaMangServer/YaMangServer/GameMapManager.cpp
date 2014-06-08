@@ -3,6 +3,7 @@
 #include "MacroSet.h"
 #include "tinyxml.h"
 #include "xpath_static.h"
+#include "Dib.h"
 
 GameMapManager::GameMapManager()
 {
@@ -70,6 +71,14 @@ bool GameMapManager::Initialize()
 
 bool GameMapManager::ReadMapFile( const char* filename )
 {
+	LPBYTE mapInfo;
+	mapInfo = DibLoadHandle( (LPSTR)filename );
+
+	int width = DIB_CX( mapInfo );
+	int Height = DIB_CY( mapInfo );
+
+	return true;
+	/*
 	FILE* f = NULL;
 	fopen_s( &f, filename, "rb" );
 
@@ -115,6 +124,5 @@ bool GameMapManager::ReadMapFile( const char* filename )
 	LogD( "[%d][%d] Map Loaded! \n", m_BattleMap.size(), m_BattleMap.at( 0 ).size() );
 
 	fclose( f );
-
-	return true;
+	*/
 }

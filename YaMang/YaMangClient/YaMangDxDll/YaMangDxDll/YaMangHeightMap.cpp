@@ -7,6 +7,7 @@
 #include "Dib.h"
 
 
+
 //////////////////////////////////////////////////////////////////////////
 //이하 heightMap 관련 함수
 //////////////////////////////////////////////////////////////////////////
@@ -484,30 +485,43 @@ YAMANGDXDLL_API void ToolViewSetting( int width, int height )
 
 void MakeMapFile( CUSTOMVERTEX* baseVertex )
 {
-	typedef struct MapDetail
+// 	typedef struct MapDetail
+// 	{
+// 		float height;
+// 		int mapProperties;
+// 	}MAPDETAIL;
+
+	typedef struct Tile
 	{
-		float height;
-		int mapProperties;
-	}MAPDETAIL;
+		int mapTileType; // R
+		int mapObjectType; // G
+		float mapHeight; // B
+	}MAPTILE;
 
 	LPBYTE mapDib;
 	
-	MAPDETAIL* mapDetail;
-	mapDetail = new MAPDETAIL[g_HeightMapWidth * g_HeightMapHeight];
+	MAPTILE* mapDetail;
+	mapDetail = new MAPTILE[g_HeightMapWidth * g_HeightMapHeight];
 
 	for ( unsigned int z = 0; z < g_HeightMapHeight; ++z )
 	{
 		for ( unsigned int x = 0; x < g_HeightMapWidth; ++x )
 		{
-			mapDetail[ x + z * g_HeightMapWidth ].height = g_HeightMap[x + z * g_HeightMapWidth].m_VertexPoint.y;
-			mapDetail[ x + z * g_HeightMapWidth ].mapProperties = 0xff;
+			mapDetail[ x + z * g_HeightMapWidth ].mapHeight = g_HeightMap[x + z * g_HeightMapWidth].m_VertexPoint.y;
+			//확인용(완료 후 삭제 예정)
+// 			if ( mapDetail[x + z * g_HeightMapWidth].height >10)
+// 			{
+// 				Log( "%d, %d \n", x, z );
+// 			}
+			mapDetail[ x + z * g_HeightMapWidth ].mapTileType = 0xff;
+			mapDetail[x + z * g_HeightMapWidth].mapObjectType = 0xff;
 		}
 	}
 
-	mapDib = DibCreateEmpty( sizeof(MAPDETAIL)* 8, g_HeightMapWidth, g_HeightMapHeight );
-	memcpy( mapDib + DIB_SIZE(mapDib)-DIB_DATASIZE(mapDib), mapDetail, g_HeightMapWidth*g_HeightMapHeight*sizeof( MAPDETAIL ) );
+	mapDib = DibCreateEmpty( sizeof(MAPTILE)* 8, g_HeightMapWidth, g_HeightMapHeight );
+	memcpy( mapDib + DIB_SIZE(mapDib)-DIB_DATASIZE(mapDib), mapDetail, g_HeightMapWidth*g_HeightMapHeight*sizeof( MAPTILE ) );
 
-	if (false == DibSave(mapDib, "HeightMapFile.ddd"))
+	if (false == DibSave(mapDib, "ServerMap1.ddd"))
 	{
 		MessageBox( NULL, L"Fail To Make Mapfile", L"YaMang.DLL", MB_OK );
 	}

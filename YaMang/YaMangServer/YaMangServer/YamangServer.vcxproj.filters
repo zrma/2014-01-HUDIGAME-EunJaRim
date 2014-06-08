@@ -169,6 +169,9 @@
     <ClInclude Include="GameMapPathFinder.h">
       <Filter>YaMang</Filter>
     </ClInclude>
+    <ClInclude Include="Dib.h">
+      <Filter>YaMang</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DatabaseJobContext.cpp">
@@ -280,6 +283,9 @@
       <Filter>YaMang</Filter>
     </ClCompile>
     <ClCompile Include="GameMapPathFinder.cpp">
+      <Filter>YaMang</Filter>
+    </ClCompile>
+    <ClCompile Include="Dib.cpp">
       <Filter>YaMang</Filter>
     </ClCompile>
   </ItemGroup>

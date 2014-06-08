@@ -6,7 +6,7 @@ struct Tile
 {
 	MapTileType m_MapTileType; // R
 	MapObjectType m_MapObjectType; // G
-	unsigned char m_MapHeight; // B
+	float m_MapHeight; // B
 };
 
 class GameMapManager
