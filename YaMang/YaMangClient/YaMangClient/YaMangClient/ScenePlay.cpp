@@ -351,8 +351,8 @@ void ScenePlay::UpdateBase( int BaseIndex, int playerID )
 
 void ScenePlay::InitUIObjects()
 {
-	m_RegenBar = new UIObject(SPRITE_UI_REGEN_BAR, SCENE_PLAY, 180, 50, true);
-	m_RegenFlag = new UIObject(SPRITE_UI_REGEN_FLAG, SCENE_PLAY, 180, 25, true);
+	m_RegenBar = new UIObject(SPRITE_UI_REGEN_BAR, SCENE_PLAY, 250, 50, true);
+	m_RegenFlag = new UIObject(SPRITE_UI_REGEN_FLAG, SCENE_PLAY, 250, 31, true);
 	m_Minimap = new MiniMap(SPRITE_UI_MAP, SCENE_PLAY, 350, 100, false);
 }
 
@@ -374,7 +374,7 @@ void ScenePlay::CheckRegenFlag()
 
 	if (m_RegenTime > 0)
 	{
-		float flagPos = static_cast<float>(((m_StackedTime / m_RegenTime) * 950) + 180);
+		float flagPos = static_cast<float>(((m_StackedTime / m_RegenTime) * 700) + 250);
 
 		if (flagPos >= 180)
 		{

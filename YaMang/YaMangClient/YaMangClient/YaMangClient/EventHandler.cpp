@@ -93,7 +93,7 @@ void NetworkManager::HandleEnterRoomResult( EnterRoomResult& inPacket )
 
 		wchar_t wsRoomNum[100] = { 0, };
 		wsprintf( wsRoomNum, L"RoomNum : %d", m_RoomNumber );
-		TextManager::GetInstance( )->RegistText( TEXT_ROOM_NUMBER, wsRoomNum, 400, 30, SCENE_PLAY );
+		TextManager::GetInstance( )->RegistText( TEXT_ROOM_NUMBER, wsRoomNum, 20, 60, SCENE_PLAY );
 	}
 	else
 	{
