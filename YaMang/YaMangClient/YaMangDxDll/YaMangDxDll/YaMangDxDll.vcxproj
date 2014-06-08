@@ -124,7 +124,7 @@ xcopy "..\..\..\Bin\YaMangClient\YaMangDxDll.lib" "..\..\..\Bin\YaMangMapTool\" 
     <ClCompile Include="YaMangSpriteUI.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="SelectShader.hlsli" />
+    <None Include="SelectShader.fx" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
