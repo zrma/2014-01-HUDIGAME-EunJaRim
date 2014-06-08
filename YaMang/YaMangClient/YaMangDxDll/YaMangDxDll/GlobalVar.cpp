@@ -62,6 +62,6 @@ LPD3DXSPRITE			g_UISprite = nullptr;
 INT						g_UIMaxSize = 0;
 
 // 셰이더
-LPDIRECT3DVERTEXDECLARATION9	g_pDecl = nullptr;		// 정점들 선언정보
+LPDIRECT3DVERTEXDECLARATION9	g_Decl = nullptr;		// 정점들 선언정보
 LPD3DXEFFECT					g_Effect = nullptr;		// fx파일을 사용하기 위한 인터페이스
 bool							g_IsEffectReady = false;

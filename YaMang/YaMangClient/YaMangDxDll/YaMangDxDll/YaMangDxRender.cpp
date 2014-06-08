@@ -54,12 +54,42 @@ YAMANGDXDLL_API bool PreRendering()
 
 YAMANGDXDLL_API void Rendering( MESHOBJECT* inputVal )
 {
-	if ( g_IsEffectReady )
-	{
+	UINT nPass;
 
+	if ( g_IsEffectReady && g_Effect )
+	{
+		g_D3dDevice->SetVertexDeclaration( g_Decl );
+		
+		// fx출력에 사용할 테크닉 선정
+		g_Effect->SetTechnique( "MyShader" );
+
+		// fx를 사용한 출력개시
+		g_Effect->Begin( &nPass, D3DXFX_DONOTSAVESTATE );
+		
+		// PASS 개수만큼 출력
+		for ( UINT i = 0; i < nPass; ++i )
+		{
+			g_Effect->BeginPass( i );
+			
+			for ( DWORD j = 0; j < inputVal->NumMaterials; ++j )
+			{
+				g_D3dDevice->SetMaterial( &inputVal->MeshMarterials[j] );
+				g_D3dDevice->SetTexture( 0, inputVal->MeshTexture[j] );
+
+				( inputVal->importedMesh )->DrawSubset( j );
+			}
+
+			g_Effect->EndPass();
+		}
+
+		/// fx를 사용한 출력종료
+		g_Effect->End();
 	}
 	else
 	{
+		g_D3dDevice->SetVertexShader( NULL );
+		g_D3dDevice->SetPixelShader( NULL );
+
 		g_D3dDevice->SetRenderState( D3DRS_LIGHTING, TRUE );
 		g_D3dDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_SOLID );
 

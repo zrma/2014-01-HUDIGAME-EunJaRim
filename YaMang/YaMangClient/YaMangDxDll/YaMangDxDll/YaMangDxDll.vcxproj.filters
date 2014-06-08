@@ -101,4 +101,9 @@
       <Filter>YaMangDxDll\Specific</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="SelectShader.hlsli">
+      <Filter>YaMangDxDll\Shader</Filter>
+    </None>
+  </ItemGroup>
 </Project>
