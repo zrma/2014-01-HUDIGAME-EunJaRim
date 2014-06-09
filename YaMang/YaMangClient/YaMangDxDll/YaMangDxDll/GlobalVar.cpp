@@ -23,6 +23,8 @@ LPDIRECT3DTEXTURE9 g_MapHeightInfo = nullptr;
 LPDIRECT3DTEXTURE9 g_MapTexture = nullptr;
 LPDIRECT3DTEXTURE9 g_MapTextureArray[MAP_TEXTURE_COUNT] = { 0, };
 
+LPDIRECT3DTEXTURE9	g_MeshTexture = nullptr;
+
 DWORD g_XHeight = 0;
 DWORD g_ZHeight = 0;
 
@@ -62,6 +64,6 @@ LPD3DXSPRITE			g_UISprite = nullptr;
 INT						g_UIMaxSize = 0;
 
 // 셰이더
-LPDIRECT3DVERTEXDECLARATION9	g_Decl = nullptr;		// 정점들 선언정보
-LPD3DXEFFECT					g_Effect = nullptr;		// fx파일을 사용하기 위한 인터페이스
+LPDIRECT3DVERTEXDECLARATION9	g_Decl;			// 정점들 선언정보
+LPD3DXEFFECT					g_Effect;		// fx파일을 사용하기 위한 인터페이스
 bool							g_IsEffectReady = false;

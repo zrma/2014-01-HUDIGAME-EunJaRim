@@ -49,9 +49,10 @@ extern LPDIRECT3DDEVICE9 g_D3dDevice;
 //////////////////////////////////////////////////////////////////////////
 extern LPD3DXMESH g_Mesh;
 
-// 클라이언트용 textureload함수
+// 클라이언트용 textureload 함수
 extern LPDIRECT3DTEXTURE9 g_MapHeightInfo;
 extern LPDIRECT3DTEXTURE9 g_MapTexture;
+extern LPDIRECT3DTEXTURE9 g_MeshTexture;
 
 //////////////////////////////////////////////////////////////////////////
 // 쿼드트리용

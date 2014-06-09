@@ -27,6 +27,7 @@ extern "C"{
 
 	//Main rendering MeshObject를 넣어 render 진행
 	YAMANGDXDLL_API void Rendering( MESHOBJECT* inputVal );
+	YAMANGDXDLL_API void SetEffect( bool isEffect = true );
 
 	//rendering 후 디바이스 endScene
 	YAMANGDXDLL_API void PostRendering();
