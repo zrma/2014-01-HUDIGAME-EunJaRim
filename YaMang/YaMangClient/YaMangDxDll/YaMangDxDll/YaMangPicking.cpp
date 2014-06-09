@@ -159,6 +159,82 @@ YAMANGDXDLL_API HRESULT TransPickedTriangle( float* pickedX, float* pickedZ, int
 }
 
 
+YAMANGDXDLL_API HRESULT TransPickedTriangleQuadTree( float* pickedX, float* pickedZ, int* PickedTriPointA, int* PickedTriPointB, int* PickedTriPointC )
+{
+	if ( !( pickedX && pickedZ ) || !g_HeightMap )
+	{
+		return S_FALSE;
+	}
+
+	BOOL hit1 = false;
+	BOOL hit2 = false;
+	float dist1 = 0;
+	float dist2 = 0;
+
+	int trianglePointA = NULL;
+	int trianglePointB = NULL;
+	int trianglePointC = NULL;
+	int trianglePointD = NULL;
+	
+	for ( UINT z = 0; ( z < ( g_HeightMapHeight - 1 ) ) && !( hit1 | hit2 ); ++z )
+	{
+		for ( UINT x = 0; ( x < ( g_HeightMapWidth - 1 ) ) && !( hit1 | hit2 ); ++x )
+		{
+			trianglePointA = g_HeightMapHeight * z + x;
+			trianglePointB = g_HeightMapHeight * z + ( x + 1 );
+			trianglePointC = g_HeightMapHeight *( z + 1 ) + x;
+			hit1 = D3DXIntersectTri( &g_HeightMap[trianglePointA].m_VertexPoint, &g_HeightMap[trianglePointB].m_VertexPoint, &g_HeightMap[trianglePointC].m_VertexPoint, &g_RayOrigin, &g_RayDirection, pickedX, pickedZ, &dist1 );
+
+			trianglePointD = g_ZHeight*( z + 1 ) + ( x + 1 );
+			hit2 = D3DXIntersectTri( &g_HeightMap[trianglePointB].m_VertexPoint, &g_HeightMap[trianglePointC].m_VertexPoint, &g_HeightMap[trianglePointD].m_VertexPoint, &g_RayOrigin, &g_RayDirection, pickedX, pickedZ, &dist2 );
+		}
+	}
+
+	HRESULT result = S_FALSE;
+	CUSTOMVERTEX* PickedPointA = nullptr;
+	CUSTOMVERTEX* PickedPointB = nullptr;
+	CUSTOMVERTEX* PickedPointC = nullptr;
+
+	if ( ( hit1 && ( dist1 > 0 ) ) || ( hit2 && ( dist2 > 0 ) ) )
+	{
+		//CUSTOMVERTEX* intersectedVertexBufferStart;
+		//g_Mesh->LockVertexBuffer( 0, (void**)&intersectedVertexBufferStart );
+
+		if ( hit1 )
+		{
+			PickedPointA = &g_HeightMap[trianglePointA];
+			PickedPointB = &g_HeightMap[trianglePointB];
+			PickedPointC = &g_HeightMap[trianglePointC];
+
+			if ( PickedTriPointA && PickedTriPointB && PickedTriPointC )
+			{
+				*PickedTriPointA = trianglePointA;
+				*PickedTriPointB = trianglePointB;
+				*PickedTriPointC = trianglePointC;
+			}
+		}
+		else
+		{
+			PickedPointA = &g_HeightMap[trianglePointB];
+			PickedPointB = &g_HeightMap[trianglePointC];
+			PickedPointC = &g_HeightMap[trianglePointD];
+
+			if ( PickedTriPointA && PickedTriPointB && PickedTriPointC )
+			{
+				*PickedTriPointA = trianglePointB;
+				*PickedTriPointB = trianglePointC;
+				*PickedTriPointC = trianglePointD;
+			}
+		}
+
+		*pickedX += PickedPointA->m_VertexPoint.x;
+		*pickedZ += PickedPointA->m_VertexPoint.z;
+
+		result = S_OK;
+	}
+	
+	return result;
+}
 
 enum AreaModeType
 {
