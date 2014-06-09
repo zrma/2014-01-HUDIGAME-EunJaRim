@@ -26,7 +26,7 @@ void KnightAttack::OnTick()
 {
 
 	// 둘중 하나라도 죽으면 어텍 취소
-	if ( m_OwnerCrops->IsDead() || m_TargerCrops->IsDead() )
+	if ( m_OwnerCrops->IsDead() || m_TargetCrops->IsDead() )
 	{
 		LogD( "Knight Attack Failed \n" );
 		m_ActionStatus = ACTION_END;
@@ -35,9 +35,9 @@ void KnightAttack::OnTick()
 	}
 
 	m_OwnerCrops->MoveStop();
-	m_TargerCrops->ReCalculatePosition();
+	m_TargetCrops->ReCalculatePosition();
 	const PositionInfo& myCorpsPositionInfo = m_OwnerCrops->GetPositionInfo();
-	const PositionInfo& targetPositionInfo = m_TargerCrops->GetPositionInfo();
+	const PositionInfo& targetPositionInfo = m_TargetCrops->GetPositionInfo();
 
 
 
@@ -68,12 +68,12 @@ void KnightAttack::OnTick()
 			return;
 		}
 
-		m_OwnerCrops->AttackCorps( m_TargerCrops );
+		m_OwnerCrops->AttackCorps( m_TargetCrops );
 
 		LogD( "Knight Attack OnTick Attack Success \n" );
 
 
-		if ( m_OwnerCrops->IsDead() || m_TargerCrops->IsDead() )
+		if ( m_OwnerCrops->IsDead() || m_TargetCrops->IsDead() )
 		{
 			LogD( "Dead! \n" );
 			m_ActionStatus = ACTION_END;

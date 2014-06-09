@@ -8,7 +8,7 @@ public:
 	virtual ~GuardArea( );
 
 	void		SetTargetCorps( Corps* targetCrops );
-	Corps*		GetTargetCorps() const { return m_TargerCrops; }
+	Corps*		GetTargetCorps() const { return m_TargetCrops; }
 
 private:
 	virtual void OnBegin();
@@ -18,7 +18,7 @@ private:
 	void		ReturnMyBase();
 
 private:
-	Corps*		m_TargerCrops = nullptr;
+	Corps*		m_TargetCrops = nullptr;
 	bool		m_GuardModeOn = false;
 };
 

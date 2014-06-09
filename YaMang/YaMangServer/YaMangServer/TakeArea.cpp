@@ -18,10 +18,10 @@ TakeArea::~TakeArea()
 void TakeArea::OnBegin()
 {
 	m_OwnerCrops->ReCalculatePosition();
-	m_TargerCrops->ReCalculatePosition();
+	m_TargetCrops->ReCalculatePosition();
 
 
-	const PositionInfo& targetPositionInfo = m_TargerCrops->GetPositionInfo();
+	const PositionInfo& targetPositionInfo = m_TargetCrops->GetPositionInfo();
 
 	D3DXVECTOR2 destination;
 	destination.x = targetPositionInfo.m_EyePoint.x;
@@ -44,7 +44,7 @@ void TakeArea::OnTick()
 {
 
 	// 둘중 하나라도 죽으면 어텍 취소
-	if ( m_OwnerCrops->IsDead() || m_TargerCrops->IsDead() )
+	if ( m_OwnerCrops->IsDead() || m_TargetCrops->IsDead() )
 	{
 		LogD( "TakeArea Failed \n" );
 		m_ActionStatus = ACTION_END;
@@ -53,9 +53,9 @@ void TakeArea::OnTick()
 	}
 
 	m_OwnerCrops->MoveStop();
-	m_TargerCrops->ReCalculatePosition();
+	m_TargetCrops->ReCalculatePosition();
 	const PositionInfo& myCorpsPositionInfo = m_OwnerCrops->GetPositionInfo( );
-	const PositionInfo& targetPositionInfo = m_TargerCrops->GetPositionInfo( );
+	const PositionInfo& targetPositionInfo = m_TargetCrops->GetPositionInfo( );
 
 	D3DXVECTOR2 destination;
 	destination.x = targetPositionInfo.m_EyePoint.x;
@@ -64,25 +64,25 @@ void TakeArea::OnTick()
 
 	if ( length < m_OwnerCrops->GetAttackRange() )
 	{
-		m_OwnerCrops->AttackCorps( m_TargerCrops ); 
+		m_OwnerCrops->AttackCorps( m_TargetCrops ); 
 		
 		LogD( "TakeArea OnTick Attack Success \n" );
 
 
-		if ( m_TargerCrops->IsDead() )
+		if ( m_TargetCrops->IsDead() )
 		{
 			LogD( "Dead! \n" );
 			m_ActionStatus = ACTION_END;
 			m_OwnerCrops->DoNextAction( this, 0 );
 
-			UnitType unitType = m_TargerCrops->GetUnitType();
+			UnitType unitType = m_TargetCrops->GetUnitType();
 			if ( UnitType::UNIT_GUARD == unitType )
 			{
-				m_GameRoom->TakeBase( m_OwnerCrops->GetPlayerID( ), m_TargerCrops->GetPlayerID( ), m_OwnerCrops->GetCorpsID( ), m_TargerCrops->GetCorpsID( ) );
+				m_GameRoom->TakeBase( m_OwnerCrops->GetPlayerID( ), m_TargetCrops->GetPlayerID( ), m_OwnerCrops->GetCorpsID( ), m_TargetCrops->GetCorpsID( ) );
 			}
 			else if ( UnitType::UNIT_KING == unitType )
 			{
-				m_GameRoom->GameRoomLoose( m_TargerCrops->GetPlayerID() );
+				m_GameRoom->GameRoomLoose( m_TargetCrops->GetPlayerID() );
 			}
 			
 			
@@ -91,7 +91,7 @@ void TakeArea::OnTick()
 		{
 			LogD( "Ready Re Attack!! \n" );
 
-			Action* targetAction = m_TargerCrops->GetHoldingAction();
+			Action* targetAction = m_TargetCrops->GetHoldingAction();
 			if ( !targetAction || ACTION_END == targetAction->GetActionStatus() )
 			{
 				LogD( "Guard Start! \n" );
@@ -99,7 +99,7 @@ void TakeArea::OnTick()
 				// m_TargerCrops->ChangeFormation( FormationType::FORMATION_DEFENSE );
 				GuardArea* action = new GuardArea();
 				action->SetGameRoom( m_GameRoom );
-				action->SetOwnerCorps( m_TargerCrops );
+				action->SetOwnerCorps( m_TargetCrops );
 				action->SetTargetCorps( m_OwnerCrops );
 
 				m_GameRoom->AddActionToScheduler( action, 0 ); // 반격하려고 정신차리는 딜레이 빠른 반격을 위해 여기는 없애자

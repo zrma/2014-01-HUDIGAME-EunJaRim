@@ -7,8 +7,8 @@ public:
 	Attack();
 	virtual ~Attack();
 
-	void		SetTargetCorps( Corps* targetCrops ) { m_TargerCrops = targetCrops; }
-	Corps*		GetTargetCorps( ) const { return m_TargerCrops; }
+	void		SetTargetCorps( Corps* targetCrops ) { m_TargetCrops = targetCrops; }
+	Corps*		GetTargetCorps( ) const { return m_TargetCrops; }
 
 private:
 	virtual void OnBegin( );
@@ -16,6 +16,6 @@ private:
 	virtual void OnEnd( );
 
 private:
-	Corps*		m_TargerCrops = nullptr;
+	Corps*		m_TargetCrops = nullptr;
 };
 

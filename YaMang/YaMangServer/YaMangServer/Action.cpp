@@ -24,6 +24,7 @@ void Action::DoAction()
 			break;
 		case ACTION_END:
 			OnEnd();
+			LowKick();
 			break;
 	}
 }

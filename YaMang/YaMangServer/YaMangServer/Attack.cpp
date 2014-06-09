@@ -17,10 +17,10 @@ void Attack::OnBegin()
 {
 	LogD( "Attack OnBegin \n" );
 	m_OwnerCrops->ReCalculatePosition();
-	m_TargerCrops->ReCalculatePosition();
+	m_TargetCrops->ReCalculatePosition();
 
 
-	const PositionInfo& targetPositionInfo = m_TargerCrops->GetPositionInfo();
+	const PositionInfo& targetPositionInfo = m_TargetCrops->GetPositionInfo();
 
 	D3DXVECTOR2 destination;
 	destination.x = targetPositionInfo.m_EyePoint.x;
@@ -44,7 +44,7 @@ void Attack::OnTick()
 {
 
 	// 둘중 하나라도 죽으면 어텍 취소
-	if ( m_OwnerCrops->IsDead( ) || m_TargerCrops->IsDead( ) )
+	if ( m_OwnerCrops->IsDead( ) || m_TargetCrops->IsDead( ) )
 	{
 		LogD( "Attack Failed \n" );
 		m_ActionStatus = ACTION_END;
@@ -53,10 +53,10 @@ void Attack::OnTick()
 	}
 
 	m_OwnerCrops->MoveStop();
-	m_TargerCrops->ReCalculatePosition();
+	m_TargetCrops->ReCalculatePosition();
 	
 	const PositionInfo& myCorpsPositionInfo = m_OwnerCrops->GetPositionInfo();
-	const PositionInfo& targetPositionInfo = m_TargerCrops->GetPositionInfo();
+	const PositionInfo& targetPositionInfo = m_TargetCrops->GetPositionInfo();
 	
 
 	D3DXVECTOR2 destination;
@@ -67,12 +67,12 @@ void Attack::OnTick()
 	if ( length < m_OwnerCrops->GetAttackRange() )
 	{
 		
-		m_OwnerCrops->AttackCorps( m_TargerCrops );
+		m_OwnerCrops->AttackCorps( m_TargetCrops );
 
 		LogD( "Attack OnTick Attack Success \n" );
 
 
-		if ( m_OwnerCrops->IsDead() || m_TargerCrops->IsDead() )
+		if ( m_OwnerCrops->IsDead() || m_TargetCrops->IsDead() )
 		{
 			LogD( "Dead! \n" );
 			m_ActionStatus = ACTION_END;
