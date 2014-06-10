@@ -519,10 +519,20 @@ void MakeMapFile( CUSTOMVERTEX* baseVertex )
 // 				Log( "%d, %d \n", x, z );
 // 			}
 			mapDetail[ x + z * g_HeightMapWidth ].mapTileType = 0xff;
-			mapDetail[x + z * g_HeightMapWidth].mapObjectType = 0xff;
+			mapDetail[ x + z * g_HeightMapWidth ].mapObjectType = 0xff;
+
+			//확인용 코드
+			if (z==0 && x==0)
+			{
+				mapDetail[x + z * g_HeightMapWidth].mapTileType = 0x00;
+			}
+			if (z==g_HeightMapHeight-1 && x==g_HeightMapWidth)
+			{
+				mapDetail[x + z * g_HeightMapWidth].mapTileType = 0x00;
+			}
 		}
 	}
-
+	
 	mapDib = DibCreateEmpty( sizeof(MAPTILE)* 8, g_HeightMapWidth, g_HeightMapHeight );
 	memcpy( mapDib + DIB_SIZE(mapDib)-DIB_DATASIZE(mapDib), mapDetail, g_HeightMapWidth*g_HeightMapHeight*sizeof( MAPTILE ) );
 
