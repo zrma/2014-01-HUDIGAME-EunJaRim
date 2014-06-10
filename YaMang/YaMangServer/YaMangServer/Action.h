@@ -43,7 +43,7 @@ protected:
 	Corps*				m_OwnerCorps = nullptr;
 	ULONGLONG			m_Time = 0;
 	bool				m_NoEgg = false;
-	ActionStatus		m_ActionStatus = ACTION_BEGIN;
+	ActionStatus		m_ActionStatus = ACTION_NONE;
 
 
 	GameRoom*		m_GameRoom = nullptr;

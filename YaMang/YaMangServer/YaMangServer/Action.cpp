@@ -5,6 +5,7 @@
 
 Action::Action()
 {
+	m_ActionStatus = ACTION_BEGIN;
 }
 
 
