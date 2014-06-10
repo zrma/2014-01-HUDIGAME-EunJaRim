@@ -17,7 +17,7 @@ GuardArea::~GuardArea()
 
 void GuardArea::SetTargetCorps( Corps* targetCrops )
 {
-	m_TargetCrops = targetCrops;
+	m_TargetCorps = targetCrops;
 	m_GuardModeOn = true;
 }
 
@@ -26,31 +26,31 @@ void GuardArea::OnBegin()
 	LogD( "GuardArea OnBegin \n" );
 	m_ActionStatus = ACTION_TICK;
 
-	m_OwnerCrops->ReCalculatePosition();
-	m_TargetCrops->ReCalculatePosition();
+	m_OwnerCorps->ReCalculatePosition();
+	m_TargetCorps->ReCalculatePosition();
 
 	if ( !m_GuardModeOn )
 	{
-		m_OwnerCrops->DoNextAction( this, 0 );
+		m_OwnerCorps->DoNextAction( this, 0 );
 		return;
 	}
 
 
-	const PositionInfo& targetPositionInfo = m_TargetCrops->GetPositionInfo();
+	const PositionInfo& targetPositionInfo = m_TargetCorps->GetPositionInfo();
 
 	D3DXVECTOR2 destination;
 	destination.x = targetPositionInfo.m_EyePoint.x;
 	destination.y = targetPositionInfo.m_EyePoint.z;
-	float length = m_OwnerCrops->GetTargetLength( destination );
+	float length = m_OwnerCorps->GetTargetLength( destination );
 
 	// 공격명령이 바로 앞에서 지시될때와 이동해야할 때를 구분 
-	if ( length < m_OwnerCrops->GetAttackRange() )
+	if ( length < m_OwnerCorps->GetAttackRange() )
 	{
-		m_OwnerCrops->DoNextAction( this, m_OwnerCrops->GetAttackDelay() );
+		m_OwnerCorps->DoNextAction( this, m_OwnerCorps->GetAttackDelay() );
 	}
 	else
 	{
-		m_OwnerCrops->DoNextAction( this, 0 );
+		m_OwnerCorps->DoNextAction( this, 0 );
 	}
 
 }
@@ -58,18 +58,18 @@ void GuardArea::OnBegin()
 void GuardArea::OnTick()
 {
 	// 둘중 하나라도 죽으면 어텍 취소
-	if ( m_OwnerCrops->IsDead() || m_TargetCrops->IsDead() )
+	if ( m_OwnerCorps->IsDead() || m_TargetCorps->IsDead() )
 	{
 		LogD( "Attack Failed \n" );
 		m_ActionStatus = ACTION_END;
-		m_OwnerCrops->DoNextAction( this, 0 );
+		m_OwnerCorps->DoNextAction( this, 0 );
 		return;
 	}
 
-	m_OwnerCrops->MoveStop();
-	m_TargetCrops->ReCalculatePosition();
-	const PositionInfo& myCorpsPositionInfo = m_OwnerCrops->GetPositionInfo();
-	const PositionInfo& targetPositionInfo = m_TargetCrops->GetPositionInfo();
+	m_OwnerCorps->MoveStop();
+	m_TargetCorps->ReCalculatePosition();
+	const PositionInfo& myCorpsPositionInfo = m_OwnerCorps->GetPositionInfo();
+	const PositionInfo& targetPositionInfo = m_TargetCorps->GetPositionInfo();
 
 	float nowX = myCorpsPositionInfo.m_EyePoint.x;
 	float nowZ = myCorpsPositionInfo.m_EyePoint.z;
@@ -80,36 +80,36 @@ void GuardArea::OnTick()
 	D3DXVECTOR2 destination;
 	destination.x = targetPositionInfo.m_EyePoint.x;
 	destination.y = targetPositionInfo.m_EyePoint.z;
-	float length = m_OwnerCrops->GetTargetLength( destination );
+	float length = m_OwnerCorps->GetTargetLength( destination );
 
 	D3DXVECTOR2 vector;
 	vector.x = targetX - nowX;
 	vector.y = targetZ - nowZ;
 
 
-	if ( m_GuardModeOn && length < m_OwnerCrops->GetAttackRange( ) )
+	if ( m_GuardModeOn && length < m_OwnerCorps->GetAttackRange( ) )
 	{
-		m_OwnerCrops->AttackCorps( m_TargetCrops );
+		m_OwnerCorps->AttackCorps( m_TargetCorps );
 
 		LogD( "GuardArea OnTick Attack Success \n" );
 
 
-		if ( m_TargetCrops->IsDead() )
+		if ( m_TargetCorps->IsDead() )
 		{
 			LogD( "Guarder Killed Target! \n" );
 			ReturnMyBase();
 			return;
 		}
-		else if ( m_OwnerCrops->IsDead() )
+		else if ( m_OwnerCorps->IsDead() )
 		{
 			m_ActionStatus = ACTION_END;
-			m_OwnerCrops->DoNextAction( this, 0 );
+			m_OwnerCorps->DoNextAction( this, 0 );
 		}
 		else
 		{
 			LogD( "Ready Re Attack!! \n" );
 			m_ActionStatus = ACTION_TICK;
-			m_OwnerCrops->DoNextAction( this, m_OwnerCrops->GetAttackDelay() );
+			m_OwnerCorps->DoNextAction( this, m_OwnerCorps->GetAttackDelay() );
 		}
 	}
 	else
@@ -127,7 +127,7 @@ void GuardArea::OnTick()
 		vector.x = targetX - nowX;
 		vector.y = targetZ - nowZ;
 
-		float halfRange = m_OwnerCrops->GetAttackRange() / 2;
+		float halfRange = m_OwnerCorps->GetAttackRange() / 2;
 		if ( vector.x > 0 )
 		{
 			targetX = targetX - halfRange;
@@ -148,12 +148,12 @@ void GuardArea::OnTick()
 		D3DXVECTOR2 destination;
 		destination.x = targetX;
 		destination.y = targetZ;
-		ULONGLONG movingTime = m_OwnerCrops->MoveStart( destination, 2 );
+		ULONGLONG movingTime = m_OwnerCorps->MoveStart( destination, 2 );
 
 
 		LogD( "GuardArea OnTick Chase \n" );
 		m_ActionStatus = ACTION_TICK;
-		m_OwnerCrops->DoNextAction( this, movingTime );
+		m_OwnerCorps->DoNextAction( this, movingTime );
 
 
 
@@ -163,7 +163,7 @@ void GuardArea::OnTick()
 void GuardArea::OnEnd()
 {
 	LogD( "GuardArea OnEnd \n" );
-	m_OwnerCrops->MoveStop();
+	m_OwnerCorps->MoveStop();
 	Action::OnEnd();
 }
 
@@ -171,20 +171,20 @@ void GuardArea::ReturnMyBase()
 {
 	LogD( "Return to my original Position! \n" );
 
-	const PositionInfo& targetPositionInfo = m_TargetCrops->GetPositionInfo();
+	const PositionInfo& targetPositionInfo = m_TargetCorps->GetPositionInfo();
 
 
-	UnitType unitType = m_OwnerCrops->GetUnitType();
+	UnitType unitType = m_OwnerCorps->GetUnitType();
 	PositionInfo originalPosition;
 
 	if ( UnitType::UNIT_GUARD == unitType )
 	{
-		int guardIndex = m_GameRoom->GetGuardIndexByID( m_OwnerCrops->GetCorpsID() );
+		int guardIndex = m_GameRoom->GetGuardIndexByID( m_OwnerCorps->GetCorpsID() );
 		originalPosition = m_GameRoom->GetGuardPositionInfo( guardIndex );
 	}
 	else if ( UnitType::UNIT_KING == unitType )
 	{
-		int kingIndex = m_GameRoom->GetKingIndexByID( m_OwnerCrops->GetCorpsID() );
+		int kingIndex = m_GameRoom->GetKingIndexByID( m_OwnerCorps->GetCorpsID() );
 		originalPosition = m_GameRoom->GetKingPositionInfo( kingIndex );
 	}
 	m_GuardModeOn = false;
@@ -193,9 +193,9 @@ void GuardArea::ReturnMyBase()
 	D3DXVECTOR2 destination;
 	destination.x = originalPosition.m_EyePoint.x + 0.01f;
 	destination.y = originalPosition.m_EyePoint.z + 0.01f;
-	ULONGLONG movingTime = m_OwnerCrops->MoveStart( destination );
+	ULONGLONG movingTime = m_OwnerCorps->MoveStart( destination );
 
 	LogD( "GuardArea OnTick Return to my original Position \n" );
 	m_ActionStatus = ACTION_END;
-	m_OwnerCrops->DoNextAction( this, movingTime );
+	m_OwnerCorps->DoNextAction( this, movingTime );
 }

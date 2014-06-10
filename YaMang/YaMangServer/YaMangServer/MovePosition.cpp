@@ -23,10 +23,10 @@ void MovePosition::OnBegin()
 	destination.x = m_Destination.m_EyePoint.x;
 	destination.y = m_Destination.m_EyePoint.z;
 
-	ULONGLONG movingTime = m_OwnerCrops->MoveStart( destination );
+	ULONGLONG movingTime = m_OwnerCorps->MoveStart( destination );
 
 	m_ActionStatus = ACTION_TICK;
-	m_OwnerCrops->DoNextAction( this, movingTime );
+	m_OwnerCorps->DoNextAction( this, movingTime );
 
 }
 
@@ -36,12 +36,12 @@ void MovePosition::OnTick()
 	LogD( "MovePosition OnTick \n" );
 
 	m_ActionStatus = ACTION_END;
-	m_OwnerCrops->DoNextAction( this, 0 );
+	m_OwnerCorps->DoNextAction( this, 0 );
 }
 
 void MovePosition::OnEnd()
 {
 	LogD( "MovePosition OnEnd \n" );
-	m_OwnerCrops->MoveStop();
+	m_OwnerCorps->MoveStop();
 	Action::OnEnd();
 }

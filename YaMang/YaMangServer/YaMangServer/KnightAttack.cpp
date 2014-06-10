@@ -19,32 +19,32 @@ void KnightAttack::OnBegin()
 {
 	LogD( "Knight Attack OnBegin \n" );
 	m_ActionStatus = ACTION_TICK;
-	m_OwnerCrops->DoNextAction( this, 0 );
+	m_OwnerCorps->DoNextAction( this, 0 );
 }
 
 void KnightAttack::OnTick()
 {
 
 	// 둘중 하나라도 죽으면 어텍 취소
-	if ( m_OwnerCrops->IsDead() || m_TargetCrops->IsDead() )
+	if ( m_OwnerCorps->IsDead() || m_TargetCorps->IsDead() )
 	{
 		LogD( "Knight Attack Failed \n" );
 		m_ActionStatus = ACTION_END;
-		m_OwnerCrops->DoNextAction( this, 0 );
+		m_OwnerCorps->DoNextAction( this, 0 );
 		return;
 	}
 
-	m_OwnerCrops->MoveStop();
-	m_TargetCrops->ReCalculatePosition();
-	const PositionInfo& myCorpsPositionInfo = m_OwnerCrops->GetPositionInfo();
-	const PositionInfo& targetPositionInfo = m_TargetCrops->GetPositionInfo();
+	m_OwnerCorps->MoveStop();
+	m_TargetCorps->ReCalculatePosition();
+	const PositionInfo& myCorpsPositionInfo = m_OwnerCorps->GetPositionInfo();
+	const PositionInfo& targetPositionInfo = m_TargetCorps->GetPositionInfo();
 
 
 
 	D3DXVECTOR2 destination;
 	destination.x = targetPositionInfo.m_EyePoint.x;
 	destination.y = targetPositionInfo.m_EyePoint.z;
-	float length = m_OwnerCrops->GetTargetLength( destination );
+	float length = m_OwnerCorps->GetTargetLength( destination );
 
 
 	// 하드 코딩 더 움직이는 거리
@@ -57,27 +57,27 @@ void KnightAttack::OnTick()
 
 	}
 
-	if ( m_CanAttack && length < m_OwnerCrops->GetAttackRange( ) )
+	if ( m_CanAttack && length < m_OwnerCorps->GetAttackRange( ) )
 	{
 		// 지연 공격 방어
 		ULONGLONG eTime = GetTickCount64() - m_AttackedTime;
-		if ( eTime < m_OwnerCrops->GetAttackDelay() )
+		if ( eTime < m_OwnerCorps->GetAttackDelay() )
 		{
 			m_ActionStatus = ACTION_TICK;
-			m_OwnerCrops->DoNextAction( this, m_OwnerCrops->GetAttackDelay( ) - eTime );
+			m_OwnerCorps->DoNextAction( this, m_OwnerCorps->GetAttackDelay( ) - eTime );
 			return;
 		}
 
-		m_OwnerCrops->AttackCorps( m_TargetCrops );
+		m_OwnerCorps->AttackCorps( m_TargetCorps );
 
 		LogD( "Knight Attack OnTick Attack Success \n" );
 
 
-		if ( m_OwnerCrops->IsDead() || m_TargetCrops->IsDead() )
+		if ( m_OwnerCorps->IsDead() || m_TargetCorps->IsDead() )
 		{
 			LogD( "Dead! \n" );
 			m_ActionStatus = ACTION_END;
-			m_OwnerCrops->DoNextAction( this, 0 );
+			m_OwnerCorps->DoNextAction( this, 0 );
 			return;
 		}
 
@@ -85,7 +85,7 @@ void KnightAttack::OnTick()
 		m_AttackedTime = GetTickCount64( );
 
 		m_ActionStatus = ACTION_TICK;
-		m_OwnerCrops->DoNextAction( this, 0 );
+		m_OwnerCorps->DoNextAction( this, 0 );
 	}
 	else
 	{
@@ -125,18 +125,18 @@ void KnightAttack::OnTick()
 		D3DXVECTOR2 destination;
 		destination.x = targetX;
 		destination.y = targetZ;
-		ULONGLONG movingTime = m_OwnerCrops->MoveStart( destination, 2 );
+		ULONGLONG movingTime = m_OwnerCorps->MoveStart( destination, 2 );
 
 
 		LogD( "Knight Attack OnTick Chase \n" );
 		m_ActionStatus = ACTION_TICK;
-		m_OwnerCrops->DoNextAction( this, movingTime );
+		m_OwnerCorps->DoNextAction( this, movingTime );
 	}
 }
 
 void KnightAttack::OnEnd()
 {
 	LogD( "Knight Attack OnEnd \n" );
-	m_OwnerCrops->MoveStop();
+	m_OwnerCorps->MoveStop();
 	Action::OnEnd();
 }

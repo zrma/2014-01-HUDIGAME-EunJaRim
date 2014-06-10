@@ -7,8 +7,8 @@ public:
 	KnightAttack();
 	virtual ~KnightAttack( );
 
-	void		SetTargetCorps( Corps* targetCrops ) { m_TargetCrops = targetCrops; }
-	Corps*		GetTargetCorps() const { return m_TargetCrops; }
+	void		SetTargetCorps( Corps* targetCorps ) { m_TargetCorps = targetCorps; }
+	Corps*		GetTargetCorps() const { return m_TargetCorps; }
 
 private:
 	virtual void OnBegin();
@@ -16,7 +16,7 @@ private:
 	virtual void OnEnd();
 
 private:
-	Corps*		m_TargetCrops = nullptr;
+	Corps*		m_TargetCorps = nullptr;
 	bool		m_CanAttack = true;
 	ULONGLONG	m_AttackedTime = 0;
 };
