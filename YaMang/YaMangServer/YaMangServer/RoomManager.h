@@ -37,6 +37,7 @@ private:
 	typedef std::map<int, GameRoom*> RoomList;
 	RoomList						m_RoomList;
 	int								m_RoomCount = 0;
+	int								m_RoomFreeCount = 0;
 	GameMapManager*					m_GameMapManager = nullptr;
 
 	ULONGLONG						m_LastGCRoomTick = 0;

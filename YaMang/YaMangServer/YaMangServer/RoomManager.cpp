@@ -23,17 +23,12 @@ RoomManager::RoomManager()
 	m_RoomList.clear();
 	m_RoomList.insert( RoomList::value_type( LOBBY_NUMBER, m_Lobby ) );
 
-	// test code
-	AddRoom();
-	AddRoom();
-	AddRoom();
-	AddRoom();
-	AddRoom();
-	AddRoom();
-	AddRoom();
-	AddRoom();
-	AddRoom();
-	AddRoom();
+
+	// Initialize 10 Rooms
+	for ( int i = 0; i < 10; ++i )
+	{
+		AddRoom();
+	}
 
 }
 
@@ -189,6 +184,12 @@ bool RoomManager::CheckRoom( int roomNumber )
 
 ClientSession* RoomManager::CreateClient( SOCKET sock )
 {
+	// 빈 방이 모자르면 방 생성
+	if ( m_RoomFreeCount < 10 )
+	{
+		AddRoom();
+	}
+	
 	return m_Lobby->CreateClient( sock );
 }
 
@@ -212,17 +213,27 @@ void RoomManager::OnPeriodWork()
 	ULONGLONG currTick = GetTickCount64();
 	if ( currTick - m_LastGCRoomTick >= 3000 )
 	{
+		
 		RoomList safetyRoomList = m_RoomList;
+		int freeRoom = safetyRoomList.size();
 		for ( auto& it : safetyRoomList )
 		{
 			GameRoom* room = it.second;
+
+			if ( 0 != room->GetClientSize() )
+			{
+				--freeRoom;
+			}
+			
 			if ( room->IsGameRoomEnd() && !room->IsGameRoomStart() )
 			{
 				DeleteRoom( room->GetRoomNumber( ) );
-				AddRoom(); // 일정수의 방 유지
+				//AddRoom(); // 일정수의 방 유지
 			}
 			
 		}
+
+		m_RoomFreeCount = freeRoom;
 		//PrintClientList();
 		m_LastGCRoomTick = currTick;
 	}
