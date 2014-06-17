@@ -145,6 +145,9 @@ void GameRoom::GameRoomGiveUp( )
 		GameOverResult outPacket;
 		outPacket.m_PlayerId = playerID;
 		outPacket.m_IsWon = true;
+		outPacket.m_KilledCorpsNum = client->GetKilledCorpsNum();
+		outPacket.m_DeathCorpsNum = client->GetDeathCorpsNum();
+		outPacket.m_TotalMyCorpsNum = client->GetTotalMyCorpsNum();
 
 		DirectPacket( playerID, &outPacket );
 		g_RoomManager->LeaveRoom( m_RoomNumber, playerID );
@@ -185,6 +188,9 @@ void GameRoom::GameRoomLoose( int loserPlayerID )
 			outPacket.m_IsWon = true;
 		}
 		
+		outPacket.m_KilledCorpsNum = client->GetKilledCorpsNum();
+		outPacket.m_DeathCorpsNum = client->GetDeathCorpsNum();
+		outPacket.m_TotalMyCorpsNum = client->GetTotalMyCorpsNum();
 
 		DirectPacket( playerID, &outPacket );
 		g_RoomManager->LeaveRoom( m_RoomNumber, playerID );

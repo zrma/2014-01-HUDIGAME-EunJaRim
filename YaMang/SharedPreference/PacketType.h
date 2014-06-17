@@ -139,8 +139,8 @@ struct GameOverRequest: public PacketHeader
 		m_IsWon = false;
 	}
 
-	int	m_PlayerId;
-	bool m_IsWon;
+	int			m_PlayerId;
+	bool		m_IsWon;
 };
 
 struct GameOverResult: public PacketHeader
@@ -151,10 +151,18 @@ struct GameOverResult: public PacketHeader
 		m_Type = PKT_SC_GAMEOVER;
 		m_PlayerId = -1;
 		m_IsWon = false;
+
+		m_KilledCorpsNum = -1;
+		m_DeathCorpsNum = -1;
+		m_TotalMyCorpsNum = -1;
 	}
 
-	int	m_PlayerId;
-	bool m_IsWon;
+	int			m_PlayerId;
+	bool		m_IsWon;
+
+	int			m_KilledCorpsNum;
+	int			m_DeathCorpsNum;
+	int			m_TotalMyCorpsNum;
 };
 
 

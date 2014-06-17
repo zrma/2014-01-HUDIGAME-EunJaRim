@@ -121,11 +121,14 @@ void ClientSession::HandleGameOverRequest( GameOverRequest& inPacket )
 		return;
 	}
 
-
 	GameOverResult outPacket;
 	outPacket.m_PlayerId = playerID;
 
 	outPacket.m_IsWon = isWon;
+
+	outPacket.m_KilledCorpsNum = m_KilledCorpsNum;
+	outPacket.m_DeathCorpsNum = m_DeathCorpsNum;
+	outPacket.m_TotalMyCorpsNum = m_TotalMyCorpsNum;
 
 	LogD( "[GameOverMessage][%d]%d \n", inPacket.m_PlayerId, isWon );
 

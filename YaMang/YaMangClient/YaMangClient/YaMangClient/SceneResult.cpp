@@ -40,4 +40,6 @@ void SceneResult::Render() const
 	{
 		RenderSprite( SPRITE_RESULT_LOSE, m_Position );
 	}
+
+	TextManager::GetInstance()->DrawTexts();
 }

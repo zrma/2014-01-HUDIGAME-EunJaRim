@@ -213,10 +213,28 @@ void NetworkManager::HandleGameOverResult( GameOverResult& inPacket )
 
 				PlayerManager::GetInstance()->SetWin( false );
 			}
+
+
+			int killedCorpsNum = inPacket.m_KilledCorpsNum;
+			int deathCorpsNum = inPacket.m_DeathCorpsNum;
+			int totalMyCorpsNum = inPacket.m_TotalMyCorpsNum;
+
+			wchar_t wsKilledCorpsNum[100] = { 0, };
+			wsprintf( wsKilledCorpsNum, L"KilledCorpsNum : %d", killedCorpsNum );
+			wchar_t wsDeathCorpsNum[100] = { 0, };
+			wsprintf( wsDeathCorpsNum, L"DeathCorpsNum : %d", deathCorpsNum );
+			wchar_t wsTotalMyCorpsNum[100] = { 0, };
+			wsprintf( wsTotalMyCorpsNum, L"TotalMyCorpsNum : %u", totalMyCorpsNum );
+
 			m_IsPlaying = false;
 			SceneManager::GetInstance()->ChangeScene( SCENE_RESULT );
 
-			
+
+			TextManager::GetInstance()->RegistText( TEXT_TEST_KILLED_CORPS_NUM, wsKilledCorpsNum, 800, 480, SCENE_RESULT, 0, 0, 0 );
+			TextManager::GetInstance()->RegistText( TEXT_TEST_DEATH_CORPS_NUM, wsDeathCorpsNum, 800, 530, SCENE_RESULT, 0, 0, 0 );
+			TextManager::GetInstance()->RegistText( TEXT_TEST_TOTAL_MY_CORPS_NUM, wsTotalMyCorpsNum, 800, 580, SCENE_RESULT, 0, 0, 0 );
+
+
 		}
 		else
 		{
