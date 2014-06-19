@@ -89,9 +89,8 @@ YAMANGDXDLL_API void Rendering( MESHOBJECT* inputVal )
 			
 			for ( DWORD j = 0; j < inputVal->NumMaterials; ++j )
 			{
-				g_D3dDevice->SetMaterial( &inputVal->MeshMarterials[j] );
-				g_D3dDevice->SetTexture( 0, inputVal->MeshTexture[j] );
-
+				g_Effect->SetTexture( "tex1", inputVal->MeshTexture[j] );
+				
 				( inputVal->importedMesh )->DrawSubset( j );
 			}
 
