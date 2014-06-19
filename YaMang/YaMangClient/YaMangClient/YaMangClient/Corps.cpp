@@ -161,6 +161,8 @@ void Corps::Render() const
 		D3DXMatrixScaling( &scaleMatrix, 0.6f + hp, 0.6f + hp, 0.6f + hp );
 
 		thisMatrix = scaleMatrix * thisMatrix;
+
+		Renderer::GetInstance()->SetShader( true );
 	}
 	else
 	{
@@ -180,6 +182,8 @@ void Corps::Render() const
 	if ( mesh )
 	{
 		Renderer::GetInstance()->RenderMesh( mesh->m_MeshObject );
+
+		Renderer::GetInstance()->SetShader( false );
 	}
 }
 

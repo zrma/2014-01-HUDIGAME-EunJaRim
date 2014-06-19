@@ -81,6 +81,15 @@ void ResourceManager::Init()
 	m_ISCursorReady = true;
 
 	CreateSprite();
+
+	ShaderImport( SELECT_SHADER );
+	MeshTextureImport( SPRITE_CORPS_TYPE_ARROW );
+// #define SPRITE_CORPS_TYPE_ARROW				PATH_SPRITE L"corps_type_arrow.png"
+// #define SPRITE_CORPS_TYPE_GUARD				PATH_SPRITE L"corps_type_guard.png"
+// #define SPRITE_CORPS_TYPE_KING				PATH_SPRITE L"corps_type_king.png"
+// #define SPRITE_CORPS_TYPE_KNIGHT			PATH_SPRITE L"corps_type_knight.png"
+// #define SPRITE_CORPS_TYPE_PIKE				PATH_SPRITE L"corps_type_pike.png"
+// #define SPRITE_CORPS_TYPE_SWORD				PATH_SPRITE L"corps_type_sword.png"
 }
 
 void ResourceManager::Destroy()

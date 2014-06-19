@@ -71,9 +71,21 @@
 #define SPRITE_IMAGE_RESULT_WIN				PATH_SPRITE L"ResultWin.png"
 #define SPRITE_IMAGE_RESULT_LOSE			PATH_SPRITE L"ResultLose.png"
 
+#define SPRITE_CORPS_TYPE_ARROW				PATH_SPRITE L"corps_type_arrow.png"
+#define SPRITE_CORPS_TYPE_GUARD				PATH_SPRITE L"corps_type_guard.png"
+#define SPRITE_CORPS_TYPE_KING				PATH_SPRITE L"corps_type_king.png"
+#define SPRITE_CORPS_TYPE_KNIGHT			PATH_SPRITE L"corps_type_knight.png"
+#define SPRITE_CORPS_TYPE_PIKE				PATH_SPRITE L"corps_type_pike.png"
+#define SPRITE_CORPS_TYPE_SWORD				PATH_SPRITE L"corps_type_sword.png"
+
 #define PATH_SOUND			L"SoundFiles\\"
 
 #define SOUND_FILE_LOOP						PATH_SOUND L"loop.bank"
 #define SOUND_FILE_MASTER_BANK				PATH_SOUND L"Master Bank.bank"
 #define SOUND_FILE_MASTER_BANK_STRINGS		PATH_SOUND L"Master Bank.strings.bank"
 #define SOUND_FILE_SFX_BANK					PATH_SOUND L"sfx.bank"
+
+
+#define PATH_SHADER		L"ShaderFiles\\"
+
+#define SELECT_SHADER			PATH_SHADER L"SelectShader.fx"

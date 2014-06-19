@@ -1,10 +1,10 @@
-ï»¿// ë³€í™˜í–‰ë ¬
+// º¯È¯Çà·Ä
 float4x4    matWVP;
 
-// í…ìŠ¤ì²˜
+// ÅØ½ºÃ³
 texture	tex0;
 
-// ìž…ë ¥ì •ì  í˜•ì‹
+// ÀÔ·ÂÁ¤Á¡ Çü½Ä
 struct VS_INPUT
 {
 	float3 pos  : POSITION;
@@ -12,7 +12,7 @@ struct VS_INPUT
 	float2 tex  : TEXCOORD0;
 };
 
-// ì¶œë ¥ì •ì  í˜•ì‹
+// Ãâ·ÂÁ¤Á¡ Çü½Ä
 struct VS_OUTPUT
 {
 	float4 pos  : POSITION;
@@ -20,20 +20,20 @@ struct VS_OUTPUT
 	float2 tex  : TEXCOORD0;
 };
 
-// VSë¼ëŠ” ì •ì ì‰ì´ë” í•¨ìˆ˜ ì„ ì–¸
+// VS¶ó´Â Á¤Á¡½¦ÀÌ´õ ÇÔ¼ö ¼±¾ð
 VS_OUTPUT VS( VS_INPUT In )
 {
-	// ì¶œë ¥ ë³€ìˆ˜ ì´ˆê¸°í™”
+	// Ãâ·Â º¯¼ö ÃÊ±âÈ­
 	VS_OUTPUT Out = (VS_OUTPUT)0;
 
-	Out.pos = mul( float4( In.p, 1 ), matWVP );
+	Out.pos = mul( float4( In.pos, 1 ), matWVP );
 	Out.diff = In.diff;
 	Out.tex = In.tex;
 
 	return Out;
 }
 
-// í…ìŠ¤ì²˜ ìƒ˜í”ŒëŸ¬ ìƒíƒœ, 
+// ÅØ½ºÃ³ »ùÇÃ·¯ »óÅÂ, 
 sampler Sampler = sampler_state
 {
 	Texture = ( tex0 ); // g_pd3dDevice->SetTexture( 0, g_pTexture );
@@ -49,10 +49,10 @@ float4 PS(
 	return tex2D( Sampler, Tex ) + Diff;
 }
 
-// MyShader í…Œí¬ë‹‰ì„ ì–¸
+// MyShader Å×Å©´Ð¼±¾ð
 technique MyShader
 {
-	pass P0	// ìµœì´ˆì˜ 0ë²ˆì§¸ íŒ¨ìŠ¤
+	pass P0	// ÃÖÃÊÀÇ 0¹øÂ° ÆÐ½º
 	{
 		Lighting = TRUE;	// g_pd3dDevice->SetRenderState( D3DRS_LIGHTING, TRUE );
 

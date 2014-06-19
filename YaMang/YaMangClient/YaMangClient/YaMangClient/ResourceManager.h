@@ -15,6 +15,16 @@ enum SkyBoxType
 	SKY_BOX_BOTTOM	= 5
 };
 
+enum CorpsTextureType
+{
+	CORPS_TEXTURE_ARROW = 0,
+	CORPS_TEXTURE_GUARD = 1,
+	CORPS_TEXTURE_KING = 2,
+	CORPS_TEXTURE_KNIGHT = 3,
+	CORPS_TEXTURE_PIKE = 4,
+	CORPS_TEXTURE_SWORD = 5,
+};
+
 struct Resource
 {
 	Resource(): m_Type( RESOURCE_NONE ) {}

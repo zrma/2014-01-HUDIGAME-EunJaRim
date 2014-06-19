@@ -136,6 +136,10 @@ YAMANGDXDLL_API void D3DCleanUp()
 	{
 		g_Effect->Release();
 	}
+	if ( g_MeshTexture )
+	{
+		g_MeshTexture->Release();
+	}
 
 	// 텍스트 소멸자 합침
 	if ( g_Font != NULL )

@@ -21,6 +21,8 @@ public:
 	void	RenderMesh( MESHOBJECT* mesh );
 	void	RenderMap( QuadTree* quadTree, Frustum* frustum, CUSTOMVERTEX* heightMap, float ratioOfLOD );
 
+	void	SetShader( bool mode );
+
 	CUSTOMVERTEX*	GetHeightMap() const;
 	void			GetHeightMapSize( DWORD* width, DWORD* height ) const;
 

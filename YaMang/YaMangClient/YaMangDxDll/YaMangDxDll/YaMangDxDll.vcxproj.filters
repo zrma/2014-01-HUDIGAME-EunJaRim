@@ -24,9 +24,6 @@
     <Filter Include="Console">
       <UniqueIdentifier>{017acf5d-cd08-4d84-89e6-accf5b81ddfa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="YaMangDxDll\Shader">
-      <UniqueIdentifier>{975aa71b-72b2-4e49-93a5-8c8ecdeeb8be}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -100,10 +97,8 @@
     <ClCompile Include="Dib.cpp">
       <Filter>YaMangDxDll\Specific</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\YaMangClient\YaMangClient\SelectShader.fx">
-      <Filter>YaMangDxDll\Shader</Filter>
-    </None>
+    <ClCompile Include="YaMangShader.cpp">
+      <Filter>YaMangDxDll\Specific</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

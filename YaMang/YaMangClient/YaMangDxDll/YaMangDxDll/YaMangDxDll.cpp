@@ -73,22 +73,6 @@ YAMANGDXDLL_API HRESULT InitD3D( HWND hWnd, long width, long height )
 	Logger::GetInstance();
 #endif
 
-
-	//////////////////////////////////////////////////////////////////////////
-	// 나중에 뽑아 내야 됨
-	// 일단 임시
-	//////////////////////////////////////////////////////////////////////////
-	// D3DVERTEXELEMENT9	decl[MAX_FVF_DECL_SIZE];
-	// D3DXDeclaratorFromFVF( D3DFVF_CUSTOMVERTEX, decl );
-	// g_D3dDevice->CreateVertexDeclaration( decl, &g_Decl );
-
-	// if ( FAILED( D3DXCreateEffectFromFile( g_D3dDevice, L"SelectShader.fx", NULL, NULL, 0, NULL, &g_Effect, NULL ) ) )
-	// {
-	// 	MessageBox( NULL, L"Effect Load Failed - SelectShader.fx", L"YaMang.DLL", MB_OK );
-	// 	return E_FAIL;
-	// }
-	//////////////////////////////////////////////////////////////////////////
-
 	return S_OK;
 }
 
