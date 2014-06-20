@@ -217,6 +217,11 @@ xcopy ".\\BugTrapDLL\*" "..\..\..\Bin\YaMangClient\" /s /d /y
   <ItemGroup>
     <Xml Include="ClientConfig.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource\ShaderFiles\SelectShader.fx">
+      <FileType>Document</FileType>
+    </None>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

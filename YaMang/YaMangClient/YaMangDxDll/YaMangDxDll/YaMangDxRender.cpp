@@ -31,11 +31,19 @@ YAMANGDXDLL_API bool PreRendering()
 	// pre rendering 단계에서 진행되지 않으면 향후 render 모두 실패
 	if ( SUCCEEDED( g_D3dDevice->BeginScene() ) )
 	{
+		D3DXMATRIXA16 identityMatrix;
+		D3DXMatrixIdentity( &identityMatrix );
+		SetWorldAreaMatrix( &identityMatrix );
+
 		// lightsetting
 		int lightNum = 1;
 		Lighting( lightNum );
 
 		flag = true;
+
+		g_D3dDevice->SetVertexShader( NULL );
+		g_D3dDevice->SetPixelShader( NULL );
+		g_IsEffectReady = false;
 	}
 
 	return flag;
@@ -52,8 +60,6 @@ YAMANGDXDLL_API void Rendering( MESHOBJECT* inputVal )
 
 	if ( g_IsEffectReady && g_Effect )
 	{
-		g_D3dDevice->SetVertexDeclaration( g_Decl );
-		
 		// fx출력에 사용할 테크닉 선정
 		g_Effect->SetTechnique( "MyShader" );
 		
@@ -62,19 +68,19 @@ YAMANGDXDLL_API void Rendering( MESHOBJECT* inputVal )
 			g_Effect->SetTexture( "tex0", g_MeshTexture );
 		}
 		
-		D3DXMATRIXA16 projectionMatrix;
-		g_D3dDevice->GetTransform( D3DTS_PROJECTION, &projectionMatrix );
-		D3DXMATRIXA16 viewingMatrix;
-		g_D3dDevice->GetTransform( D3DTS_VIEW, &viewingMatrix );
 		D3DXMATRIXA16 worldMatrix;
 		g_D3dDevice->GetTransform( D3DTS_WORLD, &worldMatrix );
+		D3DXMATRIXA16 viewingMatrix;
+		g_D3dDevice->GetTransform( D3DTS_VIEW, &viewingMatrix );
+		D3DXMATRIXA16 projectionMatrix;
+		g_D3dDevice->GetTransform( D3DTS_PROJECTION, &projectionMatrix );
 
 		D3DXMATRIXA16 thisMatrix = worldMatrix * viewingMatrix * projectionMatrix;
 
 		g_Effect->SetMatrix( "matWVP", &thisMatrix );
 		
 		// fx를 사용한 출력개시
-		g_Effect->Begin( &nPass, D3DXFX_DONOTSAVESTATE );
+		g_Effect->Begin( &nPass, D3DXFX_DONOTSAVESHADERSTATE );
 		
 		// PASS 개수만큼 출력
 		for ( UINT i = 0; i < nPass; ++i )

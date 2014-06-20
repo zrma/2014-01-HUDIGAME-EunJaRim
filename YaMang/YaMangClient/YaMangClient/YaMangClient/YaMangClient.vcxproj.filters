@@ -53,6 +53,9 @@
     <Filter Include="Map">
       <UniqueIdentifier>{771c1ac9-df50-4e04-8e73-2158a849f244}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{f70b91af-4b90-4d0a-84f8-da20c77441fb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -373,5 +376,10 @@
   </ItemGroup>
   <ItemGroup>
     <Xml Include="ClientConfig.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource\ShaderFiles\SelectShader.fx">
+      <Filter>Shader</Filter>
+    </None>
   </ItemGroup>
 </Project>

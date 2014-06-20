@@ -27,6 +27,7 @@ VS_OUTPUT VS( VS_INPUT In )
 	// 출력 변수 초기화
 	VS_OUTPUT Out = (VS_OUTPUT)0;
 
+	Out.pos = Out.pos * 2;
 	Out.pos = mul( float4( In.pos, 1 ), matWVP );
 	Out.diff = In.diff;
 	Out.tex = In.tex;
@@ -55,8 +56,8 @@ float4 PS(
 	float4 Diff : COLOR0,
 	float2 Tex : TEXCOORD0 ): COLOR
 {
-	// return tex2D( Colors, Tex ) / 10 + tex2D( Sampler, Tex ) + Diff;
-	return tex2D( Sampler, Tex );
+	return tex2D( Colors, Tex ) / 2 + tex2D( Sampler, Tex ) / 2 + Diff;
+	// return tex2D( Sampler, Tex );
 }
 
 // MyShader 테크닉선언
