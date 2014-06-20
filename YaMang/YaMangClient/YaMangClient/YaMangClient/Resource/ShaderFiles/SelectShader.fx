@@ -55,7 +55,8 @@ float4 PS(
 	float4 Diff : COLOR0,
 	float2 Tex : TEXCOORD0 ): COLOR
 {
-	return tex2D( Colors, Tex ) + tex2D( Sampler, Tex ) + Diff;
+	// return tex2D( Colors, Tex ) / 10 + tex2D( Sampler, Tex ) + Diff;
+	return tex2D( Sampler, Tex );
 }
 
 // MyShader 테크닉선언

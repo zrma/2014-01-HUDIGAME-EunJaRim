@@ -42,7 +42,6 @@ int APIENTRY _tWinMain( _In_ HINSTANCE hInstance,
 	Logger::GetInstance()->CreateConsole();
 #endif
 
-	
 
 	// test code
 	std::wstring parameter = lpCmdLine;

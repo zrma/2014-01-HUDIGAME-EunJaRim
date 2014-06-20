@@ -72,6 +72,9 @@ xcopy ".\\FmodDLL\*" "..\..\..\Bin\YaMangClient\" /s /d /y
 xcopy ".\\BugTrapDLL\*" "..\..\..\Bin\YaMangClient\" /s /d /y
 </Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>del ..\..\..\Bin\YaMangClient\ShaderFiles\*.fx</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>

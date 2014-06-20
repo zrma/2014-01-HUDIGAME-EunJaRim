@@ -153,23 +153,13 @@ void Corps::Render() const
 
 	D3DXMATRIXA16 thisMatrix = GetMatrix();
 
-	float hp = static_cast<float>( m_UnitList.size() * 0.008 );
-
 	if ( IsSelected() )
 	{
-		D3DXMATRIXA16 scaleMatrix;
-		D3DXMatrixScaling( &scaleMatrix, 0.6f + hp, 0.6f + hp, 0.6f + hp );
-
-		thisMatrix = scaleMatrix * thisMatrix;
-
 		Renderer::GetInstance()->SetShader( true );
 	}
 	else
 	{
-		D3DXMATRIXA16 scaleMatrix;
-		D3DXMatrixScaling( &scaleMatrix, 0.5f + hp, 0.5f + hp, 0.5f + hp );
-
-		thisMatrix = scaleMatrix * thisMatrix;
+		Renderer::GetInstance()->SetShader( false );
 	}
 
 	D3DXMATRIXA16 heightMatrix;
@@ -182,8 +172,6 @@ void Corps::Render() const
 	if ( mesh )
 	{
 		Renderer::GetInstance()->RenderMesh( mesh->m_MeshObject );
-
-		Renderer::GetInstance()->SetShader( false );
 	}
 }
 

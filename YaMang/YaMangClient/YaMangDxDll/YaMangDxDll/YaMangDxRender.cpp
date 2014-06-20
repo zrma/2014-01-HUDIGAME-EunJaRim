@@ -31,10 +31,6 @@ YAMANGDXDLL_API bool PreRendering()
 	// pre rendering 단계에서 진행되지 않으면 향후 render 모두 실패
 	if ( SUCCEEDED( g_D3dDevice->BeginScene() ) )
 	{
-		D3DXMATRIXA16 matWorld;
-		D3DXMatrixIdentity( &matWorld );
-		g_D3dDevice->SetTransform( D3DTS_WORLD, &matWorld );
-
 		// lightsetting
 		int lightNum = 1;
 		Lighting( lightNum );
@@ -66,14 +62,12 @@ YAMANGDXDLL_API void Rendering( MESHOBJECT* inputVal )
 			g_Effect->SetTexture( "tex0", g_MeshTexture );
 		}
 		
-		D3DXMATRIXA16 worldMatrix;
-		g_D3dDevice->GetTransform( D3DTS_WORLD, &worldMatrix );
+		D3DXMATRIXA16 projectionMatrix;
+		g_D3dDevice->GetTransform( D3DTS_PROJECTION, &projectionMatrix );
 		D3DXMATRIXA16 viewingMatrix;
 		g_D3dDevice->GetTransform( D3DTS_VIEW, &viewingMatrix );
-		D3DVIEWPORT9 viewPort;
-		D3DXMATRIXA16 projectionMatrix;
-		g_D3dDevice->GetViewport( &viewPort );
-		g_D3dDevice->GetTransform( D3DTS_PROJECTION, &projectionMatrix );
+		D3DXMATRIXA16 worldMatrix;
+		g_D3dDevice->GetTransform( D3DTS_WORLD, &worldMatrix );
 
 		D3DXMATRIXA16 thisMatrix = worldMatrix * viewingMatrix * projectionMatrix;
 
@@ -99,8 +93,6 @@ YAMANGDXDLL_API void Rendering( MESHOBJECT* inputVal )
 
 		/// fx를 사용한 출력종료
 		g_Effect->End();
-
-		g_IsEffectReady = false;
 	}
 	else
 	{
@@ -118,6 +110,8 @@ YAMANGDXDLL_API void Rendering( MESHOBJECT* inputVal )
 			( inputVal->importedMesh )->DrawSubset( i );
 		}
 	}
+
+	g_IsEffectReady = false;
 }
 
 
