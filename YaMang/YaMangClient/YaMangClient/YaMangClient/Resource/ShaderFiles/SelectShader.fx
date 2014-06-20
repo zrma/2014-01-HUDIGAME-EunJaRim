@@ -27,7 +27,7 @@ VS_OUTPUT VS( VS_INPUT In )
 	// 출력 변수 초기화
 	VS_OUTPUT Out = (VS_OUTPUT)0;
 
-	Out.pos = Out.pos * 2;
+	In.pos = In.pos * 1.1;
 	Out.pos = mul( float4( In.pos, 1 ), matWVP );
 	Out.diff = In.diff;
 	Out.tex = In.tex;
