@@ -59,6 +59,16 @@ YAMANGDXDLL_API void Rendering( MESHOBJECT* inputVal )
 {
 	if ( g_IsEffectReady && g_Effects[0] )
 	{
+		D3DVERTEXELEMENT9	ele[MAX_FVF_DECL_SIZE];
+
+		// FVF를 사용해서 정점선언값을 자동으로 채워넣는다
+		D3DXDeclaratorFromFVF( D3DFVF_CUSTOMVERTEX, ele );
+		LPDIRECT3DVERTEXDECLARATION9	decl;
+
+		// 정점선언값으로 decl을 생성한다.
+		g_D3dDevice->CreateVertexDeclaration( ele, &decl );
+		g_D3dDevice->SetVertexDeclaration( decl );
+
 		UINT nPass;
 		float thisTime = D3DX_PI * (timeGetTime() % 1400) / 700;
 

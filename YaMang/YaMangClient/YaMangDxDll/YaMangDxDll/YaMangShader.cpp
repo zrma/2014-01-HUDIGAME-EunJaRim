@@ -65,6 +65,16 @@ YAMANGDXDLL_API void DrawBillboardByTexture( int id )
 
 	if ( g_IsEffectReady && g_Effects[1] )
 	{
+		D3DVERTEXELEMENT9	ele[MAX_FVF_DECL_SIZE];
+
+		// FVF를 사용해서 정점선언값을 자동으로 채워넣는다
+		D3DXDeclaratorFromFVF( MYVERTEX::FVF, ele );
+		LPDIRECT3DVERTEXDECLARATION9	decl;
+
+		// 정점선언값으로 decl을 생성한다.
+		g_D3dDevice->CreateVertexDeclaration( ele, &decl );
+		g_D3dDevice->SetVertexDeclaration( decl );
+
 		UINT nPass;
 		float thisTime = D3DX_PI * ( timeGetTime() % 600 ) / 300;
 
@@ -83,7 +93,7 @@ YAMANGDXDLL_API void DrawBillboardByTexture( int id )
 		D3DXMATRIXA16 thisMatrix = worldMatrix * viewingMatrix * projectionMatrix;
 
 		g_Effects[1]->SetMatrix( "matWVP", &thisMatrix );
-
+		
 		// fx를 사용한 출력개시
 		g_Effects[1]->Begin( &nPass, D3DXFX_DONOTSAVESHADERSTATE );
 
@@ -108,7 +118,6 @@ YAMANGDXDLL_API void DrawBillboardByTexture( int id )
 		// 0번 텍스처에 빌보드 텍스처를 올린다
 		g_D3dDevice->SetTexture( 0, g_MeshTextures[id] );
 		g_D3dDevice->SetFVF( MYVERTEX::FVF );
-
 		g_D3dDevice->DrawPrimitiveUP( D3DPT_TRIANGLESTRIP, 2, vtx, sizeof( MYVERTEX ) );
 	}
 
