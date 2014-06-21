@@ -45,7 +45,8 @@ extern "C"{
 	// Shader
 	//////////////////////////////////////////////////////////////////////////
 
-	YAMANGDXDLL_API HRESULT ShaderImport( LPCTSTR effectFile );
+	YAMANGDXDLL_API HRESULT ShaderCreate( int size );
+	YAMANGDXDLL_API HRESULT ShaderImport( LPCTSTR effectFile, int id );
 
 	//////////////////////////////////////////////////////////////////////////
 	// Billboard

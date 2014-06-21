@@ -82,7 +82,9 @@ void ResourceManager::Init()
 
 	CreateSprite();
 
-	ShaderImport( SELECT_SHADER );
+	ShaderCreate( SHADER_TYPE_MAX );
+	ShaderImport( SELECT_SHADER, SHADER_SELECT );
+	ShaderImport( FIGHT_SHADER, SHADER_FIGHT );
 
 	MeshTextureCreateBySize( CORPS_TEXTURE_MAX );
 	MeshTextureImport( SPRITE_CORPS_TYPE_ARROW, CORPS_TEXTURE_ARROW );

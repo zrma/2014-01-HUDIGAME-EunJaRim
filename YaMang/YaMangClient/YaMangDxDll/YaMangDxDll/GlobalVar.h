@@ -130,6 +130,6 @@ extern INT					g_UIMaxSize;
 //////////////////////////////////////////////////////////////////////////
 // 셰이더
 //////////////////////////////////////////////////////////////////////////
-extern LPDIRECT3DVERTEXDECLARATION9	g_Decl;
-extern LPD3DXEFFECT					g_Effect;
-extern bool							g_IsEffectReady;
+extern LPD3DXEFFECT*		g_Effects;
+extern int					g_EffectSize;
+extern bool					g_IsEffectReady;

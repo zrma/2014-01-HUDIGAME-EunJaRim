@@ -381,5 +381,8 @@
     <None Include="Resource\ShaderFiles\SelectShader.fx">
       <Filter>Shader</Filter>
     </None>
+    <None Include="Resource\ShaderFiles\FightShader.fx">
+      <Filter>Shader</Filter>
+    </None>
   </ItemGroup>
 </Project>

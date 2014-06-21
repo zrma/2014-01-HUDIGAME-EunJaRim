@@ -132,10 +132,19 @@ YAMANGDXDLL_API void UICleanUp()
 
 YAMANGDXDLL_API void D3DCleanUp()
 {
-	if ( g_Effect )
+	if ( g_Effects )
 	{
-		g_Effect->Release();
+		for ( int i = 0; i < g_EffectSize; ++i )
+		{
+			if ( g_Effects[i] )
+			{
+				g_Effects[i]->Release();
+			}
+		}
+		delete[] g_Effects;
+		g_Effects = nullptr;
 	}
+
 	if ( g_MeshTextures )
 	{
 		for ( int i = 0; i < g_MeshTextureSize; ++i )

@@ -203,6 +203,17 @@ void Corps::Render() const
 		billMatrix._43 = thisMatrix._43;
 
 		Renderer::GetInstance()->SetWorldMatrix( billMatrix );
+
+		if ( typeid( m_Action ) == typeid( ActionAttack ) ||
+			 typeid( m_Action ) == typeid( ActionTakeArea ) )
+		{
+			Renderer::GetInstance()->SetShader( true );
+		}
+		else
+		{
+			Renderer::GetInstance()->SetShader( false );
+		}
+
 		Renderer::GetInstance()->RenderBillboard( m_TextureType );
 	}
 }

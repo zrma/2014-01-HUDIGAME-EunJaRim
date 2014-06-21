@@ -89,3 +89,4 @@
 #define PATH_SHADER		L"ShaderFiles\\"
 
 #define SELECT_SHADER			PATH_SHADER L"SelectShader.fx"
+#define FIGHT_SHADER			PATH_SHADER L"FightShader.fx"

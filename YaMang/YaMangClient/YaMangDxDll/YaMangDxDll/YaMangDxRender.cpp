@@ -59,14 +59,14 @@ YAMANGDXDLL_API void Rendering( MESHOBJECT* inputVal )
 {
 	UINT nPass;
 
-	if ( g_IsEffectReady && g_Effect )
+	if ( g_IsEffectReady && g_Effects[0] )
 	{
 		float thisTime = D3DX_PI * (timeGetTime() % 1400) / 700;
 
-		g_Effect->SetFloat( "time", thisTime );
+		g_Effects[0]->SetFloat( "time", thisTime );
 
 		// fx출력에 사용할 테크닉 선정
-		g_Effect->SetTechnique( "MyShader" );
+		g_Effects[0]->SetTechnique( "MyShader" );
 				
 		D3DXMATRIXA16 worldMatrix;
 		g_D3dDevice->GetTransform( D3DTS_WORLD, &worldMatrix );
@@ -77,28 +77,28 @@ YAMANGDXDLL_API void Rendering( MESHOBJECT* inputVal )
 
 		D3DXMATRIXA16 thisMatrix = worldMatrix * viewingMatrix * projectionMatrix;
 
-		g_Effect->SetMatrix( "matWVP", &thisMatrix );
+		g_Effects[0]->SetMatrix( "matWVP", &thisMatrix );
 		
 		// fx를 사용한 출력개시
-		g_Effect->Begin( &nPass, D3DXFX_DONOTSAVESHADERSTATE );
+		g_Effects[0]->Begin( &nPass, D3DXFX_DONOTSAVESHADERSTATE );
 		
 		// PASS 개수만큼 출력
 		for ( UINT i = 0; i < nPass; ++i )
 		{
-			g_Effect->BeginPass( i );
+			g_Effects[0]->BeginPass( i );
 			
 			for ( DWORD j = 0; j < inputVal->NumMaterials; ++j )
 			{
-				g_Effect->SetTexture( "tex0", inputVal->MeshTexture[j] );
+				g_Effects[0]->SetTexture( "tex0", inputVal->MeshTexture[j] );
 				
 				( inputVal->importedMesh )->DrawSubset( j );
 			}
 
-			g_Effect->EndPass();
+			g_Effects[0]->EndPass();
 		}
 
 		/// fx를 사용한 출력종료
-		g_Effect->End();
+		g_Effects[0]->End();
 	}
 	else
 	{

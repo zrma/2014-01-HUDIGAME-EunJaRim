@@ -2,22 +2,39 @@
 #include "yaMangDxDll.h"
 #include "GlobalVar.h"
 
-YAMANGDXDLL_API HRESULT ShaderImport( LPCTSTR effectFile )
+YAMANGDXDLL_API HRESULT ShaderCreate( int size )
 {
-	DWORD dwShaderFlags = D3DXFX_NOT_CLONEABLE | D3DXSHADER_DEBUG | D3DXSHADER_NO_PRESHADER;
-
-	HRESULT hr = S_OK;
-	hr = D3DXCreateEffectFromFile( g_D3dDevice, effectFile, NULL, NULL, dwShaderFlags, NULL, &g_Effect, NULL );
-
-	if ( FAILED( hr ) )
+	if ( size <= 0 || g_EffectSize != 0 )
 	{
-		MessageBox( NULL, L"Effect Load Failed", effectFile , MB_OK );
-	 	return E_FAIL;
+		return E_FAIL;
+	}
+
+	g_Effects = new LPD3DXEFFECT[size];
+	g_EffectSize = size;
+
+	for ( int i = 0; i < g_EffectSize; ++i )
+	{
+		g_Effects[i] = nullptr;
 	}
 
 	return S_OK;
 }
 
+YAMANGDXDLL_API HRESULT ShaderImport( LPCTSTR effectFile, int id )
+{
+	DWORD dwShaderFlags = D3DXFX_NOT_CLONEABLE | D3DXSHADER_DEBUG | D3DXSHADER_NO_PRESHADER;
+
+	HRESULT hr = S_OK;
+	hr = D3DXCreateEffectFromFile( g_D3dDevice, effectFile, NULL, NULL, dwShaderFlags, NULL, &g_Effects[id], NULL );
+
+	if ( FAILED( hr ) )
+	{
+		MessageBox( NULL, L"Effect Load Failed", effectFile, MB_OK );
+		return E_FAIL;
+	}
+
+	return S_OK;
+}
 
 //////////////////////////////////////////////////////////////////////////
 // 이거슨 텍스쳐 쪽 코드가 아니므니다 - 옮겨야 됨 ㅠㅠ 어쩌다보니 일단 여기

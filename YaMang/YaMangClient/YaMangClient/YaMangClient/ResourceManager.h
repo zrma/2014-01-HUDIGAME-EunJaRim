@@ -15,6 +15,15 @@ enum SkyBoxType
 	SKY_BOX_BOTTOM	= 5
 };
 
+enum ShaderType
+{
+	// 순서 중요!
+	SHADER_SELECT = 0,
+	SHADER_FIGHT = 1,
+
+	SHADER_TYPE_MAX
+};
+
 struct Resource
 {
 	Resource(): m_Type( RESOURCE_NONE ) {}
