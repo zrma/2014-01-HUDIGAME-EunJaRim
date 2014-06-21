@@ -14,6 +14,8 @@
 #include "MovePosition.h"
 #include "MacroSet.h"
 #include "Attack.h"
+#include "GuardArea.h"
+#include "KnightAttack.h"
 
 Corps::Corps( int playerID, int corpsID, UnitType unitType, PositionInfo position, GameRoom* gameRoom )
 : m_PlayerID( playerID ), m_CorpsID( corpsID ), m_UnitType(unitType), m_Position( position ), m_GameRoom( gameRoom )
@@ -312,10 +314,10 @@ void Corps::ReCalculateStatus()
 }
 
 
-void Corps::AttackCorps( Corps* targetCrops )
+void Corps::AttackCorps( Corps* targetCorps )
 {
-	targetCrops->MoveStop( );
-	Action* targetAction = targetCrops->GetHoldingAction( );
+	targetCorps->MoveStop( );
+	Action* targetAction = targetCorps->GetHoldingAction( );
 
 	// targetCorps의 액션이 없으면(idle)이면 반격
 	// 아니면 그냥 무시하고 계속 진행
@@ -323,21 +325,44 @@ void Corps::AttackCorps( Corps* targetCrops )
 	{
 		LogD( "target CounterAttack! \n" );
 		// m_TargerCrops->ChangeFormation( FormationType::FORMATION_DEFENSE );// 망진으로 변경해야함
-		Attack* action = new Attack();
-		action->SetGameRoom( m_GameRoom );
-		action->SetOwnerCorps( targetCrops );
-		action->SetTargetCorps( this );
+		
+		UnitType targetUnitType = targetCorps->GetUnitType();
+		if ( UnitType::UNIT_GUARD == targetUnitType || UnitType::UNIT_KING == targetUnitType )
+		{
+			GuardArea* action = new GuardArea();
+			action->SetGameRoom( m_GameRoom );
+			action->SetOwnerCorps( targetCorps );
+			action->SetTargetCorps( this );
+			m_GameRoom->AddActionToScheduler( action, targetCorps->GetAttackDelay() / 3 ); // 반격하려고 정신차리는 딜레이
+		}
+		else if ( UnitType::UNIT_KNIGHT == targetUnitType )
+		{
+			KnightAttack* action = new KnightAttack();
+			action->SetGameRoom( m_GameRoom );
+			action->SetOwnerCorps( targetCorps );
+			action->SetTargetCorps( this );
+			m_GameRoom->AddActionToScheduler( action, targetCorps->GetAttackDelay() / 3 ); // 반격하려고 정신차리는 딜레이
+		}
+		else
+		{
+			Attack* action = new Attack();
+			action->SetGameRoom( m_GameRoom );
+			action->SetOwnerCorps( targetCorps );
+			action->SetTargetCorps( this );
+			m_GameRoom->AddActionToScheduler( action, targetCorps->GetAttackDelay() / 3 ); // 반격하려고 정신차리는 딜레이
+		}
 
-		m_GameRoom->AddActionToScheduler( action, targetCrops->GetAttackDelay( ) / 3 ); // 반격하려고 정신차리는 딜레이
+
+		
 	}
 
 
 	// 공격 하세요
 	// attack result packet 보내기
-	targetCrops->AddDamage( GetAttackPower( ) );
+	targetCorps->AddDamage( GetAttackPower( ) );
 	
 	
-	if ( targetCrops->IsDead() )
+	if ( targetCorps->IsDead() )
 	{
 		auto& it = g_PidSessionTable.find( m_PlayerID );
 		if ( it != g_PidSessionTable.end() )
@@ -348,11 +373,11 @@ void Corps::AttackCorps( Corps* targetCrops )
 	}
 
 
-	const PositionInfo& targetPositionInfo = targetCrops->GetPositionInfo( );
+	const PositionInfo& targetPositionInfo = targetCorps->GetPositionInfo( );
 
 	AttackCorpsResult outPacket;
 	outPacket.m_AttackerCorpsID = GetCorpsID();
-	outPacket.m_TargetCorpsID = targetCrops->GetCorpsID( );
+	outPacket.m_TargetCorpsID = targetCorps->GetCorpsID( );
 	outPacket.m_AttackerNowX = m_Position.m_EyePoint.x;
 	outPacket.m_AttackerNowZ = m_Position.m_EyePoint.z;
 
@@ -365,13 +390,13 @@ void Corps::AttackCorps( Corps* targetCrops )
 	outPacket.m_TargetLookX = m_Position.m_EyePoint.x;
 	outPacket.m_TargetLookZ = m_Position.m_EyePoint.z;
 
-	outPacket.m_TargetUnitNum = targetCrops->GetUnitNum( );
+	outPacket.m_TargetUnitNum = targetCorps->GetUnitNum( );
 
 
 	m_GameRoom->BroadcastPacket( &outPacket );
 
 	LogD( "[Attack] range:%f damage:%f \n", GetAttackRange(), GetAttackPower() );
-	LogD( "[Attack] Attacker:[%f][%f] Defencer:[%f][%f] \n", GetPositionInfo( ).m_EyePoint.x, GetPositionInfo( ).m_EyePoint.z, targetCrops->GetPositionInfo( ).m_EyePoint.x, targetCrops->GetPositionInfo( ).m_EyePoint.z );
+	LogD( "[Attack] Attacker:[%f][%f] Defencer:[%f][%f] \n", GetPositionInfo( ).m_EyePoint.x, GetPositionInfo( ).m_EyePoint.z, targetCorps->GetPositionInfo( ).m_EyePoint.x, targetCorps->GetPositionInfo( ).m_EyePoint.z );
 
 }
 
