@@ -83,13 +83,14 @@ void ResourceManager::Init()
 	CreateSprite();
 
 	ShaderImport( SELECT_SHADER );
-	MeshTextureImport( SPRITE_CORPS_TYPE_ARROW );
-// #define SPRITE_CORPS_TYPE_ARROW				PATH_SPRITE L"corps_type_arrow.png"
-// #define SPRITE_CORPS_TYPE_GUARD				PATH_SPRITE L"corps_type_guard.png"
-// #define SPRITE_CORPS_TYPE_KING				PATH_SPRITE L"corps_type_king.png"
-// #define SPRITE_CORPS_TYPE_KNIGHT			PATH_SPRITE L"corps_type_knight.png"
-// #define SPRITE_CORPS_TYPE_PIKE				PATH_SPRITE L"corps_type_pike.png"
-// #define SPRITE_CORPS_TYPE_SWORD				PATH_SPRITE L"corps_type_sword.png"
+
+	MeshTextureCreateBySize( CORPS_TEXTURE_MAX );
+	MeshTextureImport( SPRITE_CORPS_TYPE_ARROW, CORPS_TEXTURE_ARROW );
+	MeshTextureImport( SPRITE_CORPS_TYPE_GUARD, CORPS_TEXTURE_GUARD );
+	MeshTextureImport( SPRITE_CORPS_TYPE_KING, CORPS_TEXTURE_KING );
+	MeshTextureImport( SPRITE_CORPS_TYPE_KNIGHT, CORPS_TEXTURE_KNIGHT );
+	MeshTextureImport( SPRITE_CORPS_TYPE_PIKE, CORPS_TEXTURE_PIKE );
+	MeshTextureImport( SPRITE_CORPS_TYPE_SWORD, CORPS_TEXTURE_SWORD );
 }
 
 void ResourceManager::Destroy()

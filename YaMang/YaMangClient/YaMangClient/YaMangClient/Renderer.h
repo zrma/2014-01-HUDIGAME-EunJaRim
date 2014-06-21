@@ -20,6 +20,7 @@ public:
 
 	void	RenderMesh( MESHOBJECT* mesh );
 	void	RenderMap( QuadTree* quadTree, Frustum* frustum, CUSTOMVERTEX* heightMap, float ratioOfLOD );
+	void	RenderBillboard( int id );
 
 	void	SetShader( bool mode );
 

@@ -23,7 +23,8 @@ LPDIRECT3DTEXTURE9 g_MapHeightInfo = nullptr;
 LPDIRECT3DTEXTURE9 g_MapTexture = nullptr;
 LPDIRECT3DTEXTURE9 g_MapTextureArray[MAP_TEXTURE_COUNT] = { 0, };
 
-LPDIRECT3DTEXTURE9	g_MeshTexture = nullptr;
+LPDIRECT3DTEXTURE9*	g_MeshTextures = nullptr;
+INT					g_MeshTextureSize = 0;
 
 DWORD g_XHeight = 0;
 DWORD g_ZHeight = 0;

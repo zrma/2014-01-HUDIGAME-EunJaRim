@@ -57,6 +57,7 @@ private:
 	Corps& operator=( const Corps& );
 
 	MeshKeyType				m_MeshKey = MESH_KEY_CORPS_RUSH_MINE;
+	CorpsTextureType		m_TextureType = CORPS_TEXTURE_NONE;
 
 	std::vector<Unit*>		m_UnitList;
 	int						m_CorpsID = -1;

@@ -79,21 +79,27 @@ void Corps::Create( UINT num, UnitType unitType )
 		{
 			case  UnitType::UNIT_ARROW:
 				unit = new Arrow( this, i );
+				m_TextureType = CORPS_TEXTURE_ARROW;
 				break;
 			case  UnitType::UNIT_GUARD:
 				unit = new Guard( this, i );
+				m_TextureType = CORPS_TEXTURE_GUARD;
 				break;
 			case  UnitType::UNIT_KNIGHT:
 				unit = new Knight( this, i );
+				m_TextureType = CORPS_TEXTURE_KNIGHT;
 				break;
 			case  UnitType::UNIT_PIKE:
 				unit = new Pike( this, i );
+				m_TextureType = CORPS_TEXTURE_PIKE;
 				break;
 			case  UnitType::UNIT_SWORD:
 				unit = new Sword( this, i );
+				m_TextureType = CORPS_TEXTURE_SWORD;
 				break;
 			case  UnitType::UNIT_KING:
 				unit = new King( this, i );
+				m_TextureType = CORPS_TEXTURE_KING;
 				break;
 			default:
 				return;
@@ -172,6 +178,32 @@ void Corps::Render() const
 	if ( mesh )
 	{
 		Renderer::GetInstance()->RenderMesh( mesh->m_MeshObject );
+	}
+
+	if ( m_TextureType != CORPS_TEXTURE_NONE && m_TextureType != CORPS_TEXTURE_MAX )
+	{
+		D3DXMATRIXA16 viewMatrix = CameraController::GetInstance()->GetViewMatrix();
+		D3DXMATRIXA16 billMatrix;
+		D3DXMatrixIdentity( &billMatrix );
+
+		billMatrix._11 = viewMatrix._11;
+		billMatrix._13 = viewMatrix._13;
+		billMatrix._31 = viewMatrix._31;
+		billMatrix._33 = viewMatrix._33;
+
+		D3DXMatrixInverse( &billMatrix, NULL, &billMatrix );
+
+		D3DXMATRIXA16 scaleMatrix;
+		D3DXMatrixScaling( &scaleMatrix, 8.0f, 8.0f, 8.0f );
+
+		billMatrix = billMatrix * scaleMatrix;
+
+		billMatrix._41 = thisMatrix._41;
+		billMatrix._42 = thisMatrix._42 + 15;
+		billMatrix._43 = thisMatrix._43;
+
+		Renderer::GetInstance()->SetWorldMatrix( billMatrix );
+		Renderer::GetInstance()->RenderBillboard( m_TextureType );
 	}
 }
 

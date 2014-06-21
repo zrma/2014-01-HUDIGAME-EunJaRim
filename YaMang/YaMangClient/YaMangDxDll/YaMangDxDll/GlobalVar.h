@@ -52,7 +52,9 @@ extern LPD3DXMESH g_Mesh;
 // 클라이언트용 textureload 함수
 extern LPDIRECT3DTEXTURE9 g_MapHeightInfo;
 extern LPDIRECT3DTEXTURE9 g_MapTexture;
-extern LPDIRECT3DTEXTURE9 g_MeshTexture;
+
+extern LPDIRECT3DTEXTURE9*	g_MeshTextures;
+extern INT					g_MeshTextureSize;
 
 //////////////////////////////////////////////////////////////////////////
 // 쿼드트리용

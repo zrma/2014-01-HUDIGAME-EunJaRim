@@ -100,6 +100,11 @@ void Renderer::RenderMap( QuadTree* quadTree, Frustum* frustum, CUSTOMVERTEX* he
 	}
 }
 
+void Renderer::RenderBillboard( int id )
+{
+	DrawBillboardByTexture( id );
+}
+
 void Renderer::GetHeightMapSize( DWORD* width, DWORD* height ) const
 {
 	GetHeightMapSizeForQuadTree( width, height );
