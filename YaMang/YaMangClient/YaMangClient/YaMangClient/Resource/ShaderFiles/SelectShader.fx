@@ -27,9 +27,15 @@ VS_OUTPUT VS( VS_INPUT In )
 	// 출력 변수 초기화
 	VS_OUTPUT Out = (VS_OUTPUT)0;
 
-	In.pos = In.pos + In.pos * ( sin( time ) + 1 ) / 20;
+	In.pos = In.pos + In.pos * ( sin( time ) + 1 ) / 50;
+
+	float3 lightDir = float3( 1, 1, 0 );
+	float lightScalar = dot( normalize( In.pos ), lightDir );
+	float4 lightColor = 1.0;
+	lightColor.xyz = 0.5 * lightScalar;
+	
 	Out.pos = mul( float4( In.pos, 1 ), matWVP );
-	Out.diff = In.diff;
+	Out.diff = In.diff + lightColor;
 	Out.tex = In.tex;
 
 	return Out;
@@ -51,7 +57,7 @@ float4 PS(
 	float4 color = 0.5;
 	color = color * ( ( sin( time ) + 1 ) / 2 );
 
-	return tex2D( Sampler, Tex ) + color + Diff;
+	return tex2D( Sampler, Tex ) / 5 + color + Diff;
 }
 
 // MyShader 테크닉선언

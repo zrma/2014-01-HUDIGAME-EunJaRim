@@ -61,7 +61,7 @@ YAMANGDXDLL_API void Rendering( MESHOBJECT* inputVal )
 
 	if ( g_IsEffectReady && g_Effect )
 	{
-		float thisTime = D3DX_PI * (timeGetTime() % 2000) / 1000;
+		float thisTime = D3DX_PI * (timeGetTime() % 1400) / 700;
 
 		g_Effect->SetFloat( "time", thisTime );
 
