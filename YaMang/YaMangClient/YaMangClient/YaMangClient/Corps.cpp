@@ -126,6 +126,12 @@ void Corps::Update()
 	{
 		iter->Update();
 	}
+
+	// 고마해라. 많이 맞았다 아이가...
+	if ( Timer::GetInstance()->GetNowTime() - m_AttacktedTime > 1000 )
+	{
+		m_IsFight = false;
+	}
 }
 
 void Corps::Render() const
@@ -204,8 +210,8 @@ void Corps::Render() const
 
 		Renderer::GetInstance()->SetWorldMatrix( billMatrix );
 
-		if ( typeid( m_Action ) == typeid( ActionAttack ) ||
-			 typeid( m_Action ) == typeid( ActionTakeArea ) )
+		// 두들겨 맞고 있을 땐 깃발도 셰이더로!
+		if ( IsFight() )
 		{
 			Renderer::GetInstance()->SetShader( true );
 		}
@@ -295,6 +301,10 @@ void Corps::SetCorpsHP( int unitNum )
 		
 		m_UnitList.pop_back();
 		nowUnitNum = m_UnitList.size( );
+
+		// 자 이제부터 쳐 맞기를 시작하지.
+		m_AttacktedTime = Timer::GetInstance()->GetNowTime();
+		m_IsFight = true;
 	}
 }
 
@@ -391,4 +401,10 @@ void Corps::InterpolatePosition()
 	{
 		m_IsInterpolated = false;
 	}
+}
+
+void Corps::StartFight()
+{
+	m_IsFight = true;
+	m_AttacktedTime = Timer::GetInstance()->GetNowTime();
 }

@@ -493,6 +493,7 @@ void NetworkManager::HandleAttackCorpsResult( AttackCorpsResult& inPacket )
 		{
 			Scene* scene = SceneManager::GetInstance()->GetNowScene();
 			ScenePlay* scenePlay = static_cast<ScenePlay*>( scene );
+			scenePlay->StartAttackCorps( attackerCorpsID );
 			scenePlay->MoveCorpsStop( attackerCorpsID, attackerNow, attackerLook );
 			scenePlay->MoveCorpsStop( targetCorpsID, targetNow, targetLook );
 			scenePlay->SetCorpsHP( targetCorpsID, unitNum );

@@ -51,6 +51,10 @@ public:
 	bool	GetMoved() const { return m_IsMoved; }
 	void	SetMoved( bool isMoved ) { m_IsMoved = isMoved; }
 
+	bool	IsFight() const { return m_IsFight; }
+	bool	SetFight( bool fight ) { m_IsFight = fight; }
+	void	StartFight();
+
 private:
 	Corps();
 	Corps( const Corps& );
@@ -71,6 +75,9 @@ private:
 	bool	m_IsSelected = false;
 	bool	m_IsMoved = false;
 	bool	m_IsInterpolated = false;
+	bool	m_IsFight = false;
+
+	UINT	m_AttacktedTime = 0;
 
 	ActionFunc	m_Action;
 };

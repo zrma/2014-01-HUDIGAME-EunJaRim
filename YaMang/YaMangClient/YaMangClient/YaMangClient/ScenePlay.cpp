@@ -164,6 +164,7 @@ void ScenePlay::AddCorps( int corpsID, Corps* corps )
 
 		// 중복 ID로 다시 보냈음
 		assert( false );
+		return;
 	}
 }
 
@@ -183,12 +184,28 @@ void ScenePlay::ChangeCorpsFormation( int corpsID, FormationType formationType )
 		if ( m_CorpsList[corpsID] == nullptr )
 		{
 			assert( false );
+			return;
 		}
 		m_CorpsList[corpsID]->SetFormation( formationType );
 		ActionTransFormation action;
 		m_CorpsList[corpsID]->ChangeAction( action );
 	}
 }
+
+
+void ScenePlay::StartAttackCorps( int corpsID )
+{
+	if ( m_CorpsList.find( corpsID ) != m_CorpsList.end() )
+	{
+		if ( m_CorpsList[corpsID] == nullptr )
+		{
+			assert( false );
+			return;
+		}
+		m_CorpsList[corpsID]->StartFight();
+	}
+}
+
 
 void ScenePlay::MoveCorpsStart( int corpsID, D3DXVECTOR3 targetPosition, D3DXVECTOR3 lookAtVector, float speed )
 {
@@ -197,6 +214,7 @@ void ScenePlay::MoveCorpsStart( int corpsID, D3DXVECTOR3 targetPosition, D3DXVEC
 		if ( m_CorpsList[corpsID] == nullptr )
 		{
 			assert( false );
+			return;
 		}
 		m_CorpsList[corpsID]->SetTargetPosition( targetPosition );
 		m_CorpsList[corpsID]->SetLookAtVector( lookAtVector );
@@ -215,6 +233,7 @@ void ScenePlay::MoveCorpsStop( int corpsID, D3DXVECTOR3 targetPosition, D3DXVECT
 		if ( m_CorpsList[corpsID] == nullptr )
 		{
 			assert( false );
+			return;
 		}
 		// D3DXVECTOR3 view = lookAtPoint - targetPosition;
 		m_CorpsList[corpsID]->SetTargetPosition( targetPosition );
@@ -233,6 +252,7 @@ void ScenePlay::SetCorpsHP( int corpsID, int unitNum )
 		if ( m_CorpsList[corpsID] == nullptr )
 		{
 			assert( false );
+			return;
 		}
 		m_CorpsList[corpsID]->SetCorpsHP( unitNum );
 	}
@@ -245,6 +265,7 @@ void ScenePlay::SyncOneCorp( int corpsID, D3DXVECTOR3 corpsNow, D3DXVECTOR3 corp
 		if ( m_CorpsList[corpsID] == nullptr )
 		{
 			assert( false );
+			return;
 		}
 		m_CorpsList[corpsID]->SetTargetPosition( corpsNow );
 		m_CorpsList[corpsID]->SetLookAtPoint( corpsLook );
@@ -269,6 +290,7 @@ UnitType ScenePlay::GetUnitTypeByID( int corpsID )
 		if ( m_CorpsList[corpsID] == nullptr )
 		{
 			assert( false );
+			return UnitType::UNIT_NONE;
 		}
 		return m_CorpsList[corpsID]->GetUnitType();
 	}
@@ -369,9 +391,6 @@ void ScenePlay::CheckRegenFlag()
 {
 	m_StackedTime += Timer::GetInstance()->GetElapsedTime();
 	
-	// Log("stacked time : %f\n", m_StackedTime);
-	//full width = 700
-
 	if (m_RegenTime > 0)
 	{
 		float flagPos = static_cast<float>(((m_StackedTime / m_RegenTime) * 700) + 250);
@@ -381,5 +400,4 @@ void ScenePlay::CheckRegenFlag()
 			m_RegenFlag->SetUIPosX(flagPos);
 		}
 	}
-
 }

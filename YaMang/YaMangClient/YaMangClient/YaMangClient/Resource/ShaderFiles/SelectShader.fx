@@ -65,7 +65,8 @@ technique MyShader
 {
 	pass P0	// 최초의 0번째 패스
 	{
-		Lighting = TRUE;	// g_pd3dDevice->SetRenderState( D3DRS_LIGHTING, TRUE );
+		// g_pd3dDevice->SetRenderState( D3DRS_LIGHTING, TRUE );
+		Lighting = FALSE;
 
 		// samplers
 		Sampler[0] = ( Sampler );

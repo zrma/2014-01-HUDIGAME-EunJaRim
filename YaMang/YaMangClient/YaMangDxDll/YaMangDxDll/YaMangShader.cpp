@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "yaMangDxDll.h"
 #include "GlobalVar.h"
+#include <timeapi.h>
 
 YAMANGDXDLL_API HRESULT ShaderCreate( int size )
 {
@@ -46,9 +47,6 @@ YAMANGDXDLL_API void DrawBillboardByTexture( int id )
 		return;
 	}
 
-	g_D3dDevice->SetVertexShader( NULL );
-	g_IsEffectReady = false;
-	
 	struct MYVERTEX
 	{
 		enum { FVF = D3DFVF_XYZ | D3DFVF_TEX1 };
@@ -65,14 +63,56 @@ YAMANGDXDLL_API void DrawBillboardByTexture( int id )
 		{ 1, 4, 0, 1, 0 }
 	};
 
-	D3DXMATRIXA16	matBillboard;
-	D3DXMatrixIdentity( &matBillboard );
+	if ( g_IsEffectReady && g_Effects[1] )
+	{
+		UINT nPass;
+		float thisTime = D3DX_PI * ( timeGetTime() % 600 ) / 300;
 
-	// 0번 텍스처에 빌보드 텍스처를 올린다
-	g_D3dDevice->SetTexture( 0, g_MeshTextures[id] );
-	g_D3dDevice->SetFVF( MYVERTEX::FVF );
+		g_Effects[1]->SetFloat( "time", thisTime );
 
-	g_D3dDevice->DrawPrimitiveUP( D3DPT_TRIANGLESTRIP, 2, vtx, sizeof( MYVERTEX ) );
+		// fx출력에 사용할 테크닉 선정
+		g_Effects[1]->SetTechnique( "MyShader" );
+
+		D3DXMATRIXA16 worldMatrix;
+		g_D3dDevice->GetTransform( D3DTS_WORLD, &worldMatrix );
+		D3DXMATRIXA16 viewingMatrix;
+		g_D3dDevice->GetTransform( D3DTS_VIEW, &viewingMatrix );
+		D3DXMATRIXA16 projectionMatrix;
+		g_D3dDevice->GetTransform( D3DTS_PROJECTION, &projectionMatrix );
+
+		D3DXMATRIXA16 thisMatrix = worldMatrix * viewingMatrix * projectionMatrix;
+
+		g_Effects[1]->SetMatrix( "matWVP", &thisMatrix );
+
+		// fx를 사용한 출력개시
+		g_Effects[1]->Begin( &nPass, D3DXFX_DONOTSAVESHADERSTATE );
+
+		// PASS 개수만큼 출력
+		for ( UINT i = 0; i < nPass; ++i )
+		{
+			g_Effects[1]->BeginPass( i );
+
+			g_Effects[1]->SetTexture( "tex0", g_MeshTextures[id] );
+			g_D3dDevice->DrawPrimitiveUP( D3DPT_TRIANGLESTRIP, 2, vtx, sizeof( MYVERTEX ) );
+			
+			g_Effects[1]->EndPass();
+		}
+
+		g_Effects[1]->End();
+	}
+	else
+	{
+		g_D3dDevice->SetVertexShader( NULL );
+		g_D3dDevice->SetPixelShader( NULL );
+				
+		// 0번 텍스처에 빌보드 텍스처를 올린다
+		g_D3dDevice->SetTexture( 0, g_MeshTextures[id] );
+		g_D3dDevice->SetFVF( MYVERTEX::FVF );
+
+		g_D3dDevice->DrawPrimitiveUP( D3DPT_TRIANGLESTRIP, 2, vtx, sizeof( MYVERTEX ) );
+	}
+
+	g_IsEffectReady = false;
 }
 
 YAMANGDXDLL_API HRESULT MeshTextureCreateBySize( INT size )

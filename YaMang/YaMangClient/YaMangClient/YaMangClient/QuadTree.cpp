@@ -307,7 +307,7 @@ void QuadTree::AllIsInFrustum()
 int QuadTree::IsInFrustum( CUSTOMVERTEX* heightMap, Frustum* frustum )
 {
 	BOOL b[4] = { 0, };
-	BOOL isInSphere =frustum->IsInSphere( (D3DXVECTOR3*)( heightMap + m_Center ), m_Radius );
+	BOOL isInSphere = frustum->IsInSphere( (D3DXVECTOR3*)( heightMap + m_Center ), m_Radius );
 
 	// 경계구 안에 없으면 점 단위의 프러스텀 테스트가 필요없으므로 리턴
 	if ( !isInSphere )

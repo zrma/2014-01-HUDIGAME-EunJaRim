@@ -26,6 +26,8 @@ public:
 	void		AddCorps( int corpsID, Corps* corps );
 	bool		CheckCorps( int corpsID );
 	void		ChangeCorpsFormation( int corpsID, FormationType formationType );
+	
+	void		StartAttackCorps( int corpsID );
 	void		MoveCorpsStart( int corpsID, D3DXVECTOR3 targetPosition, D3DXVECTOR3 lookAtVector, float speed );
 	void		MoveCorpsStop( int corpsID, D3DXVECTOR3 targetPosition, D3DXVECTOR3 lookAtPoint );
 	void		SetCorpsHP( int corpsID, int unitNum );

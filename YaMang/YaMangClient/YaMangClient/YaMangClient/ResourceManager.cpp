@@ -58,7 +58,7 @@ void ResourceManager::Init()
 	m_MapSize = 640;
 	m_IsMapReady = true;
 
-	InitSkyBoxMesh( 1000 );
+	InitSkyBoxMesh( 640 );
 
 	SetSkyBoxTexture( SPRITE_SKYBOX_BACK, SKY_BOX_BACK );
 	SetSkyBoxTexture( SPRITE_SKYBOX_FRONT, SKY_BOX_FRONT );
