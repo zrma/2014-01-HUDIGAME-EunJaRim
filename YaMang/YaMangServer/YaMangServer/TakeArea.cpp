@@ -91,8 +91,9 @@ void TakeArea::OnTick()
 		{
 			LogD( "Ready Re Attack!! \n" );
 
+			// 굉장히 위험하다!! 하지만 그래도 데모일까지 달리기 위해 계속 나간다!
 			Action* targetAction = m_TargetCorps->GetHoldingAction();
-			if ( !targetAction || ACTION_END == targetAction->GetActionStatus() )
+			if ( nullptr == targetAction || ACTION_END == targetAction->GetActionStatus() )
 			{
 				LogD( "Guard Start! \n" );
 

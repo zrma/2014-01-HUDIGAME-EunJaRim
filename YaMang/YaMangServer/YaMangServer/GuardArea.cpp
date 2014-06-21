@@ -82,9 +82,6 @@ void GuardArea::OnTick()
 	destination.y = targetPositionInfo.m_EyePoint.z;
 	float length = m_OwnerCorps->GetTargetLength( destination );
 
-	D3DXVECTOR2 vector;
-	vector.x = targetX - nowX;
-	vector.y = targetZ - nowZ;
 
 
 	if ( m_GuardModeOn && length < m_OwnerCorps->GetAttackRange( ) )
@@ -114,6 +111,12 @@ void GuardArea::OnTick()
 	}
 	else
 	{
+		PositionInfo originalPosition = GetOriginalPositionInfo();
+		D3DXVECTOR2 originalPositionVector;
+		originalPositionVector.x = originalPosition.m_EyePoint.x - nowX;
+		originalPositionVector.y = originalPosition.m_EyePoint.z - nowZ;
+		length = D3DXVec2Length( &originalPositionVector );
+
 		// 하드 코딩 쫓아가는것을 포기하는 거리
 		if ( length > 25 )
 		{
@@ -174,19 +177,10 @@ void GuardArea::ReturnMyBase()
 	const PositionInfo& targetPositionInfo = m_TargetCorps->GetPositionInfo();
 
 
-	UnitType unitType = m_OwnerCorps->GetUnitType();
-	PositionInfo originalPosition;
+	
+	PositionInfo originalPosition = GetOriginalPositionInfo();
 
-	if ( UnitType::UNIT_GUARD == unitType )
-	{
-		int guardIndex = m_GameRoom->GetGuardIndexByID( m_OwnerCorps->GetCorpsID() );
-		originalPosition = m_GameRoom->GetGuardPositionInfo( guardIndex );
-	}
-	else if ( UnitType::UNIT_KING == unitType )
-	{
-		int kingIndex = m_GameRoom->GetKingIndexByID( m_OwnerCorps->GetCorpsID() );
-		originalPosition = m_GameRoom->GetKingPositionInfo( kingIndex );
-	}
+	
 	m_GuardModeOn = false;
 
 
@@ -198,4 +192,22 @@ void GuardArea::ReturnMyBase()
 	LogD( "GuardArea OnTick Return to my original Position \n" );
 	m_ActionStatus = ACTION_END;
 	m_OwnerCorps->DoNextAction( this, movingTime );
+}
+
+const PositionInfo GuardArea::GetOriginalPositionInfo() const
+{
+	UnitType unitType = m_OwnerCorps->GetUnitType();
+
+	PositionInfo originalPosition;
+	if ( UnitType::UNIT_GUARD == unitType )
+	{
+		int guardIndex = m_GameRoom->GetGuardIndexByID( m_OwnerCorps->GetCorpsID() );
+		originalPosition = m_GameRoom->GetGuardPositionInfo( guardIndex );
+	}
+	else if ( UnitType::UNIT_KING == unitType )
+	{
+		int kingIndex = m_GameRoom->GetKingIndexByID( m_OwnerCorps->GetCorpsID() );
+		originalPosition = m_GameRoom->GetKingPositionInfo( kingIndex );
+	}
+	return originalPosition;
 }

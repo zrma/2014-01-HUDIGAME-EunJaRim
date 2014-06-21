@@ -1,5 +1,7 @@
 ﻿#pragma once
 #include "Action.h"
+#include "SharedDefine.h"
+
 class GuardArea:
 	public Action
 {
@@ -15,8 +17,8 @@ private:
 	virtual void OnTick();
 	virtual void OnEnd();
 
-	void		ReturnMyBase();
-
+	void					ReturnMyBase();
+	const PositionInfo		GetOriginalPositionInfo() const;
 private:
 	Corps*		m_TargetCorps = nullptr;
 	bool		m_GuardModeOn = false;
