@@ -128,7 +128,7 @@ void Corps::Update()
 	}
 
 	// 고마해라. 많이 맞았다 아이가...
-	if ( Timer::GetInstance()->GetNowTime() - m_AttacktedTime > 1000 )
+	if ( Timer::GetInstance()->GetNowTime() - m_AttacktedTime > 2000 )
 	{
 		m_IsFight = false;
 	}
