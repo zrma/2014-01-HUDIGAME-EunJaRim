@@ -1,6 +1,7 @@
 ﻿#include "stdafx.h"
 #include "yaMangDxDll.h"
 #include "GlobalVar.h"
+#include <timeapi.h>
 
 enum RenderingOption
 {
@@ -60,14 +61,13 @@ YAMANGDXDLL_API void Rendering( MESHOBJECT* inputVal )
 
 	if ( g_IsEffectReady && g_Effect )
 	{
+		float thisTime = D3DX_PI * (timeGetTime() % 2000) / 1000;
+
+		g_Effect->SetFloat( "time", thisTime );
+
 		// fx출력에 사용할 테크닉 선정
 		g_Effect->SetTechnique( "MyShader" );
-		
-		if ( g_MeshTexture )
-		{
-			g_Effect->SetTexture( "tex0", g_MeshTexture );
-		}
-		
+				
 		D3DXMATRIXA16 worldMatrix;
 		g_D3dDevice->GetTransform( D3DTS_WORLD, &worldMatrix );
 		D3DXMATRIXA16 viewingMatrix;
@@ -89,7 +89,7 @@ YAMANGDXDLL_API void Rendering( MESHOBJECT* inputVal )
 			
 			for ( DWORD j = 0; j < inputVal->NumMaterials; ++j )
 			{
-				g_Effect->SetTexture( "tex1", inputVal->MeshTexture[j] );
+				g_Effect->SetTexture( "tex0", inputVal->MeshTexture[j] );
 				
 				( inputVal->importedMesh )->DrawSubset( j );
 			}

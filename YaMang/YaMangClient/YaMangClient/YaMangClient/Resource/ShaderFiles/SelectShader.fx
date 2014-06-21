@@ -1,9 +1,9 @@
 // 변환행렬
 float4x4    matWVP;
+float		time;
 
 // 텍스처
 texture	tex0;
-texture tex1;
 
 // 입력정점 형식
 struct VS_INPUT
@@ -27,7 +27,7 @@ VS_OUTPUT VS( VS_INPUT In )
 	// 출력 변수 초기화
 	VS_OUTPUT Out = (VS_OUTPUT)0;
 
-	In.pos = In.pos * 1.1;
+	In.pos = In.pos + In.pos * ( sin( time ) + 1 ) / 20;
 	Out.pos = mul( float4( In.pos, 1 ), matWVP );
 	Out.diff = In.diff;
 	Out.tex = In.tex;
@@ -44,20 +44,14 @@ sampler Sampler = sampler_state
 	MagFilter = LINEAR; // g_pd3dDevice->SetSamplerState( 0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR );
 };
 
-sampler Colors = sampler_state
-{
-	Texture = ( tex1 ); // g_pd3dDevice->SetTexture( 0, g_pTexture );
-	MipFilter = LINEAR; // g_pd3dDevice->SetSamplerState( 0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR );
-	MinFilter = LINEAR; // g_pd3dDevice->SetSamplerState( 0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR );
-	MagFilter = LINEAR; // g_pd3dDevice->SetSamplerState( 0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR );
-};
-
 float4 PS(
 	float4 Diff : COLOR0,
 	float2 Tex : TEXCOORD0 ): COLOR
 {
-	return tex2D( Colors, Tex ) / 2 + tex2D( Sampler, Tex ) / 2 + Diff;
-	// return tex2D( Sampler, Tex );
+	float4 color = 0.5;
+	color = color * ( ( sin( time ) + 1 ) / 2 );
+
+	return tex2D( Sampler, Tex ) + color + Diff;
 }
 
 // MyShader 테크닉선언
