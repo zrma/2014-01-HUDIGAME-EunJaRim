@@ -110,6 +110,7 @@ void Unit::Render() const
 	}
 
 	Renderer::GetInstance()->RenderBillboard( m_Corps->GetCorpsTextureType(), flag );
+	Renderer::GetInstance()->SetShader( false );
 }
 
 void Unit::SetStartPosition()
@@ -119,7 +120,7 @@ void Unit::SetStartPosition()
 	D3DXMATRIXA16 formMatrix;
 	D3DXMatrixIdentity( &formMatrix );
 
-	D3DXVECTOR3 formationVector = ( m_Corps->GetFormation( m_UnitID ) ) * 3;
+	D3DXVECTOR3 formationVector = ( m_Corps->GetFormation( m_UnitID ) ) * 15;
 	D3DXMatrixTranslation( &formMatrix, formationVector.x, formationVector.y, formationVector.z );
 
 	formMatrix = formMatrix * parentMatrix;
@@ -137,7 +138,7 @@ void Unit::FindDestination()
 	D3DXMATRIXA16 formMatrix;
 	D3DXMatrixIdentity( &formMatrix );
 
-	D3DXVECTOR3 formationVector = ( m_Corps->GetFormation( m_UnitID ) ) * 3;
+	D3DXVECTOR3 formationVector = ( m_Corps->GetFormation( m_UnitID ) ) * 15;
 	D3DXMatrixTranslation( &formMatrix, formationVector.x, formationVector.y, formationVector.z );
 
 	formMatrix = formMatrix * parentMatrix;

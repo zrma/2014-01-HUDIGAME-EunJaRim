@@ -32,6 +32,7 @@ VS_OUTPUT VS( VS_INPUT In )
 	{
 		In.pos = In.pos + In.pos * ( sin( time ) + 1 ) / 40;
 	}
+	
 	Out.pos = mul( float4( In.pos, 1 ), matWVP );
 	Out.tex = In.tex;
 
@@ -56,20 +57,19 @@ float4 PS(
 		color.gb = 0.3f;
 		color = color * ( ( sin( time ) + 1 ) / 2 );
 	}
+
 	if ( isEnemy == true )
 	{
-		color.b = 0.5f;
-		color.rg = 0.0f;
-	}
-	if ( isSelect == true )
-	{
-		color.b = 0.7f;
-		color.rg = 0.3f;
+		color.r = color.r + 0.3f;
 	}
 	else
 	{
-		color.r = 0.7f;
-		color.gb = 0.3f;
+		color.b = color.b + 0.3f;
+	}
+
+	if ( isSelect == true )
+	{
+		color.rgb = color.rgb + 0.3f;
 	}
 
 	return tex2D( Sampler, Tex ) / 3 + color;

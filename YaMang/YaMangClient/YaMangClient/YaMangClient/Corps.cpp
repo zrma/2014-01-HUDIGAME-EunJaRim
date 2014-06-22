@@ -229,6 +229,8 @@ void Corps::Render() const
 
 		Renderer::GetInstance()->RenderBillboard( m_TextureType, flag );
 	}
+
+	Renderer::GetInstance()->SetShader( false );
 }
 
 void Corps::SetVisible( bool visible )
@@ -317,7 +319,7 @@ void Corps::SetCorpsHP( int unitNum )
 
 bool Corps::IsContain( float x, float z )
 {
-	std::shared_ptr<Collision> clickCollision(new Collision( this, 25.0f - CameraController::GetInstance()->GetHeightGrade() ));
+	std::shared_ptr<Collision> clickCollision(new Collision( this, 5.0f + CameraController::GetInstance()->GetHeightGrade() ));
 	
 	D3DXVECTOR3 backupPosition = m_EyePoint;
 	m_EyePoint.x = x;

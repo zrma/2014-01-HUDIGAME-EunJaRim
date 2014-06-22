@@ -87,7 +87,9 @@ YAMANGDXDLL_API void Rendering( MESHOBJECT* inputVal )
 		D3DXMATRIXA16 thisMatrix = worldMatrix * viewingMatrix * projectionMatrix;
 
 		g_Effects[0]->SetMatrix( "matWVP", &thisMatrix );
-		
+
+		g_Effects[0]->SetTexture( "tex0", inputVal->MeshTexture[0] );
+
 		// fx를 사용한 출력개시
 		g_Effects[0]->Begin( &nPass, D3DXFX_DONOTSAVESHADERSTATE );
 		
@@ -98,8 +100,6 @@ YAMANGDXDLL_API void Rendering( MESHOBJECT* inputVal )
 			
 			for ( DWORD j = 0; j < inputVal->NumMaterials; ++j )
 			{
-				g_Effects[0]->SetTexture( "tex0", inputVal->MeshTexture[j] );
-				
 				( inputVal->importedMesh )->DrawSubset( j );
 			}
 

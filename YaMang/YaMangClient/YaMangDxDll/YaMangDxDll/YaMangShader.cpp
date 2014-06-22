@@ -92,7 +92,7 @@ YAMANGDXDLL_API void DrawBillboardByTexture( int id, char flag )
 		}
 		else
 		{
-			g_Effects[1]->SetBool( "isEnemy", false );
+			g_Effects[1]->SetBool( "isAttack", false );
 		}
 
 		if ( flag & UNIT_STATUS_FLAG_SELECT )
@@ -117,6 +117,8 @@ YAMANGDXDLL_API void DrawBillboardByTexture( int id, char flag )
 		D3DXMATRIXA16 thisMatrix = worldMatrix * viewingMatrix * projectionMatrix;
 
 		g_Effects[1]->SetMatrix( "matWVP", &thisMatrix );
+
+		g_Effects[1]->SetTexture( "tex0", g_MeshTextures[id] );
 		
 		// fx를 사용한 출력개시
 		g_Effects[1]->Begin( &nPass, D3DXFX_DONOTSAVESHADERSTATE );
@@ -125,8 +127,7 @@ YAMANGDXDLL_API void DrawBillboardByTexture( int id, char flag )
 		for ( UINT i = 0; i < nPass; ++i )
 		{
 			g_Effects[1]->BeginPass( i );
-
-			g_Effects[1]->SetTexture( "tex0", g_MeshTextures[id] );
+			
 			g_D3dDevice->DrawPrimitiveUP( D3DPT_TRIANGLESTRIP, 2, vtx, sizeof( BILLBOARDVERTEX ) );
 			
 			g_Effects[1]->EndPass();
