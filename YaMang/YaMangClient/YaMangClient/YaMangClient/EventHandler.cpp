@@ -93,7 +93,7 @@ void NetworkManager::HandleEnterRoomResult( EnterRoomResult& inPacket )
 
 		wchar_t wsRoomNum[100] = { 0, };
 		wsprintf( wsRoomNum, L"RoomNum : %d", m_RoomNumber );
-		//TextManager::GetInstance( )->RegistText( TEXT_ROOM_NUMBER, wsRoomNum, 20, 60, SCENE_PLAY );
+		TextManager::GetInstance( )->RegistText( TEXT_ROOM_NUMBER, wsRoomNum, 40, 30, SCENE_PLAY );
 	}
 	else
 	{
@@ -552,8 +552,8 @@ void NetworkManager::HandleRefreshUIResult( RefreshUIResult& inPacket )
 			wchar_t wsRegenTime[100] = { 0, };
 			wsprintf( wsRegenTime, L"Regen : %u", regenTime );
 
-			TextManager::GetInstance()->RegistText(TEXT_CORPS_NUM, wsCorpsNum, 20, 200, SCENE_PLAY );
-			TextManager::GetInstance()->RegistText(TEXT_BASE_NUM, wsBaseNum, 20, 250, SCENE_PLAY );
+			TextManager::GetInstance()->RegistText(TEXT_CORPS_NUM, wsCorpsNum, 40, 80, SCENE_PLAY );
+			TextManager::GetInstance()->RegistText(TEXT_BASE_NUM, wsBaseNum, 40, 130, SCENE_PLAY );
 			//TextManager::GetInstance( )->RegistText( TEXT_REGEN_TIME, wsRegenTime, 20, 300, SCENE_PLAY ); // 텍스트로 보이는건 임시
 
 			// 디버깅용 데이터
