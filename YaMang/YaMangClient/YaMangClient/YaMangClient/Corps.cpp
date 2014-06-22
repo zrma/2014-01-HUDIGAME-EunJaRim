@@ -36,7 +36,7 @@ Corps::Corps( int corpsId, int playerId, PositionInfo pos )
 	m_LookAtPoint = pos.m_LookAtPoint;
 	
 	m_UpVector = { 0.0f, 1.0f, 0.0f };
-	m_Scale = { 1.0f, 1.0f, 1.0f };
+	m_Scale = { 0.3f, 0.3f, 0.3f };
 
 	ActionDefault action;
 	m_Action = action;
@@ -200,12 +200,12 @@ void Corps::Render() const
 		D3DXMatrixInverse( &billMatrix, NULL, &billMatrix );
 
 		D3DXMATRIXA16 scaleMatrix;
-		D3DXMatrixScaling( &scaleMatrix, 8.0f, 8.0f, 8.0f );
+		D3DXMatrixScaling( &scaleMatrix, 2.0f, 2.5f, 2.0f );
 
 		billMatrix = billMatrix * scaleMatrix;
 
 		billMatrix._41 = thisMatrix._41;
-		billMatrix._42 = thisMatrix._42 + 15;
+		billMatrix._42 = thisMatrix._42 + 5;
 		billMatrix._43 = thisMatrix._43;
 
 		Renderer::GetInstance()->SetWorldMatrix( billMatrix );

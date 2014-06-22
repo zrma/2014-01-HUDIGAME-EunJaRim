@@ -10,7 +10,7 @@ Pike::Pike( Corps* owner, UINT unitId )
 	
 	m_EyePoint = { 0.0f, 0.0f, 0.0f };
 	m_LookAtPoint = { 0.0f, 0.0f, 1.0f };
-	m_Scale = { 0.8f, 0.8f, 0.8f };
+	m_Scale = { 1.0f, 1.0f, 1.0f };
 
 	SetStartPosition();
 }
