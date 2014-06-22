@@ -230,9 +230,9 @@ void NetworkManager::HandleGameOverResult( GameOverResult& inPacket )
 			SceneManager::GetInstance()->ChangeScene( SCENE_RESULT );
 
 
-			//TextManager::GetInstance()->RegistText( TEXT_TEST_KILLED_CORPS_NUM, wsKilledCorpsNum, 800, 480, SCENE_RESULT, 0, 0, 0 );
-			//TextManager::GetInstance()->RegistText( TEXT_TEST_DEATH_CORPS_NUM, wsDeathCorpsNum, 800, 530, SCENE_RESULT, 0, 0, 0 );
-			//TextManager::GetInstance()->RegistText( TEXT_TEST_TOTAL_MY_CORPS_NUM, wsTotalMyCorpsNum, 800, 580, SCENE_RESULT, 0, 0, 0 );
+			TextManager::GetInstance()->RegistText( TEXT_TEST_KILLED_CORPS_NUM, wsKilledCorpsNum, 800, 480, SCENE_RESULT, 0, 0, 0 );
+			TextManager::GetInstance()->RegistText( TEXT_TEST_DEATH_CORPS_NUM, wsDeathCorpsNum, 800, 530, SCENE_RESULT, 0, 0, 0 );
+			TextManager::GetInstance()->RegistText( TEXT_TEST_TOTAL_MY_CORPS_NUM, wsTotalMyCorpsNum, 800, 580, SCENE_RESULT, 0, 0, 0 );
 
 
 		}
