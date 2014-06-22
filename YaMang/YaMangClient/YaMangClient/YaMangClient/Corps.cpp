@@ -44,10 +44,12 @@ Corps::Corps( int corpsId, int playerId, PositionInfo pos )
 	if ( m_OwnerPlayerID == NetworkManager::GetInstance()->GetMyPlayerID() )
 	{
 		m_MeshKey = MESH_KEY_CORPS_RUSH_MINE;
+		m_IsEnemy = false;
 	}
 	else
 	{
 		m_MeshKey = MESH_KEY_CORPS_RUSH_ENEMY;
+		m_IsEnemy = true;
 	}
 }
 
@@ -165,6 +167,11 @@ void Corps::Render() const
 
 	D3DXMATRIXA16 thisMatrix = GetMatrix();
 
+	D3DXMATRIXA16 heightMatrix;
+	D3DXMatrixTranslation( &heightMatrix, 0, MapManager::GetInstance()->GetHeightByPosition( m_EyePoint.x, m_EyePoint.z ), 0 );
+	thisMatrix = thisMatrix * heightMatrix;
+	Renderer::GetInstance()->SetWorldMatrix( thisMatrix );
+
 	if ( IsSelected() )
 	{
 		Renderer::GetInstance()->SetShader( true );
@@ -173,11 +180,6 @@ void Corps::Render() const
 	{
 		Renderer::GetInstance()->SetShader( false );
 	}
-
-	D3DXMATRIXA16 heightMatrix;
-	D3DXMatrixTranslation( &heightMatrix, 0, MapManager::GetInstance()->GetHeightByPosition( m_EyePoint.x, m_EyePoint.z ), 0 );
-	thisMatrix = thisMatrix * heightMatrix;
-	Renderer::GetInstance()->SetWorldMatrix( thisMatrix );
 
 	ResourceMesh* mesh = ResourceManager::GetInstance()->GetMeshByKey( m_MeshKey );
 
@@ -200,7 +202,7 @@ void Corps::Render() const
 		D3DXMatrixInverse( &billMatrix, NULL, &billMatrix );
 
 		D3DXMATRIXA16 scaleMatrix;
-		D3DXMatrixScaling( &scaleMatrix, 2.0f, 2.5f, 2.0f );
+		D3DXMatrixScaling( &scaleMatrix, 3.0f, 3.0f, 3.0f );
 
 		billMatrix = billMatrix * scaleMatrix;
 
@@ -210,17 +212,22 @@ void Corps::Render() const
 
 		Renderer::GetInstance()->SetWorldMatrix( billMatrix );
 
-		// 두들겨 맞고 있을 땐 깃발도 셰이더로!
+		char flag = 0;
+
+		if ( IsSelected() )
+		{
+			flag |= UNIT_STATUS_SELECT;
+		}
 		if ( IsFight() )
 		{
-			Renderer::GetInstance()->SetShader( true );
+			flag |= UNIT_STATUS_ATTACK;
 		}
-		else
+		if ( IsEnemy() )
 		{
-			Renderer::GetInstance()->SetShader( false );
+			flag |= UNIT_STATUS_ENEMY;
 		}
 
-		Renderer::GetInstance()->RenderBillboard( m_TextureType );
+		Renderer::GetInstance()->RenderBillboard( m_TextureType, flag );
 	}
 }
 

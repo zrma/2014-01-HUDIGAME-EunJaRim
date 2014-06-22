@@ -52,7 +52,7 @@ extern "C"{
 	// Billboard
 	//////////////////////////////////////////////////////////////////////////
 
-	YAMANGDXDLL_API void DrawBillboardByTexture( int id );
+	YAMANGDXDLL_API void DrawBillboardByTexture( int id, char flag );
 	YAMANGDXDLL_API HRESULT MeshTextureCreateBySize( INT size );
 	YAMANGDXDLL_API HRESULT MeshTextureImport( LPCTSTR meshTexture, int id );
 

@@ -148,3 +148,10 @@ enum CorpsTextureType
 
 	CORPS_TEXTURE_MAX
 };
+
+enum UnitStatusType
+{
+	UNIT_STATUS_ENEMY = 0x1,
+	UNIT_STATUS_ATTACK = 0x2,
+	UNIT_STATUS_SELECT = 0x4
+};

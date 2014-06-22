@@ -37,25 +37,22 @@ YAMANGDXDLL_API HRESULT ShaderImport( LPCTSTR effectFile, int id )
 	return S_OK;
 }
 
-//////////////////////////////////////////////////////////////////////////
-// 이거슨 텍스쳐 쪽 코드가 아니므니다 - 옮겨야 됨 ㅠㅠ 어쩌다보니 일단 여기
-//////////////////////////////////////////////////////////////////////////
-YAMANGDXDLL_API void DrawBillboardByTexture( int id )
+enum UnitStatusFlagType
+{
+	UNIT_STATUS_FLAG_ENEMY = 0x1,
+	UNIT_STATUS_FLAG_ATTACK = 0x2,
+	UNIT_STATUS_FLAG_SELECT = 0x4
+};
+
+YAMANGDXDLL_API void DrawBillboardByTexture( int id, char flag )
 {
 	if ( id <= 0 || id >= g_MeshTextureSize )
 	{
 		return;
 	}
 
-	struct MYVERTEX
-	{
-		enum { FVF = D3DFVF_XYZ | D3DFVF_TEX1 };
-		float px, py, pz;
-		float tu, tv;
-	};
-
 	// 빌보드 정점
-	MYVERTEX vtx[4] =
+	BILLBOARDVERTEX vtx[4] =
 	{
 		{ -1, 0, 0, 0, 1 },
 		{ -1, 4, 0, 0, 0 },
@@ -63,12 +60,12 @@ YAMANGDXDLL_API void DrawBillboardByTexture( int id )
 		{ 1, 4, 0, 1, 0 }
 	};
 
-	if ( g_IsEffectReady && g_Effects[1] )
+	if ( g_Effects[1] )
 	{
 		D3DVERTEXELEMENT9	ele[MAX_FVF_DECL_SIZE];
 
 		// FVF를 사용해서 정점선언값을 자동으로 채워넣는다
-		D3DXDeclaratorFromFVF( MYVERTEX::FVF, ele );
+		D3DXDeclaratorFromFVF( BILLBOARDVERTEX::FVF, ele );
 		LPDIRECT3DVERTEXDECLARATION9	decl;
 
 		// 정점선언값으로 decl을 생성한다.
@@ -79,6 +76,33 @@ YAMANGDXDLL_API void DrawBillboardByTexture( int id )
 		float thisTime = D3DX_PI * ( timeGetTime() % 600 ) / 300;
 
 		g_Effects[1]->SetFloat( "time", thisTime );
+
+		if ( flag & UNIT_STATUS_FLAG_ENEMY )
+		{
+			g_Effects[1]->SetBool( "isEnemy", true );
+		}
+		else
+		{
+			g_Effects[1]->SetBool( "isEnemy", false );
+		}
+
+		if ( flag & UNIT_STATUS_FLAG_ATTACK )
+		{
+			g_Effects[1]->SetBool( "isAttack", true );
+		}
+		else
+		{
+			g_Effects[1]->SetBool( "isEnemy", false );
+		}
+
+		if ( flag & UNIT_STATUS_FLAG_SELECT )
+		{
+			g_Effects[1]->SetBool( "isSelect", true );
+		}
+		else
+		{
+			g_Effects[1]->SetBool( "isSelect", false );
+		}
 
 		// fx출력에 사용할 테크닉 선정
 		g_Effects[1]->SetTechnique( "MyShader" );
@@ -103,7 +127,7 @@ YAMANGDXDLL_API void DrawBillboardByTexture( int id )
 			g_Effects[1]->BeginPass( i );
 
 			g_Effects[1]->SetTexture( "tex0", g_MeshTextures[id] );
-			g_D3dDevice->DrawPrimitiveUP( D3DPT_TRIANGLESTRIP, 2, vtx, sizeof( MYVERTEX ) );
+			g_D3dDevice->DrawPrimitiveUP( D3DPT_TRIANGLESTRIP, 2, vtx, sizeof( BILLBOARDVERTEX ) );
 			
 			g_Effects[1]->EndPass();
 		}
@@ -117,8 +141,8 @@ YAMANGDXDLL_API void DrawBillboardByTexture( int id )
 				
 		// 0번 텍스처에 빌보드 텍스처를 올린다
 		g_D3dDevice->SetTexture( 0, g_MeshTextures[id] );
-		g_D3dDevice->SetFVF( MYVERTEX::FVF );
-		g_D3dDevice->DrawPrimitiveUP( D3DPT_TRIANGLESTRIP, 2, vtx, sizeof( MYVERTEX ) );
+		g_D3dDevice->SetFVF( BILLBOARDVERTEX::FVF );
+		g_D3dDevice->DrawPrimitiveUP( D3DPT_TRIANGLESTRIP, 2, vtx, sizeof( BILLBOARDVERTEX ) );
 	}
 
 	g_IsEffectReady = false;

@@ -10,6 +10,13 @@ struct CUSTOMVERTEX
 //마지막에는 각 texturepoint의 차원과 index를 의미
 #define D3DFVF_CUSTOMVERTEX ( D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1 )
 
+struct BILLBOARDVERTEX
+{
+	enum { FVF = D3DFVF_XYZ | D3DFVF_TEX1 };
+	float px, py, pz;
+	float tu, tv;
+};
+
 struct SKYBOXVERTEX
 {
 	SKYBOXVERTEX() {}

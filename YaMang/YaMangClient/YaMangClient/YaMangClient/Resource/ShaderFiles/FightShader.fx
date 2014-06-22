@@ -1,6 +1,9 @@
 // 변환행렬
 float4x4    matWVP;
 float		time;
+bool		isEnemy;
+bool		isAttack;
+bool		isSelect;
 
 // 텍스처
 texture	tex0;
@@ -25,7 +28,10 @@ VS_OUTPUT VS( VS_INPUT In )
 	// 출력 변수 초기화
 	VS_OUTPUT Out = (VS_OUTPUT)0;
 
-	In.pos = In.pos + In.pos * ( sin( time ) + 1 ) / 40;
+	if ( isAttack == true )
+	{
+		In.pos = In.pos + In.pos * ( sin( time ) + 1 ) / 40;
+	}
 	Out.pos = mul( float4( In.pos, 1 ), matWVP );
 	Out.tex = In.tex;
 
@@ -41,11 +47,30 @@ sampler Sampler = sampler_state
 float4 PS(
 	float2 Tex : TEXCOORD0 ): COLOR
 {
-	float4 color = 1.0f;
-	color.r = 0.9f;
-	color.gb = 0.3f;
-
-	color = color * ( ( sin( time ) + 1 ) / 2 );
+	float4 color = 0.0f;
+	color.a = 1.0f;
+	
+	if ( isAttack == true )
+	{
+		color.r = 0.9f;
+		color.gb = 0.3f;
+		color = color * ( ( sin( time ) + 1 ) / 2 );
+	}
+	if ( isEnemy == true )
+	{
+		color.b = 0.5f;
+		color.rg = 0.0f;
+	}
+	if ( isSelect == true )
+	{
+		color.b = 0.7f;
+		color.rg = 0.3f;
+	}
+	else
+	{
+		color.r = 0.7f;
+		color.gb = 0.3f;
+	}
 
 	return tex2D( Sampler, Tex ) / 3 + color;
 }

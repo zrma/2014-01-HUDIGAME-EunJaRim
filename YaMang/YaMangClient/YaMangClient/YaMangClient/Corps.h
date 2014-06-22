@@ -46,6 +46,9 @@ public:
 	bool	IsSelected() const { return m_IsSelected; }
 	void	SetSelected( bool selected ) { m_IsSelected = selected; }
 
+	bool	IsEnemy() const { return m_IsEnemy; }
+	void	SetEnemy( bool enemy ) { m_IsEnemy = enemy; }
+
 	bool	IsContain( float x, float z );
 
 	bool	GetMoved() const { return m_IsMoved; }
@@ -78,6 +81,7 @@ private:
 	bool	m_IsMoved = false;
 	bool	m_IsInterpolated = false;
 	bool	m_IsFight = false;
+	bool	m_IsEnemy = false;
 
 	UINT	m_AttacktedTime = 0;
 

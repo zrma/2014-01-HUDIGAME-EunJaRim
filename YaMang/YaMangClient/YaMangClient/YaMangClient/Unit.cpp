@@ -59,14 +59,6 @@ void Unit::Render() const
 
 	D3DXMATRIXA16 thisMatrix = GetMatrix( false );
 
-	if ( m_Corps->IsSelected() )
-	{
-		D3DXMATRIXA16 scaleMatrix;
-		D3DXMatrixScaling( &scaleMatrix, 1.2f, 1.2f, 1.2f );
-
-		thisMatrix = scaleMatrix * thisMatrix;
-	}
-
 	D3DXMATRIXA16 heightMatrix;
 	D3DXMatrixTranslation( &heightMatrix, 0, MapManager::GetInstance()->GetHeightByPosition( m_EyePoint.x, m_EyePoint.z ), 0 );
 	
@@ -80,7 +72,44 @@ void Unit::Render() const
 	//	Renderer::GetInstance()->RenderMesh( mesh->m_MeshObject );
 	//}
 
-	Renderer::GetInstance()->RenderBillboard( m_Corps->GetCorpsTextureType() );
+	char flag = 0;
+
+	if ( m_Corps->IsSelected() )
+	{
+		flag |= UNIT_STATUS_SELECT;
+
+		D3DXMATRIXA16 viewMatrix = CameraController::GetInstance()->GetViewMatrix();
+		D3DXMATRIXA16 billMatrix;
+		D3DXMatrixIdentity( &billMatrix );
+
+		billMatrix._11 = viewMatrix._11;
+		billMatrix._13 = viewMatrix._13;
+		billMatrix._31 = viewMatrix._31;
+		billMatrix._33 = viewMatrix._33;
+
+		D3DXMatrixInverse( &billMatrix, NULL, &billMatrix );
+
+		D3DXMATRIXA16 scaleMatrix;
+		D3DXMatrixScaling( &scaleMatrix, 1.3f, 1.3f, 1.3f );
+
+		billMatrix = billMatrix * scaleMatrix;
+
+		billMatrix._41 = thisMatrix._41;
+		billMatrix._42 = thisMatrix._42;
+		billMatrix._43 = thisMatrix._43;
+
+		Renderer::GetInstance()->SetWorldMatrix( billMatrix );
+	}
+	if ( m_Corps->IsFight() )
+	{
+		flag |= UNIT_STATUS_ATTACK;
+	}
+	if ( m_Corps->IsEnemy() )
+	{
+		flag |= UNIT_STATUS_ENEMY;
+	}
+
+	Renderer::GetInstance()->RenderBillboard( m_Corps->GetCorpsTextureType(), flag );
 }
 
 void Unit::SetStartPosition()
