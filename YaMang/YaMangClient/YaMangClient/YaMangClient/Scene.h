@@ -14,7 +14,11 @@ public:
 
 	SceneType		GetSceneType() { return m_SceneType; }
 
+protected:
+	bool			m_SceneIsStart = false;
+
 private:
 	SceneType		m_SceneType;
+
 };
 

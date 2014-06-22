@@ -40,6 +40,10 @@ SoundManager::SoundManager()
 	m_SoundList[SOUND_CORPS_ATTACK_KNIGHT] = GetEventInstance( "event:/sfx/play/corps/attack/attack_horse" );
 	m_SoundList[SOUND_CORPS_ATTACK_PIKE] = GetEventInstance( "event:/sfx/play/corps/attack/attack_pike" );
 	m_SoundList[SOUND_CORPS_ATTACK_SWORD] = GetEventInstance( "event:/sfx/play/corps/attack/attack_sword" );
+
+	m_SoundList[SOUND_SCENE_RESULT_BGM_WIN] = GetEventInstance( "event:/loop/result_win" );
+	m_SoundList[SOUND_SCENE_RESULT_BGM_LOSE] = GetEventInstance( "event:/loop/result_lose" );
+
 }
 
 
