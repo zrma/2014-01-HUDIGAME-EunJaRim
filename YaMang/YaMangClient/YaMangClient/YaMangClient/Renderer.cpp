@@ -63,7 +63,7 @@ void Renderer::RenderEnd()
 
 		wchar_t ws[100] = { 0, };
 		wsprintf( ws, L"FPS : %d,  DPCall : %d,  Map : %d ", m_FPS, m_DPCall, m_HeightMapVertis );
-		TextManager::GetInstance( )->RegistText( TEXT_FPS, ws, 20, 20, SCENE_PLAY );
+		//TextManager::GetInstance( )->RegistText( TEXT_FPS, ws, 20, 20, SCENE_PLAY );
 		m_Frame++;
 
 		PostRendering( );

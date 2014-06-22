@@ -368,7 +368,7 @@ void ScenePlay::UpdateBase( int BaseIndex, int playerID )
 		test = test + std::to_wstring( m_BasePlayerIDList.at( i ) );
 		test = test + L"] ";
 	}
-	TextManager::GetInstance( )->RegistText( TEXT_TEST_BASE, test.c_str( ), 250, 300, SCENE_PLAY );
+	//TextManager::GetInstance( )->RegistText( TEXT_TEST_BASE, test.c_str( ), 250, 300, SCENE_PLAY );
 }
 
 void ScenePlay::InitUIObjects()

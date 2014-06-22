@@ -93,7 +93,7 @@ void NetworkManager::HandleEnterRoomResult( EnterRoomResult& inPacket )
 
 		wchar_t wsRoomNum[100] = { 0, };
 		wsprintf( wsRoomNum, L"RoomNum : %d", m_RoomNumber );
-		TextManager::GetInstance( )->RegistText( TEXT_ROOM_NUMBER, wsRoomNum, 20, 60, SCENE_PLAY );
+		//TextManager::GetInstance( )->RegistText( TEXT_ROOM_NUMBER, wsRoomNum, 20, 60, SCENE_PLAY );
 	}
 	else
 	{
@@ -230,9 +230,9 @@ void NetworkManager::HandleGameOverResult( GameOverResult& inPacket )
 			SceneManager::GetInstance()->ChangeScene( SCENE_RESULT );
 
 
-			TextManager::GetInstance()->RegistText( TEXT_TEST_KILLED_CORPS_NUM, wsKilledCorpsNum, 800, 480, SCENE_RESULT, 0, 0, 0 );
-			TextManager::GetInstance()->RegistText( TEXT_TEST_DEATH_CORPS_NUM, wsDeathCorpsNum, 800, 530, SCENE_RESULT, 0, 0, 0 );
-			TextManager::GetInstance()->RegistText( TEXT_TEST_TOTAL_MY_CORPS_NUM, wsTotalMyCorpsNum, 800, 580, SCENE_RESULT, 0, 0, 0 );
+			//TextManager::GetInstance()->RegistText( TEXT_TEST_KILLED_CORPS_NUM, wsKilledCorpsNum, 800, 480, SCENE_RESULT, 0, 0, 0 );
+			//TextManager::GetInstance()->RegistText( TEXT_TEST_DEATH_CORPS_NUM, wsDeathCorpsNum, 800, 530, SCENE_RESULT, 0, 0, 0 );
+			//TextManager::GetInstance()->RegistText( TEXT_TEST_TOTAL_MY_CORPS_NUM, wsTotalMyCorpsNum, 800, 580, SCENE_RESULT, 0, 0, 0 );
 
 
 		}
@@ -554,7 +554,7 @@ void NetworkManager::HandleRefreshUIResult( RefreshUIResult& inPacket )
 
 			TextManager::GetInstance()->RegistText(TEXT_CORPS_NUM, wsCorpsNum, 20, 200, SCENE_PLAY );
 			TextManager::GetInstance()->RegistText(TEXT_BASE_NUM, wsBaseNum, 20, 250, SCENE_PLAY );
-			TextManager::GetInstance( )->RegistText( TEXT_REGEN_TIME, wsRegenTime, 20, 300, SCENE_PLAY ); // 텍스트로 보이는건 임시
+			//TextManager::GetInstance( )->RegistText( TEXT_REGEN_TIME, wsRegenTime, 20, 300, SCENE_PLAY ); // 텍스트로 보이는건 임시
 
 			// 디버깅용 데이터
 			wchar_t wsKilledCorpsNum[100] = { 0, };
@@ -564,9 +564,9 @@ void NetworkManager::HandleRefreshUIResult( RefreshUIResult& inPacket )
 			wchar_t wsTotalMyCorpsNum[100] = { 0, };
 			wsprintf( wsTotalMyCorpsNum, L"TotalMyCorpsNum : %u", totalMyCorpsNum );
 
-			TextManager::GetInstance()->RegistText(TEXT_TEST_KILLED_CORPS_NUM, wsKilledCorpsNum, 200, 200, SCENE_PLAY);
-			TextManager::GetInstance()->RegistText(TEXT_TEST_DEATH_CORPS_NUM, wsDeathCorpsNum, 200, 250, SCENE_PLAY);
-			TextManager::GetInstance()->RegistText(TEXT_TEST_TOTAL_MY_CORPS_NUM, wsTotalMyCorpsNum, 200, 300, SCENE_PLAY);
+			//TextManager::GetInstance()->RegistText(TEXT_TEST_KILLED_CORPS_NUM, wsKilledCorpsNum, 200, 200, SCENE_PLAY);
+			//TextManager::GetInstance()->RegistText(TEXT_TEST_DEATH_CORPS_NUM, wsDeathCorpsNum, 200, 250, SCENE_PLAY);
+			//TextManager::GetInstance()->RegistText(TEXT_TEST_TOTAL_MY_CORPS_NUM, wsTotalMyCorpsNum, 200, 300, SCENE_PLAY);
 			Log("Refresh UI! \n");
 
 			ScenePlay* playScene = dynamic_cast<ScenePlay*>(SceneManager::GetInstance()->GetNowScene());
