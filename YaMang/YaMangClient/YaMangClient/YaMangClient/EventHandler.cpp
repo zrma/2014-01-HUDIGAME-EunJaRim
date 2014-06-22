@@ -499,6 +499,31 @@ void NetworkManager::HandleAttackCorpsResult( AttackCorpsResult& inPacket )
 			scenePlay->MoveCorpsStop( targetCorpsID, targetNow, targetLook );
 			scenePlay->SetCorpsHP( targetCorpsID, unitNum );
 
+			const Corps* corps = scenePlay->GetCorpsByID( attackerCorpsID );
+			switch ( corps->GetUnitType() )
+			{
+				case UnitType::UNIT_ARROW:
+					SoundManager::GetInstance()->PlaySound( SOUND_CORPS_ATTACK_ARROW );
+					break;
+				case UnitType::UNIT_GUARD:
+					SoundManager::GetInstance()->PlaySound( SOUND_CORPS_ATTACK_SWORD ); // 드립 방지 원래는 guard
+					break;
+				case UnitType::UNIT_KNIGHT:
+					SoundManager::GetInstance()->PlaySound( SOUND_CORPS_ATTACK_KNIGHT );
+					break;
+				case UnitType::UNIT_PIKE:
+					SoundManager::GetInstance()->PlaySound( SOUND_CORPS_ATTACK_PIKE );
+					break;
+				case UnitType::UNIT_SWORD:
+					SoundManager::GetInstance()->PlaySound( SOUND_CORPS_ATTACK_SWORD );
+					break;
+				case UnitType::UNIT_KING:
+					SoundManager::GetInstance()->PlaySound( SOUND_CORPS_ATTACK_SWORD );
+					break;
+				default:
+					break;
+			}
+
 			Log( "CorpsAttack! [%d]->[%d] \n", attackerCorpsID, targetCorpsID );
 			// Log( "Eye [%f %f]  LookAt [%f %f] \n", attackerNowX, attackerNowZ, targetNowX, targetNowZ );
 		}

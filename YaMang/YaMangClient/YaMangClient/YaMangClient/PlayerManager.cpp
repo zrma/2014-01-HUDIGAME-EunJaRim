@@ -64,30 +64,8 @@ void PlayerManager::AttackCorpsById( int corpsID ) const
 			attackCorpsData.m_MyCorpsID = iter;
 			attackCorpsData.m_TargetCorpsID = corpsID;
 
-			switch ( myCorps->GetUnitType() )
-			{
-				case UnitType::UNIT_ARROW:
-					SoundManager::GetInstance()->PlaySound( SOUND_CORPS_ATTACK_ARROW );
-					break;
-				case UnitType::UNIT_GUARD:
-					SoundManager::GetInstance()->PlaySound( SOUND_CORPS_ATTACK_GUARD );
-					break;
-				case UnitType::UNIT_KNIGHT:
-					SoundManager::GetInstance()->PlaySound( SOUND_CORPS_ATTACK_KNIGHT );
-					break;
-				case UnitType::UNIT_PIKE:
-					SoundManager::GetInstance()->PlaySound( SOUND_CORPS_ATTACK_PIKE );
-					break;
-				case UnitType::UNIT_SWORD:
-					SoundManager::GetInstance()->PlaySound( SOUND_CORPS_ATTACK_SWORD );
-					break;
-				case UnitType::UNIT_KING:
-					SoundManager::GetInstance()->PlaySound( SOUND_CORPS_ATTACK_SWORD );
-					break;
-				default:
-					break;
-			}
 			
+			SoundManager::GetInstance()->PlaySound( SOUND_CORPS_MOVE );
 			NetworkManager::GetInstance( )->SendPlayPacket( &attackCorpsData );
 		}
 	}
