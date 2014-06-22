@@ -7,11 +7,8 @@
 
 SoundManager::SoundManager()
 {
-<<<<<<< HEAD
+
 	m_SoundList.fill( nullptr );
-=======
-	m_TextList.fill( nullptr );
->>>>>>> 7dcf2c7b0acdc2245fe7241a99e93c22a00241eb
 	
 	FMOD_RESULT result;
 	FMOD::Studio::System::create( &m_System );
@@ -31,8 +28,6 @@ SoundManager::SoundManager()
 
 	//////////////////////////////////////////////////////////////////////////
 
-
-<<<<<<< HEAD
 	m_SoundList[SOUND_SYSTEM_MOUSE_CLICK] = GetEventInstance( "event:/sfx/system/mouse_click" );
 	m_SoundList[SOUND_SCENE_PLAY_BGM1] = GetEventInstance( "event:/loop/scene_play_01" );
 	m_SoundList[SOUND_SCENE_PLAY_BGM2] = GetEventInstance( "event:/loop/scene_play_02" );
@@ -45,19 +40,6 @@ SoundManager::SoundManager()
 	m_SoundList[SOUND_CORPS_ATTACK_KNIGHT] = GetEventInstance( "event:/sfx/play/corps/attack/attack_horse" );
 	m_SoundList[SOUND_CORPS_ATTACK_PIKE] = GetEventInstance( "event:/sfx/play/corps/attack/attack_pike" );
 	m_SoundList[SOUND_CORPS_ATTACK_SWORD] = GetEventInstance( "event:/sfx/play/corps/attack/attack_sword" );
-=======
-	m_TextList[SOUND_SYSTEM_MOUSE_CLICK] = GetEventInstance( "event:/sfx/system/mouse_click" );
-	m_TextList[SOUND_SCENE_PLAY_BGM1] = GetEventInstance( "event:/loop/scene_play_01" );
-	m_TextList[SOUND_SCENE_PLAY_BGM2] = GetEventInstance( "event:/loop/scene_play_02" );
-	m_TextList[SOUND_CORPS_GENERATE] = GetEventInstance( "event:/sfx/play/corps/generate_corps" );
-	m_TextList[SOUND_CORPS_MOVE] = GetEventInstance( "event:/sfx/play/corps/generate_corps" );
-	m_TextList[SOUND_CORPS_ATTACK_ARROW] = GetEventInstance( "event:/sfx/play/corps/attack/attack_arrow" );
-	m_TextList[SOUND_CORPS_ATTACK_GUARD] = GetEventInstance( "event:/sfx/play/corps/attack/attack_guard" );
-	m_TextList[SOUND_CORPS_ATTACK_KNIGHT] = GetEventInstance( "event:/sfx/play/corps/attack/attack_horse" );
-	m_TextList[SOUND_CORPS_ATTACK_PIKE] = GetEventInstance( "event:/sfx/play/corps/attack/attack_pike" );
-	m_TextList[SOUND_CORPS_ATTACK_SWORD] = GetEventInstance( "event:/sfx/play/corps/attack/attack_sword" );
->>>>>>> 7dcf2c7b0acdc2245fe7241a99e93c22a00241eb
-
 }
 
 
@@ -113,15 +95,10 @@ FMOD::Studio::EventInstance* SoundManager::GetEventInstance( const char* path )
 
 bool SoundManager::PlaySound( SoundType soundType )
 {
-<<<<<<< HEAD
 	if ( m_SoundList[soundType] != nullptr)
 	{
 		m_SoundList[soundType]->start();
-=======
-	if ( m_TextList[soundType] != nullptr)
-	{
-		m_TextList[soundType]->start();
->>>>>>> 7dcf2c7b0acdc2245fe7241a99e93c22a00241eb
+
 		m_System->update();
 
 		return true;
@@ -132,22 +109,15 @@ bool SoundManager::PlaySound( SoundType soundType )
 
 bool SoundManager::StopSound( SoundType soundType )
 {
-<<<<<<< HEAD
 	if ( m_SoundList[soundType] != nullptr )
 	{
 		m_SoundList[soundType]->stop( FMOD_STUDIO_STOP_ALLOWFADEOUT );
-=======
-	if ( m_TextList[soundType] != nullptr )
-	{
-
->>>>>>> 7dcf2c7b0acdc2245fe7241a99e93c22a00241eb
 		return true;
 	}
 
 	return false;
 }
 
-<<<<<<< HEAD
 
 void SoundManager::StopAllSound()
 {
@@ -162,13 +132,6 @@ bool SoundManager::SetVolume( SoundType soundType, float volume )
 	if ( m_SoundList[soundType] != nullptr )
 	{
 		m_SoundList[soundType]->setVolume( volume );
-=======
-bool SoundManager::SetVolume( SoundType soundType, float volume )
-{
-	if ( m_TextList[soundType] != nullptr )
-	{
-		m_TextList[soundType]->setVolume( volume );
->>>>>>> 7dcf2c7b0acdc2245fe7241a99e93c22a00241eb
 		m_System->update( );
 		return true;
 	}
