@@ -36,7 +36,7 @@ Corps::Corps( int corpsId, int playerId, PositionInfo pos )
 	m_LookAtPoint = pos.m_LookAtPoint;
 	
 	m_UpVector = { 0.0f, 1.0f, 0.0f };
-	m_Scale = { 0.3f, 0.3f, 0.3f };
+	m_Scale = { 0.1f, 0.1f, 0.1f };
 
 	ActionDefault action;
 	m_Action = action;
@@ -169,7 +169,15 @@ void Corps::Render() const
 
 	D3DXMATRIXA16 heightMatrix;
 	D3DXMatrixTranslation( &heightMatrix, 0, MapManager::GetInstance()->GetHeightByPosition( m_EyePoint.x, m_EyePoint.z ), 0 );
-	thisMatrix = thisMatrix * heightMatrix;
+	
+	float scale = 1.0f + static_cast<float>( m_UnitList.size() * 0.2 );
+
+	D3DXMATRIXA16 scaleMatrix;
+	D3DXMatrixScaling( &scaleMatrix, scale, scale, scale );
+
+
+	thisMatrix = scaleMatrix * thisMatrix * heightMatrix;
+
 	Renderer::GetInstance()->SetWorldMatrix( thisMatrix );
 
 	if ( IsSelected() )

@@ -458,7 +458,7 @@ void RenderHeightMapWithQuadTree( int tris, bool isWire )
 
 	g_D3dDevice->SetSamplerState( 0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR );
 	g_D3dDevice->SetSamplerState( 0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR );
-
+	
 	g_D3dDevice->SetIndices( g_HeightMapIndexBuffer );
 	g_D3dDevice->DrawIndexedPrimitive( D3DPT_TRIANGLELIST, 0, 0, g_XHeight * g_ZHeight, 0, tris );
 }

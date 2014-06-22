@@ -73,18 +73,11 @@ YAMANGDXDLL_API void DrawBillboardByTexture( int id, char flag )
 		g_D3dDevice->SetVertexDeclaration( decl );
 
 		UINT nPass;
-		float thisTime = D3DX_PI * ( timeGetTime() % 600 ) / 300;
 
+		float thisTime = D3DX_PI * ( timeGetTime() % 600 ) / 300;
 		g_Effects[1]->SetFloat( "time", thisTime );
 
-		if ( flag & UNIT_STATUS_FLAG_ENEMY )
-		{
-			g_Effects[1]->SetBool( "isEnemy", true );
-		}
-		else
-		{
-			g_Effects[1]->SetBool( "isEnemy", false );
-		}
+		float	inputColor[3] = { 0.0f };
 
 		if ( flag & UNIT_STATUS_FLAG_ATTACK )
 		{
@@ -95,14 +88,23 @@ YAMANGDXDLL_API void DrawBillboardByTexture( int id, char flag )
 			g_Effects[1]->SetBool( "isAttack", false );
 		}
 
-		if ( flag & UNIT_STATUS_FLAG_SELECT )
+		if ( flag & UNIT_STATUS_FLAG_ENEMY )
 		{
-			g_Effects[1]->SetBool( "isSelect", true );
+			inputColor[0] = 0.3f;
 		}
 		else
 		{
-			g_Effects[1]->SetBool( "isSelect", false );
+			inputColor[2] = 0.3f;
 		}
+		
+		if ( flag & UNIT_STATUS_FLAG_SELECT )
+		{
+			inputColor[0] += 0.3f;
+			inputColor[1] += 0.3f;
+			inputColor[2] += 0.3f;
+		}
+		
+		g_Effects[1]->SetFloatArray( "inputColor", inputColor, 3 );
 
 		// fx출력에 사용할 테크닉 선정
 		g_Effects[1]->SetTechnique( "MyShader" );

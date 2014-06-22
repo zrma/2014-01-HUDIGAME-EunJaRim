@@ -1,9 +1,8 @@
 // 변환행렬
 float4x4    matWVP;
 float		time;
-bool		isEnemy;
 bool		isAttack;
-bool		isSelect;
+float3		inputColor;
 
 // 텍스처
 texture	tex0;
@@ -48,31 +47,18 @@ sampler Sampler = sampler_state
 float4 PS(
 	float2 Tex : TEXCOORD0 ): COLOR
 {
-	float4 color = 0.0f;
-	color.a = 1.0f;
-	
+	float4 color = float4( inputColor, 1.0f );
+	float4 attackColor = 0.0f;
+
 	if ( isAttack == true )
 	{
-		color.r = 0.9f;
-		color.gb = 0.3f;
-		color = color * ( ( sin( time ) + 1 ) / 2 );
+		attackColor.a = 1.0f;
+		attackColor.r = 0.9f;
+		attackColor.gb = 0.3f;
+		attackColor = attackColor * ( ( sin( time ) + 1 ) / 2 );
 	}
 
-	if ( isEnemy == true )
-	{
-		color.r = color.r + 0.3f;
-	}
-	else
-	{
-		color.b = color.b + 0.3f;
-	}
-
-	if ( isSelect == true )
-	{
-		color.rgb = color.rgb + 0.3f;
-	}
-
-	return tex2D( Sampler, Tex ) / 3 + color;
+	return tex2D( Sampler, Tex ) / 3 + color + attackColor;
 }
 
 // MyShader 테크닉선언
