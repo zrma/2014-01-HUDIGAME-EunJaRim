@@ -160,8 +160,9 @@ void NetworkManager::HandleKingIndexResult( KingIndexResult& inPacket )
 
 			CameraController::GetInstance()->Init( startPositionX, startPositionZ);
 
-			SoundManager::GetInstance()->PlaySound( SOUND_SCENE_PLAY_BGM2 );
-			SoundManager::GetInstance()->SetVolume( SOUND_SCENE_PLAY_BGM2, 0.3f );
+			SoundManager::GetInstance()->StopAllSound();
+			SoundManager::GetInstance()->PlaySound( SOUND_SCENE_PLAY_BGM4 );
+			SoundManager::GetInstance()->SetVolume( SOUND_SCENE_PLAY_BGM4, 0.3f );
 
 			Log( "Your King Index:%d And Start At[%f][%f] \n", kingIndex, startPositionX, startPositionZ );
 		}
