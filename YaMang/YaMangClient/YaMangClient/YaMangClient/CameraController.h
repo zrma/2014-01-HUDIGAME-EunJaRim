@@ -2,7 +2,7 @@
 
 #include "MacroSet.h"
 
-const FLOAT NEAREST_Y = 5.0f;
+const FLOAT NEAREST_Y = 10.0f;
 const FLOAT DEGREE_1_Y = 40.0f;
 const FLOAT DEGREE_2_Y = 100.0f;
 const FLOAT DEGREE_3_Y = 170.0f;
