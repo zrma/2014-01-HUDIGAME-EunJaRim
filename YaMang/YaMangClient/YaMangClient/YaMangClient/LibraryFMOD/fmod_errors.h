@@ -32,11 +32,11 @@ static const char *FMOD_ErrorString(FMOD_RESULT errcode)
         case FMOD_ERR_DSP_CONNECTION:            return "DSP connection error.  Connection possibly caused a cyclic dependancy or connected dsps with incompatibile buffer counts.";
         case FMOD_ERR_DSP_DONTPROCESS:           return "DSP return code from a DSP process query callback.  Tells mixer not to call the process callback and therefore not consume CPU.  Use this to optimize the DSP graph.";
         case FMOD_ERR_DSP_FORMAT:                return "DSP Format error.  A DSP unit may have attempted to connect to this network with the wrong format, or a matrix may have been set with the wrong size if the target unit has a specified channel map.";
-        case FMOD_ERR_DSP_SILENCE:               return "DSP return code from a DSP process query callback.  Tells mixer silence would be produced from read, so go idle and not consume CPU.  Use this to optimize the DSP graph.";
         case FMOD_ERR_DSP_INUSE:                 return "DSP is already in the mixer's DSP network. It must be removed before being reinserted or released.";
         case FMOD_ERR_DSP_NOTFOUND:              return "DSP connection error.  Couldn't find the DSP unit specified.";
-        case FMOD_ERR_DSP_RUNNING:               return "DSP error.  Cannot perform this operation while the network is in the middle of running.  This will most likely happen if a connection or disconnection is attempted in a DSP callback.";
-        case FMOD_ERR_DSP_TOOMANYCONNECTIONS:    return "DSP connection error.  The unit being connected to or disconnected should only have 1 input or output.";
+        case FMOD_ERR_DSP_RESERVED:              return "DSP operation error.  Cannot perform operation on this DSP as it is reserved by the system.";
+        case FMOD_ERR_DSP_SILENCE:               return "DSP return code from a DSP process query callback.  Tells mixer silence would be produced from read, so go idle and not consume CPU.  Use this to optimize the DSP graph.";
+        case FMOD_ERR_DSP_TYPE:                  return "DSP operation cannot be performed on a DSP of this type.";
         case FMOD_ERR_FILE_BAD:                  return "Error loading file.";
         case FMOD_ERR_FILE_COULDNOTSEEK:         return "Couldn't perform seek operation.  This is a limitation of the medium (ie netstreams) or the file format.";
         case FMOD_ERR_FILE_DISKEJECTED:          return "Media was ejected while reading.";
@@ -45,6 +45,7 @@ static const char *FMOD_ErrorString(FMOD_RESULT errcode)
         case FMOD_ERR_FILE_NOTFOUND:             return "File not found.";
         case FMOD_ERR_FILE_UNWANTED:             return "Unwanted file access occured.";
         case FMOD_ERR_FORMAT:                    return "Unsupported file or audio format.";
+        case FMOD_ERR_HEADER_MISMATCH:           return "There is a version mismatch between the FMOD header and either the FMOD Studio library or the FMOD Low Level library.";
         case FMOD_ERR_HTTP:                      return "A HTTP error occurred. This is a catch-all for HTTP errors not listed elsewhere.";
         case FMOD_ERR_HTTP_ACCESS:               return "The specified resource requires authentication or is forbidden.";
         case FMOD_ERR_HTTP_PROXY_AUTH:           return "Proxy authentication is required to access the specified resource.";
@@ -81,7 +82,6 @@ static const char *FMOD_ErrorString(FMOD_RESULT errcode)
         case FMOD_ERR_OUTPUT_FORMAT:             return "Soundcard does not support the minimum features needed for this soundsystem (16bit stereo output).";
         case FMOD_ERR_OUTPUT_INIT:               return "Error initializing output device.";
         case FMOD_ERR_OUTPUT_NODRIVERS:          return "The output device has no drivers installed, so FMOD_OUTPUT_NOSOUND is selected as the output mode.";
-        case FMOD_ERR_OUTPUT_NOHARDWARE:         return "FMOD_HARDWARE was specified but the sound card does not have the resources necessary to play it.";
         case FMOD_ERR_OUTPUT_NOSOFTWARE:         return "Attempted to create a software sound but no software channels were specified in System::init.";
         case FMOD_ERR_PLUGIN:                    return "An unspecified error has been returned from a plugin.";
         case FMOD_ERR_PLUGIN_INSTANCES:          return "The number of allowed instances of a plugin has been exceeded.";
@@ -105,7 +105,6 @@ static const char *FMOD_ErrorString(FMOD_RESULT errcode)
         case FMOD_ERR_UNSUPPORTED:               return "A command issued was not supported by this object.  Possibly a plugin without certain callbacks specified.";
         case FMOD_ERR_UPDATE:                    return "An error caused by System::update occured.";
         case FMOD_ERR_VERSION:                   return "The version number of this file format is not supported.";
-        case FMOD_ERR_HEADER_MISMATCH:           return "There is a version mismatch between the FMOD header and either the FMOD Studio library or the FMOD Low Level library.";
         case FMOD_ERR_EVENT_ALREADY_LOADED:      return "The specified project or bank has already been loaded. Having multiple copies of the same project loaded simultaneously is forbidden.";
         case FMOD_ERR_EVENT_FAILED:              return "An Event failed to be retrieved, most likely due to 'just fail' being specified as the max playbacks behavior.";
         case FMOD_ERR_EVENT_GUIDCONFLICT:        return "An event with the same GUID already exists.";

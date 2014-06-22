@@ -91,7 +91,7 @@ typedef struct FMOD_CODEC_DESCRIPTION
     Sound::getNumSubSounds
 ]
 */
-typedef struct FMOD_CODEC_WAVEFORMAT
+struct FMOD_CODEC_WAVEFORMAT
 {
     char               name[256];     /* [in] Name of sound.*/
     FMOD_SOUND_FORMAT  format;        /* [in] Format for (decompressed) codec output, ie FMOD_SOUND_FORMAT_PCM8, FMOD_SOUND_FORMAT_PCM16.*/
@@ -106,7 +106,7 @@ typedef struct FMOD_CODEC_WAVEFORMAT
     FMOD_CHANNELMASK   channelmask;   /* [in] Defined channel bitmask to describe which speakers the channels in the codec map to, in order of channel count.  See fmod_common.h.  Leave at 0 to map to the speaker layout defined in FMOD_SPEAKER. */
     FMOD_CHANNELORDER  channelorder;  /* [in] Defined channel order type, to describe where each sound channel should pan for the number of channels specified.  See fmod_common.h.  Leave at 0 to play in default speaker order. */
     float              peakvolume;    /* [in] Peak volume of sound, or 0 if not used. */
-} FMOD_CODEC_WAVEFORMAT;
+};
 
 /*
 [DEFINE] 
@@ -159,7 +159,7 @@ typedef struct FMOD_CODEC_WAVEFORMAT
     Sound::getNumSubSounds
 ]
 */
-typedef struct FMOD_CODEC_STATE
+struct FMOD_CODEC_STATE
 {
     int                          numsubsounds;      /* [in] Number of 'subsounds' in this sound.  Anything other than 0 makes it a 'container' format (ie DLS/FSB etc which contain 1 or more subsounds).  For most normal, single sound codec such as WAV/AIFF/MP3, this should be 0 as they are not a container for subsounds, they are the sound by itself. */
     FMOD_CODEC_WAVEFORMAT       *waveformat;        /* [in] Pointer to an array of format structures containing information about each sample.  Can be 0 or NULL if FMOD_CODEC_GETWAVEFORMAT_CALLBACK callback is preferred.  The number of entries here must equal the number of subsounds defined in the subsound parameter. If numsubsounds = 0 then there should be 1 instance of this structure. */
@@ -172,7 +172,7 @@ typedef struct FMOD_CODEC_STATE
     FMOD_CODEC_METADATA_CALLBACK metadata;          /* [out] This will return a callable FMOD metadata function to use from codec.  */
 
     int                          waveformatversion; /* [in] Must be set to FMOD_CODEC_WAVEFORMAT_VERSION in the FMOD_CODEC_OPEN_CALLBACK. */
-} FMOD_CODEC_STATE;
+};
 
 #endif
 

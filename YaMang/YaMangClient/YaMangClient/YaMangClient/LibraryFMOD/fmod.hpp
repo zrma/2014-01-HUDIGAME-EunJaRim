@@ -53,13 +53,13 @@ namespace FMOD
     {
       private:
 
-        System();   /* Constructor made private so user cannot statically instance a System class.  
+        System();   /* Constructor made private so user cannot statically instance a System class.
                        System_Create must be used. */
       public:
 
         FMOD_RESULT F_API release                 ();
-                                                  
-        // Pre-init functions.					  
+
+        // Pre-init functions.
         FMOD_RESULT F_API setOutput               (FMOD_OUTPUTTYPE output);
         FMOD_RESULT F_API getOutput               (FMOD_OUTPUTTYPE *output);
         FMOD_RESULT F_API getNumDrivers           (int *numdrivers);
@@ -77,8 +77,8 @@ namespace FMOD
         FMOD_RESULT F_API setAdvancedSettings     (FMOD_ADVANCEDSETTINGS *settings);
         FMOD_RESULT F_API getAdvancedSettings     (FMOD_ADVANCEDSETTINGS *settings);
         FMOD_RESULT F_API setCallback             (FMOD_SYSTEM_CALLBACK callback, FMOD_SYSTEM_CALLBACK_TYPE callbackmask = 0xFFFFFFFF);
-                                                  
-        // Plug-in support                        
+
+        // Plug-in support.
         FMOD_RESULT F_API setPluginPath           (const char *path);
         FMOD_RESULT F_API loadPlugin              (const char *filename, unsigned int *handle, unsigned int priority = 0);
         FMOD_RESULT F_API unloadPlugin            (unsigned int handle);
@@ -91,14 +91,14 @@ namespace FMOD
         FMOD_RESULT F_API getDSPInfoByPlugin      (unsigned int handle, const FMOD_DSP_DESCRIPTION **description);
         FMOD_RESULT F_API registerCodec           (FMOD_CODEC_DESCRIPTION *description, unsigned int *handle, unsigned int priority = 0);
         FMOD_RESULT F_API registerDSP             (const FMOD_DSP_DESCRIPTION *description, unsigned int *handle);
-                                                  
-        // Init/Close                             
+
+        // Init/Close.
         FMOD_RESULT F_API init                    (int maxchannels, FMOD_INITFLAGS flags, void *extradriverdata);
         FMOD_RESULT F_API close                   ();
-                                                  
-        // General post-init system functions     
+
+        // General post-init system functions.
         FMOD_RESULT F_API update                  ();        /* IMPORTANT! CALL THIS ONCE PER FRAME! */
-                                                  
+
         FMOD_RESULT F_API setSpeakerPosition      (FMOD_SPEAKER speaker, float x, float y, bool active);
         FMOD_RESULT F_API getSpeakerPosition      (FMOD_SPEAKER speaker, float *x, float *y, bool *active);
         FMOD_RESULT F_API setStreamBufferSize     (unsigned int filebuffersize, FMOD_TIMEUNIT filebuffersizetype);
@@ -112,63 +112,64 @@ namespace FMOD
         FMOD_RESULT F_API set3DRolloffCallback    (FMOD_3D_ROLLOFF_CALLBACK callback);
         FMOD_RESULT F_API mixerSuspend            ();
         FMOD_RESULT F_API mixerResume             ();
-                                                  
-        // System information functions.          
+
+        // System information functions.
         FMOD_RESULT F_API getVersion              (unsigned int *version);
         FMOD_RESULT F_API getOutputHandle         (void **handle);
         FMOD_RESULT F_API getChannelsPlaying      (int *channels);
         FMOD_RESULT F_API getCPUUsage             (float *dsp, float *stream, float *geometry, float *update, float *total);
         FMOD_RESULT F_API getSoundRAM             (int *currentalloced, int *maxalloced, int *total);
-                                                
-        // Sound/DSP/Channel/FX creation and retrieval.       
+
+        // Sound/DSP/Channel/FX creation and retrieval.
         FMOD_RESULT F_API createSound             (const char *name_or_data, FMOD_MODE mode, FMOD_CREATESOUNDEXINFO *exinfo, Sound **sound);
         FMOD_RESULT F_API createStream            (const char *name_or_data, FMOD_MODE mode, FMOD_CREATESOUNDEXINFO *exinfo, Sound **sound);
         FMOD_RESULT F_API createDSP               (const FMOD_DSP_DESCRIPTION *description, DSP **dsp);
         FMOD_RESULT F_API createDSPByType         (FMOD_DSP_TYPE type, DSP **dsp);
         FMOD_RESULT F_API createChannelGroup      (const char *name, ChannelGroup **channelgroup);
         FMOD_RESULT F_API createSoundGroup        (const char *name, SoundGroup **soundgroup);
-        FMOD_RESULT F_API createReverb3D          (Reverb3D **reverb); 
-                                                  
+        FMOD_RESULT F_API createReverb3D          (Reverb3D **reverb);
+
         FMOD_RESULT F_API playSound               (Sound *sound, ChannelGroup *channelgroup, bool paused, Channel **channel);
         FMOD_RESULT F_API playDSP                 (DSP *dsp, ChannelGroup *channelgroup, bool paused, Channel **channel);
         FMOD_RESULT F_API getChannel              (int channelid, Channel **channel);
         FMOD_RESULT F_API getMasterChannelGroup   (ChannelGroup **channelgroup);
         FMOD_RESULT F_API getMasterSoundGroup     (SoundGroup **soundgroup);
 
-        FMOD_RESULT F_API attachChannelGroupToPort   (FMOD_PORT_TYPE portType, FMOD_PORT_INDEX portIndex, ChannelGroup *channelgroup);
+        // Routing to ports.
+        FMOD_RESULT F_API attachChannelGroupToPort   (FMOD_PORT_TYPE portType, FMOD_PORT_INDEX portIndex, ChannelGroup *channelgroup, bool passThru = false);
         FMOD_RESULT F_API detachChannelGroupFromPort (ChannelGroup *channelgroup);
-                                              
-        // Reverb API                           
+
+        // Reverb API.
         FMOD_RESULT F_API setReverbProperties     (int instance, const FMOD_REVERB_PROPERTIES *prop);
         FMOD_RESULT F_API getReverbProperties     (int instance, FMOD_REVERB_PROPERTIES *prop);
-                                                  
-        // System level DSP functionality.		  
+
+        // System level DSP functionality.
         FMOD_RESULT F_API lockDSP                 ();
         FMOD_RESULT F_API unlockDSP               ();
-                                                  
-        // Recording API.						  
+
+        // Recording API.
         FMOD_RESULT F_API getRecordNumDrivers     (int *numdrivers);
         FMOD_RESULT F_API getRecordDriverInfo     (int id, char *name, short *nameW, int namelen, FMOD_GUID *guid, int *systemrate, FMOD_SPEAKERMODE *speakermode, int *speakermodechannels);
-        FMOD_RESULT F_API getRecordPosition       (int id, unsigned int *position);  
-                                                  
+        FMOD_RESULT F_API getRecordPosition       (int id, unsigned int *position);
+
         FMOD_RESULT F_API recordStart             (int id, Sound *sound, bool loop);
         FMOD_RESULT F_API recordStop              (int id);
         FMOD_RESULT F_API isRecording             (int id, bool *recording);
-                                                  
-        // Geometry API.						  
+
+        // Geometry API.
         FMOD_RESULT F_API createGeometry          (int maxpolygons, int maxvertices, Geometry **geometry);
         FMOD_RESULT F_API setGeometrySettings     (float maxworldsize);
         FMOD_RESULT F_API getGeometrySettings     (float *maxworldsize);
         FMOD_RESULT F_API loadGeometry            (const void *data, int datasize, Geometry **geometry);
         FMOD_RESULT F_API getGeometryOcclusion    (const FMOD_VECTOR *listener, const FMOD_VECTOR *source, float *direct, float *reverb);
-                                                  
-        // Network functions.					  
+
+        // Network functions.
         FMOD_RESULT F_API setNetworkProxy         (const char *proxy);
         FMOD_RESULT F_API getNetworkProxy         (char *proxy, int proxylen);
         FMOD_RESULT F_API setNetworkTimeout       (int timeout);
         FMOD_RESULT F_API getNetworkTimeout       (int *timeout);
-                                                  
-        // Userdata set/get.					  
+
+        // Userdata set/get.
         FMOD_RESULT F_API setUserData             (void *userdata);
         FMOD_RESULT F_API getUserData             (void **userdata);
     };
@@ -187,7 +188,7 @@ namespace FMOD
         FMOD_RESULT F_API release                ();
         FMOD_RESULT F_API getSystemObject        (System **system);
 
-        // Standard sound manipulation functions.                                                
+        // Standard sound manipulation functions.
         FMOD_RESULT F_API lock                   (unsigned int offset, unsigned int length, void **ptr1, void **ptr2, unsigned int *len1, unsigned int *len2);
         FMOD_RESULT F_API unlock                 (void *ptr1, void *ptr2, unsigned int len1, unsigned int len2);
         FMOD_RESULT F_API setDefaults            (float frequency, int priority);
@@ -214,7 +215,7 @@ namespace FMOD
         FMOD_RESULT F_API setSoundGroup          (SoundGroup *soundgroup);
         FMOD_RESULT F_API getSoundGroup          (SoundGroup **soundgroup);
 
-        // Synchronization point API.  These points can come from markers embedded in wav files, and can also generate channel callbacks.        
+        // Synchronization point API.  These points can come from markers embedded in wav files, and can also generate channel callbacks.
         FMOD_RESULT F_API getNumSyncPoints       (int *numsyncpoints);
         FMOD_RESULT F_API getSyncPoint           (int index, FMOD_SYNCPOINT **point);
         FMOD_RESULT F_API getSyncPointInfo       (FMOD_SYNCPOINT *point, char *name, int namelen, unsigned int *offset, FMOD_TIMEUNIT offsettype);
@@ -235,7 +236,7 @@ namespace FMOD
         FMOD_RESULT F_API getMusicChannelVolume  (int channel, float *volume);
         FMOD_RESULT F_API setMusicSpeed          (float speed);
         FMOD_RESULT F_API getMusicSpeed          (float *speed);
-                            
+
         // Userdata set/get.
         FMOD_RESULT F_API setUserData            (void *userdata);
         FMOD_RESULT F_API getUserData            (void **userdata);
@@ -248,11 +249,11 @@ namespace FMOD
     class ChannelControl
     {
       private:
-      
+
         ChannelControl();   /* Constructor made private so user cannot statically instance a Control class. */
-        
+
       public:
-      
+
         FMOD_RESULT F_API getSystemObject        (System **system);
 
         // General control functionality for Channels and ChannelGroups.
@@ -275,14 +276,14 @@ namespace FMOD
         FMOD_RESULT F_API setCallback            (FMOD_CHANNELCONTROL_CALLBACK callback);
         FMOD_RESULT F_API isPlaying              (bool *isplaying);
 
-        // Panning and level adjustment
+        // Panning and level adjustment.
         FMOD_RESULT F_API setPan                 (float pan);
         FMOD_RESULT F_API setMixLevelsOutput     (float frontleft, float frontright, float center, float lfe, float surroundleft, float surroundright, float backleft, float backright);
         FMOD_RESULT F_API setMixLevelsInput      (float *levels, int numlevels);
         FMOD_RESULT F_API setMixMatrix           (float *matrix, int outchannels, int inchannels, int inchannel_hop = 0);
         FMOD_RESULT F_API getMixMatrix           (float *matrix, int *outchannels, int *inchannels, int inchannel_hop = 0);
 
-        // Clock based functionality
+        // Clock based functionality.
         FMOD_RESULT F_API getDSPClock            (unsigned long long *dspclock, unsigned long long *parentclock);
         FMOD_RESULT F_API setDelay               (unsigned long long dspclock_start, unsigned long long dspclock_end, bool stopchannels = true);
         FMOD_RESULT F_API getDelay               (unsigned long long *dspclock_start, unsigned long long *dspclock_end, bool *stopchannels = 0);
@@ -290,11 +291,14 @@ namespace FMOD
         FMOD_RESULT F_API removeFadePoints       (unsigned long long dspclock_start, unsigned long long dspclock_end);
         FMOD_RESULT F_API getFadePoints          (unsigned int *numpoints, unsigned long long *point_dspclock, float *point_volume);
 
-        // DSP effects
+        // DSP effects.
         FMOD_RESULT F_API getDSP                 (int index, DSP **dsp);
-        FMOD_RESULT F_API addDSP                 (int index, DSP *dsp, DSPConnection **dspconnection);
+        FMOD_RESULT F_API addDSP                 (int index, DSP *dsp);
         FMOD_RESULT F_API removeDSP              (DSP *dsp);
         FMOD_RESULT F_API getNumDSPs             (int *numdsps);
+        FMOD_RESULT F_API setDSPIndex            (DSP *dsp, int index);
+        FMOD_RESULT F_API getDSPIndex            (DSP *dsp, int *index);
+        FMOD_RESULT F_API overridePanDSP         (DSP *pan);
 
         // 3D functionality.
         FMOD_RESULT F_API set3DAttributes        (const FMOD_VECTOR *pos, const FMOD_VECTOR *vel, const FMOD_VECTOR *alt_pan_pos = 0);
@@ -318,23 +322,23 @@ namespace FMOD
         FMOD_RESULT F_API set3DDistanceFilter    (bool custom, float customLevel, float centerFreq);
         FMOD_RESULT F_API get3DDistanceFilter    (bool *custom, float *customLevel, float *centerFreq);
 
-        // Userdata set/get.                                                
+        // Userdata set/get.
         FMOD_RESULT F_API setUserData            (void *userdata);
         FMOD_RESULT F_API getUserData            (void **userdata);
     };
-    
+
     /*
         'Channel' API.
-    */ 
+    */
     class Channel : public ChannelControl
     {
       private:
 
-        Channel();   /* Constructor made private so user cannot statically instance a Channel class.  
+        Channel();   /* Constructor made private so user cannot statically instance a Channel class.
                         Appropriate Channel creation or retrieval function must be used. */
       public:
 
-        // Channel specific control functionality
+        // Channel specific control functionality.
         FMOD_RESULT F_API setPriority            (int priority);
         FMOD_RESULT F_API getPriority            (int *priority);
         FMOD_RESULT F_API setPosition            (unsigned int position, FMOD_TIMEUNIT postype);
@@ -348,7 +352,7 @@ namespace FMOD
         FMOD_RESULT F_API isVirtual              (bool *isvirtual);
         FMOD_RESULT F_API getCurrentSound        (Sound **sound);
         FMOD_RESULT F_API getIndex               (int *index);
-                                                
+
         // Functions also found in Sound class but here they can be set per channel.
         FMOD_RESULT F_API setMode                (FMOD_MODE mode);
         FMOD_RESULT F_API getMode                (FMOD_MODE *mode);
@@ -365,7 +369,7 @@ namespace FMOD
     {
       private:
 
-        ChannelGroup();   /* Constructor made private so user cannot statically instance a ChannelGroup class.  
+        ChannelGroup();   /* Constructor made private so user cannot statically instance a ChannelGroup class.
                              Appropriate ChannelGroup creation or retrieval function must be used. */
       public:
 
@@ -376,10 +380,6 @@ namespace FMOD
         FMOD_RESULT F_API getNumGroups            (int *numgroups);
         FMOD_RESULT F_API getGroup                (int index, ChannelGroup **group);
         FMOD_RESULT F_API getParentGroup          (ChannelGroup **group);
-
-        // DSP functionality specific to channel groups
-        FMOD_RESULT F_API setDSPIndex             (DSP *dsp, int index);
-        FMOD_RESULT F_API getDSPIndex             (DSP *dsp, int *index);
 
         // Information only functions.
         FMOD_RESULT F_API getName                 (char *name, int namelen);
@@ -394,7 +394,7 @@ namespace FMOD
     {
       private:
 
-        SoundGroup();       /* Constructor made private so user cannot statically instance a SoundGroup class.  
+        SoundGroup();       /* Constructor made private so user cannot statically instance a SoundGroup class.
                                Appropriate SoundGroup creation or retrieval function must be used. */
       public:
 
@@ -430,7 +430,7 @@ namespace FMOD
     {
       private:
 
-        DSP();   /* Constructor made private so user cannot statically instance a DSP class.  
+        DSP();   /* Constructor made private so user cannot statically instance a DSP class.
                     Appropriate DSP creation or retrieval function must be used. */
       public:
 
@@ -469,17 +469,17 @@ namespace FMOD
         FMOD_RESULT F_API getParameterInfo       (int index, FMOD_DSP_PARAMETER_DESC **desc);
         FMOD_RESULT F_API getDataParameterIndex  (int datatype, int *index);
         FMOD_RESULT F_API showConfigDialog       (void *hwnd, bool show);
-        
-        // DSP attributes.        
+
+        // DSP attributes.
         FMOD_RESULT F_API getInfo                (char *name, unsigned int *version, int *channels, int *configwidth, int *configheight);
         FMOD_RESULT F_API getType                (FMOD_DSP_TYPE *type);
         FMOD_RESULT F_API getIdle                (bool *idle);
-                                                
+
         // Userdata set/get.
         FMOD_RESULT F_API setUserData            (void *userdata);
         FMOD_RESULT F_API getUserData            (void **userdata);
 
-        // Metering
+        // Metering.
         FMOD_RESULT F_API setMeteringEnabled     (bool inputEnabled, bool outputEnabled);
         FMOD_RESULT F_API getMeteringEnabled     (bool *inputEnabled, bool *outputEnabled);
         FMOD_RESULT F_API getMeteringInfo        (FMOD_DSP_METERING_INFO *inputInfo, FMOD_DSP_METERING_INFO *outputInfo);
@@ -493,7 +493,7 @@ namespace FMOD
     {
       private:
 
-        DSPConnection();    /* Constructor made private so user cannot statically instance a DSPConnection class.  
+        DSPConnection();    /* Constructor made private so user cannot statically instance a DSPConnection class.
                                Appropriate DSPConnection creation or retrieval function must be used. */
 
       public:
@@ -519,26 +519,26 @@ namespace FMOD
     {
       private:
 
-        Geometry();   /* Constructor made private so user cannot statically instance a Geometry class.  
+        Geometry();   /* Constructor made private so user cannot statically instance a Geometry class.
                          Appropriate Geometry creation or retrieval function must be used. */
 
-      public:        
+      public:
 
         FMOD_RESULT F_API release                ();
 
         // Polygon manipulation.
         FMOD_RESULT F_API addPolygon             (float directocclusion, float reverbocclusion, bool doublesided, int numvertices, const FMOD_VECTOR *vertices, int *polygonindex);
-        FMOD_RESULT F_API getNumPolygons         (int *numpolygons); 
+        FMOD_RESULT F_API getNumPolygons         (int *numpolygons);
         FMOD_RESULT F_API getMaxPolygons         (int *maxpolygons, int *maxvertices);
         FMOD_RESULT F_API getPolygonNumVertices  (int index, int *numvertices);
-        FMOD_RESULT F_API setPolygonVertex       (int index, int vertexindex, const FMOD_VECTOR *vertex); 
+        FMOD_RESULT F_API setPolygonVertex       (int index, int vertexindex, const FMOD_VECTOR *vertex);
         FMOD_RESULT F_API getPolygonVertex       (int index, int vertexindex, FMOD_VECTOR *vertex);
-        FMOD_RESULT F_API setPolygonAttributes   (int index, float directocclusion, float reverbocclusion, bool doublesided); 
-        FMOD_RESULT F_API getPolygonAttributes   (int index, float *directocclusion, float *reverbocclusion, bool *doublesided); 
+        FMOD_RESULT F_API setPolygonAttributes   (int index, float directocclusion, float reverbocclusion, bool doublesided);
+        FMOD_RESULT F_API getPolygonAttributes   (int index, float *directocclusion, float *reverbocclusion, bool *doublesided);
 
         // Object manipulation.
-        FMOD_RESULT F_API setActive              (bool active);                                                 
-        FMOD_RESULT F_API getActive              (bool *active);                                                 
+        FMOD_RESULT F_API setActive              (bool active);
+        FMOD_RESULT F_API getActive              (bool *active);
         FMOD_RESULT F_API setRotation            (const FMOD_VECTOR *forward, const FMOD_VECTOR *up);
         FMOD_RESULT F_API getRotation            (FMOD_VECTOR *forward, FMOD_VECTOR *up);
         FMOD_RESULT F_API setPosition            (const FMOD_VECTOR *position);
@@ -560,10 +560,10 @@ namespace FMOD
     {
       private:
 
-        Reverb3D();    /*  Constructor made private so user cannot statically instance a Reverb3D class.  
+        Reverb3D();    /*  Constructor made private so user cannot statically instance a Reverb3D class.
                            Appropriate Reverb creation or retrieval function must be used. */
 
-      public:    
+      public:
 
         FMOD_RESULT F_API release                ();
 
@@ -577,7 +577,7 @@ namespace FMOD
 
         // Userdata set/get.
         FMOD_RESULT F_API setUserData            (void *userdata);
-        FMOD_RESULT F_API getUserData            (void **userdata);    
+        FMOD_RESULT F_API getUserData            (void **userdata);
     };
 }
 

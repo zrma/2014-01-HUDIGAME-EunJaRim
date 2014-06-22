@@ -59,6 +59,7 @@ namespace Studio
         FMOD_RESULT F_API getEvent(const ID *id, FMOD_STUDIO_LOADING_MODE mode, EventDescription **event) const;
         FMOD_RESULT F_API getMixerStrip(const ID *id, FMOD_STUDIO_LOADING_MODE mode, MixerStrip **mixerStrip) const;
         FMOD_RESULT F_API getBank(const ID *id, Bank **bank) const;
+        FMOD_RESULT F_API getSoundInfo(const char *key, FMOD_STUDIO_SOUND_INFO *info) const;
 
         // Path lookup
         FMOD_RESULT F_API lookupID(const char *path, ID *id) const;
@@ -90,6 +91,12 @@ namespace Studio
         FMOD_RESULT F_API startRecordCommands(const char *filename, FMOD_STUDIO_RECORD_COMMANDS_FLAGS flags);
         FMOD_RESULT F_API stopRecordCommands();
         FMOD_RESULT F_API playbackCommands(const char *filename);
+
+        // Callbacks
+        FMOD_RESULT F_API setCallback(FMOD_STUDIO_SYSTEM_CALLBACK callback, FMOD_STUDIO_SYSTEM_CALLBACK_TYPE callbackmask = 0xFFFFFFFF);
+        FMOD_RESULT F_API getUserData(void **userData) const;
+        FMOD_RESULT F_API setUserData(void *userData);
+
     };
 
     class EventDescription
@@ -159,6 +166,9 @@ namespace Studio
         FMOD_RESULT F_API get3DAttributes(FMOD_3D_ATTRIBUTES *attributes) const;
         FMOD_RESULT F_API set3DAttributes(const FMOD_3D_ATTRIBUTES *attributes);
 
+        FMOD_RESULT F_API getProperty(FMOD_STUDIO_EVENT_PROPERTY index, float* value) const;
+        FMOD_RESULT F_API setProperty(FMOD_STUDIO_EVENT_PROPERTY index, float value);
+
         FMOD_RESULT F_API getPaused(bool *paused) const;
         FMOD_RESULT F_API setPaused(bool paused);
 
@@ -188,9 +198,6 @@ namespace Studio
         FMOD_RESULT F_API getCueCount(int *count) const;
 
         FMOD_RESULT F_API createSubEvent(const char *name, EventInstance **instance) const;
-
-        // Loading control
-        FMOD_RESULT F_API getLoadingState(FMOD_STUDIO_LOADING_STATE *state) const;
 
         // Callbacks
         FMOD_RESULT F_API setCallback(FMOD_STUDIO_EVENT_CALLBACK callback);
