@@ -75,10 +75,12 @@ void Unit::Render() const
 
 	ResourceMesh* mesh = ResourceManager::GetInstance()->GetMeshByKey( m_MeshKey );
 
-	if ( mesh )
-	{
-		Renderer::GetInstance()->RenderMesh( mesh->m_MeshObject );
-	}
+	//if ( mesh )
+	//{
+	//	Renderer::GetInstance()->RenderMesh( mesh->m_MeshObject );
+	//}
+
+	Renderer::GetInstance()->RenderBillboard( m_Corps->GetCorpsTextureType() );
 }
 
 void Unit::SetStartPosition()

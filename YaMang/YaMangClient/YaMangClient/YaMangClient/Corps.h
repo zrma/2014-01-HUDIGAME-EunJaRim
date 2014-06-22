@@ -55,6 +55,8 @@ public:
 	bool	SetFight( bool fight ) { m_IsFight = fight; }
 	void	StartFight();
 
+	CorpsTextureType		GetCorpsTextureType() { return m_TextureType; }
+
 private:
 	Corps();
 	Corps( const Corps& );
