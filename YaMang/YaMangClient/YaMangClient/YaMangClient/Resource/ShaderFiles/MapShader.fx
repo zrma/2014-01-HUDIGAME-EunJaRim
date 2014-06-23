@@ -1,6 +1,21 @@
 // 변환행렬
 float4x4    matWVP;
-float		time;
+
+float4 filter[9] =
+{
+	-1.0, -1.0, 0.0, 1.0/64,
+	-1.0, 0.0, 0.0, 1.0/64,
+	-1.0, 1.0, 0.0, 1.0/64,
+	0.0, -1.0, 0.0, 1.0/64,
+	0.0, 0.0, 0.0, 56.0/64,
+	0.0, 1.0, 0.0, 1.0/64,
+	1.0, -1.0, 0.0, 1.0/64,
+	1.0, 0.0, 0.0, 1.0/64,
+	1.0, 1.0, 0.0, 1.0/64
+};
+
+float texScaler = 1.0 / 128.0;
+float texOffset = 0.0;
 
 // 텍스처
 texture	tex0;
@@ -27,15 +42,14 @@ VS_OUTPUT VS( VS_INPUT In )
 	// 출력 변수 초기화
 	VS_OUTPUT Out = (VS_OUTPUT)0;
 
-	In.pos = In.pos + In.pos * ( sin( time ) + 1 ) / 50;
-
-	float3 lightDir = float3( 1, 1, 0 );
-	float lightScalar = dot( normalize( In.pos ), normalize( lightDir ) );
-	float4 lightColor = 1.0;
-	lightColor.xyz = 0.5 * lightScalar;
-
 	Out.pos = mul( float4( In.pos, 1 ), matWVP );
-	Out.diff = In.diff + lightColor;
+
+	float3 lightDir = float3( 0, -1, 1 );
+	float lightScalar = dot( normalize( Out.pos ), normalize( lightDir ) );
+	float4 lightColor = 1.0;
+	lightColor.rgba = lightScalar;
+
+	Out.diff = lightColor;
 	Out.tex = In.tex;
 
 	return Out;
@@ -54,10 +68,16 @@ float4 PS(
 	float4 Diff : COLOR0,
 	float2 Tex : TEXCOORD0 ): COLOR
 {
-	float4 color = 0.5;
-	color = color * ( ( sin( time ) + 1 ) / 2 );
+	float4 outColor = 0.0f;
 
-	return tex2D( Sampler, Tex ) / 5 + color + Diff;
+	int i;
+	for ( i = 0; i < 9; ++i )
+	{
+		outColor += tex2D( Sampler,
+						   float2(Tex.x + filter[i].x * texScaler + texOffset, 
+						   Tex.y + filter[i].y * texScaler + texOffset) ) * filter[i].w;
+	}
+	return tex2D( Sampler, Tex ) / 2 + outColor * Diff;
 }
 
 // MyShader 테크닉선언

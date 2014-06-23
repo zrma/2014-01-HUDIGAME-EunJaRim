@@ -5,6 +5,7 @@
 #include <utility>
 #include <vector>
 #include "Dib.h"
+#include <timeapi.h>
 
 
 
@@ -143,7 +144,7 @@ YAMANGDXDLL_API HRESULT InitHeightMap( LPCTSTR fileName, float pixelSize )
 		MessageBox( NULL, L"Create HeightMap Vertex Buffer For Quad-Tree Failed", L"YaMang.DLL", MB_OK );
 		return E_FAIL;
 	}
-
+	
 	if ( g_HeightMapIndexBuffer )
 	{
 		g_HeightMapIndexBuffer->Release();
@@ -175,7 +176,7 @@ YAMANGDXDLL_API HRESULT InitHeightMap( LPCTSTR fileName, float pixelSize )
 		{
 			v.m_VertexPoint.x = (float)( x - g_HeightMapWidth / 2.0f ) * pixelSize;
 			v.m_VertexPoint.z = -(float)( z - g_HeightMapHeight / 2.0f ) * pixelSize;
-			v.m_VertexPoint.y = ( *( DIB_DATAXY_INV( pDIB, x, z ) ) ) / 10.0f;
+			v.m_VertexPoint.y = ( *( DIB_DATAXY_INV( pDIB, x, z ) ) ) / 7.0f;
 			v.m_Diffuse = D3DCOLOR_ARGB( 255, 255, 255, 255 );
 			v.m_VertexTexturePoint.x = (float)x / (float)( g_HeightMapWidth - 1 );
 			v.m_VertexTexturePoint.y = (float)z / (float)( g_HeightMapHeight - 1 );
@@ -436,9 +437,6 @@ void RenderHeightMapWithQuadTree( int tris, bool isWire )
 
 	g_HeightMapIndexBuffer->Unlock();
 
-	// 라이트매핑 등을 활용할 계획이므로 조명 Off
-	g_D3dDevice->SetRenderState( D3DRS_LIGHTING, FALSE );
-	
 	if ( isWire )
 	{
 		g_D3dDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_WIREFRAME );
@@ -447,20 +445,78 @@ void RenderHeightMapWithQuadTree( int tris, bool isWire )
 	{
 		g_D3dDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_SOLID );
 	}
+	
+	if ( g_Effects[2] )
+	{
+		D3DVERTEXELEMENT9	ele[MAX_FVF_DECL_SIZE];
+
+		// FVF를 사용해서 정점선언값을 자동으로 채워넣는다
+		D3DXDeclaratorFromFVF( D3DFVF_CUSTOMVERTEX, ele );
+		LPDIRECT3DVERTEXDECLARATION9	decl;
+
+		// 정점선언값으로 decl을 생성한다.
+		g_D3dDevice->CreateVertexDeclaration( ele, &decl );
+		g_D3dDevice->SetVertexDeclaration( decl );
+
+		UINT nPass;
 		
-	g_D3dDevice->SetStreamSource( 0, g_HeightMapVertexBuffer, 0, sizeof( CUSTOMVERTEX ) );
-	g_D3dDevice->SetFVF( D3DFVF_CUSTOMVERTEX );
+		// fx출력에 사용할 테크닉 선정
+		g_Effects[2]->SetTechnique( "MyShader" );
 
-	g_D3dDevice->SetTexture( 0, g_MapTexture );
-	
-	//설정된 uv 좌표값에 따라 연산
-	g_D3dDevice->SetTextureStageState( 0, D3DTSS_TEXCOORDINDEX, 0 );
+		D3DXMATRIXA16 worldMatrix;
+		g_D3dDevice->GetTransform( D3DTS_WORLD, &worldMatrix );
+		D3DXMATRIXA16 viewingMatrix;
+		g_D3dDevice->GetTransform( D3DTS_VIEW, &viewingMatrix );
+		D3DXMATRIXA16 projectionMatrix;
+		g_D3dDevice->GetTransform( D3DTS_PROJECTION, &projectionMatrix );
 
-	g_D3dDevice->SetSamplerState( 0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR );
-	g_D3dDevice->SetSamplerState( 0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR );
-	
-	g_D3dDevice->SetIndices( g_HeightMapIndexBuffer );
-	g_D3dDevice->DrawIndexedPrimitive( D3DPT_TRIANGLELIST, 0, 0, g_XHeight * g_ZHeight, 0, tris );
+		D3DXMATRIXA16 thisMatrix = worldMatrix * viewingMatrix * projectionMatrix;
+
+		g_Effects[2]->SetMatrix( "matWVP", &thisMatrix );
+
+		g_Effects[2]->SetTexture( "tex0", g_MapTexture );
+
+		g_D3dDevice->SetStreamSource( 0, g_HeightMapVertexBuffer, 0, sizeof( CUSTOMVERTEX ) );
+		g_D3dDevice->SetIndices( g_HeightMapIndexBuffer );
+
+		// fx를 사용한 출력개시
+		g_Effects[2]->Begin( &nPass, D3DXFX_DONOTSAVESHADERSTATE );
+
+		// PASS 개수만큼 출력
+		for ( UINT i = 0; i < nPass; ++i )
+		{
+			g_Effects[2]->BeginPass( i );
+			
+			g_D3dDevice->DrawIndexedPrimitive( D3DPT_TRIANGLELIST, 0, 0, g_XHeight * g_ZHeight, 0, tris );
+			
+			g_Effects[2]->EndPass();
+		}
+
+		/// fx를 사용한 출력종료
+		g_Effects[2]->End();
+	}
+	else
+	{
+		// 라이트매핑 등을 활용할 계획이므로 조명 Off
+		g_D3dDevice->SetRenderState( D3DRS_LIGHTING, FALSE );
+
+		g_D3dDevice->SetStreamSource( 0, g_HeightMapVertexBuffer, 0, sizeof( CUSTOMVERTEX ) );
+		g_D3dDevice->SetFVF( D3DFVF_CUSTOMVERTEX );
+
+		g_D3dDevice->SetTexture( 0, g_MapTexture );
+
+		//설정된 uv 좌표값에 따라 연산
+		g_D3dDevice->SetTextureStageState( 0, D3DTSS_TEXCOORDINDEX, 0 );
+
+		g_D3dDevice->SetSamplerState( 0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR );
+		g_D3dDevice->SetSamplerState( 0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR );
+
+		g_D3dDevice->SetIndices( g_HeightMapIndexBuffer );
+		g_D3dDevice->DrawIndexedPrimitive( D3DPT_TRIANGLELIST, 0, 0, g_XHeight * g_ZHeight, 0, tris );
+	}
+
+	g_D3dDevice->SetVertexShader( NULL );
+	g_D3dDevice->SetPixelShader( NULL );
 }
 
 //카메라 행렬을 인자값 받아서 정렬되도록 수정 필요 triz

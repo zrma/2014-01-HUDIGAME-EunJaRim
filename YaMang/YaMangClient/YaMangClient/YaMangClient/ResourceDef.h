@@ -24,7 +24,7 @@
 
 // #define HEIGHT_MAP				PATH_MAP L"heightmap_128_128.bmp"
 #define HEIGHT_MAP				PATH_MAP L"heightmap_129_129.bmp"
-#define HEIGHT_TEX				PATH_MAP L"heightmap_texture.tga"
+#define HEIGHT_TEX				PATH_MAP L"heightmap_texture_1024_1024_hills.jpg"
 
 // #define HEIGHT_MAP				PATH_MAP L"heightmap_129_129.bmp"
 // #define HEIGHT_TEX				PATH_MAP L"map_tex.bmp"
@@ -90,3 +90,4 @@
 
 #define SELECT_SHADER			PATH_SHADER L"SelectShader.fx"
 #define FIGHT_SHADER			PATH_SHADER L"FightShader.fx"
+#define MAP_SHADER				PATH_SHADER L"MapShader.fx"

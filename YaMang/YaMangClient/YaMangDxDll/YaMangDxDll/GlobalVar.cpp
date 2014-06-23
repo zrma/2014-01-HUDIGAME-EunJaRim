@@ -19,9 +19,9 @@ LPDIRECT3DVERTEXBUFFER9	g_HeightMapVertexBuffer = nullptr;
 LPDIRECT3DINDEXBUFFER9	g_HeightMapIndexBuffer = nullptr;
 bool g_HeightMapWithQuadTreeIsReady = false;
 
-LPDIRECT3DTEXTURE9 g_MapHeightInfo = nullptr;
-LPDIRECT3DTEXTURE9 g_MapTexture = nullptr;
-LPDIRECT3DTEXTURE9 g_MapTextureArray[MAP_TEXTURE_COUNT] = { 0, };
+LPDIRECT3DTEXTURE9	g_MapHeightInfo = nullptr;
+LPDIRECT3DTEXTURE9	g_MapTexture = nullptr;
+LPDIRECT3DTEXTURE9	g_MapTextureArray[MAP_TEXTURE_COUNT] = { 0, };
 
 LPDIRECT3DTEXTURE9*	g_MeshTextures = nullptr;
 INT					g_MeshTextureSize = 0;

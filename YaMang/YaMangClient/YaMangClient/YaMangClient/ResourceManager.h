@@ -20,6 +20,7 @@ enum ShaderType
 	// 순서 중요!
 	SHADER_SELECT = 0,
 	SHADER_FIGHT = 1,
+	SHADER_MAP = 2,
 
 	SHADER_TYPE_MAX
 };
