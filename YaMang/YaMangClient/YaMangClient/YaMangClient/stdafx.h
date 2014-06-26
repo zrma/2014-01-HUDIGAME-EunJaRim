@@ -35,3 +35,6 @@
 #include <memory>
 #include <atlconv.h>
 #include <d3dx9math.h>
+
+// DirectX 헤더입니다.
+#include <d3dx9.h>

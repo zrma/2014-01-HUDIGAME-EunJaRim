@@ -188,9 +188,6 @@ void Unit::MoveToDestination()
 
 			m_EyePoint += cross * static_cast<float>( 10 - m_UnitID )* time / 1000;
 			m_LookAtPoint += cross * static_cast<float>( 10 - m_UnitID )* time / 1000;
-
-			// rev = (rev + view) / 100;
-			// m_Collision->GetCompetitor()->SetEyePoint( m_Collision->GetCompetitor()->GetEyePoint() - static_cast<float>( 10 - m_UnitID )* rev * time / 1000 );
 		}
 		else
 		{

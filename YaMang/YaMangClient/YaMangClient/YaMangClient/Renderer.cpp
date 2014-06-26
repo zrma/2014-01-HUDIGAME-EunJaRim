@@ -8,6 +8,8 @@
 #include "QuadTree.h"
 #include "MapManager.h"
 
+const wchar_t* FONT_TYPE = L"맑은 고딕";
+
 Renderer::Renderer()
 {
 }
@@ -179,4 +181,93 @@ D3DXVECTOR3 Renderer::GetPickedPointOfCenter() const
 void Renderer::SetShader( bool mode )
 {
 	SetEffect( mode );
+}
+
+bool Renderer::CreateDevice( HWND hWnd, long width, long height )
+{
+	if ( nullptr == ( m_D3D = Direct3DCreate9( D3D_SDK_VERSION ) ) )
+	{
+		// 오류
+		MessageBox( NULL, L"Failed To Create D3D Factory", L"Renderer", MB_OK );
+		return false;
+	}
+
+	D3DPRESENT_PARAMETERS d3dpp;
+	ZeroMemory( &d3dpp, sizeof( d3dpp ) );
+	d3dpp.Windowed = TRUE;
+	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
+	d3dpp.BackBufferFormat = D3DFMT_UNKNOWN;
+	d3dpp.EnableAutoDepthStencil = TRUE;
+	d3dpp.AutoDepthStencilFormat = D3DFMT_D16;
+	d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
+
+	D3DCAPS9 caps;
+	DWORD dwVSProcess;
+	m_D3D->GetDeviceCaps( D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, &caps );
+
+	// 지원하는 정점쉐이더 버전이 1.0이하라면 SW쉐이더를, 1.0이상이면 HW쉐이더를 생성한다.
+	dwVSProcess =
+		( caps.VertexShaderVersion < D3DVS_VERSION( 1, 0 ) ) ? D3DCREATE_SOFTWARE_VERTEXPROCESSING : D3DCREATE_HARDWARE_VERTEXPROCESSING;
+
+	if ( FAILED( m_D3D->CreateDevice( D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL,
+		hWnd, dwVSProcess, &d3dpp, &m_D3dDevice ) ) )
+	{
+		MessageBox( NULL, L"Failed To Create D3D Device", L"Renderer", MB_OK );
+		return false;
+	}
+
+	m_D3dDevice->SetRenderState( D3DRS_CULLMODE, D3DCULL_NONE );
+	m_D3dDevice->SetRenderState( D3DRS_ZENABLE, TRUE );
+
+	m_StartWidth = static_cast<float>( width );
+	m_StartHeight = static_cast<float>( height );
+
+	SetAspectRatio( width, height );
+
+	return true;
+}
+
+void Renderer::DestroyDevice()
+{
+	SafeRelease( m_D3dDevice );
+	SafeRelease( m_D3D );
+}
+
+bool Renderer::CreateFont()
+{
+	if ( !m_D3dDevice )
+	{
+		MessageBox( NULL, L"Try To Create Font Device Before Create D3D Device ", L"Renderer", MB_OK );
+		return false;
+	}
+	
+	//텍스트 출력 자원 초기화
+	if ( FAILED( D3DXCreateFont(
+		m_D3dDevice						// Device 객체 
+		, m_FontHeight					// 폰트 높이 
+		, m_FontWidth					// 폰트 길이 
+		, FW_NORMAL						// 폰트 굵기 (기본 FW_BOLD) 
+		, m_FontMipLevel				// 밉레벨 
+		, false							// 폰트 기울기 켜기/끄기 설정 
+		, DEFAULT_CHARSET				// 문자셋 
+		, OUT_DEFAULT_PRECIS			// 출력 정확도 설정 
+		, DEFAULT_QUALITY				// 퀄리티 설정 
+		, DEFAULT_PITCH | FF_DONTCARE	// 피치 설정 
+		, FONT_TYPE						// 글꼴 설정 
+		, &m_Font						// 초기화할 Font 
+		) ) )
+	{
+		MessageBox( NULL, L"Failed To Create Font Device", L"Renderer", MB_OK );
+		return false;
+	}
+	
+	D3DXCreateSprite( m_D3dDevice, &m_Sprite ); // 스프라이트 초기화 
+
+	return true;
+}
+
+void Renderer::DestroyFont()
+{
+	SafeRelease( m_Sprite );
+	SafeRelease( m_Font );
 }
