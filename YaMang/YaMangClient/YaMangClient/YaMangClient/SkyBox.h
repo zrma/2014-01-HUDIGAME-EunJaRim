@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Interface3D.h"
 
 #ifndef D3DFVF_SKYBOXVERTEX
@@ -34,7 +34,7 @@ public:
 
 	enum SkyBoxType
 	{
-		// ¼ø¼­ Áß¿ä!
+		// ìˆœì„œ ì¤‘ìš”!
 		SKY_BOX_BACK = 0,
 		SKY_BOX_FRONT = 1,
 		SKY_BOX_LEFT = 2,
