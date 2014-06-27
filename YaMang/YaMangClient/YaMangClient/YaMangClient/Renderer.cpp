@@ -315,3 +315,17 @@ void Renderer::PostRender()
 	//Log( "Render End \n" );
 	m_D3dDevice->Present( NULL, NULL, NULL, NULL );
 }
+
+bool Renderer::CreateTexture( LPCTSTR fileName, LPDIRECT3DTEXTURE9* texture )
+{
+	if ( !m_D3dDevice )
+	{
+		return false;
+	}
+
+	if ( FAILED( D3DXCreateTextureFromFile( m_D3dDevice, fileName, texture ) ) )
+	{
+		return false;
+	}
+	return true;
+}

@@ -91,6 +91,8 @@ YAMANGDXDLL_API void CursorCleanUp()
 }
 
 
+//////////////////////////////////////////////////////////////////////////
+// 정리 완료
 YAMANGDXDLL_API void SkyBoxCleanUp()
 {
 	if ( g_SkyBoxMesh != NULL )

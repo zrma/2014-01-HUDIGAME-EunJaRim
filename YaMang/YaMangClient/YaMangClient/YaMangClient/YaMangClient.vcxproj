@@ -141,6 +141,7 @@ xcopy ".\\BugTrapDLL\*" "..\..\..\Bin\YaMangClient\" /s /d /y
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="ScenePlay.h" />
     <ClInclude Include="SceneResult.h" />
+    <ClInclude Include="SkyBox.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Sword.h" />
@@ -189,6 +190,7 @@ xcopy ".\\BugTrapDLL\*" "..\..\..\Bin\YaMangClient\" /s /d /y
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="ScenePlay.cpp" />
     <ClCompile Include="SceneResult.cpp" />
+    <ClCompile Include="SkyBox.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

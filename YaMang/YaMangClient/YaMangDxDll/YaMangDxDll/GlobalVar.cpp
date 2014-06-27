@@ -58,7 +58,9 @@ float			g_StartHeight = 720.0f;
 float			g_NowWidth = 1280.0f;
 float			g_NowHeight = 720.0f;
 
-// 스카이 박스
+
+//////////////////////////////////////////////////////////////////////////
+// 정리 완료
 LPDIRECT3DTEXTURE9	g_SkyBoxTextures[6] = { 0, };
 LPD3DXMESH          g_SkyBoxMesh = nullptr;
 

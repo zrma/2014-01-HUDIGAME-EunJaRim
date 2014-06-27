@@ -4,8 +4,7 @@
 
 
 //////////////////////////////////////////////////////////////////////////
-// SKYBOX
-//////////////////////////////////////////////////////////////////////////
+// 정리 완료
 YAMANGDXDLL_API bool SetSkyBoxTexture( LPCTSTR skyBoxTexture, int id )
 {
 	if ( FAILED( D3DXCreateTextureFromFile( g_D3dDevice, skyBoxTexture, &g_SkyBoxTextures[id] ) ) )
@@ -15,6 +14,8 @@ YAMANGDXDLL_API bool SetSkyBoxTexture( LPCTSTR skyBoxTexture, int id )
 	return true;
 }
 
+//////////////////////////////////////////////////////////////////////////
+// 정리 완료
 YAMANGDXDLL_API HRESULT InitSkyBoxMesh( int size )
 {
 	for ( int indexBuffer = 0; indexBuffer < 6; ++indexBuffer )

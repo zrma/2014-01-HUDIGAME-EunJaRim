@@ -21,6 +21,7 @@ public:
 	void	RenderEnd();
 
 	LPDIRECT3DDEVICE9	GetDevice() { return m_D3dDevice; }
+	bool	CreateTexture( LPCTSTR fileName, LPDIRECT3DTEXTURE9* texture );
 
 	void	RenderMesh( MESHOBJECT* mesh );
 	void	RenderMap( QuadTree* quadTree, Frustum* frustum, CUSTOMVERTEX* heightMap, float ratioOfLOD );
