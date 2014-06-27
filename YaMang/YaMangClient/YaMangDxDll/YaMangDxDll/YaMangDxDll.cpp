@@ -6,11 +6,7 @@
 #include "GlobalVar.h"
 
 //////////////////////////////////////////////////////////////////////////
-//input args: 윈도우 핸들
-//향후 공용으로 사용할 D3D, D3DDevice에 대해 초기화 진행
-//프로그램에서 1회만 실행 후 Process 종료까지 사용
-//참고 URL : http://www.delmadang.com/community/bbs_view.asp?bbsNo=17&indx=426040 
-//////////////////////////////////////////////////////////////////////////
+// 정리 완료
 YAMANGDXDLL_API HRESULT InitD3D( HWND hWnd, long width, long height )
 {
 	if ( nullptr == ( g_D3D = Direct3DCreate9( D3D_SDK_VERSION ) ) )
@@ -77,6 +73,7 @@ YAMANGDXDLL_API HRESULT InitD3D( HWND hWnd, long width, long height )
 }
 
 
+
 //////////////////////////////////////////////////////////////////////////
 //Text Render
 //////////////////////////////////////////////////////////////////////////
@@ -114,6 +111,7 @@ YAMANGDXDLL_API void RenderText( LPCWSTR text, float left, float top, int RGB_R,
 //Log("%f, %f, %f, %f \n", matrix->_31, matrix->_32, matrix->_33, matrix->_34);
 //Log("%f, %f, %f, %f \n", matrix->_41, matrix->_42, matrix->_43, matrix->_44);
 //Log("==============================");
+
 
 YAMANGDXDLL_API void SetCameraMatrix( D3DXMATRIXA16* matrix )
 {

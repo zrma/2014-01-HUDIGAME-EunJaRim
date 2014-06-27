@@ -12,11 +12,7 @@ enum RenderingOption
 };
 
 //////////////////////////////////////////////////////////////////////////
-//render를 pre - main - post renderring으로 변경
-//pre에서는 matrix, view, light에 대한 setting 진행
-//main에서는 mesh object에 대한 직접 rendering 진행
-//post에서는 pre에서 설정한 setting 초기화
-//////////////////////////////////////////////////////////////////////////
+// 정리 완료
 YAMANGDXDLL_API bool PreRendering()
 {
 	if ( NULL == g_D3dDevice )
@@ -129,7 +125,8 @@ YAMANGDXDLL_API void Rendering( MESHOBJECT* inputVal )
 	g_IsEffectReady = false;
 }
 
-
+//////////////////////////////////////////////////////////////////////////
+// 정리 완료
 YAMANGDXDLL_API void PostRendering()
 {
 	D3DXMATRIXA16 identityMatrix;

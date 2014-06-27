@@ -43,12 +43,14 @@ public:
 	void	WriteText( LPCWSTR text, float left, float top, int RGB_R = 255, int RGB_G = 255, int RGB_B = 255, float right = 0, float bottom = 0 ) const;
 
 private:
-
 	bool	CreateDevice( HWND hWnd, long width, long height );
 	void	DestroyDevice();
 
 	bool	CreateFont();
 	void	DestroyFont();
+
+	bool	PreRender();
+	void	PostRender();
 
 	bool	m_Result = false;
 	bool	m_IsReady = false;
@@ -73,4 +75,6 @@ private:
 	UINT	m_FontHeight = 30;
 	UINT	m_FontWidth = 0;
 	UINT	m_FontMipLevel = 1;
+
+	bool	m_IsEffectReady = false;
 };

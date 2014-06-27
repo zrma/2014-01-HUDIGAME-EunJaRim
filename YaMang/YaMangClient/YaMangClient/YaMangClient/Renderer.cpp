@@ -271,3 +271,47 @@ void Renderer::DestroyFont()
 	SafeRelease( m_Sprite );
 	SafeRelease( m_Font );
 }
+
+bool Renderer::PreRender()
+{
+	if ( !m_D3dDevice )
+	{
+		return false;
+	}
+
+	m_D3dDevice->Clear( 0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB( 10, 10, 10 ), 1.0f, 0 );
+
+	// 렌더 방어코드
+	// Pre Render 단계에서 진행되지 않으면 향후 Render 모두 실패
+	if ( SUCCEEDED( m_D3dDevice->BeginScene() ) )
+	{
+		D3DXMATRIXA16 identityMatrix;
+		D3DXMatrixIdentity( &identityMatrix );
+		SetWorldAreaMatrix( &identityMatrix );
+
+		m_D3dDevice->SetVertexShader( NULL );
+		m_D3dDevice->SetPixelShader( NULL );
+		m_IsEffectReady = false;
+
+		return true;
+	}
+
+	return false;
+}
+
+void Renderer::PostRender()
+{
+	if ( !m_D3dDevice )
+	{
+		return;
+	}
+
+	D3DXMATRIXA16 identityMatrix;
+	D3DXMatrixIdentity( &identityMatrix );
+
+	m_D3dDevice->SetTransform( D3DTS_WORLD, &identityMatrix );
+	m_D3dDevice->EndScene();
+
+	//Log( "Render End \n" );
+	m_D3dDevice->Present( NULL, NULL, NULL, NULL );
+}
