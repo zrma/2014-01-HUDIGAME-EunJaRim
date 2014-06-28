@@ -121,7 +121,6 @@ xcopy "..\..\..\Bin\YaMangClient\YaMangDxDll.lib" "..\..\..\Bin\YaMangMapTool\" 
     <ClCompile Include="YaMangPicking.cpp" />
     <ClCompile Include="YaMangScreenCapture.cpp" />
     <ClCompile Include="YaMangShader.cpp" />
-    <ClCompile Include="YaMangSkyBox.cpp" />
     <ClCompile Include="YaMangSpriteUI.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

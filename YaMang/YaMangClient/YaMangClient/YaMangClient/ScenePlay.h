@@ -11,6 +11,8 @@ class Frustum;
 class QuadTree;
 struct CUSTOMVERTEX;
 
+class SkyBox;
+
 class ScenePlay:
 	public Scene
 {
@@ -78,5 +80,7 @@ private:
 	QuadTree*					m_QuadTree = nullptr;
 	CUSTOMVERTEX*				m_HeightMap = nullptr;
 	float						m_LODRatio = 0.005f;
+
+	SkyBox*						m_SkyBox = nullptr;
 };
 

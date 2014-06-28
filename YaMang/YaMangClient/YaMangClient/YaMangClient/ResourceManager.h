@@ -3,6 +3,7 @@
 #include "EnumSet.h"
 
 struct MESHOBJECT;
+class SkyBox;
 
 enum SkyBoxType
 {
@@ -66,6 +67,10 @@ public:
 	
 	ResourceMesh*	GetMeshByKey( MeshKeyType key ) const { return m_MeshArray[key]; }
 
+	bool	CreateSkyBox();
+	SkyBox&	GetSkyBox() { return (*m_SkyBox); }
+	bool	IsSkyBoxReady() const { return m_IsSkyBoxReady; }
+
 private:
 	void	AddMap( LPCTSTR heightMapFileName, LPCTSTR textureFileName, MapKeyType key );
 	bool	CreateMap( MapKeyType key );
@@ -88,4 +93,8 @@ private:
 
 	bool	m_ISCursorReady = false;
 	bool	m_IsUISpriteReady = false;
+
+	SkyBox*	m_SkyBox = nullptr;
+
+	bool	m_IsSkyBoxReady = false;
 };

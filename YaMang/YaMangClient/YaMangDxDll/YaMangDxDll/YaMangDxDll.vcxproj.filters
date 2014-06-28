@@ -82,9 +82,6 @@
     <ClCompile Include="YaMangScreenCapture.cpp">
       <Filter>YaMangDxDll\Specific</Filter>
     </ClCompile>
-    <ClCompile Include="YaMangSkyBox.cpp">
-      <Filter>YaMangDxDll\Specific</Filter>
-    </ClCompile>
     <ClCompile Include="YaMangCharacter.cpp">
       <Filter>YaMangDxDll\Specific</Filter>
     </ClCompile>

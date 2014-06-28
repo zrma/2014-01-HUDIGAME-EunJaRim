@@ -5,6 +5,7 @@
 #include "MouseManager.h"
 #include "ResourceDef.h"
 #include "MapManager.h"
+#include "SkyBox.h"
 
 ResourceManager::ResourceManager()
 {
@@ -55,18 +56,11 @@ void ResourceManager::Init()
 
 	MapManager::GetInstance()->SetPixelSize( 5.0f );
 
+	m_IsSkyBoxReady = CreateSkyBox();
+
 	m_MapSize = 640;
 	m_IsMapReady = true;
 
-	InitSkyBoxMesh( 640 );
-
-	SetSkyBoxTexture( SPRITE_SKYBOX_BACK, SKY_BOX_BACK );
-	SetSkyBoxTexture( SPRITE_SKYBOX_FRONT, SKY_BOX_FRONT );
-	SetSkyBoxTexture( SPRITE_SKYBOX_LEFT, SKY_BOX_LEFT );
-	SetSkyBoxTexture( SPRITE_SKYBOX_RIGHT, SKY_BOX_RIGHT );
-	SetSkyBoxTexture( SPRITE_SKYBOX_TOP, SKY_BOX_TOP );
-	SetSkyBoxTexture( SPRITE_SKYBOX_BOTTOM, SKY_BOX_BOTTOM );
-	
 	InitCursor( CURSOR_MAX, MouseManager::GetInstance()->GetMousePositionX(), MouseManager::GetInstance()->GetMousePositionY() );
 	CreateCursorImage( SPRITE_CURSOR_DEFAULT, CURSOR_DEFAULT );
 	CreateCursorImage( SPRITE_CURSOR_ATTACK, CURSOR_ATTACK );
@@ -101,8 +95,9 @@ void ResourceManager::Destroy()
 	DeleteSprite();
 	CursorCleanUp();
 
-	SkyBoxCleanUp();
 	DeleteMap();
+
+	SafeDelete( m_SkyBox );
 
 	for ( auto& toBeDelete : m_MeshArray )
 	{
@@ -217,5 +212,21 @@ void ResourceManager::CreateSprite()
 void ResourceManager::DeleteSprite()
 {
 	UICleanUp();
+}
+
+bool ResourceManager::CreateSkyBox()
+{
+	m_SkyBox = new SkyBox();
+	if (
+		m_SkyBox->Init( SPRITE_SKYBOX_BACK, SPRITE_SKYBOX_FRONT, SPRITE_SKYBOX_LEFT, 
+		SPRITE_SKYBOX_RIGHT, SPRITE_SKYBOX_TOP, SPRITE_SKYBOX_BOTTOM, 640 ) )
+	{
+		return true;
+	}
+	else
+	{
+		SafeDelete( m_SkyBox );
+		return false;
+	}
 }
 

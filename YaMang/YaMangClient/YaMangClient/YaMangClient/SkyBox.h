@@ -48,6 +48,7 @@ public:
 	
 	void Destroy();
 
+	virtual void Update() {}
 	virtual void Render() const;
 
 private:

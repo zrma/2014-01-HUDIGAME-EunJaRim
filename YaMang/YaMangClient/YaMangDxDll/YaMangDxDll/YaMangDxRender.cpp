@@ -197,36 +197,6 @@ YAMANGDXDLL_API HRESULT RenderCursor()
 
 
 //////////////////////////////////////////////////////////////////////////
-// 정리 완료
-YAMANGDXDLL_API void RenderSkyBox( D3DXVECTOR3 eyePoint )
-{
-	if ( g_SkyBoxMesh )
-	{
-		D3DXMATRIXA16 moveMatrix;
-		D3DXMatrixTranslation( &moveMatrix, eyePoint.x, eyePoint.y, eyePoint.z );
-		g_D3dDevice->SetTransform( D3DTS_WORLD, &moveMatrix );
-
-		g_D3dDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_SOLID );
-		
-		g_D3dDevice->SetSamplerState( 0, D3DSAMP_MAGFILTER, D3DTEXF_GAUSSIANQUAD );
-		g_D3dDevice->SetSamplerState( 0, D3DSAMP_MINFILTER, D3DTEXF_GAUSSIANQUAD );
-
-		g_D3dDevice->SetSamplerState( 0, D3DSAMP_ADDRESSU, D3DTADDRESS_CLAMP );
-		g_D3dDevice->SetSamplerState( 0, D3DSAMP_ADDRESSV, D3DTADDRESS_CLAMP );
-
-		for ( int i = 0; i < 6; i++ )
-		{
-			g_D3dDevice->SetTexture( 0, g_SkyBoxTextures[i] );
-			g_SkyBoxMesh->DrawSubset( i );
-		}
-
-		g_D3dDevice->SetSamplerState( 0, D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP );
-		g_D3dDevice->SetSamplerState( 0, D3DSAMP_ADDRESSV, D3DTADDRESS_WRAP );
-	}
-}
-
-
-//////////////////////////////////////////////////////////////////////////
 //캐릭터 툴을 위한 렌더 함수
 //render를 pre - main - post renderring 구조에서 main을 담당
 //////////////////////////////////////////////////////////////////////////

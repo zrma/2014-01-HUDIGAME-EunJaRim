@@ -114,13 +114,6 @@ extern "C"{
 	YAMANGDXDLL_API void MoveCamera( float x = 0, float y = 0, float z = 0);
 	//YAMANGDXDLL_API void ZoomCamera( float zoom );
 
-	//////////////////////////////////////////////////////////////////////////
-	// SKYBOX
-	//////////////////////////////////////////////////////////////////////////
-	YAMANGDXDLL_API HRESULT InitSkyBoxMesh( int size = 500 );
-	YAMANGDXDLL_API bool SetSkyBoxTexture( LPCTSTR skyBoxTexture, int id );
-	YAMANGDXDLL_API void RenderSkyBox( D3DXVECTOR3 eyePoint );
-	YAMANGDXDLL_API void SkyBoxCleanUp();
 
 	//////////////////////////////////////////////////////////////////////////
 	// ScreenShot

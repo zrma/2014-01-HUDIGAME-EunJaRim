@@ -20,6 +20,8 @@
 #include "QuadTree.h"
 #include "ResourceManager.h"
 
+#include "SkyBox.h"
+
 ScenePlay::ScenePlay()
 {
 }
@@ -102,6 +104,11 @@ void ScenePlay::Update()
 
 void ScenePlay::Render() const
 {
+	if ( ResourceManager::GetInstance()->IsSkyBoxReady() )
+	{
+		ResourceManager::GetInstance()->GetSkyBox().Render();
+	}
+
 	Renderer::GetInstance()->RenderMap( m_QuadTree, m_Frustum, m_HeightMap, m_LODRatio );
 	TextManager::GetInstance()->DrawTexts();
 

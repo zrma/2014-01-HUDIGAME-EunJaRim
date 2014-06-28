@@ -73,15 +73,6 @@ void Renderer::RenderEnd()
 	}
 }
 
-void Renderer::RenderMesh( MESHOBJECT* mesh )
-{
-	if ( mesh && m_IsReady )
-	{	
-		++m_DPCall;
-		Rendering( mesh );
-	}
-}
-
 void Renderer::RenderMap( QuadTree* quadTree, Frustum* frustum, CUSTOMVERTEX* heightMap, float ratioOfLOD )
 {
 	if ( ResourceManager::GetInstance()->IsMapReady() )
@@ -97,8 +88,6 @@ void Renderer::RenderMap( QuadTree* quadTree, Frustum* frustum, CUSTOMVERTEX* he
 			m_HeightMapVertis = quadTree->GenerateIndex( index, heightMap, frustum, ratioOfLOD );
 			RenderHeightMapWithQuadTree( m_HeightMapVertis, m_IsHeightMapWire );
 		}
-
-		RenderSkyBox( CameraController::GetInstance()->GetEyePoint() );
 	}
 }
 

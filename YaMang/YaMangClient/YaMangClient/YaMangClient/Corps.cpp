@@ -191,10 +191,10 @@ void Corps::Render() const
 
 	ResourceMesh* mesh = ResourceManager::GetInstance()->GetMeshByKey( m_MeshKey );
 
-	if ( mesh )
-	{
-		Renderer::GetInstance()->RenderMesh( mesh->m_MeshObject );
-	}
+// 	if ( mesh )
+// 	{
+// 		Renderer::GetInstance()->RenderMesh( mesh->m_MeshObject );
+// 	}
 
 	if ( m_TextureType != CORPS_TEXTURE_NONE && m_TextureType != CORPS_TEXTURE_MAX )
 	{
