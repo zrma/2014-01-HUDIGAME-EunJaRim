@@ -7,7 +7,6 @@ LPDIRECT3D9 g_D3D = nullptr;
 LPDIRECT3DDEVICE9 g_D3dDevice = nullptr;
 
 
-
 // 전부 찢어서 각 객체들에 넣어야 한다.
 
 
@@ -43,11 +42,6 @@ INT						g_CursorType = 0;
 INT						g_CursorMaxSize = 0;
 D3DXVECTOR3				g_CursorPos = { 0, 0, 0 };
 
-// tool Camera 관련 벡터
-D3DXVECTOR3		g_EyePoint = { 0, 0, 0 };
-D3DXVECTOR3		g_LookAtPoint = { 0, 0, 1.0f };
-D3DXVECTOR3		g_UpVector = { 0, 1, 0 };
-
 // Picking 관련 변수
 D3DXVECTOR3		g_RayOrigin = { 0, 0, 0 };
 D3DXVECTOR3		g_RayDirection = { 0, 0, 0 };
@@ -57,12 +51,6 @@ float			g_StartWidth = 1280.0f;
 float			g_StartHeight = 720.0f;
 float			g_NowWidth = 1280.0f;
 float			g_NowHeight = 720.0f;
-
-
-//////////////////////////////////////////////////////////////////////////
-// 정리 완료
-LPDIRECT3DTEXTURE9	g_SkyBoxTextures[6] = { 0, };
-LPD3DXMESH          g_SkyBoxMesh = nullptr;
 
 // UI Sprite
 LPDIRECT3DTEXTURE9*		g_UITexures = nullptr;

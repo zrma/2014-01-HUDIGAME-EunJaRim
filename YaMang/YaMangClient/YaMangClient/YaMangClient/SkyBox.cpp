@@ -36,13 +36,13 @@ bool SkyBox::Init( LPCTSTR backSideFileName, LPCTSTR frontSideFileName, LPCTSTR 
 		return false;
 	}
 
-	if ( FAILED( D3DXCreateMeshFVF( 12, 24, D3DXMESH_MANAGED, D3DFVF_SKYBOXVERTEX, Renderer::GetInstance()->GetDevice(), &m_SkyBoxMesh ) ) )
+	if ( FAILED( D3DXCreateMeshFVF( 12, 24, D3DXMESH_MANAGED, D3DFVF_SKYBOX_VERTEX, Renderer::GetInstance()->GetDevice(), &m_SkyBoxMesh ) ) )
 	{
 		MessageBox( NULL, L"Failed To Create Sky Box Mesh", L"SkyBox", MB_OK );
 		return false;
 	}
 
-	SKYBOXVERTEX* vertexBuffer = nullptr;
+	SKYBOX_VERTEX* vertexBuffer = nullptr;
 	if ( FAILED( m_SkyBoxMesh->LockVertexBuffer( 0, (void**)&vertexBuffer ) ) )
 	{
 		MessageBox( NULL, L"Failed To Lock Sky Box Mesh Vertex Buffer", L"SkyBox", MB_OK );
@@ -51,35 +51,35 @@ bool SkyBox::Init( LPCTSTR backSideFileName, LPCTSTR frontSideFileName, LPCTSTR 
 	}
 
 	// 전면   
-	vertexBuffer[0] = SKYBOXVERTEX( -1.0f, -1.0f, -1.0f, 0.0f, 1.0f );
-	vertexBuffer[1] = SKYBOXVERTEX( -1.0f, 1.0f, -1.0f, 0.0f, 0.0f );
-	vertexBuffer[2] = SKYBOXVERTEX( 1.0f, 1.0f, -1.0f, 1.0f, 0.0f );
-	vertexBuffer[3] = SKYBOXVERTEX( 1.0f, -1.0f, -1.0f, 1.0f, 1.0f );
+	vertexBuffer[0] = SKYBOX_VERTEX( -1.0f, -1.0f, -1.0f, 0.0f, 1.0f );
+	vertexBuffer[1] = SKYBOX_VERTEX( -1.0f, 1.0f, -1.0f, 0.0f, 0.0f );
+	vertexBuffer[2] = SKYBOX_VERTEX( 1.0f, 1.0f, -1.0f, 1.0f, 0.0f );
+	vertexBuffer[3] = SKYBOX_VERTEX( 1.0f, -1.0f, -1.0f, 1.0f, 1.0f );
 	// 후면
-	vertexBuffer[4] = SKYBOXVERTEX( -1.0f, -1.0f, 1.0f, 1.0f, 1.0f );
-	vertexBuffer[5] = SKYBOXVERTEX( -1.0f, 1.0f, 1.0f, 1.0f, 0.0f );
-	vertexBuffer[6] = SKYBOXVERTEX( 1.0f, 1.0f, 1.0f, 0.0f, 0.0f );
-	vertexBuffer[7] = SKYBOXVERTEX( 1.0f, -1.0f, 1.0f, 0.0f, 1.0f );
+	vertexBuffer[4] = SKYBOX_VERTEX( -1.0f, -1.0f, 1.0f, 1.0f, 1.0f );
+	vertexBuffer[5] = SKYBOX_VERTEX( -1.0f, 1.0f, 1.0f, 1.0f, 0.0f );
+	vertexBuffer[6] = SKYBOX_VERTEX( 1.0f, 1.0f, 1.0f, 0.0f, 0.0f );
+	vertexBuffer[7] = SKYBOX_VERTEX( 1.0f, -1.0f, 1.0f, 0.0f, 1.0f );
 	// 좌측
-	vertexBuffer[8] = SKYBOXVERTEX( -1.0f, -1.0f, 1.0f, 0.0f, 1.0f );
-	vertexBuffer[9] = SKYBOXVERTEX( -1.0f, 1.0f, 1.0f, 0.0f, 0.0f );
-	vertexBuffer[10] = SKYBOXVERTEX( -1.0f, 1.0f, -1.0f, 1.0f, 0.0f );
-	vertexBuffer[11] = SKYBOXVERTEX( -1.0f, -1.0f, -1.0f, 1.0f, 1.0f );
+	vertexBuffer[8] = SKYBOX_VERTEX( -1.0f, -1.0f, 1.0f, 0.0f, 1.0f );
+	vertexBuffer[9] = SKYBOX_VERTEX( -1.0f, 1.0f, 1.0f, 0.0f, 0.0f );
+	vertexBuffer[10] = SKYBOX_VERTEX( -1.0f, 1.0f, -1.0f, 1.0f, 0.0f );
+	vertexBuffer[11] = SKYBOX_VERTEX( -1.0f, -1.0f, -1.0f, 1.0f, 1.0f );
 	// 우측
-	vertexBuffer[12] = SKYBOXVERTEX( 1.0f, -1.0f, 1.0f, 1.0f, 1.0f );
-	vertexBuffer[13] = SKYBOXVERTEX( 1.0f, 1.0f, 1.0f, 1.0f, 0.0f );
-	vertexBuffer[14] = SKYBOXVERTEX( 1.0f, 1.0f, -1.0f, 0.0f, 0.0f );
-	vertexBuffer[15] = SKYBOXVERTEX( 1.0f, -1.0f, -1.0f, 0.0f, 1.0f );
+	vertexBuffer[12] = SKYBOX_VERTEX( 1.0f, -1.0f, 1.0f, 1.0f, 1.0f );
+	vertexBuffer[13] = SKYBOX_VERTEX( 1.0f, 1.0f, 1.0f, 1.0f, 0.0f );
+	vertexBuffer[14] = SKYBOX_VERTEX( 1.0f, 1.0f, -1.0f, 0.0f, 0.0f );
+	vertexBuffer[15] = SKYBOX_VERTEX( 1.0f, -1.0f, -1.0f, 0.0f, 1.0f );
 	// 상단
-	vertexBuffer[16] = SKYBOXVERTEX( -1.0f, 1.0f, -1.0f, 0.0f, 1.0f );
-	vertexBuffer[17] = SKYBOXVERTEX( -1.0f, 1.0f, 1.0f, 0.0f, 0.0f );
-	vertexBuffer[18] = SKYBOXVERTEX( 1.0f, 1.0f, 1.0f, 1.0f, 0.0f );
-	vertexBuffer[19] = SKYBOXVERTEX( 1.0f, 1.0f, -1.0f, 1.0f, 1.0f );
+	vertexBuffer[16] = SKYBOX_VERTEX( -1.0f, 1.0f, -1.0f, 0.0f, 1.0f );
+	vertexBuffer[17] = SKYBOX_VERTEX( -1.0f, 1.0f, 1.0f, 0.0f, 0.0f );
+	vertexBuffer[18] = SKYBOX_VERTEX( 1.0f, 1.0f, 1.0f, 1.0f, 0.0f );
+	vertexBuffer[19] = SKYBOX_VERTEX( 1.0f, 1.0f, -1.0f, 1.0f, 1.0f );
 	// 하단
-	vertexBuffer[20] = SKYBOXVERTEX( -1.0f, -1.0f, -1.0f, 1.0f, 0.0f );
-	vertexBuffer[21] = SKYBOXVERTEX( -1.0f, -1.0f, 1.0f, 1.0f, 1.0f );
-	vertexBuffer[22] = SKYBOXVERTEX( 1.0f, -1.0f, 1.0f, 0.0f, 1.0f );
-	vertexBuffer[23] = SKYBOXVERTEX( 1.0f, -1.0f, -1.0f, 0.0f, 0.0f );
+	vertexBuffer[20] = SKYBOX_VERTEX( -1.0f, -1.0f, -1.0f, 1.0f, 0.0f );
+	vertexBuffer[21] = SKYBOX_VERTEX( -1.0f, -1.0f, 1.0f, 1.0f, 1.0f );
+	vertexBuffer[22] = SKYBOX_VERTEX( 1.0f, -1.0f, 1.0f, 0.0f, 1.0f );
+	vertexBuffer[23] = SKYBOX_VERTEX( 1.0f, -1.0f, -1.0f, 0.0f, 0.0f );
 
 	for ( UINT i = 0; i < 24; ++i )
 	{

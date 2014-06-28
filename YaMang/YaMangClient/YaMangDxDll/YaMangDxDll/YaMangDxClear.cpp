@@ -91,24 +91,6 @@ YAMANGDXDLL_API void CursorCleanUp()
 }
 
 
-//////////////////////////////////////////////////////////////////////////
-// 정리 완료
-YAMANGDXDLL_API void SkyBoxCleanUp()
-{
-	if ( g_SkyBoxMesh != NULL )
-	{
-		g_SkyBoxMesh->Release();
-	}
-
-	for ( int i = 0; i < 6; ++i )
-	{
-		if ( g_SkyBoxTextures[i] != NULL )
-		{
-			g_SkyBoxTextures[i]->Release();
-		}
-	}
-}
-
 YAMANGDXDLL_API void UICleanUp()
 {
 	if (g_UISprite)

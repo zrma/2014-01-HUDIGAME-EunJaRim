@@ -226,6 +226,7 @@
     <ClInclude Include="SkyBox.h">
       <Filter>Render</Filter>
     </ClInclude>
+    <ClInclude Include="HeightMap.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -366,6 +367,7 @@
     <ClCompile Include="SkyBox.cpp">
       <Filter>Render</Filter>
     </ClCompile>
+    <ClCompile Include="HeightMap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="YaMangClient.rc">

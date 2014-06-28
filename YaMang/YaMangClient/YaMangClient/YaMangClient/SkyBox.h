@@ -1,13 +1,13 @@
 ﻿#pragma once
 #include "Interface3D.h"
 
-#ifndef D3DFVF_SKYBOXVERTEX
-#define D3DFVF_SKYBOXVERTEX (D3DFVF_XYZ | D3DFVF_TEX1)
+#ifndef D3DFVF_SKYBOX_VERTEX
+#define D3DFVF_SKYBOX_VERTEX (D3DFVF_XYZ | D3DFVF_TEX1)
 
-struct SKYBOXVERTEX
+struct SKYBOX_VERTEX
 {
-	SKYBOXVERTEX() {}
-	SKYBOXVERTEX( float x, float y, float z, float u, float v )
+	SKYBOX_VERTEX() {}
+	SKYBOX_VERTEX( float x, float y, float z, float u, float v )
 	{
 		m_X = x;
 		m_Y = y;
@@ -23,7 +23,7 @@ struct SKYBOXVERTEX
 	float	m_V = 0;
 };
 
-#endif // !D3DFVF_SKYBOXVERTEX
+#endif // !D3DFVF_SKYBOX_VERTEX
 
 class SkyBox:
 	public Interface3D
