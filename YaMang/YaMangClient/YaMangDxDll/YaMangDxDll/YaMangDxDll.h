@@ -14,16 +14,8 @@
 struct CUSTOMVERTEX;
 
 extern "C"{
-	//처음과 마지막에만 실행하는 함수들
-	YAMANGDXDLL_API HRESULT InitD3D( HWND hWnd, long width = 1280, long height = 720 );
-	YAMANGDXDLL_API void D3DCleanUp();
-
 	//파일 이름 넣어 mesh object 받아오기
 	YAMANGDXDLL_API HRESULT InitCharacterModel( HWND hWnd, LPCTSTR fileName, MESHOBJECT* inputVal );
-
-	//render 사전 준비 beginScene
-	//x,y,z축 이동이 없으면 0을 넣으면 됩니다.
-	YAMANGDXDLL_API bool PreRendering();
 
 	//Main rendering MeshObject를 넣어 render 진행
 	YAMANGDXDLL_API void Rendering( MESHOBJECT* inputVal );
@@ -101,19 +93,6 @@ extern "C"{
 	YAMANGDXDLL_API HRESULT RenderCursor();
 	YAMANGDXDLL_API void CursorCleanUp();
 	YAMANGDXDLL_API void SetCursorPosition( int PosX = 0, int PosY = 0 );
-			
-	//////////////////////////////////////////////////////////////////////////
-	// Tool 용 함수
-	//////////////////////////////////////////////////////////////////////////
-	YAMANGDXDLL_API void RenderingTool(MESHOBJECT* inputVal);
-	YAMANGDXDLL_API void SetCameraTool(float x, float y, float z);
-
-	//////////////////////////////////////////////////////////////////////////
-	// Camera 함수
-	//////////////////////////////////////////////////////////////////////////
-	YAMANGDXDLL_API void MoveCamera( float x = 0, float y = 0, float z = 0);
-	//YAMANGDXDLL_API void ZoomCamera( float zoom );
-
 
 	//////////////////////////////////////////////////////////////////////////
 	// ScreenShot
@@ -128,10 +107,3 @@ extern "C"{
 	YAMANGDXDLL_API HRESULT RenderSprite( INT typeNum, D3DXVECTOR3 pos );
 	YAMANGDXDLL_API void UICleanUp();
 }
-
-void Lighting( int lightNum );
-//단일 변수 out sample
-//extern YAMANGDXDLL_API int nyaMangDxDll;
-
-
-

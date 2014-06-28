@@ -25,7 +25,7 @@ bool Renderer::Init()
 	LONG width = rect.right - rect.left;
 	LONG height = rect.bottom - rect.top;
 
-	if ( S_OK == InitD3D( MainWindow::GetInstance( )->Window( ), width, height ) )
+	if ( S_OK == CreateDevice( MainWindow::GetInstance( )->Window( ), width, height ) )
 	{
 		m_Result = true;
 		m_PrevTime = timeGetTime();
@@ -38,7 +38,7 @@ void Renderer::Destroy()
 {
 	if ( m_Result )
 	{
-		D3DCleanUp( );
+		DestroyDevice();
 	}
 }
 
@@ -47,7 +47,7 @@ void Renderer::RenderBegin()
 	if ( m_Result )
 	{
 		m_DPCall = 0;
-		m_IsReady = PreRendering( );
+		m_IsReady = PreRender( );
 	}
 }
 
@@ -68,7 +68,7 @@ void Renderer::RenderEnd()
 		//TextManager::GetInstance( )->RegistText( TEXT_FPS, ws, 20, 20, SCENE_PLAY );
 		m_Frame++;
 
-		PostRendering( );
+		PostRender( );
 		m_IsReady = false;
 	}
 }

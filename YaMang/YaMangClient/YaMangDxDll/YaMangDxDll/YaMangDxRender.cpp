@@ -11,41 +11,6 @@ enum RenderingOption
 	LIGHT_SETTING_OFF,
 };
 
-//////////////////////////////////////////////////////////////////////////
-// 정리 완료
-YAMANGDXDLL_API bool PreRendering()
-{
-	if ( NULL == g_D3dDevice )
-	{
-		return false;
-	}
-
-	g_D3dDevice->Clear( 0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB( 10, 10, 10 ), 1.0f, 0 );
-
-	bool flag = false;
-
-	// 렌더 방어코드
-	// pre rendering 단계에서 진행되지 않으면 향후 render 모두 실패
-	if ( SUCCEEDED( g_D3dDevice->BeginScene() ) )
-	{
-		D3DXMATRIXA16 identityMatrix;
-		D3DXMatrixIdentity( &identityMatrix );
-		SetWorldAreaMatrix( &identityMatrix );
-
-		// lightsetting
-		int lightNum = 1;
-		Lighting( lightNum );
-
-		flag = true;
-
-		g_D3dDevice->SetVertexShader( NULL );
-		g_D3dDevice->SetPixelShader( NULL );
-		g_IsEffectReady = false;
-	}
-
-	return flag;
-}
-
 YAMANGDXDLL_API void SetEffect( bool isEffect )
 {
 	g_IsEffectReady = isEffect;
@@ -193,71 +158,4 @@ YAMANGDXDLL_API HRESULT RenderCursor()
 		return S_OK;
 	}
 	return E_FAIL;
-}
-
-
-//////////////////////////////////////////////////////////////////////////
-//캐릭터 툴을 위한 렌더 함수
-//render를 pre - main - post renderring 구조에서 main을 담당
-//////////////////////////////////////////////////////////////////////////
-YAMANGDXDLL_API void RenderingTool( MESHOBJECT* inputVal )
-{
-	if ( NULL == g_D3dDevice )
-	{
-		return;
-	}
-
-	if ( g_Mesh == nullptr )
-	{
-		InitGroundMesh( 100, 100 );
-	}
-	g_D3dDevice->Clear( 0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB( 30, 10, 10 ), 1.0f, 0 );
-
-	// 렌더 방어코드
-	if ( SUCCEEDED( g_D3dDevice->BeginScene() ) )
-	{
-		// SetupTranslateMatricesTool();
-		// 일단 height map 등 다른 쪽을 생각할 것
-
-		// ViewSetting();
-
-		// lightsetting
-		// 일단 1로 진행, 향후 라이트 개수 등 확정되면 인자 받아 설정
-		int lightNum = 1;
-		Lighting( lightNum );
-		// Log( "라이팅 세팅!\n" );
-
-		g_D3dDevice->SetTextureStageState( 0, D3DTSS_COLOROP, D3DTOP_MODULATE );
-		g_D3dDevice->SetTextureStageState( 0, D3DTSS_COLORARG1, D3DTA_TEXTURE );
-		g_D3dDevice->SetTextureStageState( 0, D3DTSS_COLORARG2, D3DTA_DIFFUSE );
-		g_D3dDevice->SetTextureStageState( 0, D3DTSS_ALPHAOP, D3DTOP_DISABLE );
-
-		// Log( "Render Begin \n" );
-		// Log( "pre render 완료!\n" );
-	}
-
-	// 카메라 셋팅
-	D3DXMATRIXA16 viewMatrix;
-	D3DXMatrixLookAtLH( &viewMatrix, &g_EyePoint, &g_LookAtPoint, &g_UpVector );
-	SetCameraMatrix( &viewMatrix );
-
-	// 보여주기 위한 땅을 만듬
-	//InitGroundMesh(100, 100);
-	CreateRawGround( 100, 100, 10 );
-	RenderHeightMap();
-
-	g_D3dDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_SOLID );
-
-	// Log( "Now Render : %p \n", inputVal );
-	for ( DWORD i = 0; i < inputVal->NumMaterials; ++i )
-	{
-		g_D3dDevice->SetMaterial( &inputVal->MeshMarterials[i] );
-		g_D3dDevice->SetTexture( 0, inputVal->MeshTexture[i] );
-
-		( inputVal->importedMesh )->DrawSubset( i );
-	}
-	g_D3dDevice->EndScene();
-
-	// Log( "Render End \n" );
-	g_D3dDevice->Present( NULL, NULL, NULL, NULL );
 }
