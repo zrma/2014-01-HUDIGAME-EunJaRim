@@ -27,13 +27,12 @@ struct TERRAIN_VERTEX
 
 #endif // !D3DFVF_TERRAIN_VERTEX
 
-
-class HeightMap:
+class Terrain:
 	public Interface3D
 {
 public:
-	HeightMap();
-	virtual ~HeightMap();
+	Terrain();
+	virtual ~Terrain();
 
 private:
 	TERRAIN_VERTEX*	m_HeightMap = nullptr;

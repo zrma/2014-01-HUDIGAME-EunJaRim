@@ -56,6 +56,9 @@
     <Filter Include="Shader">
       <UniqueIdentifier>{f70b91af-4b90-4d0a-84f8-da20c77441fb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Envelope">
+      <UniqueIdentifier>{c42fd69d-6b4d-43f6-9d87-733d26583dae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -218,15 +221,17 @@
       <Filter>Map</Filter>
     </ClInclude>
     <ClInclude Include="Frustum.h">
-      <Filter>Render</Filter>
+      <Filter>Envelope</Filter>
     </ClInclude>
     <ClInclude Include="QuadTree.h">
-      <Filter>Render</Filter>
+      <Filter>Envelope</Filter>
     </ClInclude>
     <ClInclude Include="SkyBox.h">
-      <Filter>Render</Filter>
+      <Filter>Envelope</Filter>
     </ClInclude>
-    <ClInclude Include="HeightMap.h" />
+    <ClInclude Include="Terrain.h">
+      <Filter>Envelope</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -359,15 +364,17 @@
       <Filter>Map</Filter>
     </ClCompile>
     <ClCompile Include="Frustum.cpp">
-      <Filter>Render</Filter>
+      <Filter>Envelope</Filter>
     </ClCompile>
     <ClCompile Include="QuadTree.cpp">
-      <Filter>Render</Filter>
+      <Filter>Envelope</Filter>
     </ClCompile>
     <ClCompile Include="SkyBox.cpp">
-      <Filter>Render</Filter>
+      <Filter>Envelope</Filter>
     </ClCompile>
-    <ClCompile Include="HeightMap.cpp" />
+    <ClCompile Include="Terrain.cpp">
+      <Filter>Envelope</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="YaMangClient.rc">

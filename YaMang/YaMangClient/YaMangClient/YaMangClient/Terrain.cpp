@@ -1,13 +1,13 @@
 ﻿#include "stdafx.h"
-#include "HeightMap.h"
+#include "Terrain.h"
 
 
-HeightMap::HeightMap()
+Terrain::Terrain()
 {
 	ZeroMemory( m_MapTextureArray, sizeof( m_MapTextureArray ) );
 }
 
 
-HeightMap::~HeightMap()
+Terrain::~Terrain()
 {
 }
