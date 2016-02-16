@@ -41,6 +41,7 @@ public:
 private:
 	static T*	m_Instance;
 };
+
 template <typename T>
 T* Singleton<T>::m_Instance = nullptr;
 
